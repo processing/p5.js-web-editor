@@ -3,7 +3,8 @@ import Project from '../models/project';
 
 function insertErrorMessage(htmlFile) {
   const html = htmlFile.split('</head>');
-  const metaDescription = 'A web editor for p5.js, a JavaScript library with the goal of making coding accessible to artists, designers, educators, and beginners.'; // eslint-disable-line
+  const metaDescription =
+    'A web editor for p5.js, a JavaScript library with the goal of making coding accessible to artists, designers, educators, and beginners.'; // eslint-disable-line
   html[0] = `
     ${html[0]}
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />

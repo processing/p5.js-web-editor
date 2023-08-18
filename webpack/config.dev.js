@@ -42,7 +42,7 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new ReactRefreshPlugin({
       overlay: {
-        sockIntegration: 'whm',
+        sockIntegration: 'whm'
       }
     }),
     new webpack.DefinePlugin({

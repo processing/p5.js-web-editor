@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 import JSZip from 'jszip';
 import format from 'date-fns/format';
 import isUrl from 'is-url';
@@ -85,7 +86,8 @@ export function updateProject(req, res) {
 
 export function getProject(req, res) {
   const { project_id: projectId, username } = req.params;
-  User.findByUsername(username, (err, user) => { // eslint-disable-line
+  User.findByUsername(username, (err, user) => {
+    // eslint-disable-line
     if (!user) {
       return res
         .status(404)
@@ -96,7 +98,8 @@ export function getProject(req, res) {
       $or: [{ _id: projectId }, { slug: projectId }]
     })
       .populate('user', 'username')
-      .exec((err, project) => { // eslint-disable-line
+      // eslint-disable-next-line no-shadow
+      .exec((err, project) => {
         if (err) {
           console.log(err);
           return res
@@ -126,7 +129,8 @@ export function getProjectAsset(req, res) {
   const projectId = req.params.project_id;
   Project.findOne({ $or: [{ _id: projectId }, { slug: projectId }] })
     .populate('user', 'username')
-    .exec(async (err, project) => { // eslint-disable-line
+    .exec(async (err, project) => {
+      // eslint-disable-line
       if (err) {
         return res
           .status(404)

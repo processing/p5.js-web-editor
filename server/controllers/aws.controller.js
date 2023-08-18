@@ -40,7 +40,7 @@ export function getObjectKey(url) {
 }
 
 export function deleteObjectsFromS3(keyList, callback) {
-  const keys = keyList.map((key) => { return { Key: key }; }); // eslint-disable-line
+  const keys = keyList.map((key) => ({ Key: key })); // eslint-disable-line
   if (keyList.length > 0) {
     const params = {
       Bucket: `${process.env.S3_BUCKET}`,

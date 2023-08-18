@@ -31,7 +31,8 @@ mongoose.connection.on('error', () => {
  * https://mongodb.github.io/node-mongodb-native
  */
 
-const agg = [ // eslint-disable-line
+const agg = [
+  // eslint-disable-line
   {
     $project: {
       email: {

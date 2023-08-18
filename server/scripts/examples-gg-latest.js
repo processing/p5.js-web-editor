@@ -197,23 +197,31 @@ function getSketchItems(sketchList) {
   // const completeSketchPkg = [];
 
   /* eslint-disable */
-  return Q.all(sketchList[0].map(async sketch => Q.all(sketch.tree.map((item) => {
-    if (item.name === 'data') {
-      const options = {
-        url: `https://api.github.com/repos/generative-design/Code-Package-p5.js/contents/${item.path}${branchRef}`,
-        method: 'GET',
-        headers: {
-          ...headers,
-          Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`
-        }
-      };
+  return Q.all(
+    sketchList[0].map(async (sketch) =>
+      Q.all(
+        sketch.tree.map((item) => {
+          if (item.name === 'data') {
+            const options = {
+              url: `https://api.github.com/repos/generative-design/Code-Package-p5.js/contents/${item.path}${branchRef}`,
+              method: 'GET',
+              headers: {
+                ...headers,
+                Authorization: `Basic ${Buffer.from(
+                  `${clientId}:${clientSecret}`
+                ).toString('base64')}`
+              }
+            };
 
-      const { data } = axios.request(options);
-      sketch.data = data;
-      return sketch;
-    }
-    // pass
-  })))).then(() => sketchList[0]);
+            const { data } = axios.request(options);
+            sketch.data = data;
+            return sketch;
+          }
+          // pass
+        })
+      )
+    )
+  ).then(() => sketchList[0]);
   /* eslint-enable */
 }
 
@@ -378,8 +386,11 @@ function formatAllSketches(sketchList) {
 // get all the sketch data content and download to the newProjects array
 function getAllSketchContent(newProjectList) {
   /* eslint-disable */
-  return Q.all(newProjectList.map(newProject => Q.all(newProject.files.map(async (sketchFile, i) => {
-    /*
+  return Q.all(
+    newProjectList.map((newProject) =>
+      Q.all(
+        newProject.files.map(async (sketchFile, i) => {
+          /*
       sketchFile.name.endsWith(".mp4") !== true &&
       sketchFile.name.endsWith(".ogg") !== true &&
       sketchFile.name.endsWith(".otf") !== true &&
@@ -390,42 +401,49 @@ function getAllSketchContent(newProjectList) {
       sketchFile.name.endsWith(".svg") !== true
     */
 
-    if (sketchFile.fileType === 'file' &&
-      sketchFile.content != null &&
-      sketchFile.name.endsWith('.html') !== true &&
-      sketchFile.name.endsWith('.css') !== true &&
-      sketchFile.name.endsWith('.js') === true
-    ) {
-      const options = {
-        url: newProject.files[i].content,
-        method: 'GET',
-        headers: {
-          ...headers,
-          Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`
-        }
-      };
+          if (
+            sketchFile.fileType === 'file' &&
+            sketchFile.content != null &&
+            sketchFile.name.endsWith('.html') !== true &&
+            sketchFile.name.endsWith('.css') !== true &&
+            sketchFile.name.endsWith('.js') === true
+          ) {
+            const options = {
+              url: newProject.files[i].content,
+              method: 'GET',
+              headers: {
+                ...headers,
+                Authorization: `Basic ${Buffer.from(
+                  `${clientId}:${clientSecret}`
+                ).toString('base64')}`
+              }
+            };
 
-      // console.log("CONVERT ME!")
-      const { data } = await axios.request(options);
-      newProject.files[i].content = data;
-      return newProject;
-    }
-    if (newProject.files[i].url) {
-      return new Promise((resolve, reject) => {
-        // "https://raw.githubusercontent.com/generative-design/Code-Package-p5.js/gg4editor/01_P/P_3_2_1_01/data/FreeSans.otf",
-        // https://cdn.jsdelivr.net/gh/generative-design/Code-Package-p5.js@master/01_P/P_4_3_1_01/data/pic.png
-        // const rawGitRef = `https://raw.githack.com/${newProject.files[i].url.split('.com/')[1]}`;
-        const cdnRef = `https://cdn.jsdelivr.net/gh/generative-design/Code-Package-p5.js@${branchName}${newProject.files[i].url.split(branchName)[1]}`
-        // console.log("🌈🌈🌈🌈🌈", sketchFile.name);
-        // console.log("🌈🌈🌈🌈🌈", cdnRef);
-        sketchFile.content = cdnRef;
-        sketchFile.url = cdnRef;
-        // newProject.files[1].content = newProject.files[1].content.replace(`'data/${sketchFile.name}'`, `'${rawGitRef}'`);
-        resolve(newProject);
-      });
-    }
-  }))
-  )).then(() => newProjectList);
+            // console.log("CONVERT ME!")
+            const { data } = await axios.request(options);
+            newProject.files[i].content = data;
+            return newProject;
+          }
+          if (newProject.files[i].url) {
+            return new Promise((resolve, reject) => {
+              // "https://raw.githubusercontent.com/generative-design/Code-Package-p5.js/gg4editor/01_P/P_3_2_1_01/data/FreeSans.otf",
+              // https://cdn.jsdelivr.net/gh/generative-design/Code-Package-p5.js@master/01_P/P_4_3_1_01/data/pic.png
+              // const rawGitRef = `https://raw.githack.com/${newProject.files[i].url.split('.com/')[1]}`;
+              const cdnRef = `https://cdn.jsdelivr.net/gh/generative-design/Code-Package-p5.js@${branchName}${
+                newProject.files[i].url.split(branchName)[1]
+              }`;
+              // console.log("🌈🌈🌈🌈🌈", sketchFile.name);
+              // console.log("🌈🌈🌈🌈🌈", cdnRef);
+              sketchFile.content = cdnRef;
+              sketchFile.url = cdnRef;
+              // newProject.files[1].content = newProject.files[1].content.replace(`'data/${sketchFile.name}'`, `'${rawGitRef}'`);
+              resolve(newProject);
+            });
+          }
+        })
+      )
+    )
+  ).then(() => newProjectList);
   /* eslint-enable */
 }
 

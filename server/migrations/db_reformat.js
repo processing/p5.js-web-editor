@@ -2,11 +2,13 @@
 import mongoose from 'mongoose';
 import path from 'path';
 import { uniqWith, isEqual } from 'lodash';
-require('dotenv').config({path: path.resolve('.env')});
+require('dotenv').config({ path: path.resolve('.env') });
 const ObjectId = mongoose.Types.ObjectId;
 mongoose.connect('mongodb://localhost:27017/p5js-web-editor');
 mongoose.connection.on('error', () => {
-  console.error('MongoDB Connection Error. Please make sure that MongoDB is running.');
+  console.error(
+    'MongoDB Connection Error. Please make sure that MongoDB is running.'
+  );
   process.exit(1);
 });
 
@@ -19,36 +21,35 @@ let client = s3.createClient({
   maxAsyncS3: 20,
   s3RetryCount: 3,
   s3RetryDelay: 1000,
-  multipartUploadThreshold: 20971520, // this is the default (20 MB) 
-  multipartUploadSize: 15728640, // this is the default (15 MB) 
+  multipartUploadThreshold: 20971520, // this is the default (20 MB)
+  multipartUploadSize: 15728640, // this is the default (15 MB)
   s3Options: {
     accessKeyId: `${process.env.AWS_ACCESS_KEY}`,
     secretAccessKey: `${process.env.AWS_SECRET_KEY}`,
     region: `${process.env.AWS_REGION}`
-  },
+  }
 });
 
 let s3Files = [];
 
-Project.find({})
-  .exec((err, projects) => {
-    projects.forEach((project, projectIndex) => {
-      project.files.forEach((file, fileIndex) => {
-        if (file.url && !file.url.includes("https://rawgit.com/")) {
-          s3Files.push(file.url.split('/').pop());
-        }
-      });
+Project.find({}).exec((err, projects) => {
+  projects.forEach((project, projectIndex) => {
+    project.files.forEach((file, fileIndex) => {
+      if (file.url && !file.url.includes('https://rawgit.com/')) {
+        s3Files.push(file.url.split('/').pop());
+      }
     });
-    console.log(s3Files.length);
-    s3Files = uniqWith(s3Files, isEqual);
-    console.log(s3Files.length);
   });
+  console.log(s3Files.length);
+  s3Files = uniqWith(s3Files, isEqual);
+  console.log(s3Files.length);
+});
 
 const uploadedFiles = [];
-const params = {'s3Params': {'Bucket': `${process.env.S3_BUCKET}`}};
+const params = { s3Params: { Bucket: `${process.env.S3_BUCKET}` } };
 let objectsResponse = client.listObjects(params);
-objectsResponse.on('data', function(objects) {
-  objects.Contents.forEach(object => {
+objectsResponse.on('data', function (objects) {
+  objects.Contents.forEach((object) => {
     uploadedFiles.push(object.Key);
   });
 });
@@ -56,18 +57,18 @@ objectsResponse.on('data', function(objects) {
 const filesToDelete = [];
 objectsResponse.on('end', () => {
   console.log(uploadedFiles.length);
-  uploadedFiles.forEach(fileKey => {
+  uploadedFiles.forEach((fileKey) => {
     if (s3Files.indexOf(fileKey) === -1) {
       //delete file
-      filesToDelete.push({Key: fileKey});
+      filesToDelete.push({ Key: fileKey });
       // console.log("would delete file: ", fileKey);
     }
   });
   let params = {
     Bucket: `${process.env.S3_BUCKET}`,
     Delete: {
-      Objects: filesToDelete,
-    },
+      Objects: filesToDelete
+    }
   };
   // let del = client.deleteObjects(params);
   // del.on('err', (err) => {
@@ -76,9 +77,9 @@ objectsResponse.on('end', () => {
   // del.on('end', () => {
   //   console.log('deleted extra S3 files!');
   // });
-  console.log("To delete: ", filesToDelete.length);
-  console.log("Total S3 files: ", uploadedFiles.length);
-  console.log("Total S3 files in mongo: ", s3Files.length);
+  console.log('To delete: ', filesToDelete.length);
+  console.log('Total S3 files: ', uploadedFiles.length);
+  console.log('Total S3 files in mongo: ', s3Files.length);
 });
 
 // let projectsNotToUpdate;

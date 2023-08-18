@@ -11,7 +11,10 @@ const Item = ({ isAdded, onSelect, name, url }) => {
     ? t('QuickAddList.ButtonRemoveARIA')
     : t('QuickAddList.ButtonAddToCollectionARIA');
   return (
-    <li className="quick-add__item" onClick={onSelect}> { /* eslint-disable-line */ }
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
+    <li className="quick-add__item" onClick={onSelect}>
+      {' '}
+      {/* eslint-disable-line */}
       <button
         className="quick-add__item-toggle"
         onClick={onSelect}

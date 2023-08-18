@@ -13,12 +13,12 @@ export const domOnlyProps = ({
   visited,
   autofilled,
   error,
-  ...domProps }) => domProps;
+  ...domProps
+}) => domProps;
 /* eslint-enable */
 
 /* eslint-disable */
-const EMAIL_REGEX =
-  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i;
+const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i;
 /* eslint-enable */
 
 function validateNameEmail(formProps, errors) {
