@@ -80,7 +80,7 @@ window.HTMLHint = HTMLHint;
 
 const INDENTATION_AMOUNT = 2;
 
-class EditorV2 extends React.Component {
+class Editor extends React.Component {
   constructor(props) {
     super(props);
     this.tidyCode = this.tidyCode.bind(this);
@@ -592,7 +592,7 @@ class EditorV2 extends React.Component {
   }
 }
 
-EditorV2.propTypes = {
+Editor.propTypes = {
   autocloseBracketsQuotes: PropTypes.bool.isRequired,
   autocompleteHinter: PropTypes.bool.isRequired,
   lineNumbers: PropTypes.bool.isRequired,
@@ -685,5 +685,5 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default withTranslation()(
-  connect(mapStateToProps, mapDispatchToProps)(EditorV2)
+  connect(mapStateToProps, mapDispatchToProps)(Editor)
 );
