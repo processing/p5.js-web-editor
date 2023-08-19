@@ -6,4 +6,10 @@
   max-width: #{1012 / $base-font-size}rem;
   margin: 0 auto;
   width: 100%;
+
+  @media (min-width: 770px) {
+    @include themify() {
+      border: 1px solid getThemifyVariable('modal-border-color');
+    }
+  }
 }
