@@ -13,7 +13,12 @@ import NavMenuItem from '../../../../components/Nav/NavMenuItem';
 import { prop, remSize } from '../../../../theme';
 import AsteriskIcon from '../../../../images/p5-asterisk.svg';
 import IconButton from '../../../../components/mobile/IconButton';
-import { AccountIcon, EditorIcon, MoreIcon } from '../../../../common/icons';
+import {
+  AccountIcon,
+  AddIcon,
+  EditorIcon,
+  MoreIcon
+} from '../../../../common/icons';
 import {
   newFile,
   newFolder,
@@ -29,6 +34,7 @@ import { showToast } from '../../actions/toast';
 import { setLanguage } from '../../actions/preferences';
 import Overlay from '../../../App/components/Overlay';
 import ProjectName from './ProjectName';
+import CollectionCreate from '../../../User/components/CollectionCreate';
 
 const Nav = styled(NavBar)`
   background: ${prop('MobilePanel.default.background')};
@@ -238,6 +244,7 @@ const MobileNav = () => {
         )}
       </Title>
       <Options>
+        {title === 'My Stuff' && <StuffMenu />}
         {user.authenticated ? (
           <AccountMenu />
         ) : (
@@ -258,6 +265,40 @@ const MobileNav = () => {
         )}
       </Options>
     </Nav>
+  );
+};
+
+const StuffMenu = () => {
+  const dispatch = useDispatch();
+  const { isOpen, handlers } = useMenuProps('stuff');
+  const { newSketch } = useSketchActions();
+
+  const [createCollectionVisible, setCreateCollectionVisible] = useState(false);
+
+  const { t } = useTranslation();
+
+  return (
+    <div>
+      <IconButton icon={AddIcon} {...handlers} />
+      <ul className={isOpen ? 'opened' : ''}>
+        <ParentMenuContext.Provider value="stuff">
+          <NavMenuItem onClick={() => newSketch()}>
+            {t('DashboardView.NewSketch')}
+          </NavMenuItem>
+          <NavMenuItem onClick={() => setCreateCollectionVisible(true)}>
+            {t('DashboardView.CreateCollection')}
+          </NavMenuItem>
+        </ParentMenuContext.Provider>
+      </ul>
+      {createCollectionVisible && (
+        <Overlay
+          title={t('DashboardView.CreateCollectionOverlay')}
+          closeOverlay={() => setCreateCollectionVisible(false)}
+        >
+          <CollectionCreate />
+        </Overlay>
+      )}
+    </div>
   );
 };
 
