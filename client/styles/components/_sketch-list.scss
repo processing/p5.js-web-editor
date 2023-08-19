@@ -47,7 +47,7 @@
 
           > td {
             padding-left: 0;
-            width: 32%;
+            width: 30%;
             font-size: #{14 / $base-font-size}rem;
 
             @include themify() {
