@@ -42,12 +42,17 @@
             padding-left: 0;
             width: 100%;
             font-weight: bold;
-            margin-bottom: #{8 / $base-font-size}rem;
+            margin-bottom: #{6 / $base-font-size}rem;
           }
 
           > td {
             padding-left: 0;
-            width: 30%;
+            width: 32%;
+            font-size: #{14 / $base-font-size}rem;
+
+            @include themify() {
+              color: getThemifyVariable("modal-border-color");
+            }
           }
 
           .sketch-list__dropdown-column {
