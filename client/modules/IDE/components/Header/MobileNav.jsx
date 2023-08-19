@@ -17,8 +17,6 @@ import {
   AccountIcon,
   EditorIcon,
   MoreIcon,
-  CloseIcon,
-  ExitIcon,
   crossIcon
 } from '../../../../common/icons';
 import {
