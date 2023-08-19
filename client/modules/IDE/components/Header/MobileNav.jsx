@@ -17,7 +17,7 @@ import {
   AccountIcon,
   EditorIcon,
   MoreIcon,
-  crossIcon
+  CrossIcon
 } from '../../../../common/icons';
 import {
   newFile,
@@ -249,7 +249,7 @@ const MobileNav = () => {
         <Options>
           <div>
             <Link to={editorLink}>
-              <IconButton icon={crossIcon} />
+              <IconButton icon={CrossIcon} />
             </Link>
           </div>
         </Options>
