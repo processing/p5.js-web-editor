@@ -26,7 +26,7 @@ import {
   showKeyboardShortcutModal
 } from '../../actions/ide';
 import { logoutUser } from '../../../User/actions';
-import { useSketchActions } from '../../hooks';
+import { useSketchActions, useWhatPage } from '../../hooks';
 import { CmControllerContext } from '../../pages/IDEView';
 import { selectSketchPath } from '../../selectors/project';
 import { availableLanguages, languageKeyToLabel } from '../../../../i18n';
@@ -35,7 +35,6 @@ import { setLanguage } from '../../actions/preferences';
 import Overlay from '../../../App/components/Overlay';
 import ProjectName from './ProjectName';
 import CollectionCreate from '../../../User/components/CollectionCreate';
-import useWhatPage from '../../hooks/useWhatPage';
 
 const Nav = styled(NavBar)`
   background: ${prop('MobilePanel.default.background')};
