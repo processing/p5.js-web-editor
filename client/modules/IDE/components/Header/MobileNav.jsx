@@ -269,7 +269,6 @@ const MobileNav = () => {
 };
 
 const StuffMenu = () => {
-  const dispatch = useDispatch();
   const { isOpen, handlers } = useMenuProps('stuff');
   const { newSketch } = useSketchActions();
 
