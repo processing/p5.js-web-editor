@@ -35,6 +35,7 @@ import { setLanguage } from '../../actions/preferences';
 import Overlay from '../../../App/components/Overlay';
 import ProjectName from './ProjectName';
 import CollectionCreate from '../../../User/components/CollectionCreate';
+import useWhatPage from '../../hooks/useWhatPage';
 
 const Nav = styled(NavBar)`
   background: ${prop('MobilePanel.default.background')};
@@ -203,33 +204,28 @@ const MobileNav = () => {
 
   const { t } = useTranslation();
 
-  const { pathname } = useLocation();
   const editorLink = useSelector(selectSketchPath);
+  const pageName = useWhatPage();
 
   // TODO: remove the switch and use a props like mobileTitle <Nav layout=“dashboard” mobileTitle={t(‘Login’)} />
   function resolveTitle() {
-    switch (pathname) {
-      case '/':
-        return project.name;
-      case '/login':
+    switch (pageName) {
+      case 'login':
         return t('LoginView.Login');
-      case '/signup':
+      case 'signup':
         return t('LoginView.SignUp');
-      case '/account':
+      case 'account':
         return t('AccountView.Settings');
-      case '/p5/sketches':
-      case '/p5/collections':
+      case 'examples':
         return t('Nav.File.Examples');
-      case `/${user.username}/assets`:
-      case `/${user.username}/collections`:
-      case `/${user.username}/sketches`:
+      case 'myStuff':
         return 'My Stuff';
       default:
         return project.name;
     }
   }
 
-  const title = useMemo(resolveTitle, [project, pathname]);
+  const title = useMemo(resolveTitle, [pageName]);
 
   const Logo = AsteriskIcon;
   return (
