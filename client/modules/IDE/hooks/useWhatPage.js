@@ -25,7 +25,6 @@ const useWhatPage = () => {
     else if (pathname === '/account') setPageName('account');
     else if (pathname === '/p5/collections' || pathname === '/p5/sketches')
       setPageName('examples');
-    console.log(pageName, pathname);
   }, [pathname]);
 
   return pageName;
