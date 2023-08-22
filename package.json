@@ -1,6 +1,6 @@
 {
   "name": "p5.js-web-editor",
-  "version": "2.7.1",
+  "version": "2.7.3",
   "description": "The web editor for p5.js.",
   "scripts": {
     "clean": "rimraf dist",
@@ -23,7 +23,8 @@
     "update-syntax-highlighting": "node ./server/scripts/update-syntax-highlighting.js",
     "update-p5-hinter": "node ./server/scripts/update-p5-hinter.js",
     "heroku-postbuild": "touch .env; npm run build",
-    "storybook": "storybook dev -p 6006",
+    "storybook:build:css": "node-sass client/styles/main.scss client/styles/storybook.css",
+    "storybook": "npm run storybook:build:css && storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
   "husky": {
