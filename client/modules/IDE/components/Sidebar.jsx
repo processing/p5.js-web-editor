@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
+import styled, { css } from 'styled-components';
 import {
   closeProjectOptions,
   newFile,
@@ -11,11 +12,63 @@ import {
 } from '../actions/ide';
 import { selectRootFile } from '../selectors/files';
 import { getAuthenticated, selectCanEditSketch } from '../selectors/users';
-
+import { remSize } from '../../../theme';
 import ConnectedFileNode from './FileNode';
 
 import DownArrowIcon from '../../../images/down-filled-triangle.svg';
 
+const SidebarHeader = styled.header`
+  padding-right: ${remSize(6)};
+  padding-left: ${remSize(19)};
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: ${remSize(29)};
+  min-height: ${remSize(29)};
+  position: relative;
+`;
+
+const SidebarTitle = styled.h3`
+  font-size: ${remSize(12)};
+  display: ${(props) => (props.isExpanded ? 'inline-block' : 'none')};
+  white-space: nowrap;
+  overflow: hidden;
+`;
+
+const SidebarIcons = styled.div`
+  display: flex;
+  align-items: center;
+  height: 100%;
+  ${(props) =>
+    props.cantEdit &&
+    css`
+      display: none;
+    `}
+`;
+
+const SidebarAddButton = styled.button`
+  width: ${remSize(20)};
+  height: ${remSize(20)};
+  & svg {
+    width: ${remSize(10)};
+  }
+  ${(props) =>
+    !props.isExpanded &&
+    css`
+      display: none;
+    `}
+`;
+
+const SidebarProjectOptions = styled.ul`
+  display: none;
+  width: 100%;
+  max-width: ${remSize(180)};
+  ${(props) =>
+    props.open &&
+    css`
+      display: flex;
+    `}
+`;
 // TODO: use a generic Dropdown UI component
 
 export default function SideBar() {
@@ -66,23 +119,23 @@ export default function SideBar() {
 
   return (
     <section className={sidebarClass}>
-      <header className="sidebar__header" onContextMenu={toggleProjectOptions}>
-        <h3 className="sidebar__title">
+      <SidebarHeader onContextMenu={toggleProjectOptions}>
+        <SidebarTitle isExpanded={isExpanded}>
           <span>{t('Sidebar.Title')}</span>
-        </h3>
-        <div className="sidebar__icons">
-          <button
+        </SidebarTitle>
+        <SidebarIcons cantEdit={!canEditProject}>
+          <SidebarAddButton
             aria-label={t('Sidebar.ToggleARIA')}
-            className="sidebar__add"
             tabIndex="0"
             ref={sidebarOptionsRef}
             onClick={toggleProjectOptions}
             onBlur={onBlurComponent}
             onFocus={onFocusComponent}
+            isExpanded={isExpanded}
           >
             <DownArrowIcon focusable="false" aria-hidden="true" />
-          </button>
-          <ul className="sidebar__project-options">
+          </SidebarAddButton>
+          <SidebarProjectOptions open={projectOptionsVisible}>
             <li>
               <button
                 aria-label={t('Sidebar.AddFolderARIA')}
@@ -124,9 +177,9 @@ export default function SideBar() {
                 </button>
               </li>
             )}
-          </ul>
-        </div>
-      </header>
+          </SidebarProjectOptions>
+        </SidebarIcons>
+      </SidebarHeader>
       <ConnectedFileNode id={rootFile.id} canEdit={canEditProject} />
     </section>
   );
