@@ -8,10 +8,9 @@ import { Helmet } from 'react-helmet';
 import SplitPane from 'react-split-pane';
 import Editor from '../components/Editor';
 import IDEOverlays from '../components/IDEOverlays';
+import IDEKeyHandlers from '../components/IDEKeyHandlers';
 import Sidebar from '../components/Sidebar';
 import PreviewFrame from '../components/PreviewFrame';
-import Toolbar from '../components/Header/Toolbar';
-import Nav from '../components/Header/Nav';
 import Console from '../components/Console';
 import Toast from '../components/Toast';
 import * as FileActions from '../actions/files';
@@ -22,8 +21,10 @@ import * as PreferencesActions from '../actions/preferences';
 import * as UserActions from '../../User/actions';
 import * as ConsoleActions from '../actions/console';
 import { getHTMLFile } from '../reducers/files';
+import { selectActiveFile } from '../selectors/files';
 import { getIsUserOwner } from '../selectors/users';
 import RootPage from '../../../components/RootPage';
+import Header from '../components/Header';
 
 function getTitle(props) {
   const { id } = props.project;
@@ -68,7 +69,6 @@ export const CmControllerContext = React.createContext({});
 class IDEView extends React.Component {
   constructor(props) {
     super(props);
-    this.handleGlobalKeydown = this.handleGlobalKeydown.bind(this);
 
     this.state = {
       consoleSize: props.ide.consoleIsExpanded ? 150 : 29,
@@ -88,9 +88,6 @@ class IDEView extends React.Component {
         this.props.getProject(id, username);
       }
     }
-
-    this.isMac = navigator.userAgent.toLowerCase().indexOf('mac') !== -1;
-    document.addEventListener('keydown', this.handleGlobalKeydown, false);
 
     // window.onbeforeunload = this.handleUnsavedChanges;
     window.addEventListener('beforeunload', this.handleBeforeUnload);
@@ -143,87 +140,8 @@ class IDEView extends React.Component {
     }
   }
   componentWillUnmount() {
-    document.removeEventListener('keydown', this.handleGlobalKeydown, false);
     clearTimeout(this.autosaveInterval);
     this.autosaveInterval = null;
-  }
-  handleGlobalKeydown(e) {
-    // 83 === s
-    if (
-      e.keyCode === 83 &&
-      ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac))
-    ) {
-      e.preventDefault();
-      e.stopPropagation();
-      if (
-        this.props.isUserOwner ||
-        (this.props.user.authenticated && !this.props.project.owner)
-      ) {
-        this.props.saveProject(this.cmController.getContent());
-      } else if (this.props.user.authenticated) {
-        this.props.cloneProject();
-      } else {
-        this.props.showErrorModal('forceAuthentication');
-      }
-      // 13 === enter
-    } else if (
-      e.keyCode === 13 &&
-      e.shiftKey &&
-      ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac))
-    ) {
-      e.preventDefault();
-      e.stopPropagation();
-      this.props.stopSketch();
-    } else if (
-      e.keyCode === 13 &&
-      ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac))
-    ) {
-      e.preventDefault();
-      e.stopPropagation();
-      this.syncFileContent();
-      this.props.startSketch();
-      // 50 === 2
-    } else if (
-      e.keyCode === 50 &&
-      ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac)) &&
-      e.shiftKey
-    ) {
-      e.preventDefault();
-      this.props.setAllAccessibleOutput(false);
-      // 49 === 1
-    } else if (
-      e.keyCode === 49 &&
-      ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac)) &&
-      e.shiftKey
-    ) {
-      e.preventDefault();
-      this.props.setAllAccessibleOutput(true);
-    } else if (
-      e.keyCode === 66 &&
-      ((e.metaKey && this.isMac) || (e.ctrlKey && !this.isMac))
-    ) {
-      e.preventDefault();
-      if (!this.props.ide.sidebarIsExpanded) {
-        this.props.expandSidebar();
-      } else {
-        this.props.collapseSidebar();
-      }
-    } else if (e.keyCode === 192 && e.ctrlKey) {
-      e.preventDefault();
-      if (this.props.ide.consoleIsExpanded) {
-        this.props.collapseConsole();
-      } else {
-        this.props.expandConsole();
-      }
-    } else if (e.keyCode === 27) {
-      if (this.props.ide.newFolderModalVisible) {
-        this.props.closeNewFolderModal();
-      } else if (this.props.ide.uploadFileModalVisible) {
-        this.props.closeUploadFileModal();
-      } else if (this.props.ide.modalIsVisible) {
-        this.props.closeNewFileModal();
-      }
-    }
   }
 
   handleBeforeUnload = (e) => {
@@ -246,15 +164,15 @@ class IDEView extends React.Component {
         <Helmet>
           <title>{getTitle(this.props)}</title>
         </Helmet>
+        <IDEKeyHandlers getContent={() => this.cmController.getContent()} />
         <WarnIfUnsavedChanges currentLocation={this.props.location} />
         <Toast />
         <CmControllerContext.Provider value={{ current: this.cmController }}>
-          <Nav />
+          <Header
+            syncFileContent={this.syncFileContent}
+            key={this.props.project.id}
+          />
         </CmControllerContext.Provider>
-        <Toolbar
-          syncFileContent={this.syncFileContent}
-          key={this.props.project.id}
-        />
         <main className="editor-preview-container">
           <SplitPane
             split="vertical"
@@ -345,7 +263,6 @@ IDEView.propTypes = {
     id: PropTypes.string,
     username: PropTypes.string
   }).isRequired,
-  saveProject: PropTypes.func.isRequired,
   ide: PropTypes.shape({
     errorType: PropTypes.string,
     keyboardShortcutVisible: PropTypes.bool.isRequired,
@@ -391,7 +308,6 @@ IDEView.propTypes = {
     autocloseBracketsQuotes: PropTypes.bool.isRequired,
     autocompleteHinter: PropTypes.bool.isRequired
   }).isRequired,
-  setAllAccessibleOutput: PropTypes.func.isRequired,
   selectedFile: PropTypes.shape({
     id: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
@@ -402,30 +318,17 @@ IDEView.propTypes = {
     name: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired
   }).isRequired,
-  expandSidebar: PropTypes.func.isRequired,
-  collapseSidebar: PropTypes.func.isRequired,
-  cloneProject: PropTypes.func.isRequired,
-  expandConsole: PropTypes.func.isRequired,
-  collapseConsole: PropTypes.func.isRequired,
   updateFileContent: PropTypes.func.isRequired,
-  closeNewFolderModal: PropTypes.func.isRequired,
-  closeNewFileModal: PropTypes.func.isRequired,
   autosaveProject: PropTypes.func.isRequired,
   setPreviousPath: PropTypes.func.isRequired,
-  showErrorModal: PropTypes.func.isRequired,
   clearPersistedState: PropTypes.func.isRequired,
-  startSketch: PropTypes.func.isRequired,
-  closeUploadFileModal: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
   isUserOwner: PropTypes.bool.isRequired
 };
 
 function mapStateToProps(state) {
   return {
-    selectedFile:
-      state.files.find((file) => file.isSelectedFile) ||
-      state.files.find((file) => file.name === 'sketch.js') ||
-      state.files.find((file) => file.name !== 'root'),
+    selectedFile: selectActiveFile(state),
     htmlFile: getHTMLFile(state.files),
     ide: state.ide,
     preferences: state.preferences,
