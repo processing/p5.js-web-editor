@@ -10,7 +10,6 @@ import Editor from '../components/Editor';
 import IDEKeyHandlers from '../components/IDEKeyHandlers';
 import Sidebar from '../components/Sidebar';
 import PreviewFrame from '../components/PreviewFrame';
-import Toolbar from '../components/Header/Toolbar';
 import Preferences from '../components/Preferences/index';
 import NewFileModal from '../components/NewFileModal';
 import NewFolderModal from '../components/NewFolderModal';
@@ -18,7 +17,6 @@ import UploadFileModal from '../components/UploadFileModal';
 import ShareModal from '../components/ShareModal';
 import KeyboardShortcutModal from '../components/KeyboardShortcutModal';
 import ErrorModal from '../components/ErrorModal';
-import Nav from '../components/Header/Nav';
 import Console from '../components/Console';
 import Toast from '../components/Toast';
 import * as FileActions from '../actions/files';
@@ -400,15 +398,6 @@ IDEView.propTypes = {
     autocompleteHinter: PropTypes.bool.isRequired
   }).isRequired,
   closePreferences: PropTypes.func.isRequired,
-  setAutocloseBracketsQuotes: PropTypes.func.isRequired,
-  setAutocompleteHinter: PropTypes.func.isRequired,
-  setFontSize: PropTypes.func.isRequired,
-  setAutosave: PropTypes.func.isRequired,
-  setLineNumbers: PropTypes.func.isRequired,
-  setLinewrap: PropTypes.func.isRequired,
-  setLintWarning: PropTypes.func.isRequired,
-  setTextOutput: PropTypes.func.isRequired,
-  setGridOutput: PropTypes.func.isRequired,
   selectedFile: PropTypes.shape({
     id: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
