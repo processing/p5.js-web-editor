@@ -12,53 +12,59 @@ exports[`<Sketchlist /> snapshot testing 1`] = `
       <thead>
         <tr>
           <th
+            class="sc-bkbkJK VqWDQ"
             scope="col"
           >
             <button
-              aria-label="Sort by Sketch descending."
-              class="sketch-list__sort-button"
+              aria-label="Sort by Sketch ascending."
+              aria-pressed="false"
             >
               <span
-                class="sketches-table__header"
+                class="sc-fFSPTT bGvjwU"
               >
                 Sketch
               </span>
             </button>
           </th>
           <th
+            aria-sort="descending"
+            class="sc-bkbkJK VqWDQ"
             scope="col"
           >
             <button
               aria-label="Sort by Date Created ascending."
-              class="sketch-list__sort-button"
+              aria-pressed="true"
             >
               <span
-                class="sketches-table__header sketches-table__header--selected"
+                class="sc-fFSPTT cMkNYR"
               >
                 Date Created
               </span>
               <test-file-stub
                 aria-label="Descending"
+                classname="sc-dlnjwi iorFNw"
                 focusable="false"
                 role="img"
               />
             </button>
           </th>
           <th
+            class="sc-bkbkJK VqWDQ"
             scope="col"
           >
             <button
               aria-label="Sort by Date Updated descending."
-              class="sketch-list__sort-button"
+              aria-pressed="false"
             >
               <span
-                class="sketches-table__header"
+                class="sc-fFSPTT bGvjwU"
               >
                 Date Updated
               </span>
             </button>
           </th>
           <th
+            class="sc-bkbkJK VqWDQ"
             scope="col"
           />
         </tr>
@@ -85,15 +91,19 @@ exports[`<Sketchlist /> snapshot testing 1`] = `
           <td
             class="sketch-list__dropdown-column"
           >
-            <button
-              aria-label="Toggle Open/Close Sketch Options"
-              class="sketch-list__dropdown-button"
+            <div
+              class="sc-jSFjdj leDKmY"
             >
-              <test-file-stub
-                aria-hidden="true"
-                focusable="false"
-              />
-            </button>
+              <button
+                aria-label="Toggle Open/Close Sketch Options"
+                tabindex="0"
+              >
+                <test-file-stub
+                  aria-hidden="true"
+                  focusable="false"
+                />
+              </button>
+            </div>
           </td>
         </tr>
         <tr
@@ -117,15 +127,19 @@ exports[`<Sketchlist /> snapshot testing 1`] = `
           <td
             class="sketch-list__dropdown-column"
           >
-            <button
-              aria-label="Toggle Open/Close Sketch Options"
-              class="sketch-list__dropdown-button"
+            <div
+              class="sc-jSFjdj leDKmY"
             >
-              <test-file-stub
-                aria-hidden="true"
-                focusable="false"
-              />
-            </button>
+              <button
+                aria-label="Toggle Open/Close Sketch Options"
+                tabindex="0"
+              >
+                <test-file-stub
+                  aria-hidden="true"
+                  focusable="false"
+                />
+              </button>
+            </div>
           </td>
         </tr>
       </tbody>

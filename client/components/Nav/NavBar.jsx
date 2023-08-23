@@ -1,11 +1,6 @@
 import PropTypes from 'prop-types';
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState
-} from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
+import useModalClose from '../../common/useModalClose';
 import { MenuOpenContext, NavBarContext } from './contexts';
 
 function NavBar({ children, className }) {
@@ -13,36 +8,11 @@ function NavBar({ children, className }) {
 
   const timerRef = useRef(null);
 
-  const nodeRef = useRef(null);
-
-  useEffect(() => {
-    function handleClick(e) {
-      if (!nodeRef.current) {
-        return;
-      }
-      if (nodeRef.current.contains(e.target)) {
-        return;
-      }
-      setDropdownOpen('none');
-    }
-    document.addEventListener('mousedown', handleClick, false);
-    return () => {
-      document.removeEventListener('mousedown', handleClick, false);
-    };
-  }, [nodeRef, setDropdownOpen]);
-
-  // TODO: replace with `useKeyDownHandlers` after #2052 is merged
-  useEffect(() => {
-    function handleKeyDown(e) {
-      if (e.keyCode === 27) {
-        setDropdownOpen('none');
-      }
-    }
-    document.addEventListener('keydown', handleKeyDown, false);
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown, false);
-    };
+  const handleClose = useCallback(() => {
+    setDropdownOpen('none');
   }, [setDropdownOpen]);
+
+  const nodeRef = useModalClose(handleClose);
 
   const clearHideTimeout = useCallback(() => {
     if (timerRef.current) {

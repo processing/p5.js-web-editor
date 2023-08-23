@@ -44,17 +44,32 @@ describe('<Sketchlist />', () => {
     expect(screen.getByText('testsketch2')).toBeInTheDocument();
   });
 
-  it('clicking on date created row header dispatches a reordering action', () => {
+  it('clicking on date created row header sorts the table', () => {
     act(() => {
       subject();
     });
+
+    expect.assertions(6);
+
+    const rowsBefore = screen.getAllByRole('row');
+    expect(within(rowsBefore[1]).getByText('testsketch1')).toBeInTheDocument();
+    expect(within(rowsBefore[2]).getByText('testsketch2')).toBeInTheDocument();
+
+    expect(
+      screen.getByLabelText(/Sort by Date Created ascending/i)
+    ).toBeInTheDocument();
 
     act(() => {
       fireEvent.click(screen.getByText(/date created/i));
     });
 
-    const expectedAction = [{ type: 'TOGGLE_DIRECTION', field: 'createdAt' }];
-    expect(store.getActions()).toEqual(expect.arrayContaining(expectedAction));
+    expect(
+      screen.getByLabelText(/Sort by Date Created descending/i)
+    ).toBeInTheDocument();
+
+    const rowsAfter = screen.getAllByRole('row');
+    expect(within(rowsAfter[1]).getByText('testsketch2')).toBeInTheDocument();
+    expect(within(rowsAfter[2]).getByText('testsketch1')).toBeInTheDocument();
   });
 
   it('clicking on dropdown arrow opens sketch options - sketches belong to user', () => {

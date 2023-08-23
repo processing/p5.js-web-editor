@@ -127,11 +127,6 @@
   align-items: center;
 }
 
-.collection-empty-message {
-  text-align: center;
-  font-size: #{16 / $base-font-size}rem;
-}
-
 .collection-row__action-column {
   width: #{60 / $base-font-size}rem;
   position: relative;

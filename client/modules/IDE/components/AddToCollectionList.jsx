@@ -9,7 +9,6 @@ import * as ProjectActions from '../actions/project';
 import * as ProjectsActions from '../actions/projects';
 import * as CollectionsActions from '../actions/collections';
 import * as ToastActions from '../actions/toast';
-import * as SortingActions from '../actions/sorting';
 import getSortedCollections from '../selectors/collections';
 import Loader from '../../App/components/loader';
 import QuickAddList from './QuickAddList';
@@ -170,7 +169,6 @@ function mapStateToProps(state, ownProps) {
   return {
     user: state.user,
     collections: getSortedCollections(state),
-    sorting: state.sorting,
     loading: state.loading,
     project: ownProps.project || state.project,
     projectId: ownProps && ownProps.params ? ownProps.prams.project_id : null
@@ -184,8 +182,7 @@ function mapDispatchToProps(dispatch) {
       CollectionsActions,
       ProjectsActions,
       ProjectActions,
-      ToastActions,
-      SortingActions
+      ToastActions
     ),
     dispatch
   );

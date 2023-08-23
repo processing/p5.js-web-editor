@@ -15,50 +15,6 @@
   }
 }
 
-.sketches-table thead th {
-  height: #{32 / $base-font-size}rem;
-  position: sticky;
-  top: 0;
-  z-index: 1;
-  @include themify() {
-    background-color: getThemifyVariable('background-color');
-  }
-}
-
-.sketch-list__sort-button {
-  display: flex;
-  align-items: center;
-  height: #{35 / $base-font-size}rem;
-
-  & .isvg {
-    margin-left: #{8 / $base-font-size}rem;
-  }
-
-  & svg {
-    @include themify() {
-      fill: getThemifyVariable('inactive-text-color')
-    }
-  }
-}
-
-.sketches-table__header {
-  border-bottom: 2px dashed transparent;
-  padding: #{3 / $base-font-size}rem 0;
-  @include themify() {
-    color: getThemifyVariable('inactive-text-color')
-  }
-}
-
-.sketches-table__header--selected {
-  @include themify() {
-    border-color: getThemifyVariable('logo-color');
-  }
-}
-
-.sketches-table thead th:nth-child(1){
-  padding-left: #{12 / $base-font-size}rem;
-}
-
 .sketches-table__row {
   margin: #{10 / $base-font-size}rem;
   height: #{72 / $base-font-size}rem;
@@ -100,17 +56,6 @@
   font-weight: normal;
 }
 
-
-.sketch-list__dropdown-button {
-  width:#{25 / $base-font-size}rem;
-  height:#{25 / $base-font-size}rem;
-  @include themify() {
-      & polygon, & path {
-        fill: getThemifyVariable('inactive-text-color');
-      }
-  }
-}
-
 .sketches-table__name {
   display: flex;
   align-items: center;
@@ -118,16 +63,4 @@
 
 .sketches-table__icon-cell {
   width: #{35 / $base-font-size}rem;
-}
-
-.sketch-list__action-dialogue {
-  @extend %dropdown-open-right;
-  top: 63%;
-  right: calc(100% - 26px);
-}
-
-.sketches-table__empty {
-  text-align: center;
-  font-size: #{16 / $base-font-size}rem;
-  padding: #{42 / $base-font-size}rem 0;
 }
