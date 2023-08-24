@@ -2,7 +2,6 @@ import React, { useContext, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
 import { sortBy } from 'lodash';
 import classNames from 'classnames';
@@ -81,7 +80,7 @@ const Title = styled.div`
   }
 `;
 
-const Options = styled.div`
+export const Options = styled.div`
   margin-left: auto;
   display: flex;
   /* transform: translateX(${remSize(12)}); */

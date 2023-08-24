@@ -70,11 +70,15 @@
 
 .dashboard-header__switcher {
   flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: center;
 }
 
 .dashboard-header__tabs {
   display: flex;
   padding-top: #{24 / $base-font-size}rem;
+  width: 100%;
 
   @include themify() {
     border-bottom: 1px solid getThemifyVariable("inactive-text-color");
@@ -95,6 +99,10 @@
       color: getThemifyVariable("primary-text-color");
       border-bottom-color: getThemifyVariable("nav-hover-color");
       cursor: pointer;
+    }
+
+    @media (max-width: 770px) {
+      margin-right: #{20 / $base-font-size}rem;
     }
   }
 
