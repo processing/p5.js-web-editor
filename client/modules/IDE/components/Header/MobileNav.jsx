@@ -240,7 +240,7 @@ const MobileNav = () => {
       </Title>
       {/* check if the user is in login page */}
       {pageName === 'login' || pageName === 'signup' ? (
-        // showing the login page
+        // showing the CrossIcon
         <Options>
           <div>
             <Link to={editorLink}>
@@ -249,6 +249,7 @@ const MobileNav = () => {
           </div>
         </Options>
       ) : (
+        // Menus for other pages
         <Options>
           {pageName === 'myStuff' && <StuffMenu />}
           {user.authenticated ? (
