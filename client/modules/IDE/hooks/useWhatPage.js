@@ -22,7 +22,7 @@ const useWhatPage = () => {
     else if (pathname === '/account') return 'account';
     else if (pathname === '/p5/collections' || pathname === '/p5/sketches')
       return 'examples';
-    return projectName;
+    return 'home';
   }, [pathname, username]);
 
   return pageName;
