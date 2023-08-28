@@ -89,7 +89,7 @@ const DashboardTabSwitcher = ({ currentTab, isOwner, username }) => {
                   <button
                     onClick={() => dispatch(toggleDirectionForField('name'))}
                   >
-                    Name
+                    {t('CollectionList.HeaderName')}
                   </button>
                 </li>
                 <li>
@@ -98,7 +98,7 @@ const DashboardTabSwitcher = ({ currentTab, isOwner, username }) => {
                       dispatch(toggleDirectionForField('createdAt'))
                     }
                   >
-                    Created
+                    {t('CollectionList.HeaderCreatedAt')}
                   </button>
                 </li>
                 <li>
@@ -107,18 +107,20 @@ const DashboardTabSwitcher = ({ currentTab, isOwner, username }) => {
                       dispatch(toggleDirectionForField('updatedAt'))
                     }
                   >
-                    Updated
+                    {t('CollectionList.HeaderUpdatedAt')}
                   </button>
                 </li>
-                <li>
-                  <button
-                    onClick={() =>
-                      dispatch(toggleDirectionForField('numItems'))
-                    }
-                  >
-                    # of sketches
-                  </button>
-                </li>
+                {currentTab === TabKey.collections && (
+                  <li>
+                    <button
+                      onClick={() =>
+                        dispatch(toggleDirectionForField('numItems'))
+                      }
+                    >
+                      # of sketches
+                    </button>
+                  </li>
+                )}
               </ul>
             </div>
           </FilterOptions>
