@@ -48,15 +48,15 @@ exports[`Nav renders dashboard version for mobile 1`] = `
 <DocumentFragment>
   <header>
     <nav
-      class="sc-hiKfDv eXEPUW"
+      class="sc-ezzafa bZzfr"
     >
       <div
-        class="sc-gXfVKN coiywI"
+        class="sc-bYwzuL bIGdtt"
       >
         <test-file-stub />
       </div>
       <div
-        class="sc-cBoqAE hmUVIc"
+        class="sc-kLojOw btKDXx"
       >
         <h1>
           <span
@@ -89,7 +89,7 @@ exports[`Nav renders dashboard version for mobile 1`] = `
         </h1>
       </div>
       <div
-        class="sc-ciSkZP fgpVGS"
+        class="sc-iklJeh jupmlX"
       >
         <div>
           <a
@@ -459,15 +459,15 @@ exports[`Nav renders editor version for mobile 1`] = `
 <DocumentFragment>
   <header>
     <nav
-      class="sc-hiKfDv eXEPUW"
+      class="sc-ezzafa bZzfr"
     >
       <div
-        class="sc-gXfVKN coiywI"
+        class="sc-bYwzuL bIGdtt"
       >
         <test-file-stub />
       </div>
       <div
-        class="sc-cBoqAE hmUVIc"
+        class="sc-kLojOw btKDXx"
       >
         <h1>
           <span
@@ -500,7 +500,7 @@ exports[`Nav renders editor version for mobile 1`] = `
         </h1>
       </div>
       <div
-        class="sc-ciSkZP fgpVGS"
+        class="sc-iklJeh jupmlX"
       >
         <div>
           <a
