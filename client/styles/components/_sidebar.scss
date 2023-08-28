@@ -4,18 +4,17 @@
 }
 
 .sidebar__header {
-  padding-right: #{6 / $base-font-size}rem;
-  padding-left: #{19 / $base-font-size}rem;
+  padding: #{10 / $base-font-size}rem #{12 / $base-font-size}rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: #{29 / $base-font-size}rem;
   min-height: #{29 / $base-font-size}rem;
   position: relative;
 }
 
 .sidebar__title {
-  font-size: #{12 / $base-font-size}rem;
+  font-size: #{16 / $base-font-size}rem;
+  font-weight: 500;
   display: inline-block;
   .sidebar--contracted & {
     display: none;
@@ -25,14 +24,20 @@
 }
 
 .sidebar__add {
-  width: #{20 / $base-font-size}rem;
-  height: #{20 / $base-font-size}rem;
-  @include icon();
+  padding: #{2 / $base-font-size}rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  & svg {
+    width: #{18 / $base-font-size}rem;
+    height: #{18 / $base-font-size}rem;
+  }
+  @include themify() {
+    background-color: getThemifyVariable('ide-border-color');
+  }
+
   .sidebar--contracted & {
     display: none;
-  }
-  & svg {
-    width: #{10 / $base-font-size}rem;
   }
 }
 

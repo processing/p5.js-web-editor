@@ -12,31 +12,22 @@ import PreviewFrame from '../components/PreviewFrame';
 import Console from '../components/Console';
 import Toast from '../components/Toast';
 import { updateFileContent } from '../actions/files';
-import {
-  setPreviousPath,
-  stopSketch,
-  collapseSidebar,
-  newFile
-} from '../actions/ide';
+import { setPreviousPath, stopSketch } from '../actions/ide';
 import {
   autosaveProject,
   clearPersistedState,
   getProject
 } from '../actions/project';
-import { selectActiveFile, selectRootFile } from '../selectors/files';
-import { getIsUserOwner, selectCanEditSketch } from '../selectors/users';
+import { selectActiveFile } from '../selectors/files';
+import { getIsUserOwner } from '../selectors/users';
 import RootPage from '../../../components/RootPage';
 import Header from '../components/Header';
 import FloatingActionButton from '../components/FloatingActionButton';
-import EditorV2 from '../components/Editor';
+import Editor from '../components/Editor';
 import {
   EditorSidebarWrapper,
-  FileDrawer,
   PreviewWrapper
 } from '../components/Editor/MobileEditor';
-import IconButton from '../../../components/mobile/IconButton';
-import { PlusIcon } from '../../../common/icons';
-import ConnectedFileNode from '../components/FileNode';
 import IDEOverlays from '../components/IDEOverlays';
 
 function getTitle(project) {
@@ -91,9 +82,6 @@ const IDEView = (props) => {
   const [consoleSize, setConsoleSize] = useState(150);
   const [sidebarSize, setSidebarSize] = useState(160);
   const [isOverlayVisible, setIsOverlayVisible] = useState(true);
-
-  const rootFile = useSelector(selectRootFile);
-  const canEditProject = useSelector(selectCanEditSketch);
 
   const cmRef = useRef({});
 
@@ -223,7 +211,7 @@ const IDEView = (props) => {
                     allowResize={ide.consoleIsExpanded}
                     className="editor-preview-subpanel"
                   >
-                    <EditorV2
+                    <Editor
                       provideController={(ctl) => {
                         cmRef.current = ctl;
                       }}
@@ -271,27 +259,8 @@ const IDEView = (props) => {
                 </SplitPane>
               </PreviewWrapper>
               <EditorSidebarWrapper show={!ide.isPlaying}>
-                <FileDrawer show={ide.sidebarIsExpanded}>
-                  <button
-                    data-backdrop="filedrawer"
-                    onClick={() => {
-                      dispatch(collapseSidebar());
-                    }}
-                  >
-                    {' '}
-                  </button>
-                  <nav>
-                    <h4>Sketch Files</h4>
-                    <IconButton
-                      onClick={() => {
-                        dispatch(newFile(rootFile.id));
-                      }}
-                      icon={PlusIcon}
-                    />
-                  </nav>
-                  <ConnectedFileNode id={rootFile.id} canEit={canEditProject} />
-                </FileDrawer>
-                <EditorV2
+                <Sidebar />
+                <Editor
                   provideController={(ctl) => {
                     cmRef.current = ctl;
                   }}

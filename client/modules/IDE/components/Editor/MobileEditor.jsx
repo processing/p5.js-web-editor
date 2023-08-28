@@ -47,7 +47,7 @@ export const PreviewWrapper = styled.div`
 `;
 
 export const EditorSidebarWrapper = styled.div`
-  display: ${(props) => (props.show ? 'flex' : 'none')};
+  display: ${(props) => (props.show ? 'block' : 'none')};
   height: 100%;
   position: relative;
 `;
@@ -55,7 +55,7 @@ export const EditorSidebarWrapper = styled.div`
 export const FileDrawer = styled.div`
   height: 100%;
   width: 50vw;
-  display: ${(props) => (props.show ? 'flex' : 'none')};
+  display: flex;
   flex-direction: column;
   position: absolute;
   /* z-index: 10; */
@@ -70,21 +70,10 @@ export const FileDrawer = styled.div`
     transform: translateX(100%);
   }
 
-  > nav {
-    padding: ${remSize(14)};
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  @media (min-width: 770px) {
     width: 100%;
-    > h4 {
-      font-weight: bold;
-      font-size: ${remSize(15)};
-      margin: 0;
-    }
-    > button {
-      ${prop('Button.primary.default')}
-      height: ${remSize(25)};
-      width: ${remSize(25)};
+    > button[data-backdrop='filedrawer'] {
+      display: none;
     }
   }
 `;
