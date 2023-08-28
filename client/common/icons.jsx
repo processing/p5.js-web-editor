@@ -24,6 +24,7 @@ import CircleFolder from '../images/circle-folder.svg';
 import CircleInfo from '../images/circle-info.svg';
 import Add from '../images/add.svg';
 import Filter from '../images/filter.svg';
+import Cross from '../images/cross.svg';
 
 // HOC that adds the right web accessibility props
 // https://www.scottohara.me/blog/2019/05/22/contextual-images-svgs-and-a11y.html
@@ -95,6 +96,7 @@ export const TerminalIcon = withLabel(Terminal);
 export const CodeIcon = withLabel(Code);
 export const SaveIcon = withLabel(Save);
 export const FolderIcon = withLabel(Folder);
+export const CrossIcon = withLabel(Cross);
 export const CircleTerminalIcon = withLabel(CircleTerminal);
 export const CircleFolderIcon = withLabel(CircleFolder);
 export const CircleInfoIcon = withLabel(CircleInfo);

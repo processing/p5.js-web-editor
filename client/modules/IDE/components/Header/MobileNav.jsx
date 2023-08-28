@@ -16,7 +16,8 @@ import {
   AccountIcon,
   AddIcon,
   EditorIcon,
-  MoreIcon
+  MoreIcon,
+  CrossIcon
 } from '../../../../common/icons';
 import {
   newFile,
@@ -237,27 +238,39 @@ const MobileNav = () => {
           <h5>by {project?.owner?.username}</h5>
         )}
       </Title>
-      <Options>
-        {pageName === 'myStuff' && <StuffMenu />}
-        {user.authenticated ? (
-          <AccountMenu />
-        ) : (
-          <div>
-            <Link to="/login">
-              <IconButton icon={AccountIcon} />
-            </Link>
-          </div>
-        )}
-        {title === project.name ? (
-          <MoreMenu />
-        ) : (
+      {/* check if the user is in login page */}
+      {pageName === 'login' || pageName === 'signup' ? (
+        // showing the login page
+        <Options>
           <div>
             <Link to={editorLink}>
-              <IconButton icon={EditorIcon} />
+              <IconButton icon={CrossIcon} />
             </Link>
           </div>
-        )}
-      </Options>
+        </Options>
+      ) : (
+        <Options>
+          {pageName === 'myStuff' && <StuffMenu />}
+          {user.authenticated ? (
+            <AccountMenu />
+          ) : (
+            <div>
+              <Link to="/login">
+                <IconButton icon={AccountIcon} />
+              </Link>
+            </div>
+          )}
+          {title === project.name ? (
+            <MoreMenu />
+          ) : (
+            <div>
+              <Link to={editorLink}>
+                <IconButton icon={EditorIcon} />
+              </Link>
+            </div>
+          )}
+        </Options>
+      )}
     </Nav>
   );
 };
