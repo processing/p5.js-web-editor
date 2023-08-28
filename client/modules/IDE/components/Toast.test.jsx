@@ -6,10 +6,8 @@ import {
   fireEvent,
   waitFor
 } from '../../../test-utils';
-import { setToastText, showToast } from '../actions/toast';
+import { showToast } from '../actions/toast';
 import Toast from './Toast';
-
-// TODO: update action calls after reducer refactor is merged.
 
 describe(`Toast`, () => {
   it('is hidden by default', () => {
@@ -20,8 +18,7 @@ describe(`Toast`, () => {
   it('opens when an action is dispatched', async () => {
     const { store } = reduxRender(<Toast />);
     act(() => {
-      store.dispatch(showToast(1500));
-      store.dispatch(setToastText('Toast.SketchSaved'));
+      store.dispatch(showToast('Toast.SketchSaved'));
     });
 
     const toast = screen.queryByRole('status');
@@ -32,8 +29,7 @@ describe(`Toast`, () => {
   it('closes automatically after time', async () => {
     const { store } = reduxRender(<Toast />);
     act(() => {
-      store.dispatch(showToast(100));
-      store.dispatch(setToastText('Toast.SketchSaved'));
+      store.dispatch(showToast('Toast.SketchSaved', 100));
     });
 
     expect(screen.queryByRole('status')).toBeInTheDocument();
