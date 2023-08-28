@@ -117,7 +117,7 @@ const DashboardTabSwitcher = ({ currentTab, isOwner, username }) => {
                         dispatch(toggleDirectionForField('numItems'))
                       }
                     >
-                      # of sketches
+                      {t('CollectionList.HeaderNumItems')}
                     </button>
                   </li>
                 )}
