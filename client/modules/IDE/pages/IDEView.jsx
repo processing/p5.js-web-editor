@@ -115,8 +115,6 @@ const IDEView = (props) => {
 
   // For autosave
   useEffect(() => {
-    let autosaveTimeout;
-
     const handleAutosave = () => {
       if (
         isUserOwner &&
@@ -136,16 +134,14 @@ const IDEView = (props) => {
     }
 
     if (preferences.autosave) {
-      autosaveTimeout = setTimeout(handleAutosave, 20000);
+      autosaveIntervalRef.current = setTimeout(handleAutosave, 20000);
     }
-
-    autosaveIntervalRef.current = autosaveTimeout;
     prevFileNameRef.current = selectedFile.name;
     prevFileContentRef.current = selectedFile.content;
 
     return () => {
-      if (autosaveTimeout) {
-        clearTimeout(autosaveTimeout);
+      if (autosaveIntervalRef.current) {
+        clearTimeout(autosaveIntervalRef.current);
       }
     };
   }, [
