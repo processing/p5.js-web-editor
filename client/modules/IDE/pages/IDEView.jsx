@@ -91,9 +91,7 @@ const IDEView = (props) => {
   const [consoleSize, setConsoleSize] = useState(
     ide.consoleIsExpanded ? 150 : 29
   );
-  const [sidebarSize, setSidebarSize] = useState(
-    ide.sidebarIsExpanded ? 160 : 20
-  );
+  const [sidebarSize, setSidebarSize] = useState(160);
   const [isOverlayVisible, setIsOverlayVisible] = useState(true);
 
   const rootFile = useSelector(selectRootFile);
@@ -128,13 +126,6 @@ const IDEView = (props) => {
   useEffect(() => {
     dispatch(setPreviousPath(locationRef.current.pathname));
   }, [props.location]);
-
-  // for the sidebar size behavior
-  useEffect(() => {
-    if (ide.sidebarIsExpanded) {
-      setSidebarSize((prev) => (prev < 160 ? 160 : sidebarSize));
-    }
-  }, [ide.sidebarIsExpanded]);
 
   // For autosave
   useEffect(() => {
