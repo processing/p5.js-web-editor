@@ -88,7 +88,6 @@ const IDEView = (props) => {
   const autosaveIntervalRef = useRef(null);
 
   const prevFileNameRef = useRef(selectedFile.name);
-  const prevFileContentRef = useRef(selectedFile.content);
   const locationRef = useRef(props.location);
 
   const syncFileContent = () => {
@@ -122,10 +121,10 @@ const IDEView = (props) => {
         preferences.autosave &&
         ide.unsavedChanges &&
         !ide.justOpenedProject &&
-        selectedFile.name === prevFileNameRef.current &&
-        selectedFile.content !== prevFileContentRef.current
+        selectedFile.name === prevFileNameRef.current
       ) {
         dispatch(autosaveProject());
+        console.log('saveee');
       }
     };
 
@@ -134,10 +133,9 @@ const IDEView = (props) => {
     }
 
     if (preferences.autosave) {
-      autosaveIntervalRef.current = setTimeout(handleAutosave, 20000);
+      autosaveIntervalRef.current = setTimeout(handleAutosave, 10000);
     }
     prevFileNameRef.current = selectedFile.name;
-    prevFileContentRef.current = selectedFile.content;
 
     return () => {
       if (autosaveIntervalRef.current) {
@@ -151,7 +149,6 @@ const IDEView = (props) => {
     ide.unsavedChanges,
     ide.justOpenedProject,
     selectedFile.name,
-    selectedFile.content,
     dispatch,
     autosaveProject
   ]);
