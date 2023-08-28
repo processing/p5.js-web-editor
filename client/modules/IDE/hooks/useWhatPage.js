@@ -7,7 +7,6 @@ import { useLocation } from 'react-router-dom';
  * @returns {"home" | "myStuff" | "login" | "signup" | "account" | "examples"}
  */
 const useWhatPage = () => {
-  const projectName = useSelector((state) => state.project.name);
   const username = useSelector((state) => state.user.username);
   const { pathname } = useLocation();
 

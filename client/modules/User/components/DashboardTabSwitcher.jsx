@@ -40,10 +40,6 @@ Tab.propTypes = {
 
 // It is good for right now, because we need to separate the nav dropdown logic from the navBar before we can use it here
 const FilterOptions = styled(Options)`
-  &.hidden {
-    display: none;
-  }
-
   > div > button:focus + ul,
   > div > ul > button:focus ~ div > ul {
     transform: scale(1);
@@ -80,51 +76,54 @@ const DashboardTabSwitcher = ({ currentTab, isOwner, username }) => {
         )}
       </div>
       <MediaQuery maxWidth={770}>
-        {(mobile) => (
-          <FilterOptions className={mobile ? 'visible' : 'hidden'}>
-            <div>
-              <IconButton icon={FilterIcon} />
-              <ul>
-                <li>
-                  <button
-                    onClick={() => dispatch(toggleDirectionForField('name'))}
-                  >
-                    {t('CollectionList.HeaderName')}
-                  </button>
-                </li>
-                <li>
-                  <button
-                    onClick={() =>
-                      dispatch(toggleDirectionForField('createdAt'))
-                    }
-                  >
-                    {t('CollectionList.HeaderCreatedAt')}
-                  </button>
-                </li>
-                <li>
-                  <button
-                    onClick={() =>
-                      dispatch(toggleDirectionForField('updatedAt'))
-                    }
-                  >
-                    {t('CollectionList.HeaderUpdatedAt')}
-                  </button>
-                </li>
-                {currentTab === TabKey.collections && (
+        {(mobile) =>
+          mobile &&
+          currentTab !== TabKey.assets && (
+            <FilterOptions>
+              <div>
+                <IconButton icon={FilterIcon} />
+                <ul>
+                  <li>
+                    <button
+                      onClick={() => dispatch(toggleDirectionForField('name'))}
+                    >
+                      {t('CollectionList.HeaderName')}
+                    </button>
+                  </li>
                   <li>
                     <button
                       onClick={() =>
-                        dispatch(toggleDirectionForField('numItems'))
+                        dispatch(toggleDirectionForField('createdAt'))
                       }
                     >
-                      # of sketches
+                      {t('CollectionList.HeaderCreatedAt')}
                     </button>
                   </li>
-                )}
-              </ul>
-            </div>
-          </FilterOptions>
-        )}
+                  <li>
+                    <button
+                      onClick={() =>
+                        dispatch(toggleDirectionForField('updatedAt'))
+                      }
+                    >
+                      {t('CollectionList.HeaderUpdatedAt')}
+                    </button>
+                  </li>
+                  {currentTab === TabKey.collections && (
+                    <li>
+                      <button
+                        onClick={() =>
+                          dispatch(toggleDirectionForField('numItems'))
+                        }
+                      >
+                        # of sketches
+                      </button>
+                    </li>
+                  )}
+                </ul>
+              </div>
+            </FilterOptions>
+          )
+        }
       </MediaQuery>
     </ul>
   );
