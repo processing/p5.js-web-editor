@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
@@ -11,20 +11,19 @@ const useWhatPage = () => {
   const username = useSelector((state) => state.user.username);
   const { pathname } = useLocation();
 
-  const [pageName, setPageName] = useState(projectName);
+  const pageName = useMemo(() => {
+    const myStuffPattern = new RegExp(
+      `(/${username}/(sketches/?$|collections|assets)/?)`
+    );
 
-  const myStuffPattern = new RegExp(
-    `(/${username}/(sketches/?$|collections|assets)/?)`
-  );
-
-  useEffect(() => {
-    if (myStuffPattern.test(pathname)) setPageName('myStuff');
-    else if (pathname === '/login') setPageName('login');
-    else if (pathname === '/signup') setPageName('signup');
-    else if (pathname === '/account') setPageName('account');
+    if (myStuffPattern.test(pathname)) return 'myStuff';
+    else if (pathname === '/login') return 'login';
+    else if (pathname === '/signup') return 'signup';
+    else if (pathname === '/account') return 'account';
     else if (pathname === '/p5/collections' || pathname === '/p5/sketches')
-      setPageName('examples');
-  }, [pathname]);
+      return 'examples';
+    return projectName;
+  }, [pathname, username]);
 
   return pageName;
 };
