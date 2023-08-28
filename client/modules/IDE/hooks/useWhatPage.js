@@ -1,4 +1,3 @@
-/* eslint-disable no-useless-escape */
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
@@ -15,7 +14,7 @@ const useWhatPage = () => {
   const [pageName, setPageName] = useState(projectName);
 
   const myStuffPattern = new RegExp(
-    `(\/${username}\/(sketches\/?$|collections|assets)\/?)`
+    `(/${username}/(sketches/?$|collections|assets)/?)`
   );
 
   useEffect(() => {
