@@ -7,9 +7,11 @@ body {
 	font-size: #{$base-font-size}px;
 }
 
-/*Scrollbar theming */
-/* width */
-@media (min-width: 550px) {
+
+/* Styles for non-touch devices */
+@media (hover: hover) and (pointer: fine) {
+	/*Scrollbar theming */
+	/* width */
 	::-webkit-scrollbar {
 		width: 10px;
 	}
