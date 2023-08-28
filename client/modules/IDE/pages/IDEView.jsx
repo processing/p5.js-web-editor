@@ -88,9 +88,7 @@ const IDEView = (props) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const [consoleSize, setConsoleSize] = useState(
-    ide.consoleIsExpanded ? 150 : 29
-  );
+  const [consoleSize, setConsoleSize] = useState(150);
   const [sidebarSize, setSidebarSize] = useState(160);
   const [isOverlayVisible, setIsOverlayVisible] = useState(true);
 
