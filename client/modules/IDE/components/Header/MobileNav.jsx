@@ -238,7 +238,7 @@ const MobileNav = () => {
         )}
       </Title>
       <Options>
-        {title === 'My Stuff' && <StuffMenu />}
+        {pageName === 'myStuff' && <StuffMenu />}
         {user.authenticated ? (
           <AccountMenu />
         ) : (
