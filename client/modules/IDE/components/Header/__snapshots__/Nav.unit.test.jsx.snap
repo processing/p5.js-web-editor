@@ -96,7 +96,7 @@ exports[`Nav renders dashboard version for mobile 1`] = `
             href="/login"
           >
             <button
-              class="sc-jSFjdj fKQAQb sc-kEqXSa Ycwjo"
+              class="sc-gKAaRy hWeMIn sc-kEqXSa Ycwjo"
               display="inline"
               focusable="false"
               kind="primary"
@@ -112,7 +112,7 @@ exports[`Nav renders dashboard version for mobile 1`] = `
         </div>
         <div>
           <button
-            class="sc-jSFjdj fKQAQb sc-kEqXSa Ycwjo"
+            class="sc-gKAaRy hWeMIn sc-kEqXSa Ycwjo"
             display="inline"
             focusable="false"
             kind="primary"
@@ -507,7 +507,7 @@ exports[`Nav renders editor version for mobile 1`] = `
             href="/login"
           >
             <button
-              class="sc-jSFjdj fKQAQb sc-kEqXSa Ycwjo"
+              class="sc-gKAaRy hWeMIn sc-kEqXSa Ycwjo"
               display="inline"
               focusable="false"
               kind="primary"
@@ -523,7 +523,7 @@ exports[`Nav renders editor version for mobile 1`] = `
         </div>
         <div>
           <button
-            class="sc-jSFjdj fKQAQb sc-kEqXSa Ycwjo"
+            class="sc-gKAaRy hWeMIn sc-kEqXSa Ycwjo"
             display="inline"
             focusable="false"
             kind="primary"
