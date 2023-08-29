@@ -48,15 +48,15 @@ exports[`Nav renders dashboard version for mobile 1`] = `
 <DocumentFragment>
   <header>
     <nav
-      class="sc-giAqHp deBDHC"
+      class="sc-ezzafa bZzfr"
     >
       <div
-        class="sc-ezzafa bKgrFx"
+        class="sc-bYwzuL bIGdtt"
       >
         <test-file-stub />
       </div>
       <div
-        class="sc-bYwzuL lkVxhY"
+        class="sc-kLojOw btKDXx"
       >
         <h1>
           <span
@@ -89,14 +89,14 @@ exports[`Nav renders dashboard version for mobile 1`] = `
         </h1>
       </div>
       <div
-        class="sc-kLojOw casOUg"
+        class="sc-iklJeh jupmlX"
       >
         <div>
           <a
             href="/login"
           >
             <button
-              class="sc-jSFjdj fKQAQb sc-kEqXSa Ycwjo"
+              class="sc-gKAaRy hWeMIn sc-kEqXSa Ycwjo"
               display="inline"
               focusable="false"
               kind="primary"
@@ -112,7 +112,7 @@ exports[`Nav renders dashboard version for mobile 1`] = `
         </div>
         <div>
           <button
-            class="sc-jSFjdj fKQAQb sc-kEqXSa Ycwjo"
+            class="sc-gKAaRy hWeMIn sc-kEqXSa Ycwjo"
             display="inline"
             focusable="false"
             kind="primary"
@@ -459,15 +459,15 @@ exports[`Nav renders editor version for mobile 1`] = `
 <DocumentFragment>
   <header>
     <nav
-      class="sc-giAqHp deBDHC"
+      class="sc-ezzafa bZzfr"
     >
       <div
-        class="sc-ezzafa bKgrFx"
+        class="sc-bYwzuL bIGdtt"
       >
         <test-file-stub />
       </div>
       <div
-        class="sc-bYwzuL lkVxhY"
+        class="sc-kLojOw btKDXx"
       >
         <h1>
           <span
@@ -500,14 +500,14 @@ exports[`Nav renders editor version for mobile 1`] = `
         </h1>
       </div>
       <div
-        class="sc-kLojOw casOUg"
+        class="sc-iklJeh jupmlX"
       >
         <div>
           <a
             href="/login"
           >
             <button
-              class="sc-jSFjdj fKQAQb sc-kEqXSa Ycwjo"
+              class="sc-gKAaRy hWeMIn sc-kEqXSa Ycwjo"
               display="inline"
               focusable="false"
               kind="primary"
@@ -523,7 +523,7 @@ exports[`Nav renders editor version for mobile 1`] = `
         </div>
         <div>
           <button
-            class="sc-jSFjdj fKQAQb sc-kEqXSa Ycwjo"
+            class="sc-gKAaRy hWeMIn sc-kEqXSa Ycwjo"
             display="inline"
             focusable="false"
             kind="primary"
