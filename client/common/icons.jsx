@@ -13,6 +13,8 @@ import DropdownArrow from '../images/down-filled-triangle.svg';
 import Preferences from '../images/preferences.svg';
 import Play from '../images/triangle-arrow-right.svg';
 import More from '../images/more.svg';
+import Editor from '../images/editor.svg';
+import Account from '../images/account.svg';
 import Code from '../images/code.svg';
 import Save from '../images/save.svg';
 import Terminal from '../images/terminal.svg';
@@ -22,6 +24,7 @@ import Folder from '../images/folder-padded.svg';
 import CircleTerminal from '../images/circle-terminal.svg';
 import CircleFolder from '../images/circle-folder.svg';
 import CircleInfo from '../images/circle-info.svg';
+import Cross from '../images/cross.svg';
 
 // HOC that adds the right web accessibility props
 // https://www.scottohara.me/blog/2019/05/22/contextual-images-svgs-and-a11y.html
@@ -83,6 +86,8 @@ export const GoogleIcon = withLabel(Google);
 export const PlusIcon = withLabel(Plus);
 export const CloseIcon = withLabel(Close);
 export const ExitIcon = withLabel(Exit);
+export const EditorIcon = withLabel(Editor);
+export const AccountIcon = withLabel(Account);
 export const DropdownArrowIcon = withLabel(DropdownArrow);
 export const PreferencesIcon = withLabel(Preferences);
 export const PlayIcon = withLabel(Play);
@@ -90,9 +95,8 @@ export const MoreIcon = withLabel(More);
 export const TerminalIcon = withLabel(Terminal);
 export const CodeIcon = withLabel(Code);
 export const SaveIcon = withLabel(Save);
-
 export const FolderIcon = withLabel(Folder);
-
+export const CrossIcon = withLabel(Cross);
 export const CircleTerminalIcon = withLabel(CircleTerminal);
 export const CircleFolderIcon = withLabel(CircleFolder);
 export const CircleInfoIcon = withLabel(CircleInfo);

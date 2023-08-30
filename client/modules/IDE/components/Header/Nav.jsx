@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { sortBy } from 'lodash';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-
 import { useTranslation } from 'react-i18next';
+import MediaQuery from 'react-responsive';
 import NavDropdownMenu from '../../../../components/Nav/NavDropdownMenu';
 import NavMenuItem from '../../../../components/Nav/NavMenuItem';
 import { availableLanguages, languageKeyToLabel } from '../../../../i18n';
@@ -14,6 +14,7 @@ import { setLanguage } from '../../actions/preferences';
 import NavBar from '../../../../components/Nav/NavBar';
 import CaretLeftIcon from '../../../../images/left-arrow.svg';
 import LogoIcon from '../../../../images/p5js-logo-small.svg';
+import { selectRootFile } from '../../selectors/files';
 import { selectSketchPath } from '../../selectors/project';
 import { metaKey, metaKeyName } from '../../../../utils/metaKey';
 import { useSketchActions } from '../../hooks';
@@ -28,12 +29,21 @@ import {
 } from '../../actions/ide';
 import { logoutUser } from '../../../User/actions';
 import { CmControllerContext } from '../../pages/IDEView';
+import MobileNav from './MobileNav';
 
 const Nav = ({ layout }) => (
-  <NavBar>
-    <LeftLayout layout={layout} />
-    <UserMenu />
-  </NavBar>
+  <MediaQuery minWidth={770}>
+    {(matches) =>
+      matches ? (
+        <NavBar>
+          <LeftLayout layout={layout} />
+          <UserMenu />
+        </NavBar>
+      ) : (
+        <MobileNav />
+      )
+    }
+  </MediaQuery>
 );
 
 Nav.propTypes = {
@@ -102,17 +112,14 @@ const DashboardMenu = () => {
   );
 };
 
-const ProjectMenu = (props) => {
+const ProjectMenu = () => {
   const isUserOwner = useSelector(getIsUserOwner);
   const project = useSelector((state) => state.project);
   const user = useSelector((state) => state.user);
 
   const isUnsaved = !project?.id;
 
-  // TODO: use selectRootFile selector
-  const rootFile = useSelector(
-    (state) => state.files.filter((file) => file.name === 'root')[0]
-  );
+  const rootFile = useSelector(selectRootFile);
 
   const cmRef = useContext(CmControllerContext);
 
