@@ -3,19 +3,13 @@ $base-font-size: 12;
 //colors
 $p5js-pink: #ed225d;
 $p5js-pink-opacity: #ed225d80;
-$processing-blue: #007BBB;
 $p5js-active-pink: #f10046;
 $white: #fff;
 $black: #000;
 $yellow: #F5DC23;
-$orange: #ffa500;
-$red: #ff0000;
-$lightsteelblue: #B0C4DE;
 $dodgerblue: #1E90FF;
-// $icon-hover-color: #333;
 $p5-contrast-pink: #FFA9D9;
 
-$border-color: #B5B5B5;
 $outline-color: #0F9DD7;
 
 // Grayscale values
@@ -43,7 +37,6 @@ $themes: (
     primary-text-color: $dark,
     secondary-text-color: $medium-dark,
     inactive-text-color: $middle-dark,
-    dropzone-text-color: $dark,
     modal-button-color: $dark,
     background-color: $lighter,
     button-background-color: $light,
@@ -67,15 +60,10 @@ $themes: (
     console-background-color: $light,
     console-input-background-color: $lightest,
     console-color: $darker,
-    console-logged-times-color: $lightest,
     console-arrow-color: $middle-gray,
     console-active-arrow-color: #0071AD,
     console-header-background-color: $medium-light,
     console-header-color: $darker,
-    console-info-background-color: #5276B7,
-    console-warn-background-color: #996B00,
-    console-debug-background-color: #0071AD,
-    console-error-background-color: #D11518,
     ide-border-color: $medium-light,
     editor-gutter-color: $lighter,
     file-hover-color: $light,
@@ -99,9 +87,6 @@ $themes: (
     codefold-icon-open: url("../images/triangle-arrow-down.svg?byUrl"),
     codefold-icon-closed: url("../images/triangle-arrow-right.svg?byUrl"),
 
-    primary-button-color: $lightest,
-    primary-button-background-color: $p5js-pink,
-
     table-button-color: $lightest,
     table-button-background-color: $middle-gray,
     table-button-active-color: $lightest,
@@ -123,11 +108,13 @@ $themes: (
     hint-item-border-bottom-color: $white,
     hint-fun-text-color: #0B7CA9,
     hint-var-text-color: #D52889,
+    hint-keyword-text-color: #7A5A3A,
     hint-type-text-color: $medium-dark,
     hint-arrow-color: $lightest,
     hint-arrow-background-color: #ed225ddd,
     hint-arrow-background-active-color: $p5js-active-pink,
     hint-arrow-focus-outline-color: $middle-dark,
+    hint-no-link-background-color: $medium-light,
     hint-item-hover-background-color: #f4f4f4,
     hint-item-active-text-color: $white,
     hint-item-active-background-color: $middle-gray,
@@ -135,14 +122,15 @@ $themes: (
     hint-var-active-border-bottom-color: #D52889,
     hint-item-active-type-text-color: $white,
     hint-item-active-outline: none,
-    hint-item-active-outline-offset: 0
+    hint-item-active-outline-offset: 0,
+    hint-inline-text-color-light: $middle-light,
+    hint-inline-text-color: $middle-gray,
   ),
   dark: (
     logo-color: $p5js-pink,
     logo-background-color: $lightest,
     heavy-text-color: $lightest,
     primary-text-color: $lightest,
-    dropzone-text-color: $black,
     modal-button-color: $lightest,
     secondary-text-color: $medium-light,
     inactive-text-color: $middle-light,
@@ -168,15 +156,10 @@ $themes: (
     console-background-color: $dark,
     console-input-background-color: $darker,
     console-color: $lightest,
-    console-logged-times-color: $dark,
     console-arrow-color: $medium-light,
     console-active-arrow-color: #097BB3,
     console-header-background-color: $medium-dark,
     console-header-color: $lightest,
-    console-info-background-color: #5276B7,
-    console-warn-background-color: #966C08,
-    console-error-background-color: #DD3134,
-    console-debug-background-color: #097BB3,
     ide-border-color: $middle-dark,
     editor-gutter-color: $darker,
     file-hover-color: $dark,
@@ -200,9 +183,6 @@ $themes: (
     codefold-icon-open: url("../images/triangle-arrow-down-white.svg?byUrl"),
     codefold-icon-closed: url("../images/triangle-arrow-right-white.svg?byUrl"),
 
-    primary-button-color: $lightest,
-    primary-button-background-color: $p5js-pink,
-
     table-button-color: $lightest,
     table-button-background-color: $middle-gray,
     table-button-active-color: $lightest,
@@ -222,11 +202,13 @@ $themes: (
     hint-item-border-bottom-color: $darker,
     hint-fun-text-color: #0F9DD7,
     hint-var-text-color: #DE4A9B,
+    hint-keyword-text-color: #B58318,
     hint-type-text-color: $light,
     hint-arrow-color: $lightest,
     hint-arrow-background-color: #ed225ddd,
     hint-arrow-background-active-color: $p5js-active-pink,
     hint-arrow-focus-outline-color: #cfcfcf,
+    hint-no-link-background-color: $medium-dark,
     hint-item-hover-background-color: $medium-dark,
     hint-item-active-text-color: $darker,
     hint-item-active-background-color: #cfcfcf,
@@ -234,14 +216,15 @@ $themes: (
     hint-var-active-border-bottom-color: #DE4A9B,
     hint-item-active-type-text-color: $darker,
     hint-item-active-outline: none,
-    hint-item-active-outline-offset: 0
+    hint-item-active-outline-offset: 0,
+    hint-inline-text-color-light: $middle-gray,
+    hint-inline-text-color: #cfcfcf,
   ),
   contrast: (
     logo-color: $yellow,
     logo-background-color: $darker,
     heavy-text-color: $yellow,
     primary-text-color: $lightest,
-    dropzone-text-color: $black,
     modal-button-color: $dark,
     secondary-text-color: $lighter,
     inactive-text-color: $light,
@@ -267,15 +250,10 @@ $themes: (
     console-background-color: $dark,
     console-input-background-color: $darker,
     console-color: $lightest,
-    console-logged-times-color: $darker,
     console-arrow-color: $lightest,
     console-active-arrow-color: $dodgerblue,
     console-header-background-color: $medium-dark,
     console-header-color: $lightest,
-    console-info-background-color: $lightsteelblue,
-    console-warn-background-color: $orange,
-    console-debug-background-color: $dodgerblue,
-    console-error-background-color: $red,
     ide-border-color: $middle-dark,
     editor-gutter-color: $darker,
     file-hover-color: $dark,
@@ -299,9 +277,6 @@ $themes: (
     codefold-icon-open: url("../images/triangle-arrow-down-white.svg?byUrl"),
     codefold-icon-closed: url("../images/triangle-arrow-right-white.svg?byUrl"),
 
-    primary-button-color: $lightest,
-    primary-button-background-color: $p5js-pink,
-
     table-button-color: $dark,
     table-button-background-color: $middle-gray,
     table-button-active-color: $dark,
@@ -321,11 +296,13 @@ $themes: (
     hint-item-border-bottom-color: $medium-dark,
     hint-fun-text-color: #00FFFF,
     hint-var-text-color: #FFA9D9,
+    hint-keyword-text-color: #F5DC23,
     hint-type-text-color: $middle-light,
     hint-arrow-color: $darker,
     hint-arrow-background-color: #F5DC23DD,
     hint-arrow-background-active-color: #F5DC23,
     hint-arrow-focus-outline-color: $lighter,
+    hint-no-link-background-color: $medium-dark,
     hint-item-hover-background-color: $dark,
     hint-item-active-text-color: $lighter,
     hint-item-active-background-color: unset,
@@ -333,20 +310,12 @@ $themes: (
     hint-var-active-border-bottom-color: none,
     hint-item-active-type-text-color: $lighter,
     hint-item-active-outline: 2px solid $lighter,
-    hint-item-active-outline-offset: -2px
+    hint-item-active-outline-offset: -2px,
+    hint-inline-text-color-light: $middle-gray,
+    hint-inline-text-color: #cfcfcf,
   )
 );
 
 $toast-background-color: $medium-dark;
 $toast-text-color: $lightest;
 
-$light-console-error-color: #D11518;
-$light-console-warn-color: #FAAF00;
-$light-console-debug-color: #0071AD;
-
-$dark-console-error-color: #DF3A3D;
-$dark-console-warn-color: #F5BC38;
-$dark-console-debug-color: #0C99E2;
-
-$about-play-background-color: rgba(255, 255, 255, 0.7);
-$about-button-border-color: rgba(151, 151, 151, 0.7);

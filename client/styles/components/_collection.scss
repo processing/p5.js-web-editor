@@ -74,7 +74,7 @@
   text-align: left;
 }
 
-.collection-metadata__description .editable-input--has-value .editable-input__label  {
+.collection-metadata__description .editable-input--has-value:not(:hover) .editable-input__label  {
   @include themify() {
     color: getThemifyVariable('primary-text-color');
   }
@@ -82,11 +82,6 @@
 
 .collection-metadata__description .editable-input__input {
   width: 100%;
-}
-
-.collection-add-sketch {
-  min-width: #{600 / $base-font-size}rem;
-  overflow: scroll;
 }
 
 .collection-share {

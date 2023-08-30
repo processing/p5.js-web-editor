@@ -44,6 +44,8 @@ import '../../../utils/htmlmixed';
 import '../../../utils/p5-javascript';
 import Timer from '../components/Timer';
 import EditorAccessibility from '../components/EditorAccessibility';
+import { selectActiveFile } from '../selectors/files';
+import AssetPreview from './AssetPreview';
 import { metaKey } from '../../../utils/metaKey';
 import './show-hint';
 import * as hinter from '../../../utils/p5-hinter';
@@ -159,6 +161,7 @@ class Editor extends React.Component {
       [`${metaKey}-Enter`]: () => null,
       [`Shift-${metaKey}-Enter`]: () => null,
       [`${metaKey}-F`]: 'findPersistent',
+      [`Shift-${metaKey}-F`]: this.tidyCode,
       [`${metaKey}-G`]: 'findPersistentNext',
       [`Shift-${metaKey}-G`]: 'findPersistentPrev',
       [replaceCommand]: 'replace',
@@ -194,16 +197,6 @@ class Editor extends React.Component {
     });
 
     this._cm.on('keydown', (_cm, e) => {
-      if (
-        ((metaKey === 'Cmd' && e.metaKey) ||
-          (metaKey === 'Ctrl' && e.ctrlKey)) &&
-        e.shiftKey &&
-        e.key === 'f'
-      ) {
-        e.preventDefault();
-        this.tidyCode();
-      }
-
       // Show hint
       const mode = this._cm.getOption('mode');
       if (/^[a-z]$/i.test(e.key) && (mode === 'css' || mode === 'javascript')) {
@@ -269,7 +262,7 @@ class Editor extends React.Component {
     if (this.props.autocompleteHinter !== prevProps.autocompleteHinter) {
       if (!this.props.autocompleteHinter) {
         // close the hinter window once the preference is turned off
-        CodeMirror.showHint(this._cm, () => {});
+        CodeMirror.showHint(this._cm, () => {}, {});
       }
     }
 
@@ -352,7 +345,7 @@ class Editor extends React.Component {
 
   showHint(_cm) {
     if (!this.props.autocompleteHinter) {
-      CodeMirror.showHint(_cm, () => {});
+      CodeMirror.showHint(_cm, () => {}, {});
       return;
     }
 
@@ -425,7 +418,9 @@ class Editor extends React.Component {
           const c = _cm.getCursor();
           const token = _cm.getTokenAt(c);
 
-          const hints = this.hinter.search(token.string);
+          const hints = this.hinter
+            .search(token.string)
+            .filter((h) => h.item.text[0] === token.string[0]);
 
           return {
             list: hints,
@@ -506,7 +501,10 @@ class Editor extends React.Component {
           <button
             aria-label={this.props.t('Editor.OpenSketchARIA')}
             className="sidebar__contract"
-            onClick={this.props.collapseSidebar}
+            onClick={() => {
+              this.props.collapseSidebar();
+              this.props.closeProjectOptions();
+            }}
           >
             <LeftArrowIcon focusable="false" aria-hidden="true" />
           </button>
@@ -539,6 +537,9 @@ class Editor extends React.Component {
           }}
           className={editorHolderClass}
         />
+        {this.props.file.url ? (
+          <AssetPreview url={this.props.file.url} name={this.props.file.name} />
+        ) : null}
         <EditorAccessibility lintMessages={this.props.lintMessages} />
       </section>
     );
@@ -591,6 +592,7 @@ Editor.propTypes = {
   ).isRequired,
   isExpanded: PropTypes.bool.isRequired,
   collapseSidebar: PropTypes.func.isRequired,
+  closeProjectOptions: PropTypes.func.isRequired,
   expandSidebar: PropTypes.func.isRequired,
   clearConsole: PropTypes.func.isRequired,
   hideRuntimeErrorWarning: PropTypes.func.isRequired,
@@ -604,10 +606,7 @@ Editor.propTypes = {
 function mapStateToProps(state) {
   return {
     files: state.files,
-    file:
-      state.files.find((file) => file.isSelectedFile) ||
-      state.files.find((file) => file.name === 'sketch.js') ||
-      state.files.find((file) => file.name !== 'root'),
+    file: selectActiveFile(state),
     htmlFile: getHTMLFile(state.files),
     ide: state.ide,
     preferences: state.preferences,
