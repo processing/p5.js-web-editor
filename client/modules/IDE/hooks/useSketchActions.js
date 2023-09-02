@@ -41,7 +41,7 @@ const useSketchActions = () => {
 
   function downloadSketch() {
     dispatch(autosaveProject());
-    dispatch(exportProjectAsZip(project.id));
+    exportProjectAsZip(project.id);
   }
 
   function shareSketch() {
