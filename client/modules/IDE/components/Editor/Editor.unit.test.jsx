@@ -6,7 +6,7 @@ import Editor from '.';
 import { reduxRender } from '../../../../test-utils';
 import { initialTestState } from '../../../../testData/testReduxStore';
 
-jest.mock('../../../i18n');
+jest.mock('../../../../i18n');
 
 describe('<Editor />', () => {
   const mockStore = configureStore([thunk]);
