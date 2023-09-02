@@ -109,11 +109,6 @@ const IDEView = (props) => {
     }
   }, []);
 
-  // for setting previous location
-  useEffect(() => {
-    dispatch(setPreviousPath(locationRef.current.pathname));
-  }, [location.pathname]);
-
   // For autosave
   useEffect(() => {
     const handleAutosave = () => {

@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -261,7 +261,7 @@ const MobileNav = () => {
               </Link>
             </div>
           )}
-          {title === project.name ? (
+          {pageName === 'home' ? (
             <MoreMenu />
           ) : (
             <div>
