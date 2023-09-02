@@ -29,6 +29,7 @@ export default function useKeyDownHandlers(keyHandlers) {
    * @type {(function(KeyboardEvent): void)}
    */
   const handleEvent = useCallback((e) => {
+    if (!e.key) return;
     const isMac = navigator.userAgent.toLowerCase().indexOf('mac') !== -1;
     const isCtrl = isMac ? e.metaKey : e.ctrlKey;
     if (e.shiftKey && isCtrl) {
