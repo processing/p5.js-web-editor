@@ -87,8 +87,10 @@ const IDEView = (props) => {
 
   const autosaveIntervalRef = useRef(null);
 
+  const location = useLocation();
+
   const prevFileNameRef = useRef(selectedFile.name);
-  const locationRef = useRef(props.location);
+  const locationRef = useRef(location.pathname);
 
   const syncFileContent = () => {
     const file = cmRef.current.getContent();
@@ -110,7 +112,7 @@ const IDEView = (props) => {
   // for setting previous location
   useEffect(() => {
     dispatch(setPreviousPath(locationRef.current.pathname));
-  }, [props.location]);
+  }, [location.pathname]);
 
   // For autosave
   useEffect(() => {
@@ -273,9 +275,6 @@ IDEView.propTypes = {
     project_id: PropTypes.string,
     username: PropTypes.string,
     reset_password_token: PropTypes.string
-  }).isRequired,
-  location: PropTypes.shape({
-    pathname: PropTypes.string
   }).isRequired
 };
 
