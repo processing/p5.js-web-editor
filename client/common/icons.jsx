@@ -18,12 +18,12 @@ import Account from '../images/account.svg';
 import Code from '../images/code.svg';
 import Save from '../images/save.svg';
 import Terminal from '../images/terminal.svg';
-
 import Folder from '../images/folder-padded.svg';
-
 import CircleTerminal from '../images/circle-terminal.svg';
 import CircleFolder from '../images/circle-folder.svg';
 import CircleInfo from '../images/circle-info.svg';
+import Add from '../images/add.svg';
+import Filter from '../images/filter.svg';
 import Cross from '../images/cross.svg';
 
 // HOC that adds the right web accessibility props
@@ -100,3 +100,5 @@ export const CrossIcon = withLabel(Cross);
 export const CircleTerminalIcon = withLabel(CircleTerminal);
 export const CircleFolderIcon = withLabel(CircleFolder);
 export const CircleInfoIcon = withLabel(CircleInfo);
+export const AddIcon = withLabel(Add);
+export const FilterIcon = withLabel(Filter);
