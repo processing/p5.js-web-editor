@@ -12,13 +12,12 @@ import PreviewFrame from '../components/PreviewFrame';
 import Console from '../components/Console';
 import Toast from '../components/Toast';
 import { updateFileContent } from '../actions/files';
-import { setPreviousPath, stopSketch } from '../actions/ide';
+import { stopSketch } from '../actions/ide';
 import {
   autosaveProject,
   clearPersistedState,
   getProject
 } from '../actions/project';
-import { selectActiveFile } from '../selectors/files';
 import { getIsUserOwner } from '../selectors/users';
 import RootPage from '../../../components/RootPage';
 import Header from '../components/Header';
@@ -72,7 +71,6 @@ export const CmControllerContext = React.createContext({});
 
 const IDEView = (props) => {
   const ide = useSelector((state) => state.ide);
-  const selectedFile = useSelector(selectActiveFile);
   const preferences = useSelector((state) => state.preferences);
   const project = useSelector((state) => state.project);
   const isUserOwner = useSelector(getIsUserOwner);
@@ -86,11 +84,6 @@ const IDEView = (props) => {
   const cmRef = useRef({});
 
   const autosaveIntervalRef = useRef(null);
-
-  const location = useLocation();
-
-  const prevFileNameRef = useRef(selectedFile.name);
-  const locationRef = useRef(location.pathname);
 
   const syncFileContent = () => {
     const file = cmRef.current.getContent();
@@ -123,16 +116,15 @@ const IDEView = (props) => {
     }
 
     if (shouldAutosave) {
-      autosaveIntervalRef.current = setTimeout(handleAutosave, 10000);
+      autosaveIntervalRef.current = setTimeout(handleAutosave, 5000);
     }
-    prevFileNameRef.current = selectedFile.name;
 
     return () => {
       if (autosaveIntervalRef.current) {
         clearTimeout(autosaveIntervalRef.current);
       }
     };
-}, [shouldAutosave, dispatch]);
+  }, [shouldAutosave, dispatch]);
 
   return (
     <RootPage>
