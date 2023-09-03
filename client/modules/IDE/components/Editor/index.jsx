@@ -516,7 +516,10 @@ class Editor extends React.Component {
                 <button
                   aria-label={this.props.t('Editor.OpenSketchARIA')}
                   className="sidebar__contract"
-                  onClick={this.props.collapseSidebar}
+                  onClick={() => {
+                    this.props.collapseSidebar();
+                    this.props.closeProjectOptions();
+                  }}
                 >
                   <LeftArrowIcon focusable="false" aria-hidden="true" />
                 </button>
@@ -629,6 +632,7 @@ Editor.propTypes = {
   ).isRequired,
   isExpanded: PropTypes.bool.isRequired,
   collapseSidebar: PropTypes.func.isRequired,
+  closeProjectOptions: PropTypes.func.isRequired,
   expandSidebar: PropTypes.func.isRequired,
   clearConsole: PropTypes.func.isRequired,
   hideRuntimeErrorWarning: PropTypes.func.isRequired,

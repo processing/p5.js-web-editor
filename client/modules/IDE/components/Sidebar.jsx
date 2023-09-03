@@ -74,6 +74,7 @@ export default function SideBar() {
           data-backdrop="filedrawer"
           onClick={() => {
             dispatch(collapseSidebar());
+            dispatch(closeProjectOptions());
           }}
         >
           {' '}
