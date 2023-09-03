@@ -1,6 +1,5 @@
-import PropTypes from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
-import { useLocation, Prompt } from 'react-router-dom';
+import { useLocation, Prompt, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet';
@@ -69,13 +68,15 @@ function WarnIfUnsavedChanges() {
 
 export const CmControllerContext = React.createContext({});
 
-const IDEView = (props) => {
+const IDEView = () => {
   const ide = useSelector((state) => state.ide);
   const preferences = useSelector((state) => state.preferences);
   const project = useSelector((state) => state.project);
   const isUserOwner = useSelector(getIsUserOwner);
   const dispatch = useDispatch();
   const { t } = useTranslation();
+
+  const params = useParams();
 
   const [consoleSize, setConsoleSize] = useState(150);
   const [sidebarSize, setSidebarSize] = useState(160);
@@ -94,13 +95,14 @@ const IDEView = (props) => {
     dispatch(clearPersistedState());
 
     dispatch(stopSketch());
-    if (props.params.project_id) {
-      const { project_id: id, username } = props.params;
-      if (id !== project.id) {
-        dispatch(getProject(id, username));
-      }
+  }, [dispatch]);
+
+  useEffect(() => {
+    const { project_id: id, username } = params;
+    if (id && project.id !== id) {
+      dispatch(getProject(id, username));
     }
-  }, []);
+  }, [dispatch, params, project.id]);
 
   const autosaveAllowed = isUserOwner && project.id && preferences.autosave;
   const shouldAutosave = autosaveAllowed && ide.unsavedChanges;
@@ -239,14 +241,6 @@ const IDEView = (props) => {
       <IDEOverlays />
     </RootPage>
   );
-};
-
-IDEView.propTypes = {
-  params: PropTypes.shape({
-    project_id: PropTypes.string,
-    username: PropTypes.string,
-    reset_password_token: PropTypes.string
-  }).isRequired
 };
 
 export default IDEView;
