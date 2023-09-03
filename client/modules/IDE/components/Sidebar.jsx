@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   closeProjectOptions,
+  collapseSidebar,
   newFile,
   newFolder,
   openProjectOptions,
@@ -13,8 +14,8 @@ import { selectRootFile } from '../selectors/files';
 import { getAuthenticated, selectCanEditSketch } from '../selectors/users';
 
 import ConnectedFileNode from './FileNode';
-
-import DownArrowIcon from '../../../images/down-filled-triangle.svg';
+import { PlusIcon } from '../../../common/icons';
+import { FileDrawer } from './Editor/MobileEditor';
 
 // TODO: use a generic Dropdown UI component
 
@@ -22,17 +23,19 @@ export default function SideBar() {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
-  const [isFocused, setIsFocused] = useState(false);
-
   const rootFile = useSelector(selectRootFile);
+  const ide = useSelector((state) => state.ide);
   const projectOptionsVisible = useSelector(
     (state) => state.ide.projectOptionsVisible
   );
   const isExpanded = useSelector((state) => state.ide.sidebarIsExpanded);
   const canEditProject = useSelector(selectCanEditSketch);
-  const isAuthenticated = useSelector(getAuthenticated);
 
   const sidebarOptionsRef = useRef(null);
+
+  const [isFocused, setIsFocused] = useState(false);
+
+  const isAuthenticated = useSelector(getAuthenticated);
 
   const onBlurComponent = () => {
     setIsFocused(false);
@@ -65,69 +68,85 @@ export default function SideBar() {
   });
 
   return (
-    <section className={sidebarClass}>
-      <header className="sidebar__header" onContextMenu={toggleProjectOptions}>
-        <h3 className="sidebar__title">
-          <span>{t('Sidebar.Title')}</span>
-        </h3>
-        <div className="sidebar__icons">
-          <button
-            aria-label={t('Sidebar.ToggleARIA')}
-            className="sidebar__add"
-            tabIndex="0"
-            ref={sidebarOptionsRef}
-            onClick={toggleProjectOptions}
-            onBlur={onBlurComponent}
-            onFocus={onFocusComponent}
-          >
-            <DownArrowIcon focusable="false" aria-hidden="true" />
-          </button>
-          <ul className="sidebar__project-options">
-            <li>
-              <button
-                aria-label={t('Sidebar.AddFolderARIA')}
-                onClick={() => {
-                  dispatch(newFolder(rootFile.id));
-                  setTimeout(() => dispatch(closeProjectOptions()), 0);
-                }}
-                onBlur={onBlurComponent}
-                onFocus={onFocusComponent}
-              >
-                {t('Sidebar.AddFolder')}
-              </button>
-            </li>
-            <li>
-              <button
-                aria-label={t('Sidebar.AddFileARIA')}
-                onClick={() => {
-                  dispatch(newFile(rootFile.id));
-                  setTimeout(() => dispatch(closeProjectOptions()), 0);
-                }}
-                onBlur={onBlurComponent}
-                onFocus={onFocusComponent}
-              >
-                {t('Sidebar.AddFile')}
-              </button>
-            </li>
-            {isAuthenticated && (
+    <FileDrawer>
+      {ide.sidebarIsExpanded && (
+        <button
+          data-backdrop="filedrawer"
+          onClick={() => {
+            dispatch(collapseSidebar());
+            dispatch(closeProjectOptions());
+          }}
+        >
+          {' '}
+        </button>
+      )}
+      <section className={sidebarClass}>
+        <header
+          className="sidebar__header"
+          onContextMenu={toggleProjectOptions}
+        >
+          <h3 className="sidebar__title">
+            <span>{t('Sidebar.Title')}</span>
+          </h3>
+          <div className="sidebar__icons">
+            <button
+              aria-label={t('Sidebar.ToggleARIA')}
+              className="sidebar__add"
+              tabIndex="0"
+              ref={sidebarOptionsRef}
+              onClick={toggleProjectOptions}
+              onBlur={onBlurComponent}
+              onFocus={onFocusComponent}
+            >
+              <PlusIcon focusable="false" aria-hidden="true" />
+            </button>
+            <ul className="sidebar__project-options">
               <li>
                 <button
-                  aria-label={t('Sidebar.UploadFileARIA')}
+                  aria-label={t('Sidebar.AddFolderARIA')}
                   onClick={() => {
-                    dispatch(openUploadFileModal(rootFile.id));
+                    dispatch(newFolder(rootFile.id));
                     setTimeout(() => dispatch(closeProjectOptions()), 0);
                   }}
                   onBlur={onBlurComponent}
                   onFocus={onFocusComponent}
                 >
-                  {t('Sidebar.UploadFile')}
+                  {t('Sidebar.AddFolder')}
                 </button>
               </li>
-            )}
-          </ul>
-        </div>
-      </header>
-      <ConnectedFileNode id={rootFile.id} canEdit={canEditProject} />
-    </section>
+              <li>
+                <button
+                  aria-label={t('Sidebar.AddFileARIA')}
+                  onClick={() => {
+                    dispatch(newFile(rootFile.id));
+                    setTimeout(() => dispatch(closeProjectOptions()), 0);
+                  }}
+                  onBlur={onBlurComponent}
+                  onFocus={onFocusComponent}
+                >
+                  {t('Sidebar.AddFile')}
+                </button>
+              </li>
+              {isAuthenticated && (
+                <li>
+                  <button
+                    aria-label={t('Sidebar.UploadFileARIA')}
+                    onClick={() => {
+                      dispatch(openUploadFileModal(rootFile.id));
+                      setTimeout(() => dispatch(closeProjectOptions()), 0);
+                    }}
+                    onBlur={onBlurComponent}
+                    onFocus={onFocusComponent}
+                  >
+                    {t('Sidebar.UploadFile')}
+                  </button>
+                </li>
+              )}
+            </ul>
+          </div>
+        </header>
+        <ConnectedFileNode id={rootFile.id} canEdit={canEditProject} />
+      </section>
+    </FileDrawer>
   );
 }

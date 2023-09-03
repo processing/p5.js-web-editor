@@ -224,7 +224,7 @@ const MobileNav = () => {
     }
   }
 
-  const title = useMemo(resolveTitle, [pageName]);
+  const title = useMemo(resolveTitle, [pageName, project.name]);
 
   const Logo = AsteriskIcon;
   return (
@@ -261,7 +261,7 @@ const MobileNav = () => {
               </Link>
             </div>
           )}
-          {title === project.name ? (
+          {pageName === 'home' ? (
             <MoreMenu />
           ) : (
             <div>
