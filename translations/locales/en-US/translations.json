@@ -192,7 +192,8 @@
       "FindNextTextMatch": "Find Next Text Match",
       "FindPreviousTextMatch": "Find Previous Text Match",
       "CodeEditing": "Code Editing",
-      "ColorPicker": "Show Inline Color Picker"
+      "ColorPicker": "Show Inline Color Picker",
+      "CreateNewFile": "Create New File"
     },
     "General": {
       "StartSketch": "Start Sketch",

@@ -8,7 +8,8 @@ import {
   expandSidebar,
   showErrorModal,
   startSketch,
-  stopSketch
+  stopSketch,
+  newFile
 } from '../actions/ide';
 import { setAllAccessibleOutput } from '../actions/preferences';
 import { cloneProject, saveProject } from '../actions/project';
@@ -66,6 +67,7 @@ export const useIDEKeyHandlers = ({ getContent }) => {
       dispatch(setAllAccessibleOutput(false));
     },
     'ctrl-b': (e) => {
+      console.log('Ctrl-B Pressed');
       e.preventDefault();
       dispatch(
         // TODO: create actions 'toggleConsole', 'toggleSidebar', etc.
@@ -75,6 +77,11 @@ export const useIDEKeyHandlers = ({ getContent }) => {
     'ctrl-`': (e) => {
       e.preventDefault();
       dispatch(consoleIsExpanded ? collapseConsole() : expandConsole());
+    },
+    'ctrl-shift-a': (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      dispatch(newFile());
     }
   });
 };
