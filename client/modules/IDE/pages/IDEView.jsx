@@ -109,27 +109,20 @@ const IDEView = (props) => {
     }
   }, []);
 
-  // For autosave
+  const autosaveAllowed = isUserOwner && project.id && preferences.autosave;
+  const shouldAutosave = autosaveAllowed && ide.unsavedChanges;
+
+  // For autosave - send to API after 5 seconds without changes
   useEffect(() => {
     const handleAutosave = () => {
-      if (
-        isUserOwner &&
-        project.id &&
-        preferences.autosave &&
-        ide.unsavedChanges &&
-        !ide.justOpenedProject &&
-        selectedFile.name === prevFileNameRef.current
-      ) {
-        dispatch(autosaveProject());
-        console.log('saveee');
-      }
+      dispatch(autosaveProject());
     };
 
     if (autosaveIntervalRef.current) {
       clearTimeout(autosaveIntervalRef.current);
     }
 
-    if (preferences.autosave) {
+    if (shouldAutosave) {
       autosaveIntervalRef.current = setTimeout(handleAutosave, 10000);
     }
     prevFileNameRef.current = selectedFile.name;
@@ -139,16 +132,7 @@ const IDEView = (props) => {
         clearTimeout(autosaveIntervalRef.current);
       }
     };
-  }, [
-    isUserOwner,
-    project.id,
-    preferences.autosave,
-    ide.unsavedChanges,
-    ide.justOpenedProject,
-    selectedFile.name,
-    dispatch,
-    autosaveProject
-  ]);
+}, [shouldAutosave, dispatch]);
 
   return (
     <RootPage>
