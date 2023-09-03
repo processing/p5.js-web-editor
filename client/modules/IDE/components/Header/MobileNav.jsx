@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo, useState } from 'react';
+import React, { useContext, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -224,7 +224,7 @@ const MobileNav = () => {
     }
   }
 
-  const title = useMemo(resolveTitle, [pageName]);
+  const title = useMemo(resolveTitle, [pageName, project.name]);
 
   const Logo = AsteriskIcon;
   return (
