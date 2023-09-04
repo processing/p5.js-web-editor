@@ -67,7 +67,6 @@ export const useIDEKeyHandlers = ({ getContent }) => {
       dispatch(setAllAccessibleOutput(false));
     },
     'ctrl-b': (e) => {
-      console.log('Ctrl-B Pressed');
       e.preventDefault();
       dispatch(
         // TODO: create actions 'toggleConsole', 'toggleSidebar', etc.
