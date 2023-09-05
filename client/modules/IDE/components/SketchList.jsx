@@ -20,6 +20,7 @@ import AddToCollectionList from './AddToCollectionList';
 import getConfig from '../../../utils/getConfig';
 
 import DownFilledTriangleIcon from '../../../images/down-filled-triangle.svg';
+import MoreIconSvg from '../../../images/more.svg';
 
 const ROOT_URL = getConfig('API_URL');
 
@@ -195,7 +196,11 @@ class SketchListRowBase extends React.Component {
           onFocus={this.onFocusComponent}
           aria-label={this.props.t('SketchList.ToggleLabelARIA')}
         >
-          <DownFilledTriangleIcon focusable="false" aria-hidden="true" />
+          {this.props.mobile ? (
+            <MoreIconSvg focusable="false" aria-hidden="true" />
+          ) : (
+            <DownFilledTriangleIcon focusable="false" aria-hidden="true" />
+          )}
         </button>
         {optionsOpen && (
           <ul className="sketch-list__action-dialogue">
@@ -308,14 +313,8 @@ class SketchListRowBase extends React.Component {
           onClick={this.handleRowClick}
         >
           <th scope="row">{name}</th>
-          <td>
-            {mobile && 'Created: '}
-            {formatDateCell(sketch.createdAt, mobile)}
-          </td>
-          <td>
-            {mobile && 'Updated: '}
-            {formatDateCell(sketch.updatedAt, mobile)}
-          </td>
+          <td>{formatDateCell(sketch.createdAt, mobile)}</td>
+          <td>{formatDateCell(sketch.updatedAt, mobile)}</td>
           {this.renderDropdown()}
         </tr>
       </React.Fragment>

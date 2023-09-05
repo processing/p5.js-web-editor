@@ -199,7 +199,7 @@ class Collection extends React.Component {
     if (
       this.props.user != null &&
       this.props.user.username &&
-      this.props.collection.owner.username === this.props.user.username
+      this.props.collection?.owner?.username === this.props.user.username
     ) {
       isOwner = true;
     }
@@ -208,7 +208,7 @@ class Collection extends React.Component {
   }
 
   hasCollection() {
-    return !this.props.loading && this.props.collection != null;
+    return !!this.props.collection;
   }
 
   hasCollectionItems() {
@@ -216,7 +216,7 @@ class Collection extends React.Component {
   }
 
   _renderLoader() {
-    if (this.props.loading) return <Loader />;
+    if (this.props.loading && !this.hasCollection()) return <Loader />;
     return null;
   }
 
@@ -437,13 +437,7 @@ Collection.propTypes = {
 
 Collection.defaultProps = {
   username: undefined,
-  collection: {
-    id: undefined,
-    items: [],
-    owner: {
-      username: undefined
-    }
-  }
+  collection: null
 };
 
 function mapStateToProps(state, ownProps) {
