@@ -2,7 +2,51 @@
 
 exports[`<Sketchlist /> snapshot testing 1`] = `
 <DocumentFragment>
-  <article
+  .c1 {
+  border-bottom: 2px dashed transparent;
+  padding: 0.25rem 0;
+  color: #666;
+}
+
+.c2 {
+  border-bottom: 2px dashed transparent;
+  padding: 0.25rem 0;
+  color: #666;
+  border-color: #ed225d;
+}
+
+.c0 {
+  height: 2.6666666666666665rem;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: #FBFBFB;
+  font-weight: normal;
+}
+
+.c0:nth-child(1) {
+  padding-left: 1rem;
+}
+
+.c0 button {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  height: 2.9166666666666665rem;
+}
+
+.c0 button svg {
+  margin-left: 0.6666666666666666rem;
+  fill: #666;
+}
+
+<article
     class="sketches-table-container"
   >
     <table
@@ -12,7 +56,7 @@ exports[`<Sketchlist /> snapshot testing 1`] = `
       <thead>
         <tr>
           <th
-            class="sc-bkbkJK VqWDQ"
+            class="c0"
             scope="col"
           >
             <button
@@ -20,7 +64,7 @@ exports[`<Sketchlist /> snapshot testing 1`] = `
               aria-pressed="false"
             >
               <span
-                class="sc-fFSPTT bGvjwU"
+                class="c1"
               >
                 Sketch
               </span>
@@ -28,7 +72,7 @@ exports[`<Sketchlist /> snapshot testing 1`] = `
           </th>
           <th
             aria-sort="descending"
-            class="sc-bkbkJK VqWDQ"
+            class="c0"
             scope="col"
           >
             <button
@@ -36,7 +80,7 @@ exports[`<Sketchlist /> snapshot testing 1`] = `
               aria-pressed="true"
             >
               <span
-                class="sc-fFSPTT cMkNYR"
+                class="c2"
               >
                 Date Created
               </span>
@@ -49,7 +93,7 @@ exports[`<Sketchlist /> snapshot testing 1`] = `
             </button>
           </th>
           <th
-            class="sc-bkbkJK VqWDQ"
+            class="c0"
             scope="col"
           >
             <button
@@ -57,14 +101,14 @@ exports[`<Sketchlist /> snapshot testing 1`] = `
               aria-pressed="false"
             >
               <span
-                class="sc-fFSPTT bGvjwU"
+                class="c1"
               >
                 Date Updated
               </span>
             </button>
           </th>
           <th
-            class="sc-bkbkJK VqWDQ"
+            class="c0"
             scope="col"
           />
         </tr>
