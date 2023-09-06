@@ -59,6 +59,7 @@ describe('index.jsx integration', () => {
   // spy on this function and wait for it to be called before making assertions
   const spy = jest.spyOn(Actions, 'getUser');
 
+  window.process.env.PREVIEW_URL = 'http://localhost:8002';
   beforeEach(async () => {
     act(() => {
       subject();

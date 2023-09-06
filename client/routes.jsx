@@ -21,7 +21,7 @@ import createRedirectWithUsername from './components/createRedirectWithUsername'
 import MobileDashboardView from './modules/Mobile/MobileDashboardView';
 // import PrivacyPolicy from './modules/IDE/pages/PrivacyPolicy';
 // import TermsOfUse from './modules/IDE/pages/TermsOfUse';
-import Legal from './modules/IDE/pages/Legal';
+import Legal from './modules/Legal/pages/Legal';
 import { getUser } from './modules/User/actions';
 import {
   userIsAuthenticated,
