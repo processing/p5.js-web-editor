@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import {
   closeProjectOptions,
   newFile,
@@ -30,7 +30,7 @@ const SidebarHeader = styled.header`
 
 const SidebarTitle = styled.h3`
   font-size: ${remSize(12)};
-  display: ${(props) => (props.isExpanded ? 'inline-block' : 'none')};
+  display: inline-block;
   white-space: nowrap;
   overflow: hidden;
 `;
@@ -39,11 +39,6 @@ const SidebarIcons = styled.div`
   display: flex;
   align-items: center;
   height: 100%;
-  ${(props) =>
-    props.cantEdit &&
-    css`
-      display: none;
-    `}
 `;
 
 const SidebarAddButton = styled.button`
@@ -52,22 +47,12 @@ const SidebarAddButton = styled.button`
   & svg {
     width: ${remSize(10)};
   }
-  ${(props) =>
-    !props.isExpanded &&
-    css`
-      display: none;
-    `}
 `;
 
 const SidebarProjectOptions = styled.ul`
-  display: none;
+  display: flex;
   width: 100%;
   max-width: ${remSize(180)};
-  ${(props) =>
-    props.open &&
-    css`
-      display: flex;
-    `}
 `;
 // TODO: use a generic Dropdown UI component
 
@@ -120,65 +105,72 @@ export default function SideBar() {
   return (
     <section className={sidebarClass}>
       <SidebarHeader onContextMenu={toggleProjectOptions}>
-        <SidebarTitle isExpanded={isExpanded}>
-          <span>{t('Sidebar.Title')}</span>
-        </SidebarTitle>
-        <SidebarIcons cantEdit={!canEditProject}>
-          <SidebarAddButton
-            aria-label={t('Sidebar.ToggleARIA')}
-            tabIndex="0"
-            ref={sidebarOptionsRef}
-            onClick={toggleProjectOptions}
-            onBlur={onBlurComponent}
-            onFocus={onFocusComponent}
-            isExpanded={isExpanded}
-          >
-            <DownArrowIcon focusable="false" aria-hidden="true" />
-          </SidebarAddButton>
-          <SidebarProjectOptions open={projectOptionsVisible}>
-            <li>
-              <button
-                aria-label={t('Sidebar.AddFolderARIA')}
-                onClick={() => {
-                  dispatch(newFolder(rootFile.id));
-                  setTimeout(() => dispatch(closeProjectOptions()), 0);
-                }}
+        {isExpanded && (
+          <SidebarTitle>
+            <span>{t('Sidebar.Title')}</span>
+          </SidebarTitle>
+        )}
+        {canEditProject && (
+          <SidebarIcons>
+            {isExpanded && (
+              <SidebarAddButton
+                aria-label={t('Sidebar.ToggleARIA')}
+                tabIndex="0"
+                ref={sidebarOptionsRef}
+                onClick={toggleProjectOptions}
                 onBlur={onBlurComponent}
                 onFocus={onFocusComponent}
               >
-                {t('Sidebar.AddFolder')}
-              </button>
-            </li>
-            <li>
-              <button
-                aria-label={t('Sidebar.AddFileARIA')}
-                onClick={() => {
-                  dispatch(newFile(rootFile.id));
-                  setTimeout(() => dispatch(closeProjectOptions()), 0);
-                }}
-                onBlur={onBlurComponent}
-                onFocus={onFocusComponent}
-              >
-                {t('Sidebar.AddFile')}
-              </button>
-            </li>
-            {isAuthenticated && (
-              <li>
-                <button
-                  aria-label={t('Sidebar.UploadFileARIA')}
-                  onClick={() => {
-                    dispatch(openUploadFileModal(rootFile.id));
-                    setTimeout(() => dispatch(closeProjectOptions()), 0);
-                  }}
-                  onBlur={onBlurComponent}
-                  onFocus={onFocusComponent}
-                >
-                  {t('Sidebar.UploadFile')}
-                </button>
-              </li>
+                <DownArrowIcon focusable="false" aria-hidden="true" />
+              </SidebarAddButton>
             )}
-          </SidebarProjectOptions>
-        </SidebarIcons>
+            {projectOptionsVisible && (
+              <SidebarProjectOptions className="sidebar__project-options">
+                <li>
+                  <button
+                    aria-label={t('Sidebar.AddFolderARIA')}
+                    onClick={() => {
+                      dispatch(newFolder(rootFile.id));
+                      setTimeout(() => dispatch(closeProjectOptions()), 0);
+                    }}
+                    onBlur={onBlurComponent}
+                    onFocus={onFocusComponent}
+                  >
+                    {t('Sidebar.AddFolder')}
+                  </button>
+                </li>
+                <li>
+                  <button
+                    aria-label={t('Sidebar.AddFileARIA')}
+                    onClick={() => {
+                      dispatch(newFile(rootFile.id));
+                      setTimeout(() => dispatch(closeProjectOptions()), 0);
+                    }}
+                    onBlur={onBlurComponent}
+                    onFocus={onFocusComponent}
+                  >
+                    {t('Sidebar.AddFile')}
+                  </button>
+                </li>
+                {isAuthenticated && (
+                  <li>
+                    <button
+                      aria-label={t('Sidebar.UploadFileARIA')}
+                      onClick={() => {
+                        dispatch(openUploadFileModal(rootFile.id));
+                        setTimeout(() => dispatch(closeProjectOptions()), 0);
+                      }}
+                      onBlur={onBlurComponent}
+                      onFocus={onFocusComponent}
+                    >
+                      {t('Sidebar.UploadFile')}
+                    </button>
+                  </li>
+                )}
+              </SidebarProjectOptions>
+            )}
+          </SidebarIcons>
+        )}
       </SidebarHeader>
       <ConnectedFileNode id={rootFile.id} canEdit={canEditProject} />
     </section>
