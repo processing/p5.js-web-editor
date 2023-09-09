@@ -34,6 +34,8 @@ export default function useKeyDownHandlers(keyHandlers) {
     const isCtrl = isMac ? e.metaKey : e.ctrlKey;
     if (e.shiftKey && isCtrl) {
       handlers.current[`ctrl-shift-${e.key.toLowerCase()}`]?.(e);
+    } else if (e.altKey) {
+      handlers.current[`alt-${e.key.toLowerCase()}`]?.(e);
     } else if (isCtrl) {
       handlers.current[`ctrl-${e.key.toLowerCase()}`]?.(e);
     }

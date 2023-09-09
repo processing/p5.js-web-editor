@@ -211,9 +211,7 @@ const ProjectMenu = () => {
       <NavDropdownMenu id="sketch" title={t('Nav.Sketch.Title')}>
         <NavMenuItem onClick={() => dispatch(newFile(rootFile.id))}>
           {t('Nav.Sketch.AddFile')}
-          <span className="nav__keyboard-shortcut">
-            {metaKey}+{'\u21E7'}+A
-          </span>
+          <span className="nav__keyboard-shortcut">{'\u2387'}+N</span>
         </NavMenuItem>
         <NavMenuItem onClick={() => dispatch(newFolder(rootFile.id))}>
           {t('Nav.Sketch.AddFolder')}

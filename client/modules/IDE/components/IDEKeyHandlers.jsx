@@ -77,7 +77,7 @@ export const useIDEKeyHandlers = ({ getContent }) => {
       e.preventDefault();
       dispatch(consoleIsExpanded ? collapseConsole() : expandConsole());
     },
-    'ctrl-shift-a': (e) => {
+    'alt-n': (e) => {
       e.preventDefault();
       e.stopPropagation();
       dispatch(newFile());

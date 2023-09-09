@@ -70,9 +70,7 @@ function KeyboardShortcutModal() {
           <span>{t('KeyboardShortcuts.CodeEditing.ColorPicker')}</span>
         </li>
         <li className="keyboard-shortcut-item">
-          <span className="keyboard-shortcut__command">
-            {metaKeyName} + {`\u21E7`} + A
-          </span>
+          <span className="keyboard-shortcut__command">{'\u2387'} + N</span>
           <span>{t('KeyboardShortcuts.CodeEditing.CreateNewFile')}</span>
         </li>
       </ul>
