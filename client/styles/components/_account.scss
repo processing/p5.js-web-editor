@@ -4,6 +4,12 @@
     background-color: getThemifyVariable('background-color');
   }
   min-height: 100%;
+
+  @media (max-width: 770px) {
+    .account-settings__header {
+      display: none;
+    }
+  }
 }
 
 .account-settings {
@@ -24,6 +30,16 @@
 
 .account__social-stack {
   display: flex;
+  @media (max-width: 770px) {
+    flex-direction: column;
+    align-items: center;
+    gap: #{15 / $base-font-size}rem;
+
+    button, a {
+      width: 100% !important;
+      margin-right: 0;
+    }
+  }
 }
 
 .account__social-stack > * {
