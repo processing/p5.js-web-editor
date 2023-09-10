@@ -14,14 +14,15 @@ function Searchbar({
 }) {
   const [searchValue, setSearchValue] = useState(searchTerm);
 
-  useEffect(() => {
-    return () => {
+  useEffect(
+    () => () => {
       resetSearchTerm();
-    };
-  }, [resetSearchTerm]);
+    },
+    [resetSearchTerm]
+  );
 
   const throttledSearchChange = useCallback(
-    throttle(value => {
+    throttle((value) => {
       setSearchTerm(value.trim());
     }, 500),
     [setSearchTerm]
@@ -33,15 +34,21 @@ function Searchbar({
   };
 
   const handleSearchChange = (e) => {
-    const value = e.target.value;
+    const { value } = e.target;
     setSearchValue(value);
     throttledSearchChange(value.trim());
   };
 
   return (
-    <div className={`searchbar ${searchValue === '' ? 'searchbar--is-empty' : ''}`}>
+    <div
+      className={`searchbar ${searchValue === '' ? 'searchbar--is-empty' : ''}`}
+    >
       <div className="searchbar__button">
-        <SearchIcon className="searchbar__icon" focusable="false" aria-hidden="true" />
+        <SearchIcon
+          className="searchbar__icon"
+          focusable="false"
+          aria-hidden="true"
+        />
       </div>
       <input
         className="searchbar__input"
