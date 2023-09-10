@@ -1,9 +1,8 @@
-import React from 'react';
 import { Helmet } from 'react-helmet';
 import browserHistory from '../../../browserHistory';
 import RootPage from '../../../components/RootPage';
 import Nav from '../../IDE/components/Header/Nav';
-import React, { useEffect } from 'react';
+import { React, useEffect } from 'react';
 
 function EmailVerificationView({ emailVerificationTokenState, verifyEmailConfirmation, t, location }) {
   useEffect(() => {
