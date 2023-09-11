@@ -107,6 +107,12 @@ class SketchListRowBase extends React.Component {
   handleRenameEnter = (e) => {
     if (e.key === 'Enter') {
       this.updateName();
+    }
+  };
+
+  handleEnter = (e) => {
+    if (e.key === 'Enter') {
+      this.updateName();
       this.closeAll();
     }
   };
@@ -116,7 +122,7 @@ class SketchListRowBase extends React.Component {
     this.closeAll();
   };
 
-  updateName = () => {
+  updateName = (e) => {
     const isValid = this.state.renameValue.trim().length !== 0;
     if (isValid) {
       this.props.changeProjectName(
@@ -300,6 +306,7 @@ class SketchListRowBase extends React.Component {
             value={renameValue}
             onChange={this.handleRenameChange}
             onKeyUp={this.handleRenameEnter}
+            onKeyDown={this.handleEnter}
             onBlur={this.handleRenameBlur}
             onClick={(e) => e.stopPropagation()}
             ref={this.renameInput}
