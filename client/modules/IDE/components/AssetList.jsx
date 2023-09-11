@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
@@ -11,118 +11,99 @@ import Loader from '../../App/components/loader';
 import * as AssetActions from '../actions/assets';
 import DownFilledTriangleIcon from '../../../images/down-filled-triangle.svg';
 
-class AssetListRowBase extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isFocused: false,
-      optionsOpen: false
-    };
-  }
+function AssetListRowBase(props) {
+  const [isFocused, setIsFocused] = useState(false);
+  const [optionsOpen, setOptionsOpen] = useState(false);
 
-  onFocusComponent = () => {
-    this.setState({ isFocused: true });
+  const onFocusComponent = () => {
+    setIsFocused(true);
   };
-
-  onBlurComponent = () => {
-    this.setState({ isFocused: false });
+  const closeOptions = () => {
+    setOptionsOpen(false);
+  };
+  const onBlurComponent = () => {
+    setIsFocused(false);
     setTimeout(() => {
-      if (!this.state.isFocused) {
-        this.closeOptions();
+      if (!isFocused) {
+        closeOptions();
       }
     }, 200);
   };
 
-  openOptions = () => {
-    this.setState({
-      optionsOpen: true
-    });
+  const openOptions = () => {
+    setOptionsOpen(true);
   };
 
-  closeOptions = () => {
-    this.setState({
-      optionsOpen: false
-    });
-  };
-
-  toggleOptions = () => {
-    if (this.state.optionsOpen) {
-      this.closeOptions();
+  const toggleOptions = () => {
+    if (optionsOpen) {
+      closeOptions();
     } else {
-      this.openOptions();
+      openOptions();
     }
   };
 
-  handleDropdownOpen = () => {
-    this.closeOptions();
-    this.openOptions();
-  };
-
-  handleAssetDelete = () => {
-    const { key, name } = this.props.asset;
-    this.closeOptions();
-    if (window.confirm(this.props.t('Common.DeleteConfirmation', { name }))) {
-      this.props.deleteAssetRequest(key);
+  const handleAssetDelete = () => {
+    const { key, name } = props.asset;
+    closeOptions();
+    if (window.confirm(props.t('Common.DeleteConfirmation', { name }))) {
+      props.deleteAssetRequest(key);
     }
   };
 
-  render() {
-    const { asset, username, t } = this.props;
-    const { optionsOpen } = this.state;
-    return (
-      <tr className="asset-table__row" key={asset.key}>
-        <th scope="row">
-          <Link to={asset.url} target="_blank">
-            {asset.name}
+  const { asset, username, t } = props;
+  return (
+    <tr className="asset-table__row" key={asset.key}>
+      <th scope="row">
+        <Link to={asset.url} target="_blank">
+          {asset.name}
+        </Link>
+      </th>
+      <td>{prettyBytes(asset.size)}</td>
+      <td>
+        {asset.sketchId && (
+          <Link to={`/${username}/sketches/${asset.sketchId}`}>
+            {asset.sketchName}
           </Link>
-        </th>
-        <td>{prettyBytes(asset.size)}</td>
-        <td>
-          {asset.sketchId && (
-            <Link to={`/${username}/sketches/${asset.sketchId}`}>
-              {asset.sketchName}
-            </Link>
-          )}
-        </td>
-        <td className="asset-table__dropdown-column">
-          <button
-            className="asset-table__dropdown-button"
-            onClick={this.toggleOptions}
-            onBlur={this.onBlurComponent}
-            onFocus={this.onFocusComponent}
-            aria-label={t('AssetList.ToggleOpenCloseARIA')}
-          >
-            <DownFilledTriangleIcon focusable="false" aria-hidden="true" />
-          </button>
-          {optionsOpen && (
-            <ul className="asset-table__action-dialogue">
-              <li>
-                <button
-                  className="asset-table__action-option"
-                  onClick={this.handleAssetDelete}
-                  onBlur={this.onBlurComponent}
-                  onFocus={this.onFocusComponent}
-                >
-                  {t('AssetList.Delete')}
-                </button>
-              </li>
-              <li>
-                <Link
-                  to={asset.url}
-                  target="_blank"
-                  onBlur={this.onBlurComponent}
-                  onFocus={this.onFocusComponent}
-                  className="asset-table__action-option"
-                >
-                  {t('AssetList.OpenNewTab')}
-                </Link>
-              </li>
-            </ul>
-          )}
-        </td>
-      </tr>
-    );
-  }
+        )}
+      </td>
+      <td className="asset-table__dropdown-column">
+        <button
+          className="asset-table__dropdown-button"
+          onClick={toggleOptions}
+          onBlur={onBlurComponent}
+          onFocus={onFocusComponent}
+          aria-label={t('AssetList.ToggleOpenCloseARIA')}
+        >
+          <DownFilledTriangleIcon focusable="false" aria-hidden="true" />
+        </button>
+        {optionsOpen && (
+          <ul className="asset-table__action-dialogue">
+            <li>
+              <button
+                className="asset-table__action-option"
+                onClick={handleAssetDelete}
+                onBlur={onBlurComponent}
+                onFocus={onFocusComponent}
+              >
+                {t('AssetList.Delete')}
+              </button>
+            </li>
+            <li>
+              <Link
+                to={asset.url}
+                target="_blank"
+                onBlur={onBlurComponent}
+                onFocus={onFocusComponent}
+                className="asset-table__action-option"
+              >
+                {t('AssetList.OpenNewTab')}
+              </Link>
+            </li>
+          </ul>
+        )}
+      </td>
+    </tr>
+  );
 }
 
 AssetListRowBase.propTypes = {
@@ -154,65 +135,57 @@ const AssetListRow = connect(
   mapDispatchToPropsAssetListRow
 )(AssetListRowBase);
 
-class AssetList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.props.getAssets();
-  }
+function AssetList(props) {
+  useEffect(() => {
+    props.getAssets();
+  }, []);
 
-  getAssetsTitle() {
-    return this.props.t('AssetList.Title');
-  }
+  const getAssetsTitle = () => props.t('AssetList.Title');
 
-  hasAssets() {
-    return !this.props.loading && this.props.assetList.length > 0;
-  }
+  const hasAssets = () => !props.loading && props.assetList.length > 0;
 
-  renderLoader() {
-    if (this.props.loading) return <Loader />;
+  const renderLoader = () => {
+    if (props.loading) return <Loader />;
     return null;
-  }
+  };
 
-  renderEmptyTable() {
-    if (!this.props.loading && this.props.assetList.length === 0) {
+  const renderEmptyTable = () => {
+    if (!props.loading && props.assetList.length === 0) {
       return (
         <p className="asset-table__empty">
-          {this.props.t('AssetList.NoUploadedAssets')}
+          {props.t('AssetList.NoUploadedAssets')}
         </p>
       );
     }
     return null;
-  }
+  };
 
-  render() {
-    const { assetList, t } = this.props;
-    return (
-      <article className="asset-table-container">
-        <Helmet>
-          <title>{this.getAssetsTitle()}</title>
-        </Helmet>
-        {this.renderLoader()}
-        {this.renderEmptyTable()}
-        {this.hasAssets() && (
-          <table className="asset-table">
-            <thead>
-              <tr>
-                <th>{t('AssetList.HeaderName')}</th>
-                <th>{t('AssetList.HeaderSize')}</th>
-                <th>{t('AssetList.HeaderSketch')}</th>
-                <th scope="col"></th>
-              </tr>
-            </thead>
-            <tbody>
-              {assetList.map((asset) => (
-                <AssetListRow asset={asset} key={asset.key} t={t} />
-              ))}
-            </tbody>
-          </table>
-        )}
-      </article>
-    );
-  }
+  return (
+    <article className="asset-table-container">
+      <Helmet>
+        <title>{getAssetsTitle()}</title>
+      </Helmet>
+      {renderLoader()}
+      {renderEmptyTable()}
+      {hasAssets() && (
+        <table className="asset-table">
+          <thead>
+            <tr>
+              <th>{props.t('AssetList.HeaderName')}</th>
+              <th>{props.t('AssetList.HeaderSize')}</th>
+              <th>{props.t('AssetList.HeaderSketch')}</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {props.assetList.map((asset) => (
+              <AssetListRow asset={asset} key={asset.key} t={props.t} />
+            ))}
+          </tbody>
+        </table>
+      )}
+    </article>
+  );
 }
 
 AssetList.propTypes = {
