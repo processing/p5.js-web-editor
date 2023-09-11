@@ -162,6 +162,9 @@
     position: absolute;
   }
 }
+.nav__item-logo a:focus {
+  box-shadow: none;
+}
 .svg__logo g > path {
   @include themify() {
     fill: getThemifyVariable('logo-color');
