@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
@@ -16,141 +16,113 @@ import MoreIconSvg from '../../../../images/more.svg';
 const formatDateCell = (date, mobile = false) =>
   dates.format(date, { showTime: !mobile });
 
-class CollectionListRowBase extends React.Component {
-  static projectInCollection(project, collection) {
-    return (
-      collection.items.find((item) => item.project.id === project.id) != null
-    );
-  }
+const CollectionListRowBase = (props) => {
+  const [optionsOpen, setOptionsOpen] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
+  const [renameOpen, setRenameOpen] = useState(false);
+  const [renameValue, setRenameValue] = useState('');
+  const renameInput = useRef(null);
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      optionsOpen: false,
-      isFocused: false,
-      renameOpen: false,
-      renameValue: ''
-    };
-    this.renameInput = React.createRef();
-  }
-
-  onFocusComponent = () => {
-    this.setState({ isFocused: true });
+  const onFocusComponent = () => {
+    setIsFocused(true);
   };
 
-  onBlurComponent = () => {
-    this.setState({ isFocused: false });
+  const onBlurComponent = () => {
+    setIsFocused(false);
     setTimeout(() => {
-      if (!this.state.isFocused) {
-        this.closeAll();
+      if (!isFocused) {
+        closeAll();
       }
     }, 200);
   };
 
-  openOptions = () => {
-    this.setState({
-      optionsOpen: true
-    });
+  const openOptions = () => {
+    setOptionsOpen(true);
   };
 
-  closeOptions = () => {
-    this.setState({
-      optionsOpen: false
-    });
+  const closeOptions = () => {
+    setOptionsOpen(false);
   };
 
-  toggleOptions = () => {
-    if (this.state.optionsOpen) {
-      this.closeOptions();
+  const toggleOptions = () => {
+    if (optionsOpen) {
+      closeOptions();
     } else {
-      this.openOptions();
+      openOptions();
     }
   };
 
-  closeAll = () => {
-    this.setState({
-      optionsOpen: false,
-      renameOpen: false
-    });
+  const closeAll = () => {
+    setOptionsOpen(false);
+    setRenameOpen(false);
   };
 
-  handleAddSketches = () => {
-    this.closeAll();
-    this.props.onAddSketches();
+  const handleAddSketches = () => {
+    closeAll();
+    props.onAddSketches();
   };
 
-  handleDropdownOpen = () => {
-    this.closeAll();
-    this.openOptions();
-  };
-
-  handleCollectionDelete = () => {
-    this.closeAll();
+  const handleCollectionDelete = () => {
+    closeAll();
     if (
       window.confirm(
-        this.props.t('Common.DeleteConfirmation', {
-          name: this.props.collection.name
+        props.t('Common.DeleteConfirmation', {
+          name: props.collection.name
         })
       )
     ) {
-      this.props.deleteCollection(this.props.collection.id);
+      props.deleteCollection(props.collection.id);
     }
   };
 
-  handleRenameOpen = () => {
-    this.closeAll();
-    this.setState(
-      {
-        renameOpen: true,
-        renameValue: this.props.collection.name
-      },
-      () => this.renameInput.current.focus()
-    );
+  const handleRenameOpen = () => {
+    closeAll();
+    setRenameOpen(true);
+    setRenameValue(props.collection.name);
+    if (renameInput.current) {
+      renameInput.current.focus();
+    }
   };
 
-  handleRenameChange = (e) => {
-    this.setState({
-      renameValue: e.target.value
-    });
+  const handleRenameChange = (e) => {
+    setRenameValue(e.target.value);
   };
 
-  handleRenameEnter = (e) => {
+  const handleRenameEnter = (e) => {
     if (e.key === 'Enter') {
-      this.updateName();
-      this.closeAll();
+      updateName();
+      closeAll();
     }
   };
 
-  handleRenameBlur = () => {
-    this.updateName();
-    this.closeAll();
+  const handleRenameBlur = () => {
+    updateName();
+    closeAll();
   };
 
-  updateName = () => {
-    const isValid = this.state.renameValue.trim().length !== 0;
+  const updateName = () => {
+    const isValid = renameValue.trim().length !== 0;
     if (isValid) {
-      this.props.editCollection(this.props.collection.id, {
-        name: this.state.renameValue.trim()
+      props.editCollection(props.collection.id, {
+        name: renameValue.trim()
       });
     }
   };
 
-  renderActions = () => {
-    const { optionsOpen } = this.state;
-    const userIsOwner = this.props.user.username === this.props.username;
+  const renderActions = () => {
+    const { mobile } = props;
+    const userIsOwner = props.user.username === props.username;
 
     return (
-      <React.Fragment>
+      <>
         <button
           className="sketch-list__dropdown-button"
-          onClick={this.toggleOptions}
-          onBlur={this.onBlurComponent}
-          onFocus={this.onFocusComponent}
-          aria-label={this.props.t(
-            'CollectionListRow.ToggleCollectionOptionsARIA'
-          )}
+          onClick={toggleOptions}
+          onBlur={onBlurComponent}
+          onFocus={onFocusComponent}
+          aria-label={props.t('CollectionListRow.ToggleCollectionOptionsARIA')}
         >
-          {this.props.mobile ? (
+          {mobile ? (
             <MoreIconSvg focusable="false" aria-hidden="true" />
           ) : (
             <DownFilledTriangleIcon focusable="false" aria-hidden="true" />
@@ -161,22 +133,22 @@ class CollectionListRowBase extends React.Component {
             <li>
               <button
                 className="sketch-list__action-option"
-                onClick={this.handleAddSketches}
-                onBlur={this.onBlurComponent}
-                onFocus={this.onFocusComponent}
+                onClick={handleAddSketches}
+                onBlur={onBlurComponent}
+                onFocus={onFocusComponent}
               >
-                {this.props.t('CollectionListRow.AddSketch')}
+                {props.t('CollectionListRow.AddSketch')}
               </button>
             </li>
             {userIsOwner && (
               <li>
                 <button
                   className="sketch-list__action-option"
-                  onClick={this.handleCollectionDelete}
-                  onBlur={this.onBlurComponent}
-                  onFocus={this.onFocusComponent}
+                  onClick={handleCollectionDelete}
+                  onBlur={onBlurComponent}
+                  onFocus={onFocusComponent}
                 >
-                  {this.props.t('CollectionListRow.Delete')}
+                  {props.t('CollectionListRow.Delete')}
                 </button>
               </li>
             )}
@@ -184,26 +156,25 @@ class CollectionListRowBase extends React.Component {
               <li>
                 <button
                   className="sketch-list__action-option"
-                  onClick={this.handleRenameOpen}
-                  onBlur={this.onBlurComponent}
-                  onFocus={this.onFocusComponent}
+                  onClick={handleRenameOpen}
+                  onBlur={onBlurComponent}
+                  onFocus={onFocusComponent}
                 >
-                  {this.props.t('CollectionListRow.Rename')}
+                  {props.t('CollectionListRow.Rename')}
                 </button>
               </li>
             )}
           </ul>
         )}
-      </React.Fragment>
+      </>
     );
   };
 
-  renderCollectionName = () => {
-    const { collection, username } = this.props;
-    const { renameOpen, renameValue } = this.state;
+  const renderCollectionName = () => {
+    const { collection, username } = props;
 
     return (
-      <React.Fragment>
+      <>
         <Link
           to={{
             pathname: `/${username}/collections/${collection.id}`,
@@ -215,38 +186,34 @@ class CollectionListRowBase extends React.Component {
         {renameOpen && (
           <input
             value={renameValue}
-            onChange={this.handleRenameChange}
-            onKeyUp={this.handleRenameEnter}
-            onBlur={this.handleRenameBlur}
+            onChange={handleRenameChange}
+            onKeyUp={handleRenameEnter}
+            onBlur={handleRenameBlur}
             onClick={(e) => e.stopPropagation()}
-            ref={this.renameInput}
+            ref={renameInput}
           />
         )}
-      </React.Fragment>
+      </>
     );
   };
 
-  render() {
-    const { collection, mobile } = this.props;
+  const { collection, mobile } = props;
 
-    return (
-      <tr className="sketches-table__row" key={collection.id}>
-        <th scope="row">
-          <span className="sketches-table__name">
-            {this.renderCollectionName()}
-          </span>
-        </th>
-        <td>{formatDateCell(collection.createdAt, mobile)}</td>
-        <td>{formatDateCell(collection.updatedAt, mobile)}</td>
-        <td>
-          {mobile && 'sketches: '}
-          {(collection.items || []).length}
-        </td>
-        <td className="sketch-list__dropdown-column">{this.renderActions()}</td>
-      </tr>
-    );
-  }
-}
+  return (
+    <tr className="sketches-table__row" key={collection.id}>
+      <th scope="row">
+        <span className="sketches-table__name">{renderCollectionName()}</span>
+      </th>
+      <td>{formatDateCell(collection.createdAt, mobile)}</td>
+      <td>{formatDateCell(collection.updatedAt, mobile)}</td>
+      <td>
+        {mobile && 'sketches: '}
+        {(collection.items || []).length}
+      </td>
+      <td className="sketch-list__dropdown-column">{renderActions()}</td>
+    </tr>
+  );
+};
 
 CollectionListRowBase.propTypes = {
   collection: PropTypes.shape({
@@ -297,3 +264,4 @@ function mapDispatchToPropsSketchListRow(dispatch) {
 export default withTranslation()(
   connect(null, mapDispatchToPropsSketchListRow)(CollectionListRowBase)
 );
+
