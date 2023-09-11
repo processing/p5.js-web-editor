@@ -23,6 +23,20 @@ const CollectionListRowBase = (props) => {
   const [renameValue, setRenameValue] = useState('');
   const renameInput = useRef(null);
 
+  const closeAll = () => {
+    setOptionsOpen(false);
+    setRenameOpen(false);
+  };
+
+  const updateName = () => {
+    const isValid = renameValue.trim().length !== 0;
+    if (isValid) {
+      props.editCollection(props.collection.id, {
+        name: renameValue.trim()
+      });
+    }
+  };
+
   const onFocusComponent = () => {
     setIsFocused(true);
   };
@@ -50,11 +64,6 @@ const CollectionListRowBase = (props) => {
     } else {
       openOptions();
     }
-  };
-
-  const closeAll = () => {
-    setOptionsOpen(false);
-    setRenameOpen(false);
   };
 
   const handleAddSketches = () => {
@@ -98,15 +107,6 @@ const CollectionListRowBase = (props) => {
   const handleRenameBlur = () => {
     updateName();
     closeAll();
-  };
-
-  const updateName = () => {
-    const isValid = renameValue.trim().length !== 0;
-    if (isValid) {
-      props.editCollection(props.collection.id, {
-        name: renameValue.trim()
-      });
-    }
   };
 
   const renderActions = () => {
@@ -264,4 +264,3 @@ function mapDispatchToPropsSketchListRow(dispatch) {
 export default withTranslation()(
   connect(null, mapDispatchToPropsSketchListRow)(CollectionListRowBase)
 );
-
