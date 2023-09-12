@@ -1,39 +1,30 @@
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import React from 'react';
 import CodeMirror from 'codemirror';
 import { Encode } from 'console-feed';
-
 import RightArrowIcon from '../../../images/right-arrow.svg';
 import { dispatchMessage, MessageTypes } from '../../../utils/dispatcher';
 
-// heavily inspired by
-// https://github.com/codesandbox/codesandbox-client/blob/92a1131f4ded6f7d9c16945dc7c18aa97c8ada27/packages/app/src/app/components/Preview/DevTools/Console/Input/index.tsx
+function ConsoleInput({ theme, dispatchConsoleEvent, fontSize }) {
+  const [commandHistory, setCommandHistory] = useState([]);
+  const [commandCursor, setCommandCursor] = useState(-1);
+  const codemirrorContainer = useRef(null);
 
-class ConsoleInput extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      commandHistory: [],
-      commandCursor: -1
-    };
-  }
-
-  componentDidMount() {
-    this._cm = CodeMirror(this.codemirrorContainer, {
-      // eslint-disable-line
-      theme: `p5-${this.props.theme}`,
+  useEffect(() => {
+    let cm = CodeMirror(codemirrorContainer.current, {
+      theme: `p5-${theme}`,
       scrollbarStyle: null,
       keymap: 'sublime',
       mode: 'javascript',
       inputStyle: 'contenteditable'
     });
 
-    this._cm.on('keydown', (cm, e) => {
+    cm.on('keydown', (editor, e) => {
       if (e.key === 'Enter' && !e.shiftKey) {
         e.preventDefault();
         e.stopPropagation();
-        const value = cm.getValue();
-        if (value.trim(' ') === '') {
+        const value = editor.getValue();
+        if (value.trim() === '') {
           return false;
         }
         const messages = [
@@ -47,91 +38,86 @@ class ConsoleInput extends React.Component {
             messages
           }
         });
-        this.props.dispatchConsoleEvent(consoleEvent);
-        cm.setValue('');
-        this.setState((state) => ({
-          commandCursor: -1,
-          commandHistory: [value, ...state.commandHistory]
-        }));
+        dispatchConsoleEvent(consoleEvent);
+        editor.setValue('');
+        setCommandCursor(-1);
+        setCommandHistory([value, ...commandHistory]);
       } else if (e.key === 'ArrowUp') {
-        const lineNumber = this._cm.getDoc().getCursor().line;
+        const lineNumber = editor.getDoc().getCursor().line;
         if (lineNumber !== 0) {
           return false;
         }
-
-        this.setState((state) => {
-          const newCursor = Math.min(
-            state.commandCursor + 1,
-            state.commandHistory.length - 1
-          );
-          this._cm.getDoc().setValue(state.commandHistory[newCursor] || '');
-          const cursorPos = this._cm.getDoc().getLine(0).length - 1;
-          this._cm.getDoc().setCursor({ line: 0, ch: cursorPos });
-          return { commandCursor: newCursor };
-        });
+        setCommandCursor((prevCursor) =>
+          Math.min(prevCursor + 1, commandHistory.length - 1)
+        );
+        editor.getDoc().setValue(commandHistory[commandCursor + 1] || '');
+        const cursorPos = editor.getDoc().getLine(0).length - 1;
+        editor.getDoc().setCursor({ line: 0, ch: cursorPos });
       } else if (e.key === 'ArrowDown') {
-        const lineNumber = this._cm.getDoc().getCursor().line;
-        const lineCount = this._cm.getValue().split('\n').length;
+        const lineNumber = editor.getDoc().getCursor().line;
+        const lineCount = editor.getValue().split('\n').length;
         if (lineNumber + 1 !== lineCount) {
           return false;
         }
-
-        this.setState((state) => {
-          const newCursor = Math.max(state.commandCursor - 1, -1);
-          this._cm.getDoc().setValue(state.commandHistory[newCursor] || '');
-          const newLineCount = this._cm.getValue().split('\n').length;
-          const newLine = this._cm.getDoc().getLine(newLineCount);
-          const cursorPos = newLine ? newLine.length - 1 : 1;
-          this._cm.getDoc().setCursor({ line: lineCount, ch: cursorPos });
-          return { commandCursor: newCursor };
-        });
+        setCommandCursor((prevCursor) => Math.max(prevCursor - 1, -1));
+        editor.getDoc().setValue(commandHistory[commandCursor - 1] || '');
+        const newLineCount = editor.getValue().split('\n').length;
+        const newLine = editor.getDoc().getLine(newLineCount);
+        const cursorPos = newLine ? newLine.length - 1 : 1;
+        editor.getDoc().setCursor({ line: lineCount, ch: cursorPos });
       }
       return true;
     });
 
-    this._cm.getWrapperElement().style[
-      'font-size'
-    ] = `${this.props.fontSize}px`;
-  }
+    cm.getWrapperElement().style['font-size'] = `${fontSize}px`;
 
-  componentDidUpdate(prevProps) {
-    this._cm.setOption('theme', `p5-${this.props.theme}`);
-    this._cm.getWrapperElement().style[
-      'font-size'
-    ] = `${this.props.fontSize}px`;
-    this._cm.refresh();
-  }
+    return () => {
+      cm = null;
+    };
+  }, [theme, dispatchConsoleEvent, fontSize, commandHistory, commandCursor]);
 
-  componentWillUnmount() {
-    this._cm = null;
-  }
+  useEffect(() => {
+    if (codemirrorContainer.current) {
+      const cm = CodeMirror.fromTextArea(codemirrorContainer.current, {
+        theme: `p5-${theme}`,
+        scrollbarStyle: null,
+        keymap: 'sublime',
+        mode: 'javascript',
+        inputStyle: 'contenteditable'
+      });
 
-  render() {
-    return (
-      <div className="console__input">
-        <div
-          className="console-active__arrow-container"
-          style={{ height: `${this.props.fontSize * 1.3333}px` }}
-        >
-          <RightArrowIcon
-            className="console-active__arrow"
-            focusable="false"
-            aria-hidden="true"
-            style={{
-              width: `${this.props.fontSize}px`,
-              height: `${this.props.fontSize * 0.57}px`
-            }}
-          />
-        </div>
-        <div
-          ref={(element) => {
-            this.codemirrorContainer = element;
+      cm.setSize(null, `${fontSize}px`);
+
+      return () => {
+        cm.toTextArea();
+      };
+    }
+    return null;
+  }, [theme, fontSize]);
+
+  return (
+    <div className="console__input">
+      <div
+        className="console-active__arrow-container"
+        style={{ height: `${fontSize * 1.3333}px` }}
+      >
+        <RightArrowIcon
+          className="console-active__arrow"
+          focusable="false"
+          aria-hidden="true"
+          style={{
+            width: `${fontSize}px`,
+            height: `${fontSize * 0.57}px`
           }}
-          className="console__editor"
         />
       </div>
-    );
-  }
+      <textarea
+        ref={codemirrorContainer}
+        className="console__editor"
+        rows="1"
+      />
+    </div>
+  );
 }
 
 ConsoleInput.propTypes = {
