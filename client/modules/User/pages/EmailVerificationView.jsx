@@ -70,12 +70,16 @@ function mapDispatchToProps(dispatch) {
   );
 }
 
+EmailVerificationView.defaultProps = {
+  emailVerificationTokenState: null
+};
+
 EmailVerificationView.propTypes = {
   emailVerificationTokenState: PropTypes.oneOf([
     'checking',
     'verified',
     'invalid'
-  ]).isRequired,
+  ]),
   verifyEmailConfirmation: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
   location: PropTypes.shape({
