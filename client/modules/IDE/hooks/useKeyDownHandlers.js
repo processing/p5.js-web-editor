@@ -20,7 +20,7 @@ export default function useKeyDownHandlers(keyHandlers) {
   const handlers = useRef(keyHandlers);
 
   useEffect(() => {
-    handlers.current = mapKeys(keyHandlers, (value, key) => key.toLowerCase());
+    handlers.current = mapKeys(keyHandlers, (value, key) => key?.toLowerCase());
   }, [keyHandlers]);
 
   /**
@@ -29,6 +29,7 @@ export default function useKeyDownHandlers(keyHandlers) {
    * @type {(function(KeyboardEvent): void)}
    */
   const handleEvent = useCallback((e) => {
+    if (!e.key) return;
     const isMac = navigator.userAgent.toLowerCase().indexOf('mac') !== -1;
     const isCtrl = isMac ? e.metaKey : e.ctrlKey;
     if (e.shiftKey && isCtrl) {
@@ -36,7 +37,7 @@ export default function useKeyDownHandlers(keyHandlers) {
     } else if (isCtrl) {
       handlers.current[`ctrl-${e.key.toLowerCase()}`]?.(e);
     }
-    handlers.current[e.key.toLowerCase()]?.(e);
+    handlers.current[e.key?.toLowerCase()]?.(e);
   }, []);
 
   useEffect(() => {
