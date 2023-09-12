@@ -73,6 +73,7 @@ function SocialAuthButton({ service, linkStyle, isConnected }) {
     <StyledButton
       iconBefore={<ServiceIcon aria-label={ariaLabel} />}
       href={authUrls[service]}
+      target="_blank"
     >
       {loginLabel}
     </StyledButton>

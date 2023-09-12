@@ -165,6 +165,7 @@ const Button = ({
   children,
   display,
   href,
+  target,
   kind,
   iconBefore,
   iconAfter,
@@ -200,6 +201,7 @@ const Button = ({
         as="a"
         aria-label={ariaLabel}
         href={href}
+        target={target}
         {...props}
       >
         {content}
@@ -244,6 +246,7 @@ Button.defaultProps = {
   iconOnly: false,
   kind: kinds.primary,
   href: null,
+  target: null,
   'aria-label': null,
   to: null,
   type: 'button'
@@ -286,6 +289,10 @@ Button.propTypes = {
    * Specifying an href will use an <a> to link to the URL
    */
   href: PropTypes.string,
+  /**
+   * Specifying target open href URL in the new tab
+   */
+  target: PropTypes.string,
   /*
    * An ARIA Label used for accessibility
    */
