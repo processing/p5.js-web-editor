@@ -1,8 +1,10 @@
+@use "sass:math";
+
 .form-error {
   display: block;
-  padding-top: #{4 / $base-font-size}rem;
-  width: #{300 / $base-font-size}rem;
-  font-size: #{12 / $base-font-size}rem;
+  padding-top: #{math.div(4, $base-font-size)}rem;
+  width: #{math.div(300, $base-font-size)}rem;
+  font-size: #{math.div(12, $base-font-size)}rem;
   text-align: left;
   @include themify() {
     color: getThemifyVariable("error-color");
@@ -10,7 +12,7 @@
 }
 
 .form > * + * {
-  margin-top: #{12 / $base-font-size}rem;
+  margin-top: #{math.div(12, $base-font-size)}rem;
 }
 
 .form--inline {
@@ -19,32 +21,32 @@
 }
 
 .form__cancel-button {
-  margin-top: #{10 / $base-font-size}rem;
-  font-size: #{12 / $base-font-size}rem;
+  margin-top: #{math.div(10, $base-font-size)}rem;
+  font-size: #{math.div(12, $base-font-size)}rem;
 }
 
 .form__navigation-options {
-  margin-top: #{16 / $base-font-size}rem;
-  font-size: #{12 / $base-font-size}rem;
+  margin-top: #{math.div(16, $base-font-size)}rem;
+  font-size: #{math.div(12, $base-font-size)}rem;
   @include themify() {
     color: getThemifyVariable("form-navigation-options-color");
   }
 
   @media (max-width: 550px) {
     text-align: center;
-    margin: #{12 / $base-font-size}rem;
+    margin: #{math.div(12, $base-font-size)}rem;
   }
 }
 
 .form__legend {
-  font-size: #{21 / $base-font-size}rem;
+  font-size: #{math.div(21, $base-font-size)}rem;
   font-weight: bold;
 }
 
 .form__label {
-  font-size: #{12 / $base-font-size}rem;
-  margin-top: #{25 / $base-font-size}rem;
-  margin-bottom: #{7 / $base-font-size}rem;
+  font-size: #{math.div(12, $base-font-size)}rem;
+  margin-top: #{math.div(25, $base-font-size)}rem;
+  margin-bottom: #{math.div(7, $base-font-size)}rem;
   display: block;
   @include themify() {
     color: getThemifyVariable("form-secondary-title-color");
@@ -57,9 +59,9 @@
 
 .form__input {
   max-width: 90vw;
-  width: #{360 / $base-font-size}rem;
-  height: #{40 / $base-font-size}rem;
-  font-size: #{16 / $base-font-size}rem;
+  width: #{math.div(360, $base-font-size)}rem;
+  height: #{math.div(40, $base-font-size)}rem;
+  font-size: #{math.div(16, $base-font-size)}rem;
   @include themify() {
     color: getThemifyVariable("form-input-text-color");
     background-color: getThemifyVariable("input-background-color");
@@ -78,7 +80,7 @@
 
 .form__context {
   text-align: left;
-  margin-top: #{15 / $base-font-size}rem;
+  margin-top: #{math.div(15, $base-font-size)}rem;
 }
 
 .form__status {
