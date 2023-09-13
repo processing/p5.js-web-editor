@@ -1,3 +1,22 @@
+
+
+Settings
+
+Hi! Here some our recommendations to get the best out of BLACKBOX:
+
+Be as clear as possible
+
+End the question in what language you want the answer to be, e.g: ‘connect to mongodb in python
+or you can just
+Go to Blackbox
+Here are some suggestion (choose one):
+Write a function that reads data from a json file
+How to delete docs from mongodb in phyton
+Connect to mongodb in nodejs
+Ask any coding question
+send
+refresh
+Blackbox AI Chat is in beta and Blackbox is not liable for the content generated. By using Blackbox, you acknowledge that you agree to agree to Blackbox's Terms and Privacy Policy
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Helmet } from 'react-helmet';
@@ -23,7 +42,6 @@ import getConfig from '../../../utils/getConfig';
 import ArrowUpIcon from '../../../images/sort-arrow-up.svg';
 import ArrowDownIcon from '../../../images/sort-arrow-down.svg';
 import DownFilledTriangleIcon from '../../../images/down-filled-triangle.svg';
-import MoreIconSvg from '../../../images/more.svg';
 
 const ROOT_URL = getConfig('API_URL');
 
@@ -199,11 +217,7 @@ class SketchListRowBase extends React.Component {
           onFocus={this.onFocusComponent}
           aria-label={this.props.t('SketchList.ToggleLabelARIA')}
         >
-          {this.props.mobile ? (
-            <MoreIconSvg focusable="false" aria-hidden="true" />
-          ) : (
-            <DownFilledTriangleIcon focusable="false" aria-hidden="true" />
-          )}
+          <DownFilledTriangleIcon focusable="false" aria-hidden="true" />
         </button>
         {optionsOpen && (
           <ul className="sketch-list__action-dialogue">
@@ -316,8 +330,14 @@ class SketchListRowBase extends React.Component {
           onClick={this.handleRowClick}
         >
           <th scope="row">{name}</th>
-          <td>{formatDateCell(sketch.createdAt, mobile)}</td>
-          <td>{formatDateCell(sketch.updatedAt, mobile)}</td>
+          <td>
+            {mobile && 'Created: '}
+            {formatDateCell(sketch.createdAt, mobile)}
+          </td>
+          <td>
+            {mobile && 'Updated: '}
+            {formatDateCell(sketch.updatedAt, mobile)}
+          </td>
           {this.renderDropdown()}
         </tr>
       </React.Fragment>
@@ -544,9 +564,7 @@ class SketchList extends React.Component {
             }
           >
             <AddToCollectionList
-              project={this.state.sketchToAddToCollection}
-              username={this.props.username}
-              user={this.props.user}
+              projectId={this.state.sketchToAddToCollection.id}
             />
           </Overlay>
         )}
