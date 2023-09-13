@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { withTranslation } from 'react-i18next';
+import MediaQuery from 'react-responsive';
 
 import browserHistory from '../../../browserHistory';
 import ExitIcon from '../../../images/exit.svg';
@@ -68,17 +69,22 @@ class Overlay extends React.Component {
           >
             <header className="overlay__header">
               <h2 className="overlay__title">{title}</h2>
-              <div className="overlay__actions">
-                {actions}
-                <button
-                  className="overlay__close-button"
-                  onClick={this.close}
-                  aria-label={this.props.t('Overlay.AriaLabel', { title })}
-                >
-                  <ExitIcon focusable="false" aria-hidden="true" />
-                </button>
-              </div>
+              <MediaQuery query="(min-width: 768px)">
+                <div className="overlay__actions">{actions}</div>
+              </MediaQuery>
+              <button
+                className="overlay__close-button"
+                onClick={this.close}
+                aria-label={this.props.t('Overlay.AriaLabel', { title })}
+              >
+                <ExitIcon focusable="false" aria-hidden="true" />
+              </button>
             </header>
+            <MediaQuery query="(max-width: 767px)">
+              {actions && (
+                <div className="overlay__actions-mobile">{actions}</div>
+              )}
+            </MediaQuery>
             {children}
             <DocumentKeyDown handlers={{ escape: () => this.close() }} />
           </section>
