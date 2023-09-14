@@ -7,7 +7,7 @@ services:
   app:
     build:
       context: ./
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile 
       target: development
     environment:
       - MONGO_URL=mongodb://mongo:27017/p5js-web-editor
