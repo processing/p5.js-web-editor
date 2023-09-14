@@ -71,7 +71,10 @@ function NavBar({ children, className }) {
         onFocus: clearHideTimeout
       }),
       createMenuItemHandlers: (dropdown) => ({
-        onMouseUp: () => {
+        onMouseUp: (e) => {
+          if (e.button === 2) {
+            return;
+          }
           setDropdownOpen('none');
         },
         onBlur: handleBlur,
