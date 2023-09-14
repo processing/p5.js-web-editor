@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { useState, useRef, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { useTranslation, withTranslation } from 'react-i18next';
 import classNames from 'classnames';
@@ -205,7 +205,7 @@ class Collection extends React.Component {
     if (
       this.props.user != null &&
       this.props.user.username &&
-      this.props.collection.owner.username === this.props.user.username
+      this.props.collection?.owner?.username === this.props.user.username
     ) {
       isOwner = true;
     }
@@ -214,7 +214,7 @@ class Collection extends React.Component {
   }
 
   hasCollection() {
-    return !this.props.loading && this.props.collection != null;
+    return !!this.props.collection;
   }
 
   hasCollectionItems() {
@@ -222,7 +222,7 @@ class Collection extends React.Component {
   }
 
   _renderLoader() {
-    if (this.props.loading) return <Loader />;
+    if (this.props.loading && !this.hasCollection()) return <Loader />;
     return null;
   }
 
@@ -336,11 +336,7 @@ class Collection extends React.Component {
   }
 
   _renderEmptyTable() {
-    const isLoading = this.props.loading;
-    const hasCollectionItems =
-      this.props.collection != null && this.props.collection.items.length > 0;
-
-    if (!isLoading && !hasCollectionItems) {
+    if (this.hasCollection() && !this.hasCollectionItems()) {
       return (
         <p className="collection-empty-message">
           {this.props.t('Collection.NoSketches')}
@@ -516,13 +512,7 @@ Collection.propTypes = {
 
 Collection.defaultProps = {
   username: undefined,
-  collection: {
-    id: undefined,
-    items: [],
-    owner: {
-      username: undefined
-    }
-  }
+  collection: null
 };
 
 function mapStateToProps(state, ownProps) {

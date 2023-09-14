@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const ReactRefreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 
 if (process.env.NODE_ENV === 'development') {
@@ -11,17 +12,13 @@ module.exports = {
   mode: 'development',
   devtool: 'eval-cheap-module-source-map',
   entry: {
-    app: [
-      'webpack-hot-middleware/client',
-      'react-hot-loader/patch',
-      './client/index.jsx',
-    ],
-    'previewApp': [
-      'webpack-hot-middleware/client',
-      'react-hot-loader/patch',
-      './client/modules/Preview/previewIndex.jsx',
+    app: ['@gatsbyjs/webpack-hot-middleware/client', './client/index.jsx'],
+    previewApp: [
+      '@gatsbyjs/webpack-hot-middleware/client',
+      './client/modules/Preview/previewIndex.jsx'
     ],
     previewScripts: [
+      '@gatsbyjs/webpack-hot-middleware/client',
       'regenerator-runtime/runtime',
       path.resolve(__dirname, '../client/utils/previewEntry.js')
     ]
@@ -33,12 +30,9 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.jsx'],
-    modules: [
-      'client',
-      'node_modules'
-    ],
+    modules: ['client', 'node_modules'],
     fallback: {
-      "os": require.resolve("os-browserify/browser")
+      os: require.resolve('os-browserify/browser')
     }
   },
   plugins: [
@@ -46,6 +40,11 @@ module.exports = {
       extensions: ['js', 'jsx']
     }),
     new webpack.HotModuleReplacementPlugin(),
+    new ReactRefreshPlugin({
+      overlay: {
+        sockIntegration: 'whm',
+      }
+    }),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify('development')
@@ -53,23 +52,26 @@ module.exports = {
     }),
     new CopyWebpackPlugin({
       patterns: [
-        { from: path.resolve(__dirname, '../translations/locales'), to: path.resolve(__dirname, 'locales') }
+        {
+          from: path.resolve(__dirname, '../translations/locales'),
+          to: path.resolve(__dirname, 'locales')
+        }
       ]
-    }
-    )
+    })
   ],
   module: {
     rules: [
       {
         test: /\.jsx?$/,
         exclude: [/node_modules/, /.+\.config.js/],
-        use: [{
-          loader: 'babel-loader',
-          options: {
-            cacheDirectory: true,
-            plugins: ['react-hot-loader/babel'],
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              cacheDirectory: true
+            }
           }
-        }]
+        ]
       },
       {
         test: /main\.scss$/,
@@ -113,14 +115,14 @@ module.exports = {
                     {
                       name: 'removeViewBox',
                       active: false
-                    },
-                  ],
+                    }
+                  ]
                 }
               }
             }
           }
         ]
       }
-    ],
-  },
+    ]
+  }
 };

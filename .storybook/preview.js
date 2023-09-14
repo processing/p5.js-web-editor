@@ -1,9 +1,10 @@
 import React from 'react';
 import { Provider } from 'react-redux';
+import { MemoryRouter } from 'react-router';
 
 import configureStore from '../client/store';
 import '../client/i18n-test';
-import '../client/styles/build/css/main.css';
+import '../client/styles/storybook.css'
 import { withThemeProvider, themeToolbarItem } from './decorator-theme';
 
 const initialState = window.__INITIAL_STATE__;
@@ -13,7 +14,11 @@ const store = configureStore(initialState);
 export const decorators = [
   (Story) => (
     <Provider store={store}>
-      <Story />
+      <MemoryRouter>
+        <ThemeProvider>
+          <Story />
+        </ThemeProvider>
+      </MemoryRouter>
     </Provider>
   ),
   withThemeProvider
