@@ -24,7 +24,6 @@
     "update-p5-hinter": "node ./server/scripts/update-p5-hinter.js",
     "heroku-postbuild": "touch .env; npm run build",
     "storybook:build:css": "sass client/styles/main.scss client/styles/storybook.css",
-    "migrate-sass": "sass-migrator division 'client/styles/**/*.scss'",
     "storybook": "npm run storybook:build:css && storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
