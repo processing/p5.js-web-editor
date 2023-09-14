@@ -26,6 +26,11 @@
 .form__navigation-options {
   margin-top: #{16 / $base-font-size}rem;
   font-size: #{12 / $base-font-size}rem;
+
+  a {
+    font-weight: bold;
+  }
+
   @include themify() {
     color: getThemifyVariable("form-navigation-options-color");
   }
