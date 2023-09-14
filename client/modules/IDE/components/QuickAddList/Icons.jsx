@@ -1,7 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
-import CheckIcon from '../../../../images/check_encircled.svg';
 import CloseIcon from '../../../../images/close.svg';
 
 const Icons = ({ isAdded }) => {
