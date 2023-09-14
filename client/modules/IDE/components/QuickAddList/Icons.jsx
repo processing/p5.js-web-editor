@@ -20,12 +20,6 @@ const Icons = ({ isAdded }) => {
         aria-label="Descending"
         focusable="false"
       />
-      <CheckIcon
-        className="quick-add__in-icon"
-        role="img"
-        aria-label="Descending"
-        focusable="false"
-      />
       <CloseIcon
         className="quick-add__add-icon"
         role="img"
