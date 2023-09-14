@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { connect } from 'react-redux';
 import MediaQuery from 'react-responsive';
 import { withTranslation } from 'react-i18next';
@@ -103,17 +103,7 @@ const DashboardView = ({ newProject, location, params, user, t }) => {
   };
 
   const currentTab = selectedTabKey();
-  const owner = isOwner();
-  const { username } = params;
-  const actions = renderActionButton(currentTab, username, t);
-
-  useEffect(() => {
-    if (collectionCreateVisible) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'auto';
-    }
-  }, [collectionCreateVisible]);
+  const actions = renderActionButton(currentTab);
 
   return (
     <RootPage fixedHeight="100%">
@@ -125,8 +115,8 @@ const DashboardView = ({ newProject, location, params, user, t }) => {
           <div className="dashboard-header__nav">
             <DashboardTabSwitcherPublic
               currentTab={currentTab}
-              isOwner={owner}
-              username={username}
+              isOwner={isOwner()}
+              username={params.username}
             />
             {actions && (
               <div className="dashboard-header__actions">{actions}</div>
@@ -136,7 +126,7 @@ const DashboardView = ({ newProject, location, params, user, t }) => {
 
         <div className="dashboard-content">
           <MediaQuery maxWidth={770}>
-            {(mobile) => renderContent(currentTab, username, mobile)}
+            {(mobile) => renderContent(currentTab, params.username, mobile)}
           </MediaQuery>
         </div>
       </main>
