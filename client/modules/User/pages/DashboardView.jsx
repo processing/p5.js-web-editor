@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import MediaQuery from 'react-responsive';
 import { withTranslation } from 'react-i18next';
@@ -24,36 +24,27 @@ import DashboardTabSwitcherPublic, {
   TabKey
 } from '../components/DashboardTabSwitcher';
 
-class DashboardView extends React.Component {
-  static defaultProps = {
-    user: null
+function DashboardView(props) {
+  const [collectionCreateVisible, setCollectionCreateVisible] = useState(false);
+
+  useEffect(() => {
+    // You can add any componentDidMount logic here if needed.
+  }, []);
+
+  const closeAccountPage = () => {
+    browserHistory.push(props.previousPath);
   };
 
-  constructor(props) {
-    super(props);
-    this.closeAccountPage = this.closeAccountPage.bind(this);
-    this.createNewSketch = this.createNewSketch.bind(this);
-    this.gotoHomePage = this.gotoHomePage.bind(this);
-    this.toggleCollectionCreate = this.toggleCollectionCreate.bind(this);
-    this.state = {
-      collectionCreateVisible: false
-    };
-  }
+  const createNewSketch = () => {
+    props.newProject();
+  };
 
-  closeAccountPage() {
-    browserHistory.push(this.props.previousPath);
-  }
-
-  createNewSketch() {
-    this.props.newProject();
-  }
-
-  gotoHomePage() {
+  const gotoHomePage = () => {
     browserHistory.push('/');
-  }
+  };
 
-  selectedTabKey() {
-    const path = this.props.location.pathname;
+  const selectedTabKey = () => {
+    const path = props.location.pathname;
 
     if (/assets/.test(path)) {
       return TabKey.assets;
@@ -62,57 +53,55 @@ class DashboardView extends React.Component {
     }
 
     return TabKey.sketches;
-  }
+  };
 
-  ownerName() {
-    if (this.props.params.username) {
-      return this.props.params.username;
+  const ownerName = () => {
+    if (props.params.username) {
+      return props.params.username;
     }
 
-    return this.props.user.username;
-  }
+    return props.user.username;
+  };
 
-  isOwner() {
-    return this.props.user.username === this.props.params.username;
-  }
+  const isOwner = () => {
+    return props.user.username === props.params.username;
+  };
 
-  toggleCollectionCreate() {
-    this.setState((prevState) => ({
-      collectionCreateVisible: !prevState.collectionCreateVisible
-    }));
-  }
+  const toggleCollectionCreate = () => {
+    setCollectionCreateVisible((prevState) => !prevState);
+  };
 
-  renderActionButton(tabKey, username, t) {
+  const renderActionButton = (tabKey, username, t) => {
     switch (tabKey) {
       case TabKey.assets:
-        return this.isOwner() && <AssetSize />;
+        return isOwner() && <AssetSize />;
       case TabKey.collections:
         return (
-          this.isOwner() && (
-            <React.Fragment>
-              <Button onClick={this.toggleCollectionCreate}>
+          isOwner() && (
+            <>
+              <Button onClick={toggleCollectionCreate}>
                 {t('DashboardView.CreateCollection')}
               </Button>
               <CollectionSearchbar />
-            </React.Fragment>
+            </>
           )
         );
       case TabKey.sketches:
       default:
         return (
-          <React.Fragment>
-            {this.isOwner() && (
-              <Button onClick={this.createNewSketch}>
+          <>
+            {isOwner() && (
+              <Button onClick={createNewSketch}>
                 {t('DashboardView.NewSketch')}
               </Button>
             )}
             <SketchSearchbar />
-          </React.Fragment>
+          </>
         );
     }
-  }
+  };
 
-  renderContent(tabKey, username, mobile) {
+  const renderContent = (tabKey, username, mobile) => {
     switch (tabKey) {
       case TabKey.assets:
         return <AssetList key={username} mobile={mobile} username={username} />;
@@ -122,56 +111,50 @@ class DashboardView extends React.Component {
         );
       case TabKey.sketches:
       default:
-        return (
-          <SketchList key={username} mobile={mobile} username={username} />
-        );
+        return <SketchList key={username} mobile={mobile} username={username} />;
     }
-  }
+  };
 
-  render() {
-    const currentTab = this.selectedTabKey();
-    const isOwner = this.isOwner();
-    const { username } = this.props.params;
-    const actions = this.renderActionButton(currentTab, username, this.props.t);
+  const currentTab = selectedTabKey();
+  const isOwnerFlag = isOwner();
+  const { username } = props.params;
+  const actions = renderActionButton(currentTab, username, props.t);
 
-    return (
-      <RootPage fixedHeight="100%">
-        <Nav layout="dashboard" />
+  return (
+    <RootPage fixedHeight="100%">
+      <Nav layout="dashboard" />
 
-        <main className="dashboard-header">
-          <div className="dashboard-header__header">
-            <h2 className="dashboard-header__header__title">
-              {this.ownerName()}
-            </h2>
-            <div className="dashboard-header__nav">
-              <DashboardTabSwitcherPublic
-                currentTab={currentTab}
-                isOwner={isOwner}
-                username={username}
-              />
-              {actions && (
-                <div className="dashboard-header__actions">{actions}</div>
-              )}
-            </div>
+      <main className="dashboard-header">
+        <div className="dashboard-header__header">
+          <h2 className="dashboard-header__header__title">{ownerName()}</h2>
+          <div className="dashboard-header__nav">
+            <DashboardTabSwitcherPublic
+              currentTab={currentTab}
+              isOwner={isOwnerFlag}
+              username={username}
+            />
+            {actions && (
+              <div className="dashboard-header__actions">{actions}</div>
+            )}
           </div>
+        </div>
 
-          <div className="dashboard-content">
-            <MediaQuery maxWidth={770}>
-              {(mobile) => this.renderContent(currentTab, username, mobile)}
-            </MediaQuery>
-          </div>
-        </main>
-        {this.state.collectionCreateVisible && (
-          <Overlay
-            title={this.props.t('DashboardView.CreateCollectionOverlay')}
-            closeOverlay={this.toggleCollectionCreate}
-          >
-            <CollectionCreate />
-          </Overlay>
-        )}
-      </RootPage>
-    );
-  }
+        <div className="dashboard-content">
+          <MediaQuery maxWidth={770}>
+            {(mobile) => renderContent(currentTab, username, mobile)}
+          </MediaQuery>
+        </div>
+      </main>
+      {collectionCreateVisible && (
+        <Overlay
+          title={props.t('DashboardView.CreateCollectionOverlay')}
+          closeOverlay={toggleCollectionCreate}
+        >
+          <CollectionCreate />
+        </Overlay>
+      )}
+    </RootPage>
+  );
 }
 
 function mapStateToProps(state) {
