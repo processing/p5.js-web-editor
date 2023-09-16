@@ -1,299 +1,314 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { bindActionCreators } from 'redux';
+import { Helmet } from 'react-helmet';
 import { withTranslation } from 'react-i18next';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import classNames from 'classnames';
+import find from 'lodash/find';
 import * as ProjectActions from '../../actions/project';
+import * as ProjectsActions from '../../actions/projects';
 import * as CollectionsActions from '../../actions/collections';
-import * as IdeActions from '../../actions/ide';
 import * as ToastActions from '../../actions/toast';
-import dates from '../../../../utils/formatDate';
+import * as SortingActions from '../../actions/sorting';
+import getSortedCollections from '../../selectors/collections';
+import Loader from '../../../App/components/loader';
+import Overlay from '../../../App/components/Overlay';
+import AddToCollectionSketchList from '../AddToCollectionSketchList';
+import { SketchSearchbar } from '../Searchbar';
 
-import DownFilledTriangleIcon from '../../../../images/down-filled-triangle.svg';
-import MoreIconSvg from '../../../../images/more.svg';
+import CollectionListRow from './CollectionListRow';
 
-const formatDateCell = (date, mobile = false) =>
-  dates.format(date, { showTime: !mobile });
+import ArrowUpIcon from '../../../../images/sort-arrow-up.svg';
+import ArrowDownIcon from '../../../../images/sort-arrow-down.svg';
 
-class CollectionListRowBase extends React.Component {
-  static projectInCollection(project, collection) {
-    return (
-      collection.items.find((item) => item.project.id === project.id) != null
-    );
-  }
-
+class CollectionList extends React.Component {
   constructor(props) {
     super(props);
+
+    if (props.projectId) {
+      props.getProject(props.projectId);
+    }
+
+    this.props.getCollections(this.props.username);
+    this.props.resetSorting();
+
     this.state = {
-      optionsOpen: false,
-      isFocused: false,
-      renameOpen: false,
-      renameValue: ''
+      hasLoadedData: false,
+      addingSketchesToCollectionId: null
     };
-    this.renameInput = React.createRef();
   }
 
-  onFocusComponent = () => {
-    this.setState({ isFocused: true });
-  };
-
-  onBlurComponent = () => {
-    this.setState({ isFocused: false });
-    setTimeout(() => {
-      if (!this.state.isFocused) {
-        this.closeAll();
-      }
-    }, 200);
-  };
-
-  openOptions = () => {
-    this.setState({
-      optionsOpen: true
-    });
-  };
-
-  closeOptions = () => {
-    this.setState({
-      optionsOpen: false
-    });
-  };
-
-  toggleOptions = () => {
-    if (this.state.optionsOpen) {
-      this.closeOptions();
-    } else {
-      this.openOptions();
-    }
-  };
-
-  closeAll = () => {
-    this.setState({
-      optionsOpen: false,
-      renameOpen: false
-    });
-  };
-
-  handleAddSketches = () => {
-    this.closeAll();
-    this.props.onAddSketches();
-  };
-
-  handleDropdownOpen = () => {
-    this.closeAll();
-    this.openOptions();
-  };
-
-  handleCollectionDelete = () => {
-    this.closeAll();
-    if (
-      window.confirm(
-        this.props.t('Common.DeleteConfirmation', {
-          name: this.props.collection.name
-        })
-      )
-    ) {
-      this.props.deleteCollection(this.props.collection.id);
-    }
-  };
-
-  handleRenameOpen = () => {
-    this.closeAll();
-    this.setState(
-      {
-        renameOpen: true,
-        renameValue: this.props.collection.name
-      },
-      () => this.renameInput.current.focus()
-    );
-  };
-
-  handleRenameChange = (e) => {
-    this.setState({
-      renameValue: e.target.value
-    });
-  };
-
-  handleRenameEnter = (e) => {
-    if (e.key === 'Enter') {
-      this.updateName();
-      this.closeAll();
-    }
-  };
-
-  handleRenameBlur = () => {
-    this.updateName();
-    this.closeAll();
-  };
-
-  updateName = () => {
-    const isValid = this.state.renameValue.trim().length !== 0;
-    if (isValid) {
-      this.props.editCollection(this.props.collection.id, {
-        name: this.state.renameValue.trim()
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.loading === true && this.props.loading === false) {
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState({
+        hasLoadedData: true
       });
     }
+  }
+
+  getTitle() {
+    if (this.props.username === this.props.user.username) {
+      return this.props.t('CollectionList.Title');
+    }
+    return this.props.t('CollectionList.AnothersTitle', {
+      anotheruser: this.props.username
+    });
+  }
+
+  showAddSketches = (collectionId) => {
+    this.setState({
+      addingSketchesToCollectionId: collectionId
+    });
   };
 
-  renderActions = () => {
-    const { optionsOpen } = this.state;
-    const userIsOwner = this.props.user.username === this.props.username;
+  hideAddSketches = () => {
+    this.setState({
+      addingSketchesToCollectionId: null
+    });
+  };
 
+  hasCollections() {
     return (
-      <React.Fragment>
-        <button
-          className="sketch-list__dropdown-button"
-          onClick={this.toggleOptions}
-          onBlur={this.onBlurComponent}
-          onFocus={this.onFocusComponent}
-          aria-label={this.props.t(
-            'CollectionListRow.ToggleCollectionOptionsARIA'
-          )}
-        >
-          {this.props.mobile ? (
-            <MoreIconSvg focusable="false" aria-hidden="true" />
-          ) : (
-            <DownFilledTriangleIcon focusable="false" aria-hidden="true" />
-          )}
-        </button>
-        {optionsOpen && (
-          <ul className="sketch-list__action-dialogue">
-            <li>
-              <button
-                className="sketch-list__action-option"
-                onClick={this.handleAddSketches}
-                onBlur={this.onBlurComponent}
-                onFocus={this.onFocusComponent}
-              >
-                {this.props.t('CollectionListRow.AddSketch')}
-              </button>
-            </li>
-            {userIsOwner && (
-              <li>
-                <button
-                  className="sketch-list__action-option"
-                  onClick={this.handleCollectionDelete}
-                  onBlur={this.onBlurComponent}
-                  onFocus={this.onFocusComponent}
-                >
-                  {this.props.t('CollectionListRow.Delete')}
-                </button>
-              </li>
-            )}
-            {userIsOwner && (
-              <li>
-                <button
-                  className="sketch-list__action-option"
-                  onClick={this.handleRenameOpen}
-                  onBlur={this.onBlurComponent}
-                  onFocus={this.onFocusComponent}
-                >
-                  {this.props.t('CollectionListRow.Rename')}
-                </button>
-              </li>
-            )}
-          </ul>
-        )}
-      </React.Fragment>
+      (!this.props.loading || this.state.hasLoadedData) &&
+      this.props.collections.length > 0
     );
+  }
+
+  _renderLoader() {
+    if (this.props.loading && !this.state.hasLoadedData) return <Loader />;
+    return null;
+  }
+
+  _renderEmptyTable() {
+    if (!this.props.loading && this.props.collections.length === 0) {
+      return (
+        <p className="sketches-table__empty">
+          {this.props.t('CollectionList.NoCollections')}
+        </p>
+      );
+    }
+    return null;
+  }
+
+  _getButtonLabel = (fieldName, displayName) => {
+    const { field, direction } = this.props.sorting;
+    let buttonLabel;
+    if (field !== fieldName) {
+      if (field === 'name') {
+        buttonLabel = this.props.t('CollectionList.ButtonLabelAscendingARIA', {
+          displayName
+        });
+      } else {
+        buttonLabel = this.props.t('CollectionList.ButtonLabelDescendingARIA', {
+          displayName
+        });
+      }
+    } else if (direction === SortingActions.DIRECTION.ASC) {
+      buttonLabel = this.props.t('CollectionList.ButtonLabelDescendingARIA', {
+        displayName
+      });
+    } else {
+      buttonLabel = this.props.t('CollectionList.ButtonLabelAscendingARIA', {
+        displayName
+      });
+    }
+    return buttonLabel;
   };
 
-  renderCollectionName = () => {
-    const { collection, username } = this.props;
-    const { renameOpen, renameValue } = this.state;
-
+  _renderFieldHeader = (fieldName, displayName) => {
+    const { field, direction } = this.props.sorting;
+    const headerClass = classNames({
+      'sketches-table__header': true,
+      'sketches-table__header--selected': field === fieldName
+    });
+    const buttonLabel = this._getButtonLabel(fieldName, displayName);
     return (
-      <React.Fragment>
-        <Link
-          to={{
-            pathname: `/${username}/collections/${collection.id}`,
-            state: { skipSavingPath: true }
-          }}
+      <th scope="col">
+        <button
+          className="sketch-list__sort-button"
+          onClick={() => this.props.toggleDirectionForField(fieldName)}
+          aria-label={buttonLabel}
         >
-          {renameOpen ? '' : collection.name}
-        </Link>
-        {renameOpen && (
-          <input
-            value={renameValue}
-            onChange={this.handleRenameChange}
-            onKeyUp={this.handleRenameEnter}
-            onBlur={this.handleRenameBlur}
-            onClick={(e) => e.stopPropagation()}
-            ref={this.renameInput}
-          />
-        )}
-      </React.Fragment>
+          <span className={headerClass}>{displayName}</span>
+          {field === fieldName &&
+            direction === SortingActions.DIRECTION.ASC && (
+              <ArrowUpIcon
+                role="img"
+                aria-label={this.props.t(
+                  'CollectionList.DirectionAscendingARIA'
+                )}
+                focusable="false"
+              />
+            )}
+          {field === fieldName &&
+            direction === SortingActions.DIRECTION.DESC && (
+              <ArrowDownIcon
+                role="img"
+                aria-label={this.props.t(
+                  'CollectionList.DirectionDescendingARIA'
+                )}
+                focusable="false"
+              />
+            )}
+        </button>
+      </th>
     );
   };
 
   render() {
-    const { collection, mobile } = this.props;
+    const username =
+      this.props.username !== undefined
+        ? this.props.username
+        : this.props.user.username;
+    const { mobile } = this.props;
 
     return (
-      <tr className="sketches-table__row" key={collection.id}>
-        <th scope="row">
-          <span className="sketches-table__name">
-            {this.renderCollectionName()}
-          </span>
-        </th>
-        <td>{formatDateCell(collection.createdAt, mobile)}</td>
-        <td>{formatDateCell(collection.updatedAt, mobile)}</td>
-        <td>
-          {mobile && 'sketches: '}
-          {(collection.items || []).length}
-        </td>
-        <td className="sketch-list__dropdown-column">{this.renderActions()}</td>
-      </tr>
+      <article className="sketches-table-container">
+        <Helmet>
+          <title>{this.getTitle()}</title>
+        </Helmet>
+
+        {this._renderLoader()}
+        {this._renderEmptyTable()}
+        {this.hasCollections() && (
+          <table
+            className="sketches-table"
+            summary={this.props.t('CollectionList.TableSummary')}
+          >
+            <thead>
+              <tr>
+                {this._renderFieldHeader(
+                  'name',
+                  this.props.t('CollectionList.HeaderName')
+                )}
+                {this._renderFieldHeader(
+                  'createdAt',
+                  this.props.t('CollectionList.HeaderCreatedAt', {
+                    context: mobile ? 'mobile' : ''
+                  })
+                )}
+                {this._renderFieldHeader(
+                  'updatedAt',
+                  this.props.t('CollectionList.HeaderUpdatedAt', {
+                    context: mobile ? 'mobile' : ''
+                  })
+                )}
+                {this._renderFieldHeader(
+                  'numItems',
+                  this.props.t('CollectionList.HeaderNumItems', {
+                    context: mobile ? 'mobile' : ''
+                  })
+                )}
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.props.collections.map((collection) => (
+                <CollectionListRow
+                  mobile={mobile}
+                  key={collection.id}
+                  collection={collection}
+                  user={this.props.user}
+                  username={username}
+                  project={this.props.project}
+                  onAddSketches={() => this.showAddSketches(collection.id)}
+                />
+              ))}
+            </tbody>
+          </table>
+        )}
+        {this.state.addingSketchesToCollectionId && (
+          <Overlay
+            title={this.props.t('CollectionList.AddSketch')}
+            actions={<SketchSearchbar />}
+            closeOverlay={this.hideAddSketches}
+            isFixedHeight
+          >
+            <AddToCollectionSketchList
+              username={this.props.username}
+              collection={find(this.props.collections, {
+                id: this.state.addingSketchesToCollectionId
+              })}
+            />
+          </Overlay>
+        )}
+      </article>
     );
   }
 }
 
-CollectionListRowBase.propTypes = {
-  collection: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    owner: PropTypes.shape({
-      username: PropTypes.string.isRequired
-    }).isRequired,
-    createdAt: PropTypes.string.isRequired,
-    updatedAt: PropTypes.string.isRequired,
-    items: PropTypes.arrayOf(
-      PropTypes.shape({
-        project: PropTypes.shape({
-          id: PropTypes.string.isRequired
-        })
-      })
-    )
-  }).isRequired,
-  username: PropTypes.string.isRequired,
+CollectionList.propTypes = {
   user: PropTypes.shape({
     username: PropTypes.string,
     authenticated: PropTypes.bool.isRequired
   }).isRequired,
-  deleteCollection: PropTypes.func.isRequired,
-  editCollection: PropTypes.func.isRequired,
-  onAddSketches: PropTypes.func.isRequired,
-  mobile: PropTypes.bool,
-  t: PropTypes.func.isRequired
+  projectId: PropTypes.string,
+  getCollections: PropTypes.func.isRequired,
+  getProject: PropTypes.func.isRequired,
+  collections: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      description: PropTypes.string,
+      createdAt: PropTypes.string.isRequired,
+      updatedAt: PropTypes.string.isRequired
+    })
+  ).isRequired,
+  username: PropTypes.string,
+  loading: PropTypes.bool.isRequired,
+  toggleDirectionForField: PropTypes.func.isRequired,
+  resetSorting: PropTypes.func.isRequired,
+  sorting: PropTypes.shape({
+    field: PropTypes.string.isRequired,
+    direction: PropTypes.string.isRequired
+  }).isRequired,
+  project: PropTypes.shape({
+    id: PropTypes.string,
+    owner: PropTypes.shape({
+      id: PropTypes.string
+    })
+  }),
+  t: PropTypes.func.isRequired,
+  mobile: PropTypes.bool
 };
 
-CollectionListRowBase.defaultProps = {
+CollectionList.defaultProps = {
+  projectId: undefined,
+  project: {
+    id: undefined,
+    owner: undefined
+  },
+  username: undefined,
   mobile: false
 };
 
-function mapDispatchToPropsSketchListRow(dispatch) {
+function mapStateToProps(state, ownProps) {
+  return {
+    user: state.user,
+    collections: getSortedCollections(state),
+    sorting: state.sorting,
+    loading: state.loading,
+    project: state.project,
+    projectId: ownProps && ownProps.params ? ownProps.params.project_id : null
+  };
+}
+
+function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     Object.assign(
       {},
       CollectionsActions,
+      ProjectsActions,
       ProjectActions,
-      IdeActions,
-      ToastActions
+      ToastActions,
+      SortingActions
     ),
     dispatch
   );
 }
 
 export default withTranslation()(
-  connect(null, mapDispatchToPropsSketchListRow)(CollectionListRowBase)
+  connect(mapStateToProps, mapDispatchToProps)(CollectionList)
 );
