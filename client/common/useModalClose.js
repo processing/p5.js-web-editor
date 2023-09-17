@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import useKeyDownHandlers from './useKeyDownHandlers';
 
 /**
  * Common logic for Modal, Overlay, etc.
@@ -24,12 +25,6 @@ export default function useModalClose(onClose, passedRef) {
   useEffect(() => {
     modalRef.current?.focus();
 
-    function handleKeyDown(e) {
-      if (e.key === 'Escape') {
-        onClose?.();
-      }
-    }
-
     function handleClick(e) {
       // ignore clicks on the component itself
       if (modalRef.current && !modalRef.current.contains(e.target)) {
@@ -37,14 +32,14 @@ export default function useModalClose(onClose, passedRef) {
       }
     }
 
-    document.addEventListener('mousedown', handleClick, false);
-    document.addEventListener('keydown', handleKeyDown, false);
+    document.addEventListener('click', handleClick, false);
 
     return () => {
-      document.removeEventListener('mousedown', handleClick, false);
-      document.removeEventListener('keydown', handleKeyDown, false);
+      document.removeEventListener('click', handleClick, false);
     };
   }, [onClose, modalRef]);
+
+  useKeyDownHandlers({ escape: onClose });
 
   return modalRef;
 }

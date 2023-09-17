@@ -5,7 +5,7 @@
   font-size: #{12 / $base-font-size}rem;
   text-align: left;
   @include themify() {
-    color: getThemifyVariable('error-color');
+    color: getThemifyVariable("error-color");
   }
 }
 
@@ -27,11 +27,16 @@
   margin-top: #{16 / $base-font-size}rem;
   font-size: #{12 / $base-font-size}rem;
   @include themify() {
-    color: getThemifyVariable('form-navigation-options-color');
+    color: getThemifyVariable("form-navigation-options-color");
+  }
+
+  @media (max-width: 550px) {
+    text-align: center;
+    margin: #{12 / $base-font-size}rem;
   }
 }
 
-.form__legend{
+.form__legend {
   font-size: #{21 / $base-font-size}rem;
   font-weight: bold;
 }
@@ -42,7 +47,7 @@
   margin-bottom: #{7 / $base-font-size}rem;
   display: block;
   @include themify() {
-    color: getThemifyVariable('form-secondary-title-color');
+    color: getThemifyVariable("form-secondary-title-color");
   }
 }
 
@@ -56,8 +61,8 @@
   height: #{40 / $base-font-size}rem;
   font-size: #{16 / $base-font-size}rem;
   @include themify() {
-    color: getThemifyVariable('form-input-text-color');
-    background-color: getThemifyVariable('input-background-color');
+    color: getThemifyVariable("form-input-text-color");
+    background-color: getThemifyVariable("input-background-color");
   }
 }
 
@@ -67,7 +72,7 @@
 
 .form__input::placeholder {
   @include themify() {
-    color: getThemifyVariable('form-input-placeholder-text-color');
+    color: getThemifyVariable("form-input-placeholder-text-color");
   }
 }
 
@@ -78,7 +83,7 @@
 
 .form__status {
   @include themify() {
-    color: getThemifyVariable('form-navigation-options-color');
+    color: getThemifyVariable("form-navigation-options-color");
   }
 }
 
