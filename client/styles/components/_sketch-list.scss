@@ -58,14 +58,9 @@
           .sketch-list__dropdown-column {
             position: absolute;
             top: 0;
-            right: 0;
+            right: #{4 / $base-font-size}rem;
             width: auto;
             margin: #{8 / $base-font-size}rem;
-
-            .sketch-list__dropdown-button {
-              transform: rotateZ(90deg) translateX(-30%);
-              transform-origin: center;
-            }
           }
         }
       }

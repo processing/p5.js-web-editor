@@ -7,7 +7,10 @@ import { DropdownWrapper } from '../Dropdown';
 // TODO: enable arrow keys to navigate options from list
 
 const DropdownMenu = forwardRef(
-  ({ children, 'aria-label': ariaLabel, align, className, classes }, ref) => {
+  (
+    { children, anchor, 'aria-label': ariaLabel, align, className, classes },
+    ref
+  ) => {
     // Note: need to use a ref instead of a state to avoid stale closures.
     const focusedRef = useRef(false);
 
@@ -44,7 +47,7 @@ const DropdownMenu = forwardRef(
           onBlur={handleBlur}
           onFocus={handleFocus}
         >
-          <DownArrowIcon focusable="false" aria-hidden="true" />
+          {anchor ?? <DownArrowIcon focusable="false" aria-hidden="true" />}
         </button>
         {isOpen && (
           <DropdownWrapper
@@ -65,7 +68,15 @@ const DropdownMenu = forwardRef(
 );
 
 DropdownMenu.propTypes = {
-  children: PropTypes.node,
+  /**
+   * Provide <MenuItem> elements as children to control the contents of the menu.
+   */
+  children: PropTypes.node.isRequired,
+  /**
+   * Can optionally override the contents of the button which opens the menu.
+   * Defaults to <DownArrowIcon>
+   */
+  anchor: PropTypes.node,
   'aria-label': PropTypes.string.isRequired,
   align: PropTypes.oneOf(['left', 'right']),
   className: PropTypes.string,
@@ -76,7 +87,7 @@ DropdownMenu.propTypes = {
 };
 
 DropdownMenu.defaultProps = {
-  children: null,
+  anchor: null,
   align: 'right',
   className: '',
   classes: {}
