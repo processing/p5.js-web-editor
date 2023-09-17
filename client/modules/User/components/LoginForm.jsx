@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form, Field } from 'react-final-form';
 import { useDispatch } from 'react-redux';
@@ -7,7 +7,22 @@ import { validateLogin } from '../../../utils/reduxFormUtils';
 import { validateAndLoginUser } from '../actions';
 
 function LoginForm() {
+  const [contentPresent, setContentPresent] = useState(false);
   const { t } = useTranslation();
+
+  useEffect(() => {
+    const checkEmailElement = () => {
+      if (
+        document.getElementById('email') &&
+        document.getElementById('password')
+      ) {
+        setContentPresent(true);
+      } else {
+        setContentPresent(false);
+      }
+    };
+    checkEmailElement();
+  }, []);
 
   const dispatch = useDispatch();
   function onSubmit(formProps) {
@@ -71,7 +86,10 @@ function LoginForm() {
           {submitError && !modifiedSinceLastSubmit && (
             <span className="form-error">{submitError}</span>
           )}
-          <Button type="submit" disabled={submitting || pristine}>
+          <Button
+            type="submit"
+            disabled={(submitting || pristine) && !contentPresent}
+          >
             {t('LoginForm.Submit')}
           </Button>
         </form>
