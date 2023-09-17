@@ -16,6 +16,12 @@ const formatDateCell = (date, mobile = false) =>
   dates.format(date, { showTime: !mobile });
 
 class CollectionListRowBase extends React.Component {
+  static projectInCollection(project, collection) {
+    return (
+      collection.items.find((item) => item.project.id === project.id) != null
+    );
+  }
+
   constructor(props) {
     super(props);
     this.state = {
