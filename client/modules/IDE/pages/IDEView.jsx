@@ -127,7 +127,21 @@ const IDEView = () => {
       }
     };
   }, [shouldAutosave, dispatch]);
-
+  const [copied, setCopied] = useState(false);
+  const handleCopy = async () => {
+    const editor = cmRef.current;
+    try {
+      const content = editor;
+      await navigator.clipboard.writeText(content.getContent().content);
+      setCopied(true);
+      const x = setTimeout(() => {
+        setCopied(false);
+        clearTimeout(x);
+      }, 500);
+    } catch (error) {
+      console.error('Failed to copy text to clipboard:', error);
+    }
+  };
   return (
     <RootPage>
       <Helmet>
@@ -142,7 +156,29 @@ const IDEView = () => {
       <MediaQuery minWidth={770}>
         {(matches) =>
           matches ? (
-            <main className="editor-preview-container">
+            <main
+              className="editor-preview-container"
+              style={{
+                position: 'relative'
+              }}
+            >
+              <button
+                style={{
+                  position: 'fixed',
+                  zIndex: 27,
+                  right: '41.8%',
+                  backgroundColor: '#ccc',
+                  textAlign: 'center',
+                  display: 'grid',
+                  placeItems: 'center',
+                  marginTop: '-4.5rem',
+                  width: '100px',
+                  height: '40px'
+                }}
+                onClick={handleCopy}
+              >
+                {copied ? 'copied' : 'copy'}
+              </button>
               <SplitPane
                 split="vertical"
                 size={ide.sidebarIsExpanded ? sidebarSize : 20}
