@@ -1,71 +1,66 @@
+import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import React from 'react';
 import { throttle } from 'lodash';
 import { withTranslation } from 'react-i18next';
 import i18next from 'i18next';
 import SearchIcon from '../../../../images/magnifyingglass.svg';
 
-class Searchbar extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      searchValue: this.props.searchTerm
+const Searchbar = (props) => {
+  const [searchValue, setSearchValue] = useState(props.searchTerm);
+
+  const throttledSearchChange = useCallback(
+    throttle((value) => {
+      props.setSearchTerm(value.trim());
+    }, 500),
+    []
+  );
+
+  useEffect(() => {
+    return () => {
+      props.resetSearchTerm();
     };
-    this.throttledSearchChange = throttle(this.searchChange, 500);
-  }
+  }, [props]);
 
-  componentWillUnmount() {
-    this.props.resetSearchTerm();
-  }
-
-  handleResetSearch = () => {
-    this.setState({ searchValue: '' }, () => {
-      this.props.resetSearchTerm();
-    });
+  const handleResetSearch = () => {
+    setSearchValue('');
+    props.resetSearchTerm();
   };
 
-  searchChange = () => {
-    this.props.setSearchTerm(this.state.searchValue.trim());
+  const handleSearchChange = (e) => {
+    const newValue = e.target.value;
+    setSearchValue(newValue);
+    throttledSearchChange(newValue.trim());
   };
 
-  handleSearchChange = (e) => {
-    this.setState({ searchValue: e.target.value }, () => {
-      this.throttledSearchChange(this.state.searchValue.trim());
-    });
-  };
-
-  render() {
-    const { searchValue } = this.state;
-    return (
-      <div
-        className={`searchbar ${
-          searchValue === '' ? 'searchbar--is-empty' : ''
-        }`}
-      >
-        <div className="searchbar__button">
-          <SearchIcon
-            className="searchbar__icon"
-            focusable="false"
-            aria-hidden="true"
-          />
-        </div>
-        <input
-          className="searchbar__input"
-          type="text"
-          value={searchValue}
-          placeholder={this.props.searchLabel}
-          onChange={this.handleSearchChange}
+  return (
+    <div
+      className={`searchbar ${
+        searchValue === '' ? 'searchbar--is-empty' : ''
+      }`}
+    >
+      <div className="searchbar__button">
+        <SearchIcon
+          className="searchbar__icon"
+          focusable="false"
+          aria-hidden="true"
         />
-        <button
-          className="searchbar__clear-button"
-          onClick={this.handleResetSearch}
-        >
-          {this.props.t('Searchbar.ClearTerm')}
-        </button>
       </div>
-    );
-  }
-}
+      <input
+        className="searchbar__input"
+        type="text"
+        value={searchValue}
+        placeholder={props.searchLabel}
+        onChange={handleSearchChange}
+      />
+      <button
+        className="searchbar__clear-button"
+        onClick={handleResetSearch}
+      >
+        {props.t('Searchbar.ClearTerm')}
+      </button>
+    </div>
+  );
+};
 
 Searchbar.propTypes = {
   searchTerm: PropTypes.string.isRequired,
