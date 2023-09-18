@@ -37,7 +37,7 @@ const EditorAccessibility = ({ lintMessages = [] }) => {
 EditorAccessibility.propTypes = {
   lintMessages: PropTypes.arrayOf(
     PropTypes.shape({
-      severity: PropTypes.string.isRequired,
+      severity: PropTypes.oneOf(['error', 'hint', 'info', 'warning']),
       line: PropTypes.number.isRequired,
       message: PropTypes.string.isRequired,
       id: PropTypes.number.isRequired
