@@ -530,7 +530,7 @@
     "KeyUpLineNumber": "Zeile {{lineNumber}}"
   },
   "EditorAccessibility": {
-    "NoLintMessages": "Keine Lint-Warnungen vorhanden ",
+    "NoLintMessages": "Keine Lint-Warnungen vorhanden",
     "CurrentLine": " Aktuelle Zeile"
   },
   "Timer": {

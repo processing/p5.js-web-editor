@@ -529,7 +529,7 @@
       "KeyUpLineNumber": "{{lineNumber}} 行"
     },
     "EditorAccessibility": {
-      "NoLintMessages": "リントメッセージはありません ",
+      "NoLintMessages": "リントメッセージはありません",
       "CurrentLine": " 現在の行"
     },
     "Timer": {

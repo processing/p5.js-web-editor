@@ -535,7 +535,7 @@
     "KeyUpLineNumber": "linea {{lineNumber}}"
   },
   "EditorAccessibility": {
-    "NoLintMessages": "Non ci sono messaggi ",
+    "NoLintMessages": "Non ci sono messaggi",
     "CurrentLine": " Linea attuale"
   },
   "Timer": {
