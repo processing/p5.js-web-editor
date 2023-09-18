@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
@@ -8,126 +8,149 @@ import * as ProjectActions from '../../actions/project';
 import * as CollectionsActions from '../../actions/collections';
 import * as IdeActions from '../../actions/ide';
 import * as ToastActions from '../../actions/toast';
-import formatDate from '../../../../utils/formatDate';
+import dates from '../../../../utils/formatDate';
 
 import DownFilledTriangleIcon from '../../../../images/down-filled-triangle.svg';
 import MoreIconSvg from '../../../../images/more.svg';
 
-const CollectionListRowBase = (props) => {
-  const [optionsOpen, setOptionsOpen] = useState(false);
-  const [isFocused, setIsFocused] = useState(false);
-  const [renameOpen, setRenameOpen] = useState(false);
-  const [renameValue, setRenameValue] = useState(props.collection.name);
-  const renameInputRef = useRef(null);
+const formatDateCell = (date, mobile = false) =>
+  dates.format(date, { showTime: !mobile });
 
-  const projectInCollection = (project, collection) =>
-    collection.items.find((item) => item.project.id === project.id) != null;
+class CollectionListRowBase extends React.Component {
+  static projectInCollection(project, collection) {
+    return (
+      collection.items.find((item) => item.project.id === project.id) != null
+    );
+  }
 
-  const onFocusComponent = () => {
-    setIsFocused(true);
+  constructor(props) {
+    super(props);
+    this.state = {
+      optionsOpen: false,
+      isFocused: false,
+      renameOpen: false,
+      renameValue: ''
+    };
+    this.renameInput = React.createRef();
+  }
+
+  onFocusComponent = () => {
+    this.setState({ isFocused: true });
   };
 
-  const onBlurComponent = () => {
-    setIsFocused(false);
+  onBlurComponent = () => {
+    this.setState({ isFocused: false });
     setTimeout(() => {
-      if (!isFocused) {
-        // eslint-disable-next-line no-use-before-define
-        closeAll();
+      if (!this.state.isFocused) {
+        this.closeAll();
       }
     }, 200);
   };
 
-  const openOptions = () => {
-    setOptionsOpen(true);
+  openOptions = () => {
+    this.setState({
+      optionsOpen: true
+    });
   };
 
-  const closeOptions = () => {
-    setOptionsOpen(false);
+  closeOptions = () => {
+    this.setState({
+      optionsOpen: false
+    });
   };
 
-  const toggleOptions = () => {
-    if (optionsOpen) {
-      closeOptions();
+  toggleOptions = () => {
+    if (this.state.optionsOpen) {
+      this.closeOptions();
     } else {
-      openOptions();
+      this.openOptions();
     }
   };
 
-  const closeAll = () => {
-    setOptionsOpen(false);
-    setRenameOpen(false);
+  closeAll = () => {
+    this.setState({
+      optionsOpen: false,
+      renameOpen: false
+    });
   };
 
-  const handleAddSketches = () => {
-    closeAll();
-    props.onAddSketches();
+  handleAddSketches = () => {
+    this.closeAll();
+    this.props.onAddSketches();
   };
 
-  const handleDropdownOpen = () => {
-    closeAll();
-    openOptions();
+  handleDropdownOpen = () => {
+    this.closeAll();
+    this.openOptions();
   };
 
-  const handleCollectionDelete = () => {
-    closeAll();
+  handleCollectionDelete = () => {
+    this.closeAll();
     if (
       window.confirm(
-        props.t('Common.DeleteConfirmation', { name: props.collection.name })
+        this.props.t('Common.DeleteConfirmation', {
+          name: this.props.collection.name
+        })
       )
     ) {
-      props.deleteCollection(props.collection.id);
+      this.props.deleteCollection(this.props.collection.id);
     }
   };
 
-  const handleRenameOpen = () => {
-    closeAll();
-    setRenameOpen(true);
-    renameInputRef.current.focus();
+  handleRenameOpen = () => {
+    this.closeAll();
+    this.setState(
+      {
+        renameOpen: true,
+        renameValue: this.props.collection.name
+      },
+      () => this.renameInput.current.focus()
+    );
   };
 
-  const handleRenameChange = (e) => {
-    setRenameValue(e.target.value);
+  handleRenameChange = (e) => {
+    this.setState({
+      renameValue: e.target.value
+    });
   };
 
-  const handleRenameEnter = (e) => {
+  handleRenameEnter = (e) => {
     if (e.key === 'Enter') {
-      // eslint-disable-next-line no-use-before-define
-      updateName();
-      closeAll();
+      this.updateName();
+      this.closeAll();
     }
   };
 
-  const handleRenameBlur = () => {
-    // eslint-disable-next-line no-use-before-define
-    updateName();
-    closeAll();
+  handleRenameBlur = () => {
+    this.updateName();
+    this.closeAll();
   };
 
-  const updateName = () => {
-    const isValid = renameValue.trim().length !== 0;
+  updateName = () => {
+    const isValid = this.state.renameValue.trim().length !== 0;
     if (isValid) {
-      props.editCollection(props.collection.id, {
-        name: renameValue.trim()
+      this.props.editCollection(this.props.collection.id, {
+        name: this.state.renameValue.trim()
       });
     }
   };
 
-  const renderActions = () => {
-    const { mobile, user, username } = props;
-    // eslint-disable-next-line no-shadow, no-use-before-define
-    const { optionsOpen } = optionsOpen;
-    const userIsOwner = user.username === username;
+  renderActions = () => {
+    const { optionsOpen } = this.state;
+    const userIsOwner = this.props.user.username === this.props.username;
 
     return (
       <React.Fragment>
         <button
           className="sketch-list__dropdown-button"
-          onClick={toggleOptions}
-          onBlur={onBlurComponent}
-          onFocus={onFocusComponent}
-          aria-label={props.t('CollectionListRow.ToggleCollectionOptionsARIA')}
+          onClick={this.toggleOptions}
+          onBlur={this.onBlurComponent}
+          onFocus={this.onFocusComponent}
+          aria-label={this.props.t(
+            'CollectionListRow.ToggleCollectionOptionsARIA'
+          )}
         >
-          {mobile ? (
+          {this.props.mobile ? (
             <MoreIconSvg focusable="false" aria-hidden="true" />
           ) : (
             <DownFilledTriangleIcon focusable="false" aria-hidden="true" />
@@ -138,22 +161,22 @@ const CollectionListRowBase = (props) => {
             <li>
               <button
                 className="sketch-list__action-option"
-                onClick={handleAddSketches}
-                onBlur={onBlurComponent}
-                onFocus={onFocusComponent}
+                onClick={this.handleAddSketches}
+                onBlur={this.onBlurComponent}
+                onFocus={this.onFocusComponent}
               >
-                {props.t('CollectionListRow.AddSketch')}
+                {this.props.t('CollectionListRow.AddSketch')}
               </button>
             </li>
             {userIsOwner && (
               <li>
                 <button
                   className="sketch-list__action-option"
-                  onClick={handleCollectionDelete}
-                  onBlur={onBlurComponent}
-                  onFocus={onFocusComponent}
+                  onClick={this.handleCollectionDelete}
+                  onBlur={this.onBlurComponent}
+                  onFocus={this.onFocusComponent}
                 >
-                  {props.t('CollectionListRow.Delete')}
+                  {this.props.t('CollectionListRow.Delete')}
                 </button>
               </li>
             )}
@@ -161,11 +184,11 @@ const CollectionListRowBase = (props) => {
               <li>
                 <button
                   className="sketch-list__action-option"
-                  onClick={handleRenameOpen}
-                  onBlur={onBlurComponent}
-                  onFocus={onFocusComponent}
+                  onClick={this.handleRenameOpen}
+                  onBlur={this.onBlurComponent}
+                  onFocus={this.onFocusComponent}
                 >
-                  {props.t('CollectionListRow.Rename')}
+                  {this.props.t('CollectionListRow.Rename')}
                 </button>
               </li>
             )}
@@ -175,10 +198,9 @@ const CollectionListRowBase = (props) => {
     );
   };
 
-  const renderCollectionName = () => {
-    const { collection, username } = props;
-    // eslint-disable-next-line no-shadow, no-use-before-define
-    const { renameOpen } = renameOpen;
+  renderCollectionName = () => {
+    const { collection, username } = this.props;
+    const { renameOpen, renameValue } = this.state;
 
     return (
       <React.Fragment>
@@ -193,34 +215,38 @@ const CollectionListRowBase = (props) => {
         {renameOpen && (
           <input
             value={renameValue}
-            onChange={handleRenameChange}
-            onKeyUp={handleRenameEnter}
-            onBlur={handleRenameBlur}
+            onChange={this.handleRenameChange}
+            onKeyUp={this.handleRenameEnter}
+            onBlur={this.handleRenameBlur}
             onClick={(e) => e.stopPropagation()}
-            ref={renameInputRef}
+            ref={this.renameInput}
           />
         )}
       </React.Fragment>
     );
   };
 
-  const { collection, mobile } = props;
+  render() {
+    const { collection, mobile } = this.props;
 
-  return (
-    <tr className="sketches-table__row" key={collection.id}>
-      <th scope="row">
-        <span className="sketches-table__name">{renderCollectionName()}</span>
-      </th>
-      <td>{formatDate(collection.createdAt, mobile)}</td>
-      <td>{formatDate(collection.updatedAt, mobile)}</td>
-      <td>
-        {mobile && 'sketches: '}
-        {(collection.items || []).length}
-      </td>
-      <td className="sketch-list__dropdown-column">{renderActions()}</td>
-    </tr>
-  );
-};
+    return (
+      <tr className="sketches-table__row" key={collection.id}>
+        <th scope="row">
+          <span className="sketches-table__name">
+            {this.renderCollectionName()}
+          </span>
+        </th>
+        <td>{formatDateCell(collection.createdAt, mobile)}</td>
+        <td>{formatDateCell(collection.updatedAt, mobile)}</td>
+        <td>
+          {mobile && 'sketches: '}
+          {(collection.items || []).length}
+        </td>
+        <td className="sketch-list__dropdown-column">{this.renderActions()}</td>
+      </tr>
+    );
+  }
+}
 
 CollectionListRowBase.propTypes = {
   collection: PropTypes.shape({
@@ -239,8 +265,7 @@ CollectionListRowBase.propTypes = {
       })
     )
   }).isRequired,
-  // eslint-disable-next-line react/require-default-props
-  mobile: PropTypes.bool,
+  username: PropTypes.string.isRequired,
   user: PropTypes.shape({
     username: PropTypes.string,
     authenticated: PropTypes.bool.isRequired
@@ -248,12 +273,16 @@ CollectionListRowBase.propTypes = {
   deleteCollection: PropTypes.func.isRequired,
   editCollection: PropTypes.func.isRequired,
   onAddSketches: PropTypes.func.isRequired,
-  t: PropTypes.func.isRequired,
-  username: PropTypes.string.isRequired
+  mobile: PropTypes.bool,
+  t: PropTypes.func.isRequired
 };
 
-const mapDispatchToPropsSketchListRow = (dispatch) =>
-  bindActionCreators(
+CollectionListRowBase.defaultProps = {
+  mobile: false
+};
+
+function mapDispatchToPropsSketchListRow(dispatch) {
+  return bindActionCreators(
     Object.assign(
       {},
       CollectionsActions,
@@ -263,6 +292,7 @@ const mapDispatchToPropsSketchListRow = (dispatch) =>
     ),
     dispatch
   );
+}
 
 export default withTranslation()(
   connect(null, mapDispatchToPropsSketchListRow)(CollectionListRowBase)
