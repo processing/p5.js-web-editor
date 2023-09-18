@@ -518,7 +518,7 @@
   },
   "EditorAccessibility": {
     "NoLintMessages": "There are no lint messages",
-    "CurrentLine": " Current line"
+    "CurrentLine": "Current line"
   },
   "Timer": {
     "SavedAgo": "Saved: {{timeAgo}}"

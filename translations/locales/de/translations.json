@@ -531,7 +531,7 @@
   },
   "EditorAccessibility": {
     "NoLintMessages": "Keine Lint-Warnungen vorhanden",
-    "CurrentLine": " Aktuelle Zeile"
+    "CurrentLine": "Aktuelle Zeile"
   },
   "Timer": {
     "SavedAgo": "Gesichert: {{timeAgo}}"

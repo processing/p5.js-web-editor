@@ -536,7 +536,7 @@
   },
   "EditorAccessibility": {
     "NoLintMessages": "Lint mesajı yok",
-    "CurrentLine": " Şu anki satır"
+    "CurrentLine": "Şu anki satır"
   },
   "Timer": {
     "SavedAgo": "Kaydedildi: {{timeAgo}}"

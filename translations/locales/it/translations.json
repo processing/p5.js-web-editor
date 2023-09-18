@@ -536,7 +536,7 @@
   },
   "EditorAccessibility": {
     "NoLintMessages": "Non ci sono messaggi",
-    "CurrentLine": " Linea attuale"
+    "CurrentLine": "Linea attuale"
   },
   "Timer": {
     "SavedAgo": "Salvato: {{timeAgo}}"

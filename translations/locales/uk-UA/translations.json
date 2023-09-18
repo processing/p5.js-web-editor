@@ -532,7 +532,7 @@
   },
   "EditorAccessibility": {
     "NoLintMessages": "Жодних повідомлень",
-    "CurrentLine": " Поточний рядок"
+    "CurrentLine": "Поточний рядок"
   },
   "Timer": {
     "SavedAgo": "Збережено: {{timeAgo}}"

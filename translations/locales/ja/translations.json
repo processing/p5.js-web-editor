@@ -530,7 +530,7 @@
     },
     "EditorAccessibility": {
       "NoLintMessages": "リントメッセージはありません",
-      "CurrentLine": " 現在の行"
+      "CurrentLine": "現在の行"
     },
     "Timer": {
       "SavedAgo": "保存されました: {{timeAgo}}"

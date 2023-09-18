@@ -533,7 +533,7 @@
   },
   "EditorAccessibility": {
     "NoLintMessages": "Det finns inga Lint-meddelanden",
-    "CurrentLine": " Aktuell rad"
+    "CurrentLine": "Aktuell rad"
   },
   "Timer": {
     "SavedAgo": "Sparad: {{timeAgo}}"
