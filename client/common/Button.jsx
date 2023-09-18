@@ -66,6 +66,7 @@ const StyledButton = styled.button`
       color: ${({ kind }) => prop(`Button.${kind}.disabled.foreground`)};
       background-color: ${({ kind }) =>
         prop(`Button.${kind}.disabled.background`)};
+        border-color: ${({ kind }) => prop(`Button.${kind}.disabled.border`)};
     }
       svg * {
         fill: ${({ kind }) => prop(`Button.${kind}.disabled.foreground`)};
