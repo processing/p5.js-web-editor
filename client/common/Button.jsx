@@ -67,6 +67,7 @@ const StyledButton = styled.button`
       background-color: ${({ kind }) =>
         prop(`Button.${kind}.disabled.background`)};
         border-color: ${({ kind }) => prop(`Button.${kind}.disabled.border`)};
+        cursor: not-allowed;
     }
       svg * {
         fill: ${({ kind }) => prop(`Button.${kind}.disabled.foreground`)};

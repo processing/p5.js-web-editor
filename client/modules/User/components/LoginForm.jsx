@@ -7,22 +7,7 @@ import { validateLogin } from '../../../utils/reduxFormUtils';
 import { validateAndLoginUser } from '../actions';
 
 function LoginForm() {
-  const [contentPresent, setContentPresent] = useState(false);
   const { t } = useTranslation();
-
-  useEffect(() => {
-    const checkEmailElement = () => {
-      if (
-        document.getElementById('email') &&
-        document.getElementById('password')
-      ) {
-        setContentPresent(true);
-      } else {
-        setContentPresent(false);
-      }
-    };
-    checkEmailElement();
-  }, []);
 
   const dispatch = useDispatch();
   function onSubmit(formProps) {
@@ -86,10 +71,7 @@ function LoginForm() {
           {submitError && !modifiedSinceLastSubmit && (
             <span className="form-error">{submitError}</span>
           )}
-          <Button
-            type="submit"
-            disabled={(submitting || pristine) && !contentPresent}
-          >
+          <Button type="submit" disabled={submitting}>
             {t('LoginForm.Submit')}
           </Button>
         </form>
