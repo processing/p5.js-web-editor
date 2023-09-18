@@ -344,6 +344,16 @@ export function updateSettings(req, res) {
 
     user.username = req.body.username;
 
+    if (req.body.newPassword) {
+      if (user.password === undefined) {
+        user.password = req.body.newPassword;
+        saveUser(res, user);
+      }
+      if (!req.body.currentPassword) {
+        res.status(401).json({ error: 'Current password is not provided.' });
+        return;
+      }
+    }
     if (req.body.currentPassword) {
       user.comparePassword(req.body.currentPassword, (passwordErr, isMatch) => {
         if (passwordErr) throw passwordErr;
