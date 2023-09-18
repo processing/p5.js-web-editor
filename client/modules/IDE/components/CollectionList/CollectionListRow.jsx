@@ -21,17 +21,31 @@ const CollectionListRowBase = (props) => {
   const renameInputRef = useRef(null);
 
   const projectInCollection = (project, collection) =>
-    collection.items.find((item) => item.project.id === project.id) != null;
+    collection.items.find((item) => item.project.id === project.id) !==
+    undefined;
 
   const onFocusComponent = () => {
     setIsFocused(true);
+  };
+
+  const closeAll = () => {
+    setOptionsOpen(false);
+    setRenameOpen(false);
+  };
+
+  const updateName = () => {
+    const isValid = renameValue.trim().length !== 0;
+    if (isValid) {
+      props.editCollection(props.collection.id, {
+        name: renameValue.trim()
+      });
+    }
   };
 
   const onBlurComponent = () => {
     setIsFocused(false);
     setTimeout(() => {
       if (!isFocused) {
-        // eslint-disable-next-line no-use-before-define
         closeAll();
       }
     }, 200);
@@ -53,19 +67,9 @@ const CollectionListRowBase = (props) => {
     }
   };
 
-  const closeAll = () => {
-    setOptionsOpen(false);
-    setRenameOpen(false);
-  };
-
   const handleAddSketches = () => {
     closeAll();
     props.onAddSketches();
-  };
-
-  const handleDropdownOpen = () => {
-    closeAll();
-    openOptions();
   };
 
   const handleCollectionDelete = () => {
@@ -91,31 +95,18 @@ const CollectionListRowBase = (props) => {
 
   const handleRenameEnter = (e) => {
     if (e.key === 'Enter') {
-      // eslint-disable-next-line no-use-before-define
       updateName();
       closeAll();
     }
   };
 
   const handleRenameBlur = () => {
-    // eslint-disable-next-line no-use-before-define
     updateName();
     closeAll();
   };
 
-  const updateName = () => {
-    const isValid = renameValue.trim().length !== 0;
-    if (isValid) {
-      props.editCollection(props.collection.id, {
-        name: renameValue.trim()
-      });
-    }
-  };
-
   const renderActions = () => {
-    const { mobile, user, username } = props;
-    // eslint-disable-next-line no-shadow, no-use-before-define
-    const { optionsOpen } = optionsOpen;
+    const { user, username } = props;
     const userIsOwner = user.username === username;
 
     return (
@@ -127,11 +118,7 @@ const CollectionListRowBase = (props) => {
           onFocus={onFocusComponent}
           aria-label={props.t('CollectionListRow.ToggleCollectionOptionsARIA')}
         >
-          {mobile ? (
-            <MoreIconSvg focusable="false" aria-hidden="true" />
-          ) : (
-            <DownFilledTriangleIcon focusable="false" aria-hidden="true" />
-          )}
+          <MoreIconSvg focusable="false" aria-hidden="true" />
         </button>
         {optionsOpen && (
           <ul className="sketch-list__action-dialogue">
@@ -177,8 +164,6 @@ const CollectionListRowBase = (props) => {
 
   const renderCollectionName = () => {
     const { collection, username } = props;
-    // eslint-disable-next-line no-shadow, no-use-before-define
-    const { renameOpen } = renameOpen;
 
     return (
       <React.Fragment>
@@ -204,19 +189,16 @@ const CollectionListRowBase = (props) => {
     );
   };
 
-  const { collection, mobile } = props;
+  const { collection } = props;
 
   return (
     <tr className="sketches-table__row" key={collection.id}>
       <th scope="row">
         <span className="sketches-table__name">{renderCollectionName()}</span>
       </th>
-      <td>{formatDate(collection.createdAt, mobile)}</td>
-      <td>{formatDate(collection.updatedAt, mobile)}</td>
-      <td>
-        {mobile && 'sketches: '}
-        {(collection.items || []).length}
-      </td>
+      <td>{formatDate(collection.createdAt)}</td>
+      <td>{formatDate(collection.updatedAt)}</td>
+      <td>{(collection.items || []).length}</td>
       <td className="sketch-list__dropdown-column">{renderActions()}</td>
     </tr>
   );
@@ -239,11 +221,8 @@ CollectionListRowBase.propTypes = {
       })
     )
   }).isRequired,
-  // eslint-disable-next-line react/require-default-props
-  mobile: PropTypes.bool,
   user: PropTypes.shape({
-    username: PropTypes.string,
-    authenticated: PropTypes.bool.isRequired
+    username: PropTypes.string
   }).isRequired,
   deleteCollection: PropTypes.func.isRequired,
   editCollection: PropTypes.func.isRequired,
