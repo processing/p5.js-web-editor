@@ -394,6 +394,10 @@ pre.CodeMirror-line {
   font-size: #{12 / $base-font-size}rem;
   display: flex;
   justify-content: space-between;
+
+  .editor__copy-btn {
+    width: 28px;
+  }
 }
 
 .editor__unsaved-changes {

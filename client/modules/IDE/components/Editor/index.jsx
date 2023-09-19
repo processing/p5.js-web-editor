@@ -53,6 +53,7 @@ import '../../../../utils/codemirror-search';
 import beepUrl from '../../../../sounds/audioAlert.mp3';
 import RightArrowIcon from '../../../../images/right-arrow.svg';
 import LeftArrowIcon from '../../../../images/left-arrow.svg';
+import CopyIcon from '../../../../images/copy.svg';
 import { getHTMLFile } from '../../reducers/files';
 import { selectActiveFile } from '../../selectors/files';
 
@@ -535,6 +536,13 @@ class Editor extends React.Component {
                     {this.props.file.name}
                     <UnsavedChangesIndicator />
                   </span>
+
+                  <button
+                    className="editor__copy-btn"
+                    onClick={this.props.copyFileContent}
+                  >
+                    <CopyIcon />
+                  </button>
                   <Timer />
                 </div>
               </header>
@@ -609,6 +617,7 @@ Editor.propTypes = {
   updateLintMessage: PropTypes.func.isRequired,
   clearLintMessage: PropTypes.func.isRequired,
   updateFileContent: PropTypes.func.isRequired,
+  copyFileContent: PropTypes.func.isRequired,
   fontSize: PropTypes.number.isRequired,
   file: PropTypes.shape({
     name: PropTypes.string.isRequired,
