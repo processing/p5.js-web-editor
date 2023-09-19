@@ -6,9 +6,10 @@ import React, {
   useRef,
   useState
 } from 'react';
+import useKeyDownHandlers from '../../modules/IDE/hooks/useKeyDownHandlers';
 import { MenuOpenContext, NavBarContext } from './contexts';
 
-function NavBar({ children }) {
+function NavBar({ children, className }) {
   const [dropdownOpen, setDropdownOpen] = useState('none');
 
   const timerRef = useRef(null);
@@ -31,18 +32,9 @@ function NavBar({ children }) {
     };
   }, [nodeRef, setDropdownOpen]);
 
-  // TODO: replace with `useKeyDownHandlers` after #2052 is merged
-  useEffect(() => {
-    function handleKeyDown(e) {
-      if (e.keyCode === 27) {
-        setDropdownOpen('none');
-      }
-    }
-    document.addEventListener('keydown', handleKeyDown, false);
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown, false);
-    };
-  }, [setDropdownOpen]);
+  useKeyDownHandlers({
+    escape: () => setDropdownOpen('none')
+  });
 
   const clearHideTimeout = useCallback(() => {
     if (timerRef.current) {
@@ -55,6 +47,15 @@ function NavBar({ children }) {
     timerRef.current = setTimeout(() => setDropdownOpen('none'), 10);
   }, [timerRef, setDropdownOpen]);
 
+  const toggleDropdownOpen = useCallback(
+    (dropdown) => {
+      setDropdownOpen((prevState) =>
+        prevState === dropdown ? 'none' : dropdown
+      );
+    },
+    [setDropdownOpen]
+  );
+
   const contextValue = useMemo(
     () => ({
       createDropdownHandlers: (dropdown) => ({
@@ -64,15 +65,16 @@ function NavBar({ children }) {
           );
         },
         onClick: () => {
-          setDropdownOpen((prevState) =>
-            prevState === 'none' ? dropdown : 'none'
-          );
+          toggleDropdownOpen(dropdown);
         },
         onBlur: handleBlur,
         onFocus: clearHideTimeout
       }),
       createMenuItemHandlers: (dropdown) => ({
-        onMouseUp: () => {
+        onMouseUp: (e) => {
+          if (e.button === 2) {
+            return;
+          }
           setDropdownOpen('none');
         },
         onBlur: handleBlur,
@@ -80,15 +82,16 @@ function NavBar({ children }) {
           clearHideTimeout();
           setDropdownOpen(dropdown);
         }
-      })
+      }),
+      toggleDropdownOpen
     }),
-    [setDropdownOpen, clearHideTimeout, handleBlur]
+    [setDropdownOpen, toggleDropdownOpen, clearHideTimeout, handleBlur]
   );
 
   return (
     <NavBarContext.Provider value={contextValue}>
       <header>
-        <nav className="nav" ref={nodeRef}>
+        <nav className={className} ref={nodeRef}>
           <MenuOpenContext.Provider value={dropdownOpen}>
             {children}
           </MenuOpenContext.Provider>
@@ -99,11 +102,13 @@ function NavBar({ children }) {
 }
 
 NavBar.propTypes = {
-  children: PropTypes.node
+  children: PropTypes.node,
+  className: PropTypes.string
 };
 
 NavBar.defaultProps = {
-  children: null
+  children: null,
+  className: 'nav'
 };
 
 export default NavBar;
