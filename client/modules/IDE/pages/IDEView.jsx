@@ -151,12 +151,7 @@ const IDEView = () => {
       <MediaQuery minWidth={770}>
         {(matches) =>
           matches ? (
-            <main
-              className="editor-preview-container"
-              style={{
-                color: 'red'
-              }}
-            >
+            <main className="editor-preview-container">
               <SplitPane
                 split="vertical"
                 size={ide.sidebarIsExpanded ? sidebarSize : 20}
