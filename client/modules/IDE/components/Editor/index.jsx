@@ -99,6 +99,9 @@ class Editor extends React.Component {
     this.showFind = this.showFind.bind(this);
     this.showReplace = this.showReplace.bind(this);
     this.getContent = this.getContent.bind(this);
+    this.state = {
+      copied: false,
+    };
   }
 
   componentDidMount() {
@@ -494,7 +497,19 @@ class Editor extends React.Component {
       }
     });
   }
-
+  handleCopy = async () => {
+    const editor = this.props.contentValue;
+    try {
+      const content = editor.getContent().content;
+      await navigator.clipboard.writeText(content);
+      this.setState({ copied: true });
+      setTimeout(() => {
+        this.setState({ copied: false });
+      }, 500);
+    } catch (error) {
+      console.error('Failed to copy text to clipboard:', error);
+    }
+  };
   render() {
     const editorSectionClass = classNames({
       editor: true,
@@ -536,6 +551,7 @@ class Editor extends React.Component {
                     <UnsavedChangesIndicator />
                   </span>
                   <Timer />
+                  <span className='copy'>{this.copied ? 'Copied' : 'Copy'}</span>
                 </div>
               </header>
               <article

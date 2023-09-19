@@ -389,11 +389,12 @@ pre.CodeMirror-line {
     color: getThemifyVariable("primary-text-color");
   }
   height: #{29 / $base-font-size}rem;
-  padding-top: #{7 / $base-font-size}rem;
   padding-left: #{56 / $base-font-size}rem;
   font-size: #{12 / $base-font-size}rem;
   display: flex;
   justify-content: space-between;
+  padding-right: #{14 / $base-font-size}rem;
+  align-items: center;
 }
 
 .editor__unsaved-changes {
@@ -418,7 +419,13 @@ pre.CodeMirror-line {
     border: none;
   }
 }
-
+.copy{
+  padding: 3px 10px;
+  color: white;
+  background-color: #ED225D;
+  border: none;
+  border-radius: 5px;
+}
 .emmet-abbreviation-preview:not(.has-error) .emmet-abbreviation-preview-error {
   display: none;
 }

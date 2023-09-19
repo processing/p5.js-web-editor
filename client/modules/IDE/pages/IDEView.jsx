@@ -183,6 +183,7 @@ const IDEView = () => {
                       provideController={(ctl) => {
                         cmRef.current = ctl;
                       }}
+                      contentValue={cmRef.current}
                     />
                     <Console />
                   </SplitPane>
