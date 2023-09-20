@@ -2,7 +2,6 @@ import React, { useContext, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
 import { sortBy } from 'lodash';
 import classNames from 'classnames';
@@ -15,6 +14,7 @@ import AsteriskIcon from '../../../../images/p5-asterisk.svg';
 import IconButton from '../../../../components/mobile/IconButton';
 import {
   AccountIcon,
+  AddIcon,
   EditorIcon,
   MoreIcon,
   CrossIcon
@@ -26,7 +26,7 @@ import {
   showKeyboardShortcutModal
 } from '../../actions/ide';
 import { logoutUser } from '../../../User/actions';
-import { useSketchActions } from '../../hooks';
+import { useSketchActions, useWhatPage } from '../../hooks';
 import { CmControllerContext } from '../../pages/IDEView';
 import { selectSketchPath } from '../../selectors/project';
 import { availableLanguages, languageKeyToLabel } from '../../../../i18n';
@@ -34,6 +34,7 @@ import { showToast } from '../../actions/toast';
 import { setLanguage } from '../../actions/preferences';
 import Overlay from '../../../App/components/Overlay';
 import ProjectName from './ProjectName';
+import CollectionCreate from '../../../User/components/CollectionCreate';
 
 const Nav = styled(NavBar)`
   background: ${prop('MobilePanel.default.background')};
@@ -80,7 +81,7 @@ const Title = styled.div`
   }
 `;
 
-const Options = styled.div`
+export const Options = styled.div`
   margin-left: auto;
   display: flex;
   /* transform: translateX(${remSize(12)}); */
@@ -202,33 +203,28 @@ const MobileNav = () => {
 
   const { t } = useTranslation();
 
-  const { pathname } = useLocation();
   const editorLink = useSelector(selectSketchPath);
+  const pageName = useWhatPage();
 
   // TODO: remove the switch and use a props like mobileTitle <Nav layout=“dashboard” mobileTitle={t(‘Login’)} />
   function resolveTitle() {
-    switch (pathname) {
-      case '/':
-        return project.name;
-      case '/login':
+    switch (pageName) {
+      case 'login':
         return t('LoginView.Login');
-      case '/signup':
+      case 'signup':
         return t('LoginView.SignUp');
-      case '/account':
+      case 'account':
         return t('AccountView.Settings');
-      case '/p5/sketches':
-      case '/p5/collections':
+      case 'examples':
         return t('Nav.File.Examples');
-      case `/${user.username}/assets`:
-      case `/${user.username}/collections`:
-      case `/${user.username}/sketches`:
+      case 'myStuff':
         return 'My Stuff';
       default:
         return project.name;
     }
   }
 
-  const title = useMemo(resolveTitle, [project, pathname]);
+  const title = useMemo(resolveTitle, [pageName, project.name]);
 
   const Logo = AsteriskIcon;
   return (
@@ -242,10 +238,9 @@ const MobileNav = () => {
           <h5>by {project?.owner?.username}</h5>
         )}
       </Title>
-
       {/* check if the user is in login page */}
-      {pathname === '/login' || pathname === '/signup' ? (
-        // showing the login page
+      {pageName === 'login' || pageName === 'signup' ? (
+        // showing the CrossIcon
         <Options>
           <div>
             <Link to={editorLink}>
@@ -254,8 +249,9 @@ const MobileNav = () => {
           </div>
         </Options>
       ) : (
+        // Menus for other pages
         <Options>
-          {/* checking if user is logged in or not */}
+          {pageName === 'myStuff' && <StuffMenu />}
           {user.authenticated ? (
             <AccountMenu />
           ) : (
@@ -265,7 +261,7 @@ const MobileNav = () => {
               </Link>
             </div>
           )}
-          {title === project.name ? (
+          {pageName === 'home' ? (
             <MoreMenu />
           ) : (
             <div>
@@ -277,6 +273,39 @@ const MobileNav = () => {
         </Options>
       )}
     </Nav>
+  );
+};
+
+const StuffMenu = () => {
+  const { isOpen, handlers } = useMenuProps('stuff');
+  const { newSketch } = useSketchActions();
+
+  const [createCollectionVisible, setCreateCollectionVisible] = useState(false);
+
+  const { t } = useTranslation();
+
+  return (
+    <div>
+      <IconButton icon={AddIcon} {...handlers} />
+      <ul className={isOpen ? 'opened' : ''}>
+        <ParentMenuContext.Provider value="stuff">
+          <NavMenuItem onClick={() => newSketch()}>
+            {t('DashboardView.NewSketch')}
+          </NavMenuItem>
+          <NavMenuItem onClick={() => setCreateCollectionVisible(true)}>
+            {t('DashboardView.CreateCollection')}
+          </NavMenuItem>
+        </ParentMenuContext.Provider>
+      </ul>
+      {createCollectionVisible && (
+        <Overlay
+          title={t('DashboardView.CreateCollectionOverlay')}
+          closeOverlay={() => setCreateCollectionVisible(false)}
+        >
+          <CollectionCreate />
+        </Overlay>
+      )}
+    </div>
   );
 };
 
