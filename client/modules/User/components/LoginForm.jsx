@@ -23,7 +23,6 @@ function LoginForm() {
       {({
         handleSubmit,
         submitError,
-        pristine,
         submitting,
         modifiedSinceLastSubmit
       }) => (
