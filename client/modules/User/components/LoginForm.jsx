@@ -20,12 +20,7 @@ function LoginForm() {
       validate={validateLogin}
       onSubmit={onSubmit}
     >
-      {({
-        handleSubmit,
-        submitError,
-        submitting,
-        modifiedSinceLastSubmit
-      }) => (
+      {({ handleSubmit, submitError, submitting, modifiedSinceLastSubmit }) => (
         <form className="form" onSubmit={handleSubmit}>
           <Field name="email">
             {(field) => (
