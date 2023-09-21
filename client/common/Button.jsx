@@ -66,9 +66,9 @@ const StyledButton = styled.button`
       color: ${({ kind }) => prop(`Button.${kind}.disabled.foreground`)};
       background-color: ${({ kind }) =>
         prop(`Button.${kind}.disabled.background`)};
-        border-color: ${({ kind }) => prop(`Button.${kind}.disabled.border`)};
-        cursor: not-allowed;
-    }
+      border-color: ${({ kind }) => prop(`Button.${kind}.disabled.border`)};
+      cursor: not-allowed;
+
       svg * {
         fill: ${({ kind }) => prop(`Button.${kind}.disabled.foreground`)};
       }
@@ -144,6 +144,7 @@ const StyledIconButton = styled.button`
         fill: ${({ kind }) => prop(`Button.${kind}.active.foreground`)};
       }
     }
+
     &:disabled {
       color: ${({ kind }) => prop(`Button.${kind}.disabled.foreground`)};
       background-color: ${({ kind }) =>
