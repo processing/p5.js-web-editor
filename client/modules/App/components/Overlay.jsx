@@ -69,16 +69,16 @@ class Overlay extends React.Component {
           >
             <header className="overlay__header">
               <h2 className="overlay__title">{title}</h2>
-              <MediaQuery query="(min-width: 768px)">
-                <div className="overlay__actions">{actions}</div>
-              </MediaQuery>
-              <button
-                className="overlay__close-button"
-                onClick={this.close}
-                aria-label={this.props.t('Overlay.AriaLabel', { title })}
-              >
-                <ExitIcon focusable="false" aria-hidden="true" />
-              </button>
+              <div className="overlay__actions">
+                <MediaQuery query="(min-width: 768px)">{actions}</MediaQuery>
+                <button
+                  className="overlay__close-button"
+                  onClick={this.close}
+                  aria-label={this.props.t('Overlay.AriaLabel', { title })}
+                >
+                  <ExitIcon focusable="false" aria-hidden="true" />
+                </button>
+              </div>
             </header>
             <MediaQuery query="(max-width: 767px)">
               {actions && (
