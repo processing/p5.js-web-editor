@@ -270,5 +270,4 @@ const IDEView = () => {
     </RootPage>
   );
 };
-
 export default IDEView;
