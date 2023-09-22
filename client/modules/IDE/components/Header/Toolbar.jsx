@@ -4,12 +4,7 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import {
-  openPreferences,
-  startAccessibleSketch,
-  startSketch,
-  stopSketch
-} from '../../actions/ide';
+import { openPreferences, startSketch, stopSketch } from '../../actions/ide';
 import {
   setAutorefresh,
   setGridOutput,
@@ -50,7 +45,6 @@ const Toolbar = (props) => {
         className="toolbar__play-sketch-button"
         onClick={() => {
           props.syncFileContent();
-          dispatch(startAccessibleSketch());
           dispatch(setTextOutput(true));
           dispatch(setGridOutput(true));
         }}

@@ -269,14 +269,6 @@ export function startSketch() {
   };
 }
 
-export function startAccessibleSketch() {
-  return (dispatch) => {
-    dispatch(clearConsole());
-    dispatch(startAccessibleOutput());
-    dispatch(startSketchAndRefresh());
-  };
-}
-
 export function stopSketch() {
   return (dispatch) => {
     dispatchMessage({
