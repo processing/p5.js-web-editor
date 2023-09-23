@@ -70,7 +70,9 @@ exports[`<Sketchlist /> snapshot testing 1`] = `
           <th
             scope="row"
           >
-            <a>
+            <a
+              href="/happydog/sketches/testid1"
+            >
               testsketch1
             </a>
           </th>
@@ -100,7 +102,9 @@ exports[`<Sketchlist /> snapshot testing 1`] = `
           <th
             scope="row"
           >
-            <a>
+            <a
+              href="/happydog/sketches/testid2"
+            >
               testsketch2
             </a>
           </th>
