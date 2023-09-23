@@ -181,12 +181,10 @@ class Collection extends React.Component {
   }
 
   getTitle() {
-    if (this.props.username === this.props.user.username) {
-      return this.props.t('Collection.Title');
-    }
-    return this.props.t('Collection.AnothersTitle', {
-      anotheruser: this.props.username
-    });
+    const collectionTitle = this.props.t('Collection.Title');
+    const titleSplits = collectionTitle.split('|');
+    const title = titleSplits[0].concat('| ');
+    return title;
   }
 
   getUsername() {
@@ -418,7 +416,7 @@ class Collection extends React.Component {
       >
         <article className="collection">
           <Helmet>
-            <title>{this.getTitle()}</title>
+            <title>{this.getTitle() + title}</title>
           </Helmet>
           {this._renderLoader()}
           {this.hasCollection() && this._renderCollectionMetadata()}
