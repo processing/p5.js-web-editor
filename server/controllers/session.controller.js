@@ -36,14 +36,12 @@ export function destroySession(req, res, next) {
       next(err);
       return;
     }
-    req.logout((err) => {
-      if (err) {
-        next(err);
+    req.logout((error) => {
+      if (error) {
+        next(error);
         return;
       }
-
       res.json({ success: true });
-      res.redirect('/login');
     });
   });
 }
