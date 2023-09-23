@@ -539,6 +539,13 @@ class Editor extends React.Component {
                     {this.props.file.name}
                     <UnsavedChangesIndicator />
                   </span>
+
+                  <button
+                    className="editor__copy-btn"
+                    onClick={this.props.copyFileContent}
+                  >
+                    <CopyIcon />
+                  </button>
                   <Timer />
                 </div>
               </header>
@@ -624,6 +631,7 @@ Editor.propTypes = {
   updateLintMessage: PropTypes.func.isRequired,
   clearLintMessage: PropTypes.func.isRequired,
   updateFileContent: PropTypes.func.isRequired,
+  copyFileContent: PropTypes.func.isRequired,
   fontSize: PropTypes.number.isRequired,
   file: PropTypes.shape({
     name: PropTypes.string.isRequired,
