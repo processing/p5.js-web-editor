@@ -1,22 +1,22 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { boolean, text } from '@storybook/addon-knobs';
 
 import Button from './Button';
 import { GithubIcon, DropdownArrowIcon, PlusIcon } from './icons';
 
 export default {
   title: 'Common/Button',
-  component: Button
+  component: Button,
+  args: {
+    children: 'this is the button',
+    label: 'submit',
+    disabled: false
+  }
 };
 
-export const AllFeatures = () => (
-  <Button
-    disabled={boolean('disabled', false)}
-    type="submit"
-    label={text('label', 'submit')}
-  >
-    {text('children', 'this is the button')}
+export const AllFeatures = (args) => (
+  <Button disabled={args.disabled} type="submit" label={args.label}>
+    {args.children}
   </Button>
 );
 
