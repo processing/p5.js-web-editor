@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import * as ActionTypes from '../../../constants';
 
 const initialState = {
   isPlaying: false,
@@ -21,6 +22,7 @@ const initialState = {
   unsavedChanges: false,
   // TODO: remove dead code, see: PR #849 and issue #698
   infiniteLoop: false,
+  // TODO: this doesn't do anything.
   previewIsRefreshing: false,
   infiniteLoopMessage: '',
   justOpenedProject: false,
@@ -46,9 +48,6 @@ const ideSlice = createSlice({
     stopAccessibleOutput: (state) => {
       state.isAccessibleOutputPlaying = false;
     },
-    consoleEvent: (state, action) => {
-      state.consoleEvent = action.payload;
-    },
     collapseSidebar: (state) => {
       state.sidebarIsExpanded = false;
     },
@@ -73,7 +72,6 @@ const ideSlice = createSlice({
     closeProjectOptions: (state) => {
       state.projectOptionsVisible = false;
     },
-    resetProject: () => initialState,
     // TODO: rename to openNewFileModal or showNewFileModal
     newFile: (state, action) => {
       state.modalIsVisible = true;
@@ -154,7 +152,20 @@ const ideSlice = createSlice({
     hideRuntimeErrorWarning: (state) => {
       state.runtimeErrorWarningVisible = false;
     }
-  }
+  },
+  // Respond to actions which are primarily "owned" by another reducer
+  extraReducers: (builder) =>
+    builder
+      .addMatcher(
+        (action) => action.type === ActionTypes.CONSOLE_EVENT,
+        (state, action) => {
+          state.consoleEvent = action.event;
+        }
+      )
+      .addMatcher(
+        (action) => action.type === ActionTypes.RESET_PROJECT,
+        () => initialState
+      )
 });
 
 export const ideActions = ideSlice.actions;
