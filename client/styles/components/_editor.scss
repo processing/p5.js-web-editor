@@ -439,3 +439,14 @@ pre.CodeMirror-line {
 .emmet-close-tag {
   text-decoration: underline;
 }
+
+.editor__copy {
+  position: absolute;
+  top: 10%;
+  right: 5px;
+  z-index: 100;
+
+  svg {
+    width: 16px;
+  }
+}

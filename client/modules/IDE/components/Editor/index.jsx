@@ -53,6 +53,7 @@ import '../../../../utils/codemirror-search';
 import beepUrl from '../../../../sounds/audioAlert.mp3';
 import RightArrowIcon from '../../../../images/right-arrow.svg';
 import LeftArrowIcon from '../../../../images/left-arrow.svg';
+import CopyIcon from '../../../../images/copy.svg';
 import { getHTMLFile } from '../../reducers/files';
 import { selectActiveFile } from '../../selectors/files';
 
@@ -71,6 +72,7 @@ import UnsavedChangesIndicator from '../UnsavedChangesIndicator';
 import { EditorContainer, EditorHolder } from './MobileEditor';
 import { FolderIcon } from '../../../../common/icons';
 import IconButton from '../../../../components/mobile/IconButton';
+import CopyableTooltip from '../../../../components/CopyableTooltip';
 
 emmet(CodeMirror);
 
@@ -507,6 +509,8 @@ class Editor extends React.Component {
         this.props.file.fileType === 'folder' || this.props.file.url
     });
 
+    const editorContent = this._cm && this.getContent().content;
+
     return (
       <MediaQuery minWidth={770}>
         {(matches) =>
@@ -538,6 +542,17 @@ class Editor extends React.Component {
                   <Timer />
                 </div>
               </header>
+
+              <CopyableTooltip
+                className={classNames('editor__copy', 'tooltipped-nw')}
+                label="Copied"
+                copyText={editorContent}
+              >
+                <button className="copy-trigger">
+                  <CopyIcon />
+                </button>
+              </CopyableTooltip>
+
               <article
                 ref={(element) => {
                   this.codemirrorContainer = element;
