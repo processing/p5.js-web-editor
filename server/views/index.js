@@ -46,3 +46,23 @@ export function renderIndex() {
   </html>
   `;
 }
+
+export default function sendHtml(req, res, exists = true) {
+  const html = renderIndex();
+  if (!exists) {
+    res.status(404);
+    res.send(
+      html.replace(
+        '</head>',
+        `
+      <script>
+        window.__SERVER_404__ = '${req.path}';
+      </script>
+    </head>
+    `
+      )
+    );
+  } else {
+    res.send(html);
+  }
+};

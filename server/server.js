@@ -28,8 +28,7 @@ import redirectEmbedRoutes from './routes/redirectEmbed.routes';
 import passportRoutes from './routes/passport.routes';
 import { requestsOfTypeJSON } from './utils/requestsOfType';
 
-import { renderIndex } from './views/index';
-import { get404Sketch } from './views/404Page';
+import sendHtml, { renderIndex } from './views/index';
 
 const app = new Express();
 const MongoStore = connectMongo(session);
@@ -183,7 +182,7 @@ app.use('/api', (error, req, res, next) => {
 app.get('*', (req, res) => {
   res.status(404);
   if (req.accepts('html')) {
-    get404Sketch((html) => res.send(html));
+    sendHtml(req, res, false);
     return;
   }
   if (req.accepts('json')) {

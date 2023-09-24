@@ -21,6 +21,7 @@ import createRedirectWithUsername from './components/createRedirectWithUsername'
 import MobileDashboardView from './modules/Mobile/MobileDashboardView';
 // import PrivacyPolicy from './modules/IDE/pages/PrivacyPolicy';
 // import TermsOfUse from './modules/IDE/pages/TermsOfUse';
+import NotFound from './modules/IDE/pages/NotFound';
 import Legal from './modules/Legal/pages/Legal';
 import { getUser } from './modules/User/actions';
 import {
@@ -53,6 +54,9 @@ Route.propTypes.component = PropTypes.elementType.isRequired;
 
 const routes = (
   <Switch>
+    {window.__SERVER_404__ ? (
+      <Route path={window.__SERVER_404__} component={NotFound} />
+    ) : null}
     <Route exact path="/" component={mobileFirst(MobileIDEView, IDEView)} />
     <Route
       path="/login"
@@ -123,6 +127,7 @@ const routes = (
     <Route path="/privacy-policy" component={Legal} />
     <Route path="/terms-of-use" component={Legal} />
     <Route path="/code-of-conduct" component={Legal} />
+    <Route path="*" component={NotFound} />
   </Switch>
 );
 

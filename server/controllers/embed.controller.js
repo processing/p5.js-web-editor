@@ -6,7 +6,7 @@ import {
   resolveScripts,
   resolveStyles
 } from '../utils/previewGeneration';
-import { get404Sketch } from '../views/404Page';
+import sendHtml from '../views/index';
 
 export function serveProject(req, res) {
   const projectId = req.params.project_id;
@@ -14,7 +14,7 @@ export function serveProject(req, res) {
     { $or: [{ _id: projectId }, { slug: projectId }] },
     (err, project) => {
       if (err || !project) {
-        get404Sketch((html) => res.send(html));
+        sendHtml(req, res, false);
         return;
       }
       // TODO this does not parse html
