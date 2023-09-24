@@ -219,6 +219,7 @@
     "Delete": "Radera"
   },
   "Common": {
+    "SiteName": "p5.js Webb editor",
     "Error": "Error",
     "ErrorARIA": "Error",
     "Save": "Spara",

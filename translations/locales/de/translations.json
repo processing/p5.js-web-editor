@@ -216,6 +216,7 @@
     "Delete": "Löschen"
   },
   "Common": {
+    "SiteName": "p5.js Web Editor",
     "Error": "Fehler",
     "ErrorARIA": "Fehler",
     "Save": "Speichern",
