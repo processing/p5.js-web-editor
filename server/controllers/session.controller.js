@@ -31,9 +31,6 @@ export function getSession(req, res) {
 }
 
 export function destroySession(req, res, next) {
-  res.cookie('sessionId', 'loggedout', {
-    expires: new Date(Date.now() + 10 * 1000),
-    httpOnly: true
-  });
-  res.status(200).json({ status: 'success' });
+  res.clearCookie('sessionId');
+  res.json({ success: true });
 }
