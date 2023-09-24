@@ -181,10 +181,18 @@ class Collection extends React.Component {
   }
 
   getTitle() {
-    const collectionTitle = this.props.t('Collection.Title');
-    const titleSplits = collectionTitle.split('|');
-    const title = titleSplits[0].concat('| ');
-    return title;
+    const title = this.props.t('Common.SiteName');
+    const collectionTitle = title.concat(' | ');
+    return collectionTitle;
+  }
+
+  getCollectionOwner() {
+    if (this.props.username === this.props.user.username) {
+      return this.props.t('Collection.Title');
+    }
+    return this.props.t('Collection.AnothersTitle', {
+      anotheruser: this.props.username
+    });
   }
 
   getUsername() {
@@ -406,7 +414,9 @@ class Collection extends React.Component {
   }
 
   render() {
-    const title = this.hasCollection() ? this.getCollectionName() : null;
+    const title = this.hasCollection()
+      ? this.getCollectionName()
+      : this.getCollectionOwner();
     const isOwner = this.isOwner();
 
     return (
