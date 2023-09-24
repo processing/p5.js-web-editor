@@ -20,13 +20,7 @@ function LoginForm() {
       validate={validateLogin}
       onSubmit={onSubmit}
     >
-      {({
-        handleSubmit,
-        submitError,
-        pristine,
-        submitting,
-        modifiedSinceLastSubmit
-      }) => (
+      {({ handleSubmit, submitError, submitting, modifiedSinceLastSubmit }) => (
         <form className="form" onSubmit={handleSubmit}>
           <Field name="email">
             {(field) => (
@@ -39,6 +33,7 @@ function LoginForm() {
                   aria-label={t('LoginForm.UsernameOrEmailARIA')}
                   type="text"
                   id="email"
+                  autoComplete="username"
                   {...field.input}
                 />
                 {field.meta.touched && field.meta.error && (
@@ -58,6 +53,7 @@ function LoginForm() {
                   aria-label={t('LoginForm.PasswordARIA')}
                   type="password"
                   id="password"
+                  autoComplete="current-password"
                   {...field.input}
                 />
                 {field.meta.touched && field.meta.error && (
@@ -69,7 +65,7 @@ function LoginForm() {
           {submitError && !modifiedSinceLastSubmit && (
             <span className="form-error">{submitError}</span>
           )}
-          <Button type="submit" disabled={submitting || pristine}>
+          <Button type="submit" disabled={submitting}>
             {t('LoginForm.Submit')}
           </Button>
         </form>

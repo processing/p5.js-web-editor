@@ -1,7 +1,7 @@
-import { browserHistory } from 'react-router';
 import objectID from 'bson-objectid';
 import each from 'async/each';
 import isEqual from 'lodash/isEqual';
+import browserHistory from '../../../browserHistory';
 import apiClient from '../../../utils/apiClient';
 import getConfig from '../../../utils/getConfig';
 import * as ActionTypes from '../../../constants';
@@ -342,18 +342,6 @@ export function cloneProject(project) {
           });
       }
     );
-  };
-}
-
-export function showEditProjectName() {
-  return {
-    type: ActionTypes.SHOW_EDIT_PROJECT_NAME
-  };
-}
-
-export function hideEditProjectName() {
-  return {
-    type: ActionTypes.HIDE_EDIT_PROJECT_NAME
   };
 }
 

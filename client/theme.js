@@ -64,18 +64,22 @@ export const prop = (key) => (props) => {
   return value;
 };
 
-export default {
+export const extend = (baseTheme, modifications) =>
+  lodash.merge(lodash.cloneDeep(baseTheme), modifications);
+
+const baseThemes = {
   [Theme.light]: {
     colors,
     ...common,
     primaryTextColor: grays.dark,
     inactiveTextColor: grays.middleDark,
     backgroundColor: grays.lighter,
+    accentColor: colors.p5jsPink,
 
     Button: {
       primary: {
         default: {
-          foreground: colors.black,
+          foreground: grays.mediumDark,
           background: grays.light,
           border: grays.middleLight
         },
@@ -127,6 +131,10 @@ export default {
         foreground: colors.black,
         background: grays.light,
         border: grays.middleLight
+      },
+      secondary: {
+        foreground: colors.black,
+        background: grays.mediumLight
       }
     },
     Modal: {
@@ -153,6 +161,7 @@ export default {
     primaryTextColor: grays.lightest,
     inactiveTextColor: grays.middleLight,
     backgroundColor: grays.darker,
+    accentColor: colors.p5jsPink,
 
     Button: {
       primary: {
@@ -209,6 +218,10 @@ export default {
         foreground: grays.light,
         background: grays.dark,
         border: grays.middleDark
+      },
+      secondary: {
+        background: grays.mediumDark,
+        foreground: grays.light
       }
     },
     Modal: {
@@ -228,35 +241,23 @@ export default {
     Policy: {
       link: colors.processingBlueLight
     }
-  },
-  [Theme.contrast]: {
-    colors,
-    ...common,
-    primaryTextColor: grays.lightest,
+  }
+};
+
+export default {
+  ...baseThemes,
+  [Theme.contrast]: extend(baseThemes[Theme.dark], {
     inactiveTextColor: grays.light,
-    backgroundColor: grays.darker,
 
     Button: {
       primary: {
-        default: {
-          foreground: grays.light,
-          background: grays.dark,
-          border: grays.middleDark
-        },
         hover: {
           foreground: grays.dark,
           background: colors.yellow,
           border: colors.yellow
         },
         active: {
-          foreground: grays.dark,
-          background: colors.p5jsActivePink,
-          border: colors.p5jsActivePink
-        },
-        disabled: {
-          foreground: grays.light,
-          background: grays.dark,
-          border: grays.middleDark
+          foreground: grays.dark
         }
       },
       secondary: {
@@ -271,14 +272,7 @@ export default {
           border: colors.yellow
         },
         active: {
-          foreground: grays.dark,
-          background: colors.p5jsActivePink,
-          border: colors.p5jsActivePink
-        },
-        disabled: {
-          foreground: grays.light,
-          background: grays.dark,
-          border: grays.middleDark
+          foreground: grays.dark
         }
       }
     },
@@ -286,29 +280,12 @@ export default {
       default: grays.mediumLight,
       hover: colors.yellow
     },
-    MobilePanel: {
-      default: {
-        foreground: grays.light,
-        background: grays.dark,
-        border: grays.middleDark
-      }
-    },
     Modal: {
-      background: grays.dark,
-      border: grays.middleDark,
       separator: grays.light
     },
-    Separator: grays.middleDark,
-
     TabHighlight: grays.darker,
     SketchList: {
-      background: colors.yellow,
-      card: {
-        background: grays.dark
-      }
-    },
-    Policy: {
-      link: colors.processingBlueLight
+      background: colors.yellow
     }
-  }
+  })
 };

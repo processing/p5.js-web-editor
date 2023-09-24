@@ -1,7 +1,7 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { useSelector, useDispatch } from 'react-redux';
-import { withRouter } from 'react-router';
+import { withRouter } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import styled from 'styled-components';
@@ -40,6 +40,7 @@ const MobilePreferences = () => {
     theme,
     autosave,
     linewrap,
+    autocompleteHinter,
     textOutput,
     gridOutput,
     lineNumbers,
@@ -51,6 +52,7 @@ const MobilePreferences = () => {
     setTheme,
     setAutosave,
     setLinewrap,
+    setAutocompleteHinter,
     setTextOutput,
     setGridOutput,
     setLineNumbers,
@@ -79,6 +81,12 @@ const MobilePreferences = () => {
       autosave,
       setAutosave,
       'autosave'
+    ),
+    preferenceOnOff(
+      t('MobilePreferences.AutocompleteHinter'),
+      autocompleteHinter,
+      setAutocompleteHinter,
+      'autocompleteHinter'
     ),
     preferenceOnOff(
       t('MobilePreferences.WordWrap'),

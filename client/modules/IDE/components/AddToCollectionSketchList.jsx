@@ -11,6 +11,10 @@ import * as SortingActions from '../actions/sorting';
 import getSortedSketches from '../selectors/projects';
 import Loader from '../../App/components/loader';
 import QuickAddList from './QuickAddList';
+import {
+  CollectionAddSketchWrapper,
+  QuickAddWrapper
+} from './AddToCollectionList';
 
 class SketchList extends React.Component {
   constructor(props) {
@@ -80,14 +84,14 @@ class SketchList extends React.Component {
     }
 
     return (
-      <div className="collection-add-sketch">
-        <div className="quick-add-wrapper">
+      <CollectionAddSketchWrapper>
+        <QuickAddWrapper>
           <Helmet>
             <title>{this.getSketchesTitle()}</title>
           </Helmet>
           {content}
-        </div>
-      </div>
+        </QuickAddWrapper>
+      </CollectionAddSketchWrapper>
     );
   }
 }
