@@ -4,10 +4,10 @@ import Helmet from 'react-helmet';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import Nav from '../../../components/Nav';
 import RootPage from '../../../components/RootPage';
 import { remSize } from '../../../theme';
 import EmbedFrame from '../../Preview/EmbedFrame';
+import Nav from '../components/Header/Nav';
 
 const NotFoundMain = styled.main`
   & .header {
