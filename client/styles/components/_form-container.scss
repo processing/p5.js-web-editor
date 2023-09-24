@@ -35,6 +35,7 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	margin-bottom: 20px;
 }
 
 .form-container--align-left .form-container__content {
@@ -73,3 +74,6 @@
 .form-container__stack > * + * {
 	margin-top: #{math.div(10, $base-font-size)}rem;
 }
+.form__navigation-options a {
+	font-weight: bold;
+  }
