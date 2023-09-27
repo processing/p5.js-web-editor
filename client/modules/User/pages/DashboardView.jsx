@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import MediaQuery from 'react-responsive';
 import { withTranslation } from 'react-i18next';
 
 import browserHistory from '../../../browserHistory';
@@ -111,15 +112,19 @@ class DashboardView extends React.Component {
     }
   }
 
-  renderContent(tabKey, username) {
+  renderContent(tabKey, username, mobile) {
     switch (tabKey) {
       case TabKey.assets:
-        return <AssetList key={username} username={username} />;
+        return <AssetList key={username} mobile={mobile} username={username} />;
       case TabKey.collections:
-        return <CollectionList key={username} username={username} />;
+        return (
+          <CollectionList key={username} mobile={mobile} username={username} />
+        );
       case TabKey.sketches:
       default:
-        return <SketchList key={username} username={username} />;
+        return (
+          <SketchList key={username} mobile={mobile} username={username} />
+        );
     }
   }
 
@@ -151,7 +156,9 @@ class DashboardView extends React.Component {
           </div>
 
           <div className="dashboard-content">
-            {this.renderContent(currentTab, username)}
+            <MediaQuery maxWidth={770}>
+              {(mobile) => this.renderContent(currentTab, username, mobile)}
+            </MediaQuery>
           </div>
         </main>
         {this.state.collectionCreateVisible && (

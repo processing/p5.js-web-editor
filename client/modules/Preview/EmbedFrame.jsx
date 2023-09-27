@@ -252,7 +252,7 @@ function injectLocalFiles(files, htmlFile, options) {
     'PREVIEW_SCRIPTS_URL'
   )}`;
   previewScripts.setAttribute('crossorigin', '');
-  sketchDoc.head.appendChild(previewScripts);
+  sketchDoc.body.appendChild(previewScripts);
 
   const sketchDocString = `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
   scriptOffs = getAllScriptOffsets(sketchDocString);
