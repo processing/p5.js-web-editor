@@ -266,6 +266,9 @@ class Editor extends React.Component {
         this.props.autocloseBracketsQuotes
       );
     }
+    if (this.props.autoclosetags !== prevProps.autoclosetags) {
+      this._cm.setOption('autoCloseTags', this.props.autoclosetags);
+    }
     if (this.props.autocompleteHinter !== prevProps.autocompleteHinter) {
       if (!this.props.autocompleteHinter) {
         // close the hinter window once the preference is turned off
@@ -498,6 +501,7 @@ class Editor extends React.Component {
   }
 
   render() {
+    console.log(this.props.autoclosetags);
     const editorSectionClass = classNames({
       editor: true,
       'sidebar--contracted': !this.props.isExpanded
