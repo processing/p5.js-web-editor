@@ -273,7 +273,7 @@ export default function Preferences() {
               {/* {t('Preferences.AutocloseTags')} */}
               {/* {t('Preferences.AutocloseTagsOnARIA')} */}
               {/* {t('Preferences.AutocloseTagsOffARIA')} */}
-              {/* Auto Close Tags */}
+              Auto Close Tags
             </h4>
             <div className="preference__options">
               <input
