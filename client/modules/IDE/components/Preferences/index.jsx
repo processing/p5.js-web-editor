@@ -266,11 +266,13 @@ export default function Preferences() {
               </label>
             </div>
           </div>
-
           <div className="preference">
             <h4 className="preference__title">
-              {/* {t('Preferences.AutocloseBracketsQuotes')} */}
-              Auto Close Tags
+              {/* TODO: Add translation for this AutoCloseTags section like Preferences.AutocloseBracketsQuotes */}
+              {/* and add those to this. */}
+              {/* {t('Preferences.AutocloseTags')} */}
+              {/* {t('Preferences.AutocloseTagsOnARIA')} */}
+              {/* {t('Preferences.AutocloseTagsOffARIA')} */}
             </h4>
             <div className="preference__options">
               <input
@@ -307,7 +309,6 @@ export default function Preferences() {
               </label>
             </div>
           </div>
-
           <div className="preference">
             <h4 className="preference__title">
               {t('Preferences.AutocompleteHinter')}
