@@ -70,6 +70,24 @@ export function setAutocloseBracketsQuotes(value) {
   };
 }
 
+export function setAutocloseTags(value) {
+  return (dispatch, getState) => {
+    dispatch({
+      type: ActionTypes.SET_AUTOCLOSE_TAGS,
+      value
+    });
+    const state = getState();
+    if (state.user.authenticated) {
+      const formParams = {
+        preferences: {
+          autoclosetags: value
+        }
+      };
+      updatePreferences(formParams, dispatch);
+    }
+  };
+}
+
 export function setAutocompleteHinter(value) {
   return (dispatch, getState) => {
     dispatch({
