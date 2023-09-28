@@ -266,17 +266,15 @@ export default function Preferences() {
               </label>
             </div>
           </div>
-
           <div className="preference">
             <h4 className="preference__title">
-              {/* {t('Preferences.AutocloseBracketsQuotes')} */}
-              Auto Close Tags
+              {t('Preferences.AutocloseTags')}
             </h4>
             <div className="preference__options">
               <input
                 type="radio"
                 onChange={() => dispatch(setAutocloseTags(true))}
-                aria-label={t('Preferences.AutocloseBracketsQuotesOnARIA')}
+                aria-label={t('Preferences.AutocloseTagsOnARIA')}
                 name="autoclosetagsquotes"
                 id="autoclosetagsquotes-on"
                 className="preference__radio-button"
@@ -292,7 +290,7 @@ export default function Preferences() {
               <input
                 type="radio"
                 onChange={() => dispatch(setAutocloseTags(false))}
-                aria-label={t('Preferences.AutocloseBracketsQuotesOffARIA')}
+                aria-label={t('Preferences.AutocloseTagsOffARIA')}
                 name="autoclosetagsquotes"
                 id="autoclosetagsquotes-off"
                 className="preference__radio-button"
@@ -307,7 +305,6 @@ export default function Preferences() {
               </label>
             </div>
           </div>
-
           <div className="preference">
             <h4 className="preference__title">
               {t('Preferences.AutocompleteHinter')}

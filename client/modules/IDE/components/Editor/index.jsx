@@ -501,7 +501,6 @@ class Editor extends React.Component {
   }
 
   render() {
-    console.log(this.props.autoclosetags);
     const editorSectionClass = classNames({
       editor: true,
       'sidebar--contracted': !this.props.isExpanded
