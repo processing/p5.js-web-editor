@@ -1,15 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form, Field } from 'react-final-form';
 import { useDispatch } from 'react-redux';
 import Button from '../../../common/Button';
 import { validateLogin } from '../../../utils/reduxFormUtils';
 import { validateAndLoginUser } from '../actions';
+import viewimg from '../../../images/view.png';
+import hideimg from '../../../images/hide.png';
 
 function LoginForm() {
   const { t } = useTranslation();
-
+  const [showpassword, setShowpassword] = useState(false);
   const dispatch = useDispatch();
+
   function onSubmit(formProps) {
     return dispatch(validateAndLoginUser(formProps));
   }
@@ -48,14 +51,19 @@ function LoginForm() {
                 <label htmlFor="password" className="form__label">
                   {t('LoginForm.Password')}
                 </label>
-                <input
-                  className="form__input"
-                  aria-label={t('LoginForm.PasswordARIA')}
-                  type="password"
-                  id="password"
-                  autoComplete="current-password"
-                  {...field.input}
-                />
+                <div className="form__password-div">
+                  <input
+                    className="form__input"
+                    aria-label={t('LoginForm.PasswordARIA')}
+                    type={showpassword ? 'text' : 'password'}
+                    id="password"
+                    autoComplete="current-password"
+                    {...field.input}
+                  />
+                  <button onClick={() => setShowpassword(!showpassword)}>
+                    <img src={showpassword ? viewimg : hideimg} alt="" />
+                  </button>
+                </div>
                 {field.meta.touched && field.meta.error && (
                   <span className="form-error">{field.meta.error}</span>
                 )}

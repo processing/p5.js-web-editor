@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form, Field } from 'react-final-form';
 import { useDispatch } from 'react-redux';
@@ -6,6 +6,8 @@ import { validateSignup } from '../../../utils/reduxFormUtils';
 import { validateAndSignUpUser } from '../actions';
 import Button from '../../../common/Button';
 import apiClient from '../../../utils/apiClient';
+import viewimg from '../../../images/view.png';
+import hideimg from '../../../images/hide.png';
 
 function asyncValidate(fieldToValidate, value) {
   if (!value || value.trim().length === 0)
@@ -33,6 +35,7 @@ function validateEmail(email) {
 
 function SignupForm() {
   const { t } = useTranslation();
+  const [showpassword, setShowpassword] = useState(false);
 
   const dispatch = useDispatch();
   function onSubmit(formProps) {
@@ -97,14 +100,19 @@ function SignupForm() {
                 <label htmlFor="password" className="form__label">
                   {t('SignupForm.Password')}
                 </label>
-                <input
-                  className="form__input"
-                  aria-label={t('SignupForm.PasswordARIA')}
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                  {...field.input}
-                />
+                <div className="form__password-div">
+                  <input
+                    className="form__input"
+                    aria-label={t('SignupForm.PasswordARIA')}
+                    type={showpassword ? 'text' : 'password'}
+                    id="password"
+                    autoComplete="new-password"
+                    {...field.input}
+                  />
+                  <button onClick={() => setShowpassword(!showpassword)}>
+                    <img src={showpassword ? viewimg : hideimg} alt="" />
+                  </button>
+                </div>
                 {field.meta.touched && field.meta.error && (
                   <span className="form-error">{field.meta.error}</span>
                 )}
