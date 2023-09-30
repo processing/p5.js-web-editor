@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form, Field } from 'react-final-form';
 import { useDispatch } from 'react-redux';
 import Button from '../../../common/Button';
 import { validateLogin } from '../../../utils/reduxFormUtils';
 import { validateAndLoginUser } from '../actions';
+import eyeClose from '../../../images/eye-close.png';
+import eyeOpen from '../../../images/eye-open.png';
 
 function LoginForm() {
   const { t } = useTranslation();
@@ -13,6 +15,12 @@ function LoginForm() {
   function onSubmit(formProps) {
     return dispatch(validateAndLoginUser(formProps));
   }
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleShow = () => {
+    setShowPassword((prev) => !prev);
+  };
 
   return (
     <Form
@@ -54,14 +62,22 @@ function LoginForm() {
                 <label htmlFor="password" className="form__label">
                   {t('LoginForm.Password')}
                 </label>
-                <input
-                  className="form__input"
-                  aria-label={t('LoginForm.PasswordARIA')}
-                  type="password"
-                  id="password"
-                  autoComplete="current-password"
-                  {...field.input}
-                />
+                <div className="password_form">
+                  <input
+                    className="form__input"
+                    aria-label={t('LoginForm.PasswordARIA')}
+                    type={showPassword ? 'text' : 'password'}
+                    id="password"
+                    autoComplete="current-password"
+                    {...field.input}
+                  />
+                  <button className="eye_button" onClick={handleShow}>
+                    <img
+                      src={showPassword ? eyeClose : eyeOpen}
+                      alt="eye-logo"
+                    />
+                  </button>
+                </div>
                 {field.meta.touched && field.meta.error && (
                   <span className="form-error">{field.meta.error}</span>
                 )}

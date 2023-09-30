@@ -92,6 +92,27 @@
   margin-right: auto;
 }
 
+.password_form {
+  position: relative; 
+}
+
+.eye_button {
+  position: absolute; 
+  top: 50%; 
+  right: 10px; 
+  transform: translateY(-50%); 
+  background: none;
+  border: none; 
+  padding: 0; 
+  cursor: pointer; 
+}
+
+.eye_button img {
+  width: 24px; 
+  height: auto; 
+}
+
+
 // .form [type="submit"] {
 //   @extend %button;
 //   padding: #{8 / $base-font-size}rem #{25 / $base-font-size}rem;

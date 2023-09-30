@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form, Field } from 'react-final-form';
 import { useDispatch } from 'react-redux';
@@ -6,6 +7,8 @@ import { validateSignup } from '../../../utils/reduxFormUtils';
 import { validateAndSignUpUser } from '../actions';
 import Button from '../../../common/Button';
 import apiClient from '../../../utils/apiClient';
+import eyeClose from '../../../images/eye-close.png';
+import eyeOpen from '../../../images/eye-open.png';
 
 function asyncValidate(fieldToValidate, value) {
   if (!value || value.trim().length === 0)
@@ -38,6 +41,10 @@ function SignupForm() {
   function onSubmit(formProps) {
     return dispatch(validateAndSignUpUser(formProps));
   }
+  const [showPassword, setShowPassword] = useState(false);
+  const handleShow = () => {
+    setShowPassword((prev) => !prev);
+  };
 
   return (
     <Form
@@ -93,22 +100,43 @@ function SignupForm() {
           </Field>
           <Field name="password">
             {(field) => (
-              <p className="form__field">
-                <label htmlFor="password" className="form__label">
-                  {t('SignupForm.Password')}
-                </label>
-                <input
-                  className="form__input"
-                  aria-label={t('SignupForm.PasswordARIA')}
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                  {...field.input}
-                />
-                {field.meta.touched && field.meta.error && (
-                  <span className="form-error">{field.meta.error}</span>
-                )}
-              </p>
+              <div style={{ position: 'relative' }}>
+                <p className="form__field">
+                  <label htmlFor="password" className="form__label">
+                    {t('SignupForm.Password')}
+                  </label>
+                  <div className="password_form">
+                    <input
+                      className="form__input"
+                      aria-label={t('SignupForm.PasswordARIA')}
+                      type={showPassword ? 'text' : 'password'}
+                      id="password"
+                      autoComplete="new-password"
+                      {...field.input}
+                    />
+                    <button
+                      type="button"
+                      className="eye_button"
+                      onClick={handleShow}
+                      style={{
+                        fontSize: '25px',
+                        position: 'absolute',
+                        top: '38%',
+                        right: '2px',
+                        paddingTop: '4.5px'
+                      }}
+                    >
+                      <img
+                        src={showPassword ? eyeClose : eyeOpen}
+                        alt="eye-logo"
+                      />
+                    </button>
+                  </div>
+                  {field.meta.touched && field.meta.error && (
+                    <span className="form-error">{field.meta.error}</span>
+                  )}
+                </p>
+              </div>
             )}
           </Field>
           <Field name="confirmPassword">
