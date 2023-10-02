@@ -11,7 +11,7 @@ import PreviewFrame from '../components/PreviewFrame';
 import Console from '../components/Console';
 import Toast from '../components/Toast';
 import { updateFileContent } from '../actions/files';
-import { stopSketch } from '../actions/ide';
+import { startSketch } from '../actions/ide';
 import {
   autosaveProject,
   clearPersistedState,
@@ -27,6 +27,7 @@ import {
   PreviewWrapper
 } from '../components/Editor/MobileEditor';
 import IDEOverlays from '../components/IDEOverlays';
+import PuzzleView from '../pages/PuzzleView';
 
 function getTitle(project) {
   const { id } = project;
@@ -94,7 +95,7 @@ const IDEView = () => {
   useEffect(() => {
     dispatch(clearPersistedState());
 
-    dispatch(stopSketch());
+    dispatch(startSketch());
   }, [dispatch]);
 
   useEffect(() => {
@@ -146,65 +147,50 @@ const IDEView = () => {
               <SplitPane
                 split="vertical"
                 size={ide.sidebarIsExpanded ? sidebarSize : 20}
-                onChange={(size) => {
-                  setSidebarSize(size);
-                }}
-                allowResize={ide.sidebarIsExpanded}
                 minSize={125}
               >
                 <Sidebar />
-                <SplitPane
-                  split="vertical"
-                  defaultSize="50%"
-                  onChange={() => {
-                    setIsOverlayVisible(true);
-                  }}
-                  onDragFinished={() => {
-                    // overlayRef.current.style.display = 'none';
-                    setIsOverlayVisible(false);
-                  }}
-                  resizerStyle={{
-                    borderLeftWidth: '2px',
-                    borderRightWidth: '2px',
-                    width: '2px',
-                    margin: '0px 0px'
-                  }}
-                >
+                <SplitPane split="vertical" defaultSize="50%">
+                  <PuzzleView />
                   <SplitPane
+                    className="IDE-view"
                     split="horizontal"
-                    primary="second"
-                    size={ide.consoleIsExpanded ? consoleSize : 29}
-                    minSize={29}
-                    onChange={(size) => setConsoleSize(size)}
-                    allowResize={ide.consoleIsExpanded}
-                    className="editor-preview-subpanel"
+                    defaultSize="50%"
                   >
-                    <Editor
-                      provideController={(ctl) => {
-                        cmRef.current = ctl;
-                      }}
-                    />
-                    <Console />
-                  </SplitPane>
-                  <section className="preview-frame-holder">
-                    <header className="preview-frame__header">
-                      <h2 className="preview-frame__title">
-                        {t('Toolbar.Preview')}
-                      </h2>
-                    </header>
-                    <div className="preview-frame__content">
-                      <div
-                        className="preview-frame-overlay"
-                        style={{ display: isOverlayVisible ? 'block' : 'none' }}
+                    <SplitPane
+                      split="vertical"
+                      primary="second"
+                      size={ide.consoleIsExpanded ? consoleSize : 29}
+                      minSize={29}
+                    >
+                      <Editor
+                        provideController={(ctl) => {
+                          cmRef.current = ctl;
+                        }}
                       />
-                      <div>
-                        {((preferences.textOutput || preferences.gridOutput) &&
-                          ide.isPlaying) ||
-                          ide.isAccessibleOutputPlaying}
+                      <Console />
+                    </SplitPane>
+                    <section className="preview-frame-holder">
+                      <header className="preview-frame__header">
+                        <h2 className="preview-frame__title">Output</h2>
+                      </header>
+                      <div className="preview-frame__content">
+                        <div
+                          className="preview-frame-overlay"
+                          style={{
+                            display: isOverlayVisible ? 'block' : 'none'
+                          }}
+                        />
+                        <div>
+                          {((preferences.textOutput ||
+                            preferences.gridOutput) &&
+                            ide.isPlaying) ||
+                            ide.isAccessibleOutputPlaying}
+                        </div>
+                        <PreviewFrame cmController={cmRef.current} />
                       </div>
-                      <PreviewFrame cmController={cmRef.current} />
-                    </div>
-                  </section>
+                    </section>
+                  </SplitPane>
                 </SplitPane>
               </SplitPane>
             </main>

@@ -107,15 +107,15 @@ class Editor extends React.Component {
     this._cm = CodeMirror(this.codemirrorContainer, {
       theme: `p5-${this.props.theme}`,
       lineNumbers: this.props.lineNumbers,
-      styleActiveLine: true,
+      styleActiveLine: false,
       inputStyle: 'contenteditable',
       lineWrapping: this.props.linewrap,
-      fixedGutter: false,
-      foldGutter: true,
+      fixedGutter: true,
+      foldGutter: false,
       foldOptions: { widget: '\u2026' },
       gutters: ['CodeMirror-foldgutter', 'CodeMirror-lint-markers'],
       keyMap: 'sublime',
-      highlightSelectionMatches: true, // highlight current search match
+      highlightSelectionMatches: false, // highlight current search match
       matchBrackets: true,
       emmet: {
         preview: ['html'],
@@ -123,7 +123,7 @@ class Editor extends React.Component {
         autoRenameTags: true
       },
       autoCloseBrackets: this.props.autocloseBracketsQuotes,
-      styleSelectedText: true,
+      styleSelectedText: false,
       lint: {
         onUpdateLinting: (annotations) => {
           this.updateLintingMessageAccessibility(annotations);
