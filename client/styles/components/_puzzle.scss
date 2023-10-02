@@ -1,0 +1,14 @@
+.puzzle-view-container {
+    height: 100%;
+    width: 100%;
+    padding: 20px;
+}
+
+.content {
+    height: 100%;
+    width: 100%;
+    padding: 10px;
+    @include themify() {
+        border: 1px solid getThemifyVariable("ide-border-color");
+    }
+}
