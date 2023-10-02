@@ -86,6 +86,7 @@ pre.CodeMirror-line {
 */
 
 .CodeMirror-dialog {
+  display: none;
   position: fixed;
   top: 0;
   left: 50%;
@@ -287,6 +288,7 @@ pre.CodeMirror-line {
 
 // foldgutter
 .CodeMirror-foldmarker {
+  display: none;
   text-shadow:
     -1px 0 #ed225d,
     0 1px #ed225d,
@@ -302,6 +304,7 @@ pre.CodeMirror-line {
   opacity: 0.75;
 }
 .CodeMirror-foldgutter {
+  display: none;
   width: 2.7em;
 }
 .CodeMirror-foldgutter-open,
@@ -381,6 +384,7 @@ pre.CodeMirror-line {
 }
 
 .editor__header {
+  display: none;
   height: #{29 / $base-font-size}rem;
 }
 

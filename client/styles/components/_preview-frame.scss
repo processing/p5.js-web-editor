@@ -13,6 +13,7 @@
 }
 
 .preview-frame__header {
+  display: none;
   height: #{29 / $base-font-size}rem;
 }
 

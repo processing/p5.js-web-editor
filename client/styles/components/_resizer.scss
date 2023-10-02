@@ -1,4 +1,5 @@
 .Resizer {
+    display: none;
     @include themify() {
         background: getThemifyVariable('ide-border-color');
     }

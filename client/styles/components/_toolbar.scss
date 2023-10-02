@@ -60,7 +60,7 @@
 .toolbar__preferences-button {
 	@include themify() {
 		@extend %toolbar-button;
-		display: flex;
+		display: none;
 		justify-content: center;
 		align-items: center;
 		padding: 0;
@@ -71,7 +71,7 @@
 	margin-left: auto;
 	& span {
 		padding-left: #{1 / $base-font-size}rem;
-		display: flex;
+		display: none;
 		align-items: center;
 		justify-content: center;
 		width: #{20 / $base-font-size}rem;
@@ -90,7 +90,7 @@
 
 .toolbar {
 	padding: #{10 / $base-font-size}rem #{20 / $base-font-size}rem;
-	display: flex;
+	display: none;
 	align-items: center;
 	@include themify() {
 		border-bottom: 1px dashed map-get($theme-map, 'nav-border-color');
@@ -100,7 +100,7 @@
 .toolbar__project-name-container {
 	margin-left: #{10 / $base-font-size}rem;
 	padding-left: #{10 / $base-font-size}rem;
-  display: flex;
+  display: none;
   align-items: center;
 }
 
@@ -133,7 +133,7 @@
 }
 
 .toolbar__autorefresh {
-	display: flex;
+	display: none;
 	align-items: center;
 }
 
