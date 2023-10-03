@@ -250,7 +250,7 @@
 .sidebar__expand {
   display: none;
   &:hover {
-    cursor: e-resize;
+    cursor: pointer;
   }
   .sidebar--contracted & {
     display: flex;
@@ -259,7 +259,7 @@
 
 .sidebar__contract {
   &:hover {
-    cursor: w-resize;
+    cursor: pointer;
   }
   .sidebar--contracted & {
     display: none;
