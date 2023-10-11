@@ -11,7 +11,7 @@ import PreviewFrame from '../components/PreviewFrame';
 import Console from '../components/Console';
 import Toast from '../components/Toast';
 import { updateFileContent } from '../actions/files';
-import { stopSketch } from '../actions/ide';
+
 import {
   autosaveProject,
   clearPersistedState,
@@ -94,7 +94,7 @@ const IDEView = () => {
   useEffect(() => {
     dispatch(clearPersistedState());
 
-    dispatch(stopSketch());
+    // dispatch(stopSketch());
   }, [dispatch]);
 
   useEffect(() => {
