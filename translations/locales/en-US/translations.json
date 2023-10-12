@@ -76,7 +76,7 @@
     "SignUp": "Sign Up",
     "Email": "email",
     "Username": "username",
-    "DontHaveAccount": "Don't have an account? ",
+    "DontHaveAccount": "Don't have an account yet? ",
     "ForgotPassword": "Forgot your password? ",
     "ResetPassword": "Reset your password"
   },
