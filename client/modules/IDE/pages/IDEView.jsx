@@ -93,8 +93,6 @@ const IDEView = () => {
 
   useEffect(() => {
     dispatch(clearPersistedState());
-
-    // dispatch(stopSketch());
   }, [dispatch]);
 
   useEffect(() => {
