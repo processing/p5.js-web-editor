@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const ReactRefreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const ReactRefreshPlugin = process.env.NODE_ENV === 'development' ? require('@pmmmwh/react-refresh-webpack-plugin') : null;
 const ESLintPlugin = require('eslint-webpack-plugin');
 
 if (process.env.NODE_ENV === 'development') {
