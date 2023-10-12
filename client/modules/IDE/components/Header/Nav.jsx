@@ -1,5 +1,9 @@
-import React, { useContext } from 'react';
+import React, { Fragment, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Box } from '@material-ui/core';
+import { Button } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
+import { Modal } from '@material-ui/core';
 import { sortBy } from 'lodash';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -290,35 +294,90 @@ const AuthenticatedUserMenu = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 320,
+    bgcolor: 'background.paper',
+    boxShadow: 24,
+    p: 3
+  };
+
   return (
-    <ul className="nav__items-right" title="user-menu">
-      {getConfig('TRANSLATIONS_ENABLED') && <LanguageMenu />}
-      <NavDropdownMenu
-        id="account"
-        title={
-          <span>
-            {t('Nav.Auth.Hello')}, {username}!
-          </span>
-        }
+    <Fragment>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
       >
-        <NavMenuItem href={`/${username}/sketches`}>
-          {t('Nav.Auth.MySketches')}
-        </NavMenuItem>
-        <NavMenuItem
-          href={`/${username}/collections`}
-          hideIf={!getConfig('UI_COLLECTIONS_ENABLED')}
+        <Box sx={style} className="overlay__body">
+          <Typography
+            id="modal-modal-title"
+            variant="h6"
+            component="h6"
+            style={{
+              margin: '0 0 1rem 0',
+              fontWeight: 'bold',
+              cursor: 'default'
+            }}
+            className="preference__option"
+          >
+            Are you sure you want to logout?
+          </Typography>
+          <span>
+            <Button
+              onClick={() => dispatch(logoutUser())}
+              style={{ margin: '0 0.5rem 0 0' }}
+              variant="outlined"
+            >
+              Yes
+            </Button>
+            <Button
+              className="overlay__close-button"
+              onClick={handleClose}
+              color="primary"
+              style={{ margin: '0 0.5rem 0 0' }}
+            >
+              Cancel
+            </Button>
+          </span>
+        </Box>
+      </Modal>
+
+      <ul className="nav__items-right" title="user-menu">
+        {getConfig('TRANSLATIONS_ENABLED') && <LanguageMenu />}
+        <NavDropdownMenu
+          id="account"
+          title={
+            <span>
+              {t('Nav.Auth.Hello')}, {username}!
+            </span>
+          }
         >
-          {t('Nav.Auth.MyCollections')}
-        </NavMenuItem>
-        <NavMenuItem href={`/${username}/assets`}>
-          {t('Nav.Auth.MyAssets')}
-        </NavMenuItem>
-        <NavMenuItem href="/account">{t('Preferences.Settings')}</NavMenuItem>
-        <NavMenuItem onClick={() => dispatch(logoutUser())}>
-          {t('Nav.Auth.LogOut')}
-        </NavMenuItem>
-      </NavDropdownMenu>
-    </ul>
+          <NavMenuItem href={`/${username}/sketches`}>
+            {t('Nav.Auth.MySketches')}
+          </NavMenuItem>
+          <NavMenuItem
+            href={`/${username}/collections`}
+            hideIf={!getConfig('UI_COLLECTIONS_ENABLED')}
+          >
+            {t('Nav.Auth.MyCollections')}
+          </NavMenuItem>
+          <NavMenuItem href={`/${username}/assets`}>
+            {t('Nav.Auth.MyAssets')}
+          </NavMenuItem>
+          <NavMenuItem href="/account">{t('Preferences.Settings')}</NavMenuItem>
+          <NavMenuItem onClick={handleOpen}>{t('Nav.Auth.LogOut')}</NavMenuItem>
+        </NavDropdownMenu>
+      </ul>
+    </Fragment>
   );
 };
 

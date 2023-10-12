@@ -159,6 +159,7 @@
     "@babel/register": "^7.14.5",
     "@emmetio/codemirror-plugin": "^1.2.4",
     "@gatsbyjs/webpack-hot-middleware": "^2.25.3",
+    "@material-ui/core": "^4.12.4",
     "@redux-devtools/core": "^3.11.0",
     "@redux-devtools/dock-monitor": "^2.1.0",
     "@redux-devtools/log-monitor": "^3.1.0",

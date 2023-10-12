@@ -1,5 +1,9 @@
-import React, { useContext, useMemo, useState } from 'react';
+import React, { Fragment, useContext, useMemo, useState } from 'react';
 import styled from 'styled-components';
+import { Box } from '@material-ui/core';
+import { Button } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
+import { Modal } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -315,22 +319,77 @@ const AccountMenu = () => {
 
   const { isOpen, handlers } = useMenuProps('account');
 
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 300,
+    height: '100px',
+    bgcolor: 'background.paper',
+    boxShadow: 24,
+    p: 3
+  };
+
   return (
-    <div>
-      <IconButton icon={AccountIcon} {...handlers} />
-      <ul className={isOpen ? 'opened' : ''}>
-        <ParentMenuContext.Provider value="account">
-          <li className="user">{user.username}</li>
-          <NavMenuItem href={`/${user.username}/sketches`}>
-            My Stuff
-          </NavMenuItem>
-          <NavMenuItem href="/account">Settings</NavMenuItem>
-          <NavMenuItem onClick={() => dispatch(logoutUser())}>
-            Log Out
-          </NavMenuItem>
-        </ParentMenuContext.Provider>
-      </ul>
-    </div>
+    <Fragment>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style} className="overlay__body">
+          <Typography
+            id="modal-modal-title"
+            variant="h6"
+            component="h6"
+            style={{
+              margin: '0 0 1rem 0',
+              fontWeight: 'bold',
+              cursor: 'default'
+            }}
+            className="preference__option"
+          >
+            Are you sure you want to logout?
+          </Typography>
+          <span>
+            <Button
+              onClick={() => dispatch(logoutUser())}
+              style={{ margin: '0 0.5rem 0 0' }}
+              variant="outlined"
+            >
+              Yes
+            </Button>
+            <Button
+              className="overlay__close-button"
+              onClick={handleClose}
+              color="primary"
+              style={{ margin: '0 0.5rem 0 0' }}
+            >
+              Cancel
+            </Button>
+          </span>
+        </Box>
+      </Modal>
+      <div>
+        <IconButton icon={AccountIcon} {...handlers} />
+        <ul className={isOpen ? 'opened' : ''}>
+          <ParentMenuContext.Provider value="account">
+            <li className="user">{user.username}</li>
+            <NavMenuItem href={`/${user.username}/sketches`}>
+              My Stuff
+            </NavMenuItem>
+            <NavMenuItem href="/account">Settings</NavMenuItem>
+            <NavMenuItem onClick={handleOpen}>Log Out</NavMenuItem>
+          </ParentMenuContext.Provider>
+        </ul>
+      </div>
+    </Fragment>
   );
 };
 
