@@ -8,8 +8,13 @@ import Button from '../../../common/Button';
 import apiClient from '../../../utils/apiClient';
 
 function asyncValidate(fieldToValidate, value) {
+  if (fieldToValidate === 'email') {
+    return `Please enter an ${fieldToValidate}.`;
+  }
+
   if (!value || value.trim().length === 0)
     return `Please enter a ${fieldToValidate}.`;
+
   const queryParams = {};
   queryParams[fieldToValidate] = value;
   queryParams.check_type = fieldToValidate;
