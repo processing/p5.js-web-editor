@@ -1,6 +1,3 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable react/display-name */
-
 import React, { useState, useEffect, useCallback } from 'react';
 import { throttle } from 'lodash';
 import { withTranslation } from 'react-i18next';
