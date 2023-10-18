@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Route as RouterRoute, Switch } from 'react-router-dom';
@@ -47,7 +48,10 @@ const withParams = (Component) => (props) => (
 const Route = ({ component, ...props }) => (
   <RouterRoute component={withParams(component)} {...props} />
 );
-Route.propTypes = { ...RouterRoute.propTypes };
+Route.propTypes = {
+  ...RouterRoute.propTypes,
+  component: PropTypes.elementType.isRequired
+};
 
 const routes = (
   <Switch>
