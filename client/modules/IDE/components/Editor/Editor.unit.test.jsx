@@ -2,11 +2,11 @@ import React from 'react';
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { act } from 'react-dom/test-utils';
-import Editor from './Editor';
-import { reduxRender } from '../../../test-utils';
-import { initialTestState } from '../../../testData/testReduxStore';
+import Editor from '.';
+import { reduxRender } from '../../../../test-utils';
+import { initialTestState } from '../../../../testData/testReduxStore';
 
-jest.mock('../../../i18n');
+jest.mock('../../../../i18n');
 
 describe('<Editor />', () => {
   const mockStore = configureStore([thunk]);
