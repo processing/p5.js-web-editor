@@ -80,7 +80,7 @@ const IDEView = () => {
 
   const [consoleSize, setConsoleSize] = useState(150);
   const [sidebarSize, setSidebarSize] = useState(160);
-  // const [isOverlayVisible, setIsOverlayVisible] = useState(true);
+  const [isOverlayVisible, setIsOverlayVisible] = useState(false);
 
   const cmRef = useRef({});
 
@@ -155,11 +155,10 @@ const IDEView = () => {
                   split="vertical"
                   defaultSize="50%"
                   onChange={() => {
-                    // setIsOverlayVisible(true);
+                    setIsOverlayVisible(true);
                   }}
                   onDragFinished={() => {
-                    // overlayRef.current.style.display = 'none';
-                    // setIsOverlayVisible(false);
+                    setIsOverlayVisible(false);
                   }}
                   resizerStyle={{
                     borderLeftWidth: '2px',
@@ -193,7 +192,7 @@ const IDEView = () => {
                     <div className="preview-frame__content">
                       <div
                         className="preview-frame-overlay"
-                        // style={{ display: isOverlayVisible ? 'block' : 'none' }}
+                        style={{ display: isOverlayVisible ? 'block' : 'none' }}
                       />
                       <div>
                         {((preferences.textOutput || preferences.gridOutput) &&
