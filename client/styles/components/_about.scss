@@ -83,11 +83,12 @@
 
 .about__footer {
   display: flex;
-  justify-content: space-between;
+  gap: 44%;
+  // justify-content: space-between;
   padding-top: #{18 / $base-font-size}rem;
   padding-right: #{20 / $base-font-size}rem;
   padding-bottom: #{21 / $base-font-size}rem;
-  padding-left: #{20 / $base-font-size}rem;
+  padding-left: #{250 / $base-font-size}rem;
   width: 100%;
 }
 
