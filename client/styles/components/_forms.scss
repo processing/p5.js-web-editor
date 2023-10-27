@@ -66,6 +66,10 @@
   }
 }
 
+.form__input[type='password']::-ms-reveal {
+  display: none;
+}
+
 .form__input-flexible-height {
   height: auto;
 }
