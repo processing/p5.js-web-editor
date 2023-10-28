@@ -48,8 +48,10 @@ const withParams = (Component) => (props) => (
 const Route = ({ component, ...props }) => (
   <RouterRoute component={withParams(component)} {...props} />
 );
-Route.propTypes = { ...RouterRoute.propTypes };
-Route.propTypes.component = PropTypes.elementType.isRequired;
+Route.propTypes = {
+  ...RouterRoute.propTypes,
+  component: PropTypes.elementType.isRequired
+};
 
 const routes = (
   <Switch>
