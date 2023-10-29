@@ -19,7 +19,7 @@ export const initialState = () => {
       children: [b, a, c],
       fileType: 'folder',
       content: '',
-      isFolderClosed: false //
+      isFolderClosed: false
     },
     {
       name: 'sketch.js',

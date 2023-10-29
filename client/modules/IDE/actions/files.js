@@ -63,7 +63,7 @@ export function submitFile(formProps, files, parentId, projectId) {
       children: []
     };
     return apiClient
-      .post(`/projects/${projectId}/files`, postParams) //
+      .post(`/projects/${projectId}/files`, postParams)
       .then((response) => ({
         file: response.data.updatedFile,
         updatedAt: response.data.project.updatedAt
