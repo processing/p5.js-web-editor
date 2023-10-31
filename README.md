@@ -38,7 +38,9 @@ Issues and Pull Requests categorized under the PATCH or MINOR Release Milestones
 
 We will aim to deploy on a 1-2 month basis. Here are some dates we’re working towards: 
 
-PATCH Release: By October 31, 2023
+MINOR Release for [p5.js version 1.8.0](https://github.com/processing/p5.js/releases/tag/v1.8.0): By October 27, 2023
+
+PATCH Release: By November 2, 2023
 
 MINOR Release: By November 30, 2023
 
@@ -60,6 +62,11 @@ MINOR Release: By November 30, 2023
 
 Support for this project has come from [Processing Foundation](https://processingfoundation.org/), [NYU ITP](https://tisch.nyu.edu/itp), [CS4All, NYC DOE](http://cs4all.nyc/), [COSA at DU](https://liberalarts.du.edu/emergent-digital-practices/open-source-arts), [STUDIO for Creative Inquiry](https://studioforcreativeinquiry.org/), [Grant for the Web](https://www.grantfortheweb.org/), [New Media Rights](https://www.newmediarights.org/), and many others. 
 
-Hosting and technical support has come from: <br />
-<a href="https://releasehub.com/" target="_blank"><img width="100" src="https://assets.website-files.com/603dd147c5b0a480611bd348/603dd147c5b0a469bc1bd451_logo--dark.svg" /></a> 
+Hosting and technical support has come from: 
+<br />
+<br />
+<a href="https://releasehub.com/" target="_blank"><img width="100" src="https://assets.website-files.com/603dd147c5b0a480611bd348/603dd147c5b0a469bc1bd451_logo--dark.svg" /></a>
+<br />
 <a href="https://www.browserstack.com/" target="_blank"><img width="100" src="https://user-images.githubusercontent.com/6063380/46976166-ab280a80-d096-11e8-983b-18dd38c8cc9b.png" /></a>
+<br />
+<a href="https://www.fastly.com/" target="_blank"><img width="100" src="https://cdn-assets-us.frontify.com/s3/frontify-enterprise-files-us/eyJwYXRoIjoiZmFzdGx5XC9hY2NvdW50c1wvYzJcLzQwMDEwMjNcL3Byb2plY3RzXC8xMVwvYXNzZXRzXC80ZVwvNzc0XC9lZTZmYzlkOWYzNWE1NjBkNjUzNjFkNGI0NGQ2MTNmZi0xNjIxNTIyODg4LnBuZyJ9:fastly:nVuY3PxyFqQMI6elJsMzxAGLH3IFlmiuMdacHAGRMkE?width=2400" /></a>
