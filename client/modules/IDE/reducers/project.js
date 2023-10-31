@@ -33,8 +33,7 @@ const project = (state, action) => {
         name: action.project.name,
         updatedAt: action.project.updatedAt,
         owner: action.owner,
-        isSaving: false,
-        files: action.project.files
+        isSaving: false
       };
     case ActionTypes.RESET_PROJECT:
       return initialState();

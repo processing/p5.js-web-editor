@@ -93,7 +93,6 @@ export function handleCreateFile(formProps, setSelected = true) {
       submitFile(formProps, files, parentId, projectId)
         .then((response) => {
           const { file, updatedAt } = response;
-          file.fileType = 'file';
           dispatch(createFile(file, parentId));
           if (updatedAt) dispatch(setProjectSavedTime(updatedAt));
           dispatch(closeNewFileModal());
@@ -154,7 +153,6 @@ export function handleCreateFolder(formProps) {
       submitFolder(formProps, files, parentId, projectId)
         .then((response) => {
           const { file, updatedAt } = response;
-          file.isFolderClosed = false;
           dispatch(createFile(file, parentId));
           if (updatedAt) dispatch(setProjectSavedTime(updatedAt));
           dispatch(closeNewFolderModal());

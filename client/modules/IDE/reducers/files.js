@@ -18,8 +18,7 @@ export const initialState = () => {
       _id: r,
       children: [b, a, c],
       fileType: 'folder',
-      content: '',
-      isFolderClosed: false
+      content: ''
     },
     {
       name: 'sketch.js',
@@ -159,24 +158,28 @@ const files = (state, action) => {
         }
         return Object.assign({}, file, { blobURL: action.blobURL });
       });
-    case ActionTypes.NEW_PROJECT:
-      action.files = action.files.map((file) => {
+    case ActionTypes.NEW_PROJECT: {
+      const newFiles = action.files.map((file) => {
         const corrospondingObj = state.find((obj) => obj.id === file.id);
         if (corrospondingObj && corrospondingObj.fileType === 'folder') {
-          file.isFolderClosed = corrospondingObj.isFolderClosed;
+          const isFolderClosed = corrospondingObj.isFolderClosed || false;
+          return { ...file, isFolderClosed };
         }
         return file;
       });
-      return setFilePaths(action.files);
-    case ActionTypes.SET_PROJECT:
-      action.files = action.files.map((file) => {
+      return setFilePaths(newFiles);
+    }
+    case ActionTypes.SET_PROJECT: {
+      const newFiles = action.files.map((file) => {
         const corrospondingObj = state.find((obj) => obj.id === file.id);
         if (corrospondingObj && corrospondingObj.fileType === 'folder') {
-          file.isFolderClosed = corrospondingObj.isFolderClosed;
+          const isFolderClosed = corrospondingObj.isFolderClosed || false;
+          return { ...file, isFolderClosed };
         }
         return file;
       });
-      return setFilePaths(action.files);
+      return setFilePaths(newFiles);
+    }
     case ActionTypes.RESET_PROJECT:
       return initialState();
     case ActionTypes.CREATE_FILE: {
@@ -190,52 +193,19 @@ const files = (state, action) => {
         parentFile.name === 'root'
           ? ''
           : `${parentFile.filePath}/${parentFile.name}`;
-      // const newState = [
-      //   ...updateParent(state, action),
-      //   {
-      //     name: action.name,
-      //     id: action.id,
-      //     _id: action._id,
-      //     content: action.content,
-      //     url: action.url,
-      //     children: action.children,
-      //     fileType: action.fileType || 'file',
-      //     filePath,
-      //     isExpanded: action.isExpanded
-      //   }
-      // ];
-
-      let newState = null;
-      if (action.fileType === 'folder') {
-        newState = [
-          ...updateParent(state, action),
-          {
-            name: action.name,
-            id: action.id,
-            _id: action._id,
-            content: action.content,
-            url: action.url,
-            children: action.children,
-            fileType: 'folder',
-            filePath,
-            isFolderClosed: false
-          }
-        ];
-      } else {
-        newState = [
-          ...updateParent(state, action),
-          {
-            name: action.name,
-            id: action.id,
-            _id: action._id,
-            content: action.content,
-            url: action.url,
-            children: action.children,
-            fileType: 'file',
-            filePath
-          }
-        ];
-      }
+      const newState = [
+        ...updateParent(state, action),
+        {
+          name: action.name,
+          id: action.id,
+          _id: action._id,
+          content: action.content,
+          url: action.url,
+          children: action.children,
+          fileType: action.fileType || 'file',
+          filePath
+        }
+      ];
 
       return newState.map((file) => {
         if (file.id === action.parentId) {
@@ -285,18 +255,14 @@ const files = (state, action) => {
     case ActionTypes.SHOW_FOLDER_CHILDREN:
       return state.map((file) => {
         if (file.id === action.id) {
-          return Object.assign({}, file, {
-            isFolderClosed: false
-          });
+          return Object.assign({}, file, { isFolderClosed: false });
         }
         return file;
       });
     case ActionTypes.HIDE_FOLDER_CHILDREN:
       return state.map((file) => {
         if (file.id === action.id) {
-          return Object.assign({}, file, {
-            isFolderClosed: true
-          });
+          return Object.assign({}, file, { isFolderClosed: true });
         }
         return file;
       });
