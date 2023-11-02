@@ -5,7 +5,6 @@ import { withRouter } from 'react-router-dom';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-
 // Imports to be Refactored
 import { bindActionCreators } from 'redux';
 
