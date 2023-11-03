@@ -36,9 +36,9 @@ export function destroySession(req, res, next) {
       next(err);
       return;
     }
-    req.session.destroy((err) => {
-      if (err) {
-        next(err);
+    req.session.destroy((error) => {
+      if (error) {
+        next(error);
         return;
       }
       res.json({ success: true });
