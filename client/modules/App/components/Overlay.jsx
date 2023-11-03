@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { withTranslation } from 'react-i18next';
+import MediaQuery from 'react-responsive';
 
 import browserHistory from '../../../browserHistory';
 import ExitIcon from '../../../images/exit.svg';
@@ -69,7 +70,7 @@ class Overlay extends React.Component {
             <header className="overlay__header">
               <h2 className="overlay__title">{title}</h2>
               <div className="overlay__actions">
-                {actions}
+                <MediaQuery query="(min-width: 768px)">{actions}</MediaQuery>
                 <button
                   className="overlay__close-button"
                   onClick={this.close}
@@ -79,6 +80,11 @@ class Overlay extends React.Component {
                 </button>
               </div>
             </header>
+            <MediaQuery query="(max-width: 767px)">
+              {actions && (
+                <div className="overlay__actions-mobile">{actions}</div>
+              )}
+            </MediaQuery>
             {children}
             <DocumentKeyDown handlers={{ escape: () => this.close() }} />
           </section>
