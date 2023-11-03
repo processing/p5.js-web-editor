@@ -13,12 +13,15 @@ import {
 import {
   setAutorefresh,
   setGridOutput,
-  setTextOutput
+  setTextOutput,
+  setTheme
 } from '../../actions/preferences';
 
 import PlayIcon from '../../../../images/play.svg';
 import StopIcon from '../../../../images/stop.svg';
 import PreferencesIcon from '../../../../images/preferences.svg';
+import MoonIcon from '../../../../images/moon.svg';
+import SunIcon from '../../../../images/sun.svg';
 import ProjectName from './ProjectName';
 
 const Toolbar = (props) => {
@@ -29,8 +32,13 @@ const Toolbar = (props) => {
   const autorefresh = useSelector((state) => state.preferences.autorefresh);
   const dispatch = useDispatch();
 
-  const { t } = useTranslation();
+  const { theme } = useSelector((state) => state.preferences);
 
+  const handleThemeChange = (newTheme) => {
+    dispatch(setTheme(newTheme));
+  };
+
+  const { t } = useTranslation();
   const playButtonClass = classNames({
     'toolbar__play-button': true,
     'toolbar__play-button--selected': isPlaying
@@ -43,7 +51,6 @@ const Toolbar = (props) => {
     'toolbar__preferences-button': true,
     'toolbar__preferences-button--selected': preferencesIsVisible
   });
-
   return (
     <div className="toolbar">
       <button
@@ -98,7 +105,7 @@ const Toolbar = (props) => {
         {(() => {
           if (project.owner) {
             return (
-              <p className="toolbar__project-project.owner">
+              <p className="toolbar__project-owner">
                 {t('Toolbar.By')}{' '}
                 <Link to={`/${project.owner.username}/sketches`}>
                   {project.owner.username}
@@ -109,6 +116,22 @@ const Toolbar = (props) => {
           return null;
         })()}
       </div>
+      <button
+        className="toolbar__theme-no-outline"
+        onClick={() => {
+          const newTheme = theme === 'light' ? 'dark' : 'light';
+          handleThemeChange(newTheme);
+        }}
+        checked={theme === 'dark'}
+      >
+        <div className="toolbar__theme-svg">
+          {theme === 'light' ? (
+            <SunIcon className="toolbar__sun" />
+          ) : (
+            <MoonIcon />
+          )}
+        </div>
+      </button>
       <button
         className={preferencesButtonClass}
         onClick={() => dispatch(openPreferences())}

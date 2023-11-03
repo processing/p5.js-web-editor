@@ -5,23 +5,32 @@
 		justify-content: center;
 		align-items: center;
 		padding: 0 0 0 #{3 / $base-font-size}rem;
+
 		&--selected {
 			@extend %toolbar-button--selected;
 		}
+
 		&:disabled {
 			cursor: auto;
-			& g, & path {
+
+			& g,
+			& path {
 				fill: getThemifyVariable('button-border-color');
 			}
+
 			&:hover {
 				background-color: getThemifyVariable('toolbar-button-background-color');
-				& g, & path {
+
+				& g,
+				& path {
 					fill: getThemifyVariable('button-border-color');
 				}
 			}
-	    }
+		}
 	}
+
 	margin-right: #{15 / $base-font-size}rem;
+
 	span {
 		padding-left: #{4 / $base-font-size}rem;
 		display: flex;
@@ -44,10 +53,12 @@
 		align-items: center;
 		margin-right: #{15 / $base-font-size}rem;
 		padding: 0;
+
 		&--selected {
 			@extend %toolbar-button--selected;
 		}
 	}
+
 	span {
 		display: flex;
 		align-items: center;
@@ -64,11 +75,14 @@
 		justify-content: center;
 		align-items: center;
 		padding: 0;
+
 		&--selected {
 			@extend %toolbar-button--selected;
 		}
 	}
-	margin-left: auto;
+
+	margin-left: 10px;
+
 	& span {
 		padding-left: #{1 / $base-font-size}rem;
 		display: flex;
@@ -81,8 +95,11 @@
 
 .toolbar__logo {
 	margin-right: #{30 / $base-font-size}rem;
+
 	@include themify() {
-		& g, & path {
+
+		& g,
+		& path {
 			fill: getThemifyVariable('logo-color');
 		}
 	}
@@ -92,6 +109,7 @@
 	padding: #{10 / $base-font-size}rem #{20 / $base-font-size}rem;
 	display: flex;
 	align-items: center;
+
 	@include themify() {
 		border-bottom: 1px dashed map-get($theme-map, 'nav-border-color');
 	}
@@ -100,13 +118,14 @@
 .toolbar__project-name-container {
 	margin-left: #{10 / $base-font-size}rem;
 	padding-left: #{10 / $base-font-size}rem;
-  display: flex;
-  align-items: center;
+	display: flex;
+	align-items: center;
 }
 
 .toolbar .editable-input__label {
 	@include themify() {
 		color: getThemifyVariable('secondary-text-color');
+
 		& path {
 			fill: getThemifyVariable('secondary-text-color');
 		}
@@ -119,6 +138,7 @@
 
 .toolbar__project-owner {
 	margin-left: #{5 / $base-font-size}rem;
+
 	@include themify() {
 		color: getThemifyVariable('secondary-text-color');
 	}
@@ -128,6 +148,7 @@
 	@include themify() {
 		color: getThemifyVariable('secondary-text-color');
 	}
+
 	margin-left: #{5 / $base-font-size}rem;
 	font-size: #{12 / $base-font-size}rem;
 }
@@ -137,9 +158,28 @@
 	align-items: center;
 }
 
-.checkbox__autorefresh{
+.checkbox__autorefresh {
 	cursor: pointer;
-	@include themify(){
-		color:getThemifyVariable('logo-color');
+
+	@include themify() {
+		color: getThemifyVariable('logo-color');
+	}
+}
+
+.toolbar__theme-no-outline {
+	box-shadow: none;
+	margin-left: auto;
+
+	&:focus {
+		box-shadow: none;
+	}
+}
+
+.toolbar__theme-svg {
+	width: 2em;
+
+	.toolbar__sun {
+		transform: scale(1.5);
+		transform-origin: center;
 	}
 }
