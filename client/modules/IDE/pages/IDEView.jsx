@@ -11,7 +11,7 @@ import PreviewFrame from '../components/PreviewFrame';
 import Console from '../components/Console';
 import Toast from '../components/Toast';
 import { updateFileContent } from '../actions/files';
-import { stopSketch } from '../actions/ide';
+
 import {
   autosaveProject,
   clearPersistedState,
@@ -80,7 +80,7 @@ const IDEView = () => {
 
   const [consoleSize, setConsoleSize] = useState(150);
   const [sidebarSize, setSidebarSize] = useState(160);
-  const [isOverlayVisible, setIsOverlayVisible] = useState(true);
+  const [isOverlayVisible, setIsOverlayVisible] = useState(false);
 
   const cmRef = useRef({});
 
@@ -93,8 +93,6 @@ const IDEView = () => {
 
   useEffect(() => {
     dispatch(clearPersistedState());
-
-    dispatch(stopSketch());
   }, [dispatch]);
 
   useEffect(() => {
@@ -160,7 +158,6 @@ const IDEView = () => {
                     setIsOverlayVisible(true);
                   }}
                   onDragFinished={() => {
-                    // overlayRef.current.style.display = 'none';
                     setIsOverlayVisible(false);
                   }}
                   resizerStyle={{
