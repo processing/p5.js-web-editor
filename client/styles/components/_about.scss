@@ -82,15 +82,18 @@
 }
 
 .about__footer {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  text-decoration: underline;
+  justify-content: end;
   padding-top: #{18 / $base-font-size}rem;
-  padding-right: #{20 / $base-font-size}rem;
+  padding-right: #{71 / $base-font-size}rem;
   padding-bottom: #{21 / $base-font-size}rem;
   padding-left: #{20 / $base-font-size}rem;
   width: 100%;
+  @media (max-width: 768px) {
+    justify-content: start;
+  }
 }
-
 .about__footer-list {
   padding-top: #{12 / $base-font-size}rem;
 }
