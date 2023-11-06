@@ -142,7 +142,8 @@
 	cursor: pointer;
 	text-align: left;
 	padding: 0;
-	margin-bottom: #{5 / $base-font-size}rem;
+	margin-bottom: #{2.5 / $base-font-size}rem;
+	margin-top: #{2.5 / $base-font-size}rem;
 	padding-right: #{5 / $base-font-size}rem;
 	border: 0;
 	list-style-type: none;
