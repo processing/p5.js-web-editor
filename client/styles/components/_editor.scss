@@ -394,6 +394,10 @@ pre.CodeMirror-line {
   font-size: #{12 / $base-font-size}rem;
   display: flex;
   justify-content: space-between;
+
+  .editor__copy-btn {
+    width: 28px;
+  }
 }
 
 .editor__unsaved-changes {
@@ -438,4 +442,15 @@ pre.CodeMirror-line {
 .emmet-open-tag,
 .emmet-close-tag {
   text-decoration: underline;
+}
+
+.editor__copy {
+  position: absolute;
+  top: 10%;
+  right: 5px;
+  z-index: 100;
+
+  svg {
+    width: 16px;
+  }
 }

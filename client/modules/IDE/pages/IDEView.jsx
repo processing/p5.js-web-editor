@@ -91,6 +91,11 @@ const IDEView = () => {
     dispatch(updateFileContent(file.id, file.content));
   };
 
+  const copyFileContent = () => {
+    const file = cmRef.current.getContent();
+    navigator.clipboard.writeText(file.content);
+  };
+
   useEffect(() => {
     dispatch(clearPersistedState());
   }, [dispatch]);
@@ -180,6 +185,7 @@ const IDEView = () => {
                       provideController={(ctl) => {
                         cmRef.current = ctl;
                       }}
+                      copyFileContent={copyFileContent}
                     />
                     <Console />
                   </SplitPane>
