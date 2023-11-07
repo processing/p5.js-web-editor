@@ -29,6 +29,7 @@
 
 .form-container__content {
 	height: 100%;
+	max-width: 90vw;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -59,6 +60,10 @@
 
 .form-container__divider {
 	padding: #{20 / $base-font-size}rem 0;
+
+	@media (max-width: 770px) {
+		text-align: center;
+	}
 }
 
 .form-container__logo-button {
