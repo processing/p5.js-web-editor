@@ -38,11 +38,9 @@ Issues and Pull Requests categorized under the PATCH or MINOR Release Milestones
 
 We will aim to deploy on a 1-2 month basis. Here are some dates we’re working towards: 
 
-MINOR Release for [p5.js version 1.8.0](https://github.com/processing/p5.js/releases/tag/v1.8.0): By October 27, 2023
+2.9.3 PATCH Release: By November 17, 2023
 
-PATCH Release: By November 2, 2023
-
-MINOR Release: By November 30, 2023
+2.10.0 MINOR Release: By December 15, 2023
 
 [You can read more about Semantic Versioning and the differences between a MINOR and PATCH release](https://semver.org/). 
 
