@@ -531,8 +531,8 @@
     "KeyUpLineNumber": "Zeile {{lineNumber}}"
   },
   "EditorAccessibility": {
-    "NoLintMessages": "Keine Lint-Warnungen vorhanden ",
-    "CurrentLine": " Aktuelle Zeile"
+    "NoLintMessages": "Keine Lint-Warnungen vorhanden",
+    "CurrentLine": "Aktuelle Zeile"
   },
   "Timer": {
     "SavedAgo": "Gesichert: {{timeAgo}}"

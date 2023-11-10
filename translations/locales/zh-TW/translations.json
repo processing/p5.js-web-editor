@@ -533,8 +533,8 @@
     "KeyUpLineNumber": "第 {{lineNumber}} 行"
   },
   "EditorAccessibility": {
-    "NoLintMessages": "沒有語法檢查的錯誤 ",
-    "CurrentLine": " 目前行"
+    "NoLintMessages": "沒有語法檢查的錯誤",
+    "CurrentLine": "目前行"
   },
   "Timer": {
     "SavedAgo": "已儲存: {{timeAgo}}"
