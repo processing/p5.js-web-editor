@@ -531,8 +531,8 @@
     "KeyUpLineNumber": "рядок {{lineNumber}}"
   },
   "EditorAccessibility": {
-    "NoLintMessages": "Жодних повідомлень ",
-    "CurrentLine": " Поточний рядок"
+    "NoLintMessages": "Жодних повідомлень",
+    "CurrentLine": "Поточний рядок"
   },
   "Timer": {
     "SavedAgo": "Збережено: {{timeAgo}}"

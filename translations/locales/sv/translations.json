@@ -532,8 +532,8 @@
     "KeyUpLineNumber": "rad {{lineNumber}}"
   },
   "EditorAccessibility": {
-    "NoLintMessages": "Det finns inga Lint-meddelanden ",
-    "CurrentLine": " Aktuell rad"
+    "NoLintMessages": "Det finns inga Lint-meddelanden",
+    "CurrentLine": "Aktuell rad"
   },
   "Timer": {
     "SavedAgo": "Sparad: {{timeAgo}}"
