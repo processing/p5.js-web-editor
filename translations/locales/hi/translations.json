@@ -529,8 +529,8 @@
       "KeyUpLineNumber": "लाइन {{lineNumber}}"
     },
     "EditorAccessibility": {
-      "NoLintMessages": "कोई लिंट मैसेज नहीं ",
-      "CurrentLine": " वर्तमान लाइन"
+      "NoLintMessages": "कोई लिंट मैसेज नहीं",
+      "CurrentLine": "वर्तमान लाइन"
     },
     "Timer": {
       "SavedAgo": "सेव किया: {{timeAgo}}"
