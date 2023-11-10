@@ -1,5 +1,4 @@
-import isPlainObject from 'lodash/isPlainObject';
-import pick from 'lodash/pick';
+import { isPlainObject, pick } from 'lodash';
 import Project from '../models/project';
 import createId from '../utils/createId';
 import createApplicationErrorClass from '../utils/createApplicationErrorClass';
