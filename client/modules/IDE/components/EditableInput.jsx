@@ -31,6 +31,9 @@ function EditableInput({
       inputRef.current?.focus();
     }
   }, [isEditing]);
+  React.useEffect(() => {
+    setCurrentValue(value);
+  }, [value]);
 
   function beginEditing() {
     setIsEditing(true);
