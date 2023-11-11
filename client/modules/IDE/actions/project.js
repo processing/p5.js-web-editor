@@ -1,6 +1,6 @@
 import objectID from 'bson-objectid';
 import each from 'async/each';
-import isEqual from 'lodash/isEqual';
+import { isEqual } from 'lodash';
 import browserHistory from '../../../browserHistory';
 import apiClient from '../../../utils/apiClient';
 import getConfig from '../../../utils/getConfig';

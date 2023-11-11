@@ -98,16 +98,24 @@ function persistentDialog(cm, text, deflt, onEnter, replaceOpened, onKeyDown) {
 
     var upArrow = dialog.getElementsByClassName("up-arrow")[0];
     CodeMirror.on(upArrow, "click", function () {
-      cm.focus();
-      CodeMirror.commands.findPrev(cm);
-      searchField.blur();
+      if (searchField.value.trim() === "") {
+        searchField.focus();
+      } else {
+        cm.focus();
+        CodeMirror.commands.findPrev(cm);
+        searchField.blur();
+      }
     });
 
     var downArrow = dialog.getElementsByClassName("down-arrow")[0];
     CodeMirror.on(downArrow, "click", function () {
+      if (searchField.value.trim() === "") {
+        searchField.focus();
+      }else{
       cm.focus();
       CodeMirror.commands.findNext(cm);
       searchField.blur();
+      }
     });
 
     var regexpButton = dialog.getElementsByClassName("CodeMirror-regexp-button")[0];
@@ -371,7 +379,7 @@ function doSearch(cm, rev, persistent, immediate, ignoreQuery) {
       startSearch(cm, state, q);
       findNext(cm, rev);
     }
-  } else {
+  } else { 
     dialog(cm, queryDialog, 'Search for:', q, function (query) {
       if (query && !state.query)
         cm.operation(function () {

@@ -1,4 +1,4 @@
-import mapKeys from 'lodash/mapKeys';
+import { mapKeys } from 'lodash';
 import PropTypes from 'prop-types';
 import { useCallback, useEffect, useRef } from 'react';
 
