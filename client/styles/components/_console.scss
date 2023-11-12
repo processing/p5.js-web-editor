@@ -92,10 +92,20 @@
 	}
 	background: transparent;
 	border: none;
+	border-radius: 20px;
+	margin-right: 5px; 
 	padding-right: #{10 / $base-font-size}rem;
 	.preview-console--collapsed & {
 		display: none;
 	}
+}
+
+.preview-console__clear:hover {
+
+	background-color: rgba(45, 38, 38, 0.345);
+	border-radius: 20px;
+	padding: x 5px ;
+	
 }
 
 .preview-console__body {
