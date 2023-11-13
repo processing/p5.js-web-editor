@@ -10,7 +10,6 @@
   flex-direction: column;
   outline: none;
   height: calc(80vh - #{65 / $base-font-size}rem);
-  max-height: #{460 / $base-font-size}rem;
   & .react-tabs {
     max-height: 100%;
     display: flex;
@@ -18,6 +17,11 @@
   }
   & .react-tabs__tab-panel {
     overflow-y: auto;
+  }
+  
+  @media (min-width: 770px) {
+    max-height: #{460 / $base-font-size}rem;
+    
   }
 }
 
