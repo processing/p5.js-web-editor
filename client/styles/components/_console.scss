@@ -87,7 +87,7 @@
 		@extend %link;
 		color: getThemifyVariable('secondary-text-color');
 		&:hover {
-			color: getThemifyVariable('heavy-text-color');
+			color: getThemifyVariable('logo-color');
 		}
 	}
 	background: transparent;
