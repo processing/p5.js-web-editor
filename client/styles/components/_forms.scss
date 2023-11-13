@@ -56,13 +56,18 @@
 }
 
 .form__input {
-  max-width: 90vw;
-  width: #{360 / $base-font-size}rem;
+  min-width: #{355 / $base-font-size}rem;
+  width: 100%;
   height: #{40 / $base-font-size}rem;
   font-size: #{16 / $base-font-size}rem;
   @include themify() {
     color: getThemifyVariable("form-input-text-color");
     background-color: getThemifyVariable("input-background-color");
+  }
+
+  @media (max-width: 770px) {
+    max-width: 100%;
+    width:100%;
   }
 }
 
