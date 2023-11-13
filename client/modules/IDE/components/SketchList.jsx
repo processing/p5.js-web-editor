@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import OutsideClickHandler from 'react-outside-click-handler';
 import { Helmet } from 'react-helmet';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
@@ -26,6 +27,8 @@ import DownFilledTriangleIcon from '../../../images/down-filled-triangle.svg';
 import MoreIconSvg from '../../../images/more.svg';
 
 const ROOT_URL = getConfig('API_URL');
+
+const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
 const formatDateCell = (date, mobile = false) =>
   dates.format(date, { showTime: !mobile });
@@ -227,6 +230,15 @@ class SketchListRowBase extends React.Component {
                 onFocus={this.onFocusComponent}
               >
                 {this.props.t('SketchList.DropdownDownload')}
+                {isSafari && (
+                  <OutsideClickHandler
+                    onOutsideClick={() => {
+                      this.setState({
+                        optionsOpen: false
+                      });
+                    }}
+                  />
+                )}
               </button>
             </li>
             {this.props.user.authenticated && (
