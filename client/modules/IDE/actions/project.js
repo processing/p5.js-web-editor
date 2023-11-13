@@ -270,9 +270,7 @@ export function resetProject() {
 }
 
 export function newProject() {
-  setTimeout(() => {
-    browserHistory.push('/');
-  }, 0);
+  browserHistory.push('/', { confirmed: true });
   return resetProject();
 }
 
