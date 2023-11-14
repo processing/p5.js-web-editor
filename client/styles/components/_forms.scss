@@ -79,6 +79,9 @@
 .form__context {
   text-align: left;
   margin-top: #{15 / $base-font-size}rem;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .form__status {
