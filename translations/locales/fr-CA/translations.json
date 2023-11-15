@@ -532,8 +532,8 @@
       "KeyUpLineNumber": "ligne {{lineNumber}}"
     },
     "EditorAccessibility": {
-      "NoLintMessages": "Il n'y a pas de messages lint ",
-      "CurrentLine": " Ligne actuelle"
+      "NoLintMessages": "Il n'y a pas de messages lint",
+      "CurrentLine": "Ligne actuelle"
     },
     "Timer": {
       "SavedAgo": "Sauvegardé: {{timeAgo}}"

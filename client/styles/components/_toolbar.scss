@@ -127,8 +127,12 @@
 }
 
 .toolbar__autorefresh-label {
+	cursor: pointer;
 	@include themify() {
 		color: getThemifyVariable('secondary-text-color');
+		&:hover {
+			color: getThemifyVariable('logo-color');
+		}
 	}
 	margin-left: #{math.div(5, $base-font-size)}rem;
 	font-size: #{math.div(12, $base-font-size)}rem;
