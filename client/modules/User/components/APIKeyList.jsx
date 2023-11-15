@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import orderBy from 'lodash/orderBy';
+import { orderBy } from 'lodash';
 import { useTranslation } from 'react-i18next';
 
 import { APIKeyPropType } from './APIKeyForm';
