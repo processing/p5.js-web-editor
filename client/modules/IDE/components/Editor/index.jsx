@@ -71,7 +71,7 @@ import EditorAccessibility from '../EditorAccessibility';
 import UnsavedChangesIndicator from '../UnsavedChangesIndicator';
 import { EditorContainer, EditorHolder } from './MobileEditor';
 import { FolderIcon } from '../../../../common/icons';
-import IconButton from '../../../../components/mobile/IconButton';
+import IconButton from '../../../../common/IconButton';
 
 emmet(CodeMirror);
 

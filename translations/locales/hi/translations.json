@@ -118,13 +118,13 @@
       "By": " द्वारा "
     },
     "Console": {
-      "Title": "Console",
-      "Clear": "Clear",
-      "ClearARIA": "Clear console",
-      "Close": "Close",
-      "CloseARIA": "Close console",
-      "Open": "Open",
-      "OpenARIA": "Open console"
+      "Title": "कंसोल",
+      "Clear": "साफ़ करें",
+      "ClearARIA": "कंसोल साफ़ करें",
+      "Close": "बंद करें",
+      "CloseARIA": "कंसोल बंद करें",
+      "Open": "खोलें",
+      "OpenARIA": "कंसोल खोलें"
     },
     "Preferences": {
       "Settings": "सेटिंग्स",
