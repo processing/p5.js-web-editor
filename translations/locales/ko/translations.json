@@ -259,7 +259,7 @@
     "errorPasswordMismatch": "Passwords must match",
     "errorEmptyPassword": "Please enter a password",
     "errorShortPassword": "Password must be at least 6 characters",
-    "errorConfirmPassword": "Please enter a password confirmation",
+    "errorConfirmPassword": "Please confirm your password",
     "errorNewPassword": "Please enter a new password or leave the current password empty.",
     "errorEmptyUsername": "Please enter a username.",
     "errorLongUsername": "Username must be less than 20 characters.",
@@ -270,7 +270,7 @@
     "Description": "Set a New Password",
     "TokenInvalidOrExpired": "The password reset token is invalid or has expired.",
     "EmptyPassword": "Please enter a password",
-    "PasswordConfirmation": "Please enter a password confirmation",
+    "PasswordConfirmation": "Please confirm your password",
     "PasswordMismatch": "Passwords must match"
   },
   "AccountForm": {
