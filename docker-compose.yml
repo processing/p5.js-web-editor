@@ -37,7 +37,6 @@ services:
     #   - ML5_EXAMPLES_USERNAME
     #   - ML5_EXAMPLES_EMAIL
     #   - ML5_EXAMPLES_PASS
-    #   - MOBILE_EMABLED
     #   - MONGO_URL
     #   - PORT
     #   - PREVIEW_PORT
