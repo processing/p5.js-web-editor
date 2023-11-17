@@ -70,7 +70,7 @@ import EditorAccessibility from '../EditorAccessibility';
 import UnsavedChangesIndicator from '../UnsavedChangesIndicator';
 import { EditorContainer, EditorHolder } from './MobileEditor';
 import { FolderIcon } from '../../../../common/icons';
-import IconButton from '../../../../components/mobile/IconButton';
+import IconButton from '../../../../common/IconButton';
 
 emmet(CodeMirror);
 
@@ -594,7 +594,8 @@ Editor.propTypes = {
   linewrap: PropTypes.bool.isRequired,
   lintMessages: PropTypes.arrayOf(
     PropTypes.shape({
-      severity: PropTypes.string.isRequired,
+      severity: PropTypes.oneOf(['error', 'hint', 'info', 'warning'])
+        .isRequired,
       line: PropTypes.number.isRequired,
       message: PropTypes.string.isRequired,
       id: PropTypes.number.isRequired
