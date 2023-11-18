@@ -58,7 +58,6 @@ export function createCollection(collection) {
         browserHistory.push(location);
       })
       .catch((error) => {
-        // console.error('Error creating collection', response.data);
         dispatch({
           type: ActionTypes.ERROR,
           error: error?.response?.data
