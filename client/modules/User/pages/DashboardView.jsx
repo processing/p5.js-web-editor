@@ -1,8 +1,8 @@
-import PropTypes from 'prop-types';
 import React, { useState, useCallback } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import MediaQuery from 'react-responsive';
-import { withTranslation } from 'react-i18next';
+import { useLocation, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import Button from '../../../common/Button';
 import Nav from '../../IDE/components/Header/Nav';
@@ -12,7 +12,7 @@ import AssetSize from '../../IDE/components/AssetSize';
 import CollectionList from '../../IDE/components/CollectionList';
 import SketchList from '../../IDE/components/SketchList';
 import RootPage from '../../../components/RootPage';
-import * as ProjectActions from '../../IDE/actions/project';
+import { newProject } from '../../IDE/actions/project';
 import {
   CollectionSearchbar,
   SketchSearchbar
@@ -23,11 +23,20 @@ import DashboardTabSwitcherPublic, {
   TabKey
 } from '../components/DashboardTabSwitcher';
 
-const DashboardView = ({ newProject, location, params, user, t }) => {
+const DashboardView = () => {
+  const { t } = useTranslation();
+
+  const params = useParams();
+  const location = useLocation();
+
+  const dispatch = useDispatch();
+
+  const user = useSelector((state) => state.user);
+
   const [collectionCreateVisible, setCollectionCreateVisible] = useState(false);
 
   const createNewSketch = () => {
-    newProject();
+    dispatch(newProject());
   };
 
   const selectedTabKey = useCallback(() => {
@@ -142,33 +151,4 @@ const DashboardView = ({ newProject, location, params, user, t }) => {
   );
 };
 
-DashboardView.defaultProps = {
-  user: null
-};
-
-DashboardView.propTypes = {
-  newProject: PropTypes.func.isRequired,
-  location: PropTypes.shape({
-    pathname: PropTypes.string.isRequired
-  }).isRequired,
-  params: PropTypes.shape({
-    username: PropTypes.string.isRequired
-  }).isRequired,
-  user: PropTypes.shape({
-    username: PropTypes.string
-  }),
-  t: PropTypes.func.isRequired
-};
-
-const mapStateToProps = (state) => ({
-  previousPath: state.ide.previousPath,
-  user: state.user
-});
-
-const mapDispatchToProps = {
-  ...ProjectActions
-};
-
-export default withTranslation()(
-  connect(mapStateToProps, mapDispatchToProps)(DashboardView)
-);
+export default DashboardView;
