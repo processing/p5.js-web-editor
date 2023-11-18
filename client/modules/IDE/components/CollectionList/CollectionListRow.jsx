@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import OutsideClickHandler from 'react-outside-click-handler';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
@@ -15,6 +16,8 @@ import MoreIconSvg from '../../../../images/more.svg';
 
 const formatDateCell = (date, mobile = false) =>
   dates.format(date, { showTime: !mobile });
+
+const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
 class CollectionListRowBase extends React.Component {
   static projectInCollection(project, collection) {
@@ -166,6 +169,15 @@ class CollectionListRowBase extends React.Component {
                 onFocus={this.onFocusComponent}
               >
                 {this.props.t('CollectionListRow.AddSketch')}
+                {isSafari && (
+                  <OutsideClickHandler
+                    onOutsideClick={() => {
+                      this.setState({
+                        optionsOpen: false
+                      });
+                    }}
+                  />
+                )}
               </button>
             </li>
             {userIsOwner && (
