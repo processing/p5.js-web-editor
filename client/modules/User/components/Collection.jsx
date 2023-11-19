@@ -124,12 +124,9 @@ class Collection extends React.Component {
   }
 
   getTitle() {
-    const title = this.props.t('Common.SiteName');
-    const collectionTitle = title.concat(' | ');
-    return collectionTitle;
-  }
-
-  getCollectionOwner() {
+    if (this.hasCollection()) {
+      return `${this.props.t('Common.SiteName')} | ${this.getCollectionName()}`;
+    }
     if (this.props.username === this.props.user.username) {
       return this.props.t('Collection.Title');
     }
@@ -248,9 +245,6 @@ class Collection extends React.Component {
   }
 
   render() {
-    const title = this.hasCollection()
-      ? this.getCollectionName()
-      : this.getCollectionOwner();
     const isOwner = this.isOwner();
 
     return (
@@ -260,7 +254,7 @@ class Collection extends React.Component {
       >
         <article className="collection">
           <Helmet>
-            <title>{this.getTitle() + title}</title>
+            <title>{this.getTitle()}</title>
           </Helmet>
           {this._renderLoader()}
           <CollectionMetadata collectionId={this.props.collectionId} />
