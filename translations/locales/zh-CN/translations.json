@@ -219,6 +219,7 @@
     "Delete": "删除"
   },
   "Common": {
+    "SiteName": "p5.js 在线编辑器",
     "Error": "错误",
     "ErrorARIA": "错误",
     "Save": "保存",
