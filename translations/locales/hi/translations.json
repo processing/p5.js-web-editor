@@ -216,6 +216,7 @@
       "Delete": "मिटाना"
     },
     "Common": {
+      "SiteName": "p5.js वेब एडिटर",
       "Error": "एरर",
       "ErrorARIA": "एरर",
       "Save": "सेव",
