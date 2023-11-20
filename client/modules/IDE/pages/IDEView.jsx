@@ -56,7 +56,8 @@ function WarnIfUnsavedChanges() {
           isAuth(nextLocation.pathname) ||
           isAuth(currentLocation.pathname) ||
           isOverlay(nextLocation.pathname) ||
-          isOverlay(currentLocation.pathname)
+          isOverlay(currentLocation.pathname) ||
+          nextLocation.state?.confirmed
         ) {
           return true; // allow navigation
         }

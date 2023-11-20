@@ -107,15 +107,16 @@ class AssetListRowBase extends React.Component {
                 </button>
               </li>
               <li>
-                <Link
-                  to={asset.url}
+                <a
+                  href={asset.url}
                   target="_blank"
+                  rel="noreferrer"
                   onBlur={this.onBlurComponent}
                   onFocus={this.onFocusComponent}
                   className="asset-table__action-option"
                 >
                   {t('AssetList.OpenNewTab')}
-                </Link>
+                </a>
               </li>
             </ul>
           )}
