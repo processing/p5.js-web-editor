@@ -1,4 +1,5 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
+import OutsideClickHandler from 'react-outside-click-handler';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -112,6 +113,13 @@ export default function SideBar() {
                   onFocus={onFocusComponent}
                 >
                   {t('Sidebar.AddFolder')}
+                  {projectOptionsVisible && (
+                    <OutsideClickHandler
+                      onOutsideClick={() => {
+                        dispatch(closeProjectOptions());
+                      }}
+                    />
+                  )}
                 </button>
               </li>
               <li>
