@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 import OutsideClickHandler from 'react-outside-click-handler';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';

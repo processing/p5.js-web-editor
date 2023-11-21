@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import OutsideClickHandler from 'react-outside-click-handler';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
@@ -10,6 +11,8 @@ import { withTranslation } from 'react-i18next';
 import Loader from '../../App/components/loader';
 import * as AssetActions from '../actions/assets';
 import DownFilledTriangleIcon from '../../../images/down-filled-triangle.svg';
+
+const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
 class AssetListRowBase extends React.Component {
   constructor(props) {
@@ -104,6 +107,15 @@ class AssetListRowBase extends React.Component {
                   onFocus={this.onFocusComponent}
                 >
                   {t('AssetList.Delete')}
+                  {isSafari && (
+                    <OutsideClickHandler
+                      onOutsideClick={() => {
+                        this.setState({
+                          optionsOpen: false
+                        });
+                      }}
+                    />
+                  )}
                 </button>
               </li>
               <li>
