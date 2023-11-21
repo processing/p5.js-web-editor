@@ -61,10 +61,9 @@ export function getProject(id, username) {
         dispatch(setUnsavedChanges(false));
       })
       .catch((error) => {
-        const { response } = error;
         dispatch({
           type: ActionTypes.ERROR,
-          error: response.data
+          error: error?.response?.data
         });
       });
   };
@@ -338,10 +337,9 @@ export function cloneProject(project) {
             dispatch(setNewProject(response.data));
           })
           .catch((error) => {
-            const { response } = error;
             dispatch({
               type: ActionTypes.PROJECT_SAVE_FAIL,
-              error: response.data
+              error: error?.response?.data
             });
           });
       }
@@ -376,10 +374,9 @@ export function changeProjectName(id, newName) {
         }
       })
       .catch((error) => {
-        const { response } = error;
         dispatch({
           type: ActionTypes.PROJECT_SAVE_FAIL,
-          error: response.data
+          error: error?.response?.data
         });
       });
   };

@@ -219,6 +219,7 @@
       "Delete": "Supprimer"
     },
     "Common": {
+      "SiteName": "Éditeur web p5.js",
       "Error": "Erreur",
       "ErrorARIA": "Erreur",
       "Save": "Sauvegarder",
