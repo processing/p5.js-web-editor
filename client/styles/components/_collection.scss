@@ -104,6 +104,10 @@
   @extend %dropdown-open-right;
   padding: #{20 / $base-font-size}rem;
   width: #{350 / $base-font-size}rem;
+  @media only screen and (max-width: 768px) {
+    position: absolute;
+    left:-10rem;
+  }
 }
 
 .collection-content {
