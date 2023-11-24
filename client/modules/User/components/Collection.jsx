@@ -124,6 +124,9 @@ class Collection extends React.Component {
   }
 
   getTitle() {
+    if (this.hasCollection()) {
+      return `${this.props.t('Common.SiteName')} | ${this.getCollectionName()}`;
+    }
     if (this.props.username === this.props.user.username) {
       return this.props.t('Collection.Title');
     }
@@ -136,6 +139,10 @@ class Collection extends React.Component {
     return this.props.username !== undefined
       ? this.props.username
       : this.props.user.username;
+  }
+
+  getCollectionName() {
+    return this.props.collection.name;
   }
 
   isOwner() {
