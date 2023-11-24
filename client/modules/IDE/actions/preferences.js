@@ -7,10 +7,9 @@ function updatePreferences(formParams, dispatch) {
     .put('/preferences', formParams)
     .then(() => {})
     .catch((error) => {
-      const { response } = error;
       dispatch({
         type: ActionTypes.ERROR,
-        error: response.data
+        error: error?.response?.data
       });
     });
 }

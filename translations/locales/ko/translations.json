@@ -207,6 +207,7 @@
     "Delete": "Delete"
   },
   "Common": {
+    "SiteName": "p5.js 웹에디터",
     "Error": "에러",
     "ErrorARIA": "에러",
     "Save": "저장",

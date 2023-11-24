@@ -219,6 +219,7 @@
       "Delete": "削除"
     },
     "Common": {
+      "SiteName": "p5.js Web Editor",
       "Error": "エラー",
       "ErrorARIA": "エラー",
       "Save": "保存",

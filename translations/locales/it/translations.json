@@ -225,6 +225,7 @@
     "Delete": "Cancella"
   },
   "Common": {
+    "SiteName": "p5.js Web Editor",
     "Error": "Errore",
     "ErrorARIA": "Errore",
     "Save": "Salva",

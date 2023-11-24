@@ -221,6 +221,7 @@
     "Delete": "Видалити"
   },
   "Common": {
+    "SiteName": "p5.js Web Editor",
     "Error": "Помилка",
     "ErrorARIA": "Помилка",
     "Save": "Зберегти",
