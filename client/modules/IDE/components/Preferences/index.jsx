@@ -16,7 +16,8 @@ import {
   setLintWarning,
   setAutocloseBracketsQuotes,
   setAutocompleteHinter,
-  setLinewrap
+  setLinewrap,
+  setAutocloseTags
 } from '../../actions/preferences';
 
 export default function Preferences() {
@@ -34,7 +35,8 @@ export default function Preferences() {
     gridOutput,
     theme,
     autocloseBracketsQuotes,
-    autocompleteHinter
+    autocompleteHinter,
+    autoclosetags
   } = useSelector((state) => state.preferences);
 
   const [state, setState] = useState({ fontSize });
@@ -258,6 +260,45 @@ export default function Preferences() {
               />
               <label
                 htmlFor="autoclosebracketsquotes-off"
+                className="preference__option"
+              >
+                {t('Preferences.Off')}
+              </label>
+            </div>
+          </div>
+          <div className="preference">
+            <h4 className="preference__title">
+              {t('Preferences.AutocloseTags')}
+            </h4>
+            <div className="preference__options">
+              <input
+                type="radio"
+                onChange={() => dispatch(setAutocloseTags(true))}
+                aria-label={t('Preferences.AutocloseTagsOnARIA')}
+                name="autoclosetagsquotes"
+                id="autoclosetagsquotes-on"
+                className="preference__radio-button"
+                value="On"
+                checked={autoclosetags}
+              />
+              <label
+                htmlFor="autoclosetagsquotes-on"
+                className="preference__option"
+              >
+                {t('Preferences.On')}
+              </label>
+              <input
+                type="radio"
+                onChange={() => dispatch(setAutocloseTags(false))}
+                aria-label={t('Preferences.AutocloseTagsOffARIA')}
+                name="autoclosetagsquotes"
+                id="autoclosetagsquotes-off"
+                className="preference__radio-button"
+                value="Off"
+                checked={!autoclosetags}
+              />
+              <label
+                htmlFor="autoclosetagsquotes-off"
                 className="preference__option"
               >
                 {t('Preferences.Off')}

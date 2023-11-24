@@ -34,6 +34,7 @@ import 'codemirror/addon/edit/matchbrackets';
 import 'codemirror/addon/edit/closebrackets';
 import 'codemirror/addon/selection/mark-selection';
 import 'codemirror/addon/hint/css-hint';
+import 'codemirror/addon/edit/closetag';
 import 'codemirror-colorpicker';
 
 import { JSHINT } from 'jshint';
@@ -124,6 +125,7 @@ class Editor extends React.Component {
         autoRenameTags: true
       },
       autoCloseBrackets: this.props.autocloseBracketsQuotes,
+      autoCloseTags: this.props.autoclosetags,
       styleSelectedText: true,
       lint: {
         onUpdateLinting: (annotations) => {
@@ -264,6 +266,9 @@ class Editor extends React.Component {
         'autoCloseBrackets',
         this.props.autocloseBracketsQuotes
       );
+    }
+    if (this.props.autoclosetags !== prevProps.autoclosetags) {
+      this._cm.setOption('autoCloseTags', this.props.autoclosetags);
     }
     if (this.props.autocompleteHinter !== prevProps.autocompleteHinter) {
       if (!this.props.autocompleteHinter) {
@@ -589,6 +594,7 @@ class Editor extends React.Component {
 
 Editor.propTypes = {
   autocloseBracketsQuotes: PropTypes.bool.isRequired,
+  autoclosetags: PropTypes.bool.isRequired,
   autocompleteHinter: PropTypes.bool.isRequired,
   lineNumbers: PropTypes.bool.isRequired,
   lintWarning: PropTypes.bool.isRequired,
