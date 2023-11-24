@@ -74,11 +74,12 @@ const baseThemes = {
     primaryTextColor: grays.dark,
     inactiveTextColor: grays.middleDark,
     backgroundColor: grays.lighter,
+    accentColor: colors.p5jsPink,
 
     Button: {
       primary: {
         default: {
-          foreground: colors.black,
+          foreground: grays.mediumDark,
           background: grays.light,
           border: grays.middleLight
         },
@@ -130,6 +131,10 @@ const baseThemes = {
         foreground: colors.black,
         background: grays.light,
         border: grays.middleLight
+      },
+      secondary: {
+        foreground: colors.black,
+        background: grays.mediumLight
       }
     },
     Modal: {
@@ -156,6 +161,7 @@ const baseThemes = {
     primaryTextColor: grays.lightest,
     inactiveTextColor: grays.middleLight,
     backgroundColor: grays.darker,
+    accentColor: colors.p5jsPink,
 
     Button: {
       primary: {
@@ -212,6 +218,10 @@ const baseThemes = {
         foreground: grays.light,
         background: grays.dark,
         border: grays.middleDark
+      },
+      secondary: {
+        background: grays.mediumDark,
+        foreground: grays.light
       }
     },
     Modal: {

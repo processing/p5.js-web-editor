@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { remSize, prop } from '../theme';
-import IconButton from './mobile/IconButton';
+import IconButton from '../common/IconButton';
 
 const DropdownWrapper = styled.ul`
   background-color: ${prop('Modal.background')};
