@@ -6,6 +6,7 @@ const initialState = {
   modalIsVisible: false,
   sidebarIsExpanded: false,
   consoleIsExpanded: true,
+  consoleMwebIsExpanded: true,
   preferencesIsVisible: false,
   projectOptionsVisible: false,
   newFolderModalVisible: false,
@@ -54,6 +55,10 @@ const ide = (state = initialState, action) => {
       return Object.assign({}, state, { consoleIsExpanded: false });
     case ActionTypes.EXPAND_CONSOLE:
       return Object.assign({}, state, { consoleIsExpanded: true });
+    case ActionTypes.COLLAPSE_MWEB_CONSOLE:
+      return Object.assign({}, state, { consoleMwebIsExpanded: false });
+    case ActionTypes.EXPAND_MWEB_CONSOLE:
+      return Object.assign({}, state, { consoleMwebIsExpanded: true });
     case ActionTypes.OPEN_PREFERENCES:
       return Object.assign({}, state, { preferencesIsVisible: true });
     case ActionTypes.CLOSE_PREFERENCES:

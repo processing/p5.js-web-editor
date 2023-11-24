@@ -109,9 +109,21 @@ export function expandConsole() {
   };
 }
 
+export function expandMwebConsole() {
+  return {
+    type: ActionTypes.EXPAND_MWEB_CONSOLE
+  };
+}
+
 export function collapseConsole() {
   return {
     type: ActionTypes.COLLAPSE_CONSOLE
+  };
+}
+
+export function collapseMwebConsole() {
+  return {
+    type: ActionTypes.COLLAPSE_MWEB_CONSOLE
   };
 }
 

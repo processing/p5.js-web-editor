@@ -59,6 +59,11 @@
 	.preview-console--collapsed & {
 		display: none;
 	}
+	@media screen and (-webkit-min-device-pixel-ratio: 0) {
+		.preview-console--collapsed & {
+		  display: none;
+		}
+	  }
 }
 
 .preview-console__expand {

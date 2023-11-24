@@ -204,12 +204,17 @@ const Console = () => {
   const { t } = useTranslation();
   const consoleEvents = useSelector((state) => state.console);
   const isExpanded = useSelector((state) => state.ide.consoleIsExpanded);
+  const isMwebExpanded = useSelector(
+    (state) => state.ide.consoleMwebIsExpanded
+  );
   const isPlaying = useSelector((state) => state.ide.isPlaying);
   const { theme, fontSize } = useSelector((state) => state.preferences);
   const {
     collapseConsole,
     expandConsole,
     clearConsole,
+    collapseMwebConsole,
+    expandMwebConsole,
     dispatchConsoleEvent
   } = bindActionCreators({ ...IDEActions, ...ConsoleActions }, useDispatch());
 
@@ -229,8 +234,27 @@ const Console = () => {
 
   const consoleClass = classNames({
     'preview-console': true,
-    'preview-console--collapsed': !isExpanded
+    'preview-console--collapsed': !isExpanded || !isMwebExpanded
   });
+
+  const isMobSafari = () => {
+    const { userAgent } = navigator;
+    return (
+      /iPhone|iPad|iPod/i.test(userAgent) &&
+      /AppleWebKit/i.test(userAgent) &&
+      !/CriOS/i.test(userAgent)
+    );
+  };
+
+  const isMobChrome = () => {
+    const { userAgent } = navigator;
+    return /Android/i.test(userAgent) && /Chrome/i.test(userAgent);
+  };
+
+  const isMWeb = isMobSafari() || isMobChrome();
+
+  console.log(isMwebExpanded);
+  // console.log(isExpanded);
 
   return (
     <section className={consoleClass}>
@@ -246,14 +270,14 @@ const Console = () => {
           </button>
           <button
             className="preview-console__collapse"
-            onClick={collapseConsole}
+            onClick={isMWeb ? collapseMwebConsole : collapseConsole}
             aria-label={t('Console.CloseARIA')}
           >
             <DownArrowIcon focusable="false" aria-hidden="true" />
           </button>
           <button
             className="preview-console__expand"
-            onClick={expandConsole}
+            onClick={isMWeb ? expandMwebConsole : expandConsole}
             aria-label={t('Console.OpenARIA')}
           >
             <UpArrowIcon focusable="false" aria-hidden="true" />
@@ -273,7 +297,7 @@ const Console = () => {
             key={`${theme}-${fontSize}`}
           />
         </div>
-        {isExpanded && isPlaying && (
+        {isExpanded && isMwebExpanded && isPlaying && (
           <ConsoleInput
             theme={theme}
             dispatchConsoleEvent={dispatchConsoleEvent}
