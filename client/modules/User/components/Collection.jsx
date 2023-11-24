@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { Helmet } from 'react-helmet';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -121,6 +121,15 @@ const Collection = ({ username, collectionId }) => {
     }
   }, [username, collection]);
 
+  const title = useMemo(() => {
+    if (collection) {
+      return `${t('Common.SiteName')} | ${collection.name}`;
+    }
+    return isOwner
+      ? t('Collection.Title')
+      : t('Collection.AnothersTitle', { anotheruser: username });
+  }, [t, username, collection, isOwner]);
+
   const { field, direction } = useSelector((state) => state.sorting);
 
   // TODO: clean this up into a generic table/list/sort component
@@ -190,13 +199,7 @@ const Collection = ({ username, collectionId }) => {
     >
       <article className="collection">
         <Helmet>
-          <title>
-            {isOwner
-              ? t('Collection.Title')
-              : t('Collection.AnothersTitle', {
-                  anotheruser: username
-                })}
-          </title>
+          <title>{title}</title>
         </Helmet>
         {showLoader && <Loader />}
         {collection && (

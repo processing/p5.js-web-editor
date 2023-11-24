@@ -1,7 +1,6 @@
 import { createSelector } from 'reselect';
 import differenceInMilliseconds from 'date-fns/differenceInMilliseconds';
-import find from 'lodash/find';
-import orderBy from 'lodash/orderBy';
+import { find, orderBy } from 'lodash';
 import { DIRECTION } from '../actions/sorting';
 
 const getCollections = (state) => state.collections;

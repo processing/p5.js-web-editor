@@ -5,6 +5,10 @@
   overflow: hidden;
   display: flex;
   flex-direction:column;
+
+  @media (max-width:770px) {
+    padding: 0;
+  }
 }
 
 .collection {
@@ -22,6 +26,9 @@
 
 .collection-metadata__columns {
   display: flex;
+  @media (max-width:770px) {
+    flex-direction: column;
+  }
 }
 
 .collection-metadata__column--left,
@@ -82,11 +89,6 @@
 
 .collection-metadata__description .editable-input__input {
   width: 100%;
-}
-
-.collection-add-sketch {
-  min-width: #{600 / $base-font-size}rem;
-  overflow: auto;
 }
 
 .collection-share {

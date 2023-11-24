@@ -4,6 +4,7 @@ import { withTranslation } from 'react-i18next';
 
 import browserHistory from '../../../browserHistory';
 import ExitIcon from '../../../images/exit.svg';
+import { DocumentKeyDown } from '../../IDE/hooks/useKeyDownHandlers';
 
 class Overlay extends React.Component {
   constructor(props) {
@@ -11,12 +12,10 @@ class Overlay extends React.Component {
     this.close = this.close.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleClickOutside = this.handleClickOutside.bind(this);
-    this.keyPressHandle = this.keyPressHandle.bind(this);
   }
 
   componentWillMount() {
     document.addEventListener('mousedown', this.handleClick, false);
-    document.addEventListener('keydown', this.keyPressHandle);
   }
 
   componentDidMount() {
@@ -25,7 +24,6 @@ class Overlay extends React.Component {
 
   componentWillUnmount() {
     document.removeEventListener('mousedown', this.handleClick, false);
-    document.removeEventListener('keydown', this.keyPressHandle);
   }
 
   handleClick(e) {
@@ -38,14 +36,6 @@ class Overlay extends React.Component {
 
   handleClickOutside() {
     this.close();
-  }
-
-  keyPressHandle(e) {
-    // escape key code = 27.
-    // So here we are checking if the key pressed was Escape key.
-    if (e.keyCode === 27) {
-      this.close();
-    }
   }
 
   close() {
@@ -90,6 +80,7 @@ class Overlay extends React.Component {
               </div>
             </header>
             {children}
+            <DocumentKeyDown handlers={{ escape: () => this.close() }} />
           </section>
         </div>
       </div>
