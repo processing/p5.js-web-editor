@@ -4,13 +4,13 @@ import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import TableBase from '../../../../common/Table/TableBase';
 import Overlay from '../../../App/components/Overlay';
 import { getCollections } from '../../actions/collections';
 import { DIRECTION } from '../../actions/sorting';
-import getSortedCollections from '../../selectors/collections';
+import getFilteredCollections from '../../selectors/collections';
 import { selectCurrentUsername } from '../../selectors/users';
 import AddToCollectionSketchList from '../AddToCollectionSketchList';
+import ConnectedTableBase from '../ConnectedTableBase';
 import { SketchSearchbar } from '../Searchbar';
 
 import CollectionListRow from './CollectionListRow';
@@ -19,7 +19,7 @@ const CollectionList = ({ username, mobile }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
-  const collections = useSelector(getSortedCollections);
+  const collections = useSelector(getFilteredCollections);
 
   // TODO: combine with AddToCollectionList
   const loading = useSelector((state) => state.loading);
@@ -50,7 +50,7 @@ const CollectionList = ({ username, mobile }) => {
         </title>
       </Helmet>
 
-      <TableBase
+      <ConnectedTableBase
         items={collections}
         isLoading={showLoader}
         columns={[

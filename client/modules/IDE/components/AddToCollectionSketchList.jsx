@@ -8,7 +8,7 @@ import { withTranslation } from 'react-i18next';
 import * as ProjectsActions from '../actions/projects';
 import * as CollectionsActions from '../actions/collections';
 import * as ToastActions from '../actions/toast';
-import getSortedSketches from '../selectors/projects';
+import getFilteredSketches from '../selectors/projects';
 import Loader from '../../App/components/loader';
 import QuickAddList from './QuickAddList';
 import {
@@ -135,7 +135,7 @@ SketchList.defaultProps = {
 function mapStateToProps(state) {
   return {
     user: state.user,
-    sketches: getSortedSketches(state),
+    sketches: getFilteredSketches(state),
     loading: state.loading,
     project: state.project
   };

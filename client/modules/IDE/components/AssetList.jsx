@@ -5,10 +5,10 @@ import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import TableBase from '../../../common/Table/TableBase';
 import DownFilledTriangleIcon from '../../../images/down-filled-triangle.svg';
 import { deleteAssetRequest, getAssets } from '../actions/assets';
 import { DIRECTION } from '../actions/sorting';
+import ConnectedTableBase from './ConnectedTableBase';
 
 class AssetListRowBase extends React.Component {
   constructor(props) {
@@ -173,7 +173,7 @@ const AssetList = () => {
       <Helmet>
         <title>{t('AssetList.Title')}</title>
       </Helmet>
-      <TableBase
+      <ConnectedTableBase
         className="asset-table"
         items={items}
         isLoading={isLoading}

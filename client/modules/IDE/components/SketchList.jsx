@@ -7,20 +7,20 @@ import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import slugify from 'slugify';
 
-import TableBase from '../../../common/Table/TableBase';
 import dates from '../../../utils/formatDate';
 import Overlay from '../../App/components/Overlay';
 import * as IdeActions from '../actions/ide';
 import * as ProjectActions from '../actions/project';
 import { getProjects } from '../actions/projects';
 import { DIRECTION } from '../actions/sorting';
-import getSortedSketches from '../selectors/projects';
+import getFilteredSketches from '../selectors/projects';
 import { selectCurrentUsername } from '../selectors/users';
 import AddToCollectionList from './AddToCollectionList';
 import getConfig from '../../../utils/getConfig';
 
 import DownFilledTriangleIcon from '../../../images/down-filled-triangle.svg';
 import MoreIconSvg from '../../../images/more.svg';
+import ConnectedTableBase from './ConnectedTableBase';
 
 const ROOT_URL = getConfig('API_URL');
 
@@ -371,7 +371,7 @@ const SketchList = ({ username, mobile }) => {
 
   const currentUser = useSelector(selectCurrentUsername);
 
-  const sketches = useSelector(getSortedSketches);
+  const sketches = useSelector(getFilteredSketches);
 
   // TODO: combine with AddToCollectionSketchList
   const loading = useSelector((state) => state.loading);
@@ -395,7 +395,7 @@ const SketchList = ({ username, mobile }) => {
               })}
         </title>
       </Helmet>
-      <TableBase
+      <ConnectedTableBase
         items={sketches}
         isLoading={showLoader}
         columns={[
@@ -428,7 +428,6 @@ const SketchList = ({ username, mobile }) => {
         }}
         emptyMessage={t('SketchList.NoSketches')}
         caption={t('SketchList.TableSummary')}
-        // TODO: figure out how to use the StandardTable -- needs dropdown and styling
         renderRow={(sketch) => (
           <SketchListRow
             mobile={mobile}

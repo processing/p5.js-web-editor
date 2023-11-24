@@ -11,10 +11,11 @@ describe('<TableBase/>', () => {
 
   const props = {
     items,
-    initialSort: { field: 'count', direction: DIRECTION.DESC },
+    sortBy: { field: 'count', direction: DIRECTION.DESC },
     emptyMessage: 'No items found',
     renderRow: (item) => <tr key={item.id} />,
-    columns: []
+    columns: [],
+    onChangeSort: jest.fn()
   };
 
   const subject = (overrideProps) =>

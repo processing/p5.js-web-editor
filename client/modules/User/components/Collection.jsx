@@ -6,17 +6,14 @@ import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { useTranslation, withTranslation } from 'react-i18next';
 
-import Button from '../../../common/Button';
-import { DropdownArrowIcon } from '../../../common/icons';
-import TableBase from '../../../common/Table/TableBase';
 import * as ProjectActions from '../../IDE/actions/project';
 import * as CollectionsActions from '../../IDE/actions/collections';
 import { DIRECTION } from '../../IDE/actions/sorting';
 import * as IdeActions from '../../IDE/actions/ide';
+import ConnectedTableBase from '../../IDE/components/ConnectedTableBase';
 import { getCollection } from '../../IDE/selectors/collections';
 import Loader from '../../App/components/loader';
 import dates from '../../../utils/formatDate';
-
 import RemoveIcon from '../../../images/close.svg';
 import CollectionMetadata from './CollectionMetadata';
 
@@ -194,7 +191,7 @@ class Collection extends React.Component {
           <CollectionMetadata collectionId={this.props.collectionId} />
           <article className="collection-content">
             <div className="collection-table-wrapper">
-              <TableBase
+              <ConnectedTableBase
                 items={items}
                 isLoading={this.props.loading && !this.props.collection}
                 columns={[

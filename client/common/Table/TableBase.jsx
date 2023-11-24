@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { orderBy } from 'lodash';
 import PropTypes from 'prop-types';
-import React, { useState, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import Loader from '../../modules/App/components/loader';
 import { DIRECTION } from '../../modules/IDE/actions/sorting';
 import { TableEmpty } from './TableElements';
@@ -11,11 +11,12 @@ const toAscDesc = (direction) => (direction === DIRECTION.ASC ? 'asc' : 'desc');
 
 /**
  * Renders the headers, loading spinner, empty message.
- * Applies sorting to the items.
+ * Sorts the array of items based on the `sortBy` prop.
  * Expects a `renderRow` prop to render each row.
  */
 function TableBase({
-  initialSort,
+  sortBy,
+  onChangeSort,
   columns,
   items = [],
   isLoading,
@@ -25,11 +26,9 @@ function TableBase({
   renderRow,
   className
 }) {
-  const [sorting, setSorting] = useState(initialSort);
-
   const sortedItems = useMemo(
-    () => orderBy(items, sorting.field, toAscDesc(sorting.direction)),
-    [sorting.field, sorting.direction, items]
+    () => orderBy(items, sortBy.field, toAscDesc(sortBy.direction)),
+    [sortBy.field, sortBy.direction, items]
   );
 
   if (isLoading) {
@@ -51,8 +50,8 @@ function TableBase({
           {columns.map((column) => (
             <TableHeaderCell
               key={column.field}
-              sorting={sorting}
-              onSort={setSorting}
+              sorting={sortBy}
+              onSort={onChangeSort}
               field={column.field}
               defaultOrder={column.defaultOrder}
               title={column.title}
@@ -67,10 +66,14 @@ function TableBase({
 }
 
 TableBase.propTypes = {
-  initialSort: PropTypes.shape({
+  sortBy: PropTypes.shape({
     field: PropTypes.string.isRequired,
     direction: PropTypes.string.isRequired
   }).isRequired,
+  /**
+   * Function that gets called with the new sort order ({ field, direction })
+   */
+  onChangeSort: PropTypes.func.isRequired,
   columns: PropTypes.arrayOf(
     PropTypes.shape({
       field: PropTypes.string.isRequired,
