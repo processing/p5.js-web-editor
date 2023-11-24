@@ -1,4 +1,4 @@
-import find from 'lodash/find';
+import find from 'lodash';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';

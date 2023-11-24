@@ -216,6 +216,7 @@
       "Delete": "削除"
     },
     "Common": {
+      "SiteName": "p5.js Web Editor",
       "Error": "エラー",
       "ErrorARIA": "エラー",
       "Save": "保存",
@@ -529,8 +530,8 @@
       "KeyUpLineNumber": "{{lineNumber}} 行"
     },
     "EditorAccessibility": {
-      "NoLintMessages": "リントメッセージはありません ",
-      "CurrentLine": " 現在の行"
+      "NoLintMessages": "リントメッセージはありません",
+      "CurrentLine": "現在の行"
     },
     "Timer": {
       "SavedAgo": "保存されました: {{timeAgo}}"
