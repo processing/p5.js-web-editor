@@ -6,6 +6,7 @@
   }
 }
 
+
 .about__content {
   display: flex;
   flex-direction: row;
@@ -25,7 +26,7 @@
   margin-right: 15px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 785px) {
   .about__content {
     flex-direction: column;
     overflow-y: auto;
