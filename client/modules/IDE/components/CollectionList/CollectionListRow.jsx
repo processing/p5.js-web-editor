@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { withTranslation } from 'react-i18next';
 import * as ProjectActions from '../../actions/project';
@@ -11,6 +11,10 @@ import * as ToastActions from '../../actions/toast';
 import dates from '../../../../utils/formatDate';
 
 import DownFilledTriangleIcon from '../../../../images/down-filled-triangle.svg';
+import MoreIconSvg from '../../../../images/more.svg';
+
+const formatDateCell = (date, mobile = false) =>
+  dates.format(date, { showTime: !mobile });
 
 class CollectionListRowBase extends React.Component {
   static projectInCollection(project, collection) {
@@ -146,7 +150,11 @@ class CollectionListRowBase extends React.Component {
             'CollectionListRow.ToggleCollectionOptionsARIA'
           )}
         >
-          <DownFilledTriangleIcon title="Menu" />
+          {this.props.mobile ? (
+            <MoreIconSvg focusable="false" aria-hidden="true" />
+          ) : (
+            <DownFilledTriangleIcon focusable="false" aria-hidden="true" />
+          )}
         </button>
         {optionsOpen && (
           <ul className="sketch-list__action-dialogue">
@@ -228,16 +236,10 @@ class CollectionListRowBase extends React.Component {
             {this.renderCollectionName()}
           </span>
         </th>
+        <td>{formatDateCell(collection.createdAt, mobile)}</td>
+        <td>{formatDateCell(collection.updatedAt, mobile)}</td>
         <td>
-          {mobile && 'Created: '}
-          {dates.format(collection.createdAt)}
-        </td>
-        <td>
-          {mobile && 'Updated: '}
-          {dates.format(collection.updatedAt)}
-        </td>
-        <td>
-          {mobile && '# sketches: '}
+          {mobile && 'sketches: '}
           {(collection.items || []).length}
         </td>
         <td className="sketch-list__dropdown-column">{this.renderActions()}</td>
