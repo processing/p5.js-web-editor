@@ -208,13 +208,20 @@ const IDEView = () => {
             </main>
           ) : (
             <>
-              <FloatingActionButton syncFileContent={syncFileContent} />
+              <FloatingActionButton
+                syncFileContent={syncFileContent}
+                offsetBottom={ide.isPlaying ? consoleSize : 0}
+              />
               <PreviewWrapper show={ide.isPlaying}>
                 <SplitPane
                   style={{ position: 'static' }}
                   split="horizontal"
                   primary="second"
-                  minSize={200}
+                  size={ide.consoleIsExpanded ? consoleSize : 29}
+                  minSize={29}
+                  onChange={(size) => setConsoleSize(size)}
+                  allowResize={ide.consoleIsExpanded}
+                  className="editor-preview-subpanel"
                 >
                   <PreviewFrame
                     fullView

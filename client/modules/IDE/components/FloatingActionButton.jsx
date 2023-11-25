@@ -38,17 +38,20 @@ const Button = styled.button`
   }
 `;
 
-const FloatingActionButton = (props) => {
+const FloatingActionButton = ({ syncFileContent, offsetBottom }) => {
   const isPlaying = useSelector((state) => state.ide.isPlaying);
   const dispatch = useDispatch();
 
   return (
     <Button
       className={classNames({ stop: isPlaying })}
-      style={{ paddingLeft: isPlaying ? 0 : remSize(5) }}
+      style={{
+        paddingLeft: isPlaying ? 0 : remSize(5),
+        bottom: offsetBottom
+      }}
       onClick={() => {
         if (!isPlaying) {
-          props.syncFileContent();
+          syncFileContent();
           dispatch(startSketch());
         } else dispatch(stopSketch());
       }}
@@ -59,7 +62,8 @@ const FloatingActionButton = (props) => {
 };
 
 FloatingActionButton.propTypes = {
-  syncFileContent: PropTypes.func.isRequired
+  syncFileContent: PropTypes.func.isRequired,
+  offsetBottom: PropTypes.number.isRequired
 };
 
 export default FloatingActionButton;
