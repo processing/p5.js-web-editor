@@ -17,7 +17,7 @@ function About(props) {
   return (
     <div className="about__content">
       <Helmet>
-        <title> {t('About.TitleHelmet')} </title>
+        <title>{t('About.TitleHelmet')}</title>
       </Helmet>
       <div className="about__content-column">
         <SquareLogoIcon
@@ -26,7 +26,7 @@ function About(props) {
           aria-label={t('Common.p5logoARIA')}
           focusable="false"
         />
-        <div className="about__content-column">
+        <div className="about__content-inside">
           <p className="about__version-info">
             Web Editor: <span>v{packageData?.version}</span>
           </p>
