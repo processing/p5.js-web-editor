@@ -82,7 +82,7 @@ const IDEView = () => {
   const [consoleSize, setConsoleSize] = useState(150);
   const [sidebarSize, setSidebarSize] = useState(160);
   const [isOverlayVisible, setIsOverlayVisible] = useState(false);
-  const [, setMaxSize] = useState();
+  const [MaxSize, setMaxSize] = useState(window.innerWidth);
 
   const cmRef = useRef({});
 
@@ -128,8 +128,8 @@ const IDEView = () => {
     };
   }, [shouldAutosave, dispatch]);
   useEffect(() => {
-    const updateInnerWidth = () => {
-      setMaxSize(window.innerWidth);
+    const updateInnerWidth = (e) => {
+      setMaxSize(e.target.innerWidth);
     };
 
     window.addEventListener('resize', updateInnerWidth);
@@ -137,7 +137,7 @@ const IDEView = () => {
     return () => {
       window.removeEventListener('resize', updateInnerWidth);
     };
-  }, [window.innerWidth]);
+  }, [setMaxSize]);
 
   return (
     <RootPage>
@@ -166,7 +166,7 @@ const IDEView = () => {
                 <Sidebar />
                 <SplitPane
                   split="vertical"
-                  maxSize={window.innerWidth * 0.965}
+                  maxSize={MaxSize * 0.965}
                   defaultSize="50%"
                   onChange={() => {
                     setIsOverlayVisible(true);
