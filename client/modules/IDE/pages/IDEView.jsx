@@ -210,7 +210,7 @@ const IDEView = () => {
             <>
               <FloatingActionButton
                 syncFileContent={syncFileContent}
-                offsetBottom={ide.isPlaying ? consoleSize : 0}
+                offsetBottom={ide.isPlaying ? consoleSize : 20}
               />
               <PreviewWrapper show={ide.isPlaying}>
                 <SplitPane

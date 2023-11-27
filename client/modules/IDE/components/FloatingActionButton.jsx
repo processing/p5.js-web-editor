@@ -47,7 +47,7 @@ const FloatingActionButton = ({ syncFileContent, offsetBottom }) => {
       className={classNames({ stop: isPlaying })}
       style={{
         paddingLeft: isPlaying ? 0 : remSize(5),
-        bottom: offsetBottom
+        marginBottom: offsetBottom
       }}
       onClick={() => {
         if (!isPlaying) {
