@@ -6,6 +6,7 @@ import { registerFrame } from '../../../utils/dispatcher';
 
 const Frame = styled.iframe`
   min-height: 100%;
+  background-color: white;
   min-width: 100%;
   position: ${(props) => (props.fullView ? 'relative' : 'absolute')};
   border-width: 0;
