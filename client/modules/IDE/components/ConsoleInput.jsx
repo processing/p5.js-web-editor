@@ -14,8 +14,7 @@ class ConsoleInput extends React.Component {
     super(props);
     this.state = {
       commandHistory: [],
-      commandCursor: -1,
-      isPlaceholderVisible: true
+      commandCursor: -1
     };
   }
 
@@ -27,15 +26,6 @@ class ConsoleInput extends React.Component {
       keymap: 'sublime',
       mode: 'javascript',
       inputStyle: 'contenteditable'
-    });
-
-    this._cm.on('change', (cm) => {
-      const isEmpty = cm.getValue().trim() === '';
-      this.setState({ isPlaceholderVisible: isEmpty });
-    });
-
-    this._cm.on('mousedown', () => {
-      this.setState({ isPlaceholderVisible: false });
     });
 
     this._cm.on('keydown', (cm, e) => {
@@ -117,7 +107,6 @@ class ConsoleInput extends React.Component {
   }
 
   render() {
-    const { isPlaceholderVisible } = this.state;
     return (
       <div className="console__input">
         <div
@@ -140,9 +129,6 @@ class ConsoleInput extends React.Component {
           }}
           className="console__editor"
         />
-        {isPlaceholderVisible && (
-          <div className="placeholder">Command input here...</div>
-        )}
       </div>
     );
   }
