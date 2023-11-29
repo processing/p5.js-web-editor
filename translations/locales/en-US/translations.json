@@ -127,7 +127,8 @@
     "Close": "Close",
     "CloseARIA": "Close console",
     "Open": "Open",
-    "OpenARIA": "Open console"
+    "OpenARIA": "Open console",
+    "Placeholder": "Command input here..."
   },
   "Preferences": {
     "Settings": "Settings",

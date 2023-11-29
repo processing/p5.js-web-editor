@@ -1,3 +1,4 @@
+import 'codemirror/addon/display/placeholder';
 import PropTypes from 'prop-types';
 import React from 'react';
 import CodeMirror from 'codemirror';
@@ -25,7 +26,8 @@ class ConsoleInput extends React.Component {
       scrollbarStyle: null,
       keymap: 'sublime',
       mode: 'javascript',
-      inputStyle: 'contenteditable'
+      inputStyle: 'contenteditable',
+      placeholder: `${this.props.placeholder}`
     });
 
     this._cm.on('keydown', (cm, e) => {
@@ -137,7 +139,8 @@ class ConsoleInput extends React.Component {
 ConsoleInput.propTypes = {
   theme: PropTypes.string.isRequired,
   dispatchConsoleEvent: PropTypes.func.isRequired,
-  fontSize: PropTypes.number.isRequired
+  fontSize: PropTypes.number.isRequired,
+  placeholder: PropTypes.string.isRequired
 };
 
 export default ConsoleInput;
