@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 import { withTranslation } from 'react-i18next';
+import prettyBytes from 'pretty-bytes';
 
 import * as IDEActions from '../actions/ide';
 import * as FileActions from '../actions/files';
@@ -58,6 +59,11 @@ function FileName({ name }) {
     </span>
   );
 }
+
+const limit = getConfig('UPLOAD_LIMIT') || 250000000;
+const MAX_SIZE_B = limit;
+const currentSize = prettyBytes(totalSize);
+const sizeLimit = prettyBytes(MAX_SIZE_B);
 
 FileName.propTypes = {
   name: PropTypes.string.isRequired
@@ -360,15 +366,22 @@ class FileNode extends React.Component {
                     </li>
                     {this.props.authenticated && (
                       <li>
+                      {currentSize < sizeLimit ? (
                         <button
-                          aria-label={t('FileNode.UploadFileARIA')}
+                          className="sidebar__file-item-option"
+                          aria-label="FileNode.UploadFileARIA"
                           onClick={this.handleClickUploadFile}
                           onBlur={this.onBlurComponent}
                           onFocus={this.onFocusComponent}
                         >
                           {t('FileNode.UploadFile')}
                         </button>
-                      </li>
+                      ) : (
+                        <button className="sidebar__file-item-option" disabled>
+                          {t('FileNode.UploadFile')}
+                        </button>
+                      )}
+                    </li>
                     )}
                   </React.Fragment>
                 )}
