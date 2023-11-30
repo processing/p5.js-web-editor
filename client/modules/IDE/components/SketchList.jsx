@@ -303,6 +303,7 @@ class SketchListRowBase extends React.Component {
             onBlur={this.handleRenameBlur}
             onClick={(e) => e.stopPropagation()}
             ref={this.renameInput}
+            maxLength={60}
           />
         )}
       </React.Fragment>
