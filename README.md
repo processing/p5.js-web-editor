@@ -12,14 +12,9 @@ The p5.js Editor is a collaborative project created by many individuals, mostly 
 
 Learn more about [our community](https://p5js.org/community/) and read our community statement and [code of conduct](./.github/CODE_OF_CONDUCT.md). You can directly support our work with p5.js by [donating to the Processing Foundation](https://processingfoundation.org/support).
 
-## Get Started
+## Getting Started
 
 Make your first sketch in the [p5.js Editor](https://editor.p5js.org/)! Learn more about sketching with p5.js on the [Get Started](https://p5js.org/get-started/) and find everything you can do in the [Reference](https://p5js.org/reference/). You can also look at [examples](https://editor.p5js.org/p5/sketches) and remix them in the p5.js Editor.
-
-## Setting Up the Development Environment
-
-- Refer to [this documentation for setting up your environment](https://github.com/processing/p5.js-web-editor/blob/develop/contributor_docs/installation.md)
-
 
 
 ## Issues
@@ -31,10 +26,45 @@ If you have found a bug in the p5.js Web Editor, you can file it under the ["iss
 * p5.sound: [https://github.com/processing/p5.js-sound/issues](https://github.com/processing/p5.js-sound/issues)
 * p5.js website: [https://github.com/processing/p5.js-website/issues](https://github.com/processing/p5.js-website/issues)
 
+
+### How Do I Know My Issue or Pull Request is Getting Reviewed?
+
+To see which pull requests and issues are currently being reviewed, check the [PR Review Board](https://github.com/processing/p5.js-web-editor/projects/9) or the following Milestones: [PATCH Release](https://github.com/processing/p5.js-web-editor/milestone/10), [MINOR Release](https://github.com/processing/p5.js-web-editor/milestone/8). 
+
+Issues and Pull Requests categorized under the PATCH or MINOR Release Milestones will be prioritized since they are planned to be merged for the next release to Production. Please feel free to [comment on this pinned issue](https://github.com/processing/p5.js-web-editor/issues/2534) if you would like your issue to be considered for the next release!
+
+
+### When Will the Next Production Release Be?
+
+We will aim to deploy on a 1-2 month basis. Here are some dates we’re working towards: 
+
+2.9.3 PATCH Release: By November 17, 2023
+
+2.10.0 MINOR Release: By December 15, 2023
+
+[You can read more about Semantic Versioning and the differences between a MINOR and PATCH release](https://semver.org/). 
+
+
+## References for Contributing to the p5.js Web Editor
+
+[Code of Conduct](https://editor.p5js.org/code-of-conduct)
+
+[Contribution Guidelines for p5.js](https://p5js.org/contributor-docs/#/)
+
+[Contribution Guidelines for the p5.js Web Editor](https://github.com/processing/p5.js-web-editor/tree/develop/contributor_docs)
+
+[p5.js Community Statement](https://p5js.org/community/)
+
+
 ## Acknowledgements
 
 Support for this project has come from [Processing Foundation](https://processingfoundation.org/), [NYU ITP](https://tisch.nyu.edu/itp), [CS4All, NYC DOE](http://cs4all.nyc/), [COSA at DU](https://liberalarts.du.edu/emergent-digital-practices/open-source-arts), [STUDIO for Creative Inquiry](https://studioforcreativeinquiry.org/), [Grant for the Web](https://www.grantfortheweb.org/), [New Media Rights](https://www.newmediarights.org/), and many others. 
 
-Hosting and technical support has come from: <br />
-<a href="https://releasehub.com/" target="_blank"><img width="100" src="https://assets.website-files.com/603dd147c5b0a480611bd348/603dd147c5b0a469bc1bd451_logo--dark.svg" /></a> 
+Hosting and technical support has come from: 
+<br />
+<br />
+<a href="https://releasehub.com/" target="_blank"><img width="100" src="https://assets.website-files.com/603dd147c5b0a480611bd348/603dd147c5b0a469bc1bd451_logo--dark.svg" /></a>
+<br />
 <a href="https://www.browserstack.com/" target="_blank"><img width="100" src="https://user-images.githubusercontent.com/6063380/46976166-ab280a80-d096-11e8-983b-18dd38c8cc9b.png" /></a>
+<br />
+<a href="https://www.fastly.com/" target="_blank"><img width="100" src="https://cdn-assets-us.frontify.com/s3/frontify-enterprise-files-us/eyJwYXRoIjoiZmFzdGx5XC9hY2NvdW50c1wvYzJcLzQwMDEwMjNcL3Byb2plY3RzXC8xMVwvYXNzZXRzXC80ZVwvNzc0XC9lZTZmYzlkOWYzNWE1NjBkNjUzNjFkNGI0NGQ2MTNmZi0xNjIxNTIyODg4LnBuZyJ9:fastly:nVuY3PxyFqQMI6elJsMzxAGLH3IFlmiuMdacHAGRMkE?width=2400" /></a>
