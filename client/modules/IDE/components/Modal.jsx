@@ -1,8 +1,8 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
+import useModalClose from '../../../common/useModalClose';
 import ExitIcon from '../../../images/exit.svg';
-import useKeyDownHandlers from '../hooks/useKeyDownHandlers';
 
 // Common logic from NewFolderModal, NewFileModal, UploadFileModal
 
@@ -13,25 +13,7 @@ const Modal = ({
   contentClassName,
   children
 }) => {
-  const modalRef = useRef(null);
-
-  const handleOutsideClick = (e) => {
-    // ignore clicks on the component itself
-    if (modalRef.current?.contains?.(e.target)) return;
-
-    onClose();
-  };
-
-  useEffect(() => {
-    modalRef.current?.focus();
-    document.addEventListener('click', handleOutsideClick, false);
-
-    return () => {
-      document.removeEventListener('click', handleOutsideClick, false);
-    };
-  }, []);
-
-  useKeyDownHandlers({ escape: onClose });
+  const modalRef = useModalClose(onClose);
 
   return (
     <section className="modal" ref={modalRef}>

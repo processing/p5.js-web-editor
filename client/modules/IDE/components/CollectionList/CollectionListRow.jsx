@@ -4,88 +4,38 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { withTranslation } from 'react-i18next';
+import MenuItem from '../../../../components/Dropdown/MenuItem';
+import TableDropdown from '../../../../components/Dropdown/TableDropdown';
 import * as ProjectActions from '../../actions/project';
 import * as CollectionsActions from '../../actions/collections';
 import * as IdeActions from '../../actions/ide';
 import * as ToastActions from '../../actions/toast';
 import dates from '../../../../utils/formatDate';
 
-import DownFilledTriangleIcon from '../../../../images/down-filled-triangle.svg';
-import MoreIconSvg from '../../../../images/more.svg';
-
 const formatDateCell = (date, mobile = false) =>
   dates.format(date, { showTime: !mobile });
 
 class CollectionListRowBase extends React.Component {
-  static projectInCollection(project, collection) {
-    return (
-      collection.items.find((item) => item.project.id === project.id) != null
-    );
-  }
-
   constructor(props) {
     super(props);
     this.state = {
-      optionsOpen: false,
-      isFocused: false,
       renameOpen: false,
       renameValue: ''
     };
     this.renameInput = React.createRef();
   }
 
-  onFocusComponent = () => {
-    this.setState({ isFocused: true });
-  };
-
-  onBlurComponent = () => {
-    this.setState({ isFocused: false });
-    setTimeout(() => {
-      if (!this.state.isFocused) {
-        this.closeAll();
-      }
-    }, 200);
-  };
-
-  openOptions = () => {
-    this.setState({
-      optionsOpen: true
-    });
-  };
-
-  closeOptions = () => {
-    this.setState({
-      optionsOpen: false
-    });
-  };
-
-  toggleOptions = () => {
-    if (this.state.optionsOpen) {
-      this.closeOptions();
-    } else {
-      this.openOptions();
-    }
-  };
-
   closeAll = () => {
     this.setState({
-      optionsOpen: false,
       renameOpen: false
     });
   };
 
   handleAddSketches = () => {
-    this.closeAll();
     this.props.onAddSketches();
   };
 
-  handleDropdownOpen = () => {
-    this.closeAll();
-    this.openOptions();
-  };
-
   handleCollectionDelete = () => {
-    this.closeAll();
     if (
       window.confirm(
         this.props.t('Common.DeleteConfirmation', {
@@ -98,7 +48,6 @@ class CollectionListRowBase extends React.Component {
   };
 
   handleRenameOpen = () => {
-    this.closeAll();
     this.setState(
       {
         renameOpen: true,
@@ -136,65 +85,24 @@ class CollectionListRowBase extends React.Component {
   };
 
   renderActions = () => {
-    const { optionsOpen } = this.state;
     const userIsOwner = this.props.user.username === this.props.username;
 
     return (
-      <React.Fragment>
-        <button
-          className="sketch-list__dropdown-button"
-          onClick={this.toggleOptions}
-          onBlur={this.onBlurComponent}
-          onFocus={this.onFocusComponent}
-          aria-label={this.props.t(
-            'CollectionListRow.ToggleCollectionOptionsARIA'
-          )}
-        >
-          {this.props.mobile ? (
-            <MoreIconSvg focusable="false" aria-hidden="true" />
-          ) : (
-            <DownFilledTriangleIcon focusable="false" aria-hidden="true" />
-          )}
-        </button>
-        {optionsOpen && (
-          <ul className="sketch-list__action-dialogue">
-            <li>
-              <button
-                className="sketch-list__action-option"
-                onClick={this.handleAddSketches}
-                onBlur={this.onBlurComponent}
-                onFocus={this.onFocusComponent}
-              >
-                {this.props.t('CollectionListRow.AddSketch')}
-              </button>
-            </li>
-            {userIsOwner && (
-              <li>
-                <button
-                  className="sketch-list__action-option"
-                  onClick={this.handleCollectionDelete}
-                  onBlur={this.onBlurComponent}
-                  onFocus={this.onFocusComponent}
-                >
-                  {this.props.t('CollectionListRow.Delete')}
-                </button>
-              </li>
-            )}
-            {userIsOwner && (
-              <li>
-                <button
-                  className="sketch-list__action-option"
-                  onClick={this.handleRenameOpen}
-                  onBlur={this.onBlurComponent}
-                  onFocus={this.onFocusComponent}
-                >
-                  {this.props.t('CollectionListRow.Rename')}
-                </button>
-              </li>
-            )}
-          </ul>
+      <TableDropdown
+        aria-label={this.props.t(
+          'CollectionListRow.ToggleCollectionOptionsARIA'
         )}
-      </React.Fragment>
+      >
+        <MenuItem onClick={this.handleAddSketches}>
+          {this.props.t('CollectionListRow.AddSketch')}
+        </MenuItem>
+        <MenuItem hideIf={!userIsOwner} onClick={this.handleCollectionDelete}>
+          {this.props.t('CollectionListRow.Delete')}
+        </MenuItem>
+        <MenuItem hideIf={!userIsOwner} onClick={this.handleRenameOpen}>
+          {this.props.t('CollectionListRow.Rename')}
+        </MenuItem>
+      </TableDropdown>
     );
   };
 
