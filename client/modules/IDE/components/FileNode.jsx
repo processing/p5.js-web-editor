@@ -62,6 +62,7 @@ function FileName({ name }) {
   );
 }
 
+const totalSize = state.user.totalSize || state.assets.totalSize
 const limit = getConfig('UPLOAD_LIMIT') || 250000000;
 const MAX_SIZE_B = limit;
 const currentSize = prettyBytes(totalSize);
