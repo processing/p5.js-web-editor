@@ -247,6 +247,30 @@ const files = (state, action) => {
         }
         return file;
       });
+
+    // In files.js
+    case ActionTypes.CREATE_TYPESCRIPT_FILE: {
+      const parentId = state.find((file) => file.name === 'root')._id;
+      console.log(parentId);
+      const newFile = {
+        name: 'sketch.ts',
+        content: '', // You can add default content if needed
+        id: objectID().toHexString(),
+        _id: objectID().toHexString(),
+        fileType: 'file',
+        children: []
+      };
+
+      return [
+        newFile,
+        ...updateParent(state, {
+          type: ActionTypes.CREATE_TYPESCRIPT_FILE,
+          id: newFile.id,
+          parentId
+        })
+      ];
+    }
+
     default:
       return state.map((file) => {
         file.children = sortedChildrenId(state, file.children);
@@ -261,6 +285,8 @@ export const getJSFiles = (state) =>
   state.filter((file) => file.name.match(/.*\.js$/i));
 export const getCSSFiles = (state) =>
   state.filter((file) => file.name.match(/.*\.css$/i));
+export const getTSFiles = (state) =>
+  state.filter((file) => file.name.match(/.*\.ts$/i));
 export const getLinkedFiles = (state) => state.filter((file) => file.url);
 
 export default files;

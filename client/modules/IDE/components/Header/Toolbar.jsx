@@ -16,12 +16,19 @@ import {
   setTextOutput
 } from '../../actions/preferences';
 
+import {
+  toggleTypeScript,
+  createTypeScriptFile
+} from '../../actions/typescript';
+
 import PlayIcon from '../../../../images/play.svg';
 import StopIcon from '../../../../images/stop.svg';
 import PreferencesIcon from '../../../../images/preferences.svg';
 import ProjectName from './ProjectName';
+import { handleCreateFile } from '../../actions/files';
 
 const Toolbar = (props) => {
+  const useTypeScript = useSelector((state) => state.typescript.useTypeScript);
   const { isPlaying, infiniteLoop, preferencesIsVisible } = useSelector(
     (state) => state.ide
   );
@@ -79,6 +86,22 @@ const Toolbar = (props) => {
       >
         <StopIcon focusable="false" aria-hidden="true" />
       </button>
+
+      <button
+        className={classNames({
+          'toolbar__typescript-button': true,
+          'toolbar__typescript-button--enabled': useTypeScript
+        })}
+        onClick={() => {
+          dispatch(toggleTypeScript());
+          if (!useTypeScript) {
+            dispatch(createTypeScriptFile());
+          }
+        }}
+      >
+        {useTypeScript ? 'Disable TypeScript' : 'Enable TypeScript'}
+      </button>
+
       <div className="toolbar__autorefresh">
         <input
           id="autorefresh"
@@ -93,6 +116,7 @@ const Toolbar = (props) => {
           {t('Toolbar.Auto-refresh')}
         </label>
       </div>
+
       <div className="toolbar__project-name-container">
         <ProjectName />
         {(() => {
