@@ -12,6 +12,8 @@ import DownArrowIcon from '../../../images/down-filled-triangle.svg';
 import FolderRightIcon from '../../../images/triangle-arrow-right.svg';
 import FolderDownIcon from '../../../images/triangle-arrow-down.svg';
 import FileIcon from '../../../images/file.svg';
+import getConfig from '../../../utils/getConfig';
+
 
 function parseFileName(name) {
   const nameArray = name.split('.');
