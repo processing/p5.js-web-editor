@@ -219,6 +219,7 @@
     "Delete": "Radera"
   },
   "Common": {
+    "SiteName": "p5.js Webb editor",
     "Error": "Error",
     "ErrorARIA": "Error",
     "Save": "Spara",
@@ -532,8 +533,8 @@
     "KeyUpLineNumber": "rad {{lineNumber}}"
   },
   "EditorAccessibility": {
-    "NoLintMessages": "Det finns inga Lint-meddelanden ",
-    "CurrentLine": " Aktuell rad"
+    "NoLintMessages": "Det finns inga Lint-meddelanden",
+    "CurrentLine": "Aktuell rad"
   },
   "Timer": {
     "SavedAgo": "Sparad: {{timeAgo}}"

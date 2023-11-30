@@ -10,8 +10,13 @@
 .modal-content {
   @extend %modal;
   min-height: #{150 / $base-font-size}rem;
-  width: #{500 / $base-font-size}rem;
   padding: #{20 / $base-font-size}rem;
+  
+  @media (min-width: 770px) {
+    width: #{500 / $base-font-size}rem;
+    
+  }
+
   .modal--reduced & {
     //min-height: #{150 / $base-font-size}rem;
   }
