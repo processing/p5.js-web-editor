@@ -371,8 +371,8 @@ class FileNode extends React.Component {
                           >
                             {t('FileNode.UploadFile')}
                           </button>
-                      ) : (
-                            <button className="sidebar__file-item-option" disabled>
+                        ) : (
+                          <button className="sidebar__file-item-option" disabled>
                             {t('FileNode.UploadFile')}
                           </button>
                         )}
