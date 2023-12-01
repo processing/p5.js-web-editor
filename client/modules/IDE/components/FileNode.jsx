@@ -13,7 +13,6 @@ import FolderDownIcon from '../../../images/triangle-arrow-down.svg';
 import FileIcon from '../../../images/file.svg';
 import { sizeLimit, currentSize } from './AssetSize';
 
-
 function parseFileName(name) {
   const nameArray = name.split('.');
   if (nameArray.length > 1) {
@@ -60,7 +59,6 @@ function FileName({ name }) {
     </span>
   );
 }
-
 
 FileName.propTypes = {
   name: PropTypes.string.isRequired
@@ -363,21 +361,21 @@ class FileNode extends React.Component {
                     </li>
                     {this.props.authenticated && (
                       <li>
-                      {currentSize < sizeLimit ? (
-                        <button
-                          className="sidebar__file-item-option"
-                          aria-label="FileNode.UploadFileARIA"
-                          onClick={this.handleClickUploadFile}
-                          onBlur={this.onBlurComponent}
-                          onFocus={this.onFocusComponent}
-                        >
+                        {currentSize < sizeLimit ? (
+                          <button
+                            className="sidebar__file-item-option"
+                            aria-label="FileNode.UploadFileARIA"
+                            onClick={this.handleClickUploadFile}
+                            onBlur={this.onBlurComponent}
+                            onFocus={this.onFocusComponent}
+                          >
                           {t('FileNode.UploadFile')}
-                        </button>
-                      ) : (
-                        <button className="sidebar__file-item-option" disabled>
-                          {t('FileNode.UploadFile')}
-                        </button>
-                      )}
+                          </button>
+                          ) : (
+                          <button className="sidebar__file-item-option" disabled>
+                            {t('FileNode.UploadFile')}
+                          </button>
+                       )}
                     </li>
                     )}
                   </React.Fragment>
