@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 import { withTranslation } from 'react-i18next';
-import prettyBytes from 'pretty-bytes';
 
 import * as IDEActions from '../actions/ide';
 import * as FileActions from '../actions/files';
@@ -12,7 +11,7 @@ import DownArrowIcon from '../../../images/down-filled-triangle.svg';
 import FolderRightIcon from '../../../images/triangle-arrow-right.svg';
 import FolderDownIcon from '../../../images/triangle-arrow-down.svg';
 import FileIcon from '../../../images/file.svg';
-import getConfig from '../../../utils/getConfig';
+import { sizeLimit, currentSize } from './AssetSize';
 
 
 function parseFileName(name) {
@@ -62,11 +61,6 @@ function FileName({ name }) {
   );
 }
 
-const totalSize = state.user.totalSize || state.assets.totalSize
-const limit = getConfig('UPLOAD_LIMIT') || 250000000;
-const MAX_SIZE_B = limit;
-const currentSize = prettyBytes(totalSize);
-const sizeLimit = prettyBytes(MAX_SIZE_B);
 
 FileName.propTypes = {
   name: PropTypes.string.isRequired

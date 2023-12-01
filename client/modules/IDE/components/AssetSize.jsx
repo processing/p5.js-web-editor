@@ -17,6 +17,9 @@ const formatPercent = (percent) => {
   return `${Math.round(percentUsed)}%`;
 };
 
+export const getCurrentSize = (totalSize) => prettyBytes(totalSize);
+export const getSizeLimit = () => prettyBytes(MAX_SIZE_B);
+
 /* Eventually, this copy should be Total / 250 MB Used */
 const AssetSize = ({ totalSize }) => {
   if (totalSize === undefined) {
