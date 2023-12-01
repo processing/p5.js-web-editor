@@ -150,7 +150,9 @@ class FileNode extends React.Component {
   };
 
   notifyStorageLimitReached = () => {
-    alert("Your storage reached 250MB, please delete some files to add new ones.");
+    alert(
+      'Your storage reached 250MB, please delete some files to add new ones.'
+      );
   };
 
   handleClickDelete = () => {
