@@ -149,6 +149,10 @@ class FileNode extends React.Component {
     setTimeout(this.hideFileOptions, 0);
   };
 
+  notifyStorageLimitReached = () => {
+    alert("Your storage reached 250MB, please delete some files to add new ones.");
+  };
+
   handleClickDelete = () => {
     const prompt = this.props.t('Common.DeleteConfirmation', {
       name: this.props.name
@@ -372,7 +376,10 @@ class FileNode extends React.Component {
                             {t('FileNode.UploadFile')}
                           </button>
                         ) : (
-                          <button className="sidebar__file-item-option" disabled>
+                          <button
+                            className="sidebar__file-item-option"
+                            onClick={this.notifyStorageLimitReached}
+                          >
                             {t('FileNode.UploadFile')}
                           </button>
                         )}
