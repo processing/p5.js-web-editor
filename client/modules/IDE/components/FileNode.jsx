@@ -369,14 +369,14 @@ class FileNode extends React.Component {
                             onBlur={this.onBlurComponent}
                             onFocus={this.onFocusComponent}
                           >
-                          {t('FileNode.UploadFile')}
-                          </button>
-                          ) : (
-                          <button className="sidebar__file-item-option" disabled>
                             {t('FileNode.UploadFile')}
                           </button>
-                       )}
-                    </li>
+                      ) : (
+                            <button className="sidebar__file-item-option" disabled>
+                            {t('FileNode.UploadFile')}
+                          </button>
+                        )}
+                      </li>
                     )}
                   </React.Fragment>
                 )}
