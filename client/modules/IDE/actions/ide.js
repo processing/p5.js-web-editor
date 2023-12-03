@@ -1,6 +1,7 @@
 import * as ActionTypes from '../../../constants';
 import { clearConsole } from './console';
 import { dispatchMessage, MessageTypes } from '../../../utils/dispatcher';
+import { updatePreferences } from './preferences';
 
 export function startVisualSketch() {
   return {
@@ -291,5 +292,27 @@ export function createError(error) {
   return {
     type: ActionTypes.ERROR,
     error
+  };
+}
+
+export function setTheme(value) {
+  // return {
+  //   type: ActionTypes.SET_THEME,
+  //   value
+  // };
+  return (dispatch, getState) => {
+    dispatch({
+      type: ActionTypes.SET_THEME,
+      value
+    });
+    const state = getState();
+    if (state.user.authenticated) {
+      const formParams = {
+        preferences: {
+          theme: value
+        }
+      };
+      updatePreferences(formParams, dispatch);
+    }
   };
 }

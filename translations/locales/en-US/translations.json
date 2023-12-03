@@ -30,6 +30,12 @@
       "About": "About"
     },
     "Lang": "Language",
+    "Theme": {
+      "Title": "Theme",
+      "LightTheme": "Light",
+      "DarkTheme": "Dark",
+      "HighContrastTheme": "High Contrast"
+    },
     "BackEditor": "Back to Editor",
     "WarningUnsavedChanges": "Are you sure you want to leave this page? You have unsaved changes.",
     "Login": "Log in",

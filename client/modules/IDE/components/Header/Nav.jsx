@@ -25,7 +25,8 @@ import {
   newFolder,
   showKeyboardShortcutModal,
   startSketch,
-  stopSketch
+  stopSketch,
+  setTheme
 } from '../../actions/ide';
 import { logoutUser } from '../../../User/actions';
 import { CmControllerContext } from '../../pages/IDEView';
@@ -260,11 +261,29 @@ const LanguageMenu = () => {
   );
 };
 
+const ThemeMenu = () => {
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
+  return (
+    <NavDropdownMenu id="theme" title={t('Preferences.Theme')}>
+      <NavMenuItem onClick={() => dispatch(setTheme('light'))}>
+        {t('Nav.Theme.LightTheme')}
+      </NavMenuItem>
+      <NavMenuItem onClick={() => dispatch(setTheme('dark'))}>
+        {t('Nav.Theme.DarkTheme')}
+      </NavMenuItem>
+      <NavMenuItem onClick={() => dispatch(setTheme('contrast'))}>
+        {t('Nav.Theme.HighContrastTheme')}
+      </NavMenuItem>
+    </NavDropdownMenu>
+  );
+};
 const UnauthenticatedUserMenu = () => {
   const { t } = useTranslation();
   return (
     <ul className="nav__items-right" title="user-menu">
       {getConfig('TRANSLATIONS_ENABLED') && <LanguageMenu />}
+      <ThemeMenu />
       <li className="nav__item">
         <Link to="/login" className="nav__auth-button">
           <span className="nav__item-header" title="Login">
@@ -293,6 +312,7 @@ const AuthenticatedUserMenu = () => {
   return (
     <ul className="nav__items-right" title="user-menu">
       {getConfig('TRANSLATIONS_ENABLED') && <LanguageMenu />}
+      <ThemeMenu />
       <NavDropdownMenu
         id="account"
         title={
