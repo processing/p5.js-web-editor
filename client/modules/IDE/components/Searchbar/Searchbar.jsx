@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React,{useState,useEffect,useCallback} from 'react';
-import { throttle } from 'loadsh';
+import { throttle } from 'lodash';
 import { withTranslation } from 'react-i18next';
 import i18next from 'i18next';
 import SearchIcon from '../../../../images/magnifyingglass.svg';
