@@ -121,6 +121,18 @@
 	margin-left: #{5 / $base-font-size}rem;
 	@include themify() {
 		color: getThemifyVariable('secondary-text-color');
+		&:hover {
+			color: getThemifyVariable('logo-color');
+		}
+	}
+}
+.toolbar__username {
+	cursor: pointer;
+	@include themify() {
+		color: getThemifyVariable('secondary-text-color');
+		&:hover {
+			color: getThemifyVariable('logo-color');
+		}
 	}
 }
 
