@@ -25,11 +25,12 @@
   margin-right: 15px;
 }
 
-@media (max-width: 768px) {
+
+@media (max-width: 850px) {
   .about__content {
     flex-direction: column;
-    overflow-y: auto;
     overflow-x: hidden;
+    overflow-y: auto;
     width: 100%;
     margin-right: 15rem;
   }
