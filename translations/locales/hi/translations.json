@@ -96,7 +96,14 @@
       "Resources": "साधन",
       "Libraries": "लाइब्रेरीज़",
       "Forum": "समूह",
-      "Examples": "उदाहरण"
+      "Examples": "उदाहरण",
+      "Home": "होम",
+      "Twitter": "ट्विटर",
+      "Instagram": "इंस्टाग्राम",
+      "Discord": "डिस्कॉर्ड",
+      "PrivacyPolicy": "प्राइवेसी पालिसी",
+      "TermsOfUse": "टर्म्स ऑफ़ यूज़",
+      "CodeOfConduct": "कोड ऑफ़ कंडक्ट"
     },
     "Toast": {
       "OpenedNewSketch": "नया स्केच खोला",
