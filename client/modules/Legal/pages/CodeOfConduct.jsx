@@ -1,22 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import Helmet from 'react-helmet';
-import axios from 'axios';
-import PolicyContainer from '../components/PolicyContainer';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import Legal from './Legal';
 
 function CodeOfConduct() {
-  const [codeOfConduct, setCodeOfConduct] = useState('');
-  useEffect(() => {
-    axios.get('code-of-conduct.md').then((response) => {
-      setCodeOfConduct(response.data);
-    });
-  }, []);
+  const { t } = useTranslation();
+
   return (
-    <>
-      <Helmet>
-        <title>p5.js Web Editor | Code of Conduct</title>
-      </Helmet>
-      <PolicyContainer policy={codeOfConduct} />
-    </>
+    <Legal policyFile="code-of-conduct.md" title={t('Legal.CodeOfConduct')} />
   );
 }
 
