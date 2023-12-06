@@ -114,10 +114,10 @@
 }
 
 .nav__items-right {
-  padding-right: #{40 / $base-font-size}rem;
+  padding-right: #{20 / $base-font-size}rem;
 
   & .nav__dropdown {
-    width: #{110 / $base-font-size}rem;
+    width: #{125 / $base-font-size}rem;
   }
 }
 

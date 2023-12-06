@@ -494,6 +494,7 @@ exports[`Nav renders editor version for desktop 1`] = `
           </button>
           <ul
             class="nav__dropdown"
+            style="position: absolute; left: 0px; top: 0px; transform: translate(0px, 0px);"
           >
             <li
               class="nav__dropdown-item"
@@ -521,6 +522,7 @@ exports[`Nav renders editor version for desktop 1`] = `
           </button>
           <ul
             class="nav__dropdown"
+            style="position: absolute; left: 0px; top: 0px; transform: translate(0px, 0px);"
           >
             <li
               class="nav__dropdown-item"
@@ -577,6 +579,7 @@ exports[`Nav renders editor version for desktop 1`] = `
           </button>
           <ul
             class="nav__dropdown"
+            style="position: absolute; left: 0px; top: 0px; transform: translate(0px, 0px);"
           >
             <li
               class="nav__dropdown-item"
@@ -635,6 +638,7 @@ exports[`Nav renders editor version for desktop 1`] = `
           </button>
           <ul
             class="nav__dropdown"
+            style="position: absolute; left: 0px; top: 0px; transform: translate(0px, 0px);"
           >
             <li
               class="nav__dropdown-item"

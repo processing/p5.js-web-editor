@@ -1,3 +1,4 @@
+import { useFloating, autoUpdate } from '@floating-ui/react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, { useContext, useMemo } from 'react';
@@ -22,8 +23,28 @@ export function useMenuProps(id) {
 function NavDropdownMenu({ id, title, children }) {
   const { isOpen, handlers } = useMenuProps(id);
 
+  let floatingProps;
+  if (id === 'file' || id === 'edit' || id === 'sketch' || id === 'help') {
+    floatingProps = {
+      whileElementsMounted: autoUpdate,
+      placement: 'bottom-start',
+      strategy: 'absolute'
+    };
+  } else {
+    floatingProps = {
+      whileElementsMounted: autoUpdate,
+      placement: 'bottom-end',
+      strategy: 'absolute'
+    };
+  }
+
+  const { refs, floatingStyles } = useFloating(floatingProps);
+
   return (
-    <li className={classNames('nav__item', isOpen && 'nav__item--open')}>
+    <li
+      className={classNames('nav__item', isOpen && 'nav__item--open')}
+      ref={refs.setReference}
+    >
       <button {...handlers}>
         <span className="nav__item-header">{title}</span>
         <TriangleIcon
@@ -32,7 +53,11 @@ function NavDropdownMenu({ id, title, children }) {
           aria-hidden="true"
         />
       </button>
-      <ul className="nav__dropdown">
+      <ul
+        className="nav__dropdown"
+        ref={refs.setFloating}
+        style={floatingStyles}
+      >
         <ParentMenuContext.Provider value={id}>
           {children}
         </ParentMenuContext.Provider>
