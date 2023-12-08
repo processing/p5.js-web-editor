@@ -1,4 +1,4 @@
-import { useFloating, autoUpdate } from '@floating-ui/react';
+import { useFloating, autoUpdate, shift } from '@floating-ui/react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, { useContext, useMemo } from 'react';
@@ -7,7 +7,6 @@ import { MenuOpenContext, NavBarContext, ParentMenuContext } from './contexts';
 
 export function useMenuProps(id) {
   const activeMenu = useContext(MenuOpenContext);
-
   const isOpen = id === activeMenu;
 
   const { createDropdownHandlers } = useContext(NavBarContext);
@@ -16,29 +15,22 @@ export function useMenuProps(id) {
     createDropdownHandlers,
     id
   ]);
-
   return { isOpen, handlers };
 }
 
 function NavDropdownMenu({ id, title, children }) {
   const { isOpen, handlers } = useMenuProps(id);
 
-  let floatingProps;
-  if (id === 'file' || id === 'edit' || id === 'sketch' || id === 'help') {
-    floatingProps = {
-      whileElementsMounted: autoUpdate,
-      placement: 'bottom-start',
-      strategy: 'absolute'
-    };
-  } else {
-    floatingProps = {
-      whileElementsMounted: autoUpdate,
-      placement: 'bottom-end',
-      strategy: 'absolute'
-    };
-  }
-
-  const { refs, floatingStyles } = useFloating(floatingProps);
+  const { refs, floatingStyles } = useFloating({
+    whileElementsMounted: autoUpdate,
+    placement: 'bottom-start',
+    strategy: 'absolute',
+    middleware: [
+      shift({
+        mainAxis: true
+      })
+    ]
+  });
 
   return (
     <li
