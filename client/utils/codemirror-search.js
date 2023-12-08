@@ -18,8 +18,13 @@ import upArrow from '../images/up-arrow.svg?byContent';
 import exitIcon from '../images/exit.svg?byContent';
 
 function searchOverlay(query, caseInsensitive) {
-  if (typeof query == 'string') query = new RegExp(query.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&'), caseInsensitive ? 'gi' : 'g');
-  else if (!query.global) query = new RegExp(query.source, query.ignoreCase ? 'gi' : 'g');
+  if (typeof query == 'string')
+    query = new RegExp(
+      query.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&'),
+      caseInsensitive ? 'gi' : 'g'
+    );
+  else if (!query.global)
+    query = new RegExp(query.source, query.ignoreCase ? 'gi' : 'g');
 
   return {
     token: function (stream) {
@@ -33,7 +38,7 @@ function searchOverlay(query, caseInsensitive) {
       } else {
         stream.skipToEnd();
       }
-    },
+    }
   };
 }
 
@@ -56,12 +61,14 @@ function getSearchCursor(cm, query, pos) {
 }
 
 function isMouseClick(event) {
-  if(event.detail > 0) return true;
+  if (event.detail > 0) return true;
   else return false;
 }
 
 function persistentDialog(cm, text, deflt, onEnter, replaceOpened, onKeyDown) {
-  var searchField = document.getElementsByClassName("CodeMirror-search-field")[0];
+  var searchField = document.getElementsByClassName(
+    'CodeMirror-search-field'
+  )[0];
   if (!searchField) {
     cm.openDialog(text, onEnter, {
       value: deflt,
@@ -74,68 +81,85 @@ function persistentDialog(cm, text, deflt, onEnter, replaceOpened, onKeyDown) {
       closeOnBlur: false
     });
 
-    searchField = document.getElementById("Find-input-field");
+    searchField = document.getElementById('Find-input-field');
 
-    var dialog = document.getElementsByClassName("CodeMirror-dialog")[0];
-    var closeButton = dialog.getElementsByClassName("close")[0];
+    var dialog = document.getElementsByClassName('CodeMirror-dialog')[0];
+    var closeButton = dialog.getElementsByClassName('close')[0];
 
     var state = getSearchState(cm);
 
-    CodeMirror.on(searchField, "keyup", function (e) {
+    CodeMirror.on(searchField, 'keyup', function (e) {
       state.replaceStarted = false;
-      if (e.keyCode !== 13 && searchField.value.length > 1) { // not enter and more than 1 character to search
+      if (e.keyCode !== 13 && searchField.value.length > 1) {
+        // not enter and more than 1 character to search
         startSearch(cm, getSearchState(cm), searchField.value);
       } else if (searchField.value.length < 1) {
-        cm.display.wrapper.querySelector('.CodeMirror-search-results').innerText = i18n.t('CodemirrorFindAndReplace.NoResults');
+        cm.display.wrapper.querySelector(
+          '.CodeMirror-search-results'
+        ).innerText = i18n.t('CodemirrorFindAndReplace.NoResults');
       }
     });
 
-    CodeMirror.on(closeButton, "click", function () {
+    CodeMirror.on(closeButton, 'click', function () {
       clearSearch(cm);
       dialog.parentNode.removeChild(dialog);
       cm.focus();
     });
 
-    var upArrow = dialog.getElementsByClassName("up-arrow")[0];
-    CodeMirror.on(upArrow, "click", function () {
-      cm.focus();
-      CodeMirror.commands.findPrev(cm);
-      searchField.blur();
+    var upArrow = dialog.getElementsByClassName('up-arrow')[0];
+    CodeMirror.on(upArrow, 'click', function () {
+      if (searchField.value.trim() === '') {
+        searchField.focus();
+      } else {
+        cm.focus();
+        CodeMirror.commands.findPrev(cm);
+        searchField.blur();
+      }
     });
 
-    var downArrow = dialog.getElementsByClassName("down-arrow")[0];
-    CodeMirror.on(downArrow, "click", function () {
-      cm.focus();
-      CodeMirror.commands.findNext(cm);
-      searchField.blur();
+    var downArrow = dialog.getElementsByClassName('down-arrow')[0];
+    CodeMirror.on(downArrow, 'click', function () {
+      if (searchField.value.trim() === '') {
+        searchField.focus();
+      } else {
+        cm.focus();
+        CodeMirror.commands.findNext(cm);
+        searchField.blur();
+      }
     });
 
-    var regexpButton = dialog.getElementsByClassName("CodeMirror-regexp-button")[0];
-    CodeMirror.on(regexpButton, "click", function (event) {
+    var regexpButton = dialog.getElementsByClassName(
+      'CodeMirror-regexp-button'
+    )[0];
+    CodeMirror.on(regexpButton, 'click', function (event) {
       var state = getSearchState(cm);
       state.regexp = toggle(regexpButton);
       startSearch(cm, getSearchState(cm), searchField.value);
-      if(isMouseClick(event)) searchField.focus();
+      if (isMouseClick(event)) searchField.focus();
     });
 
     toggle(regexpButton, state.regexp);
 
-    var caseSensitiveButton = dialog.getElementsByClassName("CodeMirror-case-button")[0];
-    CodeMirror.on(caseSensitiveButton, "click", function (event) {
+    var caseSensitiveButton = dialog.getElementsByClassName(
+      'CodeMirror-case-button'
+    )[0];
+    CodeMirror.on(caseSensitiveButton, 'click', function (event) {
       var state = getSearchState(cm);
       state.caseInsensitive = !toggle(caseSensitiveButton);
       startSearch(cm, getSearchState(cm), searchField.value);
-      if(isMouseClick(event)) searchField.focus();
+      if (isMouseClick(event)) searchField.focus();
     });
 
     toggle(caseSensitiveButton, !state.caseInsensitive);
 
-    var wholeWordButton = dialog.getElementsByClassName("CodeMirror-word-button")[0];
-    CodeMirror.on(wholeWordButton, "click", function (event) {
+    var wholeWordButton = dialog.getElementsByClassName(
+      'CodeMirror-word-button'
+    )[0];
+    CodeMirror.on(wholeWordButton, 'click', function (event) {
       var state = getSearchState(cm);
       state.wholeWord = toggle(wholeWordButton);
       startSearch(cm, getSearchState(cm), searchField.value);
-      if(isMouseClick(event)) searchField.focus();
+      if (isMouseClick(event)) searchField.focus();
     });
 
     toggle(wholeWordButton, state.wholeWord);
@@ -149,13 +173,14 @@ function persistentDialog(cm, text, deflt, onEnter, replaceOpened, onKeyDown) {
       } else {
         nextState = initialState;
       }
-      
+
       el.setAttribute('aria-checked', nextState);
       return nextState;
     }
 
     function toggleReplace(open) {
-      var toggleButtonHeightOpened = "80px", toggleButtonHeightClosed = "40px";
+      var toggleButtonHeightOpened = '80px',
+        toggleButtonHeightClosed = '40px';
 
       if (open) {
         replaceFieldDiv.style.display = replaceControlsDiv.style.display = '';
@@ -163,7 +188,8 @@ function persistentDialog(cm, text, deflt, onEnter, replaceOpened, onKeyDown) {
         toggleReplaceBtn.style.height = toggleButtonHeightOpened;
         toggleReplaceBtn.innerHTML = triangleArrowDown;
       } else {
-        replaceFieldDiv.style.display = replaceControlsDiv.style.display = 'none';
+        replaceFieldDiv.style.display = replaceControlsDiv.style.display =
+          'none';
         toggleReplaceBtnDiv.style.height = toggleButtonHeightClosed;
         toggleReplaceBtn.style.height = toggleButtonHeightClosed;
         toggleReplaceBtn.innerHTML = triangleArrowRight;
@@ -171,14 +197,14 @@ function persistentDialog(cm, text, deflt, onEnter, replaceOpened, onKeyDown) {
     }
 
     var toggleReplaceBtnDiv = document.getElementById('Btn-Toggle-replace-div');
-    var toggleReplaceBtn = document.getElementById('Btn-Toggle-replace')
+    var toggleReplaceBtn = document.getElementById('Btn-Toggle-replace');
     var replaceFieldDiv = document.getElementById('Replace-input-div');
     var replaceControlsDiv = document.getElementById('Replace-controls-div');
     if (replaceOpened) {
       toggleReplace(true);
     }
-    CodeMirror.on(toggleReplaceBtn, "click", function () {
-      if (replaceFieldDiv.style.display === "none") {
+    CodeMirror.on(toggleReplaceBtn, 'click', function () {
+      if (replaceFieldDiv.style.display === 'none') {
         toggleReplace(true);
       } else {
         toggleReplace(false);
@@ -186,36 +212,47 @@ function persistentDialog(cm, text, deflt, onEnter, replaceOpened, onKeyDown) {
     });
 
     var replaceField = document.getElementById('Replace-input-field');
-    CodeMirror.on(replaceField, "keyup", function (e) {
+    CodeMirror.on(replaceField, 'keyup', function (e) {
       var state = getSearchState(cm);
       var query = parseQuery(searchField.value, state);
       var withText = parseString(replaceField.value);
-      if (e.keyCode === 13)  // if enter
-      {
-        var cursor = getSearchCursor(cm, query, cm.getCursor("from"));
+      if (e.keyCode === 13) {
+        // if enter
+        var cursor = getSearchCursor(cm, query, cm.getCursor('from'));
         var start = cursor.from();
         var match = cursor.findNext();
         if (!match) {
           cursor = getSearchCursor(cm, query);
-          if (!(match = cursor.findNext()) || (start && cursor.from().line == start.line && cursor.from().ch == start.ch)) return;
+          if (
+            !(match = cursor.findNext()) ||
+            (start &&
+              cursor.from().line == start.line &&
+              cursor.from().ch == start.ch)
+          )
+            return;
         }
         cm.setSelection(cursor.from(), cursor.to());
         state.replaceStarted = true;
         doReplace(match, cursor, query, withText);
       }
-    })
+    });
 
     function doReplace(match, cursor, query, withText) {
-      cursor.replace(typeof query == "string" ? withText :
-        withText.replace(/\$(\d)/g, function(_, i) {return match[i];}));
+      cursor.replace(
+        typeof query == 'string'
+          ? withText
+          : withText.replace(/\$(\d)/g, function (_, i) {
+              return match[i];
+            })
+      );
       cursor.findNext();
       // cm.focus();
       CodeMirror.commands.findNext(cm);
       // searchField.blur();
-    };
+    }
 
     var doReplaceButton = document.getElementById('Btn-replace');
-    CodeMirror.on(doReplaceButton, "click", function(e) {
+    CodeMirror.on(doReplaceButton, 'click', function (e) {
       if (!searchField.value) {
         searchField.focus();
         return;
@@ -224,7 +261,7 @@ function persistentDialog(cm, text, deflt, onEnter, replaceOpened, onKeyDown) {
       var query = parseQuery(searchField.value, state);
       var withText = parseString(replaceField.value);
       if (state.replaceStarted) {
-        var cursor = getSearchCursor(cm, query, cm.getCursor("from"));
+        var cursor = getSearchCursor(cm, query, cm.getCursor('from'));
         var match = cursor.findNext();
         if (match) {
           cm.setSelection(cursor.from(), cursor.to());
@@ -239,10 +276,10 @@ function persistentDialog(cm, text, deflt, onEnter, replaceOpened, onKeyDown) {
         searchField.blur();
         doReplaceButton.focus();
       }
-    })
+    });
 
     var doReplaceAllButton = document.getElementById('Btn-replace-all');
-    CodeMirror.on(doReplaceAllButton, "click", function(e) {
+    CodeMirror.on(doReplaceAllButton, 'click', function (e) {
       if (!searchField.value) {
         searchField.focus();
         return;
@@ -260,8 +297,7 @@ function persistentDialog(cm, text, deflt, onEnter, replaceOpened, onKeyDown) {
         startSearch(cm, state, searchField.value);
         state.replaceStarted = true;
       }
-    })
-
+    });
   } else {
     searchField.value = deflt;
 
@@ -271,7 +307,8 @@ function persistentDialog(cm, text, deflt, onEnter, replaceOpened, onKeyDown) {
 }
 
 function dialog(cm, text, shortText, deflt, f) {
-  if (cm.openDialog) cm.openDialog(text, f, { value: deflt, selectValueOnOpen: true });
+  if (cm.openDialog)
+    cm.openDialog(text, f, { value: deflt, selectValueOnOpen: true });
   else f(prompt(shortText, deflt));
 }
 
@@ -285,12 +322,13 @@ function parseString(string) {
 
 function parseQuery(query, state) {
   var emptyQuery = 'x^'; // matches nothing
-  if (query === '') { // empty string matches nothing
+  if (query === '') {
+    // empty string matches nothing
     query = emptyQuery;
   } else {
     if (state.regexp === false) {
       query = parseString(query);
-      query = query.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+      query = query.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
     }
     if (state.wholeWord) {
       query = '\\b' + query + '\\b';
@@ -299,7 +337,7 @@ function parseQuery(query, state) {
 
   var regexp;
   try {
-    regexp = new RegExp(query, state.caseInsensitive ? "gi" : "g");
+    regexp = new RegExp(query, state.caseInsensitive ? 'gi' : 'g');
   } catch (e) {
     regexp = new RegExp(emptyQuery, 'g');
   }
@@ -322,7 +360,33 @@ function startSearch(cm, state, query) {
       state.annotate.clear();
       state.annotate = null;
     }
-    state.annotate = cm.showMatchesOnScrollbar(state.query, state.caseInsensitive);
+    state.annotate = cm.showMatchesOnScrollbar(
+      state.query,
+      state.caseInsensitive
+    );
+  }
+
+  //Updating the UI everytime the search input changes
+  var cursor = getSearchCursor(cm, state.query);
+  cursor.findNext();
+  var num_match = cm.state.search.annotate.matches.length;
+  //no matches found
+  if (num_match == 0) {
+    cm.display.wrapper.querySelector(
+      '.CodeMirror-search-results'
+    ).innerText = i18n.t('CodemirrorFindAndReplace.NoResults');
+    cm.removeOverlay(state.overlay, state.caseInsensitive);
+  } else {
+    var next =
+      cm.state.search.annotate.matches.findIndex((s) => {
+        return (
+          s.from.ch === cursor.from().ch && s.from.line === cursor.from().line
+        );
+      }) + 1;
+    var text_match = next + '/' + num_match;
+    cm.display.wrapper.querySelector(
+      '.CodeMirror-search-results'
+    ).innerText = text_match;
   }
 }
 
@@ -349,24 +413,37 @@ function doSearch(cm, rev, persistent, immediate, ignoreQuery) {
           to.line < 3 &&
           document.querySelector &&
           (dialog = cm.display.wrapper.querySelector('.CodeMirror-dialog')) &&
-          dialog.getBoundingClientRect().bottom - 4 > cm.cursorCoords(to, 'window').top
+          dialog.getBoundingClientRect().bottom - 4 >
+            cm.cursorCoords(to, 'window').top
         )
           (hiding = dialog).style.opacity = 0.4;
       });
     };
-    persistentDialog(cm, queryDialog, q, searchNext, false, function (event, query) {
-      var keyName = CodeMirror.keyName(event);
-      var cmd = CodeMirror.keyMap[cm.getOption('keyMap')][keyName];
-      if (!cmd) cmd = cm.getOption('extraKeys')[keyName];
-      if (cmd == 'findNext' || cmd == 'findPrev' || cmd == 'findPersistentNext' || cmd == 'findPersistentPrev') {
-        CodeMirror.e_stop(event);
-        startSearch(cm, getSearchState(cm), query);
-        cm.execCommand(cmd);
-      } else if (cmd == 'find' || cmd == 'findPersistent') {
-        CodeMirror.e_stop(event);
-        searchNext(query, event);
+    persistentDialog(
+      cm,
+      queryDialog,
+      q,
+      searchNext,
+      false,
+      function (event, query) {
+        var keyName = CodeMirror.keyName(event);
+        var cmd = CodeMirror.keyMap[cm.getOption('keyMap')][keyName];
+        if (!cmd) cmd = cm.getOption('extraKeys')[keyName];
+        if (
+          cmd == 'findNext' ||
+          cmd == 'findPrev' ||
+          cmd == 'findPersistentNext' ||
+          cmd == 'findPersistentPrev'
+        ) {
+          CodeMirror.e_stop(event);
+          startSearch(cm, getSearchState(cm), query);
+          cm.execCommand(cmd);
+        } else if (cmd == 'find' || cmd == 'findPersistent') {
+          CodeMirror.e_stop(event);
+          searchNext(query, event);
+        }
       }
-    });
+    );
     if (immediate && q) {
       startSearch(cm, state, q);
       findNext(cm, rev);
@@ -383,7 +460,14 @@ function doSearch(cm, rev, persistent, immediate, ignoreQuery) {
   }
 }
 
-function doFindAndReplace(cm, rev, persistent, immediate, ignoreQuery, replaceOpened) {
+function doFindAndReplace(
+  cm,
+  rev,
+  persistent,
+  immediate,
+  ignoreQuery,
+  replaceOpened
+) {
   var state = getSearchState(cm);
   if (!ignoreQuery && state.query) {
     return findNext(cm, rev);
@@ -392,77 +476,111 @@ function doFindAndReplace(cm, rev, persistent, immediate, ignoreQuery, replaceOp
   var queryDialog = getQueryDialog();
   if (persistent && cm.openDialog) {
     var hiding = null;
-    var searchNext = function(query, event) {
+    var searchNext = function (query, event) {
       CodeMirror.e_stop(event);
       if (!query) return;
       if (query != state.queryText) {
         startSearch(cm, state, query);
         state.posFrom = state.posTo = cm.getCursor();
       }
-      if (hiding) hiding.style.opacity = 1
-      findNext(cm, event.shiftKey, function(_, to) {
-        var dialog
-        if (to.line < 3 && document.querySelector &&
-          (dialog = cm.display.wrapper.querySelector(".CodeMirror-dialog")) &&
-          dialog.getBoundingClientRect().bottom - 4 > cm.cursorCoords(to, "window").top)
-          (hiding = dialog).style.opacity = 1
-      })
+      if (hiding) hiding.style.opacity = 1;
+      findNext(cm, event.shiftKey, function (_, to) {
+        var dialog;
+        if (
+          to.line < 3 &&
+          document.querySelector &&
+          (dialog = cm.display.wrapper.querySelector('.CodeMirror-dialog')) &&
+          dialog.getBoundingClientRect().bottom - 4 >
+            cm.cursorCoords(to, 'window').top
+        )
+          (hiding = dialog).style.opacity = 1;
+      });
     };
-    persistentDialog(cm, queryDialog, q, searchNext, replaceOpened, function(event, query) {
-      var keyName = CodeMirror.keyName(event)
-      var cmd = CodeMirror.keyMap[cm.getOption("keyMap")][keyName]
-      if (!cmd) cmd = cm.getOption('extraKeys')[keyName]
-      if (cmd == "findNext" || cmd == "findPrev" ||
-        cmd == "findPersistentNext" || cmd == "findPersistentPrev") {
-        CodeMirror.e_stop(event);
-        startSearch(cm, getSearchState(cm), query);
-        cm.execCommand(cmd);
-      } else if (cmd == "find" || cmd == "findPersistent") {
-        CodeMirror.e_stop(event);
-        searchNext(query, event);
+    persistentDialog(
+      cm,
+      queryDialog,
+      q,
+      searchNext,
+      replaceOpened,
+      function (event, query) {
+        var keyName = CodeMirror.keyName(event);
+        var cmd = CodeMirror.keyMap[cm.getOption('keyMap')][keyName];
+        if (!cmd) cmd = cm.getOption('extraKeys')[keyName];
+        if (
+          cmd == 'findNext' ||
+          cmd == 'findPrev' ||
+          cmd == 'findPersistentNext' ||
+          cmd == 'findPersistentPrev'
+        ) {
+          CodeMirror.e_stop(event);
+          startSearch(cm, getSearchState(cm), query);
+          cm.execCommand(cmd);
+        } else if (cmd == 'find' || cmd == 'findPersistent') {
+          CodeMirror.e_stop(event);
+          searchNext(query, event);
+        }
       }
-    });
+    );
     if (immediate && q) {
       startSearch(cm, state, q);
       findNext(cm, rev);
     }
   } else {
-    dialog(cm, queryDialog, "Search for:", q, function(query) {
-      if (query && !state.query) cm.operation(function() {
-        startSearch(cm, state, query);
-        state.posFrom = state.posTo = cm.getCursor();
-        findNext(cm, rev);
-      });
+    dialog(cm, queryDialog, 'Search for:', q, function (query) {
+      if (query && !state.query)
+        cm.operation(function () {
+          startSearch(cm, state, query);
+          state.posFrom = state.posTo = cm.getCursor();
+          findNext(cm, rev);
+        });
     });
   }
 }
 
 function findNext(cm, rev, callback) {
-  cm.operation(function() {
+  cm.operation(function () {
     var state = getSearchState(cm);
-    var cursor = getSearchCursor(cm, state.query, rev ? state.posFrom : state.posTo);
+    var cursor = getSearchCursor(
+      cm,
+      state.query,
+      rev ? state.posFrom : state.posTo
+    );
     if (!cursor.find(rev)) {
-      cursor = getSearchCursor(cm, state.query, rev ? CodeMirror.Pos(cm.lastLine()) : CodeMirror.Pos(cm.firstLine(), 0));
+      cursor = getSearchCursor(
+        cm,
+        state.query,
+        rev ? CodeMirror.Pos(cm.lastLine()) : CodeMirror.Pos(cm.firstLine(), 0)
+      );
       if (!cursor.find(rev)) {
-        cm.display.wrapper.querySelector('.CodeMirror-search-results').innerText = i18n.t('CodemirrorFindAndReplace.NoResults');
+        cm.display.wrapper.querySelector(
+          '.CodeMirror-search-results'
+        ).innerText = i18n.t('CodemirrorFindAndReplace.NoResults');
         return;
       }
     }
     cm.setSelection(cursor.from(), cursor.to());
-    cm.scrollIntoView({ from: cursor.from(), to: cursor.to() }, cm.getScrollInfo().clientHeight / 2);
+    cm.scrollIntoView(
+      { from: cursor.from(), to: cursor.to() },
+      cm.getScrollInfo().clientHeight / 2
+    );
     state.posFrom = cursor.from();
     state.posTo = cursor.to();
     var num_match = cm.state.search.annotate.matches.length;
-    var next = cm.state.search.annotate.matches
-      .findIndex(s => s.from.ch === cursor.from().ch && s.from.line === cursor.from().line) + 1;
+    var next =
+      cm.state.search.annotate.matches.findIndex(
+        (s) =>
+          s.from.ch === cursor.from().ch && s.from.line === cursor.from().line
+      ) + 1;
     var text_match = next + '/' + num_match;
-    cm.display.wrapper.querySelector('.CodeMirror-search-results').innerText = text_match;
-    if (callback) callback(cursor.from(), cursor.to())
+    cm.display.wrapper.querySelector(
+      '.CodeMirror-search-results'
+    ).innerText = text_match;
+    if (callback) callback(cursor.from(), cursor.to());
   });
 }
 
 function clearSearch(cm) {
-  cm.operation(function() {
+  cm.operation(function () {
     var state = getSearchState(cm);
     state.replaceStarted = false;
     if (!state.query) return;
@@ -476,12 +594,12 @@ function clearSearch(cm) {
 }
 
 function replaceAll(cm, query, text) {
-  cm.operation(function() {
+  cm.operation(function () {
     for (var cursor = getSearchCursor(cm, query); cursor.findNext(); ) {
-      if (typeof query != "string") {
+      if (typeof query != 'string') {
         var match = cm.getRange(cursor.from(), cursor.to()).match(query);
         cursor.replace(
-          text.replace(/\$(\d)/g, function(_, i) {
+          text.replace(/\$(\d)/g, function (_, i) {
             return match[i];
           })
         );
@@ -490,8 +608,8 @@ function replaceAll(cm, query, text) {
   });
 }
 
-var getQueryDialog = function() {
-  return (`
+var getQueryDialog = function () {
+  return `
     <div class="CodeMirror-find-popup-container">
       <div id="Btn-Toggle-replace-div" class="Toggle-replace-btn-div">
         <button
@@ -507,11 +625,15 @@ var getQueryDialog = function() {
       </div>
       <div class="CodeMirror-search-inputs">
         <div class="CodeMirror-find-input">
-          <input id="Find-input-field" type="text" class="search-input CodeMirror-search-field" placeholder="${i18n.t('CodemirrorFindAndReplace.FindPlaceholder')}" />
+          <input id="Find-input-field" type="text" class="search-input CodeMirror-search-field" placeholder="${i18n.t(
+            'CodemirrorFindAndReplace.FindPlaceholder'
+          )}" />
         </div>
         <div style="display: none;" id="Replace-input-div"
         class="CodeMirror-replace-input">
-          <input id="Replace-input-field" type="text" placeholder="${i18n.t('CodemirrorFindAndReplace.ReplacePlaceholder')}" class="search-input CodeMirror-search-field"/>
+          <input id="Replace-input-field" type="text" placeholder="${i18n.t(
+            'CodemirrorFindAndReplace.ReplacePlaceholder'
+          )}" class="search-input CodeMirror-search-field"/>
         </div>
       </div>
       <div class="CodeMirror-search-controls">
@@ -563,7 +685,9 @@ var getQueryDialog = function() {
             </button>
           </div>
           <div class="CodeMirror-search-nav">
-            <p class="CodeMirror-search-results">${i18n.t('CodemirrorFindAndReplace.NoResults')}</p>
+            <p class="CodeMirror-search-results">${i18n.t(
+              'CodemirrorFindAndReplace.NoResults'
+            )}</p>
             <button
               title="${i18n.t('CodemirrorFindAndReplace.Previous')}"
               aria-label="${i18n.t('CodemirrorFindAndReplace.Previous')}"
@@ -597,8 +721,8 @@ var getQueryDialog = function() {
         </div>
       </div>
     </div>
-  `);
-}
+  `;
+};
 
 // CodeMirror.commands.findPersistent = function(cm) {doFindAndReplace(cm, false, true, false, true, false);};
 // CodeMirror.commands.findPersistentNext = function(cm) {doFindAndReplace(cm, false, true, false, true, false);};

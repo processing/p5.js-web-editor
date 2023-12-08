@@ -222,6 +222,7 @@
     "Delete": "Sil"
   },
   "Common": {
+    "SiteName": "p5.js Web Editör",
     "Error": "Hata",
     "ErrorARIA": "Hata",
     "Save": "Kaydet",
