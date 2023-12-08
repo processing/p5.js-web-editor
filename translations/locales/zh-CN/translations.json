@@ -101,7 +101,10 @@
     "Resources": "资源",
     "Libraries": "第三方库",
     "Forum": "论坛",
-    "Examples": "范例"
+    "Examples": "范例",
+    "PrivacyPolicy": "隐私政策",
+    "TermsOfUse": "使用条款",
+   "CodeOfConduct": "行为准则"
   },
   "Toast": {
     "OpenedNewSketch": "打开了新项目。",

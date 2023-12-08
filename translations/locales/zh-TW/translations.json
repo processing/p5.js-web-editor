@@ -101,7 +101,10 @@
     "Resources": "資源",
     "Libraries": "程式庫",
     "Forum": "論壇",
-    "Examples": "範例"
+    "Examples": "範例",
+    "PrivacyPolicy": "隱私政策",
+    "TermsOfUse": "使用條款",
+    "CodeOfConduct": "行為準則"
   },
   "Toast": {
     "OpenedNewSketch": "已開啟新草稿",

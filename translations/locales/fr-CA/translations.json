@@ -102,7 +102,10 @@
       "Resources": "Ressources",
       "Libraries": "Librairies",
       "Forum": "Forum",
-      "Examples": "Exemples"
+      "Examples": "Exemples",
+      "PrivacyPolicy": "Politique de confidentialité",
+      "TermsOfUse": "Conditions d'utilisation",
+      "CodeOfConduct": "Code de conduite"
     },
     "Toast": {
       "OpenedNewSketch": "Ouvrir un nouveau croquis.",

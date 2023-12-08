@@ -87,7 +87,10 @@
     "Resources": "연관 자료",
     "Libraries": "라이브러리",
     "Forum": "포럼",
-    "Examples": "예제"
+    "Examples": "예제",
+    "PrivacyPolicy": "개인정보 처리방침",
+    "TermsOfUse": "이용약관",
+    "CodeOfConduct": "행동 강령"
   },
   "Toast": {
     "OpenedNewSketch": "새 스케치 열기 완료.",

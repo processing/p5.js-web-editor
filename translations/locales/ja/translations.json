@@ -101,7 +101,10 @@
       "Resources": "参考資料",
       "Libraries": "ライブラリ",
       "Forum": "フォーラム",
-      "Examples": "サンプルを開く"
+      "Examples": "サンプルを開く",
+      "PrivacyPolicy": "プライバシーポリシー",
+      "TermsOfUse": "利用規約",
+      "CodeOfConduct": "行動規範"
     },
     "Toast": {
       "OpenedNewSketch": "新しいスケッチを開きました",

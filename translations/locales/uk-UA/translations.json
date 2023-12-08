@@ -101,7 +101,10 @@
     "Resources": "Ресурси",
     "Libraries": "Бібліотеки",
     "Forum": "Форум",
-    "Examples": "Приклади"
+    "Examples": "Приклади",
+    "PrivacyPolicy": "Політика конфіденційності",
+    "TermsOfUse": "Умови використання",
+    "CodeOfConduct": "Кодекс поведінки"
   },
   "Toast": {
     "OpenedNewSketch": "Відкрито новий скетч.",

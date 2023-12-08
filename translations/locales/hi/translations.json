@@ -101,7 +101,10 @@
       "Resources": "साधन",
       "Libraries": "लाइब्रेरीज़",
       "Forum": "समूह",
-      "Examples": "उदाहरण"
+      "Examples": "उदाहरण",
+      "PrivacyPolicy": "गोपनीयता नीति",
+      "TermsOfUse": "उपयोग की शर्तें",
+      "CodeOfConduct": "आचार संहिता"
     },
     "Toast": {
       "OpenedNewSketch": "नया स्केच खोला",
