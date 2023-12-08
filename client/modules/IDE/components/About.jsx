@@ -28,7 +28,7 @@ function About(props) {
         />
         <div className="about__content-column">
           <p className="about__version-info">
-          {t('About.WebEditor')}: <span>v{packageData?.version}</span>
+            {t('About.WebEditor')}: <span>v{packageData?.version}</span>
           </p>
           <p className="about__version-info">
             p5.js: <span>v{p5version}</span>
