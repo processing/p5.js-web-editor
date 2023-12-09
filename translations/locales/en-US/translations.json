@@ -201,6 +201,11 @@
       "TurnOffAccessibleOutput": "Turn Off Accessible Output"
     }
   },
+  "Fundraiser": {
+    "Title": "Support p5.js",
+    "Description": "🎉 Join us in celebrating a Decade of Code! 🎉 Support p5.js and earn unique rewards. 🙂", 
+    "CallToAction": "Contribute and learn more!"
+  },
   "Sidebar": {
     "Title": "Sketch Files",
     "ToggleARIA": "Toggle open/close sketch file options",
