@@ -1,5 +1,5 @@
 // TODO: convert to functional component
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import CodeMirror from 'codemirror';
 import Fuse from 'fuse.js';
 import emmet from '@emmetio/codemirror-plugin';
