@@ -24,6 +24,7 @@ import {
   newFile,
   newFolder,
   showKeyboardShortcutModal,
+  showFundraiserModal,
   startSketch,
   stopSketch
 } from '../../actions/ide';
@@ -37,6 +38,7 @@ const Nav = ({ layout }) => (
       matches ? (
         <NavBar>
           <LeftLayout layout={layout} />
+          <FundraiserSection />
           <UserMenu />
         </NavBar>
       ) : (
@@ -83,6 +85,23 @@ const UserMenu = () => {
   }
 
   return null;
+};
+
+const FundraiserSection = () => {
+  const dispatch = useDispatch();
+
+  return (
+    <>
+      <button
+        className="nav__fundraiser-btn"
+        onClick={() => dispatch(showFundraiserModal())}
+        aria-label="2023-fundraiser-button"
+        title="2023 Fundraiser Button"
+      >
+        Celebrate a Decade of Code and Support p5.js!
+      </button>
+    </>
+  );
 };
 
 const DashboardMenu = () => {
