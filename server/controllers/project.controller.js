@@ -9,6 +9,7 @@ import Project from '../models/project';
 import User from '../models/user';
 import { resolvePathToFile } from '../utils/filePath';
 import generateFileSystemSafeName from '../utils/generateFileSystemSafeName';
+import { getProjectsForUserName } from './project.controller/getProjectsForUser';
 
 export {
   default as createProject,
@@ -215,6 +216,41 @@ function bundleExternalLibs(project) {
   });
 }
 
+function bundleExternalLibsForCompiledProject(compilation) {
+  const { files } = compilation;
+  const htmlFiles = [];
+  const projectFolders = [];
+  files.forEach((file) => {
+    if (file.name === 'index.html') htmlFiles.push(file);
+    else if (file.fileType === 'folder' && file.name !== 'root')
+      projectFolders.push(file);
+  });
+  htmlFiles.forEach((indexHtml) => {
+    const { window } = new JSDOM(indexHtml.content);
+    const scriptTags = window.document.getElementsByTagName('script');
+
+    const parentFolder = projectFolders.filter((folder) =>
+      folder.children.includes(indexHtml.id)
+    );
+
+    Object.values(scriptTags).forEach(async ({ src }, i) => {
+      if (!isUrl(src)) return;
+
+      const path = src.split('/');
+      const filename = path[path.length - 1];
+      const libId = `${filename}-${parentFolder[0].name}`;
+
+      compilation.files.push({
+        name: filename,
+        url: src,
+        id: libId
+      });
+
+      parentFolder[0].children.push(libId);
+    });
+  });
+}
+
 function addFileToZip(file, files, zip, path = '') {
   return new Promise((resolve, reject) => {
     if (file.fileType === 'folder') {
@@ -259,7 +295,7 @@ function addFileToZip(file, files, zip, path = '') {
   });
 }
 
-async function buildZip(project, req, res) {
+async function buildZip(project, req, res, isSingleProject = true) {
   try {
     const zip = new JSZip();
     const currentTime = format(new Date(), 'yyyy_MM_dd_HH_mm_ss');
@@ -270,7 +306,11 @@ async function buildZip(project, req, res) {
     const { files } = project;
     const root = files.find((file) => file.name === 'root');
 
-    bundleExternalLibs(project);
+    if (isSingleProject) {
+      bundleExternalLibs(project);
+    } else {
+      bundleExternalLibsForCompiledProject(project);
+    }
     await addFileToZip(root, files, zip);
 
     const base64 = await zip.generateAsync({ type: 'base64' });
@@ -290,5 +330,34 @@ export function downloadProjectAsZip(req, res) {
   Project.findById(req.params.project_id, (err, project) => {
     // save project to some path
     buildZip(project, req, res);
+  });
+}
+
+function compileProjects(projects, compiledName) {
+  const compiledFolder = {
+    name: 'root',
+    fileType: 'folder',
+    children: []
+  };
+
+  const compiledProject = {
+    name: compiledName,
+    files: [compiledFolder]
+  };
+
+  projects.forEach((project) => {
+    const rootFile = project.files.find((file) => file.name === 'root');
+    rootFile.name = project.name;
+    compiledProject.files.push(...project.files);
+    compiledFolder.children.push(rootFile.id);
+  });
+
+  return compiledProject;
+}
+
+export function downloadAllProjectsAsZip(req, res) {
+  getProjectsForUserName(req.params.username).then((projects) => {
+    const compilation = compileProjects(projects, req.params.username);
+    buildZip(compilation, req, res, false);
   });
 }
