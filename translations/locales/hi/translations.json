@@ -600,6 +600,11 @@
     },
     "Explorer": {
       "Files": "फ़ाइलें"
+    },
+    "Legal":{
+      "PrivacyPolicy":"गोपनीयता नीति",
+      "TermsOfUse":"उपयोग की शर्तें",
+      "CodeOfConduct":"आचार संहिता"
     }
   }
  
