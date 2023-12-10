@@ -465,7 +465,8 @@
   "DashboardView": {
     "CreateCollection": "Create collection",
     "NewSketch": "New sketch",
-    "CreateCollectionOverlay": "Create collection"
+    "CreateCollectionOverlay": "Create collection",
+    "DownloadAll": "Download all Sketches"
   },
   "DashboardTabSwitcher": {
     "Sketches": "Sketches",
