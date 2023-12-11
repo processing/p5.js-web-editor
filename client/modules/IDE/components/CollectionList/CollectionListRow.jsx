@@ -4,27 +4,23 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { withTranslation } from 'react-i18next';
+import MenuItem from '../../../../components/Dropdown/MenuItem';
+import TableDropdown from '../../../../components/Dropdown/TableDropdown';
 import * as ProjectActions from '../../actions/project';
 import * as CollectionsActions from '../../actions/collections';
 import * as IdeActions from '../../actions/ide';
 import * as ToastActions from '../../actions/toast';
 import dates from '../../../../utils/formatDate';
 
-import DownFilledTriangleIcon from '../../../../images/down-filled-triangle.svg';
-import MoreIconSvg from '../../../../images/more.svg';
-
 const formatDateCell = (date, mobile = false) =>
   dates.format(date, { showTime: !mobile });
 
 const CollectionListRowBase = (props) => {
-  const [optionsOpen, setOptionsOpen] = useState(false);
-  const [isFocused, setIsFocused] = useState(false);
   const [renameOpen, setRenameOpen] = useState(false);
   const [renameValue, setRenameValue] = useState('');
   const renameInput = useRef(null);
 
   const closeAll = () => {
-    setOptionsOpen(false);
     setRenameOpen(false);
   };
 
@@ -34,35 +30,6 @@ const CollectionListRowBase = (props) => {
       props.editCollection(props.collection.id, {
         name: renameValue.trim()
       });
-    }
-  };
-
-  const onFocusComponent = () => {
-    setIsFocused(true);
-  };
-
-  const onBlurComponent = () => {
-    setIsFocused(false);
-    setTimeout(() => {
-      if (!isFocused) {
-        closeAll();
-      }
-    }, 200);
-  };
-
-  const openOptions = () => {
-    setOptionsOpen(true);
-  };
-
-  const closeOptions = () => {
-    setOptionsOpen(false);
-  };
-
-  const toggleOptions = () => {
-    if (optionsOpen) {
-      closeOptions();
-    } else {
-      openOptions();
     }
   };
 
@@ -110,63 +77,22 @@ const CollectionListRowBase = (props) => {
   };
 
   const renderActions = () => {
-    const { mobile } = props;
     const userIsOwner = props.user.username === props.username;
 
     return (
-      <>
-        <button
-          className="sketch-list__dropdown-button"
-          onClick={toggleOptions}
-          onBlur={onBlurComponent}
-          onFocus={onFocusComponent}
-          aria-label={props.t('CollectionListRow.ToggleCollectionOptionsARIA')}
-        >
-          {mobile ? (
-            <MoreIconSvg focusable="false" aria-hidden="true" />
-          ) : (
-            <DownFilledTriangleIcon focusable="false" aria-hidden="true" />
-          )}
-        </button>
-        {optionsOpen && (
-          <ul className="sketch-list__action-dialogue">
-            <li>
-              <button
-                className="sketch-list__action-option"
-                onClick={handleAddSketches}
-                onBlur={onBlurComponent}
-                onFocus={onFocusComponent}
-              >
-                {props.t('CollectionListRow.AddSketch')}
-              </button>
-            </li>
-            {userIsOwner && (
-              <li>
-                <button
-                  className="sketch-list__action-option"
-                  onClick={handleCollectionDelete}
-                  onBlur={onBlurComponent}
-                  onFocus={onFocusComponent}
-                >
-                  {props.t('CollectionListRow.Delete')}
-                </button>
-              </li>
-            )}
-            {userIsOwner && (
-              <li>
-                <button
-                  className="sketch-list__action-option"
-                  onClick={handleRenameOpen}
-                  onBlur={onBlurComponent}
-                  onFocus={onFocusComponent}
-                >
-                  {props.t('CollectionListRow.Rename')}
-                </button>
-              </li>
-            )}
-          </ul>
-        )}
-      </>
+      <TableDropdown
+        aria-label={props.t('CollectionListRow.ToggleCollectionOptionsARIA')}
+      >
+        <MenuItem onClick={handleAddSketches}>
+          {props.t('CollectionListRow.AddSketch')}
+        </MenuItem>
+        <MenuItem hideIf={!userIsOwner} onClick={handleCollectionDelete}>
+          {props.t('CollectionListRow.Delete')}
+        </MenuItem>
+        <MenuItem hideIf={!userIsOwner} onClick={handleRenameOpen}>
+          {props.t('CollectionListRow.Rename')}
+        </MenuItem>
+      </TableDropdown>
     );
   };
 
