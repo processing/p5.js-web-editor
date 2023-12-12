@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet';
 import SplitPane from 'react-split-pane';
 import MediaQuery from 'react-responsive';
+import { BiCopy } from 'react-icons/bi';
 import IDEKeyHandlers from '../components/IDEKeyHandlers';
 import Sidebar from '../components/Sidebar';
 import PreviewFrame from '../components/PreviewFrame';
@@ -126,7 +127,15 @@ const IDEView = () => {
       }
     };
   }, [shouldAutosave, dispatch]);
-
+  const handleCopy = async () => {
+    const editor = cmRef.current;
+    try {
+      const content = editor;
+      await navigator.clipboard.writeText(content.getContent().content);
+    } catch (error) {
+      console.error('Failed to copy text to clipboard:', error);
+    }
+  };
   return (
     <RootPage>
       <Helmet>
@@ -186,8 +195,27 @@ const IDEView = () => {
                   </SplitPane>
                   <section className="preview-frame-holder">
                     <header className="preview-frame__header">
-                      <h2 className="preview-frame__title">
+                      <h2
+                        className="preview-frame__title"
+                        style={{ position: 'absolute', display: 'block' }}
+                      >
                         {t('Toolbar.Preview')}
+                        <button
+                          style={{
+                            outline: '0',
+                            padding: '0',
+                            margin: '0',
+                            border: '0',
+                            position: 'relative',
+                            top: '130%',
+                            left: '-130%',
+                            fontSize: '17.5px',
+                            cursor: 'pointer'
+                          }}
+                          onClick={handleCopy}
+                        >
+                          <BiCopy />
+                        </button>
                       </h2>
                     </header>
                     <div className="preview-frame__content">
@@ -240,5 +268,4 @@ const IDEView = () => {
     </RootPage>
   );
 };
-
 export default IDEView;
