@@ -28,10 +28,16 @@ function About(props) {
         />
         <div className="about__content-column">
           <p className="about__version-info">
-            Web Editor: <span>v{packageData?.version}</span>
+            Web Editor:
+            <a href="https://github.com/processing/p5.js-web-editor/releases">
+              v{packageData?.version}
+            </a>
           </p>
           <p className="about__version-info">
-            p5.js: <span>v{p5version}</span>
+            p5.js:
+            <a href="https://github.com/processing/p5.js/releases">
+              v{p5version}
+            </a>
           </p>
         </div>
       </div>

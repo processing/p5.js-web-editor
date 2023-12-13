@@ -70,6 +70,9 @@
     span {
       color: getThemifyVariable('logo-color');
     }
+    a {
+      color: getThemifyVariable('logo-color');
+    }
     &:first-child {
       padding-top: #{30 /$base-font-size}rem;
     }
