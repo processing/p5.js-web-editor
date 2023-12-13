@@ -36,17 +36,18 @@
 .fundraiser__img-container {
     display: flex;
     justify-content: center;
-    margin: #{40 / $base-font-size}rem 0;
+    margin: #{40 / $base-font-size}rem 0 #{55 / $base-font-size}rem 0;
 }
 
 .fundraiser__logo-p5 {
-    margin:0 #{30 / $base-font-size}rem;
+    margin: 0 #{15 / $base-font-size}rem 0 #{30 / $base-font-size}rem;
     width:#{150 / $base-font-size}rem;
     height:#{150 / $base-font-size}rem;
 }
 
 .fundraiser__logo-PF {
-    margin:0 #{30 / $base-font-size}rem;
-    width:#{270 / $base-font-size}rem;
+    margin-left: #{20 / $base-font-size}rem;
+    padding-bottom: #{15 / $base-font-size}rem;
+    width:#{250 / $base-font-size}rem;
     height:#{150 / $base-font-size}rem;
 }
