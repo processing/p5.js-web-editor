@@ -236,6 +236,7 @@
     "ErrorARIA": "Error",
     "Save": "Save",
     "p5logoARIA": "p5.js Logo",
+    "PFlogoARIA": "Processing Foundation Logo",
     "DeleteConfirmation": "Are you sure you want to delete {{name}}?"
   },
   "IDEView": {

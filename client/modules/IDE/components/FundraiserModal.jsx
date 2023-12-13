@@ -19,7 +19,7 @@ export default function FundraiserModal() {
         <PFLogoIcon
           className="fundraiser__logo"
           role="img"
-          aria-label={t('Common.p5logoARIA')}
+          aria-label={t('Common.PFlogoARIA')}
           focusable="false"
         />
       </div>
