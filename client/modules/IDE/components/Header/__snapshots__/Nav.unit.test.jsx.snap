@@ -44,7 +44,7 @@ exports[`Nav renders dashboard version for desktop 1`] = `
         class="nav__fundraiser-btn"
         title="2023 Fundraiser Button"
       >
-        Celebrate a Decade of Code and Support p5.js!
+        Support p5.js and the Processing Foundation!
       </button>
     </nav>
   </header>
@@ -678,7 +678,7 @@ exports[`Nav renders editor version for desktop 1`] = `
         class="nav__fundraiser-btn"
         title="2023 Fundraiser Button"
       >
-        Celebrate a Decade of Code and Support p5.js!
+        Support p5.js and the Processing Foundation!
       </button>
     </nav>
   </header>
