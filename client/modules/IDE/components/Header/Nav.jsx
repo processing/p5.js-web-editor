@@ -88,6 +88,7 @@ const UserMenu = () => {
 };
 
 const FundraiserSection = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
 
   return (
@@ -98,7 +99,7 @@ const FundraiserSection = () => {
         aria-label="2023-fundraiser-button"
         title="2023 Fundraiser Button"
       >
-        Celebrate a Decade of Code and Support p5.js!
+        {t('Nav.Fundraiser')}
       </button>
     </>
   );
