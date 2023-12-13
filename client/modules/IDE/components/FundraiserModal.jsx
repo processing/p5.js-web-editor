@@ -11,13 +11,13 @@ export default function FundraiserModal() {
       <p className="fundraiser__description">{t('Fundraiser.Description')}</p>
       <div className="fundraiser__img-container">
         <LogoIcon
-          className="fundraiser__logo"
+          className="fundraiser__logo-p5"
           role="img"
           aria-label={t('Common.p5logoARIA')}
           focusable="false"
         />
         <PFLogoIcon
-          className="fundraiser__logo"
+          className="fundraiser__logo-PF"
           role="img"
           aria-label={t('Common.PFlogoARIA')}
           focusable="false"
