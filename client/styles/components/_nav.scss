@@ -27,7 +27,7 @@
   font-weight: bold;
   font-size: #{14 / $base-font-size}rem;
   @include themify() {
-    color: getThemifyVariable('fundraiser-button-color');
+    color: getThemifyVariable('fundraiser-button-nav-color');
   }
 }
 
