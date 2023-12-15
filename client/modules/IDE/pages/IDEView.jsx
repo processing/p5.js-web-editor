@@ -149,7 +149,7 @@ const IDEView = () => {
                   setSidebarSize(size);
                 }}
                 allowResize={ide.sidebarIsExpanded}
-                minSize={125}
+                minSize={150}
               >
                 <Sidebar />
                 <SplitPane
