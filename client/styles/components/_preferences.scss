@@ -123,7 +123,7 @@
   &:hover {
     @include themify() {
       border-bottom: #{4 / $base-font-size}rem solid
-        getThemifyVariable("button-background-hover-color");
+      #f9a7bf;
     }
   }
 }
