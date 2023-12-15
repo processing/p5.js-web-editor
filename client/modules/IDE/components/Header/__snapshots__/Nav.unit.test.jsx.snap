@@ -457,6 +457,13 @@ exports[`Nav renders dashboard version for mobile 1`] = `
                 About
               </a>
             </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                Support p5.js and the Processing Foundation!
+              </button>
+            </li>
           </ul>
         </div>
       </div>
@@ -1090,6 +1097,13 @@ exports[`Nav renders editor version for mobile 1`] = `
               >
                 About
               </a>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                Support p5.js and the Processing Foundation!
+              </button>
             </li>
           </ul>
         </div>
