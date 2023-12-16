@@ -1,0 +1,53 @@
+.fundraiser {
+    padding: #{20 / $base-font-size}rem;
+    margin-right: #{20 / $base-font-size}rem;
+    padding-bottom: #{40 / $base-font-size}rem;
+    width: #{500 / $base-font-size}rem;
+    text-align: center;
+    overflow-y: auto;
+}
+
+.fundraiser__CTA {
+    font-size: #{23 / $base-font-size}rem;
+    font-weight: bold;
+    margin-top: #{10 / $base-font-size}rem;
+    padding: #{20 / $base-font-size}rem;
+    border-radius: #{35 / $base-font-size}rem;
+
+    @include themify() {
+        color: getThemifyVariable('fundraiser-button-color');
+        background-color: getThemifyVariable('fundraiser-button-background-color');
+    }
+
+    &:hover,
+    &:focus {
+        @include themify() {
+            color: getThemifyVariable('fundraiser-button-color');
+            background-color: getThemifyVariable('fundraiser-button-hover-active-color');
+        }
+    }
+}
+
+.fundraiser__description {
+    margin: #{20 / $base-font-size}rem 0;
+    font-size: #{20 / $base-font-size}rem;
+}
+
+.fundraiser__img-container {
+    display: flex;
+    justify-content: center;
+    margin: #{40 / $base-font-size}rem 0 #{55 / $base-font-size}rem 0;
+}
+
+.fundraiser__logo-p5 {
+    margin: 0 #{15 / $base-font-size}rem 0 #{30 / $base-font-size}rem;
+    width:#{150 / $base-font-size}rem;
+    height:#{150 / $base-font-size}rem;
+}
+
+.fundraiser__logo-PF {
+    margin-left: #{20 / $base-font-size}rem;
+    padding-bottom: #{15 / $base-font-size}rem;
+    width:#{250 / $base-font-size}rem;
+    height:#{150 / $base-font-size}rem;
+}
