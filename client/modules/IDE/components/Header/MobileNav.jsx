@@ -94,6 +94,9 @@ export const Options = styled.div`
   ul.opened {
     transform: scale(1);
     opacity: 1;
+    max-width: 90vw;
+    max-height: 90vh;
+    overflow-y: auto;
   }
 
   > div {
