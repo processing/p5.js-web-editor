@@ -58,7 +58,32 @@ const getSortedCollections = createSelector(
 );
 
 export function getCollection(state, id) {
-  return find(getCollections(state), { id });
+  const collection = find(getCollections(state), { id });
+  const item = collection.items;
+  const field = getField(state);
+  const direction = getDirection(state);
+  let sorted = [];
+  console.log(field);
+  if (item) {
+    if (field === 'name') {
+      console.log(direction === DIRECTION.DESC);
+      if (direction === DIRECTION.DESC) {
+        sorted = orderBy(item, 'project.name', 'desc');
+      } else {
+        sorted = orderBy(item, 'project.name', 'asc');
+      }
+    } else if (field === 'createdAt') {
+      sorted = [...item].sort((a, b) => {
+        const result =
+          direction === DIRECTION.ASC
+            ? differenceInMilliseconds(new Date(a[field]), new Date(b[field]))
+            : differenceInMilliseconds(new Date(b[field]), new Date(a[field]));
+        return result;
+      });
+    }
+  }
+  collection.items = sorted;
+  return collection;
 }
 
 export default getSortedCollections;
