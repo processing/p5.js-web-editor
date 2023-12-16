@@ -40,5 +40,5 @@ router.delete(
   isAuthenticated,
   CollectionController.removeProjectFromCollection
 );
-
+router.get('/downloadCollection/:id', CollectionController.downloadCollection);
 export default router;
