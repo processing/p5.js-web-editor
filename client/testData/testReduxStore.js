@@ -35,6 +35,7 @@ const initialTestState = {
     shareModalProjectName: 'My Cute Sketch',
     shareModalProjectUsername: 'p5_user',
     keyboardShortcutVisible: false,
+    fundraiserContentVisible: false,
     unsavedChanges: false,
     infiniteLoop: false,
     previewIsRefreshing: false,

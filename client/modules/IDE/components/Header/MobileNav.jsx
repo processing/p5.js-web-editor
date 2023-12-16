@@ -23,7 +23,8 @@ import {
   newFile,
   newFolder,
   openPreferences,
-  showKeyboardShortcutModal
+  showKeyboardShortcutModal,
+  showFundraiserModal
 } from '../../actions/ide';
 import { logoutUser } from '../../../User/actions';
 import { useSketchActions, useWhatPage } from '../../hooks';
@@ -434,6 +435,9 @@ const MoreMenu = () => {
             {t('Nav.Help.Reference')}
           </NavMenuItem>
           <NavMenuItem href="/about">{t('Nav.Help.About')}</NavMenuItem>
+          <NavMenuItem onClick={() => dispatch(showFundraiserModal())}>
+            {t('Nav.Fundraiser')}
+          </NavMenuItem>
         </ParentMenuContext.Provider>
       </ul>
     </div>
