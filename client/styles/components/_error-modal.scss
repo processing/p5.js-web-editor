@@ -24,3 +24,19 @@
     font-size: #{16 / $base-font-size}rem;
   }
 }
+
+
+.error-modal__login-link {
+  background-color: #f04e7d;
+  padding: 5px 7px;
+  border-radius: 5px;
+  display: inline-block;
+}
+
+// Styles for SignUp link
+.error-modal__signup-link {
+  background-color: #f04e7d;
+  padding: 5px 7px;
+  border-radius: 5px;
+  display: inline-block;
+}
