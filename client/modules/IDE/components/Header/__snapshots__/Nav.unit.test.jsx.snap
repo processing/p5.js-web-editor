@@ -175,6 +175,9 @@ exports[`Nav renders dashboard version for mobile 1`] = `
   -ms-transform: scale(1);
   transform: scale(1);
   opacity: 1;
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
 .c3 > div {
@@ -816,6 +819,9 @@ exports[`Nav renders editor version for mobile 1`] = `
   -ms-transform: scale(1);
   transform: scale(1);
   opacity: 1;
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
 .c3 > div {
