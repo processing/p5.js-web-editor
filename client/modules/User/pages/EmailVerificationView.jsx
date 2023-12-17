@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withTranslation } from 'react-i18next';
@@ -10,6 +10,7 @@ import RootPage from '../../../components/RootPage';
 import Nav from '../../IDE/components/Header/Nav';
 
 const EmailVerificationView = (props) => {
+  const [verificationAttempted, setVerificationAttempted] = useState(false);
   const { emailVerificationTokenState, location, t } = props;
 
   const verificationTokenFromLocation = () => {
@@ -19,8 +20,9 @@ const EmailVerificationView = (props) => {
 
   useEffect(() => {
     const verificationToken = verificationTokenFromLocation();
-    if (verificationToken != null) {
+    if (verificationToken != null && !verificationAttempted) {
       props.verifyEmailConfirmation(verificationToken);
+      setVerificationAttempted(true);
     }
   }, [location, props]);
 
