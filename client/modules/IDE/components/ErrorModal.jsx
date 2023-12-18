@@ -7,22 +7,32 @@ const ErrorModal = ({ type, service, closeModal }) => {
   const { t } = useTranslation();
 
   function forceAuthentication() {
+    const linkStyle = {
+      backgroundColor: '#ED225D',
+      padding: '5px',
+      color: 'white',
+      fontWeight: 'bold'
+    };
+    const margin = {
+      marginTop: '5px'
+    };
     return (
       <p>
-        {t('ErrorModal.MessageLogin')}
-        <Link to="/login" onClick={closeModal}>
-          {' '}
-          {t('ErrorModal.Login')}
-        </Link>
-        {t('ErrorModal.LoginOr')}
-        <Link to="/signup" onClick={closeModal}>
-          {t('ErrorModal.SignUp')}
-        </Link>
+        <span>{t('ErrorModal.MessageLogin')}</span>
+        <p style={margin}>
+          <Link to="/login" onClick={closeModal} style={linkStyle}>
+            {' '}
+            {t('ErrorModal.Login')}
+          </Link>
+          {t('ErrorModal.LoginOr')}
+          <Link to="/signup" onClick={closeModal} style={linkStyle}>
+            {t('ErrorModal.SignUp')}
+          </Link>
+        </p>
         .
       </p>
     );
   }
-
   function oauthError() {
     const serviceLabels = {
       github: 'GitHub',
