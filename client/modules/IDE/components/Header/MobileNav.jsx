@@ -23,7 +23,8 @@ import {
   newFile,
   newFolder,
   openPreferences,
-  showKeyboardShortcutModal
+  showKeyboardShortcutModal,
+  showFundraiserModal
 } from '../../actions/ide';
 import { logoutUser } from '../../../User/actions';
 import { useSketchActions, useWhatPage } from '../../hooks';
@@ -93,6 +94,9 @@ export const Options = styled.div`
   ul.opened {
     transform: scale(1);
     opacity: 1;
+    max-width: 90vw;
+    max-height: 90vh;
+    overflow-y: auto;
   }
 
   > div {
@@ -434,6 +438,9 @@ const MoreMenu = () => {
             {t('Nav.Help.Reference')}
           </NavMenuItem>
           <NavMenuItem href="/about">{t('Nav.Help.About')}</NavMenuItem>
+          <NavMenuItem onClick={() => dispatch(showFundraiserModal())}>
+            {t('Nav.Fundraiser')}
+          </NavMenuItem>
         </ParentMenuContext.Provider>
       </ul>
     </div>
