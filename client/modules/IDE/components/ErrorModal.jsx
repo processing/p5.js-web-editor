@@ -10,12 +10,12 @@ const ErrorModal = ({ type, service, closeModal }) => {
     return (
       <p>
         {t('ErrorModal.MessageLogin')}
-        <Link to="/login" onClick={closeModal}>
+        <Link className="error-modal-button" to="/login" onClick={closeModal}>
           {' '}
           {t('ErrorModal.Login')}
         </Link>
         {t('ErrorModal.LoginOr')}
-        <Link to="/signup" onClick={closeModal}>
+        <Link className="error-modal-button" to="/signup" onClick={closeModal}>
           {t('ErrorModal.SignUp')}
         </Link>
         .
