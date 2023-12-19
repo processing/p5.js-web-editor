@@ -5,125 +5,62 @@ import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import DownFilledTriangleIcon from '../../../images/down-filled-triangle.svg';
+import MenuItem from '../../../components/Dropdown/MenuItem';
+import TableDropdown from '../../../components/Dropdown/TableDropdown';
 import { deleteAssetRequest, getAssets } from '../actions/assets';
 import { DIRECTION } from '../actions/sorting';
 import ConnectedTableBase from './ConnectedTableBase';
 
-class AssetListRowBase extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isFocused: false,
-      optionsOpen: false
-    };
-  }
+const AssetMenu = ({ item: asset }) => {
+  const { t } = useTranslation();
 
-  onFocusComponent = () => {
-    this.setState({ isFocused: true });
-  };
+  const dispatch = useDispatch();
 
-  onBlurComponent = () => {
-    this.setState({ isFocused: false });
-    setTimeout(() => {
-      if (!this.state.isFocused) {
-        this.closeOptions();
-      }
-    }, 200);
-  };
-
-  openOptions = () => {
-    this.setState({
-      optionsOpen: true
-    });
-  };
-
-  closeOptions = () => {
-    this.setState({
-      optionsOpen: false
-    });
-  };
-
-  toggleOptions = () => {
-    if (this.state.optionsOpen) {
-      this.closeOptions();
-    } else {
-      this.openOptions();
+  const handleAssetDelete = () => {
+    const { key, name } = asset;
+    if (window.confirm(t('Common.DeleteConfirmation', { name }))) {
+      dispatch(deleteAssetRequest(key));
     }
   };
 
-  handleDropdownOpen = () => {
-    this.closeOptions();
-    this.openOptions();
-  };
+  return (
+    <TableDropdown aria-label={t('AssetList.ToggleOpenCloseARIA')}>
+      <MenuItem onClick={handleAssetDelete}>{t('AssetList.Delete')}</MenuItem>
+      <MenuItem href={asset.url} target="_blank">
+        {t('AssetList.OpenNewTab')}
+      </MenuItem>
+    </TableDropdown>
+  );
+};
 
-  handleAssetDelete = () => {
-    const { key, name } = this.props.asset;
-    this.closeOptions();
-    if (window.confirm(this.props.t('Common.DeleteConfirmation', { name }))) {
-      this.props.deleteAssetRequest(key);
-    }
-  };
+AssetMenu.propTypes = {
+  item: PropTypes.shape({
+    key: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired
+  }).isRequired
+};
 
-  render() {
-    const { asset, username, t } = this.props;
-    const { optionsOpen } = this.state;
-    return (
-      <tr className="asset-table__row" key={asset.key}>
-        <th scope="row">
-          <Link to={asset.url} target="_blank">
-            {asset.name}
-          </Link>
-        </th>
-        <td>{prettyBytes(asset.size)}</td>
-        <td>
-          {asset.sketchId && (
-            <Link to={`/${username}/sketches/${asset.sketchId}`}>
-              {asset.sketchName}
-            </Link>
-          )}
-        </td>
-        <td className="asset-table__dropdown-column">
-          <button
-            className="asset-table__dropdown-button"
-            onClick={this.toggleOptions}
-            onBlur={this.onBlurComponent}
-            onFocus={this.onFocusComponent}
-            aria-label={t('AssetList.ToggleOpenCloseARIA')}
-          >
-            <DownFilledTriangleIcon focusable="false" aria-hidden="true" />
-          </button>
-          {optionsOpen && (
-            <ul className="asset-table__action-dialogue">
-              <li>
-                <button
-                  className="asset-table__action-option"
-                  onClick={this.handleAssetDelete}
-                  onBlur={this.onBlurComponent}
-                  onFocus={this.onFocusComponent}
-                >
-                  {t('AssetList.Delete')}
-                </button>
-              </li>
-              <li>
-                <a
-                  href={asset.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  onBlur={this.onBlurComponent}
-                  onFocus={this.onFocusComponent}
-                  className="asset-table__action-option"
-                >
-                  {t('AssetList.OpenNewTab')}
-                </a>
-              </li>
-            </ul>
-          )}
-        </td>
-      </tr>
-    );
-  }
-}
+const AssetListRowBase = ({ asset, username }) => (
+  <tr className="asset-table__row" key={asset.key}>
+    <th scope="row">
+      <a href={asset.url} target="_blank" rel="noopener noreferrer">
+        {asset.name}
+      </a>
+    </th>
+    <td>{prettyBytes(asset.size)}</td>
+    <td>
+      {asset.sketchId && (
+        <Link to={`/${username}/sketches/${asset.sketchId}`}>
+          {asset.sketchName}
+        </Link>
+      )}
+    </td>
+    <td className="asset-table__dropdown-column">
+      <AssetMenu item={asset} />
+    </td>
+  </tr>
+);
 
 AssetListRowBase.propTypes = {
   asset: PropTypes.shape({
@@ -134,9 +71,7 @@ AssetListRowBase.propTypes = {
     name: PropTypes.string.isRequired,
     size: PropTypes.number.isRequired
   }).isRequired,
-  deleteAssetRequest: PropTypes.func.isRequired,
-  username: PropTypes.string.isRequired,
-  t: PropTypes.func.isRequired
+  username: PropTypes.string.isRequired
 };
 
 function mapStateToPropsAssetListRow(state) {
@@ -145,9 +80,7 @@ function mapStateToPropsAssetListRow(state) {
   };
 }
 
-const AssetListRow = connect(mapStateToPropsAssetListRow, {
-  deleteAssetRequest
-})(AssetListRowBase);
+const AssetListRow = connect(mapStateToPropsAssetListRow)(AssetListRowBase);
 
 const AssetList = () => {
   const { t } = useTranslation();
@@ -200,9 +133,7 @@ const AssetList = () => {
           direction: DIRECTION.ASC
         }}
         emptyMessage={t('AssetList.NoUploadedAssets')}
-        renderRow={(asset) => (
-          <AssetListRow asset={asset} key={asset.key} t={t} />
-        )}
+        renderRow={(asset) => <AssetListRow asset={asset} key={asset.key} />}
       />
     </article>
   );

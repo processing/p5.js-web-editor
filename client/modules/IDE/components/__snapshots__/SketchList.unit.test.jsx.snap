@@ -2,7 +2,28 @@
 
 exports[`<Sketchlist /> snapshot testing 1`] = `
 <DocumentFragment>
-  .c1 {
+  .c3 > button {
+  width: 2.0833333333333335rem;
+  height: 2.0833333333333335rem;
+  padding: 0;
+}
+
+.c3 > button svg {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.c3 > button polygon,
+.c3 > button path {
+  fill: #666;
+}
+
+.c3 ul {
+  top: 63%;
+  right: calc(100% - 26px);
+}
+
+.c1 {
   border-bottom: 2px dashed transparent;
   padding: 0.25rem 0;
   color: #666;
@@ -86,7 +107,7 @@ exports[`<Sketchlist /> snapshot testing 1`] = `
               </span>
               <test-file-stub
                 aria-label="Descending"
-                classname="sc-dlnjwi iorFNw"
+                classname="sc-kEqXSa ggxouL"
                 focusable="false"
                 role="img"
               />
@@ -135,15 +156,19 @@ exports[`<Sketchlist /> snapshot testing 1`] = `
           <td
             class="sketch-list__dropdown-column"
           >
-            <button
-              aria-label="Toggle Open/Close Sketch Options"
-              class="sketch-list__dropdown-button"
+            <div
+              class="c3"
             >
-              <test-file-stub
-                aria-hidden="true"
-                focusable="false"
-              />
-            </button>
+              <button
+                aria-label="Toggle Open/Close Sketch Options"
+                tabindex="0"
+              >
+                <test-file-stub
+                  aria-hidden="true"
+                  focusable="false"
+                />
+              </button>
+            </div>
           </td>
         </tr>
         <tr
@@ -167,15 +192,19 @@ exports[`<Sketchlist /> snapshot testing 1`] = `
           <td
             class="sketch-list__dropdown-column"
           >
-            <button
-              aria-label="Toggle Open/Close Sketch Options"
-              class="sketch-list__dropdown-button"
+            <div
+              class="c3"
             >
-              <test-file-stub
-                aria-hidden="true"
-                focusable="false"
-              />
-            </button>
+              <button
+                aria-label="Toggle Open/Close Sketch Options"
+                tabindex="0"
+              >
+                <test-file-stub
+                  aria-hidden="true"
+                  focusable="false"
+                />
+              </button>
+            </div>
           </td>
         </tr>
       </tbody>

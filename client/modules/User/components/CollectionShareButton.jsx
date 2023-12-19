@@ -1,37 +1,20 @@
 import PropTypes from 'prop-types';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import Button from '../../../common/Button';
 import { DropdownArrowIcon } from '../../../common/icons';
+import useModalClose from '../../../common/useModalClose';
 import CopyableInput from '../../IDE/components/CopyableInput';
 
 const ShareURL = ({ value }) => {
   const [showURL, setShowURL] = useState(false);
-  const node = useRef();
   const { t } = useTranslation();
-
-  const handleClickOutside = (e) => {
-    if (node.current?.contains(e.target)) {
-      return;
-    }
-    setShowURL(false);
-  };
-
-  useEffect(() => {
-    if (showURL) {
-      document.addEventListener('mousedown', handleClickOutside);
-    } else {
-      document.removeEventListener('mousedown', handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [showURL]);
+  const close = useCallback(() => setShowURL(false), [setShowURL]);
+  const ref = useModalClose(close);
 
   return (
-    <div className="collection-share" ref={node}>
+    <div className="collection-share" ref={ref}>
       <Button
         onClick={() => setShowURL(!showURL)}
         iconAfter={<DropdownArrowIcon />}
