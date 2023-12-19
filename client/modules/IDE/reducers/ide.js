@@ -15,6 +15,7 @@ const initialState = {
   shareModalProjectName: 'My Cute Sketch',
   shareModalProjectUsername: 'p5_user',
   keyboardShortcutVisible: false,
+  fundraiserContentVisible: false,
   unsavedChanges: false,
   infiniteLoop: false,
   previewIsRefreshing: false,
@@ -85,6 +86,10 @@ const ide = (state = initialState, action) => {
       return Object.assign({}, state, { keyboardShortcutVisible: true });
     case ActionTypes.CLOSE_KEYBOARD_SHORTCUT_MODAL:
       return Object.assign({}, state, { keyboardShortcutVisible: false });
+    case ActionTypes.SHOW_FUNDRAISER_MODAL:
+      return Object.assign({}, state, { fundraiserContentVisible: true });
+    case ActionTypes.CLOSE_FUNDRAISER_MODAL:
+      return Object.assign({}, state, { fundraiserContentVisible: false });
     case ActionTypes.SET_UNSAVED_CHANGES:
       return Object.assign({}, state, { unsavedChanges: action.value });
     case ActionTypes.DETECT_INFINITE_LOOPS:
