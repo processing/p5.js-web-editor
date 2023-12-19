@@ -111,12 +111,14 @@ const DashboardMenu = () => {
   return (
     <ul className="nav__items-left">
       <li className="nav__item-logo">
-        <LogoIcon
-          role="img"
-          aria-label={t('Common.p5logoARIA')}
-          focusable="false"
-          className="svg__logo"
-        />
+        <a href="https://p5js.org">
+          <LogoIcon
+            role="img"
+            aria-label={t('Common.p5logoARIA')}
+            focusable="false"
+            className="svg__logo"
+          />
+        </a>
       </li>
       <li className="nav__item nav__item--no-icon">
         <Link to={editorLink} className="nav__back-link">
@@ -159,12 +161,14 @@ const ProjectMenu = () => {
   return (
     <ul className="nav__items-left">
       <li className="nav__item-logo">
-        <LogoIcon
-          role="img"
-          aria-label={t('Common.p5logoARIA')}
-          focusable="false"
-          className="svg__logo"
-        />
+        <a href="https://p5js.org">
+          <LogoIcon
+            role="img"
+            aria-label={t('Common.p5logoARIA')}
+            focusable="false"
+            className="svg__logo"
+          />
+        </a>
       </li>
       <NavDropdownMenu id="file" title={t('Nav.File.Title')}>
         <NavMenuItem onClick={newSketch}>{t('Nav.File.New')}</NavMenuItem>
