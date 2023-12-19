@@ -111,12 +111,14 @@ const DashboardMenu = () => {
   return (
     <ul className="nav__items-left">
       <li className="nav__item-logo">
+        <a href ="https://p5js.org" >
         <LogoIcon
           role="img"
           aria-label={t('Common.p5logoARIA')}
           focusable="false"
           className="svg__logo"
         />
+          </a>
       </li>
       <li className="nav__item nav__item--no-icon">
         <Link to={editorLink} className="nav__back-link">
