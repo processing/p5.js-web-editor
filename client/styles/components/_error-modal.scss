@@ -24,3 +24,24 @@
     font-size: #{16 / $base-font-size}rem;
   }
 }
+.error-modal-button{
+  @include themify() {
+  	color: getThemifyVariable("logo-background-color");
+		background-color: getThemifyVariable("logo-color");
+		border-color: getThemifyVariable("input-border-color");
+	}
+  padding: #{2 / $base-font-size}rem;
+  padding-left: #{20 / $base-font-size}rem;
+  padding-right: #{30 / $base-font-size}rem;
+  border-radius:#{5 / $base-font-size}rem; 
+ transition: 0.5s;
+}
+.error-modal-button:hover{
+  @include themify() {
+  	color: getThemifyVariable("logo-color");
+		background-color: getThemifyVariable("logo-background-color");
+		border-color: getThemifyVariable("input-selection-text-color");
+	}
+  border: 1.5px solid black;
+  box-shadow: rgba(26, 17, 17, 0.418) 0px 7px 29px 0px;
+}
