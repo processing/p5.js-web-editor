@@ -114,8 +114,6 @@ class Collection extends React.Component {
   constructor(props) {
     super(props);
     this.props.getCollections(this.props.username);
-    this.showAddSketches = this.showAddSketches.bind(this);
-    this.hideAddSketches = this.hideAddSketches.bind(this);
   }
 
   getTitle() {
