@@ -586,7 +586,7 @@ exports[`Nav renders editor version for desktop 1`] = `
                 <span
                   class="nav__keyboard-shortcut"
                 >
-                  ^+⇧+A
+                  ⎇+N
                 </span>
               </button>
             </li>
