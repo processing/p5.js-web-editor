@@ -173,7 +173,9 @@ const IDEView = () => {
                     primary="second"
                     size={ide.consoleIsExpanded ? consoleSize : 29}
                     minSize={29}
-                    onChange={(size) => setConsoleSize(size)}
+                    onChange={(size) => {
+                      setConsoleSize(size);
+                    }}
                     allowResize={ide.consoleIsExpanded}
                     className="editor-preview-subpanel"
                   >
@@ -215,11 +217,18 @@ const IDEView = () => {
                   split="horizontal"
                   primary="second"
                   minSize={200}
+                  onChange={() => {
+                    setIsOverlayVisible(true);
+                  }}
+                  onDragFinished={() => {
+                    setIsOverlayVisible(false);
+                  }}
                 >
                   <PreviewFrame
                     fullView
                     hide={!ide.isPlaying}
                     cmController={cmRef.current}
+                    isOverlayVisible={isOverlayVisible}
                   />
                   <Console />
                 </SplitPane>
