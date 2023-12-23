@@ -9,7 +9,7 @@
 .about__content {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: space-between;
   flex-wrap: wrap;
   width: #{720 / $base-font-size}rem;
 }
