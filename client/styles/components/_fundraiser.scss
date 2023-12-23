@@ -5,10 +5,14 @@
     width: #{500 / $base-font-size}rem;
     text-align: center;
     overflow-y: auto;
+
+    @media (max-width: 450px) {
+        width: 100% !important;
+    }
 }
 
 .fundraiser__CTA {
-    font-size: #{23 / $base-font-size}rem;
+    font-size: 1.62rem;
     font-weight: bold;
     margin-top: #{10 / $base-font-size}rem;
     padding: #{20 / $base-font-size}rem;
