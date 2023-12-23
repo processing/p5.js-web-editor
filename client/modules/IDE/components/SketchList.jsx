@@ -24,6 +24,7 @@ import getConfig from '../../../utils/getConfig';
 
 import ArrowUpIcon from '../../../images/sort-arrow-up.svg';
 import ArrowDownIcon from '../../../images/sort-arrow-down.svg';
+import ExamplePreview from '../../User/components/ExamplePreview';
 
 const ROOT_URL = getConfig('API_URL');
 
@@ -35,7 +36,8 @@ class SketchListRowBase extends React.Component {
     super(props);
     this.state = {
       renameOpen: false,
-      renameValue: props.sketch.name
+      renameValue: props.sketch.name,
+      preview: false
     };
     this.renameInput = React.createRef();
   }
@@ -144,6 +146,22 @@ class SketchListRowBase extends React.Component {
           >
             {this.props.t('SketchList.DropdownAddToCollection')}
           </MenuItem>
+          <MenuItem
+            hideIf={!this.props.user.authenticated}
+            onClick={() => {
+              this.setState({
+                preview: !this.state.preview
+              });
+              console.log(
+                `/${this.props.username}/sketches/${slugify(
+                  this.props.sketch.name,
+                  '_'
+                )}`
+              );
+            }}
+          >
+            Preview
+          </MenuItem>
 
           {/*
           <MenuItem onClick={this.handleSketchShare}>
@@ -194,6 +212,16 @@ class SketchListRowBase extends React.Component {
           <td>{formatDateCell(sketch.updatedAt, mobile)}</td>
           {this.renderDropdown()}
         </tr>
+        {this.state.preview ? (
+          <ExamplePreview
+            url={`/editor/${this.props.username}/projects/${slugify(
+              this.props.sketch.name,
+              '_'
+            )}`}
+          />
+        ) : (
+          <div>loading</div>
+        )}
       </React.Fragment>
     );
   }
