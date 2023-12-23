@@ -45,7 +45,11 @@ function AccountForm() {
   }
 
   function onSubmit(formProps) {
-    return dispatch(updateSettings(formProps));
+    const changesMade = Object.keys(formProps).some(
+      (key) => formProps[key] !== user[key]
+    );
+    console.log(changesMade);
+    return dispatch(updateSettings(formProps, changesMade));
   }
 
   return (

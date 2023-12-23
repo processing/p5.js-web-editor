@@ -273,14 +273,15 @@ export function submitSettings(formValues) {
   return apiClient.put('/account', formValues);
 }
 
-export function updateSettings(formValues) {
+export function updateSettings(formValues, ischanges) {
   return (dispatch) =>
     new Promise((resolve) =>
       submitSettings(formValues)
         .then((response) => {
           dispatch(updateSettingsSuccess(response.data));
           dispatch(showToast(5500));
-          dispatch(setToastText('Toast.SettingsSaved'));
+          if (ischanges) dispatch(setToastText('Toast.SettingsSaved'));
+          else dispatch(setToastText('Toast.SettingsNotSaved'));
           resolve();
         })
         .catch((error) => resolve({ error }))

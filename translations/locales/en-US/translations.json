@@ -107,7 +107,8 @@
     "SketchFailedSave": "Failed to save sketch.",
     "AutosaveEnabled": "Autosave enabled.",
     "LangChange": "Language changed",
-    "SettingsSaved": "Settings saved."
+    "SettingsSaved": "Settings saved.",
+    "SettingsNotSaved":"Please make changes before attempting to save."
   },
   "Toolbar": {
     "Preview": "Preview",
