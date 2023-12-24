@@ -31,7 +31,7 @@ const random = (done) => {
 
 export function findUserByUsername(username, cb) {
   User.findByUsername(username, (err, user) => {
-    cb(user);
+    cb(err,user);
   });
 }
 
