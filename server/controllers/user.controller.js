@@ -39,8 +39,6 @@ export async function findUserByUsername(username) {
   }
 }
 
-
-
 export function createUser(req, res, next) {
   const { username, email } = req.body;
   const { password } = req.body;
