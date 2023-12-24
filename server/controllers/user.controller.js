@@ -34,7 +34,6 @@ export async function findUserByUsername(username) {
     const user = await User.findByUsername(username);
     return user;
   } catch (error) {
-    // Handling the error appropriately, e.g., log the error, throw a custom error, etc.
     console.error('Error finding user by username:', error.message);
     throw new Error('Failed to find user by username');
   }
