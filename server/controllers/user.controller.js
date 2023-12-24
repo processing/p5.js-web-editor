@@ -29,11 +29,18 @@ const random = (done) => {
   });
 };
 
-export function findUserByUsername(username, cb) {
-  User.findByUsername(username, (err, user) => {
-    cb(user);
-  });
+export function findUserByUsername(username) {
+  return new Promise((resolve , reject) => {
+    User.findByUsername{ username , (err , user) => {
+      if (err){
+        return reject(err)
+      }
+      resolve(user);
+    });
+    })
 }
+      
+    
 
 export function createUser(req, res, next) {
   const { username, email } = req.body;
