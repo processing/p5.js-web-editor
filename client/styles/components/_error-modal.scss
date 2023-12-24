@@ -23,4 +23,13 @@
   & p {
     font-size: #{16 / $base-font-size}rem;
   }
+  & a:hover{
+
+    @include themify() {
+    
+    color: getThemifyVariable('nav-hover-color');
+    
+    }
+    
+    }
 }
