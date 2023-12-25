@@ -29,16 +29,6 @@ const random = (done) => {
   });
 };
 
-export async function findUserByUsername(username) {
-  try {
-    const user = await User.findByUsername(username);
-    return user;
-  } catch (error) {
-    console.error('Error finding user by username:', error.message);
-    throw new Error('Failed to find user by username');
-  }
-}
-
 export function createUser(req, res, next) {
   const { username, email } = req.body;
   const { password } = req.body;
