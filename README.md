@@ -38,7 +38,7 @@ Issues and Pull Requests categorized under the PATCH or MINOR Release Milestones
 
 We will aim to deploy on a 1-2 month basis. Here are some dates we’re working towards: 
 
-2.11.0 MINOR Release: By December 22, 2023
+2.11.0 MINOR Release: By January 10, 2023
 
 [You can read more about Semantic Versioning and the differences between a MINOR and PATCH release](https://semver.org/). 
 

@@ -23,6 +23,15 @@
   align-items: center;
 }
 
+.nav__fundraiser-btn {
+  font-weight: bold;
+  font-size: #{14 / $base-font-size}rem;
+  @include themify() {
+    color: getThemifyVariable('fundraiser-button-nav-color');
+  }
+}
+
+
 .preview-nav__editor-svg {
   @include icon();
 }
