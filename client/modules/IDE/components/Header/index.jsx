@@ -18,6 +18,7 @@ const Header = (props) => {
               <Toolbar
                 syncFileContent={props.syncFileContent}
                 key={project.id}
+                onClick={props.onClick}
               />
             );
           return null;
@@ -28,7 +29,8 @@ const Header = (props) => {
 };
 
 Header.propTypes = {
-  syncFileContent: PropTypes.func.isRequired
+  syncFileContent: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired
 };
 
 export default Header;

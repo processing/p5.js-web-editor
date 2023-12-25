@@ -82,6 +82,15 @@ const IDEView = () => {
   const [consoleSize, setConsoleSize] = useState(150);
   const [sidebarSize, setSidebarSize] = useState(160);
   const [isOverlayVisible, setIsOverlayVisible] = useState(false);
+  const [enableBackground, setEnableBackground] = useState(false);
+
+  const handleTempState = (sketchState) => {
+    if (sketchState === 'stop') {
+      setEnableBackground(false);
+    } else if (sketchState === 'play') {
+      setEnableBackground(true);
+    }
+  };
 
   const cmRef = useRef({});
 
@@ -136,7 +145,7 @@ const IDEView = () => {
       <WarnIfUnsavedChanges />
       <Toast />
       <CmControllerContext.Provider value={cmRef}>
-        <Header syncFileContent={syncFileContent} />
+        <Header syncFileContent={syncFileContent} onClick={handleTempState} />
       </CmControllerContext.Provider>
       <MediaQuery minWidth={770}>
         {(matches) =>
@@ -190,7 +199,12 @@ const IDEView = () => {
                         {t('Toolbar.Preview')}
                       </h2>
                     </header>
-                    <div className="preview-frame__content">
+                    <div
+                      className="preview-frame__content"
+                      style={{
+                        backgroundColor: enableBackground ? 'white' : ''
+                      }}
+                    >
                       <div
                         className="preview-frame-overlay"
                         style={{ display: isOverlayVisible ? 'block' : 'none' }}

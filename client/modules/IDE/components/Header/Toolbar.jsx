@@ -64,6 +64,7 @@ const Toolbar = (props) => {
         onClick={() => {
           props.syncFileContent();
           dispatch(startSketch());
+          props.onClick('play');
         }}
         aria-label={t('Toolbar.PlayOnlyVisualSketchARIA')}
         title={t('Toolbar.PlaySketchARIA')}
@@ -73,7 +74,10 @@ const Toolbar = (props) => {
       </button>
       <button
         className={stopButtonClass}
-        onClick={() => dispatch(stopSketch())}
+        onClick={() => {
+          dispatch(stopSketch());
+          props.onClick('stop');
+        }}
         aria-label={t('Toolbar.StopSketchARIA')}
         title={t('Toolbar.StopSketchARIA')}
       >
@@ -125,7 +129,8 @@ const Toolbar = (props) => {
 };
 
 Toolbar.propTypes = {
-  syncFileContent: PropTypes.func.isRequired
+  syncFileContent: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired
 };
 
 export default Toolbar;
