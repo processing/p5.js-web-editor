@@ -249,9 +249,7 @@ export function updatePassword(formValues, token) {
       apiClient
         .post(`/reset-password/${token}`, formValues)
         .then((response) => {
-          console.log(response.data);
           dispatch(authenticateUser(response.data));
-          console.log('ok');
           browserHistory.push('/');
           resolve();
         })
@@ -274,18 +272,19 @@ export function updateSettingsSuccess(user) {
 export function submitSettings(formValues) {
   return apiClient.put('/account', formValues);
 }
-const text = [{ email: 'random', password: 'random' }];
+// eslint-disable-next-line camelcase
+const toast_text = [{ email: 'random', password: 'random' }];
 
 export function updateSettings(formValues) {
   return (dispatch) =>
     new Promise((resolve) =>
       submitSettings(formValues)
         .then((response) => {
-          text.push(response.data);
+          toast_text.push(response.data);
           dispatch(updateSettingsSuccess(response.data));
           // eslint-disable-next-line eqeqeq
           // eslint-disable-next-line eqeqeq, no-undef
-          if (_.isEqual(text[text.length - 2], response.data)) {
+          if (_.isEqual(toast_text[toast_text.length - 2], response.data)) {
             dispatch(setToastText('Please update your account detail'));
           } else {
             dispatch(setToastText('Settings saved'));
