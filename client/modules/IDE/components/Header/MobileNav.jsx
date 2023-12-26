@@ -51,7 +51,7 @@ const Nav = styled(NavBar)`
 
 const LogoContainer = styled.div`
   width: ${remSize(28)};
-  aspect-ratio: 1;
+  height: ${remSize(28)};
   margin-left: ${remSize(14)};
   display: flex;
   justify-content: center;
@@ -233,9 +233,11 @@ const MobileNav = () => {
   const Logo = AsteriskIcon;
   return (
     <Nav>
-      <LogoContainer>
-        <Logo />
-      </LogoContainer>
+      <Link to="/">
+        <LogoContainer>
+          <Logo />
+        </LogoContainer>
+      </Link>
       <Title>
         <h1>{title === project.name ? <ProjectName /> : title}</h1>
         {project?.owner && title === project.name && (
