@@ -9,8 +9,12 @@
 .about__content {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: space-between;
   flex-wrap: wrap;
+  padding-top: #{17 / $base-font-size}rem;
+  padding-right: #{78 / $base-font-size}rem;
+  padding-bottom: #{20 / $base-font-size}rem;
+  padding-left: #{20 / $base-font-size}rem;
   width: #{720 / $base-font-size}rem;
 }
 
@@ -39,6 +43,7 @@
 
 .about__content-column-title {
   font-size: #{21 / $base-font-size}rem;
+  padding-left: #{17 / $base-font-size}rem;
 }
 
 .about__content-column-asterisk {
@@ -63,9 +68,6 @@
     padding-top: #{8 / $base-font-size}rem;
     font-size: #{16 / $base-font-size}rem;
     span {
-      color: getThemifyVariable('logo-color');
-    }
-    a {
       color: getThemifyVariable('logo-color');
     }
     &:first-child {
