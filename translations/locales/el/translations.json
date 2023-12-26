@@ -1,0 +1,621 @@
+{
+  "Nav": {
+    "File": {
+      "Title": "Αρχείο",
+      "New": "Νέο",
+      "Share": "Κοινοποίηση",
+      "Duplicate": "Αντιγραφή",
+      "Open": "Άνοιγμα",
+      "Download": "Λήψη",
+      "AddToCollection": "Προσθήκη στη Συλλογή",
+      "Examples": "Παραδείγματα"
+    },
+    "Edit": {
+      "Title": "Επεξεργασία",
+      "TidyCode": "Τακτοποίηση Κώδικα",
+      "Find": "Εύρεση",
+      "Replace": "Αντικατάσταση"
+    },
+    "Sketch": {
+      "Title": "Σκιτσόματα",
+      "AddFile": "Προσθήκη Αρχείου",
+      "AddFolder": "Προσθήκη Φακέλου",
+      "Run": "Εκτέλεση",
+      "Stop": "Διακοπή"
+    },
+    "Help": {
+      "Title": "Βοήθεια",
+      "KeyboardShortcuts": "Συντομεύσεις Πληκτρολογίου",
+      "Reference": "Αναφορά",
+      "About": "Σχετικά"
+    },
+    "Lang": "Γλώσσα",
+    "BackEditor": "Πίσω στον Επεξεργαστή",
+    "WarningUnsavedChanges": "Είστε σίγουρος/η ότι θέλετε να φύγετε από αυτήν τη σελίδα; Έχετε ανεπιβεβαίωτες αλλαγές.",
+    "Login": "Σύνδεση",
+    "LoginOr": "ή",
+    "SignUp": "Εγγραφή",
+    "Auth": {
+      "Welcome": "Καλώς ήρθατε",
+      "Hello": "Γεια σας",
+      "MyAccount": "Ο λογαριασμός μου",
+      "My": "Ο/Η",
+      "MySketches": "Τα Σκίτσα μου",
+      "MyCollections": "Οι Συλλογές μου",
+      "Asset": "Περιουσιακό Στοιχείο",
+      "MyAssets": "Τα Περιουσιακά μου Στοιχεία",
+      "LogOut": "Αποσύνδεση"
+    }
+  },
+  "CodemirrorFindAndReplace": {
+    "ToggleReplace": "Εναλλαγή Αντικατάστασης",
+    "Find": "Εύρεση",
+    "FindPlaceholder": "Εύρεση σε αρχεία",
+    "Replace": "Αντικατάσταση",
+    "ReplaceAll": "Αντικατάσταση Όλων",
+    "ReplacePlaceholder": "Κείμενο για αντικατάσταση",
+    "Regex": "Κανονική έκφραση",
+    "CaseSensitive": "Ευαίσθητο στην πεζή/κεφαλαία",
+    "WholeWords": "Ολόκληρες λέξεις",
+    "Previous": "Προηγούμενο",
+    "Next": "Επόμενο",
+    "NoResults": "Δεν υπάρχουν αποτελέσματα",
+    "Close": "Κλείσιμο"
+  },
+  "LoginForm": {
+    "UsernameOrEmail": "Όνομα χρήστη ή Email",
+    "UsernameOrEmailARIA": "Όνομα χρήστη ή Email",
+    "Password": "Κωδικός",
+    "PasswordARIA": "Κωδικός",
+    "Submit": "Σύνδεση"
+  },
+  "LoginView": {
+    "Title": "Επεξεργαστής Ιστοτόπου p5.js | Σύνδεση",
+    "Login": "Σύνδεση",
+    "LoginOr": "ή",
+    "SignUp": "Εγγραφή",
+    "Email": "email",
+    "Username": "όνομα χρήστη",
+    "DontHaveAccount": "Δεν έχετε λογαριασμό; ",
+    "ForgotPassword": "Ξεχάσατε τον κωδικό σας; ",
+    "ResetPassword": "Επαναφορά κωδικού"
+  },
+  "SocialAuthButton": {
+    "Connect": "Σύνδεση {{serviceauth}} λογαριασμού",
+    "Unlink": "Αποσύνδεση {{serviceauth}} λογαριασμού",
+    "Login": "Σύνδεση με τον λογαριασμό {{serviceauth}}",
+    "LogoARIA": "{{serviceauth}} λογότυπο"
+  },
+  "About": {
+    "Title": "Σχετικά",
+    "TitleHelmet": "p5.js Επεξεργαστής Ιστού | Σχετικά",
+    "Contribute": "Συνεισφορά",
+    "NewP5": "Νέος στο p5.js;",
+    "Report": "Αναφορά σφάλματος",
+    "Learn": "Μάθηση",
+    "Resources": "Πόροι",
+    "Libraries": "Βιβλιοθήκες",
+    "Forum": "Φόρουμ",
+    "Examples": "Παραδείγματα",
+    "PrivacyPolicy": "Πολιτική Απορρήτου",
+    "TermsOfUse": "Όροι Χρήσης",
+    "CodeOfConduct": "Κανόνες Συμπεριφοράς"
+  },
+  "Toast": {
+    "OpenedNewSketch": "Άνοιξε νέο σχέδιο.",
+    "SketchSaved": "Το σχέδιο αποθηκεύτηκε.",
+    "SketchFailedSave": "Αποτυχία αποθήκευσης σχεδίου.",
+    "AutosaveEnabled": "Ενεργοποιήθηκε αυτόματη αποθήκευση.",
+    "LangChange": "Αλλαγή γλώσσας",
+    "SettingsSaved": "Οι ρυθμίσεις αποθηκεύτηκαν."
+  },
+  "Toolbar": {
+    "Preview": "Προεπισκόπηση",
+    "Auto-refresh": "Αυτόματη ανανέωση",
+    "OpenPreferencesARIA": "Άνοιγμα Προτιμήσεων",
+    "PlaySketchARIA": "Αναπαραγωγή σχεδίου",
+    "PlayOnlyVisualSketchARIA": "Αναπαραγωγή μόνο οπτικού σχεδίου",
+    "StopSketchARIA": "Διακοπή σχεδίου",
+    "EditSketchARIA": "Επεξεργασία ονόματος σχεδίου",
+    "NewSketchNameARIA": "Νέο όνομα σχεδίου",
+    "By": " από "
+  },
+  "Console": {
+    "Title": "Κονσόλα",
+    "Clear": "Εκκαθάριση",
+    "ClearARIA": "Εκκαθάριση κονσόλας",
+    "Close": "Κλείσιμο",
+    "CloseARIA": "Κλείσιμο κονσόλας",
+    "Open": "Άνοιγμα",
+    "OpenARIA": "Άνοιγμα κονσόλας"
+  },
+  "Preferences": {
+    "Settings": "Ρυθμίσεις",
+    "GeneralSettings": "Γενικές ρυθμίσεις",
+    "Accessibility": "Προσβασιμότητα",
+    "Theme": "Θέμα",
+    "LightTheme": "Φωτεινό",
+    "LightThemeARIA": "φωτεινό θέμα ενεργοποιημένο",
+    "DarkTheme": "Σκούρο",
+    "DarkThemeARIA": "σκούρο θέμα ενεργοποιημένο",
+    "HighContrastTheme": "Θέμα υψηλού kontrast",
+    "HighContrastThemeARIA": "θέμα υψηλού kontrast ενεργοποιημένο",
+    "TextSize": "Μέγεθος κειμένου",
+    "DecreaseFont": "Μείωση",
+    "DecreaseFontARIA": "μείωση μεγέθους γραμματοσειράς",
+    "IncreaseFont": "Αύξηση",
+    "IncreaseFontARIA": "αύξηση μεγέθους γραμματοσειράς",
+    "FontSize": "Μέγεθος γραμματοσειράς",
+    "SetFontSize": "Ορισμός μεγέθους γραμματοσειράς",
+    "Autosave": "Αυτόματη αποθήκευση",
+    "On": "Ενεργό",
+    "AutosaveOnARIA": "αυτόματη αποθήκευση ενεργή",
+    "Off": "Ανενεργό",
+    "AutosaveOffARIA": "αυτόματη αποθήκευση ανενεργή",
+    "AutocloseBracketsQuotes": "Αυτόματο κλείσιμο αγκύλων και εισαγωγικών",
+    "AutocloseBracketsQuotesOnARIA": "αυτόματο κλείσιμο αγκύλων και εισαγωγικών ενεργό",
+    "AutocloseBracketsQuotesOffARIA": "αυτόματο κλείσιμο αγκύλων και εισαγωγικών ανενεργό",
+    "AutocompleteHinter": "Συμπλήρωση εντολών",
+    "AutocompleteHinterOnARIA": "συμπλήρωση εντολών ενεργή",
+    "AutocompleteHinterOffARIA": "συμπλήρωση εντολών ανενεργή",
+    "WordWrap": "Αναδίπλωση λέξεων",
+    "LineWrapOnARIA": "αναδίπλωση γραμμών ενεργή",
+    "LineWrapOffARIA": "αναδίπλωση γραμμών ανενεργή",
+    "LineNumbers": "Αρίθμηση γραμμών",
+    "LineNumbersOnARIA": "αρίθμηση γραμμών ενεργή",
+    "LineNumbersOffARIA": "αρίθμηση γραμμών ανενεργή",
+    "LintWarningSound": "Ήχος προειδοποίησης Lint",
+    "LintWarningOnARIA": "προειδοποίηση Lint ενεργή",
+    "LintWarningOffARIA": "προειδοποίηση Lint ανενεργή",
+    "PreviewSound": "Ήχος προεπισκόπησης",
+    "PreviewSoundARIA": "ήχος προεπισκόπησης",
+    "AccessibleTextBasedCanvas": "Προσβάσιμο κείμενο βασισμένο καμβά",
+    "UsedScreenReader": "Χρησιμοποιείται με αναγνώστη οθόνης",
+    "PlainText": "Κείμενο",
+    "TextOutputARIA": "έξοδος κειμένου ενεργή",
+    "TableText": "Πίνακας-κείμενο",
+    "TableOutputARIA": "έξοδος πίνακα ενεργή"
+  },
+  "KeyboardShortcuts": {
+    "Title": "Συντομεύσεις Πληκτρολογίου",
+    "ShortcutsFollow": "Οι συντομεύσεις πληκτρολογίου για επεξεργασία κώδικα ακολουθούν",
+    "SublimeText": "Συντομεύσεις πληκτρολογίου Sublime Text",
+    "CodeEditing": {
+      "Tidy": "Εξομάλυνση",
+      "FindText": "Εύρεση Κειμένου",
+      "FindNextMatch": "Εύρεση Επόμενης Αντιστοιχίας",
+      "FindPrevMatch": "Εύρεση Προηγούμενης Αντιστοιχίας",
+      "ReplaceTextMatch": "Αντικατάσταση Αντιστοιχίας Κειμένου",
+      "IndentCodeLeft": "Εσοχή Κώδικα Αριστερά",
+      "IndentCodeRight": "Εσοχή Κώδικα Δεξιά",
+      "CommentLine": "Σχολιασμός Γραμμής",
+      "FindNextTextMatch": "Εύρεση Επόμενης Αντιστοιχίας Κειμένου",
+      "FindPreviousTextMatch": "Εύρεση Προηγούμενης Αντιστοιχίας Κειμένου",
+      "CodeEditing": "Επεξεργασία Κώδικα",
+      "ColorPicker": "Εμφάνιση Ενσωματωμένου Επιλογέα Χρώματος"
+    },
+    "General": {
+      "StartSketch": "Έναρξη Σχεδίου",
+      "StopSketch": "Διακοπή Σχεδίου",
+      "TurnOnAccessibleOutput": "Ενεργοποίηση προσβάσιμης έξοδου",
+      "TurnOffAccessibleOutput": "Απενεργοποίηση προσβάσιμης έξοδου"
+    }
+  },
+  "Sidebar": {
+    "Title": "Αρχεία Σχεδίου",
+    "ToggleARIA": "Εναλλαγή επιλογών ανοιχτού/κλειστού αρχείου σχεδίου",
+    "AddFolder": "Δημιουργία φακέλου",
+    "AddFolderARIA": "προσθήκη φακέλου",
+    "AddFile": "Δημιουργία αρχείου",
+    "AddFileARIA": "προσθήκη αρχείου",
+    "UploadFile": "Μεταφόρτωση αρχείου",
+    "UploadFileARIA": "μεταφόρτωση αρχείου"
+  },
+  "FileNode": {
+    "OpenFolderARIA": "Άνοιγμα περιεχομένων φακέλου",
+    "CloseFolderARIA": "Κλείσιμο περιεχομένων φακέλου",
+    "ToggleFileOptionsARIA": "Εναλλαγή επιλογών ανοιχτού/κλειστού αρχείου",
+    "AddFolder": "Δημιουργία φακέλου",
+    "AddFolderARIA": "προσθήκη φακέλου",
+    "AddFile": "Δημιουργία αρχείου",
+    "AddFileARIA": "προσθήκη αρχείου",
+    "UploadFile": "Μεταφόρτωση αρχείου",
+    "UploadFileARIA": "μεταφόρτωση αρχείου",
+    "Rename": "Μετονομασία",
+    "Delete": "Διαγραφή"
+  },
+  "Common": {
+    "SiteName": "p5.js Επεξεργαστής Ιστού",
+    "Error": "Σφάλμα",
+    "ErrorARIA": "Σφάλμα",
+    "Save": "Αποθήκευση",
+    "p5logoARIA": "p5.js Λογότυπο",
+    "DeleteConfirmation": "Είστε σίγουροι ότι θέλετε να διαγράψετε το {{name}};"
+  },
+  "IDEView": {
+    "SubmitFeedback": "Υποβολή Ανατροφοδότησης",
+    "SubmitFeedbackARIA": "υποβολή-ανατροφοδότησης",
+    "AddCollectionTitle": "Προσθήκη στη συλλογή",
+    "AddCollectionARIA": "προσθήκη-στη-συλλογή",
+    "ShareTitle": "Κοινοποίηση",
+    "ShareARIA": "κοινοποίηση"
+  },
+  "NewFileModal": {
+    "Title": "Δημιουργία Αρχείου",
+    "CloseButtonARIA": "Κλείσιμο Νέου Αρχείου Modal",
+    "EnterName": "Παρακαλώ εισαγάγετε ένα όνομα",
+    "InvalidType": "Μη έγκυρος τύπος αρχείου. Οι έγκυρες επεκτάσεις είναι .js, .css, .json, .xml, .stl, .txt, .csv, .tsv, .frag και .vert."
+  },
+  "NewFileForm": {
+    "AddFileSubmit": "Προσθήκη Αρχείου",
+    "Placeholder": "Όνομα"
+  },
+  "NewFolderModal": {
+    "Title": "Δημιουργία Φακέλου",
+    "CloseButtonARIA": "Κλείσιμο Νέου Φακέλου Modal",
+    "EnterName": "Παρακαλώ εισαγάγετε ένα όνομα",
+    "EmptyName": "Το όνομα του φακέλου δεν μπορεί να περιέχει μόνο κενά",
+    "InvalidExtension": "Το όνομα του φακέλου δεν μπορεί να περιέχει επέκταση"
+  },
+  "NewFolderForm": {
+    "AddFolderSubmit": "Προσθήκη Φακέλου",
+    "Placeholder": "Όνομα"
+  },
+  "ResetPasswordForm": {
+    "Email": "Ηλεκτρονικό ταχυδρομείο που χρησιμοποιήθηκε για την εγγραφή",
+    "EmailARIA": "ηλεκτρονικό-ταχυδρομείο",
+    "Submit": "Αποστολή Email Επαναφοράς Κωδικού"
+  },
+  "ResetPasswordView": {
+    "Title": "p5.js Επεξεργαστής Ιστού | Επαναφορά Κωδικού",
+    "Reset": "Επαναφορά Κωδικού Πρόσβασης",
+    "Submitted": "Το email επαναφοράς κωδικού σας θα πρέπει να φτάσει σύντομα. Αν δεν το βλέπετε, ελέγξτε τον φάκελο των ανεπιθύμητων, καθώς μερικές φορές μπορεί να βρεθεί εκεί.",
+    "Login": "Σύνδεση",
+    "LoginOr": "ή",
+    "SignUp": "Εγγραφή"
+  },
+  "ReduxFormUtils": {
+    "errorInvalidEmail": "Εισαγάγετε μια έγκυρη διεύθυνση email",
+    "errorEmptyEmail": "Εισαγάγετε μια διεύθυνση email",
+    "errorPasswordMismatch": "Οι κωδικοί πρέπει να ταιριάζουν",
+    "errorEmptyPassword": "Εισαγάγετε έναν κωδικό",
+    "errorShortPassword": "Ο κωδικός πρέπει να είναι τουλάχιστον 6 χαρακτήρες",
+    "errorConfirmPassword": "Παρακαλώ επιβεβαιώστε τον κωδικό σας",
+    "errorNewPassword": "Εισαγάγετε έναν νέο κωδικό ή αφήστε τον τρέχοντα κωδικό κενό.",
+    "errorEmptyUsername": "Εισαγάγετε ένα όνομα χρήστη.",
+    "errorLongUsername": "Το όνομα χρήστη πρέπει να είναι λιγότερο από 20 χαρακτήρες.",
+    "errorValidUsername": "Το όνομα χρήστη πρέπει να αποτελείται μόνο από αριθμούς, γράμματα, τελείες, παύλες και κάτω παύλες."
+  },
+  "NewPasswordView": {
+    "Title": "p5.js Επεξεργαστής Ιστού | Νέος Κωδικός",
+    "Description": "Ορισμός Νέου Κωδικού",
+    "TokenInvalidOrExpired": "Το διακριτικό επαναφοράς κωδικού είναι άκυρο ή έχει λήξει.",
+    "EmptyPassword": "Παρακαλώ εισαγάγετε έναν κωδικό",
+    "PasswordConfirmation": "Παρακαλώ επιβεβαιώστε τον κωδικό σας",
+    "PasswordMismatch": "Οι κωδικοί πρέπει να ταιριάζουν"
+  },
+  "AccountForm": {
+    "Email": "Ηλεκτρονικό ταχυδρομείο",
+    "EmailARIA": "ηλεκτρονικό-ταχυδρομείο",
+    "Unconfirmed": "Μη επιβεβαιωμένο.",
+    "EmailSent": "Το email επιβεβαίωσης εστάλη, ελέγξτε το email σας.",
+    "Resend": "Επανάληψη αποστολής email επιβεβαίωσης",
+    "UserName": "Όνομα Χρήστη",
+    "UserNameARIA": "Όνομα Χρήστη",
+    "CurrentPassword": "Τρέχων Κωδικός",
+    "CurrentPasswordARIA": "Τρέχων Κωδικός",
+    "NewPassword": "Νέος Κωδικός",
+    "NewPasswordARIA": "Νέος Κωδικός",
+    "SubmitSaveAllSettings": "Αποθήκευση Όλων των Ρυθμίσεων"
+  },
+  "AccountView": {
+    "SocialLogin": "Κοινωνική Σύνδεση",
+    "SocialLoginDescription": "Χρησιμοποιήστε τον λογαριασμό σας GitHub ή Google για να συνδεθείτε στον Επεξεργαστή Ιστού p5.js.",
+    "Title": "Επεξεργαστής Ιστού p5.js | Ρυθμίσεις Λογαριασμού",
+    "Settings": "Ρυθμίσεις Λογαριασμού",
+    "AccountTab": "Λογαριασμός",
+    "AccessTokensTab": "Διακριτικά Πρόσβασης"
+  },
+  "APIKeyForm": {
+    "ConfirmDelete": "Είστε σίγουροι ότι θέλετε να διαγράψετε το {{key_label}};",
+    "Summary": "Τα Διακριτικά Πρόσβασης Χρήστη λειτουργούν ως ο κωδικός πρόσβασης για να επιτρέπουν σε αυτοματοποιημένα\n          σενάρια να έχουν πρόσβαση στο API του Επεξεργαστή. Δημιουργήστε ένα διακριτικό για κάθε σενάριο\n          που χρειάζεται πρόσβαση.",
+    "CreateToken": "Δημιουργία νέου διακριτικού",
+    "TokenLabel": "Για ποιο σκοπό είναι αυτό το διακριτικό;",
+    "TokenPlaceholder": "Για ποιο σκοπό είναι αυτό το διακριτικό; π.χ. Σενάριο εισαγωγής παραδείγματος",
+    "CreateTokenSubmit": "Δημιουργία",
+    "NoTokens": "Δεν έχετε υπάρχοντα διακριτικά.",
+    "NewTokenTitle": "Το νέο σας διακριτικό πρόσβασης",
+    "NewTokenInfo": "Βεβαιωθείτε ότι αντιγράψατε το νέο διακριτικό πρόσβασης τώρα.\n                  Δεν θα μπορείτε να το δείτε ξανά!",
+    "ExistingTokensTitle": "Υπάρχοντα διακριτικά"
+  },
+  "APIKeyList": {
+    "Name": "Όνομα",
+    "Created": "Δημιουργήθηκε στις",
+    "LastUsed": "Τελευταία χρήση",
+    "Actions": "Ενέργειες",
+    "Never": "Ποτέ",
+    "DeleteARIA": "Διαγραφή Διακριτικού API"
+  },
+  "NewPasswordForm": {
+    "Title": "Κωδικός πρόσβασης",
+    "TitleARIA": "Κωδικός πρόσβασης",
+    "ConfirmPassword": "Επιβεβαίωση Κωδικού πρόσβασης",
+    "ConfirmPasswordARIA": "Επιβεβαίωση Κωδικού πρόσβασης",
+    "SubmitSetNewPassword": "Ορισμός Νέου Κωδικού"
+  },
+  "SignupForm": {
+    "Title": "Όνομα Χρήστη",
+    "TitleARIA": "όνομα χρήστη",
+    "Email": "Ηλεκτρονικό ταχυδρομείο",
+    "EmailARIA": "ηλεκτρονικό-ταχυδρομείο",
+    "Password": "Κωδικός πρόσβασης",
+    "PasswordARIA": "κωδικός-πρόσβασης",
+    "ConfirmPassword": "Επιβεβαίωση Κωδικού πρόσβασης",
+    "ConfirmPasswordARIA": "Επιβεβαίωση κωδικού πρόσβασης",
+    "SubmitSignup": "Εγγραφή"
+  },
+  "SignupView": {
+    "Title": "Επεξεργαστής Ιστού p5.js | Εγγραφή",
+    "Description": "Εγγραφή",
+    "Or": "Ή",
+    "AlreadyHave": "Έχετε ήδη λογαριασμό;",
+    "Login": "Σύνδεση"
+  },
+  "EmailVerificationView": {
+    "Title": "Επεξεργαστής Ιστού p5.js | Επαλήθευση Ηλεκτρονικού Ταχυδρομείου",
+    "Verify": "Επαλήθευση του email σας",
+    "InvalidTokenNull": "Αυτός ο σύνδεσμος δεν είναι έγκυρος.",
+    "Checking": "Επαληθεύοντας το διακριτικό, παρακαλώ περιμένετε...",
+    "Verified": "Όλα έτοιμα, η διεύθυνση email σας έχει επαληθευτεί.",
+    "InvalidState": "Κάτι πήγε στραβά."
+  },
+  "AssetList": {
+    "Title": "Επεξεργαστής Ιστού p5.js | Τα αντικείμενά μου",
+    "ToggleOpenCloseARIA": "Εναλλαγή Ανοιχτών/Κλειστών Επιλογών Αντικειμένου",
+    "Delete": "Διαγραφή",
+    "OpenNewTab": "Άνοιγμα σε νέα καρτέλα",
+    "NoUploadedAssets": "Δεν υπάρχουν ανεβασμένα αντικείμενα.",
+    "HeaderName": "Όνομα",
+    "HeaderSize": "Μέγεθος",
+    "HeaderSketch": "Σκίτσο"
+  },
+  "Feedback": {
+    "Title": "Επεξεργαστής Ιστού p5.js | Ανατροφοδότηση",
+    "ViaGithubHeader": "Μέσω του Github Issues",
+    "ViaGithubDescription": "Εάν είστε εξοικειωμένοι με το Github, αυτή είναι η προτιμώμενη μας μέθοδος για τη λήψη αναφορών σφαλμάτων και ανατροφοδότησης.",
+    "GoToGithub": "Μετάβαση στο Github",
+    "ViaGoogleHeader": "Μέσω της φόρμας Google",
+    "ViaGoogleDescription": "Μπορείτε επίσης να υποβάλετε αυτήν τη γρήγορη φόρμα.",
+    "GoToForm": "Μετάβαση στη Φόρμα"
+  },
+  "Searchbar": {
+    "SearchSketch": "Αναζήτηση σκιτσών...",
+    "SearchCollection": "Αναζήτηση συλλογών...",
+    "ClearTerm": "καθαρισμός"
+  },
+  "UploadFileModal": {
+    "Title": "Μεταφόρτωση Αρχείου",
+    "CloseButtonARIA": "Κλείσιμο μοντάλ μεταφόρτωσης αρχείου",
+    "SizeLimitError": "Σφάλμα: Δεν μπορείτε να μεταφορτώσετε περισσότερα αρχεία. Έχετε φτάσει τον συνολικό ορίζοντα μεγέθους των {{sizeLimit}}.\n                Αν θέλετε να μεταφορτώσετε περισσότερα, παρακαλούμε να αφαιρέσετε αυτά που δεν χρησιμοποιείτε πλέον μέσω\n                των "
+  },
+  "FileUploader": {
+    "DictDefaultMessage": "Ρίξτε τα αρχεία εδώ ή κάντε κλικ για χρήση του περιηγητή αρχείων"
+  },
+  "ErrorModal": {
+    "MessageLogin": "Για να αποθηκεύσετε σχέδια, πρέπει να είστε συνδεδεμένοι. Παρακαλώ ",
+    "Login": "συνδεθείτε",
+    "LoginOr": " ή ",
+    "SignUp": "εγγραφείτε",
+    "MessageLoggedOut": "Φαίνεται ότι έχετε αποσυνδεθεί. Παρακαλώ ",
+    "LogIn": "συνδεθείτε",
+    "SavedDifferentWindow": "Το έργο που προσπαθήσατε να αποθηκεύσετε έχει αποθηκευτεί από άλλο παράθυρο.\n        Παρακαλώ ανανεώστε τη σελίδα για να δείτε την τελευταία έκδοση.",
+    "LinkTitle": "Σφάλμα Σύνδεσης Λογαριασμού",
+    "LinkMessage": "Υπήρξε πρόβλημα στη σύνδεση του λογαριασμού σας {{serviceauth}} με τον λογαριασμό σας στον Επεξεργαστή Ιστού p5.js. Ο λογαριασμός σας {{serviceauth}} έχει ήδη συνδεθεί με άλλον λογαριασμό στον Επεξεργαστή Ιστού p5.js."
+  },
+  "ShareModal": {
+    "Embed": "Ενσωμάτωση",
+    "Present": "Παρουσίαση",
+    "Fullscreen": "Πλήρης Οθόνη",
+    "Edit": "Επεξεργασία"
+  },
+  "CollectionView": {
+    "TitleCreate": "Δημιουργία συλλογής",
+    "TitleDefault": "συλλογή"
+  },
+  "Collection": {
+    "Title": "p5.js Επεξεργαστής Ιστού | Οι συλλογές μου",
+    "AnothersTitle": "p5.js Επεξεργαστής Ιστού | Συλλογές του χρήστη {{anotheruser}}",
+    "Share": "Κοινοποίηση",
+    "URLLink": "Σύνδεσμος στη Συλλογή",
+    "AddSketch": "Προσθήκη Σχεδίου",
+    "DeleteFromCollection": "Είστε σίγουροι ότι θέλετε να καταργήσετε το {{name_sketch}} από αυτή τη συλλογή;",
+    "SketchDeleted": "Το σχέδιο διαγράφηκε",
+    "SketchRemoveARIA": "Αφαίρεση σχεδίου από τη συλλογή",
+    "DescriptionPlaceholder": "Προσθήκη περιγραφής",
+    "Description": "περιγραφή",
+    "NumSketches": "{{count}} σχέδιο",
+    "NumSketches_plural": "{{count}} σχέδια",
+    "By": "Συλλογή από ",
+    "NoSketches": "Κανένα σχέδιο στη συλλογή",
+    "TableSummary": "πίνακας που περιέχει όλες τις συλλογές",
+    "HeaderName": "Όνομα",
+    "HeaderCreatedAt": "Ημερομηνία Προσθήκης",
+    "HeaderUser": "Ιδιοκτήτης",
+    "DirectionAscendingARIA": "Αύξουσα",
+    "DirectionDescendingARIA": "Φθίνουσα",
+    "ButtonLabelAscendingARIA": "Ταξινόμηση κατά {{displayName}} αύξουσα.",
+    "ButtonLabelDescendingARIA": "Ταξινόμηση κατά {{displayName}} φθίνουσα."
+  },
+  "AddToCollectionList": {
+    "Title": "p5.js Επεξεργαστής Ιστού | Οι συλλογές μου",
+    "AnothersTitle": "p5.js Επεξεργαστής Ιστού | Συλλογές του χρήστη {{anotheruser}}",
+    "Empty": "Χωρίς συλλογές"
+  },
+  "CollectionCreate": {
+    "Title": "p5.js Επεξεργαστής Ιστού | Δημιουργία συλλογής",
+    "FormError": "Δεν ήταν δυνατή η δημιουργία της συλλογής",
+    "FormLabel": "Όνομα συλλογής",
+    "FormLabelARIA": "όνομα",
+    "NameRequired": "Απαιτείται το όνομα της συλλογής",
+    "Description": "Περιγραφή (προαιρετικά)",
+    "DescriptionARIA": "περιγραφή",
+    "DescriptionPlaceholder": "Τα αγαπημένα μου σχέδια",
+    "SubmitCollectionCreate": "Δημιουργία συλλογής"
+  },
+  "DashboardView": {
+    "CreateCollection": "Δημιουργία συλλογής",
+    "NewSketch": "Νέο σχέδιο",
+    "CreateCollectionOverlay": "Δημιουργία συλλογής"
+  },
+  "DashboardTabSwitcher": {
+    "Sketches": "Σχέδια",
+    "Collections": "Συλλογές",
+    "Assets": "Πόροι"
+  },
+  "CollectionList": {
+    "Title": "p5.js Επεξεργαστής Ιστού | Οι συλλογές μου",
+    "AnothersTitle": "p5.js Επεξεργαστής Ιστού | Συλλογές του χρήστη {{anotheruser}}",
+    "NoCollections": "Χωρίς συλλογές.",
+    "TableSummary": "πίνακας που περιέχει όλες τις συλλογές",
+    "HeaderName": "Όνομα",
+    "HeaderCreatedAt": "Ημερομηνία Δημιουργίας",
+    "HeaderCreatedAt_mobile": "Δημιουργήθηκε",
+    "HeaderUpdatedAt": "Ημερομηνία Ενημέρωσης",
+    "HeaderUpdatedAt_mobile": "Ενημερώθηκε",
+    "HeaderNumItems": "# σχέδια",
+    "HeaderNumItems_mobile": "# σχέδια",
+    "DirectionAscendingARIA": "Αύξουσα",
+    "DirectionDescendingARIA": "Φθίνουσα",
+    "ButtonLabelAscendingARIA": "Ταξινόμηση κατά {{displayName}} αύξουσα.",
+    "ButtonLabelDescendingARIA": "Ταξινόμηση κατά {{displayName}} φθίνουσα.",
+    "AddSketch": "Προσθήκη Σχεδίου"
+  },
+  "CollectionListRow": {
+    "ToggleCollectionOptionsARIA": "Εναλλαγή άνοιγμα/κλείσιμο επιλογών συλλογής",
+    "AddSketch": "Προσθήκη σχεδίου",
+    "Delete": "Διαγραφή",
+    "Rename": "Μετονομασία"
+  },
+  "Overlay": {
+    "AriaLabel": "Κλείσιμο {{title}} επικάλυψης"
+  },
+  "QuickAddList": {
+    "ButtonRemoveARIA": "Αφαίρεση από συλλογή",
+    "ButtonAddToCollectionARIA": "Προσθήκη στη συλλογή",
+    "View": "Προβολή"
+  },
+  "SketchList": {
+    "View": "Προβολή",
+    "Title": "p5.js Επεξεργαστής Ιστού | Τα σχέδιά μου",
+    "AnothersTitle": "p5.js Επεξεργαστής Ιστού | Τα σχέδια του χρήστη {{anotheruser}}",
+    "ToggleLabelARIA": "Εναλλαγή άνοιγμα/κλείσιμο επιλογών σχεδίου",
+    "DropdownRename": "Μετονομασία",
+    "DropdownDownload": "Λήψη",
+    "DropdownDuplicate": "Αντιγραφή",
+    "DropdownAddToCollection": "Προσθήκη στη συλλογή",
+    "DropdownDelete": "Διαγραφή",
+    "AddToCollectionOverlayTitle": "Προσθήκη στη συλλογή",
+    "TableSummary": "πίνακας που περιέχει όλα τα αποθηκευμένα έργα",
+    "HeaderName": "Σχέδιο",
+    "HeaderCreatedAt": "Ημερομηνία Δημιουργίας",
+    "HeaderCreatedAt_mobile": "Δημιουργήθηκε",
+    "HeaderUpdatedAt": "Ημερομηνία Ενημέρωσης",
+    "HeaderUpdatedAt_mobile": "Ενημερώθηκε",
+    "NoSketches": "Χωρίς σχέδια."
+  },
+  "AddToCollectionSketchList": {
+    "Title": "p5.js Επεξεργαστής Ιστού | Τα σκίτσα μου",
+    "AnothersTitle": "p5.js Επεξεργαστής Ιστού | Τα σκίτσα του χρήστη {{anotheruser}}",
+    "NoCollections": "Χωρίς συλλογές."
+  },
+  "Editor": {
+    "OpenSketchARIA": "Άνοιγμα πλοήγησης αρχείων σκίτσου",
+    "CloseSketchARIA": "Κλείσιμο πλοήγησης αρχείων σκίτσου",
+    "UnsavedChangesARIA": "Το σκίτσο έχει μη αποθηκευμένες αλλαγές",
+    "KeyUpLineNumber": "γραμμή {{lineNumber}}"
+  },
+  "EditorAccessibility": {
+    "NoLintMessages": "Δεν υπάρχουν μηνύματα lint",
+    "CurrentLine": "Τρέχουσα γραμμή"
+  },
+  "Timer": {
+    "SavedAgo": "Αποθηκεύτηκε: {{timeAgo}}"
+  },
+  "formatDate": {
+    "JustNow": "μόλις τώρα",
+    "15Seconds": "15 δευτερόλεπτα πριν",
+    "25Seconds": "25 δευτερόλεπτα πριν",
+    "35Seconds": "35 δευτερόλεπτα πριν",
+    "Ago": "{{timeAgo}} πριν"
+  },
+  "AddRemoveButton": {
+    "AltAddARIA": "Προσθήκη στη συλλογή",
+    "AltRemoveARIA": "Αφαίρεση από τη συλλογή"
+  },
+  "CopyableInput": {
+    "CopiedARIA": "Αντιγράφηκε στο Πρόχειρο!",
+    "OpenViewTabARIA": "Άνοιγμα προβολής {{label}} σε νέα καρτέλα"
+  },
+  "EditableInput": {
+    "EditValue": "Επεξεργασία της τιμής {{display}}",
+    "EmptyPlaceholder": "Χωρίς τιμή"
+  },
+  "PreviewNav": {
+    "EditSketchARIA": "Επεξεργασία Σκίτσου",
+    "ByUser": "από"
+  },
+  "MobilePreferences": {
+    "Settings": "Ρυθμίσεις",
+    "GeneralSettings": "Γενικές ρυθμίσεις",
+    "Accessibility": "Προσβασιμότητα",
+    "AccessibleOutput": "Προσβάσιμη έξοδος",
+    "Theme": "Θέμα",
+    "LightTheme": "Φως",
+    "DarkTheme": "Σκοτάδι",
+    "HighContrastTheme": "Υψηλή αντίθεση",
+    "Autosave": "Αυτόματη αποθήκευση",
+    "AutocompleteHinter": "Σύστημα συμπλήρωσης",
+    "WordWrap": "Αναδίπλωση λέξεων",
+    "LineNumbers": "Αριθμοί γραμμών",
+    "LintWarningSound": "Ήχος προειδοποίησης lint",
+    "UsedScreenReader": "Χρησιμοποιείται με αναγνώστη οθόνης",
+    "PlainText": "Κείμενο απλού κειμένου",
+    "TableText": "Κείμενο πίνακα",
+    "Sound": "Ήχος"
+  },
+  "PreferenceCreators": {
+    "On": "Ενεργό",
+    "Off": "Ανενεργό"
+  },
+  "MobileIDEView": {
+    "Preferences": "Ρυθμίσεις",
+    "MyStuff": "Τα δικά μου",
+    "Examples": "Παραδείγματα",
+    "OriginalEditor": "Πρωτότυπος Επεξεργαστής",
+    "Login": "Σύνδεση",
+    "Logout": "Αποσύνδεση"
+  },
+  "MobileDashboardView": {
+    "Examples": "Παραδείγματα",
+    "Sketches": "Σκίτσα",
+    "Collections": "Συλλογές",
+    "Assets": "Πόροι",
+    "MyStuff": "Τα δικά μου",
+    "CreateSketch": "Δημιουργία Σκίτσου",
+    "CreateCollection": "Δημιουργία Συλλογής"
+  },
+  "Explorer": {
+    "Files": "Αρχεία"
+  },
+  "Cookies": {
+    "Header": "Cookies",
+    "Body": "Ο Επεξεργαστής p5.js χρησιμοποιεί cookies. Ορισμένα είναι απαραίτητα για τη λειτουργικότητα του ιστότοπου και σας επιτρέπουν να διαχειρίζεστε έναν λογαριασμό και προτιμήσεις. Άλλα δεν είναι απαραίτητα - χρησιμοποιούνται για ανάλυση και μας επιτρέπουν να μάθουμε περισσότερα για την κοινότητά μας. <strong> Δεν πωλούμε ποτέ αυτά τα δεδομένα ούτε τα χρησιμοποιούμε για διαφημίσεις. </strong> Μπορείτε να αποφασίσετε ποια cookies θέλετε να επιτρέψετε και να μάθετε περισσότερα στην <0>Πολιτική Απορρήτου<0> μας.",
+    "AllowAll": "Επιτροπή Όλων",
+    "AllowEssential": "Επιτροπή Απαραίτητων"
+  },
+  "Legal": {
+    "PrivacyPolicy": "Πολιτική Απορρήτου",
+    "TermsOfUse": "Όροι Χρήσης",
+    "CodeOfConduct": "Κώδικας Συμπεριφοράς"
+  }
+}

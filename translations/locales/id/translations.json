@@ -1,0 +1,625 @@
+{
+  "Nav": {
+    "File": {
+      "Title": "Berkas",
+      "New": "Baru",
+      "Share": "Bagikan",
+      "Duplicate": "Duplikat",
+      "Open": "Buka",
+      "Download": "Unduh",
+      "AddToCollection": "Tambahkan ke Koleksi",
+      "Examples": "Contoh"
+    },
+    "Edit": {
+      "Title": "Edit",
+      "TidyCode": "Bersihkan Kode",
+      "Find": "Cari",
+      "Replace": "Ganti"
+    },
+    "Sketch": {
+      "Title": "Sketsa",
+      "AddFile": "Tambahkan Berkas",
+      "AddFolder": "Tambahkan Folder",
+      "Run": "Jalankan",
+      "Stop": "Berhenti"
+    },
+    "Help": {
+      "Title": "Bantuan",
+      "KeyboardShortcuts": "Pintasan Keyboard",
+      "Reference": "Referensi",
+      "About": "Tentang"
+    },
+    "Lang": "Bahasa",
+    "BackEditor": "Kembali ke Editor",
+    "WarningUnsavedChanges": "Apakah Anda yakin ingin meninggalkan halaman ini? Anda memiliki perubahan yang belum disimpan.",
+    "Login": "Masuk",
+    "LoginOr": "atau",
+    "SignUp": "Daftar",
+    "Auth": {
+      "Welcome": "Selamat datang",
+      "Hello": "Halo",
+      "MyAccount": "Akun Saya",
+      "My": "Saya",
+      "MySketches": "Sketsa Saya",
+      "MyCollections": "Koleksi Saya",
+      "Asset": "Aset",
+      "MyAssets": "Aset Saya",
+      "LogOut": "Keluar"
+    }
+  },
+  "CodemirrorFindAndReplace": {
+    "ToggleReplace": "Ganti Tampilan",
+    "Find": "Cari",
+    "FindPlaceholder": "Cari dalam berkas",
+    "Replace": "Ganti",
+    "ReplaceAll": "Ganti Semua",
+    "ReplacePlaceholder": "Teks pengganti",
+    "Regex": "Ekspresi Reguler",
+    "CaseSensitive": "Sensitif huruf besar/kecil",
+    "WholeWords": "Kata-kata Utuh",
+    "Previous": "Sebelumnya",
+    "Next": "Selanjutnya",
+    "NoResults": "Tidak ada hasil",
+    "Close": "Tutup"
+  },
+  "LoginForm": {
+    "UsernameOrEmail": "Email atau Nama Pengguna",
+    "UsernameOrEmailARIA": "Email atau Nama Pengguna",
+    "Password": "Kata Sandi",
+    "PasswordARIA": "Kata Sandi",
+    "Submit": "Masuk"
+  },
+  "LoginView": {
+    "Title": "p5.js Web Editor | Masuk",
+    "Login": "Masuk",
+    "LoginOr": "atau",
+    "SignUp": "Daftar",
+    "Email": "email",
+    "Username": "nama pengguna",
+    "DontHaveAccount": "Belum punya akun? ",
+    "ForgotPassword": "Lupa kata sandi? ",
+    "ResetPassword": "Reset kata sandi"
+  },
+  "SocialAuthButton": {
+    "Connect": "Hubungkan Akun {{serviceauth}}",
+    "Unlink": "Putuskan Hubungan Akun {{serviceauth}}",
+    "Login": "Masuk dengan {{serviceauth}}",
+    "LogoARIA": "{{serviceauth}} logo"
+  },
+  "About": {
+    "Title": "Tentang",
+    "TitleHelmet": "p5.js Web Editor | Tentang",
+    "Contribute": "Berkontribusi",
+    "NewP5": "Baru menggunakan p5.js?",
+    "Report": "Laporkan bug",
+    "Learn": "Pelajari",
+    "Resources": "Sumber Daya",
+    "Libraries": "Pustaka",
+    "Forum": "Forum",
+    "Examples": "Contoh",
+    "PrivacyPolicy": "Kebijakan Privasi",
+    "TermsOfUse": "Persyaratan Penggunaan",
+    "CodeOfConduct": "Kode Etik"
+  },
+  "Toast": {
+    "OpenedNewSketch": "Membuka sketsa baru.",
+    "SketchSaved": "Sketsa disimpan.",
+    "SketchFailedSave": "Gagal menyimpan sketsa.",
+    "AutosaveEnabled": "Autosave diaktifkan.",
+    "LangChange": "Bahasa diubah",
+    "SettingsSaved": "Pengaturan disimpan."
+  },
+  "Toolbar": {
+    "Preview": "Pratinjau",
+    "Auto-refresh": "Perbarui otomatis",
+    "OpenPreferencesARIA": "Buka Preferensi",
+    "PlaySketchARIA": "Mainkan sketsa",
+    "PlayOnlyVisualSketchARIA": "Mainkan hanya sketsa visual",
+    "StopSketchARIA": "Hentikan sketsa",
+    "EditSketchARIA": "Edit nama sketsa",
+    "NewSketchNameARIA": "Nama sketsa baru",
+    "By": " oleh "
+  },
+  "Console": {
+    "Title": "Konsol",
+    "Clear": "Hapus",
+    "ClearARIA": "Hapus konsol",
+    "Close": "Tutup",
+    "CloseARIA": "Tutup konsol",
+    "Open": "Buka",
+    "OpenARIA": "Buka konsol"
+  },
+  "Preferences": {
+    "Settings": "Pengaturan",
+    "GeneralSettings": "Pengaturan Umum",
+    "Accessibility": "Aksesibilitas",
+    "Theme": "Tema",
+    "LightTheme": "Terang",
+    "LightThemeARIA": "tema terang aktif",
+    "DarkTheme": "Gelap",
+    "DarkThemeARIA": "tema gelap aktif",
+    "HighContrastTheme": "Tema Kontras Tinggi",
+    "HighContrastThemeARIA": "tema kontras tinggi aktif",
+    "TextSize": "Ukuran Teks",
+    "DecreaseFont": "Kecilkan",
+    "DecreaseFontARIA": "kurangi ukuran font",
+    "IncreaseFont": "Perbesar",
+    "IncreaseFontARIA": "besarkan ukuran font",
+    "FontSize": "Ukuran Font",
+    "SetFontSize": "atur ukuran font",
+    "Autosave": "Autosave",
+    "On": "Aktif",
+    "AutosaveOnARIA": "autosave aktif",
+    "Off": "Nonaktif",
+    "AutosaveOffARIA": "autosave nonaktif",
+    "AutocloseBracketsQuotes": "Autoclose Kurung dan Tanda Petik",
+    "AutocloseBracketsQuotesOnARIA": "autoclose kurung dan tanda petik aktif",
+    "AutocloseBracketsQuotesOffARIA": "autoclose kurung dan tanda petik nonaktif",
+    "AutocompleteHinter": "Petunjuk Autocomplete",
+    "AutocompleteHinterOnARIA": "petunjuk autocomplete aktif",
+    "AutocompleteHinterOffARIA": "petunjuk autocomplete nonaktif",
+    "WordWrap": "Pembungkus Kata",
+    "LineWrapOnARIA": "pembungkus baris aktif",
+    "LineWrapOffARIA": "pembungkus baris nonaktif",
+    "LineNumbers": "Nomor Baris",
+    "LineNumbersOnARIA": "nomor baris aktif",
+    "LineNumbersOffARIA": "nomor baris nonaktif",
+    "LintWarningSound": "Suara Peringatan Lint",
+    "LintWarningOnARIA": "peringatan lint aktif",
+    "LintWarningOffARIA": "peringatan lint nonaktif",
+    "PreviewSound": "Suara Pratinjau",
+    "PreviewSoundARIA": "suara pratinjau",
+    "AccessibleTextBasedCanvas": "Kanvas Teks yang Dapat Diakses",
+    "UsedScreenReader": "Digunakan dengan pembaca layar",
+    "PlainText": "Teks Biasa",
+    "TextOutputARIA": "output teks aktif",
+    "TableText": "Teks Tabel",
+    "TableOutputARIA": "output tabel aktif"
+  },
+  "KeyboardShortcuts": {
+    "Title": " Pintasan Keyboard",
+    "ShortcutsFollow": "Pintasan keyboard untuk pengeditan kode mengikuti",
+    "SublimeText": "Pintasan Sublime Text",
+    "CodeEditing": {
+      "Tidy": "Rapihkan",
+      "FindText": "Cari Teks",
+      "FindNextMatch": "Temukan Pencocokan Berikutnya",
+      "FindPrevMatch": "Temukan Pencocokan Sebelumnya",
+      "ReplaceTextMatch": "Ganti Pencocokan Teks",
+      "IndentCodeLeft": "Tambahkan Indentasi Kode ke Kiri",
+      "IndentCodeRight": "Tambahkan Indentasi Kode ke Kanan",
+      "CommentLine": "Komentari Baris",
+      "FindNextTextMatch": "Cari Pencocokan Teks Berikutnya",
+      "FindPreviousTextMatch": "Cari Pencocokan Teks Sebelumnya",
+      "CodeEditing": "Pengeditan Kode",
+      "ColorPicker": "Tampilkan Pemilih Warna Inline"
+    },
+    "General": {
+      "StartSketch": "Mulai Sketsa",
+      "StopSketch": "Berhenti Sketsa",
+      "TurnOnAccessibleOutput": "Nyalakan Output yang Dapat Diakses",
+      "TurnOffAccessibleOutput": "Matikan Output yang Dapat Diakses"
+    }
+  },
+  "Sidebar": {
+    "Title": "File Sketsa",
+    "ToggleARIA": "Beralih buka/tutup opsi file sketsa",
+    "AddFolder": "Buat Folder",
+    "AddFolderARIA": "tambah folder",
+    "AddFile": "Buat File",
+    "AddFileARIA": "tambah file",
+    "UploadFile": "Unggah File",
+    "UploadFileARIA": "unggah file"
+  },
+  "FileNode": {
+    "OpenFolderARIA": "Buka isi folder",
+    "CloseFolderARIA": "Tutup isi folder",
+    "ToggleFileOptionsARIA": "Beralih buka/tutup opsi file",
+    "AddFolder": "Buat Folder",
+    "AddFolderARIA": "tambah folder",
+    "AddFile": "Buat File",
+    "AddFileARIA": "tambah file",
+    "UploadFile": "Unggah File",
+    "UploadFileARIA": "unggah file",
+    "Rename": "Ubah Nama",
+    "Delete": "Hapus"
+  },
+  "Common": {
+    "SiteName": "p5.js Web Editor",
+    "Error": "Kesalahan",
+    "ErrorARIA": "Kesalahan",
+    "Save": "Simpan",
+    "p5logoARIA": "Logo p5.js",
+    "DeleteConfirmation": "Apakah Anda yakin ingin menghapus {{name}}?"
+  },
+  "IDEView": {
+    "SubmitFeedback": "Kirim Masukan",
+    "SubmitFeedbackARIA": "kirim-masukan",
+    "AddCollectionTitle": "Tambahkan ke koleksi",
+    "AddCollectionARIA": "tambahkan ke koleksi",
+    "ShareTitle": "Bagikan",
+    "ShareARIA": "bagikan"
+  },
+  "NewFileModal": {
+    "Title": "Buat File",
+    "CloseButtonARIA": "Tutup Modal File Baru",
+    "EnterName": "Silakan masukkan nama",
+    "InvalidType": "Jenis file tidak valid. Ekstensi yang valid adalah .js, .css, .json, .xml, .stl, .txt, .csv, .tsv, .frag, dan .vert."
+  },
+  "NewFileForm": {
+    "AddFileSubmit": "Tambahkan File",
+    "Placeholder": "Nama"
+  },
+  "NewFolderModal": {
+    "Title": "Buat Folder",
+    "CloseButtonARIA": "Tutup Modal Folder Baru",
+    "EnterName": "Silakan masukkan nama",
+    "EmptyName": "Nama folder tidak boleh hanya berisi spasi",
+    "InvalidExtension": "Nama folder tidak boleh mengandung ekstensi"
+  },
+  "NewFolderForm": {
+    "AddFolderSubmit": "Tambahkan Folder",
+    "Placeholder": "Nama"
+  },
+  "ResetPasswordForm": {
+    "Email": "Email yang digunakan untuk registrasi",
+    "EmailARIA": "email",
+    "Submit": "Kirim Email Reset Password"
+  },
+  "ResetPasswordView": {
+    "Title": "p5.js Web Editor | Reset Password",
+    "Reset": "Atur Ulang Kata Sandi Anda",
+    "Submitted": "Email reset password Anda seharusnya tiba segera. Jika Anda tidak melihatnya, periksa\n            folder spam Anda karena kadang-kadang bisa berada di sana.",
+    "Login": "Masuk",
+    "LoginOr": "atau",
+    "SignUp": "Daftar"
+  },
+  "ReduxFormUtils": {
+    "errorInvalidEmail": "Silakan masukkan alamat email yang valid",
+    "errorEmptyEmail": "Silakan masukkan email",
+    "errorPasswordMismatch": "Kata sandi harus sesuai",
+    "errorEmptyPassword": "Silakan masukkan kata sandi",
+    "errorShortPassword": "Kata sandi harus setidaknya 6 karakter",
+    "errorConfirmPassword": "Silakan konfirmasi kata sandi Anda",
+    "errorNewPassword": "Silakan masukkan kata sandi baru atau biarkan kata sandi saat ini kosong.",
+    "errorEmptyUsername": "Silakan masukkan nama pengguna.",
+    "errorLongUsername": "Nama pengguna harus kurang dari 20 karakter.",
+    "errorValidUsername": "Nama pengguna hanya boleh terdiri dari angka, huruf, titik, tanda hubung, dan garis bawah."
+  },
+  "NewPasswordView": {
+    "Title": "p5.js Web Editor | Kata Sandi Baru",
+    "Description": "Atur Kata Sandi Baru",
+    "TokenInvalidOrExpired": "Token reset kata sandi tidak valid atau sudah kedaluwarsa.",
+    "EmptyPassword": "Silakan masukkan kata sandi",
+    "PasswordConfirmation": "Silakan konfirmasi kata sandi Anda",
+    "PasswordMismatch": "Kata sandi harus sesuai"
+  },
+  "AccountForm": {
+    "Email": "Email",
+    "EmailARIA": "email",
+    "Unconfirmed": "Belum dikonfirmasi.",
+    "EmailSent": "Konfirmasi telah dikirim, periksa email Anda.",
+    "Resend": "Kirim ulang email konfirmasi",
+    "UserName": "Nama Pengguna",
+    "UserNameARIA": "Nama Pengguna",
+    "CurrentPassword": "Kata Sandi Saat Ini",
+    "CurrentPasswordARIA": "Kata Sandi Saat Ini",
+    "NewPassword": "Kata Sandi Baru",
+    "NewPasswordARIA": "Kata Sandi Baru",
+    "SubmitSaveAllSettings": "Simpan Semua Pengaturan"
+  },
+  "AccountView": {
+    "SocialLogin": "Login Sosial",
+    "SocialLoginDescription": "Gunakan akun GitHub atau Google Anda untuk masuk ke p5.js Web Editor.",
+    "Title": "p5.js Web Editor | Pengaturan Akun",
+    "Settings": "Pengaturan Akun",
+    "AccountTab": "Akun",
+    "AccessTokensTab": "Token Akses"
+  },
+  "APIKeyForm": {
+    "ConfirmDelete": "Apakah Anda yakin ingin menghapus {{key_label}}?",
+    "Summary": "Token Akses Pribadi berfungsi seperti kata sandi Anda untuk memungkinkan\n          skrip otomatis mengakses API Editor. Buat token untuk setiap skrip\n          yang memerlukan akses.",
+    "CreateToken": "Buat token baru",
+    "TokenLabel": "Token ini untuk apa?",
+    "TokenPlaceholder": "Token ini untuk apa? misalnya Skrip impor contoh",
+    "CreateTokenSubmit": "Buat",
+    "NoTokens": "Anda tidak memiliki token yang ada.",
+    "NewTokenTitle": "Token akses baru Anda",
+    "NewTokenInfo": "Pastikan untuk menyalin token akses pribadi baru Anda sekarang.\n                  Anda tidak akan dapat melihatnya lagi!",
+    "ExistingTokensTitle": "Token yang ada"
+  },
+  "APIKeyList": {
+    "Name": "Nama",
+    "Created": "Dibuat pada",
+    "LastUsed": "Terakhir digunakan",
+    "Actions": "Tindakan",
+    "Never": "Tidak Pernah",
+    "DeleteARIA": "Hapus Kunci API"
+  },
+  "NewPasswordForm": {
+    "Title": "Kata Sandi",
+    "TitleARIA": "Kata Sandi",
+    "ConfirmPassword": "Konfirmasi Kata Sandi",
+    "ConfirmPasswordARIA": "Konfirmasi Kata Sandi",
+    "SubmitSetNewPassword": "Atur Kata Sandi Baru"
+  },
+  "SignupForm": {
+    "Title": "Nama Pengguna",
+    "TitleARIA": "nama pengguna",
+    "Email": "Email",
+    "EmailARIA": "email",
+    "Password": "Kata Sandi",
+    "PasswordARIA": "kata sandi",
+    "ConfirmPassword": "Konfirmasi Kata Sandi",
+    "ConfirmPasswordARIA": "Konfirmasi kata sandi",
+    "SubmitSignup": "Daftar"
+  },
+  "SignupView": {
+    "Title": "p5.js Web Editor | Daftar",
+    "Description": "Daftar",
+    "Or": "Atau",
+    "AlreadyHave": "Sudah memiliki akun?",
+    "Login": "Masuk"
+  },
+  "EmailVerificationView": {
+    "Title": "p5.js Web Editor | Verifikasi Email",
+    "Verify": "Verifikasi email Anda",
+    "InvalidTokenNull": "Tautan tersebut tidak valid.",
+    "Checking": "Memvalidasi token, harap tunggu...",
+    "Verified": "Semua selesai, alamat email Anda telah diverifikasi.",
+    "InvalidState": "Ada yang salah."
+  },
+  "AssetList": {
+    "Title": "p5.js Web Editor | Aset Saya",
+    "ToggleOpenCloseARIA": "Beralih Menu Opsi Aset Terbuka/Tutup",
+    "Delete": "Hapus",
+    "OpenNewTab": "Buka dalam Tab Baru",
+    "NoUploadedAssets": "Tidak ada aset yang diunggah.",
+    "HeaderName": "Nama",
+    "HeaderSize": "Ukuran",
+    "HeaderSketch": "Sketch"
+  },
+  "Feedback": {
+    "Title": "p5.js Web Editor | Masukan",
+    "ViaGithubHeader": "Via Github Issues",
+    "ViaGithubDescription": "Jika Anda sudah familiar dengan Github, ini adalah metode yang kami pilih untuk menerima laporan bug dan masukan.",
+    "GoToGithub": "Pergi ke Github",
+    "ViaGoogleHeader": "Via Formulir Google",
+    "ViaGoogleDescription": "Anda juga dapat mengirimkan formulir singkat ini.",
+    "GoToForm": "Pergi ke Formulir"
+  },
+  "Searchbar": {
+    "SearchSketch": "Cari sketsa...",
+    "SearchCollection": "Cari koleksi...",
+    "ClearTerm": "bersihkan"
+  },
+  "UploadFileModal": {
+    "Title": "Unggah Berkas",
+    "CloseButtonARIA": "Tutup jendela unggah berkas",
+    "SizeLimitError": "Error: Anda tidak dapat mengunggah lebih banyak berkas. Anda telah mencapai batas total ukuran {{sizeLimit}}.\n                Jika Anda ingin mengunggah lebih banyak, harap hapus yang tidak lagi Anda gunakan dengan\n                di "
+  },
+  "FileUploader": {
+    "DictDefaultMessage": "Seret berkas di sini atau klik untuk menggunakan penjelajah berkas"
+  },
+  "ErrorModal": {
+    "MessageLogin": "Untuk menyimpan sketsa, Anda harus masuk. Silakan ",
+    "Login": "Masuk",
+    "LoginOr": " atau ",
+    "SignUp": "Daftar",
+    "MessageLoggedOut": "Sepertinya Anda sudah keluar. Silakan ",
+    "LogIn": "masuk",
+    "SavedDifferentWindow": "Proyek yang Anda coba simpan telah disimpan dari jendela lain.\n        Harap segarkan halaman untuk melihat versi terbaru.",
+    "LinkTitle": "Kesalahan Menghubungkan Akun",
+    "LinkMessage": "Ada masalah saat menghubungkan akun {{serviceauth}} Anda dengan akun p5.js Web Editor Anda. Akun {{serviceauth}} Anda sudah terhubung ke akun p5.js Web Editor lain."
+  },
+  "ShareModal": {
+    "Embed": "Sematkan",
+    "Present": "Presentasikan",
+    "Fullscreen": "Layar Penuh",
+    "Edit": "Edit"
+  },
+  "CollectionView": {
+    "TitleCreate": "Buat koleksi",
+    "TitleDefault": "koleksi"
+  },
+  "Collection": {
+    "Title": "p5.js Web Editor | Koleksi Saya",
+    "AnothersTitle": "p5.js Web Editor | Koleksi milik {{anotheruser}}",
+    "Share": "Bagikan",
+    "URLLink": "Tautan ke Koleksi",
+    "AddSketch": "Tambahkan Sketsa",
+    "DeleteFromCollection": "Apakah Anda yakin ingin menghapus {{name_sketch}} dari koleksi ini?",
+    "SketchDeleted": "Sketsa dihapus",
+    "SketchRemoveARIA": "Hapus sketsa dari koleksi",
+    "DescriptionPlaceholder": "Tambahkan deskripsi",
+    "Description": "deskripsi",
+    "NumSketches": "{{count}} sketsa",
+    "NumSketches_plural": "{{count}} sketsa",
+    "By": "Koleksi oleh ",
+    "NoSketches": "Tidak ada sketsa dalam koleksi",
+    "TableSummary": "tabel yang berisi semua koleksi",
+    "HeaderName": "Nama",
+    "HeaderCreatedAt": "Tanggal Ditambahkan",
+    "HeaderUser": "Pemilik",
+    "DirectionAscendingARIA": "Menaik",
+    "DirectionDescendingARIA": "Menurun",
+    "ButtonLabelAscendingARIA": "Urutkan berdasarkan {{displayName}} secara menaik.",
+    "ButtonLabelDescendingARIA": "Urutkan berdasarkan {{displayName}} secara menurun."
+  },
+  "AddToCollectionList": {
+    "Title": "p5.js Web Editor | Koleksi Saya",
+    "AnothersTitle": "p5.js Web Editor | Koleksi {{anotheruser}}",
+    "Empty": "Tidak ada koleksi"
+  },
+  "CollectionCreate": {
+    "Title": "p5.js Web Editor | Buat koleksi",
+    "FormError": "Tidak dapat membuat koleksi",
+    "FormLabel": "Nama koleksi",
+    "FormLabelARIA": "nama",
+    "NameRequired": "Nama koleksi wajib diisi",
+    "Description": "Deskripsi (opsional)",
+    "DescriptionARIA": "deskripsi",
+    "DescriptionPlaceholder": "Sketsa favorit saya",
+    "SubmitCollectionCreate": "Buat koleksi"
+  },
+  "DashboardView": {
+    "CreateCollection": "Buat koleksi",
+    "NewSketch": "Sketsa baru",
+    "CreateCollectionOverlay": "Buat koleksi"
+  },
+  "DashboardTabSwitcher": {
+    "Sketches": "Sketsa",
+    "Collections": "Koleksi",
+    "Assets": "Aset"
+  },
+  "CollectionList": {
+    "Title": "p5.js Web Editor | Koleksi Saya",
+    "AnothersTitle": "p5.js Web Editor | Koleksi {{anotheruser}}",
+    "NoCollections": "Tidak ada koleksi.",
+    "TableSummary": "tabel yang berisi semua koleksi",
+    "HeaderName": "Nama",
+    "HeaderCreatedAt": "Tanggal Dibuat",
+    "HeaderCreatedAt_mobile": "Dibuat",
+    "HeaderUpdatedAt": "Tanggal Diperbarui",
+    "HeaderUpdatedAt_mobile": "Diperbarui",
+    "HeaderNumItems": "# sketsa",
+    "HeaderNumItems_mobile": "# sketsa",
+    "DirectionAscendingARIA": "Menaik",
+    "DirectionDescendingARIA": "Menurun",
+    "ButtonLabelAscendingARIA": "Urutkan berdasarkan {{displayName}} secara menaik.",
+    "ButtonLabelDescendingARIA": "Urutkan berdasarkan {{displayName}} secara menurun.",
+    "AddSketch": "Tambah Sketsa"
+  },
+  "CollectionListRow": {
+    "ToggleCollectionOptionsARIA": "Beralih Menu Opsi Koleksi Terbuka/Tutup",
+    "AddSketch": "Tambah sketsa",
+    "Delete": "Hapus",
+    "Rename": "Ganti nama"
+  },
+  "Overlay": {
+    "AriaLabel": "Tutup {{title}} overlay"
+  },
+  "QuickAddList": {
+    "ButtonRemoveARIA": "Hapus dari koleksi",
+    "ButtonAddToCollectionARIA": "Tambahkan ke koleksi",
+    "View": "Lihat"
+  },
+  "SketchList": {
+    "View": "Lihat",
+    "Title": "p5.js Web Editor | Sketsa Saya",
+    "AnothersTitle": "p5.js Web Editor | Sketsa {{anotheruser}}",
+    "ToggleLabelARIA": "Beralih Menu Opsi Sketsa Terbuka/Tutup",
+    "DropdownRename": "Ganti nama",
+    "DropdownDownload": "Unduh",
+    "DropdownDuplicate": "Duplikat",
+    "DropdownAddToCollection": "Tambahkan ke koleksi",
+    "DropdownDelete": "Hapus",
+    "DirectionAscendingARIA": "Menaik",
+    "DirectionDescendingARIA": "Menurun",
+    "ButtonLabelAscendingARIA": "Urutkan berdasarkan {{displayName}} secara menaik.",
+    "ButtonLabelDescendingARIA": "Urutkan berdasarkan {{displayName}} secara menurun.",
+    "AddToCollectionOverlayTitle": "Tambahkan ke koleksi",
+    "TableSummary": "tabel yang berisi semua proyek yang disimpan",
+    "HeaderName": "Sketsa",
+    "HeaderCreatedAt": "Tanggal Dibuat",
+    "HeaderCreatedAt_mobile": "Dibuat",
+    "HeaderUpdatedAt": "Tanggal Diperbarui",
+    "HeaderUpdatedAt_mobile": "Diperbarui",
+    "NoSketches": "Tidak ada sketsa."
+  },
+  "AddToCollectionSketchList": {
+    "Title": "p5.js Web Editor | Sketsa Saya",
+    "AnothersTitle": "p5.js Web Editor | Sketsa {{anotheruser}}",
+    "NoCollections": "Tidak ada koleksi."
+  },
+  "Editor": {
+    "OpenSketchARIA": "Buka navigasi berkas sketsa",
+    "CloseSketchARIA": "Tutup navigasi berkas sketsa",
+    "UnsavedChangesARIA": "Sketsa memiliki perubahan yang belum disimpan",
+    "KeyUpLineNumber": "baris {{lineNumber}}"
+  },
+  "EditorAccessibility": {
+    "NoLintMessages": "Tidak ada pesan lint",
+    "CurrentLine": "Baris saat ini"
+  },
+  "Timer": {
+    "SavedAgo": "Disimpan: {{timeAgo}}"
+  },
+  "formatDate": {
+    "JustNow": "baru saja",
+    "15Seconds": "15 detik yang lalu",
+    "25Seconds": "25 detik yang lalu",
+    "35Seconds": "35 detik yang lalu",
+    "Ago": "{{timeAgo}} yang lalu"
+  },
+  "AddRemoveButton": {
+    "AltAddARIA": "Tambahkan ke koleksi",
+    "AltRemoveARIA": "Hapus dari koleksi"
+  },
+  "CopyableInput": {
+    "CopiedARIA": "Disalin ke Papan Klip!",
+    "OpenViewTabARIA": "Buka tampilan {{label}} di tab baru"
+  },
+  "EditableInput": {
+    "EditValue": "Edit nilai {{display}}",
+    "EmptyPlaceholder": "Tidak ada nilai"
+  },
+  "PreviewNav": {
+    "EditSketchARIA": "Edit Sketsa",
+    "ByUser": "oleh"
+  },
+  "MobilePreferences": {
+    "Settings": "Pengaturan",
+    "GeneralSettings": "Pengaturan umum",
+    "Accessibility": "Aksesibilitas",
+    "AccessibleOutput": "Output yang dapat diakses",
+    "Theme": "Tema",
+    "LightTheme": "Terang",
+    "DarkTheme": "Gelap",
+    "HighContrastTheme": "Tingkat kontras tinggi",
+    "Autosave": "Penyimpanan otomatis",
+    "AutocompleteHinter": "Pengingat Autocomplete",
+    "WordWrap": "Word Wrap",
+    "LineNumbers": "Nomor baris",
+    "LintWarningSound": "Suara peringatan Lint",
+    "UsedScreenReader": "Digunakan dengan pembaca layar",
+    "PlainText": "Teks polos",
+    "TableText": "Teks tabel",
+    "Sound": "Suara"
+  },
+  "PreferenceCreators": {
+    "On": "Hidup",
+    "Off": "Mati"
+  },
+  "MobileIDEView": {
+    "Preferences": "Preferensi",
+    "MyStuff": "Milik Saya",
+    "Examples": "Contoh",
+    "OriginalEditor": "Editor Asli",
+    "Login": "Masuk",
+    "Logout": "Keluar"
+  },
+  "MobileDashboardView": {
+    "Examples": "Contoh",
+    "Sketches": "Sketsa",
+    "Collections": "Koleksi",
+    "Assets": "Aset",
+    "MyStuff": "Milik Saya",
+    "CreateSketch": "Buat Sketsa",
+    "CreateCollection": "Buat Koleksi"
+  },
+  "Explorer": {
+    "Files": "Berkas"
+  },
+  "Cookies": {
+    "Header": "Cookie",
+    "Body": "Editor p5.js menggunakan cookie. Beberapa cookie penting untuk fungsionalitas situs web dan memungkinkan Anda mengelola akun dan preferensi. Lainnya tidak penting—mereka digunakan untuk analitika dan memungkinkan kami memahami lebih banyak tentang komunitas kami. <strong> Kami tidak pernah menjual data ini atau menggunakannya untuk periklanan. </strong> Anda dapat memutuskan cookie mana yang ingin Anda izinkan, dan pelajari lebih lanjut di <0>Kebijakan Privasi<0>.",
+    "AllowAll": "Izinkan Semua",
+    "AllowEssential": "Izinkan yang Penting"
+  },
+  "Legal": {
+    "PrivacyPolicy": "Kebijakan Privasi",
+    "TermsOfUse": "Syarat Penggunaan",
+    "CodeOfConduct": "Kode Etik"
+  }
+}

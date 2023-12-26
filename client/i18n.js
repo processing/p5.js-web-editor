@@ -3,14 +3,18 @@ import { initReactI18next } from 'react-i18next';
 import Backend from 'i18next-http-backend';
 
 import {
+  ar,
   be,
+  el,
   enUS,
   es,
   ja,
   hi,
+  id,
   it,
   ko,
   ptBR,
+  ru,
   de,
   frCA,
   zhCN,
@@ -23,16 +27,20 @@ import {
 const fallbackLng = ['en-US'];
 
 export const availableLanguages = [
+  'ar',
   'be',
   'de',
+  'el',
   'en-US',
   'es-419',
   'fr-CA',
   'hi',
+  'id',
   'it',
   'ja',
   'ko',
   'pt-BR',
+  'ru',
   'sv',
   'uk-UA',
   'zh-CN',
@@ -42,16 +50,20 @@ export const availableLanguages = [
 
 export function languageKeyToLabel(lang) {
   const languageMap = {
+    ar: 'العربية',
     be: 'Bengali',
     de: 'Deutsch',
+    el: 'Ελληνικά',
     'en-US': 'English',
     'es-419': 'Español',
     'fr-CA': 'Français',
     hi: 'हिन्दी',
+    id: 'Bahasa Indonesia',
     it: 'Italiano',
     ja: '日本語',
     ko: '한국어',
     'pt-BR': 'Português',
+    ru: 'Русский',
     sv: 'Svenska',
     'uk-UA': 'Українська',
     'zh-CN': '简体中文',
@@ -63,16 +75,20 @@ export function languageKeyToLabel(lang) {
 
 export function languageKeyToDateLocale(lang) {
   const languageMap = {
+    ar,
     be,
     de,
+    el,
     'en-US': enUS,
     'es-419': es,
     'fr-CA': frCA,
     hi,
+    id,
     it,
     ja,
     ko,
     'pt-BR': ptBR,
+    ru,
     sv,
     'uk-UA': uk,
     'zh-CN': zhCN,
