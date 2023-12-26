@@ -4,7 +4,7 @@
 }
 
 .sidebar__header {
-  padding: #{8 / $base-font-size}rem #{12 / $base-font-size}rem;
+  padding: #{4 / $base-font-size}rem #{4.8 / $base-font-size}rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -13,7 +13,7 @@
 }
 
 .sidebar__title {
-  font-size: #{16 / $base-font-size}rem;
+  font-size: #{12 / $base-font-size}rem;
   font-weight: 500;
   display: inline-block;
   .sidebar--contracted & {
@@ -273,6 +273,10 @@
   .sidebar--cant-edit & {
     display: none;
   }
+}
+
+.sidebar__icons>*{
+  margin: 0.1rem
 }
 
 .sidebar__folder-icon {

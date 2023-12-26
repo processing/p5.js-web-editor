@@ -25,6 +25,9 @@ import CircleInfo from '../images/circle-info.svg';
 import Add from '../images/add.svg';
 import Filter from '../images/filter.svg';
 import Cross from '../images/cross.svg';
+import AddFile from '../images/add-file.svg';
+import AddFolder from '../images/add-folder.svg';
+import UploadFile from '../images/file-upload.svg';
 
 // HOC that adds the right web accessibility props
 // https://www.scottohara.me/blog/2019/05/22/contextual-images-svgs-and-a11y.html
@@ -102,3 +105,6 @@ export const CircleFolderIcon = withLabel(CircleFolder);
 export const CircleInfoIcon = withLabel(CircleInfo);
 export const AddIcon = withLabel(Add);
 export const FilterIcon = withLabel(Filter);
+export const AddFileIcon = withLabel(AddFile);
+export const AddFolderIcon = withLabel(AddFolder);
+export const UploadFileIcon = withLabel(UploadFile);

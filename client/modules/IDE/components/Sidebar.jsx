@@ -14,7 +14,12 @@ import { selectRootFile } from '../selectors/files';
 import { getAuthenticated, selectCanEditSketch } from '../selectors/users';
 
 import ConnectedFileNode from './FileNode';
-import { PlusIcon } from '../../../common/icons';
+import {
+  AddFileIcon,
+  AddFolderIcon,
+  PlusIcon,
+  UploadFileIcon
+} from '../../../common/icons';
 import { FileDrawer } from './Editor/MobileEditor';
 
 // TODO: use a generic Dropdown UI component
@@ -90,17 +95,53 @@ export default function SideBar() {
           </h3>
           <div className="sidebar__icons">
             <button
-              aria-label={t('Sidebar.ToggleARIA')}
+              aria-label={t('Sidebar.AddFileARIA')}
               className="sidebar__add"
               tabIndex="0"
               ref={sidebarOptionsRef}
-              onClick={toggleProjectOptions}
+              onClick={() => {
+                dispatch(newFile(rootFile.id));
+                setTimeout(() => dispatch(closeProjectOptions()), 0);
+              }}
               onBlur={onBlurComponent}
               onFocus={onFocusComponent}
             >
-              <PlusIcon focusable="false" aria-hidden="true" />
+              {/* <PlusIcon focusable="false" aria-hidden="true" /> */}
+              <AddFileIcon focusable="false" aria-hidden="true" />
             </button>
-            <ul className="sidebar__project-options">
+            <button
+              aria-label={t('Sidebar.AddFolderARIA')}
+              className="sidebar__add"
+              tabIndex="0"
+              ref={sidebarOptionsRef}
+              onClick={() => {
+                dispatch(newFolder(rootFile.id));
+                setTimeout(() => dispatch(closeProjectOptions()), 0);
+              }}
+              onBlur={onBlurComponent}
+              onFocus={onFocusComponent}
+            >
+              {/* <PlusIcon focusable="false" aria-hidden="true" /> */}
+              <AddFolderIcon focusable="false" aria-hidden="true" />
+            </button>
+            {isAuthenticated && (
+              <button
+                aria-label={t('Sidebar.UploadFileARIA')}
+                className="sidebar__add"
+                tabIndex="0"
+                ref={sidebarOptionsRef}
+                onClick={() => {
+                  dispatch(openUploadFileModal(rootFile.id));
+                  setTimeout(() => dispatch(closeProjectOptions()), 0);
+                }}
+                onBlur={onBlurComponent}
+                onFocus={onFocusComponent}
+              >
+                {/* <PlusIcon focusable="false" aria-hidden="true" /> */}
+                <UploadFileIcon focusable="false" aria-hidden="true" />
+              </button>
+            )}
+            {/* <ul className="sidebar__project-options">
               <li>
                 <button
                   aria-label={t('Sidebar.AddFolderARIA')}
@@ -142,7 +183,29 @@ export default function SideBar() {
                   </button>
                 </li>
               )}
-            </ul>
+            </ul> */}
+            {/* <button
+              aria-label={t('Sidebar.AddFolderARIA')}
+              onClick={() => {
+                dispatch(newFolder(rootFile.id));
+                setTimeout(() => dispatch(closeProjectOptions()), 0);
+              }}
+              onBlur={onBlurComponent}
+              onFocus={onFocusComponent}
+            >
+              <AddFileIcon focusable="false" aria-hidden="true" />
+            </button> */}
+            {/* <button
+              aria-label={t('Sidebar.AddFileARIA')}
+              onClick={() => {
+                dispatch(newFile(rootFile.id));
+                setTimeout(() => dispatch(closeProjectOptions()), 0);
+              }}
+              onBlur={onBlurComponent}
+              onFocus={onFocusComponent}
+            >
+              {/* <AddFolderIcon focusable="false" aria-hidden="true" /> 
+            </button> */}
           </div>
         </header>
         <ConnectedFileNode id={rootFile.id} canEdit={canEditProject} />
