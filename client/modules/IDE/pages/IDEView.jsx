@@ -48,6 +48,26 @@ function WarnIfUnsavedChanges() {
 
   const currentLocation = useLocation();
 
+  // beforeunload handles closing or refreshing the window.
+  useEffect(() => {
+    const handleUnload = (e) => {
+      // See: https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeunload_event#browser_compatibility
+      e.preventDefault();
+      e.returnValue = t('Nav.WarningUnsavedChanges');
+    };
+
+    if (hasUnsavedChanges) {
+      window.addEventListener('beforeunload', handleUnload);
+    } else {
+      window.removeEventListener('beforeunload', handleUnload);
+    }
+
+    return () => {
+      window.removeEventListener('beforeunload', handleUnload);
+    };
+  }, [t, hasUnsavedChanges]);
+
+  // Prompt handles internal navigation between pages.
   return (
     <Prompt
       when={hasUnsavedChanges}
