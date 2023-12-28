@@ -207,26 +207,25 @@ function About(props) {
           </Link>
         </p>
       </div>
-      <div className="about__footer">
-        <p className="about__footer-list">
-          <a
-            href="https://github.com/processing/p5.js-web-editor"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {t('About.Contribute')}
-          </a>
-        </p>
-        <p className="about__footer-list">
-          <a
-            href="https://github.com/processing/p5.js-web-editor/issues/new"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {t('About.Report')}
-          </a>
-        </p>
-      </div>
+      <div className="about__footer-blank"></div>
+      <p className="about__footer-Contribute">
+        <a
+          href="https://github.com/processing/p5.js-web-editor"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {t('About.Contribute')}
+        </a>
+      </p>
+      <p className="about__footer-Report">
+        <a
+          href="https://github.com/processing/p5.js-web-editor/issues/new"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {t('About.Report')}
+        </a>
+      </p>
     </div>
   );
 }
