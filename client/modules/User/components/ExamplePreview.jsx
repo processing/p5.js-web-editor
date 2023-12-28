@@ -1,69 +1,30 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { PropTypes } from 'prop-types';
-import axios from 'axios';
-import { createGlobalStyle } from 'styled-components';
-import getConfig from '../../../utils/getConfig';
+import React, { useMemo } from 'react';
+import PropTypes from 'prop-types';
 import EmbedFrame from '../../Preview/EmbedFrame';
-import { registerFrame } from '../../../utils/dispatcher';
 
-const GlobalStyle = createGlobalStyle`
-  body {
-    margin: 0;
-  }
-`;
-
-function ExamplePreview({ url }) {
-  const [sketch, setSketch] = useState(null);
-  registerFrame(window.parent, getConfig('EDITOR_URL'));
-
-  useEffect(() => {
-    async function getRandomProject() {
-      // Find example projects
-      const response = await axios.get(url);
-      const projects = response.data;
-      if (!projects) return null;
-      setSketch(projects);
-      console.log('sketch', sketch);
-      return projects;
-    }
-    getRandomProject();
-  }, [url]);
-
-  const files = useMemo(() => {
-    const instanceMode = (sketch?.files || [])
-      .find((file) => file.name === 'sketch.js')
-      ?.content?.includes('Instance Mode');
-
-    return (sketch?.files || []).map((file) => ({
-      ...file,
-      content: file.content
-        // Fix links to assets
-        .replace(
-          /'assets/g,
-          "'https://github.com/processing/p5.js-website/raw/main/src/data/examples/assets"
-        )
-        .replace(
-          /"assets/g,
-          '"https://github.com/processing/p5.js-website/raw/main/src/data/examples/assets'
-        )
-        // Change canvas size
-        .replace(
-          /createCanvas\(\d+, ?\d+/g,
-          instanceMode
-            ? 'createCanvas(p.windowWidth, p.windowHeight'
-            : 'createCanvas(windowWidth, windowHeight'
-        )
-    }));
+function ExamplePreview({ sketch }) {
+  const sketchHeight = useMemo(() => {
+    const jsFile = (sketch?.files || []).find(
+      (file) => file.name === 'sketch.js'
+    );
+    return jsFile?.content?.match(/createCanvas\(\d+, ?(\d+)/)[1];
   }, [sketch]);
-  console.log(files, 'files');
+
+  const { files = [] } = sketch;
+
   return (
     <React.Fragment>
       {files.length > 0 ? (
-        <div style={{ position: 'relative', width: '100%', height: '10rem' }}>
-          <GlobalStyle />
+        <div
+          style={{
+            position: 'relative',
+            width: '100%',
+            height: `${sketchHeight || 400}px`
+          }}
+        >
           <EmbedFrame
             files={files}
-            basePath={`${window.location.pathname}/3D:_basic_shader`}
+            basePath={window.location.pathname}
             textOutput={false}
             gridOutput={false}
             isPlaying
@@ -77,7 +38,14 @@ function ExamplePreview({ url }) {
 }
 
 ExamplePreview.propTypes = {
-  url: PropTypes.string.isRequired
+  sketch: PropTypes.shape({
+    files: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        content: PropTypes.string
+      })
+    )
+  }).isRequired
 };
 
 export default ExamplePreview;

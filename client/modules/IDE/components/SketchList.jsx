@@ -147,17 +147,10 @@ class SketchListRowBase extends React.Component {
             {this.props.t('SketchList.DropdownAddToCollection')}
           </MenuItem>
           <MenuItem
-            hideIf={!this.props.user.authenticated}
             onClick={() => {
               this.setState({
                 preview: !this.state.preview
               });
-              console.log(
-                `/${this.props.username}/sketches/${slugify(
-                  this.props.sketch.name,
-                  '_'
-                )}`
-              );
             }}
           >
             Preview
@@ -212,15 +205,12 @@ class SketchListRowBase extends React.Component {
           <td>{formatDateCell(sketch.updatedAt, mobile)}</td>
           {this.renderDropdown()}
         </tr>
-        {this.state.preview ? (
-          <ExamplePreview
-            url={`/editor/${this.props.username}/projects/${slugify(
-              this.props.sketch.name,
-              '_'
-            )}`}
-          />
-        ) : (
-          <div>loading</div>
+        {this.state.preview && (
+          <tr key={`${sketch.id}-preview`}>
+            <td colSpan={4}>
+              <ExamplePreview sketch={this.props.sketch} />
+            </td>
+          </tr>
         )}
       </React.Fragment>
     );
