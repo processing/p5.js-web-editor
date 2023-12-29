@@ -7,6 +7,7 @@ import shortid from 'shortid';
 import eachSeries from 'async/eachSeries';
 import User from '../models/user';
 import Project from '../models/project';
+import { logger } from '../logger/winston.js';
 
 // TODO: change to true when testing!
 const testMake = false;
@@ -65,7 +66,7 @@ mongoose.connect(mongoConnectionString, {
 });
 mongoose.set('useCreateIndex', true);
 mongoose.connection.on('error', () => {
-  console.error(
+  logger.error(
     'MongoDB Connection Error. Please make sure that MongoDB is running.'
   );
   process.exit(1);
@@ -437,7 +438,7 @@ function createProjectsInP5user(newProjectList) {
     eachSeries(newProjectList, (newProject, sketchCallback) => {
       newProject.save((saveErr, savedProject) => {
         if (saveErr) throw saveErr;
-        console.log(`Created a new project in p5 user: ${savedProject.name}`);
+        logger.debug(`Created a new project in p5 user: ${savedProject.name}`);
         sketchCallback();
       });
     });
@@ -459,13 +460,13 @@ function getp5User() {
       });
       ggUser.save((saveErr) => {
         if (saveErr) throw saveErr;
-        console.log(`Created a user p5${ggUser}`);
+        logger.debug(`Created a user p5${ggUser}`);
       });
     }
 
     Project.find({ user: ggUser._id }, (projectsErr, projects) => {
       // if there are already some sketches, delete them
-      console.log('Deleting old projects...');
+      logger.debug('Deleting old projects...');
       projects.forEach((project) => {
         Project.remove({ _id: project._id }, (removeErr) => {
           if (removeErr) throw removeErr;

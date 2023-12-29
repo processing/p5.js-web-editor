@@ -4,6 +4,7 @@ import isBefore from 'date-fns/isBefore';
 import Project from '../models/project';
 import { resolvePathToFile } from '../utils/filePath';
 import { deleteObjectsFromS3, getObjectKey } from './aws.controller';
+import { logger } from '../logger/winston.js';
 
 // Bug -> timestamps don't get created, but it seems like this will
 // be fixed in mongoose soon
@@ -24,7 +25,7 @@ export function createFile(req, res) {
     },
     (err, updatedProject) => {
       if (err || !updatedProject) {
-        console.log(err);
+        logger.error(err);
         res.status(403).send({
           success: false,
           message: 'Project does not exist, or user does not match owner.'
@@ -35,7 +36,7 @@ export function createFile(req, res) {
       updatedProject.files.id(req.body.parentId).children.push(newFile.id);
       updatedProject.save((innerErr, savedProject) => {
         if (innerErr) {
-          console.log(innerErr);
+          logger.error(innerErr);
           res.json({ success: false });
           return;
         }

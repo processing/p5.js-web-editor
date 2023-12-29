@@ -6,6 +6,7 @@ import shortid from 'shortid';
 import { defaultCSS, defaultHTML } from '../domain-objects/createDefaultFiles';
 import User from '../models/user';
 import Project from '../models/project';
+import { logger } from '../logger/winston.js';
 
 const clientId = process.env.GITHUB_ID;
 const clientSecret = process.env.GITHUB_SECRET;
@@ -20,7 +21,7 @@ mongoose.connect(mongoConnectionString, {
 });
 mongoose.set('useCreateIndex', true);
 mongoose.connection.on('error', () => {
-  console.error(
+  logger.error(
     'MongoDB Connection Error. Please make sure that MongoDB is running.'
   );
   process.exit(1);
@@ -119,9 +120,8 @@ function getSketchContent(projectsInAllCategories) {
           const noNumberprojectName = project.projectName.replace(/(\d+)/g, '');
           if (noNumberprojectName === 'Instance Mode: Instance Container ') {
             for (let i = 0; i < 4; i += 1) {
-              const splitedRes = `${
-                data.split('*/')[1].split('</html>')[i]
-              }</html>\n`;
+              const splitedRes = `${data.split('*/')[1].split('</html>')[i]
+                }</html>\n`;
               project.sketchContent = splitedRes.replace(
                 'p5.js',
                 'https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.js'
@@ -198,7 +198,8 @@ async function addAssetsToProject(assets, response, project) {
           children: [],
           fileType: 'file'
         });
-        console.log(`create assets: ${assetName}`);
+        logger.debug(`create assets: ${assetName}`);
+
         // add asset file inside the newly created assets folder at index 4
         project.files[4].children.push(fileID);
       } else {
@@ -211,7 +212,7 @@ async function addAssetsToProject(assets, response, project) {
           children: [],
           fileType: 'file'
         });
-        console.log(`create assets: ${assetName}`);
+        logger.debug(`create assets: ${assetName}`);
         // add asset file inside the newly created assets folder at index 4
         project.files[4].children.push(fileID);
       }
@@ -335,7 +336,7 @@ async function createProjectsInP5user(projectsInAllCategories) {
 
           await addAssetsToProject(assetsInProject, data, newProject);
           const savedProject = await newProject.save();
-          console.log(`Created a new project in p5 user: ${savedProject.name}`);
+          logger.debug(`Created a new project in p5 user: ${savedProject.name}`);
         })
       )
     )
@@ -344,7 +345,7 @@ async function createProjectsInP5user(projectsInAllCategories) {
 }
 
 async function getp5User() {
-  console.log('Getting p5 user');
+  logger.debug('Getting p5 user');
   const user = await User.findOne({ username: 'p5' }).exec();
   let p5User = user;
   if (!p5User) {
@@ -354,10 +355,10 @@ async function getp5User() {
       password: process.env.EXAMPLE_USER_PASSWORD
     });
     await p5User.save();
-    console.log(`Created a user p5 ${p5User}`);
+    logger.debug(`Created a user p5 ${p5User}`);
   }
   const projects = await Project.find({ user: p5User._id }).exec();
-  console.log('Deleting old projects...');
+  logger.debug('Deleting old projects...');
   projects.forEach(async (project) => {
     await Project.deleteOne({ _id: project._id });
   });

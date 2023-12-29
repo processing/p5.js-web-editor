@@ -5,10 +5,11 @@ import mongoose from 'mongoose';
 import User from '../models/user';
 import Project from '../models/project';
 import async from 'async';
-require('dotenv').config({path: path.resolve('.env')});
+import { logger } from '../logger/winston.js';
+require('dotenv').config({ path: path.resolve('.env') });
 mongoose.connect('mongodb://localhost:27017/p5js-web-editor');
 mongoose.connection.on('error', () => {
-  console.error('MongoDB Connection Error. Please make sure that MongoDB is running.');
+  logger.error('MongoDB Connection Error. Please make sure that MongoDB is running.');
   process.exit(1);
 });
 
@@ -27,7 +28,7 @@ let client = s3.createClient({
 
 const CHUNK = 100;
 Project.count({}).exec().then((numProjects) => {
-  console.log(numProjects);
+  logger.debug(numProjects);
   let index = 0;
   async.whilst(
     () => {
@@ -41,13 +42,13 @@ Project.count({}).exec().then((numProjects) => {
             return;
           }
           const userId = project.user.valueOf();
-          console.log(project.name);
+          logger.debug(project.name);
           async.eachSeries(project.files, (file, fileCb) => {
             if (file.url && file.url.includes(process.env.S3_BUCKET) && !file.url.includes(userId)) {
-              console.log(file.url);
-              console.log(userId);
+              logger.debug(file.url, 'File URL: ');
+              logger.debug(userId);
               const key = file.url.split('/').pop();
-              console.log(key);
+              logger.debug(key);
               const params = {
                 Bucket: `${process.env.S3_BUCKET}`,
                 CopySource: `${process.env.S3_BUCKET}/${key}`,
@@ -55,33 +56,33 @@ Project.count({}).exec().then((numProjects) => {
               };
               try {
                 client.moveObject(params)
-                .on('error', (err) => {
-                  console.log(err);
-                  file.url = (process.env.S3_BUCKET_URL_BASE ||
-                              `https://s3-${process.env.AWS_REGION}.amazonaws.com/${process.env.S3_BUCKET}`) + `/${userId}/${key}`;
-                  project.save((err, savedProject) => {
-                    console.log(`updated file ${key}`);
-                    fileCb();
+                  .on('error', (err) => {
+                    logger.error(err);
+                    file.url = (process.env.S3_BUCKET_URL_BASE ||
+                      `https://s3-${process.env.AWS_REGION}.amazonaws.com/${process.env.S3_BUCKET}`) + `/${userId}/${key}`;
+                    project.save((err, savedProject) => {
+                      logger.debug(`updated file ${key}`);
+                      fileCb();
+                    });
+                  })
+                  .on('end', () => {
+                    file.url = (process.env.S3_BUCKET_URL_BASE ||
+                      `https://s3-${process.env.AWS_REGION}.amazonaws.com/${process.env.S3_BUCKET}`) + `/${userId}/${key}`;
+                    project.save((err, savedProject) => {
+                      logger.debug(`updated file ${key}`);
+                      fileCb();
+                    });
                   });
-                })
-                .on('end', () => {
-                  file.url = (process.env.S3_BUCKET_URL_BASE ||
-                              `https://s3-${process.env.AWS_REGION}.amazonaws.com/${process.env.S3_BUCKET}`) + `/${userId}/${key}`;
-                  project.save((err, savedProject) => {
-                    console.log(`updated file ${key}`);
-                    fileCb();
-                  });
-                });
-              } catch(e) {
-                console.log(e);
+              } catch (e) {
+                logger.error(e);
                 fileCb();
               }
             } else {
               fileCb();
-            }      
+            }
           }, () => {
             cb();
-          });      
+          });
         }, () => {
           index += CHUNK;
           whilstCb();
@@ -89,7 +90,7 @@ Project.count({}).exec().then((numProjects) => {
       });
     },
     () => {
-      console.log('finished processing all documents.');
+      logger.debug('finished processing all documents.');
       process.exit(0);
     }
   );

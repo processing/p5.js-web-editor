@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import blobUtil from 'blob-util';
 import mime from 'mime';
 import { PLAINTEXT_FILE_REGEX } from '../../../server/utils/fileUtils';
+import { logger } from '../../../server/logger/winston';
 
 // https://gist.github.com/fnky/7d044b94070a35e552f3c139cdf80213
 export function useSelectors(state, mapStateToSelectors) {
@@ -36,7 +37,7 @@ export function createBlobUrl(file) {
   }
 
   const mimeType = mime.getType(file.name) || 'text/plain';
-  console.log(mimeType);
+  logger.debug(mimeType);
 
   const fileBlob = blobUtil.createBlob([file.content], { type: mimeType });
   const blobURL = blobUtil.createObjectURL(fileBlob);

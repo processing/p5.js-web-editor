@@ -4,6 +4,7 @@ import {
   FileValidationError,
   ProjectValidationError
 } from '../../domain-objects/Project';
+import { logger } from '../../logger/winston.js';
 
 export default function createProject(req, res) {
   let projectValues = {
@@ -59,7 +60,7 @@ export function apiCreateProject(req, res) {
 
   function checkUserHasPermission() {
     if (req.user.username !== req.params.username) {
-      console.log('no permission');
+      logger.debug('no permission');
       const error = new ProjectValidationError(
         `'${req.user.username}' does not have permission to create for '${req.params.username}'`
       );

@@ -2,11 +2,11 @@
 import mongoose from 'mongoose';
 import path from 'path';
 import { uniqWith, isEqual } from 'lodash';
-require('dotenv').config({path: path.resolve('.env')});
+require('dotenv').config({ path: path.resolve('.env') });
 const ObjectId = mongoose.Types.ObjectId;
 mongoose.connect('mongodb://localhost:27017/p5js-web-editor');
 mongoose.connection.on('error', () => {
-  console.error('MongoDB Connection Error. Please make sure that MongoDB is running.');
+  logger.error('MongoDB Connection Error. Please make sure that MongoDB is running.');
   process.exit(1);
 });
 
@@ -14,6 +14,7 @@ import Project from '../models/project';
 import User from '../models/user';
 
 import s3 from '@auth0/s3';
+import { logger } from '../logger/winston.js';
 
 let client = s3.createClient({
   maxAsyncS3: 20,
@@ -39,15 +40,15 @@ Project.find({})
         }
       });
     });
-    console.log(s3Files.length);
+    logger.debug(s3Files.length);
     s3Files = uniqWith(s3Files, isEqual);
-    console.log(s3Files.length);
+    logger.debug(s3Files.length);
   });
 
 const uploadedFiles = [];
-const params = {'s3Params': {'Bucket': `${process.env.S3_BUCKET}`}};
+const params = { 's3Params': { 'Bucket': `${process.env.S3_BUCKET}` } };
 let objectsResponse = client.listObjects(params);
-objectsResponse.on('data', function(objects) {
+objectsResponse.on('data', function (objects) {
   objects.Contents.forEach(object => {
     uploadedFiles.push(object.Key);
   });
@@ -59,7 +60,7 @@ objectsResponse.on('end', () => {
   uploadedFiles.forEach(fileKey => {
     if (s3Files.indexOf(fileKey) === -1) {
       //delete file
-      filesToDelete.push({Key: fileKey});
+      filesToDelete.push({ Key: fileKey });
       // console.log("would delete file: ", fileKey);
     }
   });
@@ -76,9 +77,9 @@ objectsResponse.on('end', () => {
   // del.on('end', () => {
   //   console.log('deleted extra S3 files!');
   // });
-  console.log("To delete: ", filesToDelete.length);
-  console.log("Total S3 files: ", uploadedFiles.length);
-  console.log("Total S3 files in mongo: ", s3Files.length);
+  logger.debug("To delete: ", filesToDelete.length);
+  logger.debug("Total S3 files: ", uploadedFiles.length);
+  logger.debug("Total S3 files in mongo: ", s3Files.length);
 });
 
 // let projectsNotToUpdate;

@@ -9,6 +9,7 @@ import config from '../webpack/config.dev';
 import embedRoutes from './routes/embed.routes';
 import assetRoutes from './routes/asset.routes';
 import renderPreviewIndex from './views/previewIndex';
+import { logger } from './logger/winston.js';
 
 const app = new Express();
 
@@ -23,7 +24,7 @@ mongoose.connect(mongoConnectionString, {
 });
 mongoose.set('useCreateIndex', true);
 mongoose.connection.on('error', () => {
-  console.error(
+  logger.error(
     'MongoDB Connection Error. Please make sure that MongoDB is running.'
   );
   process.exit(1);
@@ -83,7 +84,7 @@ app.get('*', (req, res) => {
 
 app.listen(process.env.PREVIEW_PORT, (error) => {
   if (!error) {
-    console.log(
+    logger.debug(
       `p5.js Preview Server is running on port: ${process.env.PREVIEW_PORT}`
     );
   }

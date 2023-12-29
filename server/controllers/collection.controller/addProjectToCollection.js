@@ -1,3 +1,4 @@
+import { logger } from '../../logger/winston.js';
 import Collection from '../../models/collection';
 import Project from '../../models/project';
 
@@ -49,7 +50,7 @@ export default function addProjectToCollection(req, res) {
 
       return collection.save();
     } catch (error) {
-      console.error(error);
+      logger.error(error);
       sendFailure(500, error.message);
       return null;
     }

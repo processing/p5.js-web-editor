@@ -4,6 +4,7 @@ import s3 from '@auth0/s3';
 import mongoose from 'mongoose';
 import { getProjectsForUserId } from './project.controller';
 import { findUserByUsername } from './user.controller';
+import { logger } from '../logger/winston.js';
 
 const { ObjectId } = mongoose.Types;
 
@@ -230,8 +231,8 @@ export function listObjectsInS3ForUser(userId) {
       return Promise.resolve({ assets: projectAssets, totalSize });
     })
     .catch((err) => {
-      console.log('got an error');
-      console.log(err);
+      logger.error('got an error');
+      logger.error(err);
     });
 }
 

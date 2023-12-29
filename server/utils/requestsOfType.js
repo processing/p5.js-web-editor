@@ -1,3 +1,5 @@
+import { logger } from "../logger/winston.js";
+
 /*
   express middleware that sends a 406 Unacceptable
   response if an incoming request's Content-Type
@@ -10,7 +12,7 @@ const requestsOfType = (type) => (req, res, next) => {
 
   if (hasContentType && !isCorrectType) {
     if (process.env.NODE_ENV === 'development') {
-      console.error(
+      logger.error(
         `Requests with a body must be of Content-Type "${type}". Sending HTTP 406`
       );
     }

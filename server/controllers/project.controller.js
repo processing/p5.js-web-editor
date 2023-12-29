@@ -9,6 +9,7 @@ import Project from '../models/project';
 import User from '../models/user';
 import { resolvePathToFile } from '../utils/filePath';
 import generateFileSystemSafeName from '../utils/generateFileSystemSafeName';
+import { logger } from '../logger/winston.js';
 
 export {
   default as createProject,
@@ -52,7 +53,7 @@ export function updateProject(req, res) {
       .populate('user', 'username')
       .exec((updateProjectErr, updatedProject) => {
         if (updateProjectErr) {
-          console.log(updateProjectErr);
+          logger.error(updateProjectErr);
           res.status(400).json({ success: false });
           return;
         }
@@ -70,7 +71,7 @@ export function updateProject(req, res) {
           });
           updatedProject.save((innerErr, savedProject) => {
             if (innerErr) {
-              console.log(innerErr);
+              logger.error(innerErr);
               res.status(400).json({ success: false });
               return;
             }
@@ -98,7 +99,7 @@ export function getProject(req, res) {
       .populate('user', 'username')
       .exec((err, project) => { // eslint-disable-line
         if (err) {
-          console.log(err);
+          logger.error(err);
           return res
             .status(404)
             .send({ message: 'Project with that id does not exist' });
@@ -115,7 +116,7 @@ export function getProjectsForUserId(userId) {
       .select('name files id createdAt updatedAt')
       .exec((err, projects) => {
         if (err) {
-          console.log(err);
+          logger.error(err);
         }
         resolve(projects);
       });
@@ -281,7 +282,7 @@ async function buildZip(project, req, res) {
     });
     res.end(buff);
   } catch (err) {
-    console.error(err);
+    logger.error(err);
     res.status(500).send(err);
   }
 }

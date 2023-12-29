@@ -9,6 +9,7 @@ import {
 } from '../controllers/aws.controller';
 import mail from '../utils/mail';
 import { renderAccountConsolidation } from '../views/mail';
+import { logger } from '../logger/winston.js';
 
 const mongoConnectionString = process.env.MONGO_URL;
 const { ObjectId } = mongoose.Types;
@@ -20,7 +21,7 @@ mongoose.connect(mongoConnectionString, {
 });
 mongoose.set('useCreateIndex', true);
 mongoose.connection.on('error', () => {
-  console.error(
+  logger.error(
     'MongoDB Connection Error. Please make sure that MongoDB is running.'
   );
   process.exit(1);
@@ -87,9 +88,9 @@ let duplicates = null;
 fs.readFile('duplicates.json', async (err, file) => {
   const result = JSON.parse(file);
   for (let i = 3000; i < result.length; i += 1) {
-    console.log('Index: ', i);
+    ('Index: ', i);
     const email = result[i]._id;
-    console.log(email);
+    (email);
     await consolidateAccount(email); // eslint-disable-line
   }
   process.exit(0);
@@ -102,9 +103,9 @@ async function consolidateAccount(email) {
     .exec()
     .then((result) => {
       [currentUser, ...duplicates] = result;
-      console.log('Current User: ', currentUser._id, ' ', currentUser.email);
+      ('Current User: ', currentUser._id, ' ', currentUser.email);
       duplicates = duplicates.map((dup) => dup._id);
-      console.log('Duplicates: ', duplicates);
+      ('Duplicates: ', duplicates);
       return Project.find({
         user: { $in: duplicates }
       }).exec();
@@ -112,8 +113,8 @@ async function consolidateAccount(email) {
     .then((sketches) => {
       const saveSketchPromises = [];
       sketches.forEach((sketch) => {
-        console.log('SketchId: ', sketch._id);
-        console.log('UserId: ', sketch.user);
+        ('SketchId: ', sketch._id);
+        ('UserId: ', sketch.user);
         const moveSketchFilesPromises = [];
         sketch.files.forEach((file) => {
           // if the file url contains sketch user
@@ -131,8 +132,8 @@ async function consolidateAccount(email) {
                   file.url = newUrl;
                 })
                 .catch((err) => {
-                  console.log('Move Error:');
-                  console.log(err);
+                  logger.error('Move Error:');
+                  logger.error(err);
                 });
               moveSketchFilesPromises.push(fileSavePromise);
             } else {
@@ -141,8 +142,8 @@ async function consolidateAccount(email) {
                   file.url = newUrl;
                 })
                 .catch((err) => {
-                  console.log('Copy Error:');
-                  console.log(err);
+                  logger.error('Copy Error:');
+                  logger.error(err);
                 });
               moveSketchFilesPromises.push(fileSavePromise);
             }
@@ -159,23 +160,23 @@ async function consolidateAccount(email) {
       return Promise.all(saveSketchPromises);
     })
     .then(() => {
-      console.log('Moved and updated all sketches.');
+      ('Moved and updated all sketches.');
       return Collection.updateMany(
         { owner: { $in: duplicates } },
         { $set: { owner: ObjectId(currentUser.id) } }
       );
     })
     .then(() => {
-      console.log('Moved and updated all collections.');
+      ('Moved and updated all collections.');
       return User.deleteMany({ _id: { $in: duplicates } });
     })
     .then(() => {
-      console.log('Deleted other user accounts.');
+      ('Deleted other user accounts.');
       currentUser.email = currentUser.email.toLowerCase();
       return currentUser.save();
     })
     .then(() => {
-      console.log('Migrated email to lowercase.');
+      ('Migrated email to lowercase.');
       // const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
       const mailOptions = renderAccountConsolidation({
         body: {
@@ -188,7 +189,7 @@ async function consolidateAccount(email) {
 
       return new Promise((resolve, reject) => {
         mail.send(mailOptions, (mailErr, result) => {
-          console.log('Sent email.');
+          ('Sent email.');
           if (mailErr) {
             return reject(mailErr);
           }
@@ -197,7 +198,7 @@ async function consolidateAccount(email) {
       });
     })
     .catch((err) => {
-      console.log(err);
+      logger.error(err);
       process.exit(1);
     });
 }
