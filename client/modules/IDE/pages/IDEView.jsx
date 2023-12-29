@@ -193,16 +193,10 @@ const IDEView = () => {
                       </h2>
                     </header>
                     <div className="preview-frame__content">
-                      <div
-                        className="preview-frame-overlay"
-                        style={{ display: isOverlayVisible ? 'block' : 'none' }}
+                      <PreviewFrame
+                        cmController={cmRef.current}
+                        isOverlayVisible={isOverlayVisible}
                       />
-                      <div>
-                        {((preferences.textOutput || preferences.gridOutput) &&
-                          ide.isPlaying) ||
-                          ide.isAccessibleOutputPlaying}
-                      </div>
-                      <PreviewFrame cmController={cmRef.current} />
                     </div>
                   </section>
                 </SplitPane>
