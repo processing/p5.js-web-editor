@@ -188,6 +188,22 @@ export function setTheme(value) {
       value
     });
     const state = getState();
+
+    state.files.forEach((e) => {
+      // genereting a regular ex for targeting the html, body selector
+      const regex = new RegExp(`(html, body\\s*{[^}]*color\\s*:[^;]+;)`, 'g');
+      // replacing the color property
+      if (e.name === 'style.css' && state.preferences.theme !== 'light') {
+        e.content = e.content.replace(regex, (match, p1) =>
+          p1.replace(new RegExp(`color\\s*:[^;]+;`), `color: white;`)
+        );
+      } else if (e.name === 'style.css') {
+        e.content = e.content.replace(regex, (match, p1) =>
+          p1.replace(new RegExp(`color\\s*:[^;]+;`), `color: black;`)
+        );
+      }
+    });
+
     if (state.user.authenticated) {
       const formParams = {
         preferences: {

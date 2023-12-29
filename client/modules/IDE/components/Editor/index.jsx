@@ -224,7 +224,8 @@ class Editor extends React.Component {
 
   componentWillUpdate(nextProps) {
     // check if files have changed
-    if (this.props.files[0].id !== nextProps.files[0].id) {
+    if (this.props.files[0].id !== nextProps.files[3].id) {
+      // did change files[0] > files [3] to reflect the changes to original-files
       // then need to make CodeMirror documents
       this.initializeDocuments(nextProps.files);
     }
