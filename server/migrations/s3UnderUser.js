@@ -45,7 +45,7 @@ Project.count({}).exec().then((numProjects) => {
           logger.debug(project.name);
           async.eachSeries(project.files, (file, fileCb) => {
             if (file.url && file.url.includes(process.env.S3_BUCKET) && !file.url.includes(userId)) {
-              logger.debug(file.url, 'File URL: ');
+              logger.debug(file.url);
               logger.debug(userId);
               const key = file.url.split('/').pop();
               logger.debug(key);

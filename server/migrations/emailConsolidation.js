@@ -88,9 +88,9 @@ let duplicates = null;
 fs.readFile('duplicates.json', async (err, file) => {
   const result = JSON.parse(file);
   for (let i = 3000; i < result.length; i += 1) {
-    ('Index: ', i);
+    logger.debug(i);
     const email = result[i]._id;
-    (email);
+    logger.debug(email);
     await consolidateAccount(email); // eslint-disable-line
   }
   process.exit(0);
@@ -103,9 +103,10 @@ async function consolidateAccount(email) {
     .exec()
     .then((result) => {
       [currentUser, ...duplicates] = result;
-      ('Current User: ', currentUser._id, ' ', currentUser.email);
+      logger.debug(currentUser._id);
+      logger.debug(currentUser.email);
       duplicates = duplicates.map((dup) => dup._id);
-      ('Duplicates: ', duplicates);
+      logger.debug(duplicates);
       return Project.find({
         user: { $in: duplicates }
       }).exec();
@@ -160,23 +161,23 @@ async function consolidateAccount(email) {
       return Promise.all(saveSketchPromises);
     })
     .then(() => {
-      ('Moved and updated all sketches.');
+      logger.debug('Moved and updated all sketches.');
       return Collection.updateMany(
         { owner: { $in: duplicates } },
         { $set: { owner: ObjectId(currentUser.id) } }
       );
     })
     .then(() => {
-      ('Moved and updated all collections.');
+      logger.debug('Moved and updated all collections.');
       return User.deleteMany({ _id: { $in: duplicates } });
     })
     .then(() => {
-      ('Deleted other user accounts.');
+      logger.debug('Deleted other user accounts.');
       currentUser.email = currentUser.email.toLowerCase();
       return currentUser.save();
     })
     .then(() => {
-      ('Migrated email to lowercase.');
+      logger.debug('Migrated email to lowercase.');
       // const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
       const mailOptions = renderAccountConsolidation({
         body: {
@@ -189,7 +190,7 @@ async function consolidateAccount(email) {
 
       return new Promise((resolve, reject) => {
         mail.send(mailOptions, (mailErr, result) => {
-          ('Sent email.');
+          logger.debug('Sent email.');
           if (mailErr) {
             return reject(mailErr);
           }
