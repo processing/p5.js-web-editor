@@ -254,9 +254,6 @@ export default {
   ...baseThemes,
   [Theme.contrast]: extend(baseThemes[Theme.dark], {
     inactiveTextColor: grays.light,
-    modalBorderColor: grays.middleDark,
-    searchBackgroundColor: grays.darker,
-    tableRowStripeColor: grays.dark,
 
     Button: {
       primary: {
