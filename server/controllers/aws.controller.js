@@ -4,7 +4,7 @@ import s3 from '@auth0/s3';
 import mongoose from 'mongoose';
 import { getProjectsForUserId } from './project.controller';
 import { findUserByUsername } from './user.controller';
-import { logger } from '../logger/winston.js';
+import { logger } from '../logger/winston';
 
 const { ObjectId } = mongoose.Types;
 

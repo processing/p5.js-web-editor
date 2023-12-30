@@ -1,5 +1,5 @@
 import mjml2html from 'mjml';
-import { logger } from '../logger/winston.js';
+import { logger } from '../logger/winston';
 
 export default (template) => {
   try {

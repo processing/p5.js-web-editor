@@ -30,7 +30,7 @@ import { requestsOfTypeJSON } from './utils/requestsOfType';
 
 import { renderIndex } from './views/index';
 import { get404Sketch } from './views/404Page';
-import { logger } from './logger/winston.js';
+import { logger } from './logger/winston';
 
 const app = new Express();
 const MongoStore = connectMongo(session);

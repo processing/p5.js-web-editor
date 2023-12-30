@@ -6,7 +6,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 import Project from '../models/project';
-import { logger } from '../logger/winston.js';
+import { logger } from '../logger/winston';
 
 // Connect to MongoDB
 mongoose.Promise = global.Promise;

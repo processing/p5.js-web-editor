@@ -1,11 +1,13 @@
-import { developmentLogger } from './dev-logger.js';
-import { productionLogger } from './prod-logger.js';
+import { developmentLogger } from './dev-logger';
+import { productionLogger } from './prod-logger';
 
-export let logger = null;
+// eslint-disable-next-line import/no-mutable-exports
+let logger = null;
 
-if (process.env.NODE_ENV !== "production") {
-    logger = developmentLogger();
+if (process.env.NODE_ENV !== 'production') {
+  logger = developmentLogger();
+} else {
+  logger = productionLogger();
 }
-else {
-    logger = productionLogger();
-}
+
+export default logger;

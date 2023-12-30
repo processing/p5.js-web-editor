@@ -2,7 +2,7 @@ import fs from 'fs';
 import axios from 'axios';
 import Q from 'q';
 import { ok } from 'assert';
-import { logger } from '../logger/winston.js';
+import { logger } from '../logger/winston';
 
 const branchName = 'main';
 const branchRef = `?ref=${branchName}`;
@@ -95,8 +95,9 @@ async function fetchFileContent(item) {
   }
 
   if (file.url) {
-    const cdnRef = `https://cdn.jsdelivr.net/gh/ml5js/ml5-library@${branchName}${file.url.split(branchName)[1]
-      }`;
+    const cdnRef = `https://cdn.jsdelivr.net/gh/ml5js/ml5-library@${branchName}${
+      file.url.split(branchName)[1]
+    }`;
     file.url = cdnRef;
   }
 

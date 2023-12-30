@@ -4,7 +4,7 @@ import async from 'async';
 import User from '../models/user';
 import mail from '../utils/mail';
 import { renderEmailConfirmation, renderResetPassword } from '../views/mail';
-import { logger } from '../logger/winston.js';
+import { logger } from '../logger/winston';
 
 export * from './user.controller/apiKey';
 

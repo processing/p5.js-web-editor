@@ -1,7 +1,7 @@
 const fs = require('fs');
 const process = require('process');
 const axios = require('axios');
-const { logger } = require('../logger/winston.js');
+const { logger } = require('../logger/winston');
 
 axios.get('https://p5js.org/reference/data.json').then((response) => {
   const { data } = response;

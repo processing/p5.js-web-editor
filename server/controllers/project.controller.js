@@ -9,7 +9,7 @@ import Project from '../models/project';
 import User from '../models/user';
 import { resolvePathToFile } from '../utils/filePath';
 import generateFileSystemSafeName from '../utils/generateFileSystemSafeName';
-import { logger } from '../logger/winston.js';
+import { logger } from '../logger/winston';
 
 export {
   default as createProject,

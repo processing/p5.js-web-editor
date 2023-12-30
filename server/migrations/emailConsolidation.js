@@ -1,3 +1,5 @@
+/* eslint-disable no-sequences */
+/* eslint-disable no-unused-expressions */
 import mongoose from 'mongoose';
 import fs from 'fs';
 import User from '../models/user';
@@ -9,7 +11,7 @@ import {
 } from '../controllers/aws.controller';
 import mail from '../utils/mail';
 import { renderAccountConsolidation } from '../views/mail';
-import { logger } from '../logger/winston.js';
+import { logger } from '../logger/winston';
 
 const mongoConnectionString = process.env.MONGO_URL;
 const { ObjectId } = mongoose.Types;
@@ -114,8 +116,8 @@ async function consolidateAccount(email) {
     .then((sketches) => {
       const saveSketchPromises = [];
       sketches.forEach((sketch) => {
-        ('SketchId: ', sketch._id);
-        ('UserId: ', sketch.user);
+        'SketchId: ', sketch._id;
+        'UserId: ', sketch.user;
         const moveSketchFilesPromises = [];
         sketch.files.forEach((file) => {
           // if the file url contains sketch user

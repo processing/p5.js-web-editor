@@ -4,7 +4,7 @@ import {
   FileValidationError,
   ProjectValidationError
 } from '../../domain-objects/Project';
-import { logger } from '../../logger/winston.js';
+import { logger } from '../../logger/winston';
 
 export default function createProject(req, res) {
   let projectValues = {

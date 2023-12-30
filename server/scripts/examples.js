@@ -6,7 +6,7 @@ import shortid from 'shortid';
 import { defaultCSS, defaultHTML } from '../domain-objects/createDefaultFiles';
 import User from '../models/user';
 import Project from '../models/project';
-import { logger } from '../logger/winston.js';
+import { logger } from '../logger/winston';
 
 const clientId = process.env.GITHUB_ID;
 const clientSecret = process.env.GITHUB_SECRET;
@@ -120,8 +120,9 @@ function getSketchContent(projectsInAllCategories) {
           const noNumberprojectName = project.projectName.replace(/(\d+)/g, '');
           if (noNumberprojectName === 'Instance Mode: Instance Container ') {
             for (let i = 0; i < 4; i += 1) {
-              const splitedRes = `${data.split('*/')[1].split('</html>')[i]
-                }</html>\n`;
+              const splitedRes = `${
+                data.split('*/')[1].split('</html>')[i]
+              }</html>\n`;
               project.sketchContent = splitedRes.replace(
                 'p5.js',
                 'https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.js'
@@ -336,7 +337,9 @@ async function createProjectsInP5user(projectsInAllCategories) {
 
           await addAssetsToProject(assetsInProject, data, newProject);
           const savedProject = await newProject.save();
-          logger.debug(`Created a new project in p5 user: ${savedProject.name}`);
+          logger.debug(
+            `Created a new project in p5 user: ${savedProject.name}`
+          );
         })
       )
     )

@@ -1,4 +1,4 @@
-import { logger } from "../logger/winston.js";
+import { logger } from '../logger/winston';
 
 /*
   express middleware that sends a 406 Unacceptable

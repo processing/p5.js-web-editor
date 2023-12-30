@@ -14,7 +14,7 @@ import Project from '../models/project';
 import User from '../models/user';
 
 import s3 from '@auth0/s3';
-import { logger } from '../logger/winston.js';
+import { logger } from '../logger/winston';
 
 let client = s3.createClient({
   maxAsyncS3: 20,

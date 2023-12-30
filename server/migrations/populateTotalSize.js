@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 
 import User from '../models/user';
 import { listObjectsInS3ForUser } from '../controllers/aws.controller';
-import { logger } from '../logger/winston.js';
+import { logger } from '../logger/winston';
 
 // Connect to MongoDB
 mongoose.Promise = global.Promise;

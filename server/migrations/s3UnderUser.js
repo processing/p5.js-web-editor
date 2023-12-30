@@ -5,7 +5,7 @@ import mongoose from 'mongoose';
 import User from '../models/user';
 import Project from '../models/project';
 import async from 'async';
-import { logger } from '../logger/winston.js';
+import { logger } from '../logger/winston';
 require('dotenv').config({ path: path.resolve('.env') });
 mongoose.connect('mongodb://localhost:27017/p5js-web-editor');
 mongoose.connection.on('error', () => {

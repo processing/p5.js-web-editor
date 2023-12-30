@@ -9,7 +9,7 @@ import config from '../webpack/config.dev';
 import embedRoutes from './routes/embed.routes';
 import assetRoutes from './routes/asset.routes';
 import renderPreviewIndex from './views/previewIndex';
-import { logger } from './logger/winston.js';
+import { logger } from './logger/winston';
 
 const app = new Express();
 

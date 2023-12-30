@@ -1,4 +1,4 @@
-import { logger } from '../../logger/winston.js';
+import { logger } from '../../logger/winston';
 import Collection from '../../models/collection';
 import Project from '../../models/project';
 

@@ -9,7 +9,7 @@ import GoogleStrategy from 'passport-google-oauth20';
 import { BasicStrategy } from 'passport-http';
 
 import User from '../models/user';
-import { logger } from '../logger/winston.js';
+import { logger } from '../logger/winston';
 
 const accountSuspensionMessage =
   'Account has been suspended. Please contact privacy@p5js.org if you believe this is an error.';
@@ -17,7 +17,7 @@ const accountSuspensionMessage =
 function generateUniqueUsername(username) {
   const adj =
     friendlyWords.predicates[
-    Math.floor(Math.random() * friendlyWords.predicates.length)
+      Math.floor(Math.random() * friendlyWords.predicates.length)
     ];
   return slugify(`${username} ${adj}`);
 }
