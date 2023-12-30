@@ -56,7 +56,8 @@ function WarnIfUnsavedChanges() {
           isAuth(nextLocation.pathname) ||
           isAuth(currentLocation.pathname) ||
           isOverlay(nextLocation.pathname) ||
-          isOverlay(currentLocation.pathname)
+          isOverlay(currentLocation.pathname) ||
+          nextLocation.state?.confirmed
         ) {
           return true; // allow navigation
         }
@@ -172,7 +173,9 @@ const IDEView = () => {
                     primary="second"
                     size={ide.consoleIsExpanded ? consoleSize : 29}
                     minSize={29}
-                    onChange={(size) => setConsoleSize(size)}
+                    onChange={(size) => {
+                      setConsoleSize(size);
+                    }}
                     allowResize={ide.consoleIsExpanded}
                     className="editor-preview-subpanel"
                   >
@@ -190,16 +193,10 @@ const IDEView = () => {
                       </h2>
                     </header>
                     <div className="preview-frame__content">
-                      <div
-                        className="preview-frame-overlay"
-                        style={{ display: isOverlayVisible ? 'block' : 'none' }}
+                      <PreviewFrame
+                        cmController={cmRef.current}
+                        isOverlayVisible={isOverlayVisible}
                       />
-                      <div>
-                        {((preferences.textOutput || preferences.gridOutput) &&
-                          ide.isPlaying) ||
-                          ide.isAccessibleOutputPlaying}
-                      </div>
-                      <PreviewFrame cmController={cmRef.current} />
                     </div>
                   </section>
                 </SplitPane>
@@ -214,11 +211,18 @@ const IDEView = () => {
                   split="horizontal"
                   primary="second"
                   minSize={200}
+                  onChange={() => {
+                    setIsOverlayVisible(true);
+                  }}
+                  onDragFinished={() => {
+                    setIsOverlayVisible(false);
+                  }}
                 >
                   <PreviewFrame
                     fullView
                     hide={!ide.isPlaying}
                     cmController={cmRef.current}
+                    isOverlayVisible={isOverlayVisible}
                   />
                   <Console />
                 </SplitPane>

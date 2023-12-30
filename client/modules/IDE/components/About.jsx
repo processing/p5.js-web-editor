@@ -163,6 +163,20 @@ function About(props) {
           </a>
         </p>
         <p className="about__content-column-list">
+          <a
+            href="https://p5js.org/download/support.html"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <AsteriskIcon
+              className="about__content-column-asterisk"
+              aria-hidden="true"
+              focusable="false"
+            />
+            Donate
+          </a>
+        </p>
+        <p className="about__content-column-list">
           <Link to="/privacy-policy">
             <AsteriskIcon
               className="about__content-column-asterisk"

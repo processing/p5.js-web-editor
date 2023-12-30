@@ -31,12 +31,12 @@ export function getSession(req, res) {
 }
 
 export function destroySession(req, res, next) {
-  req.session.destroy((err) => {
+  req.logout((err) => {
     if (err) {
       next(err);
       return;
     }
-    req.logout((error) => {
+    req.session.destroy((error) => {
       if (error) {
         next(error);
         return;

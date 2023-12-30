@@ -45,7 +45,8 @@
       "Asset": "Asset",
       "MyAssets": "My Assets",
       "LogOut": "Log Out"
-    }
+    },
+    "Fundraiser": "Support p5.js and the Processing Foundation!"
   },
   "CodemirrorFindAndReplace": {
     "ToggleReplace": "Toggle Replace",
@@ -201,6 +202,11 @@
       "TurnOffAccessibleOutput": "Turn Off Accessible Output"
     }
   },
+  "Fundraiser": {
+    "Title": "Support Our Software and Team",
+    "Description": "🎉 Join us in celebrating a Decade of Code! 🎉 Support p5.js and the Processing Foundation and earn unique rewards. 🙂", 
+    "CallToAction": "Contribute and learn more!"
+  },
   "Sidebar": {
     "Title": "Sketch Files",
     "ToggleARIA": "Toggle open/close sketch file options",
@@ -225,10 +231,12 @@
     "Delete": "Delete"
   },
   "Common": {
+    "SiteName": "p5.js Web Editor",
     "Error": "Error",
     "ErrorARIA": "Error",
     "Save": "Save",
     "p5logoARIA": "p5.js Logo",
+    "PFlogoARIA": "Processing Foundation Logo",
     "DeleteConfirmation": "Are you sure you want to delete {{name}}?"
   },
   "IDEView": {
@@ -279,7 +287,7 @@
     "errorPasswordMismatch": "Passwords must match",
     "errorEmptyPassword": "Please enter a password",
     "errorShortPassword": "Password must be at least 6 characters",
-    "errorConfirmPassword": "Please enter a password confirmation",
+    "errorConfirmPassword": "Please confirm your password",
     "errorNewPassword": "Please enter a new password or leave the current password empty.",
     "errorEmptyUsername": "Please enter a username.",
     "errorLongUsername": "Username must be less than 20 characters.",
@@ -290,7 +298,7 @@
     "Description": "Set a New Password",
     "TokenInvalidOrExpired": "The password reset token is invalid or has expired.",
     "EmptyPassword": "Please enter a password",
-    "PasswordConfirmation": "Please enter a password confirmation",
+    "PasswordConfirmation": "Please confirm your password",
     "PasswordMismatch": "Passwords must match"
   },
   "AccountForm": {
@@ -538,8 +546,8 @@
     "KeyUpLineNumber": "line {{lineNumber}}"
   },
   "EditorAccessibility": {
-    "NoLintMessages": "There are no lint messages ",
-    "CurrentLine": " Current line"
+    "NoLintMessages": "There are no lint messages",
+    "CurrentLine": "Current line"
   },
   "Timer": {
     "SavedAgo": "Saved: {{timeAgo}}"
