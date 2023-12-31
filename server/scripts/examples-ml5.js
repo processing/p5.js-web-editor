@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import fs from 'fs';
 import axios from 'axios';
 import Q from 'q';
@@ -95,9 +96,8 @@ async function fetchFileContent(item) {
   }
 
   if (file.url) {
-    const cdnRef = `https://cdn.jsdelivr.net/gh/ml5js/ml5-library@${branchName}${
-      file.url.split(branchName)[1]
-    }`;
+    const cdnRef = `https://cdn.jsdelivr.net/gh/ml5js/ml5-library@${branchName}${file.url.split(branchName)[1]
+      }`;
     file.url = cdnRef;
   }
 
