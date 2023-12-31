@@ -6,6 +6,7 @@ import shortid from 'shortid';
 import { defaultCSS, defaultHTML } from '../domain-objects/createDefaultFiles';
 import User from '../models/user';
 import Project from '../models/project';
+import logger from '../logger/winton';
 
 const clientId = process.env.GITHUB_ID;
 const clientSecret = process.env.GITHUB_SECRET;
@@ -198,7 +199,7 @@ async function addAssetsToProject(assets, response, project) {
           children: [],
           fileType: 'file'
         });
-        console.log(`create assets: ${assetName}`);
+        logger.debug(`create assets: ${assetName}`);
         // add asset file inside the newly created assets folder at index 4
         project.files[4].children.push(fileID);
       } else {
@@ -211,7 +212,7 @@ async function addAssetsToProject(assets, response, project) {
           children: [],
           fileType: 'file'
         });
-        console.log(`create assets: ${assetName}`);
+        logger.debug(`create assets: ${assetName}`);
         // add asset file inside the newly created assets folder at index 4
         project.files[4].children.push(fileID);
       }
@@ -335,7 +336,9 @@ async function createProjectsInP5user(projectsInAllCategories) {
 
           await addAssetsToProject(assetsInProject, data, newProject);
           const savedProject = await newProject.save();
-          console.log(`Created a new project in p5 user: ${savedProject.name}`);
+          logger.debug(
+            `Created a new project in p5 user: ${savedProject.name}`
+          );
         })
       )
     )
@@ -344,7 +347,7 @@ async function createProjectsInP5user(projectsInAllCategories) {
 }
 
 async function getp5User() {
-  console.log('Getting p5 user');
+  logger.debug('Getting p5 user');
   const user = await User.findOne({ username: 'p5' }).exec();
   let p5User = user;
   if (!p5User) {
@@ -354,10 +357,10 @@ async function getp5User() {
       password: process.env.EXAMPLE_USER_PASSWORD
     });
     await p5User.save();
-    console.log(`Created a user p5 ${p5User}`);
+    logger.debug(`Created a user p5 ${p5User}`);
   }
   const projects = await Project.find({ user: p5User._id }).exec();
-  console.log('Deleting old projects...');
+  logger.debug('Deleting old projects...');
   projects.forEach(async (project) => {
     await Project.deleteOne({ _id: project._id });
   });

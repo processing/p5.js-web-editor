@@ -5,7 +5,8 @@ import mongoose from 'mongoose';
 import User from '../models/user';
 import Project from '../models/project';
 import async from 'async';
-require('dotenv').config({path: path.resolve('.env')});
+import logger from '../logger/winton';
+require('dotenv').config({ path: path.resolve('.env') });
 mongoose.connect('mongodb://localhost:27017/p5js-web-editor');
 mongoose.connection.on('error', () => {
   console.error('MongoDB Connection Error. Please make sure that MongoDB is running.');
@@ -27,39 +28,39 @@ mongoose.connection.on('error', () => {
 
 const CHUNK = 100;
 Project.count({})
-.exec().then((numProjects) => {
-  console.log(numProjects);
-  let index = 0;
-  async.whilst(
-    () => {
-      return index < numProjects;
-    },
-    (whilstCb) => {
-      Project.find({}).skip(index).limit(CHUNK).exec((err, projects) => {
-        async.eachSeries(projects, (project, cb) => {
-          console.log(project.name);
-          async.eachSeries(project.files, (file, fileCb) => {
-            if (file.url && file.url.includes('s3-us-west-2.amazonaws.com/')) {
-              file.url = file.url.replace('s3-us-west-2.amazonaws.com/', '');
-              project.save((err, newProject) => {
-                console.log(`updated file ${file.url}`);
+  .exec().then((numProjects) => {
+    logger.debug(numProjects);
+    let index = 0;
+    async.whilst(
+      () => {
+        return index < numProjects;
+      },
+      (whilstCb) => {
+        Project.find({}).skip(index).limit(CHUNK).exec((err, projects) => {
+          async.eachSeries(projects, (project, cb) => {
+            logger.debug(project.name);
+            async.eachSeries(project.files, (file, fileCb) => {
+              if (file.url && file.url.includes('s3-us-west-2.amazonaws.com/')) {
+                file.url = file.url.replace('s3-us-west-2.amazonaws.com/', '');
+                project.save((err, newProject) => {
+                  logger.debug(`updated file ${file.url}`);
+                  fileCb();
+                });
+              } else {
                 fileCb();
-              });
-            } else {
-              fileCb();
-            }
+              }
+            }, () => {
+              cb();
+            });
           }, () => {
-            cb();
+            index += CHUNK;
+            whilstCb();
           });
-        }, () => {
-          index += CHUNK;
-          whilstCb();
         });
-      });
-    },
-    () => {
-      console.log('finished processing all documents.')
-      process.exit(0); 
-    }
-  );
-});
+      },
+      () => {
+        logger.debug('finished processing all documents.')
+        process.exit(0);
+      }
+    );
+  });

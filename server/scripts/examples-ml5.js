@@ -2,6 +2,7 @@ import fs from 'fs';
 import axios from 'axios';
 import Q from 'q';
 import { ok } from 'assert';
+import logger from '../logger/winton';
 
 const branchName = 'main';
 const branchRef = `?ref=${branchName}`;
@@ -311,31 +312,31 @@ async function createProject(project) {
  * @param {*} user
  */
 async function createProjectsInP5User(filledProjectList, user) {
-  console.log('Finding existing projects...');
+  logger.debug('Finding existing projects...');
 
   const existingProjects = await getProjectsList();
 
-  console.log(`Will delete ${existingProjects.length} projects`);
+  logger.debug(`Will delete ${existingProjects.length} projects`);
 
   try {
     await Q.all(existingProjects.map(deleteProject));
-    console.log('deleted old projects!');
+    logger.debug('deleted old projects!');
   } catch (error) {
-    console.log('Problem deleting projects');
-    console.log(error);
+    logger.error('Problem deleting projects');
+    logger.error(error);
     process.exit(1);
   }
 
   try {
     const newProjects = filledProjectList.map(async (project) => {
-      console.log(`saving ${project.name}`);
+      logger.debug(`saving ${project.name}`);
       await createProject(project);
     });
     await Q.all(newProjects);
-    console.log(`Projects saved to User: ${editorUsername}!`);
+    logger.debug(`Projects saved to User: ${editorUsername}!`);
   } catch (error) {
-    console.log('Error saving projects');
-    console.log(error);
+    logger.error('Error saving projects');
+    logger.error(error);
   }
 }
 
@@ -366,7 +367,7 @@ async function make() {
   );
 
   await createProjectsInP5User(formattedSketchList);
-  console.log('done!');
+  logger.debug('done!');
   process.exit();
 }
 
@@ -390,7 +391,7 @@ async function test() {
   );
 
   await createProjectsInP5User(formattedSketchList);
-  console.log('done!');
+  logger.debug('done!');
   process.exit();
 }
 

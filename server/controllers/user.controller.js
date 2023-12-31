@@ -4,6 +4,7 @@ import async from 'async';
 import User from '../models/user';
 import mail from '../utils/mail';
 import { renderEmailConfirmation, renderResetPassword } from '../views/mail';
+import logger from '../logger/winton';
 
 export * from './user.controller/apiKey';
 
@@ -181,7 +182,7 @@ export function resetPasswordInitiate(req, res) {
     ],
     (err) => {
       if (err) {
-        console.log(err);
+        logger.error(err);
         res.json({ success: false });
         return;
       }
