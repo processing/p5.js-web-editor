@@ -35,8 +35,6 @@
   & .CodeMirror-lines {
     padding-top: #{2 / $base-font-size}rem;
   }
-
-
 }
 
 .console__editor .CodeMirror {
@@ -52,8 +50,5 @@
     @include themify() {
       color: getThemifyVariable('console-color');
     }
-
-    
- 
   }
 }
