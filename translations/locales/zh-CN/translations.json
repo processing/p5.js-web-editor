@@ -124,7 +124,8 @@
     "Close": "关闭",
     "CloseARIA": "关闭控制台",
     "Open": "打开",
-    "OpenARIA": "打开控制台"
+    "OpenARIA": "打开控制台",
+    "Placeholder" : "此处输入命令..."
   },
   "Preferences": {
     "Settings": "设置",

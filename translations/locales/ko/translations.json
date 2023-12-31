@@ -110,7 +110,8 @@
     "Close": "닫기",
     "CloseARIA": "콘솔 닫기",
     "Open": "열기",
-    "OpenARIA": "콘솔 열기"
+    "OpenARIA": "콘솔 열기",
+    "Placeholder" : "여기에 명령 입력..."
   },
   "Preferences": {
     "Settings": "설정",

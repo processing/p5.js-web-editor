@@ -124,7 +124,8 @@
       "Close": "閉じる",
       "CloseARIA": "コンソールを閉じる",
       "Open": "開く",
-      "OpenARIA": "コンソールを開く"
+      "OpenARIA": "コンソールを開く",
+      "Placeholder" : "ここにコマンド入力..."
     },
     "Preferences": {
       "Settings": "設定",

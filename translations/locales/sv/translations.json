@@ -127,7 +127,8 @@
     "Close": "Stäng",
     "CloseARIA": "Stäng konsoll",
     "Open": "Öppna",
-    "OpenARIA": "Öppna konsoll"
+    "OpenARIA": "Öppna konsoll",
+    "Placeholder" : "Kommandoinmatning här..."
   },
   "Preferences": {
     "Settings": "Inställningar",

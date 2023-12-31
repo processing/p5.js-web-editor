@@ -124,7 +124,8 @@
       "Close": "बंद करें",
       "CloseARIA": "कंसोल बंद करें",
       "Open": "खोलें",
-      "OpenARIA": "कंसोल खोलें"
+      "OpenARIA": "कंसोल खोलें",
+      "Placeholder": "यहां कमांड इनपुट करें..."
     },
     "Preferences": {
       "Settings": "सेटिंग्स",

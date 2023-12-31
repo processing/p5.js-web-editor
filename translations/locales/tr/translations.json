@@ -127,7 +127,8 @@
     "Close": "Kapat",
     "CloseARIA": "Konsolu Kapat",
     "Open": "Aç",
-    "OpenARIA": "Konsolu Aç"
+    "OpenARIA": "Konsolu Aç",
+    "Placeholder": "Buraya komut girişi..."
   },
   "Preferences": {
     "Settings": "Ayarlar",

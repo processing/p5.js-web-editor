@@ -128,7 +128,8 @@
     "Close": "বন্ধ",
     "CloseARIA": "কনসোল বন্ধ করুন",
     "Open": "খোলা",
-    "OpenARIA": "কনসোল খোলুন"
+    "OpenARIA": "কনসোল খোলুন",
+    "Placeholder" : "কমান্ড ইনপুট এখানে..."
   },
   "Preferences": {
     "Settings": "সেটিংস",

@@ -95,11 +95,9 @@ function CollectionMetadata({ collectionId }) {
 
         <div className="collection-metadata__column--right">
           <ShareURL value={`${hostname}/${username}/collections/${id}`} />
-          {isOwner && (
-            <Button onClick={() => setIsAddingSketches(true)}>
-              {t('Collection.AddSketch')}
-            </Button>
-          )}
+          <Button onClick={() => setIsAddingSketches(true)}>
+            {t('Collection.AddSketch')}
+          </Button>
         </div>
       </div>
       {isAddingSketches && (

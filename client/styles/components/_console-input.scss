@@ -35,11 +35,15 @@
   & .CodeMirror-lines {
     padding-top: #{2 / $base-font-size}rem;
   }
+
+
 }
 
 .console__editor .CodeMirror {
   border: none;
   font-family: Inconsolata,monospace;
+
+
   @include themify() {
     background-color: getThemifyVariable('console-input-background-color');
   }
@@ -48,5 +52,8 @@
     @include themify() {
       color: getThemifyVariable('console-color');
     }
+
+    
+ 
   }
 }

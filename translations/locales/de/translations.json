@@ -124,7 +124,8 @@
     "Close": "Schließen",
     "CloseARIA": "Konsole schließen",
     "Open": "Öffnen",
-    "OpenARIA": "Konsole öffnen"
+    "OpenARIA": "Konsole öffnen",
+    "Placeholder" : "Commando-invoer hier..."
   },
   "Preferences": {
     "Settings": "Einstellungen",

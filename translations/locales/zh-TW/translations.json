@@ -124,7 +124,8 @@
     "Close": "關閉",
     "CloseARIA": "關閉主控台",
     "Open": "Open",
-    "OpenARIA": "Open console"
+    "OpenARIA": "Open console",
+    "Placeholder" : "此處輸入命令..."
   },
   "Preferences": {
     "Settings": "設定",

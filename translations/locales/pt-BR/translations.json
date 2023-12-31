@@ -124,7 +124,8 @@
     "Close": "Fechar",
     "CloseARIA": "Fechar terminal",
     "Open": "Abrir",
-    "OpenARIA": "Abrir terminal"
+    "OpenARIA": "Abrir terminal",
+    "Placeholder" : "Entrada de comando aqui..."
   },
   "Preferences": {
     "Settings": "Configurações",

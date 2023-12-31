@@ -127,7 +127,8 @@
     "Close": "Chiudi",
     "CloseARIA": "Chiudi terminale",
     "Open": "Apri",
-    "OpenARIA": "Apri terminale"
+    "OpenARIA": "Apri terminale",
+    "Placeholder" : "Inserisci il comando qui..."
   },
   "Preferences": {
     "Settings": "Impostazioni",
