@@ -208,16 +208,16 @@ function About(props) {
         </p>
       </div>
       <div className="about__footer">
-        <p className="about__footer-list">
-          <a
-            href="https://github.com/processing/p5.js-web-editor"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {t('About.Contribute')}
-          </a>
-        </p>
-        <p className="about__footer-list">
+        <div className="about__footer-list">
+            <a
+              href="https://github.com/processing/p5.js-web-editor"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {t('About.Contribute')}
+            </a>
+        </div>
+        <div className="about__footer-list">
           <a
             href="https://github.com/processing/p5.js-web-editor/issues/new"
             target="_blank"
@@ -225,7 +225,7 @@ function About(props) {
           >
             {t('About.Report')}
           </a>
-        </p>
+        </div>
       </div>
     </div>
   );

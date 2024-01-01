@@ -5,7 +5,14 @@
     }
   }
 }
+.about__footer {
+  display: flex;
+  justify-content: space-between; 
+}
 
+.about__footer-list {
+  margin: 0;
+}
 .about__content {
   display: flex;
   flex-direction: row;
