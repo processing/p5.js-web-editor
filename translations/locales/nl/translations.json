@@ -1,0 +1,625 @@
+{
+  "Nav": {
+    "File": {
+      "Title": "Bestand",
+      "New": "Nieuw",
+      "Share": "Delen",
+      "Duplicate": "Duplicaat",
+      "Open": "Openen",
+      "Download": "Downloaden",
+      "AddToCollection": "Toevoegen aan Verzameling",
+      "Examples": "Voorbeelden"
+    },
+    "Edit": {
+      "Title": "Bewerken",
+      "TidyCode": "Code opschonen",
+      "Find": "Vinden",
+      "Replace": "Vervangen"
+    },
+    "Sketch": {
+      "Title": "Schetsen",
+      "AddFile": "Bestand toevoegen",
+      "AddFolder": "Map toevoegen",
+      "Run": "Uitvoeren",
+      "Stop": "Stoppen"
+    },
+    "Help": {
+      "Title": "Help",
+      "KeyboardShortcuts": "Sneltoetsen",
+      "Reference": "Referentie",
+      "About": "Over"
+    },
+    "Lang": "Taal",
+    "BackEditor": "Terug naar Editor",
+    "WarningUnsavedChanges": "Weet je zeker dat je deze pagina wilt verlaten? Er zijn niet-opgeslagen wijzigingen.",
+    "Login": "Inloggen",
+    "LoginOr": "of",
+    "SignUp": "Aanmelden",
+    "Auth": {
+      "Welcome": "Welkom",
+      "Hello": "Hallo",
+      "MyAccount": "Mijn Account",
+      "My": "Mijn",
+      "MySketches": "Mijn Schetsen",
+      "MyCollections": "Mijn Verzamelingen",
+      "Asset": "Actief",
+      "MyAssets": "Mijn Activa",
+      "LogOut": "Uitloggen"
+    }
+  },
+  "CodemirrorFindAndReplace": {
+    "ToggleReplace": "Vervanging Wisselen",
+    "Find": "Vinden",
+    "FindPlaceholder": "Zoeken in bestanden",
+    "Replace": "Vervangen",
+    "ReplaceAll": "Alles Vervangen",
+    "ReplacePlaceholder": "Tekst om te vervangen",
+    "Regex": "Reguliere expressie",
+    "CaseSensitive": "Hoofdlettergevoelig",
+    "WholeWords": "Hele woorden",
+    "Previous": "Vorige",
+    "Next": "Volgende",
+    "NoResults": "Geen resultaten",
+    "Close": "Sluiten"
+  },
+  "LoginForm": {
+    "UsernameOrEmail": "Gebruikersnaam of E-mail",
+    "UsernameOrEmailARIA": "Gebruikersnaam of E-mail",
+    "Password": "Wachtwoord",
+    "PasswordARIA": "Wachtwoord",
+    "Submit": "Inloggen"
+  },
+  "LoginView": {
+    "Title": "p5.js Website Editor | Inloggen",
+    "Login": "Inloggen",
+    "LoginOr": "of",
+    "SignUp": "Aanmelden",
+    "Email": "email",
+    "Username": "gebruikersnaam",
+    "DontHaveAccount": "Heb je geen account? ",
+    "ForgotPassword": "Wachtwoord vergeten? ",
+    "ResetPassword": "Wachtwoord resetten"
+  },
+  "SocialAuthButton": {
+    "Connect": "Verbinden met {{serviceauth}} account",
+    "Unlink": "Ontkoppelen van {{serviceauth}} account",
+    "Login": "Inloggen met {{serviceauth}} account",
+    "LogoARIA": "{{serviceauth}} logo"
+  },
+  "About": {
+    "Title": "Over",
+    "TitleHelmet": "p5.js Website Editor | Over",
+    "Contribute": "Bijdragen",
+    "NewP5": "Nieuw bij p5.js?",
+    "Report": "Fout melden",
+    "Learn": "Leren",
+    "Resources": "Bronnen",
+    "Libraries": "Bibliotheken",
+    "Forum": "Forum",
+    "Examples": "Voorbeelden",
+    "PrivacyPolicy": "Privacybeleid",
+    "TermsOfUse": "Gebruiksvoorwaarden",
+    "CodeOfConduct": "Gedragscode"
+},
+  "Toast": {
+    "OpenedNewSketch": "Nieuwe schets geopend.",
+    "SketchSaved": "Schets opgeslagen.",
+    "SketchFailedSave": "Opslaan van schets mislukt.",
+    "AutosaveEnabled": "Automatisch opslaan ingeschakeld.",
+    "LangChange": "Taal wijzigen",
+    "SettingsSaved": "Instellingen opgeslagen."
+  },
+  "Toolbar": {
+    "Preview": "Voorbeeld",
+    "Auto-refresh": "Automatisch vernieuwen",
+    "OpenPreferencesARIA": "Voorkeuren openen",
+    "PlaySketchARIA": "Schets afspelen",
+    "PlayOnlyVisualSketchARIA": "Alleen visuele schets afspelen",
+    "StopSketchARIA": "Stop schets",
+    "EditSketchARIA": "Schetsnaam bewerken",
+    "NewSketchNameARIA": "Nieuwe schetsnaam",
+    "By": " door "
+  },
+  "Console": {
+    "Title": "Console",
+    "Clear": "Wissen",
+    "ClearARIA": "Console wissen",
+    "Close": "Sluiten",
+    "CloseARIA": "Console sluiten",
+    "Open": "Openen",
+    "OpenARIA": "Console openen"
+  },
+  "Preferences": {
+    "Settings": "Instellingen",
+    "GeneralSettings": "Algemene instellingen",
+    "Accessibility": "Toegankelijkheid",
+    "Theme": "Thema",
+    "LightTheme": "Licht",
+    "LightThemeARIA": "licht thema ingeschakeld",
+    "DarkTheme": "Donker",
+    "DarkThemeARIA": "donker thema ingeschakeld",
+    "HighContrastTheme": "Hoog contrast thema",
+    "HighContrastThemeARIA": "hoog contrast thema ingeschakeld",
+    "TextSize": "Tekstgrootte",
+    "DecreaseFont": "Verkleinen",
+    "DecreaseFontARIA": "lettergrootte verkleinen",
+    "IncreaseFont": "Vergroten",
+    "IncreaseFontARIA": "lettergrootte vergroten",
+    "FontSize": "Lettergrootte",
+    "SetFontSize": "Lettergrootte instellen",
+    "Autosave": "Automatisch opslaan",
+    "On": "Aan",
+    "AutosaveOnARIA": "automatisch opslaan ingeschakeld",
+    "Off": "Uit",
+    "AutosaveOffARIA": "automatisch opslaan uitgeschakeld",
+    "AutocloseBracketsQuotes": "Automatisch sluiten van haken en aanhalingstekens",
+    "AutocloseBracketsQuotesOnARIA": "Automatisch sluiten van haken en aanhalingstekens ingeschakeld",
+    "AutocloseBracketsQuotesOffARIA": "Automatisch sluiten van haken en aanhalingstekens uitgeschakeld",
+    "AutocompleteHinter": "Automatische aanvulling",
+    "AutocompleteHinterOnARIA": "Automatische aanvulling ingeschakeld",
+    "AutocompleteHinterOffARIA": "Automatische aanvulling uitgeschakeld",
+    "WordWrap": "Woorden teruglopen",
+    "LineWrapOnARIA": "Regelomloop ingeschakeld",
+    "LineWrapOffARIA": "Regelomloop uitgeschakeld",
+    "LineNumbers": "Regelnummers",
+    "LineNumbersOnARIA": "Regelnummers ingeschakeld",
+    "LineNumbersOffARIA": "Regelnummers uitgeschakeld",
+    "LintWarningSound": "Lint waarschuwingsgeluid",
+    "LintWarningOnARIA": "Lint waarschuwing ingeschakeld",
+    "LintWarningOffARIA": "Lint waarschuwing uitgeschakeld",
+    "PreviewSound": "Voorbeeldgeluid",
+    "PreviewSoundARIA": "Voorbeeldgeluid",
+    "AccessibleTextBasedCanvas": "Toegankelijke tekstgebaseerde canvas",
+    "UsedScreenReader": "Gebruikte schermlezer",
+    "PlainText": "Platte tekst",
+    "TextOutputARIA": "Tekstoutput ingeschakeld",
+    "TableText": "Tabeltekst",
+    "TableOutputARIA": "Tabeloutput ingeschakeld"
+  },
+  "KeyboardShortcuts": {
+    "Title": "Sneltoetsen",
+    "ShortcutsFollow": "Sneltoetsen voor codebewerking volgen",
+    "SublimeText": "Sneltoetsen voor Sublime Text",
+    "CodeEditing": {
+      "Tidy": "Netjes maken",
+      "FindText": "Tekst zoeken",
+      "FindNextMatch": "Volgende overeenkomst zoeken",
+      "FindPrevMatch": "Vorige overeenkomst zoeken",
+      "ReplaceTextMatch": "Vervang tekstovereenkomst",
+      "IndentCodeLeft": "Code naar links inspringen",
+      "IndentCodeRight": "Code naar rechts inspringen",
+      "CommentLine": "Regel commentaar",
+      "FindNextTextMatch": "Volgende tekstovereenkomst zoeken",
+      "FindPreviousTextMatch": "Vorige tekstovereenkomst zoeken",
+      "CodeEditing": "Codebewerking",
+      "ColorPicker": "Ingebouwde kleurenkiezer"
+    },
+    "General": {
+      "StartSketch": "Start schets",
+      "StopSketch": "Stop schets",
+      "TurnOnAccessibleOutput": "Inschakelen toegankelijke output",
+"TurnOffAccessibleOutput": "Uitschakelen toegankelijke output"
+ }
+},
+"Sidebar": {
+"Title": "Ontwerpbestanden",
+"ToggleARIA": "Schakel open/dichte ontwerpbestandopties om",
+"AddFolder": "Map toevoegen",
+"AddFolderARIA": "map toevoegen",
+"AddFile": "Bestand toevoegen",
+"AddFileARIA": "bestand toevoegen",
+"UploadFile": "Bestand uploaden",
+"UploadFileARIA": "bestand uploaden"
+},
+"FileNode": {
+"OpenFolderARIA": "Mapinhoud openen",
+"CloseFolderARIA": "Mapinhoud sluiten",
+"ToggleFileOptionsARIA": "Schakel open/dichte bestandopties om",
+"AddFolder": "Map toevoegen",
+"AddFolderARIA": "map toevoegen",
+"AddFile": "Bestand toevoegen",
+"AddFileARIA": "bestand toevoegen",
+"UploadFile": "Bestand uploaden",
+"UploadFileARIA": "bestand uploaden",
+"Rename": "Naam wijzigen",
+"Delete": "Verwijderen"
+},
+"Common": {
+"SiteName": "p5.js Web Editor",
+"Error": "Fout",
+"ErrorARIA": "Fout",
+"Save": "Opslaan",
+"p5logoARIA": "p5.js Logo",
+"DeleteConfirmation": "Weet u zeker dat u {{name}} wilt verwijderen?"
+},
+"IDEView": {
+"SubmitFeedback": "Feedback verzenden",
+"SubmitFeedbackARIA": "feedback-verzenden",
+"AddCollectionTitle": "Toevoegen aan collectie",
+"AddCollectionARIA": "toevoegen-aan-collectie",
+"ShareTitle": "Delen",
+"ShareARIA": "delen"
+},
+"NewFileModal": {
+"Title": "Bestand aanmaken",
+"CloseButtonARIA": "Sluit nieuw bestandmodaal",
+"EnterName": "Voer een naam in",
+"InvalidType": "Ongeldig bestandstype. Geldige extensies zijn .js, .css, .json, .xml, .stl, .txt, .csv, .tsv, .frag en .vert."
+},
+"NewFileForm": {
+    "AddFileSubmit": "Bestand toevoegen",
+    "Placeholder": "Naam"
+  },
+  "NewFolderModal": {
+    "Title": "Map aanmaken",
+    "CloseButtonARIA": "Sluit nieuw mapmodaal",
+    "EnterName": "Voer een naam in",
+    "EmptyName": "Mapnaam mag niet leeg zijn",
+    "InvalidExtension": "Mapnaam mag geen extensie bevatten"
+  },
+"NewFolderForm": {
+    "AddFolderSubmit": "Map toevoegen",
+    "Placeholder": "Naam"
+},
+"ResetPasswordForm": {
+    "Email": "E-mailadres gebruikt voor registratie",
+    "EmailARIA": "e-mailadres",
+    "Submit": "Verstuur herstel e-mail"
+},
+"ResetPasswordView": {
+    "Title": "p5.js Web Editor | Wachtwoord herstellen",
+    "Reset": "Wachtwoord herstellen",
+    "Submitted": "Uw herstel e-mail zou binnenkort moeten arriveren. Als u deze niet ziet, controleer dan uw spam-map, soms komt het daar terecht.",
+    "Login": "Inloggen",
+    "LoginOr": "of",
+    "SignUp": "Aanmelden"
+},
+"ReduxFormUtils": {
+    "errorInvalidEmail": "Voer een geldig e-mailadres in",
+    "errorEmptyEmail": "Voer een e-mailadres in",
+    "errorPasswordMismatch": "Wachtwoorden moeten overeenkomen",
+    "errorEmptyPassword": "Voer een wachtwoord in",
+    "errorShortPassword": "Wachtwoord moet minimaal 6 tekens bevatten",
+    "errorConfirmPassword": "Bevestig uw wachtwoord",
+    "errorNewPassword": "Voer een nieuw wachtwoord in of laat het huidige wachtwoord leeg.",
+    "errorEmptyUsername": "Voer een gebruikersnaam in.",
+    "errorLongUsername": "Gebruikersnaam moet minder dan 20 tekens bevatten.",
+    "errorValidUsername": "Gebruikersnaam mag alleen bestaan uit cijfers, letters, punten, streepjes en lage streepjes."
+},
+"NewPasswordView": {
+    "Title": "p5.js Web Editor | Nieuw Wachtwoord",
+    "Description": "Stel een nieuw wachtwoord in",
+    "TokenInvalidOrExpired": "Token voor wachtwoordherstel is ongeldig of verlopen.",
+    "EmptyPassword": "Voer een wachtwoord in",
+    "PasswordConfirmation": "Bevestig uw wachtwoord",
+    "PasswordMismatch": "Wachtwoorden moeten overeenkomen"
+},
+"AccountForm": {
+    "Email": "E-mailadres",
+    "EmailARIA": "e-mailadres",
+    "Unconfirmed": "Niet bevestigd.",
+    "EmailSent": "Bevestigingse-mail is verzonden, controleer uw e-mail.",
+    "Resend": "Verstuur bevestigingse-mail opnieuw",
+    "UserName": "Gebruikersnaam",
+    "UserNameARIA": "Gebruikersnaam",
+    "CurrentPassword": "Huidig Wachtwoord",
+    "CurrentPasswordARIA": "Huidig Wachtwoord",
+    "NewPassword": "Nieuw Wachtwoord",
+    "NewPasswordARIA": "Nieuw Wachtwoord",
+    "SubmitSaveAllSettings": "Alle instellingen opslaan"
+},
+"AccountView": {
+    "SocialLogin": "Sociaal Inloggen",
+    "SocialLoginDescription": "Gebruik uw GitHub- of Google-account om in te loggen bij de p5.js Web Editor.",
+    "Title": "p5.js Web Editor | Accountinstellingen",
+    "Settings": "Accountinstellingen",
+    "AccountTab": "Account",
+    "AccessTokensTab": "Toegangstokens"
+},
+"APIKeyForm": {
+    "ConfirmDelete": "Weet u zeker dat u {{key_label}} wilt verwijderen?",
+    "Summary": "Gebruikerstoegangstokens dienen als wachtwoorden om geautomatiseerde scripts toegang te geven tot de Editor API. Maak een token aan voor elk script dat toegang nodig heeft.",
+    "CreateToken": "Nieuw token aanmaken",
+    "TokenLabel": "Voor welk doel is dit token?",
+    "TokenPlaceholder": "Voor welk doel is dit token? Bijv. Script voor voorbeelden invoegen",
+    "CreateTokenSubmit": "Aanmaken",
+    "NoTokens": "Geen bestaande tokens.",
+    "NewTokenTitle": "Uw nieuwe toegangstoken",
+    "NewTokenInfo": "Zorg ervoor dat u het nieuwe toegangstoken nu kopieert. U zult het niet opnieuw kunnen zien!",
+    "ExistingTokensTitle": "Bestaande toegangstokens"
+},
+"APIKeyList": {
+    "Name": "Naam",
+    "Created": "Aangemaakt op",
+    "LastUsed": "Laatst gebruikt",
+    "Actions": "Acties",
+    "Never": "Nooit",
+    "DeleteARIA": "Toegangstoken verwijderen"
+},
+"NewPasswordForm": {
+    "Title": "Wachtwoord",
+    "TitleARIA": "Wachtwoord",
+    "ConfirmPassword": "Bevestig wachtwoord",
+    "ConfirmPasswordARIA": "Bevestig wachtwoord",
+    "SubmitSetNewPassword": "Nieuw wachtwoord instellen"
+},
+"SignupForm": {
+    "Title": "Gebruikersnaam",
+    "TitleARIA": "gebruikersnaam",
+    "Email": "E-mailadres",
+    "EmailARIA": "e-mailadres",
+    "Password": "Wachtwoord",
+"PasswordARIA": "wachtwoord",
+"ConfirmPassword": "Bevestig wachtwoord",
+"ConfirmPasswordARIA": "Bevestig wachtwoord",
+"SubmitSignup": "Aanmelden"
+},
+"SignupView": {
+"Title": "p5.js Web Editor | Registreren",
+"Description": "Registreren",
+"Or": "Of",
+"AlreadyHave": "Heeft u al een account?",
+"Login": "Inloggen"
+},
+"EmailVerificationView": {
+    "Title": "p5.js Web Editor | E-mail Verificatie",
+    "Verify": "Verifieer uw e-mail",
+    "InvalidTokenNull": "Deze link is ongeldig.",
+    "Checking": "Token controleren, even geduld a.u.b...",
+    "Verified": "Alles is klaar, uw e-mailadres is geverifieerd.",
+    "InvalidState": "Er is iets misgegaan."
+},
+"AssetList": {
+    "Title": "p5.js Web Editor | Mijn assets",
+    "ToggleOpenCloseARIA": "Wissel tussen openen/sluiten van assetopties",
+    "Delete": "Verwijderen",
+    "OpenNewTab": "Openen in nieuw tabblad",
+    "NoUploadedAssets": "Geen geüploade assets.",
+    "HeaderName": "Naam",
+    "HeaderSize": "Grootte",
+    "HeaderSketch": "Sketch"
+},
+"Feedback": {
+    "Title": "p5.js Web Editor | Feedback",
+    "ViaGithubHeader": "Via Github Issues",
+    "ViaGithubDescription": "Als u bekend bent met Github, is dit onze voorkeursmethode voor het melden van bugs en feedback.",
+    "GoToGithub": "Ga naar Github",
+    "ViaGoogleHeader": "Via Google Formulier",
+    "ViaGoogleDescription": "U kunt ook dit snelle formulier indienen.",
+    "GoToForm": "Ga naar het formulier"
+},
+"Searchbar": {
+    "SearchSketch": "Zoek sketches...",
+    "SearchCollection": "Zoek collecties...",
+    "ClearTerm": "wissen"
+},
+"UploadFileModal": {
+    "Title": "Bestand uploaden",
+    "CloseButtonARIA": "Sluit uploadbestand modal",
+    "SizeLimitError": "Fout: U kunt geen extra bestanden uploaden. U heeft de totale grootte limiet van {{sizeLimit}} bereikt.\n                Als u meer wilt uploaden, verwijder dan bestanden die u niet langer gebruikt via\n                "
+},
+"FileUploader": {
+    "DictDefaultMessage": "Sleep hier bestanden of klik hier om de bestandsbrowser te openen"
+},
+"ErrorModal": {
+    "MessageLogin": "Om tekeningen op te slaan, moet u ingelogd zijn. Gelieve ",
+    "Login": "in te loggen",
+    "LoginOr": " of ",
+    "SignUp": "te registreren",
+    "MessageLoggedOut": "Het lijkt erop dat u uitgelogd bent. Gelieve ",
+    "LogIn": "in te loggen",
+    "SavedDifferentWindow": "De bewerking die u probeerde op te slaan is al opgeslagen in een ander venster.\n        Vernieuw de pagina om de laatste versie te zien.",
+    "LinkTitle": "Account Link Fout",
+    "LinkMessage": "Er was een probleem met het koppelen van uw {{serviceauth}} account aan uw account op de p5.js Web Editor. Uw {{serviceauth}} account is al gekoppeld aan een ander account op de p5.js Web Editor."
+},
+"ShareModal": {
+    "Embed": "Embed",
+    "Present": "Presenteren",
+    "Fullscreen": "Volledig scherm",
+    "Edit": "Bewerken"
+},
+"CollectionView": {
+    "TitleCreate": "Collectie aanmaken",
+    "TitleDefault": "collectie"
+},
+"Collection": {
+    "Title": "p5.js Web Editor | Mijn collecties",
+    "AnothersTitle": "p5.js Web Editor | Collecties van gebruiker {{anotheruser}}",
+    "Share": "Delen",
+    "URLLink": "Link naar collectie",
+    "AddSketch": "Toevoegen van tekening",
+    "DeleteFromCollection": "Weet u zeker dat u {{name_sketch}} uit deze collectie wilt verwijderen?",
+    "SketchDeleted": "Tekening verwijderd",
+    "SketchRemoveARIA": "Verwijder tekening uit collectie",
+    "DescriptionPlaceholder": "Voeg een beschrijving toe",
+    "Description": "Beschrijving",
+    "NumSketches": "{{count}} tekening",
+    "NumSketches_plural": "{{count}} tekeningen",
+    "By": "Verzameld door ",
+    "NoSketches": "Geen tekeningen in de collectie",
+    "TableSummary": "tabel met alle collecties",
+    "HeaderName": "Naam",
+    "HeaderCreatedAt": "Datum aangemaakt",
+    "HeaderUser": "Eigenaar",
+    "DirectionAscendingARIA": "Oplopend",
+    "DirectionDescendingARIA": "Aflopend",
+    "ButtonLabelAscendingARIA": "Sorteer op {{displayName}} oplopend.",
+    "ButtonLabelDescendingARIA": "Sorteer op {{displayName}} aflopend."
+},
+"AddToCollectionList": {
+    "Title": "p5.js Web Editor | Mijn collecties",
+    "AnothersTitle": "p5.js Web Editor | Collecties van gebruiker {{anotheruser}}",
+    "Empty": "Geen collecties"
+},
+"CollectionCreate": {
+    "Title": "p5.js Web Editor | Collectie maken",
+    "FormError": "Kan de collectie niet aanmaken",
+    "FormLabel": "Naam van de collectie",
+    "FormLabelARIA": "naam",
+    "NameRequired": "Naam van de collectie is vereist",
+    "Description": "Beschrijving (optioneel)",
+    "DescriptionARIA": "beschrijving",
+    "DescriptionPlaceholder": "Mijn favoriete tekeningen",
+    "SubmitCollectionCreate": "Collectie maken"
+},
+"DashboardView": {
+    "CreateCollection": "Collectie maken",
+    "NewSketch": "Nieuwe tekening",
+    "CreateCollectionOverlay": "Collectie maken"
+},
+"DashboardTabSwitcher": {
+    "Sketches": "Tekeningen",
+    "Collections": "Collecties",
+    "Assets": "Middelen"
+},
+"CollectionList": {
+    "Title": "p5.js Web Editor | Mijn collecties",
+    "AnothersTitle": "p5.js Web Editor | Collecties van gebruiker {{anotheruser}}",
+    "NoCollections": "Geen collecties.",
+    "TableSummary": "tabel met alle collecties",
+    "HeaderName": "Naam",
+    "HeaderCreatedAt": "Datum aangemaakt",
+    "HeaderCreatedAt_mobile": "Aangemaakt",
+    "HeaderUpdatedAt": "Datum bijgewerkt",
+    "HeaderUpdatedAt_mobile": "Bijgewerkt",
+    "HeaderNumItems": "# tekeningen",
+    "HeaderNumItems_mobile": "# tekeningen",
+    "DirectionAscendingARIA": "Oplopend",
+    "DirectionDescendingARIA": "Aflopend",
+    "ButtonLabelAscendingARIA": "Sorteer op {{displayName}} oplopend.",
+    "ButtonLabelDescendingARIA": "Sorteer op {{displayName}} aflopend.",
+    "AddSketch": "Toevoegen tekening"
+},
+"CollectionListRow": {
+    "ToggleCollectionOptionsARIA": "Toggle openen/sluiten collectieopties",
+    "AddSketch": "Toevoegen tekening",
+    "Delete": "Verwijderen",
+    "Rename": "Naam wijzigen"
+},
+"Overlay": {
+    "AriaLabel": "Sluit {{title}} overlay"
+},
+"QuickAddList": {
+    "ButtonRemoveARIA": "Verwijderen uit collectie",
+    "ButtonAddToCollectionARIA": "Toevoegen aan collectie",
+    "View": "Bekijken"
+},
+"SketchList": {
+    "View": "Bekijken",
+    "Title": "p5.js Web Editor | Mijn Schetsen",
+    "AnothersTitle": "p5.js Web Editor | Schetsen van gebruiker {{anotheruser}}",
+    "ToggleLabelARIA": "Opties voor schets openen/sluiten",
+    "DropdownRename": "Hernoemen",
+    "DropdownDownload": "Downloaden",
+    "DropdownDuplicate": "Dupliceren",
+    "DropdownAddToCollection": "Toevoegen aan collectie",
+    "DropdownDelete": "Verwijderen",
+    "AddToCollectionOverlayTitle": "Toevoegen aan Collectie",
+    "TableSummary": "tabel met alle opgeslagen projecten",
+    "HeaderName": "Schets",
+    "HeaderCreatedAt": "Aanmaakdatum",
+    "HeaderCreatedAt_mobile": "Aangemaakt",
+    "HeaderUpdatedAt": "Bijgewerkt op",
+    "HeaderUpdatedAt_mobile": "Bijgewerkt",
+    "NoSketches": "Geen schetsen."
+},
+"AddToCollectionSketchList": {
+    "Title": "p5.js Web Editor | Mijn Schetsen",
+    "AnothersTitle": "p5.js Web Editor | Schetsen van gebruiker {{anotheruser}}",
+    "NoCollections": "Geen collecties."
+},
+"Editor": {
+    "OpenSketchARIA": "Openen schetsbestandsnavigatie",
+    "CloseSketchARIA": "Sluiten schetsbestandsnavigatie",
+    "UnsavedChangesARIA": "Schets heeft niet-opgeslagen wijzigingen",
+    "KeyUpLineNumber": "regel {{lineNumber}}"
+},
+"EditorAccessibility": {
+    "NoLintMessages": "Geen lintberichten",
+    "CurrentLine": "Huidige regel"
+},
+"Timer": {
+    "SavedAgo": "Opgeslagen: {{timeAgo}}"
+},
+"formatDate": {
+    "JustNow": "zojuist",
+    "15Seconds": "15 seconden geleden",
+    "25Seconds": "25 seconden geleden",
+    "35Seconds": "35 seconden geleden",
+    "Ago": "{{timeAgo}} geleden"
+},
+"AddRemoveButton": {
+    "AltAddARIA": "Toevoegen aan collectie",
+    "AltRemoveARIA": "Verwijderen uit collectie"
+},
+"CopyableInput": {
+    "CopiedARIA": "Gekopieerd naar klembord!",
+    "OpenViewTabARIA": "Open {{label}}-weergave in nieuw tabblad"
+},
+"EditableInput": {
+    "EditValue": "Bewerk {{display}}-waarde",
+    "EmptyPlaceholder": "Geen waarde"
+},
+"PreviewNav": {
+    "EditSketchARIA": "Bewerk Schets",
+    "ByUser": "door"
+},
+"MobilePreferences": {
+    "Settings": "Instellingen",
+    "GeneralSettings": "Algemene instellingen",
+    "Accessibility": "Toegankelijkheid",
+    "AccessibleOutput": "Toegankelijke uitvoer",
+    "Theme": "Thema",
+    "LightTheme": "Licht",
+    "DarkTheme": "Donker",
+    "HighContrastTheme": "Hoog Contrast",
+    "Autosave": "Automatisch opslaan",
+    "AutocompleteHinter": "Autocomplete-systeem",
+    "WordWrap": "Woordomloop",
+    "LineNumbers": "Regelnummers",
+    "LintWarningSound": "Lintwaarschuwing geluid",
+    "UsedScreenReader": "Gebruikt met schermlezer",
+    "PlainText": "Platte tekst",
+    "TableText": "Tabeltekst",
+    "Sound": "Geluid"
+},
+"PreferenceCreators": {
+    "On": "Aan",
+    "Off": "Uit"
+},
+"MobileIDEView": {
+    "Preferences": "Voorkeuren",
+    "MyStuff": "Mijn spullen",
+    "Examples": "Voorbeelden",
+    "OriginalEditor": "Originele Editor",
+    "Login": "Inloggen",
+    "Logout": "Uitloggen"
+},
+"MobileDashboardView": {
+    "Examples": "Voorbeelden",
+    "Sketches": "Schetsen",
+    "Collections": "Collecties",
+    "Assets": "Bestanden",
+    "MyStuff": "Mijn spullen",
+    "CreateSketch": "Schets maken",
+    "CreateCollection": "Collectie maken"
+},
+"Explorer": {
+    "Files": "Bestanden"
+},
+"Cookies": {
+    "Header": "Cookies",
+    "Body": "De p5.js Editor maakt gebruik van cookies. Sommige zijn essentieel voor de functionaliteit van de site en stellen u in staat om een account en voorkeuren te beheren. Anderen zijn niet essentieel - ze worden gebruikt voor analyses en helpen ons meer te weten te komen over onze gemeenschap. <strong>We verkopen deze gegevens nooit en gebruiken ze niet voor advertenties.</strong> U kunt beslissen welke cookies u wilt toestaan en meer leren in ons <0>Privacybeleid</0>.",
+    "AllowAll": "Alles toestaan",
+    "AllowEssential": "Essentiële toestaan"
+},
+"Legal": {
+    "PrivacyPolicy": "Privacybeleid",
+    "TermsOfUse": "Gebruiksvoorwaarden",
+    "CodeOfConduct": "Gedragscode"
+}
+}
+
+
+
+    
