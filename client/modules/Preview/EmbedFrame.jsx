@@ -5,9 +5,9 @@ import loopProtect from 'loop-protect';
 import { JSHINT } from 'jshint';
 import decomment from 'decomment';
 import { resolvePathToFile } from '../../../server/utils/filePath';
+import { resolvePathsForElementsWithAttribute } from '../../../server/utils/previewGeneration';
 import getConfig from '../../utils/getConfig';
 import {
-  MEDIA_FILE_REGEX,
   MEDIA_FILE_QUOTED_REGEX,
   STRING_REGEX,
   PLAINTEXT_FILE_REGEX,
@@ -32,19 +32,6 @@ const Frame = styled.iframe`
     position: relative;
   `}
 `;
-
-function resolvePathsForElementsWithAttribute(attr, sketchDoc, files) {
-  const elements = sketchDoc.querySelectorAll(`[${attr}]`);
-  const elementsArray = Array.prototype.slice.call(elements);
-  elementsArray.forEach((element) => {
-    if (element.getAttribute(attr).match(MEDIA_FILE_REGEX)) {
-      const resolvedFile = resolvePathToFile(element.getAttribute(attr), files);
-      if (resolvedFile && resolvedFile.url) {
-        element.setAttribute(attr, resolvedFile.url);
-      }
-    }
-  });
-}
 
 function resolveCSSLinksInString(content, files) {
   let newContent = content;
