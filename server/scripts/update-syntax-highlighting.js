@@ -1,6 +1,7 @@
 const fs = require('fs');
 const process = require('process');
 const axios = require('axios');
+const { default: logger } = require('../logger/winton');
 
 axios.get('https://p5js.org/reference/data.json').then((response) => {
   const { data } = response;
@@ -42,9 +43,9 @@ axios.get('https://p5js.org/reference/data.json').then((response) => {
     generatedCode,
     (error) => {
       if (error) {
-        console.log("Error!! Couldn't write to the file", error);
+        logger.error("Error!! Couldn't write to the file", error);
       } else {
-        console.log('Syntax highlighting files updated successfully');
+        logger.debug('Syntax highlighting files updated successfully');
       }
     }
   );

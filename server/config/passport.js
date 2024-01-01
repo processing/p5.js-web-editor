@@ -9,6 +9,7 @@ import GoogleStrategy from 'passport-google-oauth20';
 import { BasicStrategy } from 'passport-http';
 
 import User from '../models/user';
+import logger from '../logger/winton';
 
 const accountSuspensionMessage =
   'Account has been suspended. Please contact privacy@p5js.org if you believe this is an error.';
@@ -274,7 +275,7 @@ passport.use(
                         User.EmailConfirmation.Verified;
                       existingEmailUser.save((saveErr) => {
                         if (saveErr) {
-                          console.log(saveErr);
+                          logger.debug(saveErr);
                         }
                         done(null, existingEmailUser);
                       });
@@ -288,7 +289,7 @@ passport.use(
                       user.verified = User.EmailConfirmation.Verified;
                       user.save((saveErr) => {
                         if (saveErr) {
-                          console.log(saveErr);
+                          logger.debug(saveErr);
                         }
                         done(null, user);
                       });

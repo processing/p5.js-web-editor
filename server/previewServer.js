@@ -5,6 +5,7 @@ import webpack from 'webpack';
 import cors from 'cors';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from '@gatsbyjs/webpack-hot-middleware';
+import logger from './logger/winton';
 import config from '../webpack/config.dev';
 import embedRoutes from './routes/embed.routes';
 import assetRoutes from './routes/asset.routes';
@@ -83,7 +84,7 @@ app.get('*', (req, res) => {
 
 app.listen(process.env.PREVIEW_PORT, (error) => {
   if (!error) {
-    console.log(
+    logger.debug(
       `p5.js Preview Server is running on port: ${process.env.PREVIEW_PORT}`
     );
   }
