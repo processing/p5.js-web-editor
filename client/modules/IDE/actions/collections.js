@@ -97,6 +97,35 @@ export function addToCollection(collectionId, projectId) {
   };
 }
 
+export function reqToOwner(collectionId, projectId, owner, user) {
+  return (dispatch) => {
+    dispatch(startLoader());
+    const url = `/collections/${collectionId}/${projectId}`;
+    console.log(url);
+    return apiClient
+      .post(url)
+      .then((response) => {
+        dispatch({
+          type: ActionTypes.ADD_TO_COLLECTION,
+          payload: response.data
+        });
+        dispatch(stopLoader());
+
+        dispatch(setToastText(`fjidgghfgvifdsafdffasdsl`));
+        dispatch(showToast(TOAST_DISPLAY_TIME_MS));
+
+        return response.data;
+      })
+      .catch((error) => {
+        dispatch({
+          type: ActionTypes.ERROR,
+          error: error?.response?.data
+        });
+        dispatch(stopLoader());
+      });
+  };
+}
+
 export function removeFromCollection(collectionId, projectId) {
   return (dispatch) => {
     dispatch(startLoader());

@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import * as CollectionController from '../controllers/collection.controller';
 import isAuthenticated from '../utils/isAuthenticated';
+import reqToOwner from '../controllers/collection.controller/reqToOwner';
 
 const router = new Router();
 
@@ -40,5 +41,7 @@ router.delete(
   isAuthenticated,
   CollectionController.removeProjectFromCollection
 );
+
+router.post('/request/collection/', reqToOwner);
 
 export default router;

@@ -12,6 +12,7 @@ import EditableInput from '../../IDE/components/EditableInput';
 import { SketchSearchbar } from '../../IDE/components/Searchbar';
 import { getCollection } from '../../IDE/selectors/collections';
 import ShareURL from './CollectionShareButton';
+import AddToOthersCollectionSketchList from '../../IDE/components/AddToOthersCollectionSketchList';
 
 function CollectionMetadata({ collectionId }) {
   const { t } = useTranslation();
@@ -22,6 +23,7 @@ function CollectionMetadata({ collectionId }) {
   const currentUsername = useSelector((state) => state.user.username);
 
   const [isAddingSketches, setIsAddingSketches] = useState(false);
+  const [isSendingReq, setIsSendingReq] = useState(false);
 
   if (!collection) {
     return null;
@@ -94,6 +96,9 @@ function CollectionMetadata({ collectionId }) {
         </div>
 
         <div className="collection-metadata__column--right">
+          <Button onClick={() => setIsSendingReq(true)}>
+            Request to add your sketches
+          </Button>
           <ShareURL value={`${hostname}/${username}/collections/${id}`} />
           {isOwner && (
             <Button onClick={() => setIsAddingSketches(true)}>
@@ -110,6 +115,19 @@ function CollectionMetadata({ collectionId }) {
           isFixedHeight
         >
           <AddToCollectionSketchList
+            username={username}
+            collection={collection}
+          />
+        </Overlay>
+      )}{' '}
+      {isSendingReq && (
+        <Overlay
+          title={t('Collection.AddSketch')}
+          actions={<SketchSearchbar />}
+          closeOverlay={() => setIsSendingReq(false)}
+          isFixedHeight
+        >
+          <AddToOthersCollectionSketchList
             username={username}
             collection={collection}
           />

@@ -30,6 +30,7 @@ import { requestsOfTypeJSON } from './utils/requestsOfType';
 
 import { renderIndex } from './views/index';
 import { get404Sketch } from './views/404Page';
+import reqToOwner from './controllers/collection.controller/reqToOwner';
 
 const app = new Express();
 const MongoStore = connectMongo(session);
@@ -169,6 +170,7 @@ app.get('/', (req, res) => {
   res.sendFile(renderIndex());
 });
 
+app.post('/request/collection/', reqToOwner);
 // Handle API errors
 app.use('/api', (error, req, res, next) => {
   if (error && error.code && !res.headersSent) {
