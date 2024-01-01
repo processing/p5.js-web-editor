@@ -11,7 +11,7 @@ const Frame = styled.iframe`
   border-width: 0;
 `;
 
-function PreviewFrame({ fullView }) {
+function PreviewFrame({ fullView, isOverlayVisible }) {
   const iframe = useRef();
   const previewUrl = getConfig('PREVIEW_URL');
   useEffect(() => {
@@ -28,28 +28,36 @@ function PreviewFrame({ fullView }) {
     hid; microphone; magnetometer; midi; payment; usb; serial; vr; xr-spatial-tracking`;
 
   return (
-    <Frame
-      title="sketch preview"
-      src={frameUrl}
-      sandbox={sandboxAttributes}
-      allow={allow}
-      scrolling="auto"
-      allowtransparency
-      allowpaymentrequest
-      allowFullScreen
-      frameBorder="0"
-      ref={iframe}
-      fullView={fullView}
-    />
+    <>
+      <div
+        className="preview-frame-overlay"
+        style={{ display: isOverlayVisible ? 'block' : 'none' }}
+      />
+      <Frame
+        title="sketch preview"
+        src={frameUrl}
+        sandbox={sandboxAttributes}
+        allow={allow}
+        scrolling="auto"
+        allowtransparency
+        allowpaymentrequest
+        allowFullScreen
+        frameBorder="0"
+        ref={iframe}
+        fullView={fullView}
+      />
+    </>
   );
 }
 
 PreviewFrame.propTypes = {
-  fullView: PropTypes.bool
+  fullView: PropTypes.bool,
+  isOverlayVisible: PropTypes.bool
 };
 
 PreviewFrame.defaultProps = {
-  fullView: false
+  fullView: false,
+  isOverlayVisible: false
 };
 
 export default PreviewFrame;
