@@ -7,11 +7,11 @@ export const Theme = {
 };
 
 export const colors = {
-  p5jsPink: '#ed225d',
+  p5jsPink: 'rgb(182, 0, 91)',
   processingBlueDark: '#28347D',
   processingBlue: '#2D67F6',
   processingBlueLight: '#8DADF9',
-  p5jsActivePink: '#f10046',
+  p5jsActiveYellow: '#fff001',
   white: '#fff',
   black: '#000',
   yellow: '#f5dc23',
@@ -90,8 +90,8 @@ const baseThemes = {
         },
         active: {
           foreground: grays.lightest,
-          background: colors.p5jsActivePink,
-          border: colors.p5jsActivePink
+          background: colors.p5jsActiveYellow,
+          border: colors.p5jsActiveYellow,
         },
         disabled: {
           foreground: colors.black,
@@ -112,8 +112,8 @@ const baseThemes = {
         },
         active: {
           foreground: grays.lightest,
-          background: colors.p5jsActivePink,
-          border: colors.p5jsActivePink
+          background: colors.p5jsActiveYellow,
+          border: colors.p5jsActiveYellow,
         },
         disabled: {
           foreground: colors.black,
@@ -177,8 +177,8 @@ const baseThemes = {
         },
         active: {
           foreground: grays.lightest,
-          background: colors.p5jsActivePink,
-          border: colors.p5jsActivePink
+          background: colors.p5jsActiveYellow,
+          border: colors.p5jsActiveYellow,
         },
         disabled: {
           foreground: grays.light,
@@ -199,8 +199,8 @@ const baseThemes = {
         },
         active: {
           foreground: grays.lightest,
-          background: colors.p5jsActivePink,
-          border: colors.p5jsActivePink
+          background: colors.p5jsActiveYellow,
+          border: colors.p5jsActiveYellow,
         },
         disabled: {
           foreground: grays.light,
