@@ -97,23 +97,46 @@ export function addToCollection(collectionId, projectId) {
   };
 }
 
-export function reqToOwner(collectionId, projectId, owner, user) {
+export function reqToOwner(collectionId, projectId, owner, sender) {
   return (dispatch) => {
     dispatch(startLoader());
-    const url = `/collections/${collectionId}/${projectId}`;
+    const url = `/collections/${collectionId}/${projectId}/request`;
     console.log(url);
+
+    const reqBody = {
+      owner,
+      sender
+    };
     return apiClient
-      .post(url)
+      .post(url, reqBody)
       .then((response) => {
+        dispatch(startLoader());
+        dispatch(stopLoader());
+        dispatch(setToastText(response.data.message));
+        dispatch(showToast(TOAST_DISPLAY_TIME_MS));
+      })
+      .catch((error) => {
         dispatch({
-          type: ActionTypes.ADD_TO_COLLECTION,
-          payload: response.data
+          type: ActionTypes.ERROR,
+          error: error?.response?.data
         });
         dispatch(stopLoader());
+      });
+  };
+}
 
-        dispatch(setToastText(`fjidgghfgvifdsafdffasdsl`));
-        dispatch(showToast(TOAST_DISPLAY_TIME_MS));
-
+export function getMessages(owner) {
+  return (dispatch) => {
+    dispatch(startLoader());
+    const url = '/collections/messages';
+    console.log(url);
+    apiClient
+      .get(url, { owner })
+      .then((response) => {
+        dispatch({
+          messages: response.data
+        });
+        dispatch(stopLoader());
         return response.data;
       })
       .catch((error) => {

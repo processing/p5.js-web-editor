@@ -2,38 +2,26 @@ import Collection from '../../models/collection';
 import Messages from '../../models/messages';
 import Project from '../../models/project';
 
-export default function reqToOwner(req, res) {
-  const { collectionId, projectId, owner, user } = req.body;
-  console.log(collectionId, projectId, owner, user);
+export default async function reqToOwner(req, res) {
+  const { id: collectionId, projectId } = req.params;
+  const { owner, sender } = req.body;
 
-  const collectionPromise = Collection.findById(collectionId).populate(
-    'items.project',
-    '_id'
-  );
-  const projectPromise = Project.findById(projectId);
+  try {
+    const [collection, project] = await Promise.all([
+      Collection.findById(collectionId),
+      Project.findById(projectId)
+    ]);
 
-  function sendFailure(code = 500, message = 'Something went wrong') {
-    res.status(code).json({ success: false, message });
-  }
-
-  function sendSuccess() {
-    res.status(200).json({ success: true });
-  }
-
-  function sendReq([collection, project]) {
     if (collection == null) {
-      sendFailure(404, 'Collection not found');
-      return null;
+      return res
+        .status(404)
+        .json({ success: false, message: 'Collection not found' });
     }
 
     if (project == null) {
-      sendFailure(404, 'Project not found');
-      return null;
-    }
-
-    if (!collection.owner.equals(owner)) {
-      sendFailure(403, 'User does not own this collection');
-      return null;
+      return res
+        .status(404)
+        .json({ success: false, message: 'Project not found' });
     }
 
     const projectInCollection = collection.items.find(
@@ -41,27 +29,24 @@ export default function reqToOwner(req, res) {
     );
 
     if (projectInCollection) {
-      sendFailure(404, 'Project already in collection');
-      return null;
+      return res
+        .status(404)
+        .json({ success: false, message: 'Project already in collection' });
     }
 
-    try {
-      const newMsgs = new Messages({
-        msg: `${user} wants to add their sketch in your ${collection} collection!`,
-        user: user._id
-      });
+    const newMsgs = await Messages.create({
+      msg: `${sender} wants to add their sketch in your ${collection.name} collection!`,
+      owner: owner._id,
+      sender,
+      project: projectId,
+      collection: collectionId
+    });
 
-      newMsgs.save();
-      return res.status(200).json(newMsgs);
-    } catch (error) {
-      console.error(error);
-      sendFailure(500, error.message);
-      return null;
-    }
+    await newMsgs.save();
+
+    return res.status(200).json({ success: true, message: newMsgs.msg });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ success: false, message: error.message });
   }
-
-  Promise.all([collectionPromise, projectPromise])
-    .then(sendReq)
-    .then(sendSuccess)
-    .catch(sendFailure);
 }

@@ -8,7 +8,10 @@ const MessagesSchema = new Schema(
   {
     _id: { type: String, default: shortid.generate },
     msg: { type: String },
-    user: { type: Schema.Types.ObjectId, ref: 'User' }
+    owner: { type: Schema.Types.ObjectId, ref: 'User' },
+    sender: { type: Schema.Types.ObjectId, ref: 'User' },
+    project: { type: Schema.Types.ObjectId, ref: 'Project' },
+    collection: { type: Schema.Types.ObjectId, ref: 'Collection' }
   },
   { timestamps: true, usePushEach: true }
 );

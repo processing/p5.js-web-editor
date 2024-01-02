@@ -1,3 +1,6 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable react/jsx-no-comment-textnodes */
 import React, { useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { sortBy } from 'lodash';
@@ -31,6 +34,8 @@ import {
 import { logoutUser } from '../../../User/actions';
 import { CmControllerContext } from '../../pages/IDEView';
 import MobileNav from './MobileNav';
+import Overlay from '../../../App/components/Overlay';
+import Messages from './Messages';
 
 const Nav = ({ layout }) => (
   <MediaQuery minWidth={770}>
@@ -305,6 +310,10 @@ const UnauthenticatedUserMenu = () => {
 };
 
 const AuthenticatedUserMenu = () => {
+  const user = useSelector((state) => state.user);
+
+  const [overlay, setOverlay] = React.useState(false);
+
   const username = useSelector((state) => state.user.username);
 
   const { t } = useTranslation();
@@ -333,6 +342,19 @@ const AuthenticatedUserMenu = () => {
         <NavMenuItem href={`/${username}/assets`}>
           {t('Nav.Auth.MyAssets')}
         </NavMenuItem>
+        {/* // eslint-disable-next-line jsx-a11y/click-events-have-key-events,
+        jsx-a11y/click-events-have-key-events */}
+        <div onClick={() => setOverlay(true)}>Messages</div>
+
+        {overlay && (
+          <Overlay
+            title={t('Preferences.Settings')}
+            closeOverlay={() => setOverlay(false)}
+            isFixedHeight
+          >
+            <Messages owner={user} />
+          </Overlay>
+        )}
         <NavMenuItem href="/account">{t('Preferences.Settings')}</NavMenuItem>
         <NavMenuItem onClick={() => dispatch(logoutUser())}>
           {t('Nav.Auth.LogOut')}

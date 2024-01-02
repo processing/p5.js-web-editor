@@ -77,7 +77,6 @@ class SketchList extends React.Component {
         <QuickAddList
           items={sketchesWithAddedStatus}
           onAdd={this.handleCollectionAdd}
-          onRemove={this.handleCollectionRemove}
         />
       );
     } else {

@@ -52,7 +52,8 @@ class SketchList extends React.Component {
       this.props.collection.id,
       sketch.id,
       this.props.user.username,
-      this.props.username
+      this.props.username,
+      this.props.collection
     );
   };
 
@@ -78,7 +79,6 @@ class SketchList extends React.Component {
         <QuickAddList
           items={sketchesWithAddedStatus}
           onAdd={this.handleCollectionAdd}
-          onRemove={this.handleCollectionRemove}
         />
       );
     } else {
