@@ -29,6 +29,18 @@ You must provide the version number when accessing the API.
 
 The API accepts and returns the following model objects, as JSON.
 
+## Enabling Access Token UI in Settings Page
+
+To enable the Access Token UI in the Settings page, follow these steps:
+
+1. Navigate to the `.env` file in your project.
+2. Locate the line specifying UI_ACCESS_TOKEN_ENABLED.
+3. Set the value to `true`, as shown below:
+
+```bash
+UI_ACCESS_TOKEN_ENABLED=true
+```
+
 ## Sketch
 
 | Name  | Type              | Description                                                                          |
@@ -217,3 +229,5 @@ No body
 |---------------|-------------------------|
 | 200 OK        | Sketch has been deleted |
 | 404 Not Found | Sketch does not exist   |
+
+
