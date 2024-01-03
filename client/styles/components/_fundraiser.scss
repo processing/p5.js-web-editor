@@ -2,13 +2,13 @@
     padding: #{20 / $base-font-size}rem;
     margin-right: #{20 / $base-font-size}rem;
     padding-bottom: #{40 / $base-font-size}rem;
-    width: #{500 / $base-font-size}rem;
+    max-width: #{500 / $base-font-size}rem;
     text-align: center;
     overflow-y: auto;
 }
 
 .fundraiser__CTA {
-    font-size: #{23 / $base-font-size}rem;
+    font-size: #{16 / $base-font-size}rem;
     font-weight: bold;
     margin-top: #{10 / $base-font-size}rem;
     padding: #{20 / $base-font-size}rem;
