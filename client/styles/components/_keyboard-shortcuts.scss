@@ -2,7 +2,7 @@
   padding: #{20 / $base-font-size}rem;
   margin-right: #{20 / $base-font-size}rem;
   padding-bottom: #{40 / $base-font-size}rem;
-  width: 100%;
+  width: calc(100% - #{20 / $base-font-size}rem);
   overflow-y: auto;
 }
 
