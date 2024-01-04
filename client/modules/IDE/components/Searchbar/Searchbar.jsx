@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { throttle } from 'lodash';
 import { withTranslation } from 'react-i18next';
 import i18next from 'i18next';
 import SearchIcon from '../../../../images/magnifyingglass.svg';
@@ -13,10 +12,7 @@ const Searchbar = ({
   t
 }) => {
   const [searchValue, setSearchValue] = useState(searchTerm);
-  const searchChange = useCallback(
-    throttle(() => setSearchTerm(searchValue.trim()), 500),
-    [searchValue]
-  );
+
   const handleResetSearch = () => {
     setSearchValue('');
     resetSearchTerm();
@@ -25,7 +21,13 @@ const Searchbar = ({
   const handleSearchChange = (e) => {
     const { value } = e.target;
     setSearchValue(value);
-    searchChange();
+
+    // Throttle the setSearchTerm function
+    const delayedSearchChange = setTimeout(() => {
+      setSearchTerm(value.trim());
+    }, 500);
+
+    return () => clearTimeout(delayedSearchChange);
   };
 
   useEffect(
