@@ -3,9 +3,9 @@
       "File": {
         "Title": "फाइल",
         "New": "नई",
-        "Share": "शेयर",
-        "Duplicate": "डुप्लिकेट",
-        "Open": "ओपन",
+        "Share": "भेजें",
+        "Duplicate": "प्रतिलिपि बनाएँ",
+        "Open": "खोलें",
         "Download": "डाउनलोड",
         "AddToCollection": "संग्रह में जोड़ें",
         "Examples": "उदाहरण"
@@ -17,7 +17,7 @@
         "Replace": "बदली करें"
       },
       "Sketch": {
-        "Title": "स्केच",
+        "Title": "चित्र",
         "AddFile": "फाइल जोड़ें",
         "AddFolder": "फोल्डर जोड़ें",
         "Run": "चलाएं",
@@ -42,7 +42,7 @@
         "My": "मेरा",
         "MySketches": "मेरे स्केच",
         "MyCollections": "मेरे संग्रह",
-        "Asset": "ऐसेट",
+        "Asset": "संपत्ति",
         "MyAssets": "मेरे ऐसेट",
         "LogOut": "लॉग आउट"
       }
@@ -95,7 +95,7 @@
       "Learn": "सीखें",
       "Resources": "साधन",
       "Libraries": "लाइब्रेरीज़",
-      "Forum": "फोरम",
+      "Forum": "समूह",
       "Examples": "उदाहरण"
     },
     "Toast": {
@@ -118,13 +118,13 @@
       "By": " द्वारा "
     },
     "Console": {
-      "Title": "Console",
-      "Clear": "Clear",
-      "ClearARIA": "Clear console",
-      "Close": "Close",
-      "CloseARIA": "Close console",
-      "Open": "Open",
-      "OpenARIA": "Open console"
+      "Title": "कंसोल",
+      "Clear": "साफ़ करें",
+      "ClearARIA": "कंसोल साफ़ करें",
+      "Close": "बंद करें",
+      "CloseARIA": "कंसोल बंद करें",
+      "Open": "खोलें",
+      "OpenARIA": "कंसोल खोलें"
     },
     "Preferences": {
       "Settings": "सेटिंग्स",
@@ -150,6 +150,9 @@
       "AutocloseBracketsQuotes": "ऑटोक्लोज ब्रैकिट और क्वोट",
       "AutocloseBracketsQuotesOnARIA": "ऑटोक्लोज ब्रैकिट और क्वोट चालू",
       "AutocloseBracketsQuotesOffARIA": "ऑटोक्लोज ब्रैकिट और क्वोट बंद",
+      "AutocompleteHinter": "ऑटोकम्प्लीट हिंटर",
+      "AutocompleteHinterOnARIA": "ऑटोकम्प्लीट हिंटर चालू",
+      "AutocompleteHinterOffARIA": "ऑटोकम्प्लीट हिंटर बंद",
       "WordWrap": "वर्ड रैप",
       "LineWrapOnARIA": "लाइनरैप चालू",
       "LineWrapOffARIA": "लाइनरैप बंद",
@@ -216,6 +219,7 @@
       "Delete": "मिटाना"
     },
     "Common": {
+      "SiteName": "p5.js वेब एडिटर",
       "Error": "एरर",
       "ErrorARIA": "एरर",
       "Save": "सेव",
@@ -529,8 +533,8 @@
       "KeyUpLineNumber": "लाइन {{lineNumber}}"
     },
     "EditorAccessibility": {
-      "NoLintMessages": "कोई लिंट मैसेज नहीं ",
-      "CurrentLine": " वर्तमान लाइन"
+      "NoLintMessages": "कोई लिंट मैसेज नहीं",
+      "CurrentLine": "वर्तमान लाइन"
     },
     "Timer": {
       "SavedAgo": "सेव किया: {{timeAgo}}"

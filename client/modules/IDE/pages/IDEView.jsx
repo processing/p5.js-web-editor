@@ -11,7 +11,7 @@ import PreviewFrame from '../components/PreviewFrame';
 import Console from '../components/Console';
 import Toast from '../components/Toast';
 import { updateFileContent } from '../actions/files';
-import { stopSketch } from '../actions/ide';
+
 import {
   autosaveProject,
   clearPersistedState,
@@ -56,7 +56,8 @@ function WarnIfUnsavedChanges() {
           isAuth(nextLocation.pathname) ||
           isAuth(currentLocation.pathname) ||
           isOverlay(nextLocation.pathname) ||
-          isOverlay(currentLocation.pathname)
+          isOverlay(currentLocation.pathname) ||
+          nextLocation.state?.confirmed
         ) {
           return true; // allow navigation
         }
@@ -80,7 +81,7 @@ const IDEView = () => {
 
   const [consoleSize, setConsoleSize] = useState(150);
   const [sidebarSize, setSidebarSize] = useState(160);
-  const [isOverlayVisible, setIsOverlayVisible] = useState(true);
+  const [isOverlayVisible, setIsOverlayVisible] = useState(false);
 
   const cmRef = useRef({});
 
@@ -93,8 +94,6 @@ const IDEView = () => {
 
   useEffect(() => {
     dispatch(clearPersistedState());
-
-    dispatch(stopSketch());
   }, [dispatch]);
 
   useEffect(() => {
@@ -160,7 +159,6 @@ const IDEView = () => {
                     setIsOverlayVisible(true);
                   }}
                   onDragFinished={() => {
-                    // overlayRef.current.style.display = 'none';
                     setIsOverlayVisible(false);
                   }}
                   resizerStyle={{
@@ -175,7 +173,9 @@ const IDEView = () => {
                     primary="second"
                     size={ide.consoleIsExpanded ? consoleSize : 29}
                     minSize={29}
-                    onChange={(size) => setConsoleSize(size)}
+                    onChange={(size) => {
+                      setConsoleSize(size);
+                    }}
                     allowResize={ide.consoleIsExpanded}
                     className="editor-preview-subpanel"
                   >
@@ -193,16 +193,10 @@ const IDEView = () => {
                       </h2>
                     </header>
                     <div className="preview-frame__content">
-                      <div
-                        className="preview-frame-overlay"
-                        style={{ display: isOverlayVisible ? 'block' : 'none' }}
+                      <PreviewFrame
+                        cmController={cmRef.current}
+                        isOverlayVisible={isOverlayVisible}
                       />
-                      <div>
-                        {((preferences.textOutput || preferences.gridOutput) &&
-                          ide.isPlaying) ||
-                          ide.isAccessibleOutputPlaying}
-                      </div>
-                      <PreviewFrame cmController={cmRef.current} />
                     </div>
                   </section>
                 </SplitPane>
@@ -217,11 +211,18 @@ const IDEView = () => {
                   split="horizontal"
                   primary="second"
                   minSize={200}
+                  onChange={() => {
+                    setIsOverlayVisible(true);
+                  }}
+                  onDragFinished={() => {
+                    setIsOverlayVisible(false);
+                  }}
                 >
                   <PreviewFrame
                     fullView
                     hide={!ide.isPlaying}
                     cmController={cmRef.current}
+                    isOverlayVisible={isOverlayVisible}
                   />
                   <Console />
                 </SplitPane>
