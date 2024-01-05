@@ -141,6 +141,7 @@ pre.CodeMirror-line {
   align-items: center;
 }
 .CodeMirror-search-inputs {
+  display: block;
   width: 30%;
   margin-left: 10px;
 }
@@ -150,12 +151,13 @@ pre.CodeMirror-line {
   align-items: center;
 }
 .CodeMirror-search-controls {
-  display: flex;
+  display: block;
   align-items: center;
   justify-content: end;
 }
 .CodeMirror-replace-controls {
   display: flex;
+  padding-top: 1.4rem;
   margin-left: #{10 / $base-font-size}rem;
 }
 

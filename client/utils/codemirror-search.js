@@ -372,9 +372,8 @@ function startSearch(cm, state, query) {
   var num_match = cm.state.search.annotate.matches.length;
   //no matches found
   if (num_match == 0) {
-    cm.display.wrapper.querySelector(
-      '.CodeMirror-search-results'
-    ).innerText = i18n.t('CodemirrorFindAndReplace.NoResults');
+    cm.display.wrapper.querySelector('.CodeMirror-search-results').innerText =
+      i18n.t('CodemirrorFindAndReplace.NoResults');
     cm.removeOverlay(state.overlay, state.caseInsensitive);
   } else {
     var next =
@@ -384,9 +383,8 @@ function startSearch(cm, state, query) {
         );
       }) + 1;
     var text_match = next + '/' + num_match;
-    cm.display.wrapper.querySelector(
-      '.CodeMirror-search-results'
-    ).innerText = text_match;
+    cm.display.wrapper.querySelector('.CodeMirror-search-results').innerText =
+      text_match;
   }
 }
 
@@ -572,9 +570,8 @@ function findNext(cm, rev, callback) {
           s.from.ch === cursor.from().ch && s.from.line === cursor.from().line
       ) + 1;
     var text_match = next + '/' + num_match;
-    cm.display.wrapper.querySelector(
-      '.CodeMirror-search-results'
-    ).innerText = text_match;
+    cm.display.wrapper.querySelector('.CodeMirror-search-results').innerText =
+      text_match;
     if (callback) callback(cursor.from(), cursor.to());
   });
 }
@@ -637,26 +634,6 @@ var getQueryDialog = function () {
         </div>
       </div>
       <div class="CodeMirror-search-controls">
-        <div style="display: none;" id="Replace-controls-div" class="CodeMirror-replace-controls">
-          <button
-            title="${i18n.t('CodemirrorFindAndReplace.Replace')}"
-            aria-label="${i18n.t('CodemirrorFindAndReplace.Replace')}"
-            role="button"
-            id="Btn-replace"
-            class="CodeMirror-search-modifier-button CodeMirror-replace-button"
-          >
-            ${i18n.t('CodemirrorFindAndReplace.Replace')}
-          </button>
-          <button
-            title="${i18n.t('CodemirrorFindAndReplace.ReplaceAll')}"
-            aria-label="${i18n.t('CodemirrorFindAndReplace.ReplaceAll')}"
-            role="button"
-            id="Btn-replace-all"
-            class="CodeMirror-search-modifier-button CodeMirror-replace-button"
-          >
-            ${i18n.t('CodemirrorFindAndReplace.ReplaceAll')}
-          </button>
-        </div>
         <div class="CodeMirror-find-controls">
           <div class="CodeMirror-search-modifiers button-wrap">
             <button
@@ -718,6 +695,26 @@ var getQueryDialog = function () {
               </span>
             </button>
           </div>
+        </div>
+        <div style="display: none;" id="Replace-controls-div" class="CodeMirror-replace-controls">
+          <button
+            title="${i18n.t('CodemirrorFindAndReplace.Replace')}"
+            aria-label="${i18n.t('CodemirrorFindAndReplace.Replace')}"
+            role="button"
+            id="Btn-replace"
+            class="CodeMirror-search-modifier-button CodeMirror-replace-button"
+          >
+            ${i18n.t('CodemirrorFindAndReplace.Replace')}
+          </button>
+          <button
+            title="${i18n.t('CodemirrorFindAndReplace.ReplaceAll')}"
+            aria-label="${i18n.t('CodemirrorFindAndReplace.ReplaceAll')}"
+            role="button"
+            id="Btn-replace-all"
+            class="CodeMirror-search-modifier-button CodeMirror-replace-button"
+          >
+            ${i18n.t('CodemirrorFindAndReplace.ReplaceAll')}
+          </button>
         </div>
       </div>
     </div>
