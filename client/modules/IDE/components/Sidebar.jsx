@@ -17,7 +17,6 @@ import ConnectedFileNode from './FileNode';
 import {
   AddFileIcon,
   AddFolderIcon,
-  PlusIcon,
   UploadFileIcon
 } from '../../../common/icons';
 import { FileDrawer } from './Editor/MobileEditor';
@@ -96,7 +95,7 @@ export default function SideBar() {
           <div className="sidebar__icons">
             <button
               aria-label={t('Sidebar.AddFileARIA')}
-              className="sidebar__add"
+              className="sidebar__icon"
               tabIndex="0"
               ref={sidebarOptionsRef}
               onClick={() => {
@@ -111,7 +110,7 @@ export default function SideBar() {
             </button>
             <button
               aria-label={t('Sidebar.AddFolderARIA')}
-              className="sidebar__add"
+              className="sidebar__icon"
               tabIndex="0"
               ref={sidebarOptionsRef}
               onClick={() => {
@@ -127,7 +126,7 @@ export default function SideBar() {
             {isAuthenticated && (
               <button
                 aria-label={t('Sidebar.UploadFileARIA')}
-                className="sidebar__add"
+                className="sidebar__icon"
                 tabIndex="0"
                 ref={sidebarOptionsRef}
                 onClick={() => {
