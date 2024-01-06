@@ -44,7 +44,7 @@ export const availableLanguages = [
 
 export function languageKeyToLabel(lang) {
   const languageMap = {
-    be: 'Bengali',
+    be: 'বাংলা',
     de: 'Deutsch',
     'en-US': 'English',
     'es-419': 'Español',
