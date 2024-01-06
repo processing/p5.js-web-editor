@@ -79,6 +79,7 @@ pre.CodeMirror-line {
   }
   // left: 0 !important;
   width: #{48 / $base-font-size}rem;
+  z-index: 0;
 }
 
 /*
@@ -96,6 +97,7 @@ pre.CodeMirror-line {
     right: 0;
     width: 100%;
     margin-left: 0;
+    z-index: 5;
   }
 
   z-index: 1;
@@ -138,7 +140,11 @@ pre.CodeMirror-line {
 
 .CodeMirror-find-controls {
   display: flex;
-  align-items: center;
+  align-items: center;  
+
+  @media (max-width: 580px) {
+    padding: 0.6rem 0rem;
+  }
 }
 .CodeMirror-search-inputs {
   width: 30%;
