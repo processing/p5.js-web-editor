@@ -366,7 +366,8 @@
     "Description": "Sign Up",
     "Or": "Or",
     "AlreadyHave": "Already have an account?",
-    "Login": "Log In"
+    "Login": "Log In",
+    "Warning": "By signing up, you agree to the p5.js Editor's <0>Terms of Use</0> and <1>Privacy Policy.</1>"
   },
   "EmailVerificationView": {
     "Title": "p5.js Web Editor | Email Verification",
