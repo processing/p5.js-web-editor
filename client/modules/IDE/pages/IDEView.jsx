@@ -127,6 +127,11 @@ const IDEView = () => {
     };
   }, [shouldAutosave, dispatch]);
 
+  const consoleCollapsedSize = 29;
+  const currentConsoleSize = ide.consoleIsExpanded
+    ? consoleSize
+    : consoleCollapsedSize;
+
   return (
     <RootPage>
       <Helmet>
@@ -171,8 +176,8 @@ const IDEView = () => {
                   <SplitPane
                     split="horizontal"
                     primary="second"
-                    size={ide.consoleIsExpanded ? consoleSize : 29}
-                    minSize={29}
+                    size={currentConsoleSize}
+                    minSize={consoleCollapsedSize}
                     onChange={(size) => {
                       setConsoleSize(size);
                     }}
@@ -206,16 +211,16 @@ const IDEView = () => {
             <>
               <FloatingActionButton
                 syncFileContent={syncFileContent}
-                offsetBottom={ide.isPlaying ? consoleSize : 20}
+                offsetBottom={ide.isPlaying ? currentConsoleSize : 0}
               />
               <PreviewWrapper show={ide.isPlaying}>
                 <SplitPane
                   style={{ position: 'static' }}
                   split="horizontal"
                   primary="second"
-                  size={ide.consoleIsExpanded ? consoleSize : 29}
-                  minSize={29}
-                   onChange={(size) => {
+                  size={currentConsoleSize}
+                  minSize={consoleCollapsedSize}
+                  onChange={(size) => {
                     setConsoleSize(size);
                     setIsOverlayVisible(true);
                   }}
