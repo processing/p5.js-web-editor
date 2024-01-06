@@ -25,7 +25,7 @@ const EmailVerificationView = () => {
     }
   }, [dispatch, verificationToken]);
   let status = null;
-  if (verificationToken == null) {
+  if (!verificationToken) {
     status = <p>{t('EmailVerificationView.InvalidTokenNull')}</p>;
   } else if (emailVerificationTokenState === 'checking') {
     status = <p>{t('EmailVerificationView.Checking')}</p>;
