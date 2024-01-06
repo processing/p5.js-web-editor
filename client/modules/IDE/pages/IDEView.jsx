@@ -87,6 +87,8 @@ const IDEView = () => {
 
   const autosaveIntervalRef = useRef(null);
 
+  const previewFrameRef = useRef(null);
+
   const syncFileContent = () => {
     const file = cmRef.current.getContent();
     dispatch(updateFileContent(file.id, file.content));
@@ -219,6 +221,7 @@ const IDEView = () => {
                   }}
                 >
                   <PreviewFrame
+                    ref={previewFrameRef}
                     fullView
                     hide={!ide.isPlaying}
                     cmController={cmRef.current}
