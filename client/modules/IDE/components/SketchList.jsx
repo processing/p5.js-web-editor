@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import classNames from 'classnames';
 import slugify from 'slugify';
+import MenuItem from '../../../components/Dropdown/MenuItem';
+import TableDropdown from '../../../components/Dropdown/TableDropdown';
 import dates from '../../../utils/formatDate';
 import * as ProjectActions from '../actions/project';
 import * as ProjectsActions from '../actions/projects';
@@ -22,8 +24,6 @@ import getConfig from '../../../utils/getConfig';
 
 import ArrowUpIcon from '../../../images/sort-arrow-up.svg';
 import ArrowDownIcon from '../../../images/sort-arrow-down.svg';
-import DownFilledTriangleIcon from '../../../images/down-filled-triangle.svg';
-import MoreIconSvg from '../../../images/more.svg';
 
 const ROOT_URL = getConfig('API_URL');
 
@@ -34,46 +34,11 @@ class SketchListRowBase extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      optionsOpen: false,
       renameOpen: false,
-      renameValue: props.sketch.name,
-      isFocused: false
+      renameValue: props.sketch.name
     };
     this.renameInput = React.createRef();
   }
-
-  onFocusComponent = () => {
-    this.setState({ isFocused: true });
-  };
-
-  onBlurComponent = () => {
-    this.setState({ isFocused: false });
-    setTimeout(() => {
-      if (!this.state.isFocused) {
-        this.closeAll();
-      }
-    }, 200);
-  };
-
-  openOptions = () => {
-    this.setState({
-      optionsOpen: true
-    });
-  };
-
-  closeOptions = () => {
-    this.setState({
-      optionsOpen: false
-    });
-  };
-
-  toggleOptions = () => {
-    if (this.state.optionsOpen) {
-      this.closeOptions();
-    } else {
-      this.openOptions();
-    }
-  };
 
   openRename = () => {
     this.setState(
@@ -91,13 +56,6 @@ class SketchListRowBase extends React.Component {
     });
   };
 
-  closeAll = () => {
-    this.setState({
-      renameOpen: false,
-      optionsOpen: false
-    });
-  };
-
   handleRenameChange = (e) => {
     this.setState({
       renameValue: e.target.value
@@ -107,13 +65,13 @@ class SketchListRowBase extends React.Component {
   handleRenameEnter = (e) => {
     if (e.key === 'Enter') {
       this.updateName();
-      this.closeAll();
+      this.closeRename();
     }
   };
 
   handleRenameBlur = () => {
     this.updateName();
-    this.closeAll();
+    this.closeRename();
   };
 
   updateName = () => {
@@ -124,23 +82,6 @@ class SketchListRowBase extends React.Component {
         this.state.renameValue.trim()
       );
     }
-  };
-
-  resetSketchName = () => {
-    this.setState({
-      renameValue: this.props.sketch.name,
-      renameOpen: false
-    });
-  };
-
-  handleDropdownOpen = () => {
-    this.closeAll();
-    this.openOptions();
-  };
-
-  handleRenameOpen = () => {
-    this.closeAll();
-    this.openRename();
   };
 
   handleSketchDownload = () => {
@@ -154,12 +95,10 @@ class SketchListRowBase extends React.Component {
   };
 
   handleSketchDuplicate = () => {
-    this.closeAll();
     this.props.cloneProject(this.props.sketch);
   };
 
   handleSketchShare = () => {
-    this.closeAll();
     this.props.showShareModal(
       this.props.sketch.id,
       this.props.sketch.name,
@@ -168,7 +107,6 @@ class SketchListRowBase extends React.Component {
   };
 
   handleSketchDelete = () => {
-    this.closeAll();
     if (
       window.confirm(
         this.props.t('Common.DeleteConfirmation', {
@@ -180,106 +118,42 @@ class SketchListRowBase extends React.Component {
     }
   };
 
-  renderViewButton = (sketchURL) => (
-    <td className="sketch-list__dropdown-column">
-      <Link to={sketchURL}>{this.props.t('SketchList.View')}</Link>
-    </td>
-  );
-
   renderDropdown = () => {
-    const { optionsOpen } = this.state;
     const userIsOwner = this.props.user.username === this.props.username;
 
     return (
       <td className="sketch-list__dropdown-column">
-        <button
-          className="sketch-list__dropdown-button"
-          onClick={this.toggleOptions}
-          onBlur={this.onBlurComponent}
-          onFocus={this.onFocusComponent}
-          aria-label={this.props.t('SketchList.ToggleLabelARIA')}
-        >
-          {this.props.mobile ? (
-            <MoreIconSvg focusable="false" aria-hidden="true" />
-          ) : (
-            <DownFilledTriangleIcon focusable="false" aria-hidden="true" />
-          )}
-        </button>
-        {optionsOpen && (
-          <ul className="sketch-list__action-dialogue">
-            {userIsOwner && (
-              <li>
-                <button
-                  className="sketch-list__action-option"
-                  onClick={this.handleRenameOpen}
-                  onBlur={this.onBlurComponent}
-                  onFocus={this.onFocusComponent}
-                >
-                  {this.props.t('SketchList.DropdownRename')}
-                </button>
-              </li>
-            )}
-            <li>
-              <button
-                className="sketch-list__action-option"
-                onClick={this.handleSketchDownload}
-                onBlur={this.onBlurComponent}
-                onFocus={this.onFocusComponent}
-              >
-                {this.props.t('SketchList.DropdownDownload')}
-              </button>
-            </li>
-            {this.props.user.authenticated && (
-              <li>
-                <button
-                  className="sketch-list__action-option"
-                  onClick={this.handleSketchDuplicate}
-                  onBlur={this.onBlurComponent}
-                  onFocus={this.onFocusComponent}
-                >
-                  {this.props.t('SketchList.DropdownDuplicate')}
-                </button>
-              </li>
-            )}
-            {this.props.user.authenticated && (
-              <li>
-                <button
-                  className="sketch-list__action-option"
-                  onClick={() => {
-                    this.props.onAddToCollection();
-                    this.closeAll();
-                  }}
-                  onBlur={this.onBlurComponent}
-                  onFocus={this.onFocusComponent}
-                >
-                  {this.props.t('SketchList.DropdownAddToCollection')}
-                </button>
-              </li>
-            )}
-            {/* <li>
-              <button
-                className="sketch-list__action-option"
-                onClick={this.handleSketchShare}
-                onBlur={this.onBlurComponent}
-                onFocus={this.onFocusComponent}
-              >
-                Share
-              </button>
-            </li> */}
-            {userIsOwner && (
-              <li>
-                <button
-                  className="sketch-list__action-option"
-                  onClick={this.handleSketchDelete}
-                  onBlur={this.onBlurComponent}
-                  onFocus={this.onFocusComponent}
-                >
-                  {this.props.t('SketchList.DropdownDelete')}
-                </button>
-              </li>
-            )}
-          </ul>
-        )}
+        <TableDropdown aria-label={this.props.t('SketchList.ToggleLabelARIA')}>
+          <MenuItem hideIf={!userIsOwner} onClick={this.openRename}>
+            {this.props.t('SketchList.DropdownRename')}
+          </MenuItem>
+          <MenuItem onClick={this.handleSketchDownload}>
+            {this.props.t('SketchList.DropdownDownload')}
+          </MenuItem>
+          <MenuItem
+            hideIf={!this.props.user.authenticated}
+            onClick={this.handleSketchDuplicate}
+          >
+            {this.props.t('SketchList.DropdownDuplicate')}
+          </MenuItem>
+          <MenuItem
+            hideIf={!this.props.user.authenticated}
+            onClick={() => {
+              this.props.onAddToCollection();
+            }}
+          >
+            {this.props.t('SketchList.DropdownAddToCollection')}
+          </MenuItem>
+
+          {/*
+          <MenuItem onClick={this.handleSketchShare}>
+            Share
+          </MenuItem>
+            */}
+          <MenuItem hideIf={!userIsOwner} onClick={this.handleSketchDelete}>
+            {this.props.t('SketchList.DropdownDelete')}
+          </MenuItem>
+        </TableDropdown>
       </td>
     );
   };
