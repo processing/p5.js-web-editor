@@ -16,6 +16,7 @@ import {
   ptBR,
   ru,
   de,
+  nl,
   frCA,
   zhCN,
   zhTW,
