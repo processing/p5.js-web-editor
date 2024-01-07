@@ -31,6 +31,7 @@
         "About": "À propos"
       },
       "Lang": "Langue",
+      "Fundraiser":"Soutenez p5.js et la Processing Foundation !",
       "BackEditor": "Retour à l'éditeur",
       "WarningUnsavedChanges": "Êtes-vous certain de vouloir quitter cette page? Vous avez des changements non enregistrés.",
       "Login": "Se connecter",
