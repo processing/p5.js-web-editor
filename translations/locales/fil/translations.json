@@ -1,0 +1,633 @@
+{
+  "Nav": {
+    "File": {
+      "Title": "Sako",
+      "New": "Bago",
+      "Share": "Ibahagi",
+      "Duplicate": "Kopyahin",
+      "Open": "Buksan",
+      "Download": "I-download",
+      "AddToCollection": "Idagdag sa Koleksyon",
+      "Examples": "Mga Halimbawa"
+    },
+    "Edit": {
+      "Title": "I-edit",
+      "TidyCode": "Linisin ang Code",
+      "Find": "Hanapin",
+      "Replace": "Palitan"
+    },
+    "Sketch": {
+      "Title": "Sketch",
+      "AddFile": "Magdagdag ng File",
+      "AddFolder": "Magdagdag ng Folder",
+      "Run": "Tumakbo",
+      "Stop": "Itigil"
+    },
+    "Help": {
+      "Title": "Tulong",
+      "KeyboardShortcuts": "Mga Shortcut ng Keyboard",
+      "Reference": "Sanggunian",
+      "About": "Tungkol sa Amin"
+    },
+    "Lang": "Wika",
+    "BackEditor": "Bumalik sa Editor",
+    "WarningUnsavedChanges": "Sigurado ka bang nais mong umalis sa pahinang ito? Mayroon kang mga hindi naisilang pagbabago.",
+    "Login": "Mag-log in",
+    "LoginOr": "o",
+    "SignUp": "Mag-sign up",
+    "Auth": {
+      "Welcome": "Maligayang Pagdating",
+      "Hello": "Kamusta",
+      "MyAccount": "Aking Account",
+      "My": "Akin",
+      "MySketches": "Aking Mga Sketch",
+      "MyCollections": "Aking Mga Koleksyon",
+      "Asset": "Ari-arian",
+      "MyAssets": "Aking Mga Ari-arian",
+      "LogOut": "Mag-logout"
+    },
+    "Fundraiser": "Suportahan ang p5.js at ang Processing Foundation!"
+  },
+  "CodemirrorFindAndReplace": {
+    "ToggleReplace": "Baguhin ang Pagsusuri",
+    "Find": "Hanapin",
+    "FindPlaceholder": "Hanapin sa mga files",
+    "Replace": "Palitan",
+    "ReplaceAll": "Palitan ang Lahat",
+    "ReplacePlaceholder": "Teksto na ipapalit",
+    "Regex": "Regular na ekspresyon",
+    "CaseSensitive": "Sensitibo sa Case",
+    "WholeWords": "Buong mga Salita",
+    "Previous": "Naunang",
+    "Next": "Susunod",
+    "NoResults": "Walang resulta",
+    "Close": "Isara"
+  },
+  "LoginForm": {
+    "UsernameOrEmail": "Email o Username",
+    "UsernameOrEmailARIA": "Email o Username",
+    "Password": "Password",
+    "PasswordARIA": "Password",
+    "Submit": "Mag-log In"
+  },
+  "LoginView": {
+    "Title": "p5.js Web Editor | Login",
+    "Login": "Mag-log In",
+    "LoginOr": "o",
+    "SignUp": "Mag-sign Up",
+    "Email": "email",
+    "Username": "username",
+    "DontHaveAccount": "Walang account? ",
+    "ForgotPassword": "Nakalimutan ang password? ",
+    "ResetPassword": "I-reset ang iyong password"
+  },
+  "SocialAuthButton": {
+    "Connect": "Kumonekta ng {{serviceauth}} Account",
+    "Unlink": "Tanggalin ang koneksyon ng {{serviceauth}} Account",
+    "Login": "Mag-log In gamit ang {{serviceauth}}",
+    "LogoARIA": "{{serviceauth}} logo"
+  },
+  "About": {
+    "Title": "Tungkol Sa Amin",
+    "TitleHelmet": "p5.js Web Editor | Tungkol Sa Amin",
+    "Contribute": "Mag-ambag",
+    "NewP5": "Bago sa p5.js?",
+    "Report": "I-ulat ang bug",
+    "Learn": "Matuto",
+    "Resources": "Mga Pinagkukunan",
+    "Libraries": "Mga Aklatan",
+    "Forum": "Forum",
+    "Examples": "Mga Halimbawa",
+    "PrivacyPolicy": "Patakaran sa Privacy",
+    "TermsOfUse": "Mga Tuntunin ng Paggamit",
+    "CodeOfConduct": "Code of Conduct"
+  },
+  "Toast": {
+    "OpenedNewSketch": "Binuksan ang bagong sketch.",
+    "SketchSaved": "Na-save ang sketch.",
+    "SketchFailedSave": "Hindi nagtagumpay ang pag-save ng sketch.",
+    "AutosaveEnabled": "Ang autosave ay naka-enable.",
+    "LangChange": "Nabago ang Wika",
+    "SettingsSaved": "Na-save ang mga setting."
+  },
+  "Toolbar": {
+    "Preview": "Preview",
+    "Auto-refresh": "Auto-refresh",
+    "OpenPreferencesARIA": "Buksan ang mga Kaugalian",
+    "PlaySketchARIA": "I-play ang sketch",
+    "PlayOnlyVisualSketchARIA": "I-play ang visual na sketch lamang",
+    "StopSketchARIA": "Itigil ang sketch",
+    "EditSketchARIA": "I-edit ang pangalan ng sketch",
+    "NewSketchNameARIA": "Bagong pangalan ng sketch",
+    "By": " ni "
+  },
+  "Console": {
+    "Title": "Console",
+    "Clear": "Burahin",
+    "ClearARIA": "Burahin ang console",
+    "Close": "Isara",
+    "CloseARIA": "Isara ang console",
+    "Open": "Buksan",
+    "OpenARIA": "Buksan ang console"
+  },
+  "Preferences": {
+    "Settings": "Mga Kaugalian",
+    "GeneralSettings": "Pangkalahatang mga Kaugalian",
+    "Accessibility": "Kahusayan",
+    "Theme": "Tema",
+    "LightTheme": "Maliwanag",
+    "LightThemeARIA": "maliwanag na tema sa",
+    "DarkTheme": "Madilim",
+    "DarkThemeARIA": "madilim na tema sa",
+    "HighContrastTheme": "High Contrast",
+    "HighContrastThemeARIA": "high contrast na tema sa",
+    "TextSize": "Laki ng Teksto",
+    "DecreaseFont": "Bawasan",
+    "DecreaseFontARIA": "bawasan ang laki ng font",
+    "IncreaseFont": "Itaas",
+    "IncreaseFontARIA": "taasan ang laki ng font",
+    "FontSize": "Laki ng Font",
+    "SetFontSize": "itaas ang laki ng font",
+    "Autosave": "Auto-save",
+    "On": "On",
+    "AutosaveOnARIA": "auto-save on",
+    "Off": "Off",
+    "AutosaveOffARIA": "auto-save off",
+    "AutocloseBracketsQuotes": "Autoclose Brackets at Quotes",
+    "AutocloseBracketsQuotesOnARIA": "autoclose brackets at quotes on",
+    "AutocloseBracketsQuotesOffARIA": "autoclose brackets at quotes off",
+    "AutocompleteHinter": "Autocomplete Hinter",
+    "AutocompleteHinterOnARIA": "autocomplete hinter on",
+    "AutocompleteHinterOffARIA": "autocomplete hinter off",
+    "WordWrap": "Word Wrap",
+    "LineWrapOnARIA": "linewrap on",
+    "LineWrapOffARIA": "linewrap off",
+    "LineNumbers": "Mga Numero ng Linya",
+    "LineNumbersOnARIA": "mga numero ng linya on",
+    "LineNumbersOffARIA": "mga numero ng linya off",
+    "LintWarningSound": "Lint warning sound",
+    "LintWarningOnARIA": "lint warning on",
+    "LintWarningOffARIA": "lint warning off",
+    "PreviewSound": "Preview sound",
+    "PreviewSoundARIA": "preview sound",
+    "AccessibleTextBasedCanvas": "Accessible text-based canvas",
+    "UsedScreenReader": "Ginamit gamit ang screen reader",
+    "PlainText": "Plain-text",
+    "TextOutputARIA": "text output on",
+    "TableText": "Table-text",
+    "TableOutputARIA": "table output on"
+  },
+  "KeyboardShortcuts": {
+    "Title": "Keyboard Shortcuts",
+    "ShortcutsFollow": "Ang mga shortcut sa keyboard para sa pag-edit ng code ay sinusundan",
+    "SublimeText": "Mga shortcut ng Sublime Text",
+    "CodeEditing": {
+      "Tidy": "Ayusin",
+      "FindText": "Hanapin ang Teksto",
+      "FindNextMatch": "Hanapin ang Susunod na Match",
+      "FindPrevMatch": "Hanapin ang Naunang Match",
+      "ReplaceTextMatch": "Palitan ang Teksto Match",
+      "IndentCodeLeft": "Itabing ang Kode sa Kaliwa",
+      "IndentCodeRight": "Itabing ang Kode sa Kanan",
+      "CommentLine": "Magkomento ng Linya",
+      "FindNextTextMatch": "Hanapin ang Susunod na Teksto Match",
+      "FindPreviousTextMatch": "Hanapin ang Naunang Teksto Match",
+      "CodeEditing": "Pag-eedit ng Code",
+      "ColorPicker": "Ipakita ang Inline Color Picker"
+    },
+    "General": {
+      "StartSketch": "Simulan ang Sketch",
+      "StopSketch": "Itigil ang Sketch",
+      "TurnOnAccessibleOutput": "Buksan ang Accessible Output",
+      "TurnOffAccessibleOutput": "Isara ang Accessible Output"
+    }
+  },
+  "Fundraiser": {
+    "Title": "Suportahan ang Aming Software at Team",
+    "Description": "🎉 Sumali sa amin sa pagdiriwang ng isang Dekada ng Code! 🎉 Suportahan ang p5.js at ang Processing Foundation at kumita ng mga natatanging gantimpala. 🙂",
+    "CallToAction": "Mag-ambag at alamin pa ang iba!"
+  },
+  "Sidebar": {
+    "Title": "Mga File ng Sketch",
+    "ToggleARIA": "I-toggle ang mga opsyon para buksan/isara ang file ng sketch",
+    "AddFolder": "Gumawa ng Folder",
+    "AddFolderARIA": "magdagdag ng folder",
+    "AddFile": "Gumawa ng File",
+    "AddFileARIA": "magdagdag ng file",
+    "UploadFile": "Mag-upload ng File",
+    "UploadFileARIA": "mag-upload ng file"
+  },
+  "FileNode": {
+    "OpenFolderARIA": "Buksan ang nilalaman ng folder",
+    "CloseFolderARIA": "Isara ang nilalaman ng folder",
+    "ToggleFileOptionsARIA": "I-toggle ang mga opsyon para buksan/isara ang file",
+    "AddFolder": "Gumawa ng Folder",
+    "AddFolderARIA": "magdagdag ng folder",
+    "AddFile": "Gumawa ng File",
+    "AddFileARIA": "magdagdag ng file",
+    "UploadFile": "Mag-upload ng File",
+    "UploadFileARIA": "mag-upload ng file",
+    "Rename": "Baguhin ang Pangalan",
+    "Delete": "Tanggalin"
+  },
+  "Common": {
+    "SiteName": "p5.js Web Editor",
+    "Error": "Error",
+    "ErrorARIA": "Error",
+    "Save": "I-save",
+    "p5logoARIA": "p5.js Logo",
+    "PFlogoARIA": "Processing Foundation Logo",
+    "DeleteConfirmation": "Sigurado ka bang gusto mong tanggalin ang {{name}}?"
+  },
+  "IDEView": {
+    "SubmitFeedback": "Magbigay ng Feedback",
+    "SubmitFeedbackARIA": "magbigay-feedback",
+    "AddCollectionTitle": "Idagdag sa koleksyon",
+    "AddCollectionARIA": "idagdag sa koleksyon",
+    "ShareTitle": "Ibahagi",
+    "ShareARIA": "ibahagi"
+  },
+  "NewFileModal": {
+    "Title": "Gumawa ng File",
+    "CloseButtonARIA": "Isara ang Bagong Modal na File",
+    "EnterName": "Mangyaring ipasok ang pangalan",
+    "InvalidType": "Hindi wastong uri ng file. Ang mga wastong extension ay .js, .css, .json, .xml, .stl, .txt, .csv, .tsv, .frag, at .vert."
+  },
+  "NewFileForm": {
+    "AddFileSubmit": "Magdagdag ng File",
+    "Placeholder": "Pangalan"
+  },
+  "NewFolderModal": {
+    "Title": "Gumawa ng Folder",
+    "CloseButtonARIA": "Isara ang Bagong Modal na Folder",
+    "EnterName": "Mangyaring ipasok ang pangalan",
+    "EmptyName": "Ang pangalan ng folder ay hindi maaaring naglalaman lamang ng mga puwang",
+    "InvalidExtension": "Ang pangalan ng folder ay hindi maaaring naglalaman ng extension"
+  },
+  "NewFolderForm": {
+    "AddFolderSubmit": "Magdagdag ng Folder",
+    "Placeholder": "Pangalan"
+  },
+  "ResetPasswordForm": {
+    "Email": "Email na ginamit sa pagsusuri",
+    "EmailARIA": "email",
+    "Submit": "Ipadala ang Email sa Pag-reset ng Password"
+  },
+  "ResetPasswordView": {
+    "Title": "p5.js Web Editor | I-reset ang Password",
+    "Reset": "I-reset ang Iyong Password",
+    "Submitted": "Ang email para sa pag-reset ng iyong password ay darating sa lalong madaling panahon. Kung hindi mo ito nakikita, tingnan\n            sa iyong spam folder dahil minsan ay maaaring doon ito mapunta.",
+    "Login": "Mag-log In",
+    "LoginOr": "o",
+    "SignUp": "Mag-sign Up"
+  },
+  "ReduxFormUtils": {
+    "errorInvalidEmail": "Mangyaring ipasok ang isang wastong email address",
+    "errorEmptyEmail": "Mangyaring ipasok ang email",
+    "errorPasswordMismatch": "Dapat magkatugma ang mga password",
+    "errorEmptyPassword": "Mangyaring ipasok ang password",
+    "errorShortPassword": "Ang password ay dapat na hindi kukulang sa 6 na karakter",
+    "errorConfirmPassword": "Mangyaring kumpirmahin ang iyong password",
+    "errorNewPassword": "Mangyaring ipasok ang isang bagong password o hayaan ang kasalukuyang password na walang laman.",
+    "errorEmptyUsername": "Mangyaring ipasok ang isang username.",
+    "errorLongUsername": "Ang username ay dapat na hindi lalampas sa 20 na karakter.",
+    "errorValidUsername": "Ang username ay dapat na binubuo lamang ng mga numero, titik, period, gitling, at mga underscore."
+  },
+  "NewPasswordView": {
+    "Title": "p5.js Web Editor | Bagong Password",
+    "Description": "Magtakda ng Bagong Password",
+    "TokenInvalidOrExpired": "Ang password reset token ay hindi wasto o nag-expire na.",
+    "EmptyPassword": "Mangyaring ipasok ang password",
+    "PasswordConfirmation": "Mangyaring kumpirmahin ang iyong password",
+    "PasswordMismatch": "Dapat magkatugma ang mga password"
+  },
+  "AccountForm": {
+    "Email": "Email",
+    "EmailARIA": "email",
+    "Unconfirmed": "Hindi pa kinumpirma.",
+    "EmailSent": "Kumpirmasyon na ipinadala, tingnan ang iyong email.",
+    "Resend": "Ipadala ulit ang kumpirmasyon na email",
+    "UserName": "Pangalan ng User",
+    "UserNameARIA": "Username",
+    "CurrentPassword": "Kasalukuyang Password",
+    "CurrentPasswordARIA": "Kasalukuyang Password",
+    "NewPassword": "Bagong Password",
+    "NewPasswordARIA": "Bagong Password",
+    "SubmitSaveAllSettings": "I-save ang Lahat ng mga Kaugalian"
+  },
+  "AccountView": {
+    "SocialLogin": "Social Login",
+    "SocialLoginDescription": "Gamitin ang iyong GitHub o Google account para mag-log in sa p5.js Web Editor.",
+    "Title": "p5.js Web Editor | Mga Kaugalian ng Account",
+    "Settings": "Mga Kaugalian ng Account",
+    "AccountTab": "Account",
+    "AccessTokensTab": "Mga Access Token"
+  },
+  "APIKeyForm": {
+    "ConfirmDelete": "Sigurado ka bang nais mong burahin ang {{key_label}}?",
+    "Summary": "Ang Personal Access Tokens ay parang iyong password na nagbibigay daan sa mga awtomatikong script na makapasok sa Editor API. Gumawa ng token para sa bawat script na nangangailangan ng access.",
+    "CreateToken": "Gumawa ng bagong token",
+    "TokenLabel": "Para saan ito na token?",
+    "TokenPlaceholder": "Para saan ito na token? Halimbawa: Script ng importasyon",
+    "CreateTokenSubmit": "Gumawa",
+    "NoTokens": "Wala kang mga umiiral na token.",
+    "NewTokenTitle": "Ang iyong bagong access token",
+    "NewTokenInfo": "Siguruhing kopyahin agad ang iyong bagong personal access token. \n                  Hindi mo ito makikita ulit!",
+    "ExistingTokensTitle": "Mga umiiral na token"
+  },
+  "APIKeyList": {
+    "Name": "Pangalan",
+    "Created": "Nilikha noong",
+    "LastUsed": "Huling ginamit",
+    "Actions": "Aksyon",
+    "Never": "Hindi pa",
+    "DeleteARIA": "Burahin ang API Key"
+  },
+  "NewPasswordForm": {
+    "Title": "Password",
+    "TitleARIA": "Password",
+    "ConfirmPassword": "Kumpirmahin ang Password",
+    "ConfirmPasswordARIA": "Kumpirmahin ang Password",
+    "SubmitSetNewPassword": "Itakda ang Bagong Password"
+  },
+  "SignupForm": {
+    "Title": "Pangalan ng User",
+    "TitleARIA": "username",
+    "Email": "Email",
+    "EmailARIA": "email",
+    "Password": "Password",
+    "PasswordARIA": "password",
+    "ConfirmPassword": "Kumpirmahin ang Password",
+    "ConfirmPasswordARIA": "Kumpirmahin ang password",
+    "SubmitSignup": "Mag-sign Up"
+  },
+  "SignupView": {
+    "Title": "p5.js Web Editor | Mag-signup",
+    "Description": "Mag-sign Up",
+    "Or": "O",
+    "AlreadyHave": "Mayroon ka nang account?",
+    "Login": "Mag-log In",
+    "Warning": "Sa pamamagitan ng pagsignup, sumasang-ayon ka sa <0>Terms of Use</0> at <1>Privacy Policy</1> ng p5.js Editor."
+  },
+  "EmailVerificationView": {
+    "Title": "p5.js Web Editor | Pag-verify ng Email",
+    "Verify": "I-verify ang iyong email",
+    "InvalidTokenNull": "Ang link ay hindi wasto.",
+    "Checking": "Pini-validate ang token, mangyaring maghintay...",
+    "Verified": "Tapos na, nai-verify na ang iyong email address.",
+    "InvalidState": "May mali na nangyari."
+  },
+  "AssetList": {
+    "Title": "p5.js Web Editor | Aking mga asset",
+    "ToggleOpenCloseARIA": "Toggle ang Open/Close Asset Options",
+    "Delete": "Burahin",
+    "OpenNewTab": "Buksan sa Bagong Tab",
+    "NoUploadedAssets": "Walang na-upload na mga asset.",
+    "HeaderName": "Pangalan",
+    "HeaderSize": "Laki",
+    "HeaderSketch": "Sketch"
+  },
+  "Feedback": {
+    "Title": "p5.js Web Editor | Feedback",
+    "ViaGithubHeader": "Sa pamamagitan ng Github Issues",
+    "ViaGithubDescription": "Kung may alam ka sa Github, ito ang ating pinipiling paraan ng pagtanggap ng mga bug report at feedback.",
+    "GoToGithub": "Pumunta sa Github",
+    "ViaGoogleHeader": "Sa pamamagitan ng Google Form",
+    "ViaGoogleDescription": "Maaari mo rin itong isumite gamit ang mabilisang form na ito.",
+    "GoToForm": "Pumunta sa Form"
+  },
+  "Searchbar": {
+    "SearchSketch": "Maghanap ng mga sketch...",
+    "SearchCollection": "Maghanap ng mga koleksyon...",
+    "ClearTerm": "alinlangan"
+  },
+  "UploadFileModal": {
+    "Title": "Mag-upload ng File",
+    "CloseButtonARIA": "Isara ang modal na pag-upload ng file",
+    "SizeLimitError": "Error: Hindi ka makapag-upload ng karagdagang mga file. Naabot mo na ang kabuuang limitadong laki na {{sizeLimit}}.\n                Kung nais mong mag-upload ng karagdagang mga file, mangyaring tanggalin ang mga hindi mo na ginagamit sa pamamagitan ng\n                sa iyong "
+  },
+  "FileUploader": {
+    "DictDefaultMessage": "I-drop dito ang mga file o i-click upang gamitin ang file browser"
+  },
+  "ErrorModal": {
+    "MessageLogin": "Upang ma-save ang mga sketch, kailangan kang mag-log in. Mangyaring ",
+    "Login": "Mag-log In",
+    "LoginOr": " o ",
+    "SignUp": "Mag-sign Up",
+    "MessageLoggedOut": "Tingin ko ay na-logout ka. Mangyaring ",
+    "LogIn": "mag-log in",
+    "SavedDifferentWindow": "Ang proyektong sinusubukan mong i-save ay nai-save mula sa ibang window.\n        Mangyaring i-refresh ang pahina upang makita ang pinakabagong bersyon.",
+    "LinkTitle": "Error sa Pag-link ng Account",
+    "LinkMessage": "May problema sa pag-link ng iyong {{serviceauth}} account sa iyong p5.js Web Editor account. Ang iyong {{serviceauth}} account ay nakalink na sa isa pang p5.js Web Editor account."
+  },
+  "ShareModal": {
+    "Embed": "I-embed",
+    "Present": "I-present",
+    "Fullscreen": "Fullscreen",
+    "Edit": "I-edit"
+  },
+  "CollectionView": {
+    "TitleCreate": "Gumawa ng koleksyon",
+    "TitleDefault": "koleksyon"
+  },
+  "Collection": {
+    "Title": "p5.js Web Editor | Aking mga koleksyon",
+    "AnothersTitle": "p5.js Web Editor | Mga koleksyon ni {{anotheruser}}",
+    "Share": "Ibahagi",
+    "URLLink": "Link sa Koleksyon",
+    "AddSketch": "Idagdag ang Sketch",
+    "DeleteFromCollection": "Sigurado ka bang nais mong tanggalin ang {{name_sketch}} mula sa koleksyong ito?",
+    "SketchDeleted": "Ang Sketch ay na-delete",
+    "SketchRemoveARIA": "Tanggalin ang sketch mula sa koleksyon",
+    "DescriptionPlaceholder": "Magdagdag ng deskripsyon",
+    "Description": "deskripsyon",
+    "NumSketches": "{{count}} sketch",
+    "NumSketches_plural": "{{count}} mga sketch",
+    "By": "Koleksyon ni ",
+    "NoSketches": "Walang mga sketch sa koleksyon",
+    "TableSummary": "talaang naglalaman ng lahat ng mga koleksyon",
+    "HeaderName": "Pangalan",
+    "HeaderCreatedAt": "Petsa ng Pagsingil",
+    "HeaderUser": "May-ari",
+    "DirectionAscendingARIA": "Pataas",
+    "DirectionDescendingARIA": "Pababa",
+    "ButtonLabelAscendingARIA": "I-ayos ang ayon sa {{displayName}} pataas.",
+    "ButtonLabelDescendingARIA": "I-ayos ang ayon sa {{displayName}} pababa."
+  },
+  "AddToCollectionList": {
+    "Title": "p5.js Web Editor | Aking mga koleksyon",
+    "AnothersTitle": "p5.js Web Editor | Mga koleksyon ni {{anotheruser}}",
+    "Empty": "Walang mga koleksyon"
+  },
+  "CollectionCreate": {
+    "Title": "p5.js Web Editor | Gumawa ng koleksyon",
+    "FormError": "Hindi maitatag ang koleksyon",
+    "FormLabel": "Pangalan ng Koleksyon",
+    "FormLabelARIA": "pangalan",
+    "NameRequired": "Kinakailangan ang pangalan ng koleksyon",
+    "Description": "Deskripsyon (opsiyonal)",
+    "DescriptionARIA": "deskripsyon",
+    "DescriptionPlaceholder": "Aking mga paboritong sketch",
+    "SubmitCollectionCreate": "Gumawa ng koleksyon"
+  },
+  "DashboardView": {
+    "CreateCollection": "Gumawa ng koleksyon",
+    "NewSketch": "Bagong sketch",
+    "CreateCollectionOverlay": "Gumawa ng koleksyon"
+  },
+  "DashboardTabSwitcher": {
+    "Sketches": "Sketches",
+    "Collections": "Mga Koleksyon",
+    "Assets": "Mga Asset"
+  },
+  "CollectionList": {
+    "Title": "p5.js Web Editor | Aking mga koleksyon",
+    "AnothersTitle": "p5.js Web Editor | Mga koleksyon ni {{anotheruser}}",
+    "NoCollections": "Walang mga koleksyon.",
+    "TableSummary": "talaang naglalaman ng lahat ng mga koleksyon",
+    "HeaderName": "Pangalan",
+    "HeaderCreatedAt": "Petsa ng Paglikha",
+    "HeaderCreatedAt_mobile": "Nilikha",
+    "HeaderUpdatedAt": "Petsa ng Paggamit",
+    "HeaderUpdatedAt_mobile": "Na-update",
+    "HeaderNumItems": "# mga sketch",
+    "HeaderNumItems_mobile": "# mga sketch",
+    "DirectionAscendingARIA": "Pataas",
+    "DirectionDescendingARIA": "Pababa",
+    "ButtonLabelAscendingARIA": "Ayusin ayon sa {{displayName}} pataas.",
+    "ButtonLabelDescendingARIA": "Ayusin ayon sa {{displayName}} pababa.",
+    "AddSketch": "Idagdag ang Sketch"
+  },
+  "CollectionListRow": {
+    "ToggleCollectionOptionsARIA": "Toggle ang Open/Close na mga option ng koleksyon",
+    "AddSketch": "Idagdag ang sketch",
+    "Delete": "Burahin",
+    "Rename": "Palitan ang Pangalan"
+  },
+  "Overlay": {
+    "AriaLabel": "Isara ang {{title}} overlay"
+  },
+  "QuickAddList": {
+    "ButtonRemoveARIA": "Alisin mula sa koleksyon",
+    "ButtonAddToCollectionARIA": "Idagdag sa koleksyon",
+    "View": "Tingnan"
+  },
+  "SketchList": {
+    "View": "Tingnan",
+    "Title": "p5.js Web Editor | Aking mga sketch",
+    "AnothersTitle": "p5.js Web Editor | Mga sketch ni {{anotheruser}}",
+    "ToggleLabelARIA": "Toggle ang Open/Close na mga Option ng Sketch",
+    "DropdownRename": "Palitan ang Pangalan",
+    "DropdownDownload": "I-download",
+    "DropdownDuplicate": "Kopyahin",
+    "DropdownAddToCollection": "Idagdag sa koleksyon",
+    "DropdownDelete": "Burahin",
+    "DirectionAscendingARIA": "Pataas",
+    "DirectionDescendingARIA": "Pababa",
+    "ButtonLabelAscendingARIA": "Ayusin ayon sa {{displayName}} pataas.",
+    "ButtonLabelDescendingARIA": "Ayusin ayon sa {{displayName}} pababa.",
+    "AddToCollectionOverlayTitle": "Idagdag sa koleksyon",
+    "TableSummary": "talaang naglalaman ng lahat ng mga nai-save na proyekto",
+    "HeaderName": "Sketch",
+    "HeaderCreatedAt": "Petsa ng Paglikha",
+    "HeaderCreatedAt_mobile": "Nilikha",
+    "HeaderUpdatedAt": "Petsa ng Paggamit",
+    "HeaderUpdatedAt_mobile": "Na-update",
+    "NoSketches": "Walang mga sketch."
+  },
+  "AddToCollectionSketchList": {
+    "Title": "p5.js Web Editor | Aking mga sketch",
+    "AnothersTitle": "p5.js Web Editor | Mga sketch ni {{anotheruser}}",
+    "NoCollections": "Walang mga koleksyon."
+  },
+  "Editor": {
+    "OpenSketchARIA": "Buksan ang pag-navigate ng mga file ng Sketch",
+    "CloseSketchARIA": "Isara ang pag-navigate ng mga file ng Sketch",
+    "UnsavedChangesARIA": "May hindi na-i-save na mga pagbabago sa Sketch",
+    "KeyUpLineNumber": "line {{lineNumber}}"
+  },
+  "EditorAccessibility": {
+    "NoLintMessages": "Walang mga lint message",
+    "CurrentLine": "Kasalukuyang linya"
+  },
+  "Timer": {
+    "SavedAgo": "Nai-save: {{timeAgo}}"
+  },
+  "formatDate": {
+    "JustNow": "ngayon lang",
+    "15Seconds": "15 segundo ang nakakaraan",
+    "25Seconds": "25 segundo ang nakakaraan",
+    "35Seconds": "35 segundo ang nakakaraan",
+    "Ago": "{{timeAgo}} ang nakakaraan"
+  },
+  "AddRemoveButton": {
+    "AltAddARIA": "Idagdag sa koleksyon",
+    "AltRemoveARIA": "Alisin mula sa koleksyon"
+  },
+  "CopyableInput": {
+    "CopiedARIA": "Kinopya sa Clipboard!",
+    "OpenViewTabARIA": "Buksan ang {{label}} na tanawin sa bagong tab"
+  },
+  "EditableInput": {
+    "EditValue": "Baguhin ang {{display}} na halaga",
+    "EmptyPlaceholder": "Walang halaga"
+  },
+  "PreviewNav": {
+    "EditSketchARIA": "I-edit ang Sketch",
+    "ByUser": "ni"
+  },
+  "MobilePreferences": {
+    "Settings": "Mga Setting",
+    "GeneralSettings": "Pangkalahatang mga setting",
+    "Accessibility": "Accessibility",
+    "AccessibleOutput": "Accessible Output",
+    "Theme": "Tema",
+    "LightTheme": "Maliwanag",
+    "DarkTheme": "Madilim",
+    "HighContrastTheme": "Mataas na Kontrast",
+    "Autosave": "Autosave",
+    "AutocompleteHinter": "Autocomplete Hinter",
+    "WordWrap": "Word Wrap",
+    "LineNumbers": "Numero ng mga linya",
+    "LintWarningSound": "Lint Babala na Tunog",
+    "UsedScreenReader": "Ginamit sa screen reader",
+    "PlainText": "Plain-text",
+    "TableText": "Table-text",
+    "Sound": "Tunog"
+  },
+  "PreferenceCreators": {
+    "On": "On",
+    "Off": "Off"
+  },
+  "MobileIDEView": {
+    "Preferences": "Mga Preferences",
+    "MyStuff": "Aking Mga Bagay",
+    "Examples": "Mga Halimbawa",
+    "OriginalEditor": "Orihinal na Editor",
+    "Login": "Mag-log In",
+    "Logout": "Mag-logout"
+  },
+  "MobileDashboardView": {
+    "Examples": "Mga Halimbawa",
+    "Sketches": "Mga Sketches",
+    "Collections": "Mga Koleksyon",
+    "Assets": "Mga Asset",
+    "MyStuff": "Aking Mga Bagay",
+    "CreateSketch": "Gumawa ng Sketch",
+    "CreateCollection": "Gumawa ng Koleksyon"
+  },
+  "Explorer": {
+    "Files": "Mga File"
+  },
+  "Cookies": {
+    "Header": "Mga Cookies",
+    "Body": "Ang p5.js Editor ay gumagamit ng cookies. Ang ilan ay kailangan para sa functionality ng website at nagbibigay daan sa iyo na pamahalaan ang isang account at mga preference. Ang iba ay hindi kailangan—ginagamit ito para sa analytics at nagbibigay daan sa amin na malaman pa ng higit tungkol sa aming komunidad. <strong> Hindi namin kailanman binibenta ang data na ito o ginagamit ito para sa advertising. </strong> Maaari mong piliin kung aling cookies ang nais mong payagan, at alamin pa ito sa aming <0>Privacy Policy<0>.",
+    "AllowAll": "Payagan lahat",
+    "AllowEssential": "Payagan ang Mahalaga"
+  },
+  "Legal": {
+    "PrivacyPolicy": "Patakaran sa Privacy",
+    "TermsOfUse": "Mga Tuntunin ng Paggamit",
+    "CodeOfConduct": "Code of Conduct"
+  }
+}
