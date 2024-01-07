@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import getConfig from '../../utils/getConfig';
+import { showReduxDevTools } from '../../store';
 import DevTools from './components/DevTools';
 import { setPreviousPath } from '../IDE/actions/ide';
 import { setLanguage } from '../IDE/actions/preferences';
@@ -52,9 +52,7 @@ const App = ({ children }) => {
   return (
     <div className="app">
       <CookieConsent hide={hide} />
-      {isMounted &&
-        !window.devToolsExtension &&
-        getConfig('NODE_ENV') === 'development' && <DevTools />}
+      {isMounted && showReduxDevTools() && <DevTools />}
       {children}
     </div>
   );
