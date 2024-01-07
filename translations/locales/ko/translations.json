@@ -46,7 +46,8 @@
       "Asset": "애셋",
       "MyAssets": "나의 애셋들",
       "LogOut": "로그아웃"
-    }
+    },
+    "Fundraiser":"p5.js와 Processing Foundation을 지원하세요!"
   },
   "LoginForm": {
     "UsernameOrEmail": "이메일 또는 아이디",

@@ -45,7 +45,8 @@
       "Asset": "资产",
       "MyAssets": "我的资产",
       "LogOut": "登出"
-    }
+    },
+    "Fundraiser":"支持 p5.js 和 Processing Foundation!"
   },
   "CodemirrorFindAndReplace": {
     "ToggleReplace": "开关替换选项",

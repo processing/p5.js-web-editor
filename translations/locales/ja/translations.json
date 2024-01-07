@@ -45,7 +45,8 @@
         "Asset": "アセット",
         "MyAssets": "マイアセット",
         "LogOut": "ログアウト"
-      }
+      },
+      "Fundraiser":"p5.js と Processing Foundation をサポート！"
     },
     "CodemirrorFindAndReplace": {
       "ToggleReplace": "置換の切り替え",

@@ -45,7 +45,8 @@
       "Asset": "Varlık",
       "MyAssets": "Varlıklarım",
       "LogOut": "Çıkış Yap"
-    }
+    },
+    "Fundraiser":"p5.js ve Processing Foundation'ı destekleyin!"
   },
   "CodemirrorFindAndReplace": {
     "ToggleReplace": "Değiştirme Aç/Kapa",

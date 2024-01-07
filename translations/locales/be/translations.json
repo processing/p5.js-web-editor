@@ -45,7 +45,8 @@
       "Asset": "সম্পদ",
       "MyAssets": "আমার সম্পদ",
       "LogOut": "লগ আউট"
-    }
+    },
+    "Fundraiser":"p5.js এবং প্রসেসিং ফাউন্ডেশন সমর্থন করুন!"
   },
   "CodemirrorFindAndReplace": {
     "ToggleReplace": "প্রতিস্থাপন টগল করুন",

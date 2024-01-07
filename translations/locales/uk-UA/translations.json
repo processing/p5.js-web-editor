@@ -45,7 +45,8 @@
       "Asset": "Файл",
       "MyAssets": "Мої файли",
       "LogOut": "Вийти"
-    }
+    },
+    "Fundraiser":"Підтримайте p5.js та Фонд Processing!"
   },
   "CodemirrorFindAndReplace": {
     "ToggleReplace": "Увімкнути заміну",

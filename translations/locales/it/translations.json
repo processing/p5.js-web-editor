@@ -45,7 +45,8 @@
       "Asset": "Risorse",
       "MyAssets": "Mie risorse",
       "LogOut": "Esci"
-    }
+    },
+    "Fundraiser":"Supporta p5.js e la Fondazione Processing!"
   },
   "CodemirrorFindAndReplace": {
     "ToggleReplace": "Attiva/disattiva Sostituzione",

@@ -45,7 +45,8 @@
       "Asset": "Resurs",
       "MyAssets": "Mina resurser",
       "LogOut": "Logga ut"
-    }
+    },
+    "Fundraiser":"Stöd p5.js och Processing Foundation!"
   },
   "CodemirrorFindAndReplace": {
     "ToggleReplace": "Växla ersätt",

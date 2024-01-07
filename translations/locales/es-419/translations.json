@@ -45,7 +45,8 @@
       "Asset": "Recurso",
       "MyAssets": "Mis recursos",
       "LogOut": "Cerrar sesión"
-    }
+    },
+    "Fundraiser":"¡Apoya a p5.js y a la Fundación Processing!"
   },
   "CodemirrorFindAndReplace": {
     "ToggleReplace": "Alternar reemplazar",

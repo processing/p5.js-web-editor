@@ -45,7 +45,8 @@
       "Asset": "Asset",
       "MyAssets": "Meine Assets",
       "LogOut": "Abmelden"
-    }
+    },
+    "Fundraiser":"Unterstütze p5.js und die Processing Foundation!"
   },
   "CodemirrorFindAndReplace": {
     "ToggleReplace": "Ersetzen umschalten",
