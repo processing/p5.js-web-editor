@@ -23,6 +23,11 @@
       "Run": "Run",
       "Stop": "Stop"
     },
+    "Settings":{
+      "Title" : "Settings",
+      "Preferences": "Preferences",
+      "Language" : "Language"
+    },
     "Help": {
       "Title": "Help",
       "KeyboardShortcuts": "Keyboard Shortcuts",

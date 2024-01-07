@@ -23,6 +23,11 @@
         "Run": "चलाएं",
         "Stop": "रोकें"
       },
+      "Settings":{
+        "Title" : "सेटिंग",
+        "Preferences": "पसंद",
+        "Language" : "भाषा"
+      },
       "Help": {
         "Title": "मदद",
         "KeyboardShortcuts": "कीबोर्ड शॉर्टकट",

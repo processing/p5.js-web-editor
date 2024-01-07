@@ -419,16 +419,16 @@ const MoreMenu = () => {
             {t('Nav.Sketch.AddFolder')}
           </NavMenuItem>
           {/* TODO: Add Translations */}
-          <b>Settings</b>
+          <b>{t('Nav.Settings.Title')}</b>
           <NavMenuItem
             onClick={() => {
               dispatch(openPreferences());
             }}
           >
-            Preferences
+            {t('Nav.Settings.Preferences')}
           </NavMenuItem>
           <NavMenuItem onClick={() => setIsLanguageModalVisible(true)}>
-            Language
+            {t('Nav.Settings.Language')}
           </NavMenuItem>
           <b>{t('Nav.Help.Title')}</b>
           <NavMenuItem onClick={() => dispatch(showKeyboardShortcutModal())}>
