@@ -56,7 +56,7 @@ export function languageKeyToLabel(lang) {
   const languageMap = {
     ar: 'العربية',
     be: 'বাংলা',
-    da:  "རྫོང་ཁ",
+    da:  'རྫོང་ཁ',
     de: 'Deutsch',
     el: 'Ελληνικά',
     'en-US': 'English',
