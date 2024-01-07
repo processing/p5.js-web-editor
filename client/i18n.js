@@ -5,6 +5,7 @@ import Backend from 'i18next-http-backend';
 import {
   ar,
   be,
+  da,
   el,
   enUS,
   es,
@@ -30,6 +31,7 @@ const fallbackLng = ['en-US'];
 export const availableLanguages = [
   'ar',
   'be',
+  'da',
   'de',
   'el',
   'en-US',
@@ -54,6 +56,7 @@ export function languageKeyToLabel(lang) {
   const languageMap = {
     ar: 'العربية',
     be: 'বাংলা',
+    da:  "རྫོང་ཁ",
     de: 'Deutsch',
     el: 'Ελληνικά',
     'en-US': 'English',
@@ -80,6 +83,7 @@ export function languageKeyToDateLocale(lang) {
   const languageMap = {
     ar,
     be,
+    da,
     de,
     el,
     'en-US': enUS,
