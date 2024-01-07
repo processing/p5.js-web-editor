@@ -601,6 +601,12 @@
   },
   "Explorer": {
     "Files": "Dateien"
+  },
+  "Message": {
+    "Messages": "Berichten",
+    "Accept": "Accepteren",
+    "Reject": "Afwijzen",
+    "View": "Bekijken"
   }
 }
 

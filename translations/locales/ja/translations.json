@@ -611,5 +611,11 @@
     "PrivacyPolicy": "プライバシーポリシー",
     "TermsOfUse": "利用規約",
     "CodeOfConduct": "行動規範"
+  },
+  "Message": {
+    "Messages": "メッセージ",
+    "Accept": "受け入れる",
+    "Reject": "拒否する",
+    "View": "表示する"
   }
 }

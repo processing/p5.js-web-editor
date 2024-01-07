@@ -1,0 +1,25 @@
+.messages__list {
+    font-size: medium;
+    width: auto;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 2px;
+}
+
+.messages__msg {
+    display: flex;
+    flex-direction: column; 
+    justify-content: space-between;
+    align-items: flex-start; 
+}
+
+.messages__buttons {
+    display: flex;
+    gap: 3px;
+    margin-top: 5px;
+    justify-content: flex-end;
+}

@@ -604,5 +604,11 @@
   },
   "Explorer": {
     "Files": "檔案"
+  },
+  "Message": {
+    "Messages": "消息",
+    "Accept": "接受",
+    "Reject": "拒絕",
+    "View": "查看"
   }
 }

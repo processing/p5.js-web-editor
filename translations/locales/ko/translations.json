@@ -588,5 +588,11 @@
   },
   "Explorer": {
     "Files": "Files"
+  },
+  "Message": {
+    "Messages": "메시지",
+    "Accept": "수락",
+    "Reject": "거부",
+    "View": "보기"
   }
 }

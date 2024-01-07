@@ -48,12 +48,12 @@ class SketchList extends React.Component {
   }
 
   handleCollectionAdd = (sketch) => {
+    console.log(this.props.collection);
     this.props.reqToOwner(
       this.props.collection.id,
-      sketch.id,
-      this.props.user.username,
-      this.props.username,
-      this.props.collection
+      sketch._id,
+      this.props.collectionOwner,
+      this.props.currentUsername
     );
   };
 
@@ -123,6 +123,8 @@ SketchList.propTypes = {
       })
     )
   }).isRequired,
+  collectionOwner: PropTypes.string.isRequired,
+  currentUsername: PropTypes.string.isRequired,
   username: PropTypes.string,
   loading: PropTypes.bool.isRequired,
   sorting: PropTypes.shape({

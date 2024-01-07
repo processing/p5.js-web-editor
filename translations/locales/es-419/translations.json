@@ -600,5 +600,11 @@
   },
   "Explorer": {
     "Files": "Archivos"
+  },
+  "Message": {
+    "Messages": "Mensajes",
+    "Accept": "Aceptar",
+    "Reject": "Rechazar",
+    "View": "Ver"
   }
 }

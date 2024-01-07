@@ -617,5 +617,11 @@
     "PrivacyPolicy": "Gizlilik Politikası",
     "TermsOfUse": "Kullanım Koşulları",
     "CodeOfConduct": "Davranış Kuralları"
+  },
+  "Message": {
+    "Messages": "Mesajlar",
+    "Accept": "Kabul Et",
+    "Reject": "Reddet",
+    "View": "Görüntüle"
   }
 }

@@ -614,6 +614,12 @@
     "PrivacyPolicy": "Integritetspolicy",
     "TermsOfUse": "Villkor för användning",
     "CodeOfConduct": "Uppförandekod"
+  },
+  "Message": {
+    "Messages": "Meddelanden",
+    "Accept": "Acceptera",
+    "Reject": "Avvisa",
+    "View": "Visa"
   }
 }
 

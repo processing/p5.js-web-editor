@@ -628,5 +628,11 @@
     "PrivacyPolicy": "Privacy Policy",
     "TermsOfUse": "Terms of Use",
     "CodeOfConduct": "Code of Conduct"
+  },
+  "Message": {
+    "Messages": "Messages",
+    "Accept" : "Accept",
+    "Reject" : "Reject",
+    "View" : "View"
   }
 }

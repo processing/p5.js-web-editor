@@ -603,6 +603,12 @@
     },
     "Explorer": {
       "Files": "Fichiers"
+    },
+    "Message": {
+      "Messages": "Messages",
+      "Accept": "Accepter",
+      "Reject": "Rejeter",
+      "View": "Voir"
     }
   }
   

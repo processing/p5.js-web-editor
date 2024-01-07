@@ -34,8 +34,9 @@ import {
 import { logoutUser } from '../../../User/actions';
 import { CmControllerContext } from '../../pages/IDEView';
 import MobileNav from './MobileNav';
-import Overlay from '../../../App/components/Overlay';
 import Messages from './Messages';
+import Button from '../../../../common/Button';
+import Overlay from '../../../App/components/Overlay';
 
 const Nav = ({ layout }) => (
   <MediaQuery minWidth={770}>
@@ -290,6 +291,7 @@ const UnauthenticatedUserMenu = () => {
   return (
     <ul className="nav__items-right" title="user-menu">
       {getConfig('TRANSLATIONS_ENABLED') && <LanguageMenu />}
+
       <li className="nav__item">
         <Link to="/login" className="nav__auth-button">
           <span className="nav__item-header" title="Login">
@@ -310,18 +312,29 @@ const UnauthenticatedUserMenu = () => {
 };
 
 const AuthenticatedUserMenu = () => {
-  const user = useSelector((state) => state.user);
-
-  const [overlay, setOverlay] = React.useState(false);
-
   const username = useSelector((state) => state.user.username);
 
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const [isReadingMsgs, setIsReadingMsgs] = React.useState(false);
 
   return (
     <ul className="nav__items-right" title="user-menu">
       {getConfig('TRANSLATIONS_ENABLED') && <LanguageMenu />}
+
+      <div>
+        <Button onClick={() => setIsReadingMsgs(true)}>Messages</Button>
+
+        {isReadingMsgs && (
+          <Overlay
+            title="Messages"
+            closeOverlay={() => setIsReadingMsgs(false)}
+            isFixedHeight
+          >
+            <Messages />
+          </Overlay>
+        )}
+      </div>
       <NavDropdownMenu
         id="account"
         title={
@@ -344,17 +357,15 @@ const AuthenticatedUserMenu = () => {
         </NavMenuItem>
         {/* // eslint-disable-next-line jsx-a11y/click-events-have-key-events,
         jsx-a11y/click-events-have-key-events */}
-        <div onClick={() => setOverlay(true)}>Messages</div>
 
-        {overlay && (
+        {/* {overlay && (
           <Overlay
             title={t('Preferences.Settings')}
             closeOverlay={() => setOverlay(false)}
             isFixedHeight
-          >
-            <Messages owner={user} />
-          </Overlay>
-        )}
+          > */}
+        {/* </Overlay> */}
+        {/* )} */}
         <NavMenuItem href="/account">{t('Preferences.Settings')}</NavMenuItem>
         <NavMenuItem onClick={() => dispatch(logoutUser())}>
           {t('Nav.Auth.LogOut')}

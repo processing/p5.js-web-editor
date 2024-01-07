@@ -12,7 +12,7 @@ router.get(
 );
 
 router.get(
-  '/collections/messages',
+  '/collections/messages/',
   isAuthenticated,
   CollectionController.getMessages
 );
@@ -51,6 +51,11 @@ router.post(
   '/collections/:id/:projectId/request',
   isAuthenticated,
   CollectionController.reqToOwner
+);
+router.delete(
+  '/collections/:collectionId/:projectId/disallow',
+  isAuthenticated,
+  CollectionController.disallowReq
 );
 
 export default router;

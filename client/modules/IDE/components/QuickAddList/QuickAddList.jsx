@@ -46,11 +46,14 @@ Item.propTypes = {
   onSelect: PropTypes.func.isRequired
 };
 
-const QuickAddList = ({ items, onAdd }) => {
+const QuickAddList = ({ items, onAdd, onRemove }) => {
   const handleAction = (item) => {
-    onAdd(item);
+    if (item.isAdded) {
+      onRemove(item);
+    } else {
+      onAdd(item);
+    }
   };
-
   return (
     <ul className="quick-add">
       {items.map((item) => (
@@ -70,7 +73,8 @@ const QuickAddList = ({ items, onAdd }) => {
 
 QuickAddList.propTypes = {
   items: PropTypes.arrayOf(ItemType).isRequired,
-  onAdd: PropTypes.func.isRequired
+  onAdd: PropTypes.func.isRequired,
+  onRemove: PropTypes.func.isRequired
 };
 
 export default QuickAddList;

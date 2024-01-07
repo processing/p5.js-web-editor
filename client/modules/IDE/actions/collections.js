@@ -71,6 +71,7 @@ export function addToCollection(collectionId, projectId) {
   return (dispatch) => {
     dispatch(startLoader());
     const url = `/collections/${collectionId}/${projectId}`;
+    console.log(url);
     return apiClient
       .post(url)
       .then((response) => {
@@ -97,21 +98,28 @@ export function addToCollection(collectionId, projectId) {
   };
 }
 
-export function reqToOwner(collectionId, projectId, owner, sender) {
+export function reqToOwner(
+  collectionId,
+  projectId,
+  collectionOwner,
+  currentUsername
+) {
   return (dispatch) => {
     dispatch(startLoader());
     const url = `/collections/${collectionId}/${projectId}/request`;
     console.log(url);
 
     const reqBody = {
-      owner,
-      sender
+      collectionOwner,
+      currentUsername,
+      collectionId
     };
     return apiClient
       .post(url, reqBody)
       .then((response) => {
         dispatch(startLoader());
         dispatch(stopLoader());
+        dispatch(console.log(response.data.message));
         dispatch(setToastText(response.data.message));
         dispatch(showToast(TOAST_DISPLAY_TIME_MS));
       })
@@ -125,27 +133,53 @@ export function reqToOwner(collectionId, projectId, owner, sender) {
   };
 }
 
-export function getMessages(owner) {
+export function disallowReq(collectionId, projectId) {
+  console.log(collectionId, projectId);
   return (dispatch) => {
     dispatch(startLoader());
-    const url = '/collections/messages';
-    console.log(url);
-    apiClient
-      .get(url, { owner })
+    const url = `/collections/${collectionId}/${projectId}/disallow`;
+
+    return apiClient
+      .delete(url)
       .then((response) => {
-        dispatch({
-          messages: response.data
-        });
         dispatch(stopLoader());
-        return response.data;
+        dispatch({
+          type: ActionTypes.DISALLOW_REQ,
+          payload: response.data
+        });
+        dispatch(setToastText('Request disallowed'));
+        dispatch(showToast(TOAST_DISPLAY_TIME_MS));
       })
       .catch((error) => {
         dispatch({
           type: ActionTypes.ERROR,
           error: error?.response?.data
         });
-        dispatch(stopLoader());
       });
+  };
+}
+export function getMessages() {
+  return async (dispatch) => {
+    try {
+      dispatch(startLoader());
+      const url = '/collections/messages/';
+      console.log(url);
+
+      const response = await apiClient.get(url);
+      dispatch(stopLoader());
+      console.log(response.data);
+
+      const { data } = response;
+
+      return data;
+    } catch (err) {
+      dispatch({
+        type: ActionTypes.ERROR,
+        error: err?.response?.data
+      });
+      dispatch(stopLoader());
+      throw err;
+    }
   };
 }
 
