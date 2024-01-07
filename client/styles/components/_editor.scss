@@ -139,6 +139,10 @@ pre.CodeMirror-line {
 .CodeMirror-find-controls {
   display: flex;
   align-items: center;
+  
+  @media (max-width: 580px) {
+    padding: 0.6rem 0rem;
+  }
 }
 .CodeMirror-search-inputs {
   width: 30%;
