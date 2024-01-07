@@ -31,7 +31,6 @@ const fallbackLng = ['en-US'];
 export const availableLanguages = [
   'ar',
   'be',
-  'da',
   'de',
   'el',
   'en-US',
@@ -42,6 +41,7 @@ export const availableLanguages = [
   'it',
   'ja',
   'ko',
+  'nl',
   'pt-BR',
   'ru',
   'sv',
@@ -56,7 +56,6 @@ export function languageKeyToLabel(lang) {
   const languageMap = {
     ar: 'العربية',
     be: 'বাংলা',
-    da:  "རྫོང་ཁ",
     de: 'Deutsch',
     el: 'Ελληνικά',
     'en-US': 'English',
@@ -67,6 +66,7 @@ export function languageKeyToLabel(lang) {
     it: 'Italiano',
     ja: '日本語',
     ko: '한국어',
+    nl: 'Dutch',
     'pt-BR': 'Português',
     ru: 'Русский',
     sv: 'Svenska',
@@ -83,7 +83,6 @@ export function languageKeyToDateLocale(lang) {
   const languageMap = {
     ar,
     be,
-    da,
     de,
     el,
     'en-US': enUS,
@@ -94,6 +93,7 @@ export function languageKeyToDateLocale(lang) {
     it,
     ja,
     ko,
+    nl,
     'pt-BR': ptBR,
     ru,
     sv,
