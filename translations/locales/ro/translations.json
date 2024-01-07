@@ -1,0 +1,633 @@
+{
+  "Nav": {
+    "File": {
+      "Title": "Fișier",
+      "New": "Nou",
+      "Share": "Partajează",
+      "Duplicate": "Duplică",
+      "Open": "Deschide",
+      "Download": "Descarcă",
+      "AddToCollection": "Adaugă în Colecție",
+      "Examples": "Exemple"
+    },
+    "Edit": {
+      "Title": "Editează",
+      "TidyCode": "Ordonează Codul",
+      "Find": "Găsește",
+      "Replace": "Înlocuiește"
+    },
+    "Sketch": {
+      "Title": "Schiță",
+      "AddFile": "Adaugă Fișier",
+      "AddFolder": "Adaugă Dosar",
+      "Run": "Rulează",
+      "Stop": "Oprește"
+    },
+    "Help": {
+      "Title": "Ajutor",
+      "KeyboardShortcuts": "Scurtături de Tastatură",
+      "Reference": "Referință",
+      "About": "Despre"
+    },
+    "Lang": "Limba",
+    "BackEditor": "Înapoi la Editor",
+    "WarningUnsavedChanges": "Sigur dorești să părăsești această pagină? Ai modificări nesalvate.",
+    "Login": "Autentificare",
+    "LoginOr": "sau",
+    "SignUp": "Înregistrare",
+    "Auth": {
+      "Welcome": "Bun venit",
+      "Hello": "Salut",
+      "MyAccount": "Contul Meu",
+      "My": "Meu",
+      "MySketches": "Schițele Mele",
+      "MyCollections": "Colecțiile Mele",
+      "Asset": "Resursă",
+      "MyAssets": "Resursele Mele",
+      "LogOut": "Dezautentificare"
+    },
+    "Fundraiser": "Susține p5.js și Fundația Processing!"
+  },
+  "CodemirrorFindAndReplace": {
+    "ToggleReplace": "Comută Înlocuirea",
+    "Find": "Găsește",
+    "FindPlaceholder": "Găsește în fișiere",
+    "Replace": "Înlocuiește",
+    "ReplaceAll": "Înlocuiește Tot",
+    "ReplacePlaceholder": "Text pentru înlocuire",
+    "Regex": "Expresie Regulată",
+    "CaseSensitive": "Sensibil la Majuscule/Minuscule",
+    "WholeWords": "Cuvinte Intregi",
+    "Previous": "Anterior",
+    "Next": "Următor",
+    "NoResults": "Fără rezultate",
+    "Close": "Închide"
+  },
+  "LoginForm": {
+    "UsernameOrEmail": "Email sau Nume de Utilizator",
+    "UsernameOrEmailARIA": "Email sau Nume de Utilizator",
+    "Password": "Parolă",
+    "PasswordARIA": "Parolă",
+    "Submit": "Autentificare"
+  },
+  "LoginView": {
+    "Title": "p5.js Web Editor | Autentificare",
+    "Login": "Autentificare",
+    "LoginOr": "sau",
+    "SignUp": "Înregistrare",
+    "Email": "email",
+    "Username": "numeutilizator",
+    "DontHaveAccount": "Nu ai un cont? ",
+    "ForgotPassword": "Ți-ai uitat parola? ",
+    "ResetPassword": "Resetare parolă"
+  },
+  "SocialAuthButton": {
+    "Connect": "Conectează Contul {{serviceauth}}",
+    "Unlink": "Decuplează Contul {{serviceauth}}",
+    "Login": "Autentificare cu {{serviceauth}}",
+    "LogoARIA": "logo {{serviceauth}}"
+  },
+  "About": {
+    "Title": "Despre",
+    "TitleHelmet": "p5.js Web Editor | Despre",
+    "Contribute": "Contribuie",
+    "NewP5": "Ești nou la p5.js?",
+    "Report": "Raportează o eroare",
+    "Learn": "Învață",
+    "Resources": "Resurse",
+    "Libraries": "Biblioteci",
+    "Forum": "Forum",
+    "Examples": "Exemple",
+    "PrivacyPolicy": "Politica de Confidențialitate",
+    "TermsOfUse": "Termeni de Utilizare",
+    "CodeOfConduct": "Cod de Conduită"
+  },
+  "Toast": {
+    "OpenedNewSketch": "Schiță nouă deschisă.",
+    "SketchSaved": "Schița salvată.",
+    "SketchFailedSave": "Eșec la salvarea schiței.",
+    "AutosaveEnabled": "Autosalvare activată.",
+    "LangChange": "Schimbare limbă",
+    "SettingsSaved": "Setări salvate."
+  },
+  "Toolbar": {
+    "Preview": "Previzualizare",
+    "Auto-refresh": "Auto-refresh",
+    "OpenPreferencesARIA": "Deschide Preferințe",
+    "PlaySketchARIA": "Rulează schița",
+    "PlayOnlyVisualSketchARIA": "Rulează doar schița vizuală",
+    "StopSketchARIA": "Oprește schița",
+    "EditSketchARIA": "Editează numele schiței",
+    "NewSketchNameARIA": "Nume nou de schiță",
+    "By": " de către "
+  },
+  "Console": {
+    "Title": "Consolă",
+    "Clear": "Șterge",
+    "ClearARIA": "Șterge consola",
+    "Close": "Închide",
+    "CloseARIA": "Închide consola",
+    "Open": "Deschide",
+    "OpenARIA": "Deschide consola"
+  },
+  "Preferences": {
+    "Settings": "Setări",
+    "GeneralSettings": "Setări generale",
+    "Accessibility": "Accesibilitate",
+    "Theme": "Temă",
+    "LightTheme": "Luminos",
+    "LightThemeARIA": "temă luminată activată",
+    "DarkTheme": "Întunecat",
+    "DarkThemeARIA": "temă întunecată activată",
+    "HighContrastTheme": "Înalt Contrast",
+    "HighContrastThemeARIA": "temă de înalt contrast activată",
+    "TextSize": "Dimensiune Text",
+    "DecreaseFont": "Micșorează",
+    "DecreaseFontARIA": "micșorează dimensiunea fontului",
+    "IncreaseFont": "Mărește",
+    "IncreaseFontARIA": "mărește dimensiunea fontului",
+    "FontSize": "Dimensiune Font",
+    "SetFontSize": "setează dimensiunea fontului",
+    "Autosave": "Autosalvare",
+    "On": "Activată",
+    "AutosaveOnARIA": "autosalvare activată",
+    "Off": "Dezactivată",
+    "AutosaveOffARIA": "autosalvare dezactivată",
+    "AutocloseBracketsQuotes": "Închide automat parantezele și ghilimelele",
+    "AutocloseBracketsQuotesOnARIA": "închide automat parantezele și ghilimelele activat",
+    "AutocloseBracketsQuotesOffARIA": "închide automat parantezele și ghilimelele dezactivat",
+    "AutocompleteHinter": "Sugestii de Autocompletare",
+    "AutocompleteHinterOnARIA": "sugestii de autocompletare activate",
+    "AutocompleteHinterOffARIA": "sugestii de autocompletare dezactivate",
+    "WordWrap": "Împachetare Cuvinte",
+    "LineWrapOnARIA": "împachetare cuvinte activată",
+    "LineWrapOffARIA": "împachetare cuvinte dezactivată",
+    "LineNumbers": "Numere Linie",
+    "LineNumbersOnARIA": "numere linie activate",
+    "LineNumbersOffARIA": "numere linie dezactivate",
+    "LintWarningSound": "Sunet avertisment Lint",
+    "LintWarningOnARIA": "avertisment Lint activat",
+    "LintWarningOffARIA": "avertisment Lint dezactivat",
+    "PreviewSound": "Sunet Previzualizare",
+    "PreviewSoundARIA": "sunet previzualizare",
+    "AccessibleTextBasedCanvas": "Panou text bazat pe text accesibil",
+    "UsedScreenReader": "Folosit cu cititor de ecran",
+    "PlainText": "Text simplu",
+    "TextOutputARIA": "ieșire text activată",
+    "TableText": "Text tabel",
+    "TableOutputARIA": "ieșire tabel activată"
+  },
+  "KeyboardShortcuts": {
+    "Title": "Scurtături Tastatură",
+    "ShortcutsFollow": "Scurtături tastatură pentru editare de cod urmează",
+    "SublimeText": "Scurtături tastatură Sublime Text",
+    "CodeEditing": {
+      "Tidy": "Ordonează",
+      "FindText": "Găsește Text",
+      "FindNextMatch": "Găsește Următoarea Potrivire",
+      "FindPrevMatch": "Găsește Potrivirea Anterioară",
+      "ReplaceTextMatch": "Înlocuiește Textul Potrivit",
+      "IndentCodeLeft": "Indentare Cod la Stânga",
+      "IndentCodeRight": "Indentare Cod la Dreapta",
+      "CommentLine": "Comentează Linie",
+      "FindNextTextMatch": "Găsește Următorul Text Potrivit",
+      "FindPreviousTextMatch": "Găsește Textul Potrivit Anterior",
+      "CodeEditing": "Editare Cod",
+      "ColorPicker": "Afișează Selectorul de Culoare"
+    },
+    "General": {
+      "StartSketch": "Începe Schița",
+      "StopSketch": "Oprește Schița",
+      "TurnOnAccessibleOutput": "Activează Ieșirea Accesibilă",
+      "TurnOffAccessibleOutput": "Dezactivează Ieșirea Accesibilă"
+    }
+  },
+  "Fundraiser": {
+    "Title": "Sprijiniți Software-ul și Echipa Noastră",
+    "Description": "🎉 Alătură-te sărbătoririi unei Decade de Cod! 🎉 Sprijină p5.js și Fundația Processing și câștigă recompense unice. 🙂",
+    "CallToAction": "Contribuie și află mai multe!"
+  },
+  "Sidebar": {
+    "Title": "Fișiere Schiță",
+    "ToggleARIA": "Comută deschiderea/închiderea opțiunilor fișierelor schiței",
+    "AddFolder": "Creează dosar",
+    "AddFolderARIA": "adaugă dosar",
+    "AddFile": "Creează fișier",
+    "AddFileARIA": "adaugă fișier",
+    "UploadFile": "Încarcă fișier",
+    "UploadFileARIA": "încarcă fișier"
+  },
+  "FileNode": {
+    "OpenFolderARIA": "Deschide conținutul dosarului",
+    "CloseFolderARIA": "Închide conținutul dosarului",
+    "ToggleFileOptionsARIA": "Comută deschiderea/închiderea opțiunilor fișierului",
+    "AddFolder": "Creează dosar",
+    "AddFolderARIA": "adaugă dosar",
+    "AddFile": "Creează fișier",
+    "AddFileARIA": "adaugă fișier",
+    "UploadFile": "Încarcă fișier",
+    "UploadFileARIA": "încarcă fișier",
+    "Rename": "Redenumește",
+    "Delete": "Șterge"
+  },
+  "Common": {
+    "SiteName": "p5.js Web Editor",
+    "Error": "Eroare",
+    "ErrorARIA": "Eroare",
+    "Save": "Salvare",
+    "p5logoARIA": "Logo p5.js",
+    "PFlogoARIA": "Logo Processing Foundation",
+    "DeleteConfirmation": "Sigur vrei să ștergi {{name}}?"
+  },
+  "IDEView": {
+    "SubmitFeedback": "Trimite Feedback",
+    "SubmitFeedbackARIA": "trimite-feedback",
+    "AddCollectionTitle": "Adaugă la colecție",
+    "AddCollectionARIA": "adaugă-la-colecție",
+    "ShareTitle": "Partajează",
+    "ShareARIA": "partajează"
+  },
+  "NewFileModal": {
+    "Title": "Creează Fișier",
+    "CloseButtonARIA": "Închide Fereastra pentru Fișier Nou",
+    "EnterName": "Te rog introdu un nume",
+    "InvalidType": "Tip de fișier invalid. Extensiile valide sunt .js, .css, .json, .xml, .stl, .txt, .csv, .tsv, .frag și .vert."
+  },
+  "NewFileForm": {
+    "AddFileSubmit": "Adaugă Fișier",
+    "Placeholder": "Nume"
+  },
+  "NewFolderModal": {
+    "Title": "Creează Dosar",
+    "CloseButtonARIA": "Închide Fereastra pentru Dosar Nou",
+    "EnterName": "Te rog introdu un nume",
+    "EmptyName": "Numele dosarului nu poate conține doar spații",
+    "InvalidExtension": "Numele dosarului nu poate conține o extensie"
+  },
+  "NewFolderForm": {
+    "AddFolderSubmit": "Adaugă Dosar",
+    "Placeholder": "Nume"
+  },
+  "ResetPasswordForm": {
+    "Email": "Email utilizat la înregistrare",
+    "EmailARIA": "email",
+    "Submit": "Trimite Email pentru Resetarea Parolei"
+  },
+  "ResetPasswordView": {
+    "Title": "p5.js Web Editor | Resetare Parolă",
+    "Reset": "Resetează Parola",
+    "Submitted": "Emailul pentru resetarea parolei ar trebui să ajungă în curând. Dacă nu-l vezi, verifică\n            în folderul spam, deoarece uneori poate ajunge acolo.",
+    "Login": "Conectare",
+    "LoginOr": "sau",
+    "SignUp": "Înregistrare"
+  },
+  "ReduxFormUtils": {
+    "errorInvalidEmail": "Te rog introdu o adresă de email validă",
+    "errorEmptyEmail": "Te rog introdu o adresă de email",
+    "errorPasswordMismatch": "Parolele trebuie să coincidă",
+    "errorEmptyPassword": "Te rog introdu o parolă",
+    "errorShortPassword": "Parola trebuie să aibă cel puțin 6 caractere",
+    "errorConfirmPassword": "Te rog confirmă parola",
+    "errorNewPassword": "Te rog introdu o parolă nouă sau lasă câmpul parolei curente gol.",
+    "errorEmptyUsername": "Te rog introdu un nume de utilizator.",
+    "errorLongUsername": "Numele de utilizator trebuie să aibă mai puțin de 20 de caractere.",
+    "errorValidUsername": "Numele de utilizator trebuie să conțină doar numere, litere, puncte, linii și sublinieri."
+  },
+  "NewPasswordView": {
+    "Title": "p5.js Web Editor | Parolă Nouă",
+    "Description": "Setează o Parolă Nouă",
+    "TokenInvalidOrExpired": "Tokenul pentru resetarea parolei este invalid sau a expirat.",
+    "EmptyPassword": "Te rog introdu o parolă",
+    "PasswordConfirmation": "Te rog confirmă parola",
+    "PasswordMismatch": "Parolele trebuie să coincidă"
+  },
+  "AccountForm": {
+    "Email": "Email",
+    "EmailARIA": "email",
+    "Unconfirmed": "Neconfirmat.",
+    "EmailSent": "Confirmare trimisă, verifică emailul.",
+    "Resend": "Retrimite emailul de confirmare",
+    "UserName": "Nume Utilizator",
+    "UserNameARIA": "Nume Utilizator",
+    "CurrentPassword": "Parola Curentă",
+    "CurrentPasswordARIA": "Parola Curentă",
+    "NewPassword": "Parola Nouă",
+    "NewPasswordARIA": "Parola Nouă",
+    "SubmitSaveAllSettings": "Salvează Toate Setările"
+  },
+  "AccountView": {
+    "SocialLogin": "Conectare Socială",
+    "SocialLoginDescription": "Folosește-ți contul GitHub sau Google pentru a te conecta la p5.js Web Editor.",
+    "Title": "p5.js Web Editor | Setări Cont",
+    "Settings": "Setări Cont",
+    "AccountTab": "Cont",
+    "AccessTokensTab": "Tokenuri de Acces"
+  },
+  "APIKeyForm": {
+    "ConfirmDelete": "Sigur vrei să ștergi {{key_label}}?",
+    "Summary": "Tokenurile personale de acces funcționează ca o parolă pentru a permite scripturilor automate\n          să acceseze API-ul Editorului. Creează un token pentru fiecare script\n          care are nevoie de acces.",
+    "CreateToken": "Creează un token nou",
+    "TokenLabel": "Pentru ce este acest token?",
+    "TokenPlaceholder": "Pentru ce este acest token? Exemplu: script de import",
+    "CreateTokenSubmit": "Creează",
+    "NoTokens": "Nu ai tokenuri existente.",
+    "NewTokenTitle": "Noul tău token de acces",
+    "NewTokenInfo": "Asigură-te că copiezi noul tău token de acces personal acum.\n                  Nu vei putea să-l vezi din nou!",
+    "ExistingTokensTitle": "Tokenuri existente"
+  },
+  "APIKeyList": {
+    "Name": "Nume",
+    "Created": "Creat pe",
+    "LastUsed": "Ultima utilizare",
+    "Actions": "Acțiuni",
+    "Never": "Niciodată",
+    "DeleteARIA": "Șterge Cheia API"
+  },
+  "NewPasswordForm": {
+    "Title": "Parolă",
+    "TitleARIA": "Parolă",
+    "ConfirmPassword": "Confirmă Parola",
+    "ConfirmPasswordARIA": "Confirmă Parola",
+    "SubmitSetNewPassword": "Setează Parola Nouă"
+  },
+  "SignupForm": {
+    "Title": "Nume Utilizator",
+    "TitleARIA": "nume-utilizator",
+    "Email": "Email",
+    "EmailARIA": "email",
+    "Password": "Parolă",
+    "PasswordARIA": "parolă",
+    "ConfirmPassword": "Confirmă Parola",
+    "ConfirmPasswordARIA": "confirmă-parola",
+    "SubmitSignup": "Înregistrare"
+  },
+  "SignupView": {
+    "Title": "p5.js Web Editor | Înregistrare",
+    "Description": "Înregistrare",
+    "Or": "Sau",
+    "AlreadyHave": "Ai deja un cont?",
+    "Login": "Conectare",
+    "Warning": "Prin înregistrare, ești de acord cu <0>Termenii de Utilizare</0> și <1>Politica de Confidențialitate</1> a Editorului p5.js."
+  },
+  "EmailVerificationView": {
+    "Title": "p5.js Web Editor | Verificare Email",
+    "Verify": "Verifică-ți emailul",
+    "InvalidTokenNull": "Acel link este invalid.",
+    "Checking": "Se validează token-ul, te rog așteaptă...",
+    "Verified": "Gata, adresa ta de email a fost verificată.",
+    "InvalidState": "Ceva nu a mers bine."
+  },
+  "AssetList": {
+    "Title": "p5.js Web Editor | Resursele mele",
+    "ToggleOpenCloseARIA": "Comută Opțiunile Deschidere/Închidere Resurse",
+    "Delete": "Șterge",
+    "OpenNewTab": "Deschide în Tab Nou",
+    "NoUploadedAssets": "Nicio resursă încărcată.",
+    "HeaderName": "Nume",
+    "HeaderSize": "Dimensiune",
+    "HeaderSketch": "Scheci"
+  },
+  "Feedback": {
+    "Title": "p5.js Web Editor | Feedback",
+    "ViaGithubHeader": "Prin Probleme Github",
+    "ViaGithubDescription": "Dacă ești familiar cu Github, aceasta este metoda noastră preferată de a primi rapoarte de erori și feedback.",
+    "GoToGithub": "Mergi pe Github",
+    "ViaGoogleHeader": "Prin Formularul Google",
+    "ViaGoogleDescription": "Poți de asemenea să completezi acest formular rapid.",
+    "GoToForm": "Mergi la Formular"
+  },
+  "Searchbar": {
+    "SearchSketch": "Caută schițe...",
+    "SearchCollection": "Caută colecții...",
+    "ClearTerm": "golește"
+  },
+  "UploadFileModal": {
+    "Title": "Încarcă Fișier",
+    "CloseButtonARIA": "Închide fereastra de încărcare fișier",
+    "SizeLimitError": "Eroare: Nu poți încărca mai multe fișiere. Ai atins limita totală de dimensiune de {{sizeLimit}}.\n                Dacă dorești să încarci mai multe, te rog să elimini cele pe care nu le mai folosești\n                în "
+  },
+  "FileUploader": {
+    "DictDefaultMessage": "Trage fișierele aici sau apasă pentru a folosi browser-ul de fișiere"
+  },
+  "ErrorModal": {
+    "MessageLogin": "Pentru a salva schițele, trebuie să fii autentificat. Te rog ",
+    "Login": "Conectează-te",
+    "LoginOr": " sau ",
+    "SignUp": "Înregistrează-te",
+    "MessageLoggedOut": "Se pare că ai fost deconectat. Te rog ",
+    "LogIn": "conectează-te",
+    "SavedDifferentWindow": "Proiectul pe care ai încercat să-l salvezi a fost salvat dintr-o altă fereastră.\n        Te rog reîmprospătează pagina pentru a vedea versiunea cea mai recentă.",
+    "LinkTitle": "Eroare la Legarea Contului",
+    "LinkMessage": "A fost o problemă la legarea contului {{serviceauth}} la contul tău de p5.js Web Editor. Contul tău {{serviceauth}} este deja legat la alt cont de p5.js Web Editor."
+  },
+  "ShareModal": {
+    "Embed": "Înglobare",
+    "Prezentare": "Prezentare",
+    "EcranComplet": "Ecran Complet",
+    "Editare": "Editare"
+  },
+  "CollectionView": {
+    "TitleCreate": "Creează colecție",
+    "TitleDefault": "colecție"
+  },
+  "Collection": {
+    "Title": "p5.js Web Editor | Colecțiile mele",
+    "AnothersTitle": "p5.js Web Editor | Colecțiile lui {{anotheruser}}",
+    "Share": "Partajează",
+    "URLLink": "Link către Colecție",
+    "AddSketch": "Adaugă Schiță",
+    "DeleteFromCollection": "Ești sigur că vrei să elimini {{name_sketch}} din această colecție?",
+    "SketchDeleted": "Schița ștearsă",
+    "SketchRemoveARIA": "Elimină schița din colecție",
+    "DescriptionPlaceholder": "Adaugă descriere",
+    "Description": "descriere",
+    "NumSketches": "{{count}} schiță",
+    "NumSketches_plural": "{{count}} schițe",
+    "By": "Colecție de ",
+    "NoSketches": "Nicio schiță în colecție",
+    "TableSummary": "tabel care conține toate colecțiile",
+    "HeaderName": "Nume",
+    "HeaderCreatedAt": "Data Adăugării",
+    "HeaderUser": "Proprietar",
+    "DirectionAscendingARIA": "Crescător",
+    "DirectionDescendingARIA": "Descrescător",
+    "ButtonLabelAscendingARIA": "Sortează după {{displayName}} în ordine crescătoare.",
+    "ButtonLabelDescendingARIA": "Sortează după {{displayName}} în ordine descrescătoare."
+  },
+  "AddToCollectionList": {
+    "Title": "p5.js Web Editor | Colecțiile mele",
+    "AnothersTitle": "p5.js Web Editor | Colecțiile lui {{anotheruser}}",
+    "Empty": "Nicio colecție"
+  },
+  "CollectionCreate": {
+    "Title": "p5.js Web Editor | Creează colecție",
+    "FormError": "Nu s-a putut crea colecția",
+    "FormLabel": "Nume colecție",
+    "FormLabelARIA": "nume",
+    "NameRequired": "Numele colecției este obligatoriu",
+    "Description": "Descriere (opțional)",
+    "DescriptionARIA": "descriere",
+    "DescriptionPlaceholder": "Schițele mele preferate",
+    "SubmitCollectionCreate": "Creează colecție"
+  },
+  "DashboardView": {
+    "CreateCollection": "Creează colecție",
+    "NewSketch": "Schiță nouă",
+    "CreateCollectionOverlay": "Creează colecție"
+  },
+  "DashboardTabSwitcher": {
+    "Sketches": "Schițe",
+    "Collections": "Colecții",
+    "Resurse": "Resurse"
+  },
+  "CollectionList": {
+    "Title": "p5.js Web Editor | Colecțiile mele",
+    "AnothersTitle": "p5.js Web Editor | Colecțiile lui {{anotheruser}}",
+    "NoCollections": "Nicio colecție.",
+    "TableSummary": "tabel care conține toate colecțiile",
+    "HeaderName": "Nume",
+    "HeaderCreatedAt": "Data Creării",
+    "HeaderCreatedAt_mobile": "Creat",
+    "HeaderUpdatedAt": "Data Actualizării",
+    "HeaderUpdatedAt_mobile": "Actualizat",
+    "HeaderNumItems": "# schițe",
+    "HeaderNumItems_mobile": "# schițe",
+    "DirectionAscendingARIA": "Crescător",
+    "DirectionDescendingARIA": "Descrescător",
+    "ButtonLabelAscendingARIA": "Sortează după {{displayName}} în ordine crescătoare.",
+    "ButtonLabelDescendingARIA": "Sortează după {{displayName}} în ordine descrescătoare.",
+    "AddSketch": "Adaugă Schiță"
+  },
+  "CollectionListRow": {
+    "ToggleCollectionOptionsARIA": "Comută Opțiunile Deschidere/Închidere Colecție",
+    "AddSketch": "Adaugă schiță",
+    "Delete": "Șterge",
+    "Rename": "Redenumește"
+  },
+  "Overlay": {
+    "AriaLabel": "Închide fereastra {{title}}"
+  },
+  "QuickAddList": {
+    "ButtonRemoveARIA": "Înlătură din colecție",
+    "ButtonAddToCollectionARIA": "Adaugă în colecție",
+    "Vezi": "Vezi"
+  },
+  "SketchList": {
+    "Vezi": "Vezi",
+    "Titlu": "p5.js Web Editor | Schițele mele",
+    "TitluAltUser": "p5.js Web Editor | Schițele lui {{anotheruser}}",
+    "ComutareEtichetaARIA": "Comută Deschidere/Închidere Opțiuni Schiță",
+    "ListaDerulareRedenumire": "Redenumește",
+    "ListaDerulareDescărcare": "Descarcă",
+    "ListaDerulareDuplicare": "Duplică",
+    "ListaDerulareAdaugareInColecție": "Adaugă în colecție",
+    "ListaDerulareȘtergere": "Șterge",
+    "DirectieCrescatoareARIA": "Crescător",
+    "DirectieDescrescatoareARIA": "Descrescător",
+    "EtichetaButonCrescatoareARIA": "Sortează după {{displayName}} în ordine crescătoare.",
+    "EtichetaButonDescrescatoareARIA": "Sortează după {{displayName}} în ordine descrescătoare.",
+    "TitluSuprapunereAdaugareInColecție": "Adaugă în colecție",
+    "SumarTabel": "tabel care conține toate proiectele salvate",
+    "AntetNume": "Schiță",
+    "AntetDataCrearii": "Data Creării",
+    "AntetDataCrearii_mobil": "Creat",
+    "AntetDataActualizarii": "Data Actualizării",
+    "AntetDataActualizarii_mobil": "Actualizat",
+    "NicioSchiță": "Nicio schiță."
+  },
+  "AdaugareInColecțieListaSchițe": {
+    "Titlu": "p5.js Web Editor | Schițele mele",
+    "TitluAltUser": "p5.js Web Editor | Schițele lui {{anotheruser}}",
+    "FaraColecții": "Nicio colecție."
+  },
+  "Editor": {
+    "DeschideNavigareFisiereSchițăARIA": "Deschide Navigarea Fișierelor Schiță",
+    "ÎnchideNavigareFisiereSchițăARIA": "Închide Navigarea Fișierelor Schiță",
+    "ModificăriNesalvateARIA": "Schița are modificări nesalvate",
+    "CheieSusNumarLinie": "linia {{lineNumber}}"
+  },
+  "EditorAccesibilitate": {
+    "NiciunMesajLint": "Nu există mesaje lint",
+    "LinieCurenta": "Linie curentă"
+  },
+  "Cronometru": {
+    "SalvatCuTimpAgo": "Salvat: {{timeAgo}}"
+  },
+  "formatData": {
+    "ChiarAcum": "chiar acum",
+    "15Secunde": "15 secunde în urmă",
+    "25Secunde": "25 secunde în urmă",
+    "35Secunde": "35 secunde în urmă",
+    "ÎnUrma": "{{timeAgo}} în urmă"
+  },
+  "ButonAdaugareȘtergere": {
+    "AltAdaugareARIA": "Adaugă în colecție",
+    "AltȘtergereARIA": "Șterge din colecție"
+  },
+  "IntrareCopiabilă": {
+    "CopiatARIA": "Copiat în Clipboard!",
+    "DeschideFilaVeziARIA": "Deschide fila {{label}} într-un tab nou"
+  },
+  "IntrareEditabilă": {
+    "EditeazăValoarea": "Editează valoarea {{display}}",
+    "SubstituentGol": "Nicio valoare"
+  },
+  "NavigarePrevizualizare": {
+    "EditeazăSchițăARIA": "Editează Schița",
+    "DeUser": "de"
+  },
+  "PreferințeMobile": {
+    "Setări": "Setări",
+    "SetăriGenerale": "Setări generale",
+    "Accesibilitate": "Accesibilitate",
+    "IeșireAccesibilă": "Ieșire Accesibilă",
+    "Temă": "Temă",
+    "TemăDeschisă": "Deschisă",
+    "TemăÎntunecată": "Întunecată",
+    "TemăContrastÎnalt": "Contrast Înalt",
+    "SalvareAutomată": "Salvare Automată",
+    "SugerareAutocompletare": "Sugerare Autocompletare",
+    "ÎmpachetareaCuvintelor": "Împachetarea Cuvintelor",
+    "NumereLinii": "Numere de Linii",
+    "SunetAvertizareLint": "Sunet Avertizare Lint",
+    "FolosireCititorEcran": "Folosire Cititor de Ecran",
+    "TextSimplu": "Text Simplu",
+    "TextTabel": "Text Tabel",
+    "Sunet": "Sunet"
+  },
+  "CreatorPreferințe": {
+    "Pornit": "Pornit",
+    "Oprit": "Oprit"
+  },
+  "IDEViewMobile": {
+    "Preferințe": "Preferințe",
+    "ChestiiMele": "Chestii Mele",
+    "Exemple": "Exemple",
+    "EditorOriginal": "Editor Original",
+    "Conectare": "Conectare",
+    "Deconectare": "Deconectare"
+  },
+  "DashboardViewMobile": {
+    "Exemple": "Exemple",
+    "Schițe": "Schițe",
+    "Colecții": "Colecții",
+    "Resurse": "Resurse",
+    "ChestiiMele": "Chestii Mele",
+    "CreeazăSchiță": "Creează Schiță",
+    "CreeazăColecție": "Creează Colecție"
+  },
+  "Explorer": {
+    "Files": "Fișiere"
+  },
+  "Cookies": {
+    "Header": "Cookie-uri",
+    "Body": "Editorul p5.js utilizează cookie-uri. Unele sunt esențiale pentru funcționalitatea site-ului și vă permit să gestionați un cont și preferințele. Altele nu sunt esențiale, sunt utilizate pentru analize și ne permit să aflăm mai multe despre comunitatea noastră. <strong> Nu vindem niciodată aceste date sau le utilizăm în scopuri publicitare. </strong> Puteți decide ce cookie-uri doriți să permiteți și să aflați mai multe în <0>Politica de Confidențialitate<0>.",
+    "PermiteTot": "Permite Tot",
+    "PermiteEsențiale": "Permite Esețiale"
+  },
+  "Legal": {
+    "PoliticaDeConfidențialitate": "Politica de Confidențialitate",
+    "TermeniDeUtilizare": "Termeni de Utilizare",
+    "CodDeConduită": "Cod de Conduită"
+  }
+}
