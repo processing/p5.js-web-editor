@@ -48,6 +48,26 @@ function WarnIfUnsavedChanges() {
 
   const currentLocation = useLocation();
 
+  // beforeunload handles closing or refreshing the window.
+  useEffect(() => {
+    const handleUnload = (e) => {
+      // See: https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeunload_event#browser_compatibility
+      e.preventDefault();
+      e.returnValue = t('Nav.WarningUnsavedChanges');
+    };
+
+    if (hasUnsavedChanges) {
+      window.addEventListener('beforeunload', handleUnload);
+    } else {
+      window.removeEventListener('beforeunload', handleUnload);
+    }
+
+    return () => {
+      window.removeEventListener('beforeunload', handleUnload);
+    };
+  }, [t, hasUnsavedChanges]);
+
+  // Prompt handles internal navigation between pages.
   return (
     <Prompt
       when={hasUnsavedChanges}
@@ -127,6 +147,11 @@ const IDEView = () => {
     };
   }, [shouldAutosave, dispatch]);
 
+  const consoleCollapsedSize = 29;
+  const currentConsoleSize = ide.consoleIsExpanded
+    ? consoleSize
+    : consoleCollapsedSize;
+
   return (
     <RootPage>
       <Helmet>
@@ -171,9 +196,11 @@ const IDEView = () => {
                   <SplitPane
                     split="horizontal"
                     primary="second"
-                    size={ide.consoleIsExpanded ? consoleSize : 29}
-                    minSize={29}
-                    onChange={(size) => setConsoleSize(size)}
+                    size={currentConsoleSize}
+                    minSize={consoleCollapsedSize}
+                    onChange={(size) => {
+                      setConsoleSize(size);
+                    }}
                     allowResize={ide.consoleIsExpanded}
                     className="editor-preview-subpanel"
                   >
@@ -191,16 +218,10 @@ const IDEView = () => {
                       </h2>
                     </header>
                     <div className="preview-frame__content">
-                      <div
-                        className="preview-frame-overlay"
-                        style={{ display: isOverlayVisible ? 'block' : 'none' }}
+                      <PreviewFrame
+                        cmController={cmRef.current}
+                        isOverlayVisible={isOverlayVisible}
                       />
-                      <div>
-                        {((preferences.textOutput || preferences.gridOutput) &&
-                          ide.isPlaying) ||
-                          ide.isAccessibleOutputPlaying}
-                      </div>
-                      <PreviewFrame cmController={cmRef.current} />
                     </div>
                   </section>
                 </SplitPane>
@@ -208,18 +229,32 @@ const IDEView = () => {
             </main>
           ) : (
             <>
-              <FloatingActionButton syncFileContent={syncFileContent} />
+              <FloatingActionButton
+                syncFileContent={syncFileContent}
+                offsetBottom={ide.isPlaying ? currentConsoleSize : 0}
+              />
               <PreviewWrapper show={ide.isPlaying}>
                 <SplitPane
                   style={{ position: 'static' }}
                   split="horizontal"
                   primary="second"
-                  minSize={200}
+                  size={currentConsoleSize}
+                  minSize={consoleCollapsedSize}
+                  onChange={(size) => {
+                    setConsoleSize(size);
+                    setIsOverlayVisible(true);
+                  }}
+                  onDragFinished={() => {
+                    setIsOverlayVisible(false);
+                  }}
+                  allowResize={ide.consoleIsExpanded}
+                  className="editor-preview-subpanel"
                 >
                   <PreviewFrame
                     fullView
                     hide={!ide.isPlaying}
                     cmController={cmRef.current}
+                    isOverlayVisible={isOverlayVisible}
                   />
                   <Console />
                 </SplitPane>
