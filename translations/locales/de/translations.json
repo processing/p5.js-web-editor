@@ -350,7 +350,16 @@
     "Description": "Registrieren",
     "Or": "Oder",
     "AlreadyHave": "Hast Du bereits einen Account? ",
-    "Login": "Anmelden"
+    "Login": "Anmelden",
+    "SignupView": {
+      "Title": "p5.js Web Editor | Registrieren",
+      "Description": "Registrieren",
+      "Or": "Oder",
+      "AlreadyHave": "Haben Sie bereits ein Konto?",
+      "Login": "Anmelden",
+      "Warning": "Durch die Anmeldung erklären Sie sich mit den <0>Nutzungsbedingungen</0> und der <1>Datenschutzrichtlinie</1> des p5.js Editors einverstanden."
+  }
+  
   },
   "EmailVerificationView": {
     "Title": "p5.js Web Editor | E-Mail Bestätigung",

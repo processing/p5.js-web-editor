@@ -353,7 +353,8 @@
     "Description": "注册",
     "Or": "或",
     "AlreadyHave": "已经有账户了？",
-    "Login": "登陆"
+    "Login": "登陆",
+    "Warning": "注册即表示您同意 p5.js 编辑器的 <0>使用条款</0> 和 <1>隐私政策。</1>"
   },
   "EmailVerificationView": {
     "Title": "p5.js 在线编辑器 ｜ 确认邮箱",

@@ -356,7 +356,8 @@
     "Description": "Registrati",
     "Or": "o",
     "AlreadyHave": "Hai già un account?",
-    "Login": "Accedi"
+    "Login": "Accedi",
+    "Warning": "Registrandoti, accetti i <0>Termini di utilizzo</0> e la <1>Informativa sulla privacy</1> dell'Editor p5.js."
   },
   "EmailVerificationView": {
     "Title": "p5.js Web Editor | Verifica email",

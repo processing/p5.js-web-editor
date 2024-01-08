@@ -353,7 +353,8 @@
     "Description": "註冊",
     "Or": "或是",
     "AlreadyHave": "已經有帳號？",
-    "Login": "登入"
+    "Login": "登入",
+    "Warning": "註冊即表示您同意 p5.js 編輯器的 <0>使用條款</0> 和 <1>隱私政策。</1>"
   },
   "EmailVerificationView": {
     "Title": "p5.js Web Editor | 驗證電子郵件",

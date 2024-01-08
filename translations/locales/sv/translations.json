@@ -353,7 +353,8 @@
     "Description": "Registrering",
     "Or": "Eller",
     "AlreadyHave": "Har du redan ett konto?",
-    "Login": "Logga in"
+    "Login": "Logga in",
+    "Warning": "Genom att registrera dig godkänner du p5.js Editors <0>Användarvillkor</0> och <1>Integritetspolicy.</1>"
   },
   "EmailVerificationView": {
     "Title": "p5.js Webb editor | E-postbekräftelse",
