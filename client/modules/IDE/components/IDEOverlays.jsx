@@ -5,7 +5,6 @@ import { useLocation, useParams } from 'react-router-dom';
 import Overlay from '../../App/components/Overlay';
 import {
   closeKeyboardShortcutModal,
-  closeFundraiserModal,
   closePreferences,
   closeShareModal,
   hideErrorModal
@@ -15,7 +14,6 @@ import AddToCollectionList from './AddToCollectionList';
 import ErrorModal from './ErrorModal';
 import Feedback from './Feedback';
 import KeyboardShortcutModal from './KeyboardShortcutModal';
-import FundraiserModal from './FundraiserModal';
 import NewFileModal from './NewFileModal';
 import NewFolderModal from './NewFolderModal';
 import Preferences from './Preferences';
@@ -35,7 +33,6 @@ export default function IDEOverlays() {
     uploadFileModalVisible,
     preferencesIsVisible,
     keyboardShortcutVisible,
-    fundraiserContentVisible,
     shareModalVisible,
     shareModalProjectId,
     shareModalProjectName,
@@ -107,15 +104,6 @@ export default function IDEOverlays() {
           closeOverlay={() => dispatch(closeKeyboardShortcutModal())}
         >
           <KeyboardShortcutModal />
-        </Overlay>
-      )}
-      {fundraiserContentVisible && (
-        <Overlay
-          title={t('Fundraiser.Title')}
-          ariaLabel={t('Fundraiser.Title')}
-          closeOverlay={() => dispatch(closeFundraiserModal())}
-        >
-          <FundraiserModal />
         </Overlay>
       )}
       {errorType && (
