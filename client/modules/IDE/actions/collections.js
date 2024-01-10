@@ -4,7 +4,6 @@ import * as ActionTypes from '../../../constants';
 import { startLoader, stopLoader } from './loader';
 import { showToast } from './toast';
 
-// eslint-disable-next-line
 export function getCollections(username) {
   return (dispatch) => {
     dispatch(startLoader());
@@ -14,8 +13,7 @@ export function getCollections(username) {
     } else {
       url = '/collections';
     }
-    console.log(url);
-    apiClient
+    return apiClient
       .get(url)
       .then((response) => {
         dispatch({

@@ -1,11 +1,10 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import Overlay from '../../App/components/Overlay';
 import {
   closeKeyboardShortcutModal,
-  closeFundraiserModal,
   closePreferences,
   closeShareModal,
   hideErrorModal
@@ -15,7 +14,6 @@ import AddToCollectionList from './AddToCollectionList';
 import ErrorModal from './ErrorModal';
 import Feedback from './Feedback';
 import KeyboardShortcutModal from './KeyboardShortcutModal';
-import FundraiserModal from './FundraiserModal';
 import NewFileModal from './NewFileModal';
 import NewFolderModal from './NewFolderModal';
 import Preferences from './Preferences';
@@ -27,7 +25,6 @@ export default function IDEOverlays() {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const location = useLocation();
-  const params = useParams();
 
   const {
     modalIsVisible,
@@ -35,7 +32,6 @@ export default function IDEOverlays() {
     uploadFileModalVisible,
     preferencesIsVisible,
     keyboardShortcutVisible,
-    fundraiserContentVisible,
     shareModalVisible,
     shareModalProjectId,
     shareModalProjectName,
@@ -82,8 +78,7 @@ export default function IDEOverlays() {
           isFixedHeight
         >
           <AddToCollectionList
-            projectId={params.project_id}
-            username={params.username}
+            projectId={this.state.sketchToAddToCollection.id}
           />
         </Overlay>
       )}
@@ -107,15 +102,6 @@ export default function IDEOverlays() {
           closeOverlay={() => dispatch(closeKeyboardShortcutModal())}
         >
           <KeyboardShortcutModal />
-        </Overlay>
-      )}
-      {fundraiserContentVisible && (
-        <Overlay
-          title={t('Fundraiser.Title')}
-          ariaLabel={t('Fundraiser.Title')}
-          closeOverlay={() => dispatch(closeFundraiserModal())}
-        >
-          <FundraiserModal />
         </Overlay>
       )}
       {errorType && (
