@@ -4,7 +4,58 @@
   flex: 1;
   overflow: hidden;
   display: flex;
-  flex-direction:column;
+  flex-direction: column;
+
+  @media (max-width: 770px) {
+    padding: 0;
+
+    .dashboard-header__nav {
+      display: flex;
+      flex-direction: column;
+      padding: #{10 / $base-font-size}rem #{16 / $base-font-size}rem;
+      gap: #{10 / $base-font-size}rem;
+
+      .dashboard-header__tabs {
+        border-bottom: none;
+        padding-top: #{12 / $base-font-size}rem;
+      }
+      .dashboard-header__tab__title {
+        font-weight: bold;
+        font-size: #{15 / $base-font-size}rem;
+
+        @include themify() {
+          color: getThemifyVariable("inactive-text-color");
+          opacity: 0.7;
+
+          &.dashboard-header__tab--selected {
+            color: getThemifyVariable("primary-text-color");
+            opacity: 1;
+          }
+        }
+      }
+
+      .dashboard-header__actions {
+        padding: 0;
+
+        > :first-child {
+          display: none;
+        }
+
+        > *:not(:first-child) {
+          margin-left: 0;
+          width: 100%;
+
+          .searchbar__input {
+            width: 100%;
+          }
+        }
+      }
+    }
+
+    .dashboard-header__header__title {
+      display: none;
+    }
+  }
 }
 
 .dashboard-header__header {
@@ -13,42 +64,32 @@
   width: 100%;
 }
 
-.dashboard-header--no-vertical-padding {
-  padding: 0 66px;
-}
-
-.dashboard-header--no-vertical-padding {
-  padding: 0 66px;
-}
-
 .dashboard-header__switcher {
   flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: center;
 }
 
 .dashboard-header__tabs {
   display: flex;
   padding-top: #{24 / $base-font-size}rem;
-  
+  width: 100%;
+
   @include themify() {
-    border-bottom: 1px solid getThemifyVariable('inactive-text-color');
+    border-bottom: 1px solid getThemifyVariable("inactive-text-color");
   }
 }
 
 .dashboard-header__tab {
   @include themify() {
-    color: getThemifyVariable('inactive-text-color');
-    border-bottom: #{4 / $base-font-size}rem solid transparent;
-
+    color: getThemifyVariable("inactive-text-color");
     padding: 0;
     margin-right: #{26 / $base-font-size}rem;
-
-    &:hover, &:focus, &.dashboard-header__tab--selected {
-      color: getThemifyVariable('primary-text-color');
-      border-bottom-color: getThemifyVariable('nav-hover-color');
-      cursor: pointer; 
+    @media (max-width: 770px) {
+      margin-right: #{20 / $base-font-size}rem;
     }
   }
-
   font-size: #{12 / $base-font-size}rem;
 }
 
@@ -62,15 +103,19 @@
 
 .dashboard-header__tab__title {
   margin: 0;
-  padding: 0;
-}
-
-.dashboard-header__tab__title > * {
   display: inline-block;
-  padding: 0 #{5 /$base-font-size}rem #{5 /$base-font-size}rem;
-}
+  padding: 0 #{5 / $base-font-size}rem #{5 / $base-font-size}rem;
+  border-bottom: #{4 / $base-font-size}rem solid transparent;
 
-.dashboard-header__nav {
+  @include themify() {
+    &:hover,
+    &:focus,
+    &.dashboard-header__tab--selected {
+      color: getThemifyVariable("primary-text-color");
+      border-bottom-color: getThemifyVariable("nav-hover-color");
+      cursor: pointer;
+    }
+  }
 }
 
 .dashboard-header__actions {

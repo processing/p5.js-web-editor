@@ -8,23 +8,8 @@
   z-index: 0;
 }
 
-.editor-console-container {
-  // flex: 1 0 0px;
-  // max-width: 45%;
-  width: 100%;
-  height: 100%;
-  position: relative;
-
-  // temporary fix for safari
-  min-height: 75vh;
-}
-
 .editor-accessibility {
   @extend %hidden-element;
-}
-
-.accessible-output {
-	@extend %hidden-element;
 }
 
 .toolbar {

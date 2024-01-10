@@ -6,39 +6,30 @@ import { assetsActions } from '../reducers/assets';
 const { setAssets, deleteAsset } = assetsActions;
 
 export function getAssets() {
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch(startLoader());
-    apiClient
-      .get('/S3/objects')
-      .then((response) => {
-        dispatch(
-          setAssets({
-            list: response.data.assets,
-            totalSize: response.data.totalSize
-          })
-        );
-        dispatch(stopLoader());
-      })
-      .catch(() => {
-        dispatch({
-          type: ActionTypes.ERROR
-        });
-        dispatch(stopLoader());
+    try {
+      const response = await apiClient.get('/S3/objects');
+      dispatch(setAssets(response.data.assets, response.data.totalSize));
+      dispatch(stopLoader());
+    } catch (error) {
+      dispatch({
+        type: ActionTypes.ERROR
       });
+      dispatch(stopLoader());
+    }
   };
 }
 
 export function deleteAssetRequest(assetKey) {
-  return (dispatch) => {
-    apiClient
-      .delete(`/S3/${assetKey}`)
-      .then((response) => {
-        dispatch(deleteAsset(assetKey));
-      })
-      .catch(() => {
-        dispatch({
-          type: ActionTypes.ERROR
-        });
+  return async (dispatch) => {
+    try {
+      await apiClient.delete(`/S3/${assetKey}`);
+      dispatch(deleteAsset(assetKey));
+    } catch (error) {
+      dispatch({
+        type: ActionTypes.ERROR
       });
+    }
   };
 }
