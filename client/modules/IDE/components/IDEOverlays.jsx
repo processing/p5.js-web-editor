@@ -25,7 +25,6 @@ export default function IDEOverlays() {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const location = useLocation();
-  const params = useParams();
 
   const {
     modalIsVisible,
