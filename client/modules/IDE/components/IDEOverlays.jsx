@@ -79,8 +79,7 @@ export default function IDEOverlays() {
           isFixedHeight
         >
           <AddToCollectionList
-            projectId={params.project_id}
-            username={params.username}
+            projectId={this.state.sketchToAddToCollection.id}
           />
         </Overlay>
       )}
