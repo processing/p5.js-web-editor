@@ -4,18 +4,17 @@
 }
 
 .sidebar__header {
-  padding-right: #{6 / $base-font-size}rem;
-  padding-left: #{19 / $base-font-size}rem;
+  padding: #{8 / $base-font-size}rem #{12 / $base-font-size}rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: #{29 / $base-font-size}rem;
   min-height: #{29 / $base-font-size}rem;
   position: relative;
 }
 
 .sidebar__title {
-  font-size: #{12 / $base-font-size}rem;
+  font-size: #{16 / $base-font-size}rem;
+  font-weight: 500;
   display: inline-block;
   .sidebar--contracted & {
     display: none;
@@ -25,14 +24,20 @@
 }
 
 .sidebar__add {
-  width: #{20 / $base-font-size}rem;
-  height: #{20 / $base-font-size}rem;
-  @include icon();
+  padding: #{2 / $base-font-size}rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  & svg {
+    width: #{18 / $base-font-size}rem;
+    height: #{18 / $base-font-size}rem;
+  }
+  @include themify() {
+    background-color: getThemifyVariable('ide-border-color');
+  }
+
   .sidebar--contracted & {
     display: none;
-  }
-  & svg {
-    width: #{10 / $base-font-size}rem;
   }
 }
 
@@ -49,13 +54,22 @@
 .sidebar__root-item {
   position: relative;
   overflow-y: auto;
+  padding-top: #{6 / $base-font-size}rem;
   flex: 1 1 auto;
-  @include themify() {
-    border-top: 1px solid map-get($theme-map, 'ide-border-color');
+  @media (min-width: 770px) {
+    @include themify() {
+      border-top: 1px solid map-get($theme-map, 'ide-border-color');
+    }
   }
   .sidebar--contracted & {
     border: none;
   }
+}
+
+.file-item__children {
+  display: flex;
+  flex-direction: column;
+  gap: #{4 / $base-font-size}rem;
 }
 
 .sidebar__file-item {
@@ -73,6 +87,11 @@
 
 .sidebar__file-item--folder {
   z-index: 1;
+  display: flex;
+  align-items: center;
+  > button {
+    padding-left: #{1 / $base-font-size}rem;
+  }
 }
 
 // to indent each row in the file tree
@@ -131,7 +150,7 @@
   padding: #{4 / $base-font-size}rem 0;
   padding-right: #{25 / $base-font-size}rem;
   font-family: Inconsolata, monospace;
-  font-size: #{14 / $base-font-size}rem;
+  font-size: #{15 / $base-font-size}rem;
   overflow: hidden;
   .sidebar__file-item--editing & {
     display: none;
@@ -270,8 +289,9 @@
 }
 
 .sidebar__file-item-icon {
-  padding: #{4 / $base-font-size}rem 0;
   margin-right: #{5 / $base-font-size}rem;
+  display: flex;
+  align-items: center;
   & path {
     @include themify() {
       fill: getThemifyVariable('secondary-text-color');

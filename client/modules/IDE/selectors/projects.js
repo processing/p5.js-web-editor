@@ -1,6 +1,6 @@
-import { createSelector } from 'reselect';
+import { createSelector } from '@reduxjs/toolkit';
 import differenceInMilliseconds from 'date-fns/differenceInMilliseconds';
-import orderBy from 'lodash/orderBy';
+import { orderBy } from 'lodash';
 import { DIRECTION } from '../actions/sorting';
 
 const getSketches = (state) => state.sketches;

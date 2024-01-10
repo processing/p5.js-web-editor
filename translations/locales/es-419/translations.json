@@ -216,6 +216,7 @@
     "Delete": "Borrar"
   },
   "Common": {
+    "SiteName": "Editor Web p5.js",
     "Error": "Error",
     "ErrorARIA": "Error",
     "Save": "Guardar",
@@ -530,7 +531,7 @@
   },
   "EditorAccessibility": {
     "NoLintMessages": "No hay mensajes de Lint",
-    "CurrentLine": " Línea actual"
+    "CurrentLine": "Línea actual"
   },
   "Timer": {
     "SavedAgo": "Guardado: {{timeAgo}}"
