@@ -6,6 +6,9 @@ import { Route as RouterRoute, Switch } from 'react-router-dom';
 import App from './modules/App/App';
 import IDEView from './modules/IDE/pages/IDEView';
 import FullView from './modules/IDE/pages/FullView';
+import CodeOfConduct from './modules/Legal/pages/CodeOfConduct';
+import PrivacyPolicy from './modules/Legal/pages/PrivacyPolicy';
+import TermsOfUse from './modules/Legal/pages/TermsOfUse';
 import LoginView from './modules/User/pages/LoginView';
 import SignupView from './modules/User/pages/SignupView';
 import ResetPasswordView from './modules/User/pages/ResetPasswordView';
@@ -15,7 +18,6 @@ import AccountView from './modules/User/pages/AccountView';
 import CollectionView from './modules/User/pages/CollectionView';
 import DashboardView from './modules/User/pages/DashboardView';
 import createRedirectWithUsername from './components/createRedirectWithUsername';
-import Legal from './modules/Legal/pages/Legal';
 import { getUser } from './modules/User/actions';
 import {
   userIsAuthenticated,
@@ -91,9 +93,9 @@ const routes = (
     <Route path="/account" component={userIsAuthenticated(AccountView)} />
     <Route path="/about" component={IDEView} />
 
-    <Route path="/privacy-policy" component={Legal} />
-    <Route path="/terms-of-use" component={Legal} />
-    <Route path="/code-of-conduct" component={Legal} />
+    <Route path="/privacy-policy" component={PrivacyPolicy} />
+    <Route path="/terms-of-use" component={TermsOfUse} />
+    <Route path="/code-of-conduct" component={CodeOfConduct} />
   </Switch>
 );
 

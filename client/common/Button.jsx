@@ -21,7 +21,8 @@ const displays = {
 const StyledButton = styled.button`
   &&& {
     font-weight: bold;
-    display: flex;
+    display: ${({ display }) =>
+      display === displays.inline ? 'inline-flex' : 'flex'};
     justify-content: center;
     align-items: center;
 
@@ -107,57 +108,6 @@ const StyledInlineButton = styled.button`
   }
 `;
 
-const StyledIconButton = styled.button`
-  &&& {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    width: ${remSize(32)}px;
-    height: ${remSize(32)}px;
-    text-decoration: none;
-
-    color: ${({ kind }) => prop(`Button.${kind}.default.foreground`)};
-    background-color: ${({ kind }) => prop(`Button.${kind}.hover.background`)};
-    cursor: pointer;
-    border: 1px solid transparent;
-    border-radius: 50%;
-    padding: ${remSize(8)} ${remSize(25)};
-    line-height: 1;
-
-    &:hover:not(:disabled) {
-      color: ${({ kind }) => prop(`Button.${kind}.hover.foreground`)};
-      background-color: ${({ kind }) =>
-        prop(`Button.${kind}.hover.background`)};
-
-      svg * {
-        fill: ${({ kind }) => prop(`Button.${kind}.hover.foreground`)};
-      }
-    }
-
-    &:active:not(:disabled) {
-      color: ${({ kind }) => prop(`Button.${kind}.active.foreground`)};
-      background-color: ${({ kind }) =>
-        prop(`Button.${kind}.active.background`)};
-
-      svg * {
-        fill: ${({ kind }) => prop(`Button.${kind}.active.foreground`)};
-      }
-    }
-
-    &:disabled {
-      color: ${({ kind }) => prop(`Button.${kind}.disabled.foreground`)};
-      background-color: ${({ kind }) =>
-        prop(`Button.${kind}.disabled.background`)};
-      cursor: not-allowed;
-    }
-
-    > * + * {
-      margin-left: ${remSize(8)};
-    }
-  }
-`;
-
 /**
  * A Button performs an primary action
  */
@@ -184,12 +134,8 @@ const Button = ({
   );
   let StyledComponent = StyledButton;
 
-  if (display === displays.inline) {
-    StyledComponent = StyledInlineButton;
-  }
-
   if (iconOnly) {
-    StyledComponent = StyledIconButton;
+    StyledComponent = StyledInlineButton;
   }
 
   if (href) {
@@ -265,7 +211,7 @@ Button.propTypes = {
   /**
    * The display type of the button—inline or block
    */
-  display: PropTypes.string,
+  display: PropTypes.oneOf(Object.values(displays)),
   /**
    * SVG icon to place after child content
    */
@@ -286,7 +232,7 @@ Button.propTypes = {
    * Specifying an href will use an <a> to link to the URL
    */
   href: PropTypes.string,
-  /*
+  /**
    * An ARIA Label used for accessibility
    */
   'aria-label': PropTypes.string,

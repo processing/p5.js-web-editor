@@ -13,7 +13,7 @@ export default function Toast() {
     return null;
   }
   return (
-    <section className="toast">
+    <section className="toast" role="status" aria-live="polite">
       <p>{t(text)}</p>
       <button
         className="toast__close"
