@@ -1,8 +1,11 @@
+import { createSlice } from '@reduxjs/toolkit';
 import * as ActionTypes from '../../../constants';
 
 const initialState = {
   isPlaying: false,
+  // TODO: this doesn't do anything.
   isAccessibleOutputPlaying: false,
+  // TODO: rename ambiguous property
   modalIsVisible: false,
   sidebarIsExpanded: false,
   consoleIsExpanded: true,
@@ -10,13 +13,16 @@ const initialState = {
   projectOptionsVisible: false,
   newFolderModalVisible: false,
   uploadFileModalVisible: false,
+  // TODO: nested properties instead of all at top-level
   shareModalVisible: false,
   shareModalProjectId: 'abcd',
   shareModalProjectName: 'My Cute Sketch',
   shareModalProjectUsername: 'p5_user',
   keyboardShortcutVisible: false,
   unsavedChanges: false,
+  // TODO: remove dead code, see: PR #849 and issue #698
   infiniteLoop: false,
+  // TODO: this doesn't do anything.
   previewIsRefreshing: false,
   infiniteLoopMessage: '',
   justOpenedProject: false,
@@ -26,105 +32,142 @@ const initialState = {
   parentId: undefined
 };
 
-const ide = (state = initialState, action) => {
-  switch (action.type) {
-    case ActionTypes.START_SKETCH:
-      return Object.assign({}, state, { isPlaying: true });
-    case ActionTypes.STOP_SKETCH:
-      return Object.assign({}, state, { isPlaying: false });
-    case ActionTypes.START_ACCESSIBLE_OUTPUT:
-      return Object.assign({}, state, { isAccessibleOutputPlaying: true });
-    case ActionTypes.STOP_ACCESSIBLE_OUTPUT:
-      return Object.assign({}, state, { isAccessibleOutputPlaying: false });
-    case ActionTypes.CONSOLE_EVENT:
-      return Object.assign({}, state, { consoleEvent: action.event });
-    case ActionTypes.SHOW_MODAL:
-      return Object.assign({}, state, {
-        modalIsVisible: true,
-        parentId: action.parentId,
-        newFolderModalVisible: false
-      });
-    case ActionTypes.HIDE_MODAL:
-      return Object.assign({}, state, { modalIsVisible: false });
-    case ActionTypes.COLLAPSE_SIDEBAR:
-      return Object.assign({}, state, { sidebarIsExpanded: false });
-    case ActionTypes.EXPAND_SIDEBAR:
-      return Object.assign({}, state, { sidebarIsExpanded: true });
-    case ActionTypes.COLLAPSE_CONSOLE:
-      return Object.assign({}, state, { consoleIsExpanded: false });
-    case ActionTypes.EXPAND_CONSOLE:
-      return Object.assign({}, state, { consoleIsExpanded: true });
-    case ActionTypes.OPEN_PREFERENCES:
-      return Object.assign({}, state, { preferencesIsVisible: true });
-    case ActionTypes.CLOSE_PREFERENCES:
-      return Object.assign({}, state, { preferencesIsVisible: false });
-    case ActionTypes.RESET_PROJECT:
-      return initialState;
-    case ActionTypes.OPEN_PROJECT_OPTIONS:
-      return Object.assign({}, state, { projectOptionsVisible: true });
-    case ActionTypes.CLOSE_PROJECT_OPTIONS:
-      return Object.assign({}, state, { projectOptionsVisible: false });
-    case ActionTypes.SHOW_NEW_FOLDER_MODAL:
-      return Object.assign({}, state, {
-        newFolderModalVisible: true,
-        parentId: action.parentId,
-        modalIsVisible: false
-      });
-    case ActionTypes.CLOSE_NEW_FOLDER_MODAL:
-      return Object.assign({}, state, { newFolderModalVisible: false });
-    case ActionTypes.SHOW_SHARE_MODAL:
-      return Object.assign({}, state, {
-        shareModalVisible: true,
-        shareModalProjectId: action.payload.shareModalProjectId,
-        shareModalProjectName: action.payload.shareModalProjectName,
-        shareModalProjectUsername: action.payload.shareModalProjectUsername
-      });
-    case ActionTypes.CLOSE_SHARE_MODAL:
-      return Object.assign({}, state, { shareModalVisible: false });
-    case ActionTypes.SHOW_KEYBOARD_SHORTCUT_MODAL:
-      return Object.assign({}, state, { keyboardShortcutVisible: true });
-    case ActionTypes.CLOSE_KEYBOARD_SHORTCUT_MODAL:
-      return Object.assign({}, state, { keyboardShortcutVisible: false });
-    case ActionTypes.SET_UNSAVED_CHANGES:
-      return Object.assign({}, state, { unsavedChanges: action.value });
-    case ActionTypes.DETECT_INFINITE_LOOPS:
-      return Object.assign({}, state, {
-        infiniteLoop: true,
-        infiniteLoopMessage: action.message
-      });
-    case ActionTypes.RESET_INFINITE_LOOPS:
-      return Object.assign({}, state, {
-        infiniteLoop: false,
-        infiniteLoopMessage: ''
-      });
-    case ActionTypes.START_SKETCH_REFRESH:
-      return Object.assign({}, state, { previewIsRefreshing: true });
-    case ActionTypes.END_SKETCH_REFRESH:
-      return Object.assign({}, state, { previewIsRefreshing: false });
-    case ActionTypes.JUST_OPENED_PROJECT:
-      return Object.assign({}, state, { justOpenedProject: true });
-    case ActionTypes.RESET_JUST_OPENED_PROJECT:
-      return Object.assign({}, state, { justOpenedProject: false });
-    case ActionTypes.SET_PREVIOUS_PATH:
-      return Object.assign({}, state, { previousPath: action.path });
-    case ActionTypes.SHOW_ERROR_MODAL:
-      return Object.assign({}, state, { errorType: action.modalType });
-    case ActionTypes.HIDE_ERROR_MODAL:
-      return Object.assign({}, state, { errorType: undefined });
-    case ActionTypes.HIDE_RUNTIME_ERROR_WARNING:
-      return Object.assign({}, state, { runtimeErrorWarningVisible: false });
-    case ActionTypes.SHOW_RUNTIME_ERROR_WARNING:
-      return Object.assign({}, state, { runtimeErrorWarningVisible: true });
-    case ActionTypes.OPEN_UPLOAD_FILE_MODAL:
-      return Object.assign({}, state, {
-        uploadFileModalVisible: true,
-        parentId: action.parentId
-      });
-    case ActionTypes.CLOSE_UPLOAD_FILE_MODAL:
-      return Object.assign({}, state, { uploadFileModalVisible: false });
-    default:
-      return state;
-  }
-};
+const ideSlice = createSlice({
+  name: 'ide',
+  initialState,
+  reducers: {
+    startVisualSketch: (state) => {
+      state.isPlaying = true;
+    },
+    stopVisualSketch: (state) => {
+      state.isPlaying = false;
+    },
+    startAccessibleOutput: (state) => {
+      state.isAccessibleOutputPlaying = true;
+    },
+    stopAccessibleOutput: (state) => {
+      state.isAccessibleOutputPlaying = false;
+    },
+    collapseSidebar: (state) => {
+      state.sidebarIsExpanded = false;
+    },
+    expandSidebar: (state) => {
+      state.sidebarIsExpanded = true;
+    },
+    collapseConsole: (state) => {
+      state.consoleIsExpanded = false;
+    },
+    expandConsole: (state) => {
+      state.consoleIsExpanded = true;
+    },
+    openPreferences: (state) => {
+      state.preferencesIsVisible = true;
+    },
+    closePreferences: (state) => {
+      state.preferencesIsVisible = false;
+    },
+    openProjectOptions: (state) => {
+      state.projectOptionsVisible = true;
+    },
+    closeProjectOptions: (state) => {
+      state.projectOptionsVisible = false;
+    },
+    // TODO: rename to openNewFileModal or showNewFileModal
+    newFile: (state, action) => {
+      state.modalIsVisible = true;
+      // TODO: nested properties
+      state.parentId = action.payload;
+      state.newFolderModalVisible = false;
+    },
+    closeNewFileModal: (state) => {
+      state.modalIsVisible = false;
+    },
+    // TODO: rename to openNewFolderModal or showNewFolderModal
+    newFolder: (state, action) => {
+      state.newFolderModalVisible = true;
+      state.parentId = action.payload;
+      state.modalIsVisible = false;
+    },
+    closeNewFolderModal: (state) => {
+      state.newFolderModalVisible = false;
+    },
+    openUploadFileModal: (state, action) => {
+      state.uploadFileModalVisible = true;
+      state.parentId = action.payload;
+    },
+    closeUploadFileModal: (state) => {
+      state.uploadFileModalVisible = false;
+    },
+    showShareModal: (state, action) => {
+      state.shareModalVisible = true;
+      state.shareModalProjectId = action.payload.shareModalProjectId;
+      state.shareModalProjectName = action.payload.shareModalProjectName;
+      state.shareModalProjectUsername =
+        action.payload.shareModalProjectUsername;
+    },
+    closeShareModal: (state) => {
+      state.shareModalVisible = false;
+    },
+    showKeyboardShortcutModal: (state) => {
+      state.keyboardShortcutVisible = true;
+    },
+    closeKeyboardShortcutModal: (state) => {
+      state.keyboardShortcutVisible = false;
+    },
+    showErrorModal: (state, action) => {
+      state.errorType = action.payload;
+    },
+    hideErrorModal: (state) => {
+      state.errorType = undefined;
+    },
+    setUnsavedChanges: (state, action) => {
+      state.unsavedChanges = action.payload;
+    },
+    detectInfiniteLoops: (state, action) => {
+      state.infiniteLoop = true;
+      state.infiniteLoopMessage = action.payload;
+    },
+    resetInfiniteLoops: (state) => {
+      state.infiniteLoop = false;
+      state.infiniteLoopMessage = '';
+    },
+    startRefreshSketch: (state) => {
+      state.previewIsRefreshing = true;
+    },
+    endSketchRefresh: (state) => {
+      state.previewIsRefreshing = false;
+    },
+    justOpenedProject: (state) => {
+      state.justOpenedProject = true;
+    },
+    resetJustOpenedProject: (state) => {
+      state.justOpenedProject = false;
+    },
+    setPreviousPath: (state, action) => {
+      state.previousPath = action.payload;
+    },
+    showRuntimeErrorWarning: (state) => {
+      state.runtimeErrorWarningVisible = true;
+    },
+    hideRuntimeErrorWarning: (state) => {
+      state.runtimeErrorWarningVisible = false;
+    }
+  },
+  // Respond to actions which are primarily "owned" by another reducer
+  extraReducers: (builder) =>
+    builder
+      .addMatcher(
+        (action) => action.type === ActionTypes.CONSOLE_EVENT,
+        (state, action) => {
+          state.consoleEvent = action.event;
+        }
+      )
+      .addMatcher(
+        (action) => action.type === ActionTypes.RESET_PROJECT,
+        () => initialState
+      )
+});
 
-export default ide;
+export const ideActions = ideSlice.actions;
+
+export default ideSlice.reducer;
