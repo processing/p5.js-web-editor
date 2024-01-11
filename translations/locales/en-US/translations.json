@@ -45,8 +45,7 @@
       "Asset": "Asset",
       "MyAssets": "My Assets",
       "LogOut": "Log Out"
-    },
-    "Fundraiser": "Support p5.js and the Processing Foundation!"
+    }
   },
   "CodemirrorFindAndReplace": {
     "ToggleReplace": "Toggle Replace",
@@ -203,11 +202,6 @@
       "TurnOffAccessibleOutput": "Turn Off Accessible Output"
     }
   },
-  "Fundraiser": {
-    "Title": "Support Our Software and Team",
-    "Description": "🎉 Join us in celebrating a Decade of Code! 🎉 Support p5.js and the Processing Foundation and earn unique rewards. 🙂", 
-    "CallToAction": "Contribute and learn more!"
-  },
   "Sidebar": {
     "Title": "Sketch Files",
     "ToggleARIA": "Toggle open/close sketch file options",
@@ -237,7 +231,6 @@
     "ErrorARIA": "Error",
     "Save": "Save",
     "p5logoARIA": "p5.js Logo",
-    "PFlogoARIA": "Processing Foundation Logo",
     "DeleteConfirmation": "Are you sure you want to delete {{name}}?"
   },
   "IDEView": {
@@ -367,7 +360,8 @@
     "Description": "Sign Up",
     "Or": "Or",
     "AlreadyHave": "Already have an account?",
-    "Login": "Log In"
+    "Login": "Log In",
+    "Warning": "By signing up, you agree to the p5.js Editor's <0>Terms of Use</0> and <1>Privacy Policy.</1>"
   },
   "EmailVerificationView": {
     "Title": "p5.js Web Editor | Email Verification",
