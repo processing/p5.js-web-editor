@@ -10,7 +10,8 @@
 .console__input .console-active__arrow {
   width: auto;
   height: 38%;
-  & path {
+  & path ,
+  & polygon {
     @include themify() {
       fill: getThemifyVariable('console-active-arrow-color');
       opacity: 1; 
