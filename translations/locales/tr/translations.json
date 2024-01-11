@@ -222,6 +222,7 @@
     "Delete": "Sil"
   },
   "Common": {
+    "SiteName": "p5.js Web Editör",
     "Error": "Hata",
     "ErrorARIA": "Hata",
     "Save": "Kaydet",
@@ -535,8 +536,8 @@
     "KeyUpLineNumber": "{{lineNumber}}. satır"
   },
   "EditorAccessibility": {
-    "NoLintMessages": "Lint mesajı yok ",
-    "CurrentLine": " Şu anki satır"
+    "NoLintMessages": "Lint mesajı yok",
+    "CurrentLine": "Şu anki satır"
   },
   "Timer": {
     "SavedAgo": "Kaydedildi: {{timeAgo}}"

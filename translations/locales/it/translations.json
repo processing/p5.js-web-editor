@@ -222,6 +222,7 @@
     "Delete": "Cancella"
   },
   "Common": {
+    "SiteName": "p5.js Web Editor",
     "Error": "Errore",
     "ErrorARIA": "Errore",
     "Save": "Salva",
@@ -535,8 +536,8 @@
     "KeyUpLineNumber": "linea {{lineNumber}}"
   },
   "EditorAccessibility": {
-    "NoLintMessages": "Non ci sono messaggi ",
-    "CurrentLine": " Linea attuale"
+    "NoLintMessages": "Non ci sono messaggi",
+    "CurrentLine": "Linea attuale"
   },
   "Timer": {
     "SavedAgo": "Salvato: {{timeAgo}}"

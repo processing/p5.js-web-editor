@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import Button from '../../common/Button';
-import { remSize } from '../../theme';
+import Button from './Button';
+import { remSize } from '../theme';
 
 const ButtonWrapper = styled(Button)`
   width: ${remSize(48)};
@@ -19,6 +19,7 @@ const IconButton = (props) => {
   return (
     <ButtonWrapper
       iconBefore={icon && <Icon />}
+      iconOnly
       display={Button.displays.inline}
       focusable="false"
       {...otherProps}
