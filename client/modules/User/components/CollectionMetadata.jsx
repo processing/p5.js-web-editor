@@ -31,7 +31,6 @@ function CollectionMetadata({ collectionId }) {
 
   const { id, name, description, items, owner } = collection;
   const { username } = owner;
-  console.log(owner);
   const collectionOwnerId = owner._id;
   const isOwner = !!currentUsername && currentUsername === username;
 

@@ -71,7 +71,6 @@ export function addToCollection(collectionId, projectId) {
   return (dispatch) => {
     dispatch(startLoader());
     const url = `/collections/${collectionId}/${projectId}`;
-    console.log(url);
     return apiClient
       .post(url)
       .then((response) => {
@@ -109,7 +108,6 @@ export function reqToOwner(
     dispatch(setToastText('Request has been sent!'));
     dispatch(showToast(TOAST_DISPLAY_TIME_MS));
     const url = `/collections/${collectionId}/${projectId}/request`;
-    console.log(url);
 
     const reqBody = {
       collectionOwner,
@@ -144,8 +142,6 @@ export function disallowReq(collectionId, projectId) {
     return apiClient
       .delete(url)
       .then((response) => {
-        dispatch(setToastText('Request disallowed'));
-        dispatch(showToast(TOAST_DISPLAY_TIME_MS));
         dispatch({
           type: ActionTypes.DISALLOW_REQ,
           payload: response.data
@@ -165,7 +161,6 @@ export function getMessages() {
     try {
       dispatch(startLoader());
       const url = '/collections/messages/';
-      console.log(url);
 
       const response = await apiClient.get(url);
       dispatch(stopLoader());

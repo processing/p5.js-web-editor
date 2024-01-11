@@ -34,7 +34,6 @@ const Messages = () => {
 
   const allowProject = (msgindex) => {
     const { collectionID, projectID } = msgindex;
-    console.log(collectionID, projectID);
     try {
       dispatch(addToCollection(collectionID, projectID));
       getMsgs();
@@ -45,7 +44,6 @@ const Messages = () => {
 
   const disallowProject = (singleMsg) => {
     const { collectionID, projectID } = singleMsg;
-    console.log(collectionID, projectID);
 
     try {
       dispatch(disallowReq(collectionID, projectID));
@@ -54,7 +52,6 @@ const Messages = () => {
       console.log(error);
     }
   };
-  console.log(msgs);
   return (
     <CollectionAddSketchWrapper>
       <QuickAddWrapper>
