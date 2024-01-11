@@ -125,8 +125,12 @@
 }
 
 .toolbar__autorefresh-label {
+	cursor: pointer;
 	@include themify() {
 		color: getThemifyVariable('secondary-text-color');
+		&:hover {
+			color: getThemifyVariable('logo-color');
+		}
 	}
 	margin-left: #{5 / $base-font-size}rem;
 	font-size: #{12 / $base-font-size}rem;
@@ -140,6 +144,6 @@
 .checkbox__autorefresh{
 	cursor: pointer;
 	@include themify(){
-		color:getThemifyVariable('logo-color');
+		accent-color:getThemifyVariable('logo-color');
 	}
 }
