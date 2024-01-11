@@ -213,7 +213,7 @@ export async function listObjectsInS3ForUser(userId) {
   }
 }
 
-export async function listObjectsInS3ForUserRequestHandler(req, res) {
+export function listObjectsInS3ForUserRequestHandler(req, res) {
   const { username } = req.user;
   User.findByUsername(username, (err, user) => {
     if (err) {
