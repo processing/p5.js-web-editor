@@ -216,6 +216,7 @@
     "Delete": "Löschen"
   },
   "Common": {
+    "SiteName": "p5.js Web Editor",
     "Error": "Fehler",
     "ErrorARIA": "Fehler",
     "Save": "Speichern",
@@ -530,8 +531,8 @@
     "KeyUpLineNumber": "Zeile {{lineNumber}}"
   },
   "EditorAccessibility": {
-    "NoLintMessages": "Keine Lint-Warnungen vorhanden ",
-    "CurrentLine": " Aktuelle Zeile"
+    "NoLintMessages": "Keine Lint-Warnungen vorhanden",
+    "CurrentLine": "Aktuelle Zeile"
   },
   "Timer": {
     "SavedAgo": "Gesichert: {{timeAgo}}"

@@ -216,6 +216,7 @@
     "Delete": "Apagar"
   },
   "Common": {
+    "SiteName": "Editor de Web p5.js",
     "Error": "Erro",
     "ErrorARIA": "Erro",
     "Save": "Salvar",
@@ -529,7 +530,7 @@
     "KeyUpLineNumber": "linha {{lineNumber}}"
   },
   "EditorAccessibility": {
-    "NoLintMessages": "Não há mensagens de Lint ",
+    "NoLintMessages": "Não há mensagens de Lint",
     "CurrentLine": "Linha atual"
   },
   "Timer": {

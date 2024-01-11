@@ -3,7 +3,7 @@ import S3Policy from 's3-policy-v4';
 import s3 from '@auth0/s3';
 import mongoose from 'mongoose';
 import { getProjectsForUserId } from './project.controller';
-import { findUserByUsername } from './user.controller';
+import User from '../models/user';
 
 const { ObjectId } = mongoose.Types;
 
@@ -237,10 +237,24 @@ export function listObjectsInS3ForUser(userId) {
 
 export function listObjectsInS3ForUserRequestHandler(req, res) {
   const { username } = req.user;
-  findUserByUsername(username, (user) => {
+  User.findByUsername(username, (err, user) => {
+    if (err) {
+      console.error('Error fetching user:', err.message);
+      res.status(500).json({ error: 'Failed to fetch user' });
+      return;
+    }
+    if (!user) {
+      res.status(404).json({ error: 'User not found' });
+      return;
+    }
     const userId = user.id;
-    listObjectsInS3ForUser(userId).then((objects) => {
-      res.json(objects);
-    });
+    listObjectsInS3ForUser(userId)
+      .then((objects) => {
+        res.json(objects);
+      })
+      .catch((error) => {
+        console.error('Error listing objects in S3:', error.message);
+        res.status(500).json({ error: 'Failed to list objects in S3' });
+      });
   });
 }
