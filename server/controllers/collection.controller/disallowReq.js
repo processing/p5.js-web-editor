@@ -15,6 +15,7 @@ export default async function disallowReq(req, res) {
       .json({ success: false, message: 'Project not found' });
   }
 
+  // Delete Messages
   try {
     await Messages.findOneAndDelete({
       projectID: projectId,

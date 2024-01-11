@@ -106,6 +106,8 @@ export function reqToOwner(
 ) {
   return (dispatch) => {
     dispatch(startLoader());
+    dispatch(setToastText('Request has been sent!'));
+    dispatch(showToast(TOAST_DISPLAY_TIME_MS));
     const url = `/collections/${collectionId}/${projectId}/request`;
     console.log(url);
 
@@ -117,44 +119,44 @@ export function reqToOwner(
     return apiClient
       .post(url, reqBody)
       .then((response) => {
-        dispatch(startLoader());
+        dispatch({
+          type: ActionTypes.REQ_TO_OWNER,
+          payload: response.data
+        });
         dispatch(stopLoader());
-        dispatch(console.log(response.data.message));
-        dispatch(setToastText(response.data.message));
-        dispatch(showToast(TOAST_DISPLAY_TIME_MS));
       })
       .catch((error) => {
         dispatch({
           type: ActionTypes.ERROR,
           error: error?.response?.data
         });
-        dispatch(stopLoader());
       });
   };
 }
 
 export function disallowReq(collectionId, projectId) {
-  console.log(collectionId, projectId);
   return (dispatch) => {
     dispatch(startLoader());
+    dispatch(setToastText('Request disallowed'));
+    dispatch(showToast(TOAST_DISPLAY_TIME_MS));
     const url = `/collections/${collectionId}/${projectId}/disallow`;
 
     return apiClient
       .delete(url)
       .then((response) => {
-        dispatch(stopLoader());
+        dispatch(setToastText('Request disallowed'));
+        dispatch(showToast(TOAST_DISPLAY_TIME_MS));
         dispatch({
           type: ActionTypes.DISALLOW_REQ,
           payload: response.data
         });
-        dispatch(setToastText('Request disallowed'));
-        dispatch(showToast(TOAST_DISPLAY_TIME_MS));
       })
       .catch((error) => {
         dispatch({
           type: ActionTypes.ERROR,
           error: error?.response?.data
         });
+        dispatch(stopLoader());
       });
   };
 }

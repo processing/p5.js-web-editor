@@ -20,7 +20,7 @@ import {
 class SketchList extends React.Component {
   constructor(props) {
     super(props);
-    this.props.getProjects(this.props.username);
+    this.props.getProjects(this.currentUsername);
 
     this.state = {
       isInitialDataLoad: true
@@ -40,9 +40,9 @@ class SketchList extends React.Component {
 
   getSketchesTitle() {
     if (this.props.username === this.props.user.username) {
-      return this.props.t('AddToCollectionSketchList.Title');
+      return this.props.t('Message.SendReqToAddSketches');
     }
-    return this.props.t('AddToCollectionSketchList.AnothersTitle', {
+    return this.props.t('Message.SendReqToAddSketches', {
       anotheruser: this.props.username
     });
   }

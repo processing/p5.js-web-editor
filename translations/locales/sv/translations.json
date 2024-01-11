@@ -619,7 +619,10 @@
     "Messages": "Meddelanden",
     "Accept": "Acceptera",
     "Reject": "Avvisa",
-    "View": "Visa"
-  }
+    "View": "Visa",
+    "SendRequest": "Skicka förfrågan",
+    "SendReqToAddSketches": "Skicka förfrågan om att lägga till skisser",
+    "NoMsg": "Inget meddelande för dig"
+  }  
 }
 

@@ -616,6 +616,9 @@
     "Messages": "メッセージ",
     "Accept": "受け入れる",
     "Reject": "拒否する",
-    "View": "表示する"
-  }
+    "View": "表示する",
+    "SendRequest": "リクエストを送信",
+    "SendReqToAddSketches": "スケッチを追加するためのリクエストを送信",
+    "NoMsg": "あなたにメッセージはありません"
+  }  
 }

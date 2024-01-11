@@ -622,6 +622,9 @@
     "Messages": "Messaggi",
     "Accept": "Accetta",
     "Reject": "Rifiuta",
-    "View": "Visualizza"
-  }
+    "View": "Visualizza",
+    "SendRequest": "Invia richiesta",
+    "SendReqToAddSketches": "Invia richiesta per aggiungere schizzi",
+    "NoMsg": "Nessun messaggio per te"
+  }  
 }

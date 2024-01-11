@@ -40,6 +40,8 @@ const SketchList = ({
     }
   }, [sketches]);
 
+  console.log(collection);
+
   const getSketchesTitle = () => {
     if (username === user.username) {
       return t('AddToCollectionSketchList.Title');

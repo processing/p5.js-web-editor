@@ -30,7 +30,7 @@ import { requestsOfTypeJSON } from './utils/requestsOfType';
 
 import { renderIndex } from './views/index';
 import { get404Sketch } from './views/404Page';
-import reqToOwner from './controllers/collection.controller/reqToOwner';
+import { reqToOwner } from './controllers/collection.controller';
 
 const app = new Express();
 const MongoStore = connectMongo(session);
@@ -70,7 +70,6 @@ const corsMiddleware = cors({
 app.use(corsMiddleware);
 // Enable pre-flight OPTIONS route for all end-points
 app.options('*', corsMiddleware);
-
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(cookieParser());
@@ -169,8 +168,6 @@ mongoose.connection.on('error', () => {
 app.get('/', (req, res) => {
   res.sendFile(renderIndex());
 });
-
-app.post('/request/collection/', reqToOwner);
 // Handle API errors
 app.use('/api', (error, req, res, next) => {
   if (error && error.code && !res.headersSent) {
@@ -195,6 +192,7 @@ app.get('*', (req, res) => {
   res.type('txt').send('Not found.');
 });
 
+app.post('/collections/:id/:projectId/request', reqToOwner);
 // start app
 app.listen(process.env.PORT, (error) => {
   if (!error) {

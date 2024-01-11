@@ -52,6 +52,7 @@ router.post(
   isAuthenticated,
   CollectionController.reqToOwner
 );
+
 router.delete(
   '/collections/:collectionId/:projectId/disallow',
   isAuthenticated,

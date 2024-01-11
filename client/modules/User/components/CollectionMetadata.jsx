@@ -98,9 +98,11 @@ function CollectionMetadata({ collectionId }) {
         </div>
 
         <div className="collection-metadata__column--right">
-          <Button onClick={() => setIsSendingReq(true)}>
-            Request to add your sketches
-          </Button>
+          {!isOwner && (
+            <Button onClick={() => setIsSendingReq(true)}>
+              {t('Message.SendRequest')}
+            </Button>
+          )}
           <ShareURL value={`${hostname}/${username}/collections/${id}`} />
           {isOwner && (
             <Button onClick={() => setIsAddingSketches(true)}>
@@ -124,7 +126,7 @@ function CollectionMetadata({ collectionId }) {
       )}{' '}
       {isSendingReq && (
         <Overlay
-          title={t('Collection.AddSketch')}
+          title={t('Message.SendReqToAddSketches')}
           actions={<SketchSearchbar />}
           closeOverlay={() => setIsSendingReq(false)}
           isFixedHeight

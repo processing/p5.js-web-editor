@@ -11,7 +11,8 @@ const MessagesSchema = new Schema(
     reqSender: { type: String },
     collectionOwner: { type: String },
     projectID: { type: String },
-    collectionID: { type: String }
+    collectionID: { type: String },
+    slug: { type: String }
   },
   { timestamps: true, usePushEach: true }
 );
@@ -26,8 +27,8 @@ MessagesSchema.set('toJSON', {
 
 MessagesSchema.pre('save', function generateSlug(next) {
   const message = this;
-  message.slug = slugify(message.msg, '_'); // Fix: Use message.msg instead of collection.name
-  return next();
+  message.slug = slugify(message.msg, '_');
+  next();
 });
 
 export default mongoose.models.Messages ||

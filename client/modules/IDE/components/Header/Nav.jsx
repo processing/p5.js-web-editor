@@ -37,6 +37,7 @@ import MobileNav from './MobileNav';
 import Messages from './Messages';
 import Button from '../../../../common/Button';
 import Overlay from '../../../App/components/Overlay';
+import { getMessages } from '../../actions/collections';
 
 const Nav = ({ layout }) => (
   <MediaQuery minWidth={770}>
@@ -313,28 +314,46 @@ const UnauthenticatedUserMenu = () => {
 
 const AuthenticatedUserMenu = () => {
   const username = useSelector((state) => state.user.username);
-
-  const { t } = useTranslation();
   const dispatch = useDispatch();
+  const [msgs, setMsgs] = React.useState([]);
+
+  const getMsgs = async () => {
+    try {
+      const data = await dispatch(getMessages());
+      setMsgs(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  React.useEffect(() => {
+    getMsgs();
+  }, []);
+  const { t } = useTranslation();
   const [isReadingMsgs, setIsReadingMsgs] = React.useState(false);
 
   return (
     <ul className="nav__items-right" title="user-menu">
-      {getConfig('TRANSLATIONS_ENABLED') && <LanguageMenu />}
-
-      <div>
-        <Button onClick={() => setIsReadingMsgs(true)}>Messages</Button>
-
-        {isReadingMsgs && (
-          <Overlay
-            title="Messages"
-            closeOverlay={() => setIsReadingMsgs(false)}
-            isFixedHeight
-          >
-            <Messages />
-          </Overlay>
+      <div className="button-container">
+        <Button onClick={() => setIsReadingMsgs(true)}>
+          {t('Message.Messages')}
+        </Button>
+        {msgs.length > 0 && (
+          <span className="notification-circle">{msgs.length}</span>
         )}
       </div>
+
+      {isReadingMsgs && (
+        <Overlay
+          title={t('Message.Messages')}
+          closeOverlay={() => setIsReadingMsgs(false)}
+          isFixedHeight
+        >
+          <Messages />
+        </Overlay>
+      )}
+      {getConfig('TRANSLATIONS_ENABLED') && <LanguageMenu />}
+
       <NavDropdownMenu
         id="account"
         title={

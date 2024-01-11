@@ -48,7 +48,7 @@ Item.propTypes = {
 
 const QuickAddList = ({ items, onAdd, onRemove }) => {
   const handleAction = (item) => {
-    if (item.isAdded) {
+    if (item.isAdded && onRemove) {
       onRemove(item);
     } else {
       onAdd(item);
@@ -74,7 +74,8 @@ const QuickAddList = ({ items, onAdd, onRemove }) => {
 QuickAddList.propTypes = {
   items: PropTypes.arrayOf(ItemType).isRequired,
   onAdd: PropTypes.func.isRequired,
-  onRemove: PropTypes.func.isRequired
+  // eslint-disable-next-line react/require-default-props
+  onRemove: PropTypes.func
 };
 
 export default QuickAddList;

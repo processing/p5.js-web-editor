@@ -608,7 +608,10 @@
       "Messages": "Messages",
       "Accept": "Accepter",
       "Reject": "Rejeter",
-      "View": "Voir"
-    }
+      "View": "Voir",
+      "SendRequest": "Envoyer une demande",
+      "SendReqToAddSketches": "Envoyer une demande pour ajouter des croquis",
+      "NoMsg": "Aucun message pour toi"
+    }    
   }
   

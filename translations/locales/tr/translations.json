@@ -622,6 +622,9 @@
     "Messages": "Mesajlar",
     "Accept": "Kabul Et",
     "Reject": "Reddet",
-    "View": "Görüntüle"
-  }
+    "View": "Görüntüle",
+    "SendRequest": "İstek gönder",
+    "SendReqToAddSketches": "Eskiz eklemek için istek gönder",
+    "NoMsg": "Senin için mesaj yok"
+  }  
 }

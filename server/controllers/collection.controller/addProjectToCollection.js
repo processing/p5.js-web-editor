@@ -48,6 +48,7 @@ export default async function addProjectToCollection(req, res) {
     try {
       collection.items.push({ project });
 
+      // Delete the sketch request after the acception if it exists
       const reqExists = Messages.findOne({
         projectID: projectId,
         collectionID: collectionId

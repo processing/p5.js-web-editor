@@ -593,6 +593,9 @@
     "Messages": "메시지",
     "Accept": "수락",
     "Reject": "거부",
-    "View": "보기"
-  }
+    "View": "보기",
+    "SendRequest": "요청 보내기",
+    "SendReqToAddSketches": "스케치 추가 요청 보내기",
+    "NoMsg": "너에게 메시지가 없어"
+  }  
 }

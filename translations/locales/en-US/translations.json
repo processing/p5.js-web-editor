@@ -633,6 +633,9 @@
     "Messages": "Messages",
     "Accept" : "Accept",
     "Reject" : "Reject",
-    "View" : "View"
+    "View" : "View",
+    "SendRequest" : "Send Request",
+    "SendReqToAddSketches" : "Request to add Sketches",
+    "NoMsg" : "No message for you"
   }
 }

@@ -5,7 +5,6 @@ import Project from '../../models/project';
 export default async function reqToOwner(req, res) {
   const { projectId } = req.params;
   const { collectionOwner, currentUsername, collectionId } = req.body;
-  console.log(projectId);
 
   try {
     const [collection, project] = await Promise.all([
@@ -34,7 +33,7 @@ export default async function reqToOwner(req, res) {
         .status(404)
         .json({ success: false, message: 'Project already in collection' });
     }
-    const newMsgs = await Messages.create({
+    const newMsgs = new Messages({
       msg: `${currentUsername} wants to add their Sketch in your ${collection.name}`,
       reqSender: currentUsername,
       projectID: projectId,
@@ -43,8 +42,6 @@ export default async function reqToOwner(req, res) {
     });
 
     await newMsgs.save();
-
-    console.log(newMsgs);
 
     return res.status(200).json({ success: true, message: newMsgs.msg });
   } catch (error) {

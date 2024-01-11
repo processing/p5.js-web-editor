@@ -609,6 +609,9 @@
     "Messages": "消息",
     "Accept": "接受",
     "Reject": "拒絕",
-    "View": "查看"
-  }
+    "View": "查看",
+    "SendRequest": "發送請求",
+    "SendReqToAddSketches": "發送請求以添加素描",
+    "NoMsg": "沒有消息給你"
+  }  
 }

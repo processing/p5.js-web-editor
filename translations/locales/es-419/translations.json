@@ -605,6 +605,9 @@
     "Messages": "Mensajes",
     "Accept": "Aceptar",
     "Reject": "Rechazar",
-    "View": "Ver"
+    "View": "Ver",
+    "SendRequest": "Enviar solicitud",
+    "SendReqToAddSketches": "Enviar solicitud para agregar bocetos",
+    "NoMsg": "Keine Nachricht für dich"
   }
 }
