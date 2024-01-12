@@ -350,7 +350,8 @@
       "Description": "ユーザー登録",
       "Or": "もしくは",
       "AlreadyHave": "既にアカウントをお持ちですか？",
-      "Login": "ログイン"
+      "Login": "ログイン",
+      "Warning": "サインアップすることにより、あなたはp5.jsエディタの <0> 利用規約 </0> および <1> プライバシーポリシー </1> に同意するものとします。"
     },
     "EmailVerificationView": {
       "Title": "p5.js Web Editor | メールアドレス認証",
