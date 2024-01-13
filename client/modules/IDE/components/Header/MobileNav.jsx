@@ -232,9 +232,11 @@ const MobileNav = () => {
   const Logo = AsteriskIcon;
   return (
     <Nav>
-      <LogoContainer>
-        <Logo />
-      </LogoContainer>
+      <Link to="/">
+        <LogoContainer>
+          <Logo />
+        </LogoContainer>
+      </Link>
       <Title>
         <h1>{title === project.name ? <ProjectName /> : title}</h1>
         {project?.owner && title === project.name && (
