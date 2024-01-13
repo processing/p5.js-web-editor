@@ -269,11 +269,15 @@ exports[`Nav renders dashboard version for mobile 1`] = `
     <nav
       class="c0"
     >
-      <div
-        class="c1"
+      <a
+        href="/"
       >
-        <test-file-stub />
-      </div>
+        <div
+          class="c1"
+        >
+          <test-file-stub />
+        </div>
+      </a>
       <div
         class="c2"
       >
@@ -899,11 +903,15 @@ exports[`Nav renders editor version for mobile 1`] = `
     <nav
       class="c0"
     >
-      <div
-        class="c1"
+      <a
+        href="/"
       >
-        <test-file-stub />
-      </div>
+        <div
+          class="c1"
+        >
+          <test-file-stub />
+        </div>
+      </a>
       <div
         class="c2"
       >
