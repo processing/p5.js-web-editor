@@ -52,8 +52,6 @@ import * as hinter from '../../../../utils/p5-hinter';
 import '../../../../utils/codemirror-search';
 
 import beepUrl from '../../../../sounds/audioAlert.mp3';
-import RightArrowIcon from '../../../../images/right-arrow.svg';
-import LeftArrowIcon from '../../../../images/left-arrow.svg';
 import { getHTMLFile } from '../../reducers/files';
 import { selectActiveFile } from '../../selectors/files';
 
@@ -522,14 +520,20 @@ class Editor extends React.Component {
                     this.props.closeProjectOptions();
                   }}
                 >
-                  <LeftArrowIcon focusable="false" aria-hidden="true" />
+                  <IconButton
+                    onClick={this.props.expandSidebar}
+                    icon={FolderIcon}
+                  />
                 </button>
                 <button
                   aria-label={this.props.t('Editor.CloseSketchARIA')}
                   className="sidebar__expand"
                   onClick={this.props.expandSidebar}
                 >
-                  <RightArrowIcon focusable="false" aria-hidden="true" />
+                  <IconButton
+                    onClick={this.props.expandSidebar}
+                    icon={FolderIcon}
+                  />
                 </button>
                 <div className="editor__file-name">
                   <span>

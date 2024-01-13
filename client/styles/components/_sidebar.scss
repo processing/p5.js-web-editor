@@ -239,7 +239,6 @@
       fill: getThemifyVariable("toolbar-button-color");
     }
     &:hover {
-      background-color: getThemifyVariable("button-background-hover-color");
       & polygon, & path {
         fill: getThemifyVariable("button-hover-color");
       }
