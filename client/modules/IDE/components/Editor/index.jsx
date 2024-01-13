@@ -570,6 +570,7 @@ class Editor extends React.Component {
                   ref={(element) => {
                     this.codemirrorContainer = element;
                   }}
+                  className={editorHolderClass}
                 />
                 {this.props.file.url ? (
                   <AssetPreview
