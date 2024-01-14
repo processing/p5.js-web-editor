@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -26,7 +25,6 @@ import {
   newFile,
   newFolder,
   showKeyboardShortcutModal,
-  showFundraiserModal,
   startSketch,
   stopSketch
 } from '../../actions/ide';
@@ -40,7 +38,6 @@ const Nav = ({ layout }) => (
       matches ? (
         <NavBar>
           <LeftLayout layout={layout} />
-          <FundraiserSection />
           <UserMenu />
         </NavBar>
       ) : (
