@@ -39,13 +39,6 @@ exports[`Nav renders dashboard version for desktop 1`] = `
           </a>
         </li>
       </ul>
-      <button
-        aria-label="2023-fundraiser-button"
-        class="nav__fundraiser-btn"
-        title="2023 Fundraiser Button"
-      >
-        Support p5.js and the Processing Foundation!
-      </button>
     </nav>
   </header>
 </DocumentFragment>
@@ -460,13 +453,6 @@ exports[`Nav renders dashboard version for mobile 1`] = `
                 About
               </a>
             </li>
-            <li
-              class="nav__dropdown-item"
-            >
-              <button>
-                Support p5.js and the Processing Foundation!
-              </button>
-            </li>
           </ul>
         </div>
       </div>
@@ -683,13 +669,6 @@ exports[`Nav renders editor version for desktop 1`] = `
           </ul>
         </li>
       </ul>
-      <button
-        aria-label="2023-fundraiser-button"
-        class="nav__fundraiser-btn"
-        title="2023 Fundraiser Button"
-      >
-        Support p5.js and the Processing Foundation!
-      </button>
     </nav>
   </header>
 </DocumentFragment>
@@ -1103,13 +1082,6 @@ exports[`Nav renders editor version for mobile 1`] = `
               >
                 About
               </a>
-            </li>
-            <li
-              class="nav__dropdown-item"
-            >
-              <button>
-                Support p5.js and the Processing Foundation!
-              </button>
             </li>
           </ul>
         </div>
