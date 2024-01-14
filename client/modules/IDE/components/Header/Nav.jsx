@@ -266,7 +266,7 @@ const LanguageMenu = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-       console.log(await axios.post('/editor/currentLanguage', { language: currentLanguage }));
+       await axios.post('/editor/currentLanguage', { language: currentLanguage });
       } catch (error) {
         console.error('Error sending language to server:', error);
       }
