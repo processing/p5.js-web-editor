@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
@@ -15,103 +15,92 @@ import dates from '../../../../utils/formatDate';
 const formatDateCell = (date, mobile = false) =>
   dates.format(date, { showTime: !mobile });
 
-class CollectionListRowBase extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      renameOpen: false,
-      renameValue: ''
-    };
-    this.renameInput = React.createRef();
-  }
+const CollectionListRowBase = (props) => {
+  const [renameOpen, setRenameOpen] = useState(false);
+  const [renameValue, setRenameValue] = useState('');
+  const renameInput = useRef(null);
 
-  closeAll = () => {
-    this.setState({
-      renameOpen: false
-    });
+  const closeAll = () => {
+    setRenameOpen(false);
   };
 
-  handleAddSketches = () => {
-    this.props.onAddSketches();
-  };
-
-  handleCollectionDelete = () => {
-    if (
-      window.confirm(
-        this.props.t('Common.DeleteConfirmation', {
-          name: this.props.collection.name
-        })
-      )
-    ) {
-      this.props.deleteCollection(this.props.collection.id);
-    }
-  };
-
-  handleRenameOpen = () => {
-    this.setState(
-      {
-        renameOpen: true,
-        renameValue: this.props.collection.name
-      },
-      () => this.renameInput.current.focus()
-    );
-  };
-
-  handleRenameChange = (e) => {
-    this.setState({
-      renameValue: e.target.value
-    });
-  };
-
-  handleRenameEnter = (e) => {
-    if (e.key === 'Enter') {
-      this.updateName();
-      this.closeAll();
-    }
-  };
-
-  handleRenameBlur = () => {
-    this.updateName();
-    this.closeAll();
-  };
-
-  updateName = () => {
-    const isValid = this.state.renameValue.trim().length !== 0;
+  const updateName = () => {
+    const isValid = renameValue.trim().length !== 0;
     if (isValid) {
-      this.props.editCollection(this.props.collection.id, {
-        name: this.state.renameValue.trim()
+      props.editCollection(props.collection.id, {
+        name: renameValue.trim()
       });
     }
   };
 
-  renderActions = () => {
-    const userIsOwner = this.props.user.username === this.props.username;
+  const handleAddSketches = () => {
+    closeAll();
+    props.onAddSketches();
+  };
+
+  const handleCollectionDelete = () => {
+    closeAll();
+    if (
+      window.confirm(
+        props.t('Common.DeleteConfirmation', {
+          name: props.collection.name
+        })
+      )
+    ) {
+      props.deleteCollection(props.collection.id);
+    }
+  };
+
+  const handleRenameOpen = () => {
+    closeAll();
+    setRenameOpen(true);
+    setRenameValue(props.collection.name);
+    if (renameInput.current) {
+      renameInput.current.focus();
+    }
+  };
+
+  const handleRenameChange = (e) => {
+    setRenameValue(e.target.value);
+  };
+
+  const handleRenameEnter = (e) => {
+    if (e.key === 'Enter') {
+      updateName();
+      closeAll();
+    }
+  };
+
+  const handleRenameBlur = () => {
+    updateName();
+    closeAll();
+  };
+
+  const renderActions = () => {
+    const userIsOwner = props.user.username === props.username;
 
     return (
       <TableDropdown
-        aria-label={this.props.t(
-          'CollectionListRow.ToggleCollectionOptionsARIA'
-        )}
+        aria-label={props.t('CollectionListRow.ToggleCollectionOptionsARIA')}
       >
-        <MenuItem onClick={this.handleAddSketches}>
-          {this.props.t('CollectionListRow.AddSketch')}
+        <MenuItem onClick={handleAddSketches}>
+          {props.t('CollectionListRow.AddSketch')}
         </MenuItem>
-        <MenuItem hideIf={!userIsOwner} onClick={this.handleCollectionDelete}>
-          {this.props.t('CollectionListRow.Delete')}
+        <MenuItem hideIf={!userIsOwner} onClick={handleCollectionDelete}>
+          {props.t('CollectionListRow.Delete')}
         </MenuItem>
-        <MenuItem hideIf={!userIsOwner} onClick={this.handleRenameOpen}>
-          {this.props.t('CollectionListRow.Rename')}
+        <MenuItem hideIf={!userIsOwner} onClick={handleRenameOpen}>
+          {props.t('CollectionListRow.Rename')}
         </MenuItem>
       </TableDropdown>
     );
   };
 
-  renderCollectionName = () => {
-    const { collection, username } = this.props;
-    const { renameOpen, renameValue } = this.state;
+  const renderCollectionName = () => {
+    const { collection, username } = props;
 
     return (
-      <React.Fragment>
+      <>
         <Link
           to={{
             pathname: `/${username}/collections/${collection.id}`,
@@ -123,38 +112,34 @@ class CollectionListRowBase extends React.Component {
         {renameOpen && (
           <input
             value={renameValue}
-            onChange={this.handleRenameChange}
-            onKeyUp={this.handleRenameEnter}
-            onBlur={this.handleRenameBlur}
+            onChange={handleRenameChange}
+            onKeyUp={handleRenameEnter}
+            onBlur={handleRenameBlur}
             onClick={(e) => e.stopPropagation()}
-            ref={this.renameInput}
+            ref={renameInput}
           />
         )}
-      </React.Fragment>
+      </>
     );
   };
 
-  render() {
-    const { collection, mobile } = this.props;
+  const { collection, mobile } = props;
 
-    return (
-      <tr className="sketches-table__row" key={collection.id}>
-        <th scope="row">
-          <span className="sketches-table__name">
-            {this.renderCollectionName()}
-          </span>
-        </th>
-        <td>{formatDateCell(collection.createdAt, mobile)}</td>
-        <td>{formatDateCell(collection.updatedAt, mobile)}</td>
-        <td>
-          {mobile && 'sketches: '}
-          {(collection.items || []).length}
-        </td>
-        <td className="sketch-list__dropdown-column">{this.renderActions()}</td>
-      </tr>
-    );
-  }
-}
+  return (
+    <tr className="sketches-table__row" key={collection.id}>
+      <th scope="row">
+        <span className="sketches-table__name">{renderCollectionName()}</span>
+      </th>
+      <td>{formatDateCell(collection.createdAt, mobile)}</td>
+      <td>{formatDateCell(collection.updatedAt, mobile)}</td>
+      <td>
+        {mobile && 'sketches: '}
+        {(collection.items || []).length}
+      </td>
+      <td className="sketch-list__dropdown-column">{renderActions()}</td>
+    </tr>
+  );
+};
 
 CollectionListRowBase.propTypes = {
   collection: PropTypes.shape({

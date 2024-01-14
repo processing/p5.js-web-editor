@@ -150,6 +150,9 @@
       "AutocloseBracketsQuotes": "ऑटोक्लोज ब्रैकिट और क्वोट",
       "AutocloseBracketsQuotesOnARIA": "ऑटोक्लोज ब्रैकिट और क्वोट चालू",
       "AutocloseBracketsQuotesOffARIA": "ऑटोक्लोज ब्रैकिट और क्वोट बंद",
+      "AutocompleteHinter": "ऑटोकम्प्लीट हिंटर",
+      "AutocompleteHinterOnARIA": "ऑटोकम्प्लीट हिंटर चालू",
+      "AutocompleteHinterOffARIA": "ऑटोकम्प्लीट हिंटर बंद",
       "WordWrap": "वर्ड रैप",
       "LineWrapOnARIA": "लाइनरैप चालू",
       "LineWrapOffARIA": "लाइनरैप बंद",
@@ -350,7 +353,8 @@
       "Description": "साइन अप",
       "Or": "या",
       "AlreadyHave": "पहले से ही अकाउंट है?",
-      "Login": "लॉग इन"
+      "Login": "लॉग इन",
+      "Warning": "साइन अप करके, आप p5.js संपादक की उपयोग की <0>शर्तों</0> और <1>गोपनीयता नीति</1> से सहमत होते हैं।"
     },
     "EmailVerificationView": {
       "Title": "p5.js वेब एडिटर | ईमेल वेरीफिकेशन",

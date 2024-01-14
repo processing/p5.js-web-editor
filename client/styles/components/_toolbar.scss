@@ -144,6 +144,6 @@
 .checkbox__autorefresh{
 	cursor: pointer;
 	@include themify(){
-		color:getThemifyVariable('logo-color');
+		accent-color:getThemifyVariable('logo-color');
 	}
 }
