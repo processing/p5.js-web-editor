@@ -1,23 +1,24 @@
 import { v4 as uuidv4 } from 'uuid';
 import S3Policy from 's3-policy-v4';
-import s3 from '@auth0/s3';
+import {
+  S3Client,
+  HeadObjectCommand,
+  CopyObjectCommand,
+  ListObjectsCommand,
+  DeleteObjectsCommand
+} from '@aws-sdk/client-s3';
 import mongoose from 'mongoose';
 import { getProjectsForUserId } from './project.controller';
 import User from '../models/user';
 
 const { ObjectId } = mongoose.Types;
 
-const client = s3.createClient({
-  maxAsyncS3: 20,
-  s3RetryCount: 3,
-  s3RetryDelay: 1000,
-  multipartUploadThreshold: 20971520, // this is the default (20 MB)
-  multipartUploadSize: 15728640, // this is the default (15 MB)
-  s3Options: {
-    accessKeyId: `${process.env.AWS_ACCESS_KEY}`,
-    secretAccessKey: `${process.env.AWS_SECRET_KEY}`,
-    region: `${process.env.AWS_REGION}`
-  }
+const s3Client = new S3Client({
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY,
+    secretAccessKey: process.env.AWS_SECRET_KEY
+  },
+  region: process.env.AWS_REGION
 });
 
 const s3Bucket =
@@ -39,21 +40,26 @@ export function getObjectKey(url) {
   return objectKey;
 }
 
-export function deleteObjectsFromS3(keyList, callback) {
-  const keys = keyList.map((key) => { return { Key: key }; }); // eslint-disable-line
-  if (keyList.length > 0) {
+export async function deleteObjectsFromS3(keyList, callback) {
+  const objectsToDelete = keyList.map((key) => ({ Key: key }));
+
+  if (objectsToDelete.length > 0) {
     const params = {
-      Bucket: `${process.env.S3_BUCKET}`,
-      Delete: {
-        Objects: keys
-      }
+      Bucket: process.env.S3_BUCKET,
+      Delete: { Objects: objectsToDelete }
     };
-    const del = client.deleteObjects(params);
-    del.on('end', () => {
+
+    try {
+      await s3Client.send(new DeleteObjectsCommand(params));
       if (callback) {
         callback();
       }
-    });
+    } catch (error) {
+      console.error('Error deleting objects from S3: ', error);
+      if (callback) {
+        callback(error);
+      }
+    }
   } else if (callback) {
     callback();
   }
@@ -61,12 +67,7 @@ export function deleteObjectsFromS3(keyList, callback) {
 
 export function deleteObjectFromS3(req, res) {
   const { objectKey, userId } = req.params;
-  let fullObjectKey;
-  if (userId) {
-    fullObjectKey = `${userId}/${objectKey}`;
-  } else {
-    fullObjectKey = objectKey;
-  }
+  const fullObjectKey = userId ? `${userId}/${objectKey}` : objectKey;
   deleteObjectsFromS3([fullObjectKey], () => {
     res.json({ success: true });
   });
@@ -96,143 +97,120 @@ export function signS3(req, res) {
   res.json(policy);
 }
 
-export function copyObjectInS3(url, userId) {
-  return new Promise((resolve, reject) => {
-    const objectKey = getObjectKey(url);
-    const fileExtension = getExtension(objectKey);
-    const newFilename = uuidv4() + fileExtension;
-    const headParams = {
-      Bucket: `${process.env.S3_BUCKET}`,
-      Key: `${objectKey}`
-    };
-    client.s3.headObject(headParams, (headErr) => {
-      if (headErr) {
-        reject(
-          new Error(
-            `Object with key ${process.env.S3_BUCKET}/${objectKey} does not exist.`
-          )
-        );
-        return;
-      }
-      const params = {
-        Bucket: `${process.env.S3_BUCKET}`,
-        CopySource: `${process.env.S3_BUCKET}/${objectKey}`,
-        Key: `${userId}/${newFilename}`,
-        ACL: 'public-read'
-      };
-      const copy = client.copyObject(params);
-      copy.on('err', (err) => {
-        reject(err);
-      });
-      copy.on('end', (data) => {
-        resolve(`${s3Bucket}${userId}/${newFilename}`);
-      });
-    });
-  });
+export async function copyObjectInS3(url, userId) {
+  const objectKey = getObjectKey(url);
+  const fileExtension = getExtension(objectKey);
+  const newFilename = uuidv4() + fileExtension;
+  const headParams = {
+    Bucket: process.env.S3_BUCKET,
+    Key: objectKey
+  };
+
+  await s3Client.send(new HeadObjectCommand(headParams));
+
+  const params = {
+    Bucket: process.env.S3_BUCKET,
+    CopySource: `${process.env.S3_BUCKET}/${objectKey}`,
+    Key: `${userId}/${newFilename}`,
+    ACL: 'public-read'
+  };
+
+  try {
+    await s3Client.send(new CopyObjectCommand(params));
+    return `${s3Bucket}${userId}/${newFilename}`;
+  } catch (error) {
+    console.error('Error copying object in S3:', error);
+    throw error;
+  }
 }
 
-export function copyObjectInS3RequestHandler(req, res) {
+export async function copyObjectInS3RequestHandler(req, res) {
   const { url } = req.body;
-  copyObjectInS3(url, req.user.id).then((newUrl) => {
-    res.json({ url: newUrl });
-  });
+  const newUrl = await copyObjectInS3(url, req.user.id);
+  res.json({ url: newUrl });
 }
 
-export function moveObjectToUserInS3(url, userId) {
-  return new Promise((resolve, reject) => {
-    const objectKey = getObjectKey(url);
-    const fileExtension = getExtension(objectKey);
-    const newFilename = uuidv4() + fileExtension;
+export async function moveObjectToUserInS3(url, userId) {
+  const objectKey = getObjectKey(url);
+  const fileExtension = getExtension(objectKey);
+  const newFilename = uuidv4() + fileExtension;
+
+  try {
     const headParams = {
-      Bucket: `${process.env.S3_BUCKET}`,
-      Key: `${objectKey}`
+      Bucket: process.env.S3_BUCKET,
+      Key: objectKey
     };
-    client.s3.headObject(headParams, (headErr) => {
-      if (headErr) {
-        reject(
-          new Error(
-            `Object with key ${process.env.S3_BUCKET}/${objectKey} does not exist.`
-          )
-        );
-        return;
-      }
-      const params = {
-        Bucket: `${process.env.S3_BUCKET}`,
-        CopySource: `${process.env.S3_BUCKET}/${objectKey}`,
-        Key: `${userId}/${newFilename}`,
-        ACL: 'public-read'
-      };
-      const move = client.moveObject(params);
-      move.on('err', (err) => {
-        reject(err);
-      });
-      move.on('end', (data) => {
-        resolve(`${s3Bucket}${userId}/${newFilename}`);
-      });
-    });
-  });
+    await s3Client.send(new HeadObjectCommand(headParams));
+  } catch (headErr) {
+    throw new Error(
+      `Object with key ${process.env.S3_BUCKET}/${objectKey} does not exist.`
+    );
+  }
+
+  const params = {
+    Bucket: process.env.S3_BUCKET,
+    CopySource: `${process.env.S3_BUCKET}/${objectKey}`,
+    Key: `${userId}/${newFilename}`,
+    ACL: 'public-read'
+  };
+
+  await s3Client.send(new CopyObjectCommand(params));
+  return `${s3Bucket}${userId}/${newFilename}`;
 }
 
-export function listObjectsInS3ForUser(userId) {
-  let assets = [];
-  return new Promise((resolve) => {
+export async function listObjectsInS3ForUser(userId) {
+  try {
+    let assets = [];
     const params = {
-      s3Params: {
-        Bucket: `${process.env.S3_BUCKET}`,
-        Prefix: `${userId}/`
-      }
+      Bucket: process.env.S3_BUCKET,
+      Prefix: `${userId}/`
     };
-    client
-      .listObjects(params)
-      .on('data', (data) => {
-        assets = assets.concat(
-          data.Contents.map((object) => ({
-            key: object.Key,
-            size: object.Size
-          }))
-        );
-      })
-      .on('end', () => {
-        resolve();
-      });
-  })
-    .then(() => getProjectsForUserId(userId))
-    .then((projects) => {
-      const projectAssets = [];
-      let totalSize = 0;
-      assets.forEach((asset) => {
-        const name = asset.key.split('/').pop();
-        const foundAsset = {
-          key: asset.key,
-          name,
-          size: asset.size,
-          url: `${process.env.S3_BUCKET_URL_BASE}${asset.key}`
-        };
-        totalSize += asset.size;
-        projects.some((project) => {
-          let found = false;
-          project.files.some((file) => {
-            if (!file.url) return false;
-            if (file.url.includes(asset.key)) {
-              found = true;
-              foundAsset.name = file.name;
-              foundAsset.sketchName = project.name;
-              foundAsset.sketchId = project.id;
-              foundAsset.url = file.url;
-              return true;
-            }
-            return false;
-          });
-          return found;
+
+    const data = await s3Client.send(new ListObjectsCommand(params));
+
+    assets = data.Contents.map((object) => ({
+      key: object.Key,
+      size: object.Size
+    }));
+
+    const projects = await getProjectsForUserId(userId);
+    const projectAssets = [];
+    let totalSize = 0;
+
+    assets.forEach((asset) => {
+      const name = asset.key.split('/').pop();
+      const foundAsset = {
+        key: asset.key,
+        name,
+        size: asset.size,
+        url: `${process.env.S3_BUCKET_URL_BASE}${asset.key}`
+      };
+      totalSize += asset.size;
+
+      projects.some((project) => {
+        let found = false;
+        project.files.some((file) => {
+          if (!file.url) return false;
+          if (file.url.includes(asset.key)) {
+            found = true;
+            foundAsset.name = file.name;
+            foundAsset.sketchName = project.name;
+            foundAsset.sketchId = project.id;
+            foundAsset.url = file.url;
+            return true;
+          }
+          return false;
         });
-        projectAssets.push(foundAsset);
+        return found;
       });
-      return Promise.resolve({ assets: projectAssets, totalSize });
-    })
-    .catch((err) => {
-      console.log('got an error');
-      console.log(err);
+      projectAssets.push(foundAsset);
     });
+
+    return { assets: projectAssets, totalSize };
+  } catch (error) {
+    console.log('Got an error:', error);
+    throw error;
+  }
 }
 
 export function listObjectsInS3ForUserRequestHandler(req, res) {
