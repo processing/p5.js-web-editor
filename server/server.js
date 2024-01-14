@@ -8,6 +8,7 @@ import connectMongo from 'connect-mongo';
 import passport from 'passport';
 import path from 'path';
 import basicAuth from 'express-basic-auth';
+import i18nextMiddleware from 'i18next-express-middleware';
 
 // Webpack Requirements
 import webpack from 'webpack';
@@ -24,16 +25,18 @@ import files from './routes/file.routes';
 import collections from './routes/collection.routes';
 import aws from './routes/aws.routes';
 import serverRoutes from './routes/server.routes';
+
 import redirectEmbedRoutes from './routes/redirectEmbed.routes';
 import passportRoutes from './routes/passport.routes';
 import { requestsOfTypeJSON } from './utils/requestsOfType';
 
 import { renderIndex } from './views/index';
 import { get404Sketch } from './views/404Page';
+import i18n from './translations/i18n';
 
 const app = new Express();
 const MongoStore = connectMongo(session);
-
+app.use(i18nextMiddleware.handle(i18n));
 app.get('/health', (req, res) => res.json({ success: true }));
 
 const allowedCorsOrigins = [

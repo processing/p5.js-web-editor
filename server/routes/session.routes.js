@@ -9,4 +9,6 @@ router.get('/session', SessionController.getSession);
 
 router.get('/logout', SessionController.destroySession);
 
+router.post('/currentLanguage', SessionController.getCurrentLanguage);
+
 export default router;

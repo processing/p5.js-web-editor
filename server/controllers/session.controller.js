@@ -1,5 +1,5 @@
 import passport from 'passport';
-
+import i18n from '../translations/i18n';
 import { userResponse } from './user.controller';
 
 export function createSession(req, res, next) {
@@ -9,7 +9,9 @@ export function createSession(req, res, next) {
       return;
     }
     if (!user) {
-      res.status(401).json({ message: 'Invalid username or password.' });
+      const errorMessage = i18n.t('translation:errorCredentials');
+      console.log(errorMessage);
+      res.status(401).json({ message: errorMessage });
       return;
     }
 
@@ -28,6 +30,18 @@ export function getSession(req, res) {
     return res.json(userResponse(req.user));
   }
   return res.status(404).send({ message: 'Session does not exist' });
+}
+
+export async function getCurrentLanguage(req, res) {
+  try {
+    res.json({
+      language: req.body.language || 'en',
+      message: 'Language Current'
+    });
+    i18n.changeLanguage(req.body.language);
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 export function destroySession(req, res, next) {
