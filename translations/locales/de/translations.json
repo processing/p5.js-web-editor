@@ -234,7 +234,6 @@
   "NewFileModal": {
     "Title": "Neue Datei",
     "CloseButtonARIA": "Neue Datei Fenster schließen",
-    "EnterName": "Bitte gib einen Namen ein",
     "InvalidType": "Ungültiger Dateityp. Gültige Endungen sind .js, .css, .json, .xml, .txt, .csv, .tsv, .frag, und .vert."
   },
   "NewFileForm": {
@@ -244,7 +243,6 @@
   "NewFolderModal": {
     "Title": "Neuer Ordner",
     "CloseButtonARIA": "Neuer Ordner Fenster schließen",
-    "EnterName": "Bitte gib einen Namen ein",
     "EmptyName": "Der Ordnername kann keine Leerzeichen enthalten",
     "InvalidExtension": "Der Ordnername kann keine Datei-Endung enthalten"
   },

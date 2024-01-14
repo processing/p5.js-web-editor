@@ -234,7 +234,6 @@
     "NewFileModal": {
       "Title": "ファイル作成",
       "CloseButtonARIA": "新規ファイルモーダルを閉じる",
-      "EnterName": "ファイル名を入力してください",
       "InvalidType": "ファイルタイプが無効です。有効な拡張子は、.js、.css、.json、.xml、.stl、.txt、.csv、.tsv、.frag、.vertです。"
     },
     "NewFileForm": {
@@ -244,7 +243,6 @@
     "NewFolderModal": {
       "Title": "フォルダ作成",
       "CloseButtonARIA": "新しいフォルダモーダルを閉じる",
-      "EnterName": "フォルダ名を入力してください",
       "EmptyName": "スペースのみのフォルダ名は無効です",
       "InvalidExtension": "フォルダ名に拡張子を含めることはできません"
     },

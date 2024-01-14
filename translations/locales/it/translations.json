@@ -240,7 +240,6 @@
   "NewFileModal": {
     "Title": "Crea File",
     "CloseButtonARIA": "Chiudi finestra Nuovo File",
-    "EnterName": "Prego inserire il nome",
     "InvalidType": "Tipo di file non valido. Estensioni valide sono: .js, .css, .json, .xml, .txt, .csv, .tsv, .frag, and .vert."
   },
   "NewFileForm": {
@@ -250,7 +249,6 @@
   "NewFolderModal": {
     "Title": "Crea cartella",
     "CloseButtonARIA": "Chiudi finestra nuova cartella",
-    "EnterName": "Prego inserire il nome",
     "EmptyName": "Il nome cartella non può contenere solo spazi",
     "InvalidExtension": "Il nome cartella non può contenere un'estensione"
   },

@@ -243,7 +243,6 @@
     "NewFileModal": {
       "Title": "فائل بنائیں",
       "CloseButtonARIA": "نیا فائل موڈل بند کریں۔",
-      "EnterName": "براہ کرم ایک نام درج کریں۔",
       "InvalidType": "غلط فائل کی قسم۔ "
     },
     "NewFileForm": {
@@ -253,7 +252,6 @@
     "NewFolderModal": {
       "Title": "فولڈر بنائیں",
       "CloseButtonARIA": "نیا فولڈر موڈل بند کریں۔",
-      "EnterName": "براہ کرم ایک نام درج کریں۔",
       "EmptyName": "فولڈر کا نام صرف خالی جگہوں پر مشتمل نہیں ہو سکتا",
       "InvalidExtension": "فولڈر کے نام میں توسیع نہیں ہو سکتی"
     },

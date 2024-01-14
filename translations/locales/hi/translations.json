@@ -237,7 +237,6 @@
     "NewFileModal": {
       "Title": "फ़ाइल बनाएँ",
       "CloseButtonARIA": "नई फ़ाइल मोडल बंद करें",
-      "EnterName": "कृपया एक नाम दर्ज करें",
       "InvalidType": "अमान्य फ़ाइल प्रकार। मान्य एक्सटेंशन हैं .js, .css, .json, .xml, .stl, .txt, .csv, .tsv, .frag, और .vert."
     },
     "NewFileForm": {
@@ -247,7 +246,6 @@
     "NewFolderModal": {
       "Title": "फोल्डर बनाएं",
       "CloseButtonARIA": "नया फ़ोल्डर मोडल बंद करें",
-      "EnterName": "कृपया नाम दर्ज करें",
       "EmptyName": "फ़ोल्डर नाम में केवल रिक्त स्थान नहीं हो सकते",
       "InvalidExtension": "फ़ोल्डर नाम में एक्सटेंशन नहीं हो सकता"
     },

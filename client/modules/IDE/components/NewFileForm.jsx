@@ -20,7 +20,7 @@ function NewFileForm() {
     const errors = {};
 
     if (!formProps.name) {
-      errors.name = t('NewFileModal.EnterName');
+      errors.name = '';
     } else if (!formProps.name.match(CREATE_FILE_REGEX)) {
       errors.name = t('NewFileModal.InvalidType');
     }
