@@ -118,7 +118,8 @@
         "StopSketchARIA": "خاکہ بنانا بند کریں",
         "EditSketchARIA": "خاکے کے نام میں ترمیم کریں۔",
         "NewSketchNameARIA": "خاکے کا نیا نام",
-        "By": " کی طرف سے "
+        "By": " کی طرف سے ",
+        "DuplicateToEdit": "ترتيب ديکر ترتيب ديکھيں"
       },      
     "Console": {
       "Title": "تسلی",

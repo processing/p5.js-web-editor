@@ -115,7 +115,8 @@
     "StopSketchARIA": "Detener bosquejo",
     "EditSketchARIA": "Editar nombre de bosquejo",
     "NewSketchNameARIA": "Nuevo nombre de bosquejo",
-    "By": " de "
+    "By": " de ",
+    "DuplicateToEdit": "Duplicar para editar"
   },
   "Console": {
     "Title": "Consola",

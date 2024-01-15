@@ -115,7 +115,8 @@
     "StopSketchARIA": "Parar esboço",
     "EditSketchARIA": "Mudar nome do esboço",
     "NewSketchNameARIA": "Novo nome de esboço",
-    "By": " por "
+    "By": " por ",
+    "DuplicateToEdit": "Duplicar para editar"
   },
   "Console": {
     "Title": "Terminal",

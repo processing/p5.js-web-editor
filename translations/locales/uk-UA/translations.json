@@ -115,7 +115,8 @@
     "StopSketchARIA": "Зупинити скетч",
     "EditSketchARIA": "Редагувати ім'я скетча",
     "NewSketchNameARIA": "Нове ім'я скетча",
-    "By": " користувачем "
+    "By": " користувачем ",
+    "DuplicateToEdit": "Дублювати для редагування"
   },
   "Console": {
     "Title": "Консоль",

@@ -115,7 +115,8 @@
     "StopSketchARIA": "停止运行",
     "EditSketchARIA": "修改项目名称",
     "NewSketchNameARIA": "新项目名称",
-    "By": "作者 "
+    "By": "作者 ",
+    "DuplicateToEdit": "复制以编辑"
   },
   "Console": {
     "Title": "控制台",

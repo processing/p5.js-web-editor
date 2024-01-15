@@ -118,7 +118,8 @@
     "StopSketchARIA": "Stoppa sketch",
     "EditSketchARIA": "Redigera sketchnamn",
     "NewSketchNameARIA": "Nytt sketchnamn",
-    "By": " av "
+    "By": " av ",
+    "DuplicateToEdit": "Duplicera för redigering"
   },
   "Console": {
     "Title": "Konsoll",

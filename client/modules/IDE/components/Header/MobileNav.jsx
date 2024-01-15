@@ -263,7 +263,7 @@ const MobileNav = () => {
                 }`}
                 onClick={() => dispatch(cloneProject())}
               >
-                Duplicate to edit{' '}
+                {t('Toolbar.DuplicateToEdit')}{' '}
                 <EditIcon
                   className={`toolbar__icon ${
                     theme === 'contrast' ? 'contrast' : 'normal'

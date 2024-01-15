@@ -508,7 +508,11 @@ class Editor extends React.Component {
         this.props.file.fileType === 'folder' || this.props.file.url,
       // eslint-disable-next-line no-dupe-keys
       'editor-holder--readonly':
-        this.props.project.owner?.username !== this.props.user.username
+        //  Check if there is a project owner, the user has a username,
+        // and the project owner's username is not the same as the user's username
+        this.props.project.owner && this.props.user.username
+          ? this.props.project.owner?.username !== this.props.user.username
+          : ''
     });
 
     return (
@@ -571,8 +575,10 @@ class Editor extends React.Component {
               <section>
                 <EditorHolder
                   readOnly={
-                    this.props.project.owner?.username !==
-                    this.props.user.username
+                    this.props.project.owner &&
+                    this.props.user.username &&
+                    this.props.project.owner.username !==
+                      this.props.user.username
                   }
                   ref={(element) => {
                     this.codemirrorContainer = element;

@@ -101,7 +101,8 @@
     "StopSketchARIA": "스케치 실행 중지",
     "EditSketchARIA": "스케치 이름 수정하기",
     "NewSketchNameARIA": "새로운 스케치 이름",
-    "By": " 제작: "
+    "By": " 제작: ",
+    "DuplicateToEdit": "편집을 위해 복제"
   },
   "Console": {
     "Title": "콘솔",

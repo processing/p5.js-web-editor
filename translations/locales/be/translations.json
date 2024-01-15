@@ -119,7 +119,8 @@
     "StopSketchARIA": "স্কেচ বন্ধ করুন",
     "EditSketchARIA": "স্কেচের নাম সম্পাদনা করুন",
     "NewSketchNameARIA": "নতুন স্কেচের নাম",
-    "By": " দ্বারা "
+    "By": " দ্বারা ",
+    "DuplicateToEdit": "সম্পাদনা করতে নকল করুন"
   },
   "Console": {
     "Title": "কনসোল",
