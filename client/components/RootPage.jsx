@@ -12,7 +12,7 @@ const RootPage = styled.div`
 
   @media (max-width: 770px) {
     height: 100%;
-    overflow: hidden;
+    overflow: auto;
   }
 `;
 
