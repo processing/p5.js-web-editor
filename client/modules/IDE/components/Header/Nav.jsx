@@ -1,3 +1,6 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable react/jsx-no-comment-textnodes */
 import React, { useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { sortBy } from 'lodash';
@@ -30,6 +33,10 @@ import {
 import { logoutUser } from '../../../User/actions';
 import { CmControllerContext } from '../../pages/IDEView';
 import MobileNav from './MobileNav';
+import Messages from './Messages';
+import Button from '../../../../common/Button';
+import Overlay from '../../../App/components/Overlay';
+import { getMessages } from '../../actions/collections';
 
 const Nav = ({ layout }) => (
   <MediaQuery minWidth={770}>
@@ -265,6 +272,7 @@ const UnauthenticatedUserMenu = () => {
   return (
     <ul className="nav__items-right" title="user-menu">
       {getConfig('TRANSLATIONS_ENABLED') && <LanguageMenu />}
+
       <li className="nav__item">
         <Link to="/login" className="nav__auth-button">
           <span className="nav__item-header" title="Login">
@@ -286,13 +294,46 @@ const UnauthenticatedUserMenu = () => {
 
 const AuthenticatedUserMenu = () => {
   const username = useSelector((state) => state.user.username);
-
-  const { t } = useTranslation();
   const dispatch = useDispatch();
+  const [msgs, setMsgs] = React.useState([]);
+
+  const getMsgs = async () => {
+    try {
+      const data = await dispatch(getMessages());
+      setMsgs(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  React.useEffect(() => {
+    getMsgs();
+  }, []);
+  const { t } = useTranslation();
+  const [isReadingMsgs, setIsReadingMsgs] = React.useState(false);
 
   return (
     <ul className="nav__items-right" title="user-menu">
+      <div className="button-container">
+        <Button onClick={() => setIsReadingMsgs(true)}>
+          {t('Message.Messages')}
+        </Button>
+        {msgs.length > 0 && (
+          <span className="notification-circle">{msgs.length}</span>
+        )}
+      </div>
+
+      {isReadingMsgs && (
+        <Overlay
+          title={t('Message.Messages')}
+          closeOverlay={() => setIsReadingMsgs(false)}
+          isFixedHeight
+        >
+          <Messages />
+        </Overlay>
+      )}
       {getConfig('TRANSLATIONS_ENABLED') && <LanguageMenu />}
+
       <NavDropdownMenu
         id="account"
         title={
@@ -313,6 +354,17 @@ const AuthenticatedUserMenu = () => {
         <NavMenuItem href={`/${username}/assets`}>
           {t('Nav.Auth.MyAssets')}
         </NavMenuItem>
+        {/* // eslint-disable-next-line jsx-a11y/click-events-have-key-events,
+        jsx-a11y/click-events-have-key-events */}
+
+        {/* {overlay && (
+          <Overlay
+            title={t('Preferences.Settings')}
+            closeOverlay={() => setOverlay(false)}
+            isFixedHeight
+          > */}
+        {/* </Overlay> */}
+        {/* )} */}
         <NavMenuItem href="/account">{t('Preferences.Settings')}</NavMenuItem>
         <NavMenuItem onClick={() => dispatch(logoutUser())}>
           {t('Nav.Auth.LogOut')}

@@ -604,5 +604,14 @@
   },
   "Explorer": {
     "Files": "文件"
-  }
+  },
+  "Message": {
+    "Messages": "消息",
+    "Accept": "接受",
+    "Reject": "拒绝",
+    "View": "查看",
+    "SendRequest": "发送请求",
+    "SendReqToAddSketches": "发送请求以添加素描",
+    "NoMsg": "没有消息给你"
+  }  
 }

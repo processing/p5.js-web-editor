@@ -1,10 +1,9 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withTranslation } from 'react-i18next';
-// import { find } from 'lodash';
 import * as ProjectsActions from '../actions/projects';
 import * as CollectionsActions from '../actions/collections';
 import * as ToastActions from '../actions/toast';
@@ -17,85 +16,88 @@ import {
   QuickAddWrapper
 } from './AddToCollectionList';
 
-class SketchList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.props.getProjects(this.props.username);
+const SketchList = ({
+  user,
+  getProjects,
+  sketches,
+  collection,
+  username,
+  loading,
+  addToCollection,
+  removeFromCollection,
+  sorting,
+  t
+}) => {
+  const [isInitialDataLoad, setIsInitialDataLoad] = useState(true);
 
-    this.state = {
-      isInitialDataLoad: true
-    };
-  }
+  useEffect(() => {
+    getProjects(username);
+  }, [getProjects, username]);
 
-  componentWillReceiveProps(nextProps) {
-    if (
-      this.props.sketches !== nextProps.sketches &&
-      Array.isArray(nextProps.sketches)
-    ) {
-      this.setState({
-        isInitialDataLoad: false
-      });
+  useEffect(() => {
+    if (sketches && Array.isArray(sketches)) {
+      setIsInitialDataLoad(false);
     }
-  }
+  }, [sketches]);
 
-  getSketchesTitle() {
-    if (this.props.username === this.props.user.username) {
-      return this.props.t('AddToCollectionSketchList.Title');
+  console.log(collection);
+
+  const getSketchesTitle = () => {
+    if (username === user.username) {
+      return t('AddToCollectionSketchList.Title');
     }
-    return this.props.t('AddToCollectionSketchList.AnothersTitle', {
-      anotheruser: this.props.username
+    return t('AddToCollectionSketchList.AnothersTitle', {
+      anotheruser: username
     });
-  }
-
-  handleCollectionAdd = (sketch) => {
-    this.props.addToCollection(this.props.collection.id, sketch.id);
   };
 
-  handleCollectionRemove = (sketch) => {
-    this.props.removeFromCollection(this.props.collection.id, sketch.id);
+  const handleCollectionAdd = (sketch) => {
+    addToCollection(collection.id, sketch.id);
   };
 
-  inCollection = (sketch) =>
-    this.props.collection.items.find((item) =>
+  const handleCollectionRemove = (sketch) => {
+    removeFromCollection(collection.id, sketch.id);
+  };
+
+  const inCollection = (sketch) =>
+    collection.items.find((item) =>
       item.isDeleted ? false : item.project.id === sketch.id
     ) != null;
 
-  render() {
-    const hasSketches = this.props.sketches.length > 0;
-    const sketchesWithAddedStatus = this.props.sketches.map((sketch) => ({
-      ...sketch,
-      isAdded: this.inCollection(sketch),
-      url: `/${this.props.username}/sketches/${sketch.id}`
-    }));
+  const hasSketches = sketches.length > 0;
+  const sketchesWithAddedStatus = sketches.map((sketch) => ({
+    ...sketch,
+    isAdded: inCollection(sketch),
+    url: `/${username}/sketches/${sketch.id}`
+  }));
 
-    let content = null;
+  let content = null;
 
-    if (this.props.loading && this.state.isInitialDataLoad) {
-      content = <Loader />;
-    } else if (hasSketches) {
-      content = (
-        <QuickAddList
-          items={sketchesWithAddedStatus}
-          onAdd={this.handleCollectionAdd}
-          onRemove={this.handleCollectionRemove}
-        />
-      );
-    } else {
-      content = this.props.t('AddToCollectionSketchList.NoCollections');
-    }
-
-    return (
-      <CollectionAddSketchWrapper>
-        <QuickAddWrapper>
-          <Helmet>
-            <title>{this.getSketchesTitle()}</title>
-          </Helmet>
-          {content}
-        </QuickAddWrapper>
-      </CollectionAddSketchWrapper>
+  if (loading && isInitialDataLoad) {
+    content = <Loader />;
+  } else if (hasSketches) {
+    content = (
+      <QuickAddList
+        items={sketchesWithAddedStatus}
+        onAdd={handleCollectionAdd}
+        onRemove={handleCollectionRemove}
+      />
     );
+  } else {
+    content = t('AddToCollectionSketchList.NoCollections');
   }
-}
+
+  return (
+    <CollectionAddSketchWrapper>
+      <QuickAddWrapper>
+        <Helmet>
+          <title>{getSketchesTitle()}</title>
+        </Helmet>
+        {content}
+      </QuickAddWrapper>
+    </CollectionAddSketchWrapper>
+  );
+};
 
 SketchList.propTypes = {
   user: PropTypes.shape({
@@ -137,18 +139,16 @@ SketchList.defaultProps = {
   username: undefined
 };
 
-function mapStateToProps(state) {
-  return {
-    user: state.user,
-    sketches: getSortedSketches(state),
-    sorting: state.sorting,
-    loading: state.loading,
-    project: state.project
-  };
-}
+const mapStateToProps = (state) => ({
+  user: state.user,
+  sketches: getSortedSketches(state),
+  sorting: state.sorting,
+  loading: state.loading,
+  project: state.project
+});
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
     Object.assign(
       {},
       ProjectsActions,
@@ -158,7 +158,6 @@ function mapDispatchToProps(dispatch) {
     ),
     dispatch
   );
-}
 
 export default withTranslation()(
   connect(mapStateToProps, mapDispatchToProps)(SketchList)

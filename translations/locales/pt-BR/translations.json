@@ -600,5 +600,14 @@
   },
   "Explorer": {
     "Files": "Arquivos"
+  },
+  "Message": {
+    "Messages": "Mensagens",
+    "Accept": "Aceitar",
+    "Reject": "Rejeitar",
+    "View": "Ver",
+    "SendRequest": "Enviar solicitação",
+    "SendReqToAddSketches": "Enviar solicitação para adicionar esboços",
+    "NoMsg": "Nenhuma mensagem para você"
   }
 }

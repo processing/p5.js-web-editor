@@ -95,6 +95,89 @@ export function addToCollection(collectionId, projectId) {
   };
 }
 
+export function reqToOwner(
+  collectionId,
+  projectId,
+  collectionOwner,
+  currentUsername
+) {
+  return (dispatch) => {
+    dispatch(startLoader());
+    dispatch(setToastText('Request has been sent!'));
+    dispatch(showToast(TOAST_DISPLAY_TIME_MS));
+    const url = `/collections/${collectionId}/${projectId}/request`;
+
+    const reqBody = {
+      collectionOwner,
+      currentUsername,
+      collectionId
+    };
+    return apiClient
+      .post(url, reqBody)
+      .then((response) => {
+        dispatch({
+          type: ActionTypes.REQ_TO_OWNER,
+          payload: response.data
+        });
+        dispatch(stopLoader());
+      })
+      .catch((error) => {
+        dispatch({
+          type: ActionTypes.ERROR,
+          error: error?.response?.data
+        });
+      });
+  };
+}
+
+export function disallowReq(collectionId, projectId) {
+  return (dispatch) => {
+    dispatch(startLoader());
+    dispatch(setToastText('Request disallowed'));
+    dispatch(showToast(TOAST_DISPLAY_TIME_MS));
+    const url = `/collections/${collectionId}/${projectId}/disallow`;
+
+    return apiClient
+      .delete(url)
+      .then((response) => {
+        dispatch({
+          type: ActionTypes.DISALLOW_REQ,
+          payload: response.data
+        });
+      })
+      .catch((error) => {
+        dispatch({
+          type: ActionTypes.ERROR,
+          error: error?.response?.data
+        });
+        dispatch(stopLoader());
+      });
+  };
+}
+export function getMessages() {
+  return async (dispatch) => {
+    try {
+      dispatch(startLoader());
+      const url = '/collections/messages/';
+
+      const response = await apiClient.get(url);
+      dispatch(stopLoader());
+      console.log(response.data);
+
+      const { data } = response;
+
+      return data;
+    } catch (err) {
+      dispatch({
+        type: ActionTypes.ERROR,
+        error: err?.response?.data
+      });
+      dispatch(stopLoader());
+      throw err;
+    }
+  };
+}
+
 export function removeFromCollection(collectionId, projectId) {
   return (dispatch) => {
     dispatch(startLoader());

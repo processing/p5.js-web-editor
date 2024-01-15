@@ -1,0 +1,45 @@
+.messages__add{
+gap: 10px;
+padding-top: 5px;
+padding-bottom: 5px;
+
+  @include themify() {
+    border: 1px solid getThemifyVariable('modal-border-color');
+  }
+}
+
+
+.messages__list {
+    height: #{64 / $base-font-size}rem;
+    padding-right: #{24 / $base-font-size}rem;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding-left: 7px;
+    padding-right: 7px;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.messages__add:nth-child(odd) {
+   @include themify() {
+      background: getThemifyVariable('table-row-stripe-color-alternate');
+    }
+}
+
+.messages__msg {
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    align-items: center; 
+}
+
+.messages__buttons {
+    margin-top: 5px;
+    display: flex;
+    gap: 3px;
+    margin-top: 5px;
+    font-size: smaller;
+    justify-content: flex-end;
+}
+

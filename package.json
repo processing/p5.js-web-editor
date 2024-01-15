@@ -164,7 +164,7 @@
     "@redux-devtools/log-monitor": "^4.0.2",
     "@reduxjs/toolkit": "^1.9.3",
     "async": "^3.2.3",
-    "axios": "^0.21.2",
+    "axios": "^0.21.4",
     "babel-plugin-styled-components": "^1.13.2",
     "bcryptjs": "^2.4.3",
     "blob-util": "^1.2.1",

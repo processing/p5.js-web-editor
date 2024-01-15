@@ -10,6 +10,12 @@ router.get(
   isAuthenticated,
   CollectionController.listCollections
 );
+
+router.get(
+  '/collections/messages/',
+  isAuthenticated,
+  CollectionController.getMessages
+);
 router.get('/:username/collections', CollectionController.listCollections);
 
 // Create, modify, delete collection
@@ -39,6 +45,18 @@ router.delete(
   '/collections/:id/:projectId',
   isAuthenticated,
   CollectionController.removeProjectFromCollection
+);
+
+router.post(
+  '/collections/:id/:projectId/request',
+  isAuthenticated,
+  CollectionController.reqToOwner
+);
+
+router.delete(
+  '/collections/:collectionId/:projectId/disallow',
+  isAuthenticated,
+  CollectionController.disallowReq
 );
 
 export default router;

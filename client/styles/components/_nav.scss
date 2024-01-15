@@ -15,12 +15,13 @@
 
 .nav__items-left,
 .nav__items-right {
-  list-style: none;
+  list-style: none; 
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
   height: 100%;
   align-items: center;
+  gap: 3px;
 }
 
 .preview-nav__editor-svg {
@@ -209,4 +210,21 @@
 
 .nav__back-link {
   display: flex;
+}
+
+.button-container {
+  position: relative;
+  display: inline-block;
+}
+
+.notification-circle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  padding: 3px 5px;
+  font-size: 9px;
+  font-weight: bold;
 }

@@ -12,6 +12,7 @@ import EditableInput from '../../IDE/components/EditableInput';
 import { SketchSearchbar } from '../../IDE/components/Searchbar';
 import { getCollection } from '../../IDE/selectors/collections';
 import ShareURL from './CollectionShareButton';
+import AddToOthersCollectionSketchList from '../../IDE/components/AddToOthersCollectionSketchList';
 
 function CollectionMetadata({ collectionId }) {
   const { t } = useTranslation();
@@ -22,6 +23,7 @@ function CollectionMetadata({ collectionId }) {
   const currentUsername = useSelector((state) => state.user.username);
 
   const [isAddingSketches, setIsAddingSketches] = useState(false);
+  const [isSendingReq, setIsSendingReq] = useState(false);
 
   if (!collection) {
     return null;
@@ -29,6 +31,7 @@ function CollectionMetadata({ collectionId }) {
 
   const { id, name, description, items, owner } = collection;
   const { username } = owner;
+  const collectionOwnerId = owner._id;
   const isOwner = !!currentUsername && currentUsername === username;
 
   const hostname = window.location.origin;
@@ -94,6 +97,11 @@ function CollectionMetadata({ collectionId }) {
         </div>
 
         <div className="collection-metadata__column--right">
+          {!isOwner && (
+            <Button onClick={() => setIsSendingReq(true)}>
+              {t('Message.SendRequest')}
+            </Button>
+          )}
           <ShareURL value={`${hostname}/${username}/collections/${id}`} />
           {isOwner && (
             <Button onClick={() => setIsAddingSketches(true)}>
@@ -112,6 +120,21 @@ function CollectionMetadata({ collectionId }) {
           <AddToCollectionSketchList
             username={username}
             collection={collection}
+          />
+        </Overlay>
+      )}{' '}
+      {isSendingReq && (
+        <Overlay
+          title={t('Message.SendReqToAddSketches')}
+          actions={<SketchSearchbar />}
+          closeOverlay={() => setIsSendingReq(false)}
+          isFixedHeight
+        >
+          <AddToOthersCollectionSketchList
+            username={username}
+            collection={collection}
+            collectionOwner={collectionOwnerId}
+            currentUsername={currentUsername}
           />
         </Overlay>
       )}
