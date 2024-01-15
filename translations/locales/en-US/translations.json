@@ -45,8 +45,7 @@
       "Asset": "Asset",
       "MyAssets": "My Assets",
       "LogOut": "Log Out"
-    },
-    "Fundraiser": "Support p5.js and the Processing Foundation!"
+    }
   },
   "CodemirrorFindAndReplace": {
     "ToggleReplace": "Toggle Replace",
@@ -202,11 +201,6 @@
       "TurnOffAccessibleOutput": "Turn Off Accessible Output"
     }
   },
-  "Fundraiser": {
-    "Title": "Support Our Software and Team",
-    "Description": "🎉 Join us in celebrating a Decade of Code! 🎉 Support p5.js and the Processing Foundation and earn unique rewards. 🙂", 
-    "CallToAction": "Contribute and learn more!"
-  },
   "Sidebar": {
     "Title": "Sketch Files",
     "ToggleARIA": "Toggle open/close sketch file options",
@@ -236,7 +230,6 @@
     "ErrorARIA": "Error",
     "Save": "Save",
     "p5logoARIA": "p5.js Logo",
-    "PFlogoARIA": "Processing Foundation Logo",
     "DeleteConfirmation": "Are you sure you want to delete {{name}}?"
   },
   "IDEView": {
