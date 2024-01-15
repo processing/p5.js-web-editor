@@ -1,0 +1,632 @@
+{
+  "Nav": {
+    "File": {
+      "Title": "קובץ",
+      "New": "חדש",
+      "Share": "שתף",
+      "Duplicate": "שכפל",
+      "Open": "פתח",
+      "Download": "הורד",
+      "AddToCollection": "הוסף לאוסף",
+      "Examples": "דוגמאות"
+    },
+    "Edit": {
+      "Title": "עריכה",
+      "TidyCode": "קוד מסודר",
+      "Find": "חפש",
+      "Replace": "החלף"
+    },
+    "Sketch": {
+      "Title": "סקיצה",
+      "AddFile": "הוסף קובץ",
+      "AddFolder": "הוסף תיקייה",
+      "Run": "הפעל",
+      "Stop": "עצור"
+    },
+    "Help": {
+      "Title": "עזרה",
+      "KeyboardShortcuts": "קיצורי מקלדת",
+      "Reference": "מקור",
+      "About": "אודות"
+    },
+    "Lang": "שפה",
+    "BackEditor": "חזור לעורך",
+    "WarningUnsavedChanges": "האם אתה בטוח שברצונך לעזוב את הדף? יש לך שינויים שלא נשמרו.",
+    "Login": "כניסה",
+    "LoginOr": "או",
+    "SignUp": "הרשם",
+    "Auth": {
+      "Welcome": "ברוך הבא",
+      "Hello": "שלום",
+      "MyAccount": "החשבון שלי",
+      "My": "שלי",
+      "MySketches": "הסקיצות שלי",
+      "MyCollections": "האוספים שלי",
+      "Asset": "נכס",
+      "MyAssets": "הנכסים שלי",
+      "LogOut": "התנתק"
+    },
+    "Fundraiser": "תמכו ב-p5.js ובקרבת העיבוד!"
+  },
+  "CodemirrorFindAndReplace": {
+    "ToggleReplace": "החלף הצג/הסתר",
+    "Find": "חפש",
+    "FindPlaceholder": "חפש בקבצים",
+    "Replace": "החלף",
+    "ReplaceAll": "החלף הכל",
+    "ReplacePlaceholder": "טקסט להחלפה",
+    "Regex": "ביטוי רגולרי",
+    "CaseSensitive": "תלוי רישיות",
+    "WholeWords": "מילים שלמות",
+    "Previous": "קודם",
+    "Next": "הבא",
+    "NoResults": "אין תוצאות",
+    "Close": "סגור"
+  },
+  "LoginForm": {
+    "UsernameOrEmail": "אימייל או שם משתמש",
+    "UsernameOrEmailARIA": "אימייל או שם משתמש",
+    "Password": "סיסמה",
+    "PasswordARIA": "סיסמה",
+    "Submit": "כניסה"
+  },
+  "LoginView": {
+    "Title": "עורך p5.js | כניסה",
+    "Login": "כניסה",
+    "LoginOr": "או",
+    "SignUp": "הרשמה",
+    "Email": "אימייל",
+    "Username": "שם משתמש",
+    "DontHaveAccount": "אין לך חשבון? ",
+    "ForgotPassword": "שכחת סיסמה? ",
+    "ResetPassword": "איפוס סיסמה"
+  },
+  "SocialAuthButton": {
+    "Connect": "חבר {{serviceauth}} חשבון",
+    "Unlink": "בטל חיבור {{serviceauth}} חשבון",
+    "Login": "כניסה עם {{serviceauth}}",
+    "LogoARIA": "לוגו {{serviceauth}}"
+  },
+  "About": {
+    "Title": "אודות",
+    "TitleHelmet": "עורך p5.js | אודות",
+    "Contribute": "תרמו",
+    "NewP5": "חדשים ב-p5.js?",
+    "Report": "דווח על בעיה",
+    "Learn": "למידה",
+    "Resources": "משאבים",
+    "Libraries": "ספריות",
+    "Forum": "פורום",
+    "Examples": "דוגמאות",
+    "PrivacyPolicy": "מדיניות פרטיות",
+    "TermsOfUse": "תנאי השימוש",
+    "CodeOfConduct": "קוד התנהגות"
+  },
+  "Toast": {
+    "OpenedNewSketch": "נפתחה סקיצה חדשה.",
+    "SketchSaved": "הסקיצה נשמרה.",
+    "SketchFailedSave": "נכשל בשמירת הסקיצה.",
+    "AutosaveEnabled": "שמירה אוטומטית מופעלת.",
+    "LangChange": "שפה השתנתה",
+    "SettingsSaved": "הגדרות נשמרו."
+  },
+  "Toolbar": {
+    "Preview": "תצוגה מקדימה",
+    "Auto-refresh": "רענון אוטומטי",
+    "OpenPreferencesARIA": "פתח העדפות",
+    "PlaySketchARIA": "נגן סקיצה",
+    "PlayOnlyVisualSketchARIA": "נגן סקיצה חזותית בלבד",
+    "StopSketchARIA": "עצור סקיצה",
+    "EditSketchARIA": "ערוך שם סקיצה",
+    "NewSketchNameARIA": "שם סקיצה חדש"
+  },
+  "Console": {
+    "Title": "קונסולה",
+    "Clear": "נקה",
+    "ClearARIA": "נקה את הקונסולה",
+    "Close": "סגור",
+    "CloseARIA": "סגור קונסולה",
+    "Open": "פתח",
+    "OpenARIA": "פתח קונסולה"
+  },
+  "Preferences": {
+    "Settings": "הגדרות",
+    "GeneralSettings": "הגדרות כלליות",
+    "Accessibility": "נגישות",
+    "Theme": "ערכת נושא",
+    "LightTheme": "בהיר",
+    "LightThemeARIA": "ערכת נושא בהירה מופעלת",
+    "DarkTheme": "אפלה",
+    "DarkThemeARIA": "ערכת נושא אפלה מופעלת",
+    "HighContrastTheme": "ערכת נושא גבוהה ניגוד",
+    "HighContrastThemeARIA": "ערכת נושא גבוהה ניגוד מופעלת",
+    "TextSize": "גודל טקסט",
+    "DecreaseFont": "הקטן פונט",
+    "DecreaseFontARIA": "הקטן גודל פונט",
+    "IncreaseFont": "הגדל פונט",
+    "IncreaseFontARIA": "הגדל גודל פונט",
+    "FontSize": "גודל פונט",
+    "SetFontSize": "קבע גודל פונט",
+    "Autosave": "שמירה אוטומטית",
+    "On": "פעיל",
+    "AutosaveOnARIA": "שמירה אוטומטית מופעלת",
+    "Off": "לא פעיל",
+    "AutosaveOffARIA": "שמירה אוטומטית לא פעילה",
+    "AutocloseBracketsQuotes": "סגור אוטומטית מסורות וציטוטים",
+    "AutocloseBracketsQuotesOnARIA": "סגירת מסורות וציטוטים אוטומטית מופעלת",
+    "AutocloseBracketsQuotesOffARIA": "סגירת מסורות וציטוטים אוטומטית לא פעילה",
+    "AutocompleteHinter": "השלמת טקסט מראש",
+    "AutocompleteHinterOnARIA": "השלמת טקסט מראש מופעלת",
+    "AutocompleteHinterOffARIA": "השלמת טקסט מראש לא פעילה",
+    "WordWrap": "גלישת שורות",
+    "LineWrapOnARIA": "גלישת שורות מופעלת",
+    "LineWrapOffARIA": "גלישת שורות לא פעילה",
+    "LineNumbers": "מספרי שורות",
+    "LineNumbersOnARIA": "מספרי שורות מופעלים",
+    "LineNumbersOffARIA": "מספרי שורות לא פעילים",
+    "LintWarningSound": "צפצוף אזהרת Lint",
+    "LintWarningOnARIA": "אזהרת Lint מופעלת",
+    "LintWarningOffARIA": "אזהרת Lint לא פעילה",
+    "PreviewSound": "צפצוף הצגה מקדימה",
+    "PreviewSoundARIA": "צפצוף הצגה מקדימה",
+    "AccessibleTextBasedCanvas": "קנבס טקסטואלי נגיש",
+    "UsedScreenReader": "משמש עם קורא מסך",
+    "PlainText": "טקסט פשוט",
+    "TextOutputARIA": "פלט טקסט מופעל",
+    "TableText": "טקסט טבלה",
+    "TableOutputARIA": "פלט טבלה מופעל"
+  },
+  "KeyboardShortcuts": {
+    "Title": "קיצורי מקלדת",
+    "ShortcutsFollow": "קיצורי מקלדת לעריכת קוד",
+    "SublimeText": "קיצורי מקלדת של Sublime Text",
+    "CodeEditing": {
+      "Tidy": "סדר קוד",
+      "FindText": "חיפוש בטקסט",
+      "FindNextMatch": "מצא התאמה הבאה",
+      "FindPrevMatch": "מצא התאמה קודמת",
+      "ReplaceTextMatch": "החלף התאמת טקסט",
+      "IndentCodeLeft": "הזח קוד לשמאל",
+      "IndentCodeRight": "הזח קוד לימין",
+      "CommentLine": "הוסף הערה לשורה",
+      "FindNextTextMatch": "מצא התאמת טקסט הבאה",
+      "FindPreviousTextMatch": "מצא התאמת טקסט קודמת",
+      "CodeEditing": "עריכת קוד",
+      "ColorPicker": "הצג בורר צבעים מוטבע"
+    },
+    "General": {
+      "StartSketch": "התחל סקיצה",
+      "StopSketch": "עצור סקיצה",
+      "TurnOnAccessibleOutput": "הפעל פלט נגיש",
+      "TurnOffAccessibleOutput": "כבה פלט נגיש"
+    }
+  },
+  "Fundraiser": {
+    "Title": "תמכו בתוכנה שלנו ובצוות",
+    "Description": "🎉 הצטרפו אלינו לחגיגת עשור של קוד! 🎉 תמכו ב-p5.js ובקרן העיבוד וקבלו תגמולים ייחודיים. 🙂",
+    "CallToAction": "הוספו וגלו יותר!"
+  },
+  "Sidebar": {
+    "Title": "קבצי סקיצה",
+    "ToggleARIA": "הפעל/כבה אפשרויות קובץ סקיצה",
+    "AddFolder": "צור תיקייה",
+    "AddFolderARIA": "הוסף תיקייה",
+    "AddFile": "צור קובץ",
+    "AddFileARIA": "הוסף קובץ",
+    "UploadFile": "העלה קובץ",
+    "UploadFileARIA": "העלה קובץ"
+  },
+  "FileNode": {
+    "OpenFolderARIA": "פתח תוכן תיקייה",
+    "CloseFolderARIA": "סגור תוכן תיקייה",
+    "ToggleFileOptionsARIA": "הפעל/כבה אפשרויות קובץ",
+    "AddFolder": "צור תיקייה",
+    "AddFolderARIA": "הוסף תיקייה",
+    "AddFile": "צור קובץ",
+    "AddFileARIA": "הוסף קובץ",
+    "UploadFile": "העלה קובץ",
+    "UploadFileARIA": "העלה קובץ",
+    "Rename": "שנה שם",
+    "Delete": "מחק"
+  },
+  "Common": {
+    "SiteName": "עורך p5.js",
+    "Error": "שגיאה",
+    "ErrorARIA": "שגיאה",
+    "Save": "שמור",
+    "p5logoARIA": "לוגו p5.js",
+    "PFlogoARIA": "לוגו Processing Foundation",
+    "DeleteConfirmation": "האם אתה בטוח שברצונך למחוק את {{name}}?"
+  },
+  "IDEView": {
+    "SubmitFeedback": "שלח משוב",
+    "SubmitFeedbackARIA": "שלח משוב",
+    "AddCollectionTitle": "הוסף לאוסף",
+    "AddCollectionARIA": "הוסף לאוסף",
+    "ShareTitle": "שתף",
+    "ShareARIA": "שתף"
+  },
+  "NewFileModal": {
+    "Title": "צור קובץ",
+    "CloseButtonARIA": "סגור חלון יצירת קובץ חדש",
+    "EnterName": "אנא הזן שם",
+    "InvalidType": "סוג קובץ לא תקין. הסיומות התקינות הן .js, .css, .json, .xml, .stl, .txt, .csv, .tsv, .frag ו-.vert."
+  },
+  "NewFileForm": {
+    "AddFileSubmit": "הוסף קובץ",
+    "Placeholder": "שם"
+  },
+  "NewFolderModal": {
+    "Title": "צור תיקייה",
+    "CloseButtonARIA": "סגור חלון יצירת תיקייה חדשה",
+    "EnterName": "אנא הזן שם",
+    "EmptyName": "שם התיקייה לא יכול להכיל רק רווחים",
+    "InvalidExtension": "שם התיקייה לא יכול לכלול סיומת"
+  },
+  "NewFolderForm": {
+    "AddFolderSubmit": "הוסף תיקייה",
+    "Placeholder": "שם"
+  },
+  "ResetPasswordForm": {
+    "Email": "דוא\"ל המשמש לרישום",
+    "EmailARIA": "דוא\"ל",
+    "Submit": "שלח אימייל לאיפוס סיסמה"
+  },
+  "ResetPasswordView": {
+    "Title": "עורך p5.js | איפוס סיסמה",
+    "Reset": "איפוס סיסמה שלך",
+    "Submitted": "האימייל לאיפוס הסיסמה שלך צפוי להגיע בקרוב. אם לא רואים אותו, בדוק\n            את התיקיית הספאם, כי לפעמים הוא יכול להגיע לשם.",
+    "Login": "התחבר",
+    "LoginOr": "או",
+    "SignUp": "הרשם"
+  },
+  "ReduxFormUtils": {
+    "errorInvalidEmail": "אנא הזן כתובת דוא\"ל חוקית",
+    "errorEmptyEmail": "אנא הזן כתובת דוא\"ל",
+    "errorPasswordMismatch": "הסיסמאות חייבות להתאים זו לזו",
+    "errorEmptyPassword": "אנא הזן סיסמה",
+    "errorShortPassword": "הסיסמה חייבת להיות באורך של לפחות 6 תווים",
+    "errorConfirmPassword": "אנא אמת את הסיסמה",
+    "errorNewPassword": "אנא הזן סיסמה חדשה או השאר את הסיסמה הנוכחית ריקה",
+    "errorEmptyUsername": "אנא הזן שם משתמש",
+    "errorLongUsername": "שם המשתמש חייב להיות באורך של עד 20 תווים",
+    "errorValidUsername": "שם המשתמש יכול להכיל רק מספרים, אותיות, נקודות, מקפים וקווים תחתונים"
+  },
+  "NewPasswordView": {
+    "Title": "עורך p5.js | סיסמה חדשה",
+    "Description": "קבע סיסמה חדשה",
+    "TokenInvalidOrExpired": "אסימון איפוס הסיסמה אינו חוקי או פג תוקף.",
+    "EmptyPassword": "אנא הזן סיסמה",
+    "PasswordConfirmation": "אנא אמת את הסיסמה",
+    "PasswordMismatch": "הסיסמאות חייבות להתאים זו לזו"
+  },
+  "AccountForm": {
+    "Email": "דוא\"ל",
+    "EmailARIA": "דוא\"ל",
+    "Unconfirmed": "לא מאומת.",
+    "EmailSent": "אימייל אימות נשלח, בדוק את האימייל שלך.",
+    "Resend": "שלח שוב אימייל לאימות",
+    "UserName": "שם משתמש",
+    "UserNameARIA": "שם משתמש",
+    "CurrentPassword": "סיסמה נוכחית",
+    "CurrentPasswordARIA": "סיסמה נוכחית",
+    "NewPassword": "סיסמה חדשה",
+    "NewPasswordARIA": "סיסמה חדשה",
+    "SubmitSaveAllSettings": "שמור את כל ההגדרות"
+  },
+  "AccountView": {
+    "SocialLogin": "כניסה חברתית",
+    "SocialLoginDescription": "השתמש בחשבון GitHub או Google שלך כדי להתחבר לעורך האינטרנט של p5.js.",
+    "Title": "עורך p5.js | הגדרות חשבון",
+    "Settings": "הגדרות חשבון",
+    "AccountTab": "חשבון",
+    "AccessTokensTab": "אסימוני גישה"
+  },
+  "APIKeyForm": {
+    "ConfirmDelete": "האם אתה בטוח שברצונך למחוק את {{key_label}}?",
+    "Summary": "אסימוני גישה אישיים פועלים כמו הסיסמה שלך ומאפשרים לתסריטים אוטומטיים לגשת\n          ל-API של העורך. צור אסימון עבור כל תסריט שזקוק לגישה.",
+    "CreateToken": "צור אסימון חדש",
+    "TokenLabel": "למה האסימון הזה?",
+    "TokenPlaceholder": "למה האסימון הזה? לדוג, תסריט יבוא דוגמא",
+    "CreateTokenSubmit": "צור",
+    "NoTokens": "אין לך אסימונים קיימים.",
+    "NewTokenTitle": "האסימון החדש שלך",
+    "NewTokenInfo": "ודא שאתה מעתיק את האסימון האישי החדש שלך כעת.\n                  לא תוכל לראות אותו שוב!",
+    "ExistingTokensTitle": "אסימונים קיימים"
+  },
+  "APIKeyList": {
+    "Name": "שם",
+    "Created": "נוצר בתאריך",
+    "LastUsed": "נעשה שימוש אחרון",
+    "Actions": "פעולות",
+    "Never": "לעולם לא",
+    "DeleteARIA": "מחק אסימון API"
+  },
+  "NewPasswordForm": {
+    "Title": "סיסמה",
+    "TitleARIA": "סיסמה",
+    "ConfirmPassword": "אשר סיסמה",
+    "ConfirmPasswordARIA": "אשר סיסמה",
+    "SubmitSetNewPassword": "קבע סיסמה חדשה"
+  },
+  "SignupForm": {
+    "Title": "שם משתמש",
+    "TitleARIA": "שם משתמש",
+    "Email": "דוא\"ל",
+    "EmailARIA": "דוא\"ל",
+    "Password": "סיסמה",
+    "PasswordARIA": "סיסמה",
+    "ConfirmPassword": "אשר סיסמה",
+    "ConfirmPasswordARIA": "אשר סיסמה",
+    "SubmitSignup": "הרשם"
+  },
+  "SignupView": {
+    "Title": "עורך p5.js | הרשמה",
+    "Description": "הרשם",
+    "Or": "או",
+    "AlreadyHave": "כבר יש לך חשבון?",
+    "Login": "התחבר",
+    "Warning": "על ידי הרשמה, אתה מסכים ל<0>תנאי השימוש</0> ול<1>מדיניות הפרטיות</1> של עורך p5.js."
+  },
+  "EmailVerificationView": {
+    "Title": "עורך p5.js | אימות דוא\"ל",
+    "Verify": "אמת את הדוא\"ל שלך",
+    "InvalidTokenNull": "הקישור אינו תקף.",
+    "Checking": "בודק את הקישור, אנא המתן...",
+    "Verified": "כל הכבוד, כתובת הדוא\"ל שלך אומתה.",
+    "InvalidState": "משהו השתבש."
+  },
+  "AssetList": {
+    "Title": "עורך p5.js | הנכסים שלי",
+    "ToggleOpenCloseARIA": "החלף אפשרויות הנכס",
+    "Delete": "מחק",
+    "OpenNewTab": "פתח בלשונית חדשה",
+    "NoUploadedAssets": "אין נכסים הועלו.",
+    "HeaderName": "שם",
+    "HeaderSize": "גודל",
+    "HeaderSketch": "סקיצה"
+  },
+  "Feedback": {
+    "Title": "עורך p5.js | משוב",
+    "ViaGithubHeader": "דרך בעזרת Github Issues",
+    "ViaGithubDescription": "אם אתה מכיר ב-Github, זו הדרך המועדפת עלינו לקבל דוחות באגים ומשוב.",
+    "GoToGithub": "עבור אל Github",
+    "ViaGoogleHeader": "דרך בעזרת טופס Google",
+    "ViaGoogleDescription": "אתה יכול גם לשלוח טופס זה במהירות.",
+    "GoToForm": "עבור אל הטופס"
+  },
+  "Searchbar": {
+    "SearchSketch": "חפש בסקיצות...",
+    "SearchCollection": "חפש באוספים...",
+    "ClearTerm": "נקה"
+  },
+  "UploadFileModal": {
+    "Title": "העלאת קובץ",
+    "CloseButtonARIA": "סגור את חלון ההעלאה של קובץ",
+    "SizeLimitError": "שגיאה: אין אפשרות להעלות עוד קבצים. הגעת למגבלת הגודל הכוללת של {{sizeLimit}}.\n                אם ברצונך להעלות עוד, יש למחוק את הקבצים שלא נעשה בהם שימוש יותר על ידי\n                באמצעות ה "
+  },
+  "FileUploader": {
+    "DictDefaultMessage": "זרוק קבצים כאן או לחץ כדי להשתמש בדפדפן הקבצים"
+  },
+  "ErrorModal": {
+    "MessageLogin": "כדי לשמור סקיצות, עליך להתחבר. אנא ",
+    "Login": "התחבר",
+    "LoginOr": " או ",
+    "SignUp": "הירשם",
+    "MessageLoggedOut": "נראה כי התנתקת. אנא ",
+    "LogIn": "התחבר",
+    "SavedDifferentWindow": "הפרויקט שניסית לשמור כבר נשמר מחלון אחר.\n        אנא רענן את העמוד כדי לראות את הגרסה האחרונה.",
+    "LinkTitle": "שגיאה בקישור לחשבון",
+    "LinkMessage": "הייתה בעיה בקישור של חשבון ה-{{serviceauth}} שלך לחשבון העורך של p5.js. חשבון ה-{{serviceauth}} שלך כבר קושר לחשבון אחר בעורך p5.js."
+  },
+  "ShareModal": {
+    "Embed": "הטמע",
+    "Present": "הצג",
+    "Fullscreen": "מסך מלא",
+    "Edit": "ערוך"
+  },
+  "CollectionView": {
+    "TitleCreate": "צור אוסף",
+    "TitleDefault": "אוסף"
+  },
+  "Collection": {
+    "Title": "עורך p5.js | האוספים שלי",
+    "AnothersTitle": "עורך p5.js | האוספים של {{anotheruser}}",
+    "Share": "שתף",
+    "URLLink": "קישור לאוסף",
+    "AddSketch": "הוסף סקיצה",
+    "DeleteFromCollection": "האם אתה בטוח שברצונך להסיר את {{name_sketch}} מהאוסף הזה?",
+    "SketchDeleted": "הסקיצה נמחקה",
+    "SketchRemoveARIA": "הסר סקיצה מהאוסף",
+    "DescriptionPlaceholder": "הוסף תיאור",
+    "Description": "תיאור",
+    "NumSketches": "{{count}} סקיצה",
+    "NumSketches_plural": "{{count}} סקיצות",
+    "By": "אוסף של ",
+    "NoSketches": "אין סקיצות באוסף",
+    "TableSummary": "טבלה המכילה את כל האוספים",
+    "HeaderName": "שם",
+    "HeaderCreatedAt": "תאריך הוספה",
+    "HeaderUser": "בעלים",
+    "DirectionAscendingARIA": "סדר עולה",
+    "DirectionDescendingARIA": "סדר יורד",
+    "ButtonLabelAscendingARIA": "מיין לפי {{displayName}} בסדר עולה.",
+    "ButtonLabelDescendingARIA": "מיין לפי {{displayName}} בסדר יורד."
+  },
+  "AddToCollectionList": {
+    "Title": "עורך p5.js | האוספים שלי",
+    "AnothersTitle": "עורך p5.js | האוספים של {{anotheruser}}",
+    "Empty": "אין אוספים"
+  },
+  "CollectionCreate": {
+    "Title": "עורך p5.js | צור אוסף",
+    "FormError": "לא ניתן ליצור אוסף",
+    "FormLabel": "שם האוסף",
+    "FormLabelARIA": "שם",
+    "NameRequired": "שם האוסף דרוש",
+    "Description": "תיאור (אופציונלי)",
+    "DescriptionARIA": "תיאור",
+    "DescriptionPlaceholder": "הסקיצות האהובות עליי",
+    "SubmitCollectionCreate": "צור אוסף"
+  },
+  "DashboardView": {
+    "CreateCollection": "צור אוסף",
+    "NewSketch": "סקיצה חדשה",
+    "CreateCollectionOverlay": "צור אוסף"
+  },
+  "DashboardTabSwitcher": {
+    "Sketches": "סקיצות",
+    "Collections": "אוספים",
+    "Assets": "נכסים"
+  },
+  "CollectionList": {
+    "Title": "עורך p5.js | האוספים שלי",
+    "AnothersTitle": "עורך p5.js | האוספים של {{anotheruser}}",
+    "NoCollections": "אין אוספים.",
+    "TableSummary": "טבלה המכילה את כל האוספים",
+    "HeaderName": "שם",
+    "HeaderCreatedAt": "תאריך יצירה",
+    "HeaderCreatedAt_mobile": "נוצר",
+    "HeaderUpdatedAt": "תאריך עדכון",
+    "HeaderUpdatedAt_mobile": "עודכן",
+    "HeaderNumItems": "# סקיצות",
+    "HeaderNumItems_mobile": "# סקיצות",
+    "DirectionAscendingARIA": "סדר עולה",
+    "DirectionDescendingARIA": "סדר יורד",
+    "ButtonLabelAscendingARIA": "מיין לפי {{displayName}} בסדר עולה.",
+    "ButtonLabelDescendingARIA": "מיין לפי {{displayName}} בסדר יורד.",
+    "AddSketch": "הוסף סקיצה"
+  },
+  "CollectionListRow": {
+    "ToggleCollectionOptionsARIA": "החלף אפשרויות אוסף פתוח/סגור",
+    "AddSketch": "הוסף סקיצה",
+    "Delete": "מחק",
+    "Rename": "שנה שם"
+  },
+  "Overlay": {
+    "AriaLabel": "סגור {{title}} חצי השקה"
+  },
+  "QuickAddList": {
+    "ButtonRemoveARIA": "הסר מהאוסף",
+    "ButtonAddToCollectionARIA": "הוסף לאוסף",
+    "View": "הצג"
+  },
+  "SketchList": {
+    "View": "הצג",
+    "Title": "עורך p5.js | הסקיצות שלי",
+    "AnothersTitle": "עורך p5.js | הסקיצות של {{anotheruser}}",
+    "ToggleLabelARIA": "החלף אפשרויות סקיצה פתוחות/סגורות",
+    "DropdownRename": "שנה שם",
+    "DropdownDownload": "הורדה",
+    "DropdownDuplicate": "שכפל",
+    "DropdownAddToCollection": "הוסף לאוסף",
+    "DropdownDelete": "מחק",
+    "DirectionAscendingARIA": "סדר עולה",
+    "DirectionDescendingARIA": "סדר יורד",
+    "ButtonLabelAscendingARIA": "מיין לפי {{displayName}} בסדר עולה.",
+    "ButtonLabelDescendingARIA": "מיין לפי {{displayName}} בסדר יורד.",
+    "AddToCollectionOverlayTitle": "הוסף לאוסף",
+    "TableSummary": "טבלה המכילה את כל הפרויקטים שנשמרו",
+    "HeaderName": "סקיצה",
+    "HeaderCreatedAt": "תאריך יצירה",
+    "HeaderCreatedAt_mobile": "נוצר",
+    "HeaderUpdatedAt": "תאריך עדכון",
+    "HeaderUpdatedAt_mobile": "עודכן",
+    "NoSketches": "אין סקיצות."
+  },
+  "AddToCollectionSketchList": {
+    "Title": "עורך p5.js | הסקיצות שלי",
+    "AnothersTitle": "עורך p5.js | הסקיצות של {{anotheruser}}",
+    "NoCollections": "אין אוספים."
+  },
+  "Editor": {
+    "OpenSketchARIA": "פתח ניווט קבצי הסקיצה",
+    "CloseSketchARIA": "סגור ניווט קבצי הסקיצה",
+    "UnsavedChangesARIA": "יש שינויים שלא נשמרו בסקיצה",
+    "KeyUpLineNumber": "שורה {{lineNumber}}"
+  },
+  "EditorAccessibility": {
+    "NoLintMessages": "אין הודעות לינט",
+    "CurrentLine": "שורה נוכחית"
+  },
+  "Timer": {
+    "SavedAgo": "נשמר: {{timeAgo}}"
+  },
+  "formatDate": {
+    "JustNow": "ממש עכשיו",
+    "15Seconds": "לפני 15 שניות",
+    "25Seconds": "לפני 25 שניות",
+    "35Seconds": "לפני 35 שניות",
+    "Ago": "{{timeAgo}} לפני"
+  },
+  "AddRemoveButton": {
+    "AltAddARIA": "הוסף לאוסף",
+    "AltRemoveARIA": "הסר מהאוסף"
+  },
+  "CopyableInput": {
+    "CopiedARIA": "הועתק ללוח!",
+    "OpenViewTabARIA": "פתח {{label}} תצוגה בלשונית חדשה"
+  },
+  "EditableInput": {
+    "EditValue": "ערוך ערך {{display}}",
+    "EmptyPlaceholder": "אין ערך"
+  },
+  "PreviewNav": {
+    "EditSketchARIA": "ערוך סקיצה",
+    "ByUser": "על ידי"
+  },
+  "MobilePreferences": {
+    "Settings": "הגדרות",
+    "GeneralSettings": "הגדרות כלליות",
+    "Accessibility": "נגישות",
+    "AccessibleOutput": "פלט נגיש",
+    "Theme": "ערכת נושא",
+    "LightTheme": "בהיר",
+    "DarkTheme": "אפל",
+    "HighContrastTheme": "ניגודיות גבוהה",
+    "Autosave": "שמירה אוטומטית",
+    "AutocompleteHinter": "רמז אוטומטי",
+    "WordWrap": "גלישת שורות",
+    "LineNumbers": "מספרי שורות",
+    "LintWarningSound": "צליל אזהרת לינט",
+    "UsedScreenReader": "משמש עם קורא מסך",
+    "PlainText": "טקסט פשוט",
+    "TableText": "טקסט טבלה",
+    "Sound": "צליל"
+  },
+  "PreferenceCreators": {
+    "On": "פעיל",
+    "Off": "לא פעיל"
+  },
+  "MobileIDEView": {
+    "Preferences": "העדפות",
+    "MyStuff": "הדברים שלי",
+    "Examples": "דוגמאות",
+    "OriginalEditor": "עורך מקורי",
+    "Login": "התחברות",
+    "Logout": "התנתקות"
+  },
+  "MobileDashboardView": {
+    "Examples": "דוגמאות",
+    "Sketches": "סקיצות",
+    "Collections": "אוספים",
+    "Assets": "נכסים",
+    "MyStuff": "הדברים שלי",
+    "CreateSketch": "צור סקיצה",
+    "CreateCollection": "צור אוסף"
+  },
+  "Explorer": {
+    "Files": "קבצים"
+  },
+  "Cookies": {
+    "Header": "עוגיות",
+    "Body": "עורך p5.js משתמש בעוגיות. חלקן הן חיוניות לפונקציות האתר ומאפשרות לך לנהל חשבון והעדפות. חלק מהן אינן חיוניות - הן משמשות לניתוחים ומאפשרות לנו ללמוד עוד על הקהל שלנו. <strong> אנו אינו משווים מידע זה ולא משתמשים בו לצורך פרסומות. </strong> באפשרותך להחליט אילו עוגיות לאשר ולמדרגות נוספות ב <0>מדיניות הפרטיות שלנו<0>.",
+    "AllowAll": "אשר הכול",
+    "AllowEssential": "אשר חיוניות"
+  },
+  "Legal": {
+    "PrivacyPolicy": "מדיניות פרטיות",
+    "TermsOfUse": "תנאי שימוש",
+    "CodeOfConduct": "קוד התנהגות"
+  }
+}
