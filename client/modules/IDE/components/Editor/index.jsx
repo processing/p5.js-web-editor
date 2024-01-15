@@ -423,17 +423,6 @@ class Editor extends React.Component {
       closeOnUnfocus: false
     };
 
-    const getUserAndProject = () => {
-      const { user, project } = useSelector((state) => ({
-        user: state.user,
-        project: state.project
-      }));
-
-      return { user, project };
-    };
-
-    getUserAndProject();
-
     if (_cm.options.mode === 'javascript') {
       // JavaScript
       CodeMirror.showHint(
