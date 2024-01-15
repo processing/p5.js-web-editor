@@ -243,6 +243,7 @@
   "NewFileModal": {
     "Title": "ফাইল তৈরি করুন",
     "CloseButtonARIA": "নতুন ফাইল মোডাল বন্ধ করুন",
+    "EnterName": "নাম লিখুন",
     "InvalidType": "অবৈধ ফাইল ধরন। বৈধ এক্সটেনশনগুলি হলো .js, .css, .json, .xml, .stl, .txt, .csv, .tsv, .frag এবং .vert."
   },
   "NewFileForm": {
@@ -252,6 +253,7 @@
   "NewFolderModal": {
     "Title": "ফোল্ডার তৈরি করুন",
     "CloseButtonARIA": "নতুন ফোল্ডার মোডাল বন্ধ করুন",
+    "EnterName": "নাম লিখুন দয়া করে",
     "EmptyName": "ফোল্ডার নাম কেবলমাত্র স্থান নিতে পারবে না",
     "InvalidExtension": "ফোল্ডার নামে একটি এক্সটেনশন থাকতে পারবে না"
   },

@@ -236,6 +236,7 @@
   "NewFileModal": {
     "Title": "Додати файл",
     "CloseButtonARIA": "Закрити",
+    "EnterName": "Введіть ім'я файла",
     "InvalidType": "Некоректний тип файлу. Підтримувані формати: .js, .css, .json, .xml, .txt, .csv, .tsv, .frag та .vert."
   },
   "NewFileForm": {
@@ -245,6 +246,7 @@
   "NewFolderModal": {
     "Title": "Додати папку",
     "CloseButtonARIA": "Закрити",
+    "EnterName": "Введіть ім'я папки",
     "EmptyName": "Ім'я папки не може містити лише пробіли",
     "InvalidExtension": "Ім'я папки не може містити розширення"
   },

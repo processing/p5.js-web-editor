@@ -16,7 +16,7 @@ function NewFolderForm() {
   function validate(formProps) {
     const errors = {};
     if (!formProps.name) {
-      errors.name = '';
+      errors.name = t('NewFolderModal.EnterName');
     } else if (formProps.name.trim().length === 0) {
       errors.name = t('NewFolderModal.EmptyName');
     } else if (formProps.name.match(/\.+/i)) {

@@ -237,6 +237,7 @@
     "NewFileModal": {
       "Title": "Créer un fichier",
       "CloseButtonARIA": "Fermer la boîte de dialogue de création de fichier",
+      "EnterName": "Veuillez saisir un nom",
       "InvalidType": "Type de fichier invalide. Les extensions valides sont .js, .css, .json, .txt, .csv, .tsv, .frag, and .vert."
     },
     "NewFileForm": {
@@ -246,6 +247,7 @@
     "NewFolderModal": {
       "Title": "Créer un dossier",
       "CloseButtonARIA": "Fermer la boîte de dialogue de création de dossier",
+      "EnterName": "Veuillez saisir un nom",
       "EmptyName": "Le nom du dossier ne peut contenir uniquement des espaces",
       "InvalidExtension": "Le nom du dossier ne peut contenir une extension"
     },

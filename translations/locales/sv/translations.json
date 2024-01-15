@@ -237,6 +237,7 @@
   "NewFileModal": {
     "Title": "Skapa fil",
     "CloseButtonARIA": "Stäng ny fil Modal",
+    "EnterName": "Skriv in ett namn",
     "InvalidType": "Felaktig filtyp. Giltiga filändelser är .js, .css, .json, .xml, .txt, .csv, .tsv, .frag, och .vert."
   },
   "NewFileForm": {
@@ -246,6 +247,7 @@
   "NewFolderModal": {
     "Title": "Skapa mapp",
     "CloseButtonARIA": "Stäng ny mapp Modal",
+    "EnterName": "Skriv in ett namn",
     "EmptyName": "Mappnamnet kan inte vara tomt",
     "InvalidExtension": "Mappnamnet kan inte innehålla en filändelse"
   },

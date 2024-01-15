@@ -234,6 +234,7 @@
   "NewFileModal": {
     "Title": "Criar Arquivos",
     "CloseButtonARIA": "Fechar Módulo de Criação de Arquivos",
+    "EnterName": "Por favor coloque um nome",
     "InvalidType": "Tipo de arquivo invalido. Extensões válidas são .js, .css, .json, .xml, .txt, .csv, .tsv, .frag, and .vert."
   },
   "NewFileForm": {
@@ -243,6 +244,7 @@
   "NewFolderModal": {
     "Title": "Criar",
     "CloseButtonARIA": "Fechar Módulo de Criação de Pasta",
+    "EnterName": "Por favor coloque um nome",
     "EmptyName": "Nomes de pastas não podem conter apenas espaços",
     "InvalidExtension": "Nomes de pastas não podem conter extensões"
   },

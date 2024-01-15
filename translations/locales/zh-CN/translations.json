@@ -237,6 +237,7 @@
   "NewFileModal": {
     "Title": "新建文件",
     "CloseButtonARIA": "取消新建文件",
+    "EnterName": "请输入名称",
     "InvalidType": "不支持的格式。支持的格式有 .js, .css, .json, .xml, .txt, .csv, .tsv, .frag, .vert 。"
   },
   "NewFileForm": {
@@ -246,6 +247,7 @@
   "NewFolderModal": {
     "Title": "新建文件夹",
     "CloseButtonARIA": "取消新建文件夹",
+    "EnterName": "请输入名称",
     "EmptyName": "文件夹名称不能含有空格",
     "InvalidExtension": "文件夹名称不能含有空格"
   },
