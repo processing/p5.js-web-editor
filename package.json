@@ -154,6 +154,7 @@
   },
   "dependencies": {
     "@auth0/s3": "^1.0.0",
+    "@aws-sdk/client-s3": "^3.412.0",
     "@babel/core": "^7.14.6",
     "@babel/register": "^7.14.5",
     "@emmetio/codemirror-plugin": "^1.2.4",
