@@ -359,6 +359,10 @@
     "Description": "নিবন্ধন করুন",
     "Or": "অথবা",
     "AlreadyHave": "ইতিমধ্যে একটি অ্যাকাউন্ট আছে?",
+    "BySigningUP": "সাইন আপ করে, আপনি p5.js এডিটরের",
+    "TermsOfService": "পরিষেবা শর্তাবলী",
+    "and": "এবং",
+    "PrivacyPolicy": "গোপনীয়তা নীতি।",
     "Login": "লগ ইন"
   },
   "EmailVerificationView": {

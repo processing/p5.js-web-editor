@@ -356,6 +356,10 @@
     "Description": "Registrati",
     "Or": "o",
     "AlreadyHave": "Hai già un account?",
+    "BySigningUP": "Iscrivendoti, accetti le",
+    "TermsOfService": "Condizioni di servizio",
+    "and": "e",
+    "PrivacyPolicy": "Informativa sulla privacy dell'Editor di p5.js.",
     "Login": "Accedi"
   },
   "EmailVerificationView": {

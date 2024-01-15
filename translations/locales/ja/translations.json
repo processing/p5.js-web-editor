@@ -350,6 +350,10 @@
       "Description": "ユーザー登録",
       "Or": "もしくは",
       "AlreadyHave": "既にアカウントをお持ちですか？",
+      "BySigningUP": "サインアップすることで、p5.js エディタの",
+      "TermsOfService": "利用規約",
+      "and": "および",
+      "PrivacyPolicy": "プライバシーポリシーに同意するものとします。",
       "Login": "ログイン"
     },
     "EmailVerificationView": {

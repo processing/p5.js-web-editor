@@ -353,6 +353,10 @@
       "Description": "S'inscrire",
       "Or": "Ou",
       "AlreadyHave": "Vous avez déjà un compte?",
+      "BySigningUP": "En vous inscrivant, vous acceptez les",
+      "TermsOfService": "Conditions d'utilisation",
+      "and": "et",
+      "PrivacyPolicy": "Politique de confidentialité de l'Éditeur p5.js.",
       "Login": "Se connecter"
     },
     "EmailVerificationView": {

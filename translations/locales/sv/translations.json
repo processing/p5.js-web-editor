@@ -353,6 +353,10 @@
     "Description": "Registrering",
     "Or": "Eller",
     "AlreadyHave": "Har du redan ett konto?",
+    "BySigningUP": "Genom att registrera dig godkänner du p5.js Editorns",
+    "TermsOfService": "Användarvillkor",
+    "and": "och",
+    "PrivacyPolicy": "Integritetspolicy.",
     "Login": "Logga in"
   },
   "EmailVerificationView": {

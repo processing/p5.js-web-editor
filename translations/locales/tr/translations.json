@@ -356,6 +356,10 @@
     "Description": "Kaydol",
     "Or": "Veya",
     "AlreadyHave": "Zaten bir hesabın var mı?",
+    "BySigningUP": "Kaydolarak, p5.js Editör'ün",
+    "TermsOfService": "Kullanım Koşulları",
+    "and": "ve",
+    "PrivacyPolicy": "Gizlilik Politikası'na katılıyorsunuz.",
     "Login": "Giriş yap"
   },
   "EmailVerificationView": {

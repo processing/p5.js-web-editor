@@ -350,6 +350,10 @@
     "Description": "Criar Conta",
     "Or": "Ou",
     "AlreadyHave": "Já tem uma conta?",
+    "BySigningUP": "Ao se inscrever, você concorda com os",
+    "TermsOfService": "Termos de Serviço",
+    "and": "e",
+    "PrivacyPolicy": "Política de Privacidade do Editor p5.js.",
     "Login": "Entrar"
   },
   "EmailVerificationView": {

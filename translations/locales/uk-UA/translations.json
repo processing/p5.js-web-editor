@@ -352,6 +352,10 @@
     "Description": "Реєстрація",
     "Or": "Або",
     "AlreadyHave": "Ви вже маєте акаунт? ",
+    "BySigningUP": "Підписуючись, ви погоджуєтеся з",
+    "TermsOfService": "Умовами використання",
+    "and": "та",
+    "PrivacyPolicy": "Політикою конфіденційності редактора p5.js.",
     "Login": "Увійти"
   },
   "EmailVerificationView": {

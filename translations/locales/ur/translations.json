@@ -359,6 +359,10 @@
       "Description": "سائن اپ",
       "Or": "یا",
       "AlreadyHave": "پہلے سے ہی اکاؤنٹ ہے؟",
+      "BySigningUP": "سائن اپ کرنے کے ذریعے، آپ p5.js ایڈیٹر کے",
+      "TermsOfService": "سروس کی شرائط",
+      "and": "اور",
+      "PrivacyPolicy": "پرائیویسی پالیسی کے ساتھ متفق ہوتے ہیں۔",
       "Login": "لاگ ان کریں"
     },
     "EmailVerificationView": {

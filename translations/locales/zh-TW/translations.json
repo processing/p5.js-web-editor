@@ -353,6 +353,10 @@
     "Description": "註冊",
     "Or": "或是",
     "AlreadyHave": "已經有帳號？",
+    "BySigningUP": "註冊即表示您同意 p5.js 編輯器的",
+    "TermsOfService": "服務條款",
+    "and": "和",
+    "PrivacyPolicy": "隱私政策。",
     "Login": "登入"
   },
   "EmailVerificationView": {

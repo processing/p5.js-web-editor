@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import { useTranslation, Trans } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import SignupForm from '../components/SignupForm';
 import SocialAuthButton from '../components/SocialAuthButton';
 import Nav from '../../IDE/components/Header/Nav';
@@ -27,13 +27,10 @@ function SignupView() {
             <SocialAuthButton service={SocialAuthButton.services.google} />
           </div>
           <p className="form__navigation-options">
-            <Trans
-              i18nKey="SignupView.Warning"
-              components={[
-                <Link to="/terms-of-use">Terms of use</Link>,
-                <Link to="/privacy-policy">Privacy Policy</Link>
-              ]}
-            />
+            {t('SignupView.BySigningUP')}{' '}
+            <Link to="/terms-of-use">{t('SignupView.TermsOfService')}</Link>{' '}
+            {t('SignupView.and')}{' '}
+            <Link to="/privacy-policy">{t('SignupView.PrivacyPolicy')}</Link>
           </p>
           <p className="form__navigation-options">
             {t('SignupView.AlreadyHave')}{' '}
