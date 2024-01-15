@@ -41,7 +41,7 @@ import { CSSLint } from 'csslint';
 import { HTMLHint } from 'htmlhint';
 import classNames from 'classnames';
 import { debounce } from 'lodash';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import MediaQuery from 'react-responsive';
 import '../../../../utils/htmlmixed';
@@ -423,6 +423,17 @@ class Editor extends React.Component {
       closeOnUnfocus: false
     };
 
+    const getUserAndProject = () => {
+      const { user, project } = useSelector((state) => ({
+        user: state.user,
+        project: state.project
+      }));
+
+      return { user, project };
+    };
+
+    getUserAndProject();
+
     if (_cm.options.mode === 'javascript') {
       // JavaScript
       CodeMirror.showHint(
@@ -505,7 +516,10 @@ class Editor extends React.Component {
     const editorHolderClass = classNames({
       'editor-holder': true,
       'editor-holder--hidden':
-        this.props.file.fileType === 'folder' || this.props.file.url
+        this.props.file.fileType === 'folder' || this.props.file.url,
+      // eslint-disable-next-line no-dupe-keys
+      'editor-holder--readonly':
+        this.props.project.owner?.username !== this.props.user.username
     });
 
     return (
@@ -567,6 +581,10 @@ class Editor extends React.Component {
               </header>
               <section>
                 <EditorHolder
+                  readOnly={
+                    this.props.project.owner?.username !==
+                    this.props.user.username
+                  }
                   ref={(element) => {
                     this.codemirrorContainer = element;
                   }}
@@ -588,6 +606,10 @@ class Editor extends React.Component {
 }
 
 Editor.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  user: PropTypes.object.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  project: PropTypes.object.isRequired,
   autocloseBracketsQuotes: PropTypes.bool.isRequired,
   autocompleteHinter: PropTypes.bool.isRequired,
   lineNumbers: PropTypes.bool.isRequired,

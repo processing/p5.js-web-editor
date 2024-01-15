@@ -20,15 +20,18 @@ import PlayIcon from '../../../../images/play.svg';
 import StopIcon from '../../../../images/stop.svg';
 import PreferencesIcon from '../../../../images/preferences.svg';
 import ProjectName from './ProjectName';
+import { cloneProject } from '../../actions/project';
+import EditIcon from '../../../../images/pencil.svg';
 
 const Toolbar = (props) => {
   const { isPlaying, infiniteLoop, preferencesIsVisible } = useSelector(
     (state) => state.ide
   );
+  const user = useSelector((state) => state.user);
   const project = useSelector((state) => state.project);
+  const theme = useSelector((state) => state.preferences.theme);
   const autorefresh = useSelector((state) => state.preferences.autorefresh);
   const dispatch = useDispatch();
-
   const { t } = useTranslation();
 
   const playButtonClass = classNames({
@@ -97,20 +100,40 @@ const Toolbar = (props) => {
         </label>
       </div>
       <div className="toolbar__project-name-container">
-        <ProjectName />
-        {(() => {
-          if (project.owner) {
-            return (
-              <p className="toolbar__project-project.owner">
-                {t('Toolbar.By')}{' '}
-                <Link to={`/${project.owner.username}/sketches`}>
-                  {project.owner.username}
-                </Link>
-              </p>
-            );
-          }
-          return null;
-        })()}
+        <div className="toolbar__projectname">
+          <ProjectName />
+          {(() => {
+            if (project.owner) {
+              return (
+                <p className="toolbar__project-project.owner">
+                  {t('Toolbar.By')}{' '}
+                  <Link to={`/${project.owner.username}/sketches`}>
+                    {project.owner.username}
+                  </Link>
+                </p>
+              );
+            }
+            return null;
+          })()}
+        </div>
+        {project.owner && user.username !== project.owner.username && (
+          // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
+          <p
+            className={`toolbar__duplicatetoedit ${
+              theme === 'contrast' ? 'contrast' : 'normal'
+            }`}
+            onClick={() => dispatch(cloneProject())}
+          >
+            Duplicate to edit{' '}
+            <EditIcon
+              className={`toolbar__icon ${
+                theme === 'contrast' ? 'contrast' : 'normal'
+              }`}
+              focusable="false"
+              aria-hidden="true"
+            />
+          </p>
+        )}
       </div>
       <button
         className={preferencesButtonClass}

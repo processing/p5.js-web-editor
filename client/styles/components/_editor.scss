@@ -378,6 +378,9 @@ pre.CodeMirror-line {
   &.editor-holder--hidden .CodeMirror {
     display: none;
   }
+  &.editor-holder--readonly {
+    pointer-events: none;
+  }
 }
 
 .editor__header {

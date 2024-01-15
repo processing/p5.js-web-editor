@@ -98,10 +98,18 @@
 }
 
 .toolbar__project-name-container {
-	margin-left: #{10 / $base-font-size}rem;
-	padding-left: #{10 / $base-font-size}rem;
+  margin-left: #{10 / $base-font-size}rem;
+  padding-left: #{10 / $base-font-size}rem;
   display: flex;
+  gap: 13px;
   align-items: center;
+}
+
+.toolbar__projectname{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 }
 
 .toolbar .editable-input__label {
@@ -118,7 +126,6 @@
 }
 
 .toolbar__project-owner {
-	margin-left: #{5 / $base-font-size}rem;
 	@include themify() {
 		color: getThemifyVariable('secondary-text-color');
 	}
@@ -145,5 +152,38 @@
 	cursor: pointer;
 	@include themify(){
 		accent-color:getThemifyVariable('logo-color');
+	}
+}
+
+.toolbar__duplicatetoedit {
+	display: flex;
+	gap: 2px;
+	cursor: pointer;
+    padding: 3px 8px;
+	align-items: center;
+	justify-content: center;
+    border-radius: 5px;
+
+    &.contrast {
+        background-color: #F5DC23;
+        color: black;
+    }
+
+    &.normal {
+        background-color: $p5js-pink;
+        color: white;
+    }
+}
+
+.toolbar__icon {
+	width: 1.5rem;
+	height: 1.5rem;
+
+	&.contrast {
+		fill: black;
+	}
+
+	&.normal {
+		fill: white;
 	}
 }
