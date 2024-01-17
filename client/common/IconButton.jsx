@@ -19,6 +19,7 @@ const IconButton = (props) => {
   return (
     <ButtonWrapper
       iconBefore={icon && <Icon />}
+      iconOnly
       display={Button.displays.inline}
       focusable="false"
       {...otherProps}

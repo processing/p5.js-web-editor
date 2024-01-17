@@ -8,6 +8,7 @@ import { remSize } from '../../../theme';
 import { GithubIcon, GoogleIcon } from '../../../common/icons';
 import Button from '../../../common/Button';
 import { unlinkService } from '../actions';
+import { persistState } from '../../IDE/actions/project';
 
 const authUrls = {
   github: '/auth/github',
@@ -64,6 +65,7 @@ function SocialAuthButton({ service, linkStyle, isConnected }) {
       <StyledButton
         iconBefore={<ServiceIcon aria-label={ariaLabel} />}
         href={authUrls[service]}
+        onClick={() => dispatch(persistState())}
       >
         {connectLabel}
       </StyledButton>
@@ -73,6 +75,7 @@ function SocialAuthButton({ service, linkStyle, isConnected }) {
     <StyledButton
       iconBefore={<ServiceIcon aria-label={ariaLabel} />}
       href={authUrls[service]}
+      onClick={() => dispatch(persistState())}
     >
       {loginLabel}
     </StyledButton>
