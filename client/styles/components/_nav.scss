@@ -153,21 +153,6 @@
   }
 }
 
-.nav__announce {
-  position: absolute;
-  top: #{40 / $base-font-size}rem;
-  right: #{88 / $base-font-size}rem;
-  width: #{398 / $base-font-size}rem;
-  padding: #{5 / $base-font-size}rem 0;
-  text-transform: uppercase;
-  background-color: #ffbc00;
-  color: white;
-  text-align: center;
-  padding: #{7 / $base-font-size}rem #{8 / $base-font-size}rem;
-  line-height: 145%;
-  z-index: 0;
-}
-
 .nav__item-logo {
   position: relative;
   height: #{42 / $base-font-size}rem;
@@ -177,20 +162,25 @@
     position: absolute;
   }
 }
-.svg__logo g > path {
+
+.svg__logo {
+
   @include themify() {
-    fill: getThemifyVariable('logo-color');
+    // Set background color of the logo
+    background-color: getThemifyVariable('logo-color');
   }
-}
-.svg__logo g g:first-of-type path {
-  fill: none;
+
 }
 
-.svg__logo g g:first-of-type use {
+.svg__logo g path{
+  
   @include themify() {
+    // Set internal color of the logo;
     fill: getThemifyVariable('logo-background-color');
   }
+
 }
+
 
 .nav__keyboard-shortcut {
   font-size: #{12 / $base-font-size}rem;
