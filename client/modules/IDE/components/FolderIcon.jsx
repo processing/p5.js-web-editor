@@ -1,11 +1,17 @@
-import { FaFolderClosed } from 'react-icons/fa6';
-import { FaFolderOpen } from 'react-icons/fa6';
+import { FaChevronDown } from 'react-icons/fa6';
+import { FaChevronRight } from 'react-icons/fa6';
+import { BsThreeDotsVertical } from 'react-icons/bs';
+
 import React from 'react';
 
 export function FolderOpen() {
-  return <FaFolderOpen />;
+  return <FaChevronDown />;
 }
 
 export function FolderClose() {
-  return <FaFolderClosed />;
+  return <FaChevronRight />;
+}
+
+export function ShowOptionIcon() {
+  return <BsThreeDotsVertical />;
 }

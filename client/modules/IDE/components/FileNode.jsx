@@ -7,9 +7,8 @@ import { withTranslation } from 'react-i18next';
 
 import * as IDEActions from '../actions/ide';
 import * as FileActions from '../actions/files';
-import DownArrowIcon from '../../../images/down-filled-triangle.svg';
 import FileIcon from '../../../images/file.svg';
-import { FolderClose, FolderOpen } from './FolderIcon';
+import { FolderClose, FolderOpen, ShowOptionIcon } from './FolderIcon';
 
 function parseFileName(name) {
   const nameArray = name.split('.');
@@ -321,7 +320,7 @@ class FileNode extends React.Component {
               onBlur={this.onBlurComponent}
               onFocus={this.onFocusComponent}
             >
-              <DownArrowIcon focusable="false" aria-hidden="true" />
+              <ShowOptionIcon />
             </button>
             <div className="sidebar__file-item-options">
               <ul title="file options">
