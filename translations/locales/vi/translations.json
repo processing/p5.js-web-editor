@@ -1,0 +1,633 @@
+{
+  "Nav": {
+    "File": {
+      "Title": "Tệp",
+      "New": "Mới",
+      "Share": "Chia sẻ",
+      "Duplicate": "Sao chép",
+      "Open": "Mở",
+      "Download": "Tải về",
+      "AddToCollection": "Thêm vào Bộ sưu tập",
+      "Examples": "Ví dụ"
+    },
+    "Edit": {
+      "Title": "Chỉnh sửa",
+      "TidyCode": "Làm sạch mã",
+      "Find": "Tìm kiếm",
+      "Replace": "Thay thế"
+    },
+    "Sketch": {
+      "Title": "Sơ đồ",
+      "AddFile": "Thêm tệp",
+      "AddFolder": "Thêm thư mục",
+      "Run": "Chạy",
+      "Stop": "Dừng lại"
+    },
+    "Help": {
+      "Title": "Trợ giúp",
+      "KeyboardShortcuts": "Phím tắt",
+      "Reference": "Tham khảo",
+      "About": "Về chúng tôi"
+    },
+    "Lang": "Ngôn ngữ",
+    "BackEditor": "Quay lại Trình soạn thảo",
+    "WarningUnsavedChanges": "Bạn có chắc chắn muốn rời khỏi trang này không? Bạn có những thay đổi chưa lưu.",
+    "Login": "Đăng nhập",
+    "LoginOr": "hoặc",
+    "SignUp": "Đăng ký",
+    "Auth": {
+      "Welcome": "Chào mừng",
+      "Hello": "Xin chào",
+      "MyAccount": "Tài khoản của tôi",
+      "My": "Của tôi",
+      "MySketches": "Sơ đồ của tôi",
+      "MyCollections": "Bộ sưu tập của tôi",
+      "Asset": "Tài sản",
+      "MyAssets": "Tài sản của tôi",
+      "LogOut": "Đăng xuất"
+    },
+    "Fundraiser": "Hỗ trợ p5.js và Processing Foundation!"
+  },
+  "CodemirrorFindAndReplace": {
+    "ToggleReplace": "Chuyển đổi Thay thế",
+    "Find": "Tìm kiếm",
+    "FindPlaceholder": "Tìm trong tệp",
+    "Replace": "Thay thế",
+    "ReplaceAll": "Thay thế tất cả",
+    "ReplacePlaceholder": "Văn bản cần thay thế",
+    "Regex": "Biểu thức chính quy",
+    "CaseSensitive": "Phân biệt chữ hoa chữ thường",
+    "WholeWords": "Toàn bộ từ",
+    "Previous": "Trước",
+    "Next": "Tiếp theo",
+    "NoResults": "Không có kết quả",
+    "Close": "Đóng"
+  },
+  "LoginForm": {
+    "UsernameOrEmail": "Email hoặc Tên người dùng",
+    "UsernameOrEmailARIA": "Email hoặc Tên người dùng",
+    "Password": "Mật khẩu",
+    "PasswordARIA": "Mật khẩu",
+    "Submit": "Đăng nhập"
+  },
+  "LoginView": {
+    "Title": "Trình soạn thảo p5.js | Đăng nhập",
+    "Login": "Đăng nhập",
+    "LoginOr": "hoặc",
+    "SignUp": "Đăng ký",
+    "Email": "email",
+    "Username": "tên người dùng",
+    "DontHaveAccount": "Chưa có tài khoản? ",
+    "ForgotPassword": "Quên mật khẩu của bạn? ",
+    "ResetPassword": "Đặt lại mật khẩu"
+  },
+  "SocialAuthButton": {
+    "Connect": "Kết nối Tài khoản {{serviceauth}}",
+    "Unlink": "Hủy liên kết Tài khoản {{serviceauth}}",
+    "Login": "Đăng nhập với {{serviceauth}}",
+    "LogoARIA": "{{serviceauth}} logo"
+  },
+  "About": {
+    "Title": "Về chúng tôi",
+    "TitleHelmet": "Trình soạn thảo p5.js | Về chúng tôi",
+    "Contribute": "Đóng góp",
+    "NewP5": "Mới với p5.js?",
+    "Report": "Báo cáo lỗi",
+    "Learn": "Học",
+    "Resources": "Tài nguyên",
+    "Libraries": "Thư viện",
+    "Forum": "Diễn đàn",
+    "Examples": "Ví dụ",
+    "PrivacyPolicy": "Chính sách quyền riêng tư",
+    "TermsOfUse": "Điều khoản sử dụng",
+    "CodeOfConduct": "Quy tắc ứng xử"
+  },
+  "Toast": {
+    "OpenedNewSketch": "Đã mở sơ đồ mới.",
+    "SketchSaved": "Sơ đồ đã được lưu.",
+    "SketchFailedSave": "Không thể lưu sơ đồ.",
+    "AutosaveEnabled": "Tự động lưu đã được bật.",
+    "LangChange": "Ngôn ngữ đã thay đổi",
+    "SettingsSaved": "Cài đặt đã được lưu."
+  },
+  "Toolbar": {
+    "Preview": "Xem trước",
+    "Auto-refresh": "Tự động làm mới",
+    "OpenPreferencesARIA": "Mở Tùy chọn",
+    "PlaySketchARIA": "Chơi sơ đồ",
+    "PlayOnlyVisualSketchARIA": "Chơi chỉ sơ đồ hình ảnh",
+    "StopSketchARIA": "Dừng lại sơ đồ",
+    "EditSketchARIA": "Chỉnh sửa tên sơ đồ",
+    "NewSketchNameARIA": "Tên sơ đồ mới",
+    "By": " bởi "
+  },
+  "Console": {
+    "Title": "Bảng điều khiển",
+    "Clear": "Xóa",
+    "ClearARIA": "Xóa bảng điều khiển",
+    "Close": "Đóng",
+    "CloseARIA": "Đóng bảng điều khiển",
+    "Open": "Mở",
+    "OpenARIA": "Mở bảng điều khiển"
+  },
+  "Preferences": {
+    "Settings": "Cài đặt",
+    "GeneralSettings": "Cài đặt chung",
+    "Accessibility": "Truy cập dễ dàng",
+    "Theme": "Chủ đề",
+    "LightTheme": "Sáng",
+    "LightThemeARIA": "bật chủ đề sáng",
+    "DarkTheme": "Tối",
+    "DarkThemeARIA": "bật chủ đề tối",
+    "HighContrastTheme": "Chế độ Tương phản Cao",
+    "HighContrastThemeARIA": "bật chế độ tương phản cao",
+    "TextSize": "Kích thước văn bản",
+    "DecreaseFont": "Giảm",
+    "DecreaseFontARIA": "giảm kích thước font chữ",
+    "IncreaseFont": "Tăng",
+    "IncreaseFontARIA": "tăng kích thước font chữ",
+    "FontSize": "Kích thước font chữ",
+    "SetFontSize": "đặt kích thước font chữ",
+    "Autosave": "Tự động lưu",
+    "On": "Bật",
+    "AutosaveOnARIA": "tự động lưu đã được bật",
+    "Off": "Tắt",
+    "AutosaveOffARIA": "tự động lưu đã được tắt",
+    "AutocloseBracketsQuotes": "Tự động đóng ngoặc và dấu ngoặc kép",
+    "AutocloseBracketsQuotesOnARIA": "tự động đóng ngoặc và dấu ngoặc kép đã được bật",
+    "AutocloseBracketsQuotesOffARIA": "tự động đóng ngoặc và dấu ngoặc kép đã được tắt",
+    "AutocompleteHinter": "Gợi ý Autocomplete",
+    "AutocompleteHinterOnARIA": "gợi ý autocomplete đã được bật",
+    "AutocompleteHinterOffARIA": "gợi ý autocomplete đã được tắt",
+    "WordWrap": "Bọc từ",
+    "LineWrapOnARIA": "bọc dòng đã được bật",
+    "LineWrapOffARIA": "bọc dòng đã được tắt",
+    "LineNumbers": "Số dòng",
+    "LineNumbersOnARIA": "số dòng đã được bật",
+    "LineNumbersOffARIA": "số dòng đã được tắt",
+    "LintWarningSound": "Âm cảnh báo Lint",
+    "LintWarningOnARIA": "âm cảnh báo lint đã được bật",
+    "LintWarningOffARIA": "âm cảnh báo lint đã được tắt",
+    "PreviewSound": "Âm xem trước",
+    "PreviewSoundARIA": "âm xem trước",
+    "AccessibleTextBasedCanvas": "Bảng vẽ dựa trên văn bản có thể truy cập",
+    "UsedScreenReader": "Sử dụng với trình đọc màn hình",
+    "PlainText": "Văn bản thuần túy",
+    "TextOutputARIA": "đầu ra văn bản đã được bật",
+    "TableText": "Văn bản bảng",
+    "TableOutputARIA": "đầu ra bảng đã được bật"
+  },
+  "KeyboardShortcuts": {
+    "Title": " Phím tắt Bàn phím",
+    "ShortcutsFollow": "Phím tắt chỉnh sửa mã theo",
+    "SublimeText": "Phím tắt Sublime Text",
+    "CodeEditing": {
+      "Tidy": "Làm sạch",
+      "FindText": "Tìm kiếm văn bản",
+      "FindNextMatch": "Tìm kiếm kết quả tiếp theo",
+      "FindPrevMatch": "Tìm kiếm kết quả trước đó",
+      "ReplaceTextMatch": "Thay thế kết quả văn bản",
+      "IndentCodeLeft": "Thụt mã về bên trái",
+      "IndentCodeRight": "Thụt mã về bên phải",
+      "CommentLine": "Bình luận dòng",
+      "FindNextTextMatch": "Tìm kiếm kết quả văn bản tiếp theo",
+      "FindPreviousTextMatch": "Tìm kiếm kết quả văn bản trước đó",
+      "CodeEditing": "Chỉnh sửa mã",
+      "ColorPicker": "Hiển thị Bảng chọn màu nhanh"
+    },
+    "General": {
+      "StartSketch": "Bắt đầu Sơ đồ",
+      "StopSketch": "Dừng lại Sơ đồ",
+      "TurnOnAccessibleOutput": "Bật Đầu ra có thể truy cập",
+      "TurnOffAccessibleOutput": "Tắt Đầu ra có thể truy cập"
+    }
+  },
+  "Fundraiser": {
+    "Title": "Hỗ trợ Phần mềm và Đội ngũ của chúng tôi",
+    "Description": "🎉 Hãy tham gia với chúng tôi để ăn mừng Một thập kỷ của Mã nguồn! 🎉 Hỗ trợ p5.js và Processing Foundation và nhận những phần thưởng độc đáo. 🙂",
+    "CallToAction": "Đóng góp và tìm hiểu thêm!"
+  },
+  "Sidebar": {
+    "Title": "Tệp Sơ đồ",
+    "ToggleARIA": "Chuyển đổi mở/đóng tùy chọn tệp sơ đồ",
+    "AddFolder": "Tạo thư mục",
+    "AddFolderARIA": "thêm thư mục",
+    "AddFile": "Tạo tệp",
+    "AddFileARIA": "thêm tệp",
+    "UploadFile": "Tải lên tệp",
+    "UploadFileARIA": "tải lên tệp"
+  },
+  "FileNode": {
+    "OpenFolderARIA": "Mở nội dung thư mục",
+    "CloseFolderARIA": "Đóng nội dung thư mục",
+    "ToggleFileOptionsARIA": "Chuyển đổi mở/đóng tùy chọn tệp",
+    "AddFolder": "Tạo thư mục",
+    "AddFolderARIA": "thêm thư mục",
+    "AddFile": "Tạo tệp",
+    "AddFileARIA": "thêm tệp",
+    "UploadFile": "Tải lên tệp",
+    "UploadFileARIA": "tải lên tệp",
+    "Rename": "Đổi tên",
+    "Delete": "Xóa"
+  },
+  "Common": {
+    "SiteName": "Trình soạn thảo p5.js",
+    "Error": "Lỗi",
+    "ErrorARIA": "Lỗi",
+    "Save": "Lưu",
+    "p5logoARIA": "Logo p5.js",
+    "PFlogoARIA": "Logo Processing Foundation",
+    "DeleteConfirmation": "Bạn có chắc chắn muốn xóa {{name}} không?"
+  },
+  "IDEView": {
+    "SubmitFeedback": "Gửi Phản hồi",
+    "SubmitFeedbackARIA": "gui-phản-hồi",
+    "AddCollectionTitle": "Thêm vào bộ sưu tập",
+    "AddCollectionARIA": "thêm vào bộ sưu tập",
+    "ShareTitle": "Chia sẻ",
+    "ShareARIA": "chia-sẻ"
+  },
+  "NewFileModal": {
+    "Title": "Tạo tệp",
+    "CloseButtonARIA": "Đóng Hộp thoại Tạo tệp mới",
+    "EnterName": "Vui lòng nhập tên",
+    "InvalidType": "Loại tệp không hợp lệ. Các phần mở rộng hợp lệ là .js, .css, .json, .xml, .stl, .txt, .csv, .tsv, .frag và .vert."
+  },
+  "NewFileForm": {
+    "AddFileSubmit": "Thêm tệp",
+    "Placeholder": "Tên"
+  },
+  "NewFolderModal": {
+    "Title": "Tạo thư mục",
+    "CloseButtonARIA": "Đóng Hộp thoại Tạo thư mục mới",
+    "EnterName": "Vui lòng nhập tên",
+    "EmptyName": "Tên thư mục không thể chỉ chứa khoảng trắng",
+    "InvalidExtension": "Tên thư mục không thể chứa phần mở rộng"
+  },
+  "NewFolderForm": {
+    "AddFolderSubmit": "Thêm thư mục",
+    "Placeholder": "Tên"
+  },
+  "ResetPasswordForm": {
+    "Email": "Email được sử dụng để đăng ký",
+    "EmailARIA": "email",
+    "Submit": "Gửi Email Đặt lại Mật khẩu"
+  },
+  "ResetPasswordView": {
+    "Title": "p5.js Web Editor | Đặt lại mật khẩu",
+    "Reset": "Đặt lại mật khẩu của bạn",
+    "Submitted": "Email đặt lại mật khẩu của bạn sẽ sớm được gửi. Nếu bạn không thấy nó, kiểm tra\n            thư mục rác của bạn vì đôi khi nó có thể nằm ở đó.",
+    "Login": "Đăng nhập",
+    "LoginOr": "hoặc",
+    "SignUp": "Đăng ký"
+  },
+  "ReduxFormUtils": {
+    "errorInvalidEmail": "Vui lòng nhập địa chỉ email hợp lệ",
+    "errorEmptyEmail": "Vui lòng nhập địa chỉ email",
+    "errorPasswordMismatch": "Mật khẩu phải trùng khớp",
+    "errorEmptyPassword": "Vui lòng nhập mật khẩu",
+    "errorShortPassword": "Mật khẩu phải có ít nhất 6 ký tự",
+    "errorConfirmPassword": "Vui lòng xác nhận mật khẩu của bạn",
+    "errorNewPassword": "Vui lòng nhập mật khẩu mới hoặc để trống mật khẩu hiện tại.",
+    "errorEmptyUsername": "Vui lòng nhập tên người dùng.",
+    "errorLongUsername": "Tên người dùng phải ít hơn 20 ký tự.",
+    "errorValidUsername": "Tên người dùng chỉ được bao gồm số, chữ cái, dấu chấm, dấu gạch và dấu gạch dưới."
+  },
+  "NewPasswordView": {
+    "Title": "p5.js Web Editor | Mật khẩu mới",
+    "Description": "Đặt Mật khẩu mới",
+    "TokenInvalidOrExpired": "Mã thông báo đặt lại mật khẩu không hợp lệ hoặc đã hết hạn.",
+    "EmptyPassword": "Vui lòng nhập mật khẩu",
+    "PasswordConfirmation": "Vui lòng xác nhận mật khẩu của bạn",
+    "PasswordMismatch": "Mật khẩu phải trùng khớp"
+  },
+  "AccountForm": {
+    "Email": "Email",
+    "EmailARIA": "email",
+    "Unconfirmed": "Chưa xác nhận.",
+    "EmailSent": "Đã gửi xác nhận, kiểm tra email của bạn.",
+    "Resend": "Gửi lại email xác nhận",
+    "UserName": "Tên người dùng",
+    "UserNameARIA": "Tên người dùng",
+    "CurrentPassword": "Mật khẩu hiện tại",
+    "CurrentPasswordARIA": "Mật khẩu hiện tại",
+    "NewPassword": "Mật khẩu mới",
+    "NewPasswordARIA": "Mật khẩu mới",
+    "SubmitSaveAllSettings": "Lưu tất cả cài đặt"
+  },
+  "AccountView": {
+    "SocialLogin": "Đăng nhập xã hội",
+    "SocialLoginDescription": "Sử dụng tài khoản GitHub hoặc Google của bạn để đăng nhập vào p5.js Web Editor.",
+    "Title": "p5.js Web Editor | Cài đặt tài khoản",
+    "Settings": "Cài đặt tài khoản",
+    "AccountTab": "Tài khoản",
+    "AccessTokensTab": "Mã truy cập"
+  },
+  "APIKeyForm": {
+    "ConfirmDelete": "Bạn có chắc chắn muốn xóa {{key_label}} không?",
+    "Summary": "Mã truy cập cá nhân hoạt động giống như mật khẩu của bạn để cho phép\n          các kịch bản tự động truy cập API Editor. Tạo một mã cho mỗi kịch bản\n          cần truy cập.",
+    "CreateToken": "Tạo mã truy cập mới",
+    "TokenLabel": "Mã này dùng cho việc gì?",
+    "TokenPlaceholder": "Mã này dùng cho việc gì? Ví dụ: Kịch bản nhập mẫu",
+    "CreateTokenSubmit": "Tạo",
+    "NoTokens": "Bạn không có mã hiện tại.",
+    "NewTokenTitle": "Mã truy cập mới của bạn",
+    "NewTokenInfo": "Hãy chắc chắn sao chép mã truy cập cá nhân mới của bạn ngay bây giờ.\n                  Bạn sẽ không thể xem lại nó!",
+    "ExistingTokensTitle": "Các mã hiện tại"
+  },
+  "APIKeyList": {
+    "Name": "Tên",
+    "Created": "Được tạo vào",
+    "LastUsed": "Lần sử dụng cuối",
+    "Actions": "Hành động",
+    "Never": "Không bao giờ",
+    "DeleteARIA": "Xóa Khóa API"
+  },
+  "NewPasswordForm": {
+    "Title": "Mật khẩu",
+    "TitleARIA": "Mật khẩu",
+    "ConfirmPassword": "Xác nhận mật khẩu",
+    "ConfirmPasswordARIA": "Xác nhận mật khẩu",
+    "SubmitSetNewPassword": "Đặt mật khẩu mới"
+  },
+  "SignupForm": {
+    "Title": "Tên người dùng",
+    "TitleARIA": "tên người dùng",
+    "Email": "Email",
+    "EmailARIA": "email",
+    "Password": "Mật khẩu",
+    "PasswordARIA": "mật khẩu",
+    "ConfirmPassword": "Xác nhận mật khẩu",
+    "ConfirmPasswordARIA": "Xác nhận mật khẩu",
+    "SubmitSignup": "Đăng ký"
+  },
+  "SignupView": {
+    "Title": "p5.js Web Editor | Đăng ký",
+    "Description": "Đăng ký",
+    "Or": "Hoặc",
+    "AlreadyHave": "Đã có tài khoản?",
+    "Login": "Đăng nhập",
+    "Warning": "Bằng cách đăng ký, bạn đồng ý với <0>Điều khoản sử dụng</0> và <1>Chính sách quyền riêng tư</1> của p5.js Editor."
+  },
+  "EmailVerificationView": {
+    "Title": "p5.js Web Editor | Xác nhận email",
+    "Verify": "Xác nhận email của bạn",
+    "InvalidTokenNull": "Liên kết đó là không hợp lệ.",
+    "Checking": "Xác nhận mã thông báo, vui lòng đợi...",
+    "Verified": "Xong, địa chỉ email của bạn đã được xác nhận.",
+    "InvalidState": "Có điều gì đó đã đi quá giới hạn."
+  },
+  "AssetList": {
+    "Title": "p5.js Web Editor | Tài nguyên của tôi",
+    "ToggleOpenCloseARIA": "Chuyển đổi Bật / Tắt Tùy chọn Tài sản",
+    "Delete": "Xóa",
+    "OpenNewTab": "Mở trong Tab mới",
+    "NoUploadedAssets": "Không có tài nguyên đã tải lên.",
+    "HeaderName": "Tên",
+    "HeaderSize": "Kích thước",
+    "HeaderSketch": "Bản vẽ"
+  },
+  "Feedback": {
+    "Title": "p5.js Web Editor | Phản hồi",
+    "ViaGithubHeader": "Qua Github Issues",
+    "ViaGithubDescription": "Nếu bạn quen với Github, đây là phương pháp ưa thích của chúng tôi để nhận báo cáo lỗi và phản hồi.",
+    "GoToGithub": "Đến Github",
+    "ViaGoogleHeader": "Qua Google Form",
+    "ViaGoogleDescription": "Bạn cũng có thể gửi mẫu nhanh này.",
+    "GoToForm": "Đến Form"
+  },
+  "Searchbar": {
+    "SearchSketch": "Tìm kiếm bản vẽ...",
+    "SearchCollection": "Tìm kiếm bộ sưu tập...",
+    "ClearTerm": "xóa"
+  },
+  "UploadFileModal": {
+    "Title": "Tải lên tệp",
+    "CloseButtonARIA": "Đóng hộp thoại tải lên tệp",
+    "SizeLimitError": "Lỗi: Bạn không thể tải lên thêm tệp nào nữa. Bạn đã đạt đến giới hạn tổng kích thước là {{sizeLimit}}.\n                Nếu bạn muốn tải lên thêm, vui lòng xóa những tệp bạn không sử dụng nữa bằng cách\n                trong "
+  },
+  "FileUploader": {
+    "DictDefaultMessage": "Kéo và thả tệp ở đây hoặc nhấp để sử dụng trình duyệt tệp"
+  },
+  "ErrorModal": {
+    "MessageLogin": "Để lưu bản vẽ, bạn phải đăng nhập. Vui lòng ",
+    "Login": "Đăng nhập",
+    "LoginOr": " hoặc ",
+    "SignUp": "Đăng ký",
+    "MessageLoggedOut": "Dường như bạn đã đăng xuất. Vui lòng ",
+    "LogIn": "đăng nhập",
+    "SavedDifferentWindow": "Dự án bạn đã cố gắng lưu đã được lưu từ một cửa sổ khác.\n        Vui lòng làm mới trang để xem phiên bản mới nhất.",
+    "LinkTitle": "Lỗi Liên kết Tài khoản",
+    "LinkMessage": "Có sự cố khi liên kết tài khoản {{serviceauth}} của bạn với tài khoản p5.js Web Editor của bạn. Tài khoản {{serviceauth}} của bạn đã được liên kết với một tài khoản p5.js Web Editor khác."
+  },
+  "ShareModal": {
+    "Embed": "Nhúng",
+    "Present": "Trình bày",
+    "Fullscreen": "Toàn màn hình",
+    "Edit": "Chỉnh sửa"
+  },
+  "CollectionView": {
+    "TitleCreate": "Tạo bộ sưu tập",
+    "TitleDefault": "bộ sưu tập"
+  },
+  "Collection": {
+    "Title": "p5.js Web Editor | Bộ sưu tập của tôi",
+    "AnothersTitle": "p5.js Web Editor | Bộ sưu tập của {{anotheruser}}",
+    "Share": "Chia sẻ",
+    "URLLink": "Liên kết đến Bộ sưu tập",
+    "AddSketch": "Thêm Bản vẽ",
+    "DeleteFromCollection": "Bạn có chắc chắn muốn xóa {{name_sketch}} khỏi bộ sưu tập này không?",
+    "SketchDeleted": "Bản vẽ đã được xóa",
+    "SketchRemoveARIA": "Xóa bản vẽ khỏi bộ sưu tập",
+    "DescriptionPlaceholder": "Thêm mô tả",
+    "Description": "mô tả",
+    "NumSketches": "{{count}} bản vẽ",
+    "NumSketches_plural": "{{count}} bản vẽ",
+    "By": "Bộ sưu tập của ",
+    "NoSketches": "Không có bản vẽ trong bộ sưu tập",
+    "TableSummary": "bảng chứa tất cả các bộ sưu tập",
+    "HeaderName": "Tên",
+    "HeaderCreatedAt": "Ngày thêm",
+    "HeaderUser": "Chủ sở hữu",
+    "DirectionAscendingARIA": "Tăng dần",
+    "DirectionDescendingARIA": "Giảm dần",
+    "ButtonLabelAscendingARIA": "Sắp xếp theo {{displayName}} tăng dần.",
+    "ButtonLabelDescendingARIA": "Sắp xếp theo {{displayName}} giảm dần."
+  },
+  "AddToCollectionList": {
+    "Title": "p5.js Web Editor | Bộ sưu tập của tôi",
+    "AnothersTitle": "p5.js Web Editor | Bộ sưu tập của {{anotheruser}}",
+    "Empty": "Không có bộ sưu tập"
+  },
+  "CollectionCreate": {
+    "Title": "p5.js Web Editor | Tạo bộ sưu tập",
+    "FormError": "Không thể tạo bộ sưu tập",
+    "FormLabel": "Tên bộ sưu tập",
+    "FormLabelARIA": "tên",
+    "NameRequired": "Yêu cầu tên bộ sưu tập",
+    "Description": "Mô tả (tùy chọn)",
+    "DescriptionARIA": "mô tả",
+    "DescriptionPlaceholder": "Bản vẽ yêu thích của tôi",
+    "SubmitCollectionCreate": "Tạo bộ sưu tập"
+  },
+  "DashboardView": {
+    "CreateCollection": "Tạo bộ sưu tập",
+    "NewSketch": "Bản vẽ mới",
+    "CreateCollectionOverlay": "Tạo bộ sưu tập"
+  },
+  "DashboardTabSwitcher": {
+    "Sketches": "Bản vẽ",
+    "Collections": "Bộ sưu tập",
+    "Assets": "Tài nguyên"
+  },
+  "CollectionList": {
+    "Title": "p5.js Web Editor | Bộ sưu tập của tôi",
+    "AnothersTitle": "p5.js Web Editor | Bộ sưu tập của {{anotheruser}}",
+    "NoCollections": "Không có bộ sưu tập nào.",
+    "TableSummary": "bảng chứa tất cả các bộ sưu tập",
+    "HeaderName": "Tên",
+    "HeaderCreatedAt": "Ngày tạo",
+    "HeaderCreatedAt_mobile": "Đã tạo",
+    "HeaderUpdatedAt": "Ngày cập nhật",
+    "HeaderUpdatedAt_mobile": "Đã cập nhật",
+    "HeaderNumItems": "# bản vẽ",
+    "HeaderNumItems_mobile": "# bản vẽ",
+    "DirectionAscendingARIA": "Tăng dần",
+    "DirectionDescendingARIA": "Giảm dần",
+    "ButtonLabelAscendingARIA": "Sắp xếp theo {{displayName}} tăng dần.",
+    "ButtonLabelDescendingARIA": "Sắp xếp theo {{displayName}} giảm dần.",
+    "AddSketch": "Thêm Bản vẽ"
+  },
+  "CollectionListRow": {
+    "ToggleCollectionOptionsARIA": "Chuyển đổi Bật / Tắt tùy chọn bộ sưu tập",
+    "AddSketch": "Thêm bản vẽ",
+    "Delete": "Xóa",
+    "Rename": "Đổi tên"
+  },
+  "Overlay": {
+    "AriaLabel": "Đóng {{title}} overlay"
+  },
+  "QuickAddList": {
+    "ButtonRemoveARIA": "Xóa khỏi bộ sưu tập",
+    "ButtonAddToCollectionARIA": "Thêm vào bộ sưu tập",
+    "View": "Xem"
+  },
+  "SketchList": {
+    "View": "Xem",
+    "Title": "p5.js Web Editor | Bản vẽ của tôi",
+    "AnothersTitle": "p5.js Web Editor | Bản vẽ của {{anotheruser}}",
+    "ToggleLabelARIA": "Chuyển đổi Bật / Tắt tùy chọn Bản vẽ",
+    "DropdownRename": "Đổi tên",
+    "DropdownDownload": "Tải xuống",
+    "DropdownDuplicate": "Nhân bản",
+    "DropdownAddToCollection": "Thêm vào bộ sưu tập",
+    "DropdownDelete": "Xóa",
+    "DirectionAscendingARIA": "Tăng dần",
+    "DirectionDescendingARIA": "Giảm dần",
+    "ButtonLabelAscendingARIA": "Sắp xếp theo {{displayName}} tăng dần.",
+    "ButtonLabelDescendingARIA": "Sắp xếp theo {{displayName}} giảm dần.",
+    "AddToCollectionOverlayTitle": "Thêm vào bộ sưu tập",
+    "TableSummary": "bảng chứa tất cả các dự án đã lưu",
+    "HeaderName": "Bản vẽ",
+    "HeaderCreatedAt": "Ngày tạo",
+    "HeaderCreatedAt_mobile": "Đã tạo",
+    "HeaderUpdatedAt": "Ngày cập nhật",
+    "HeaderUpdatedAt_mobile": "Đã cập nhật",
+    "NoSketches": "Không có bản vẽ nào."
+  },
+  "AddToCollectionSketchList": {
+    "Title": "p5.js Web Editor | Bản vẽ của tôi",
+    "AnothersTitle": "p5.js Web Editor | Bản vẽ của {{anotheruser}}",
+    "NoCollections": "Không có bộ sưu tập nào."
+  },
+  "Editor": {
+    "OpenSketchARIA": "Mở điều hướng tệp Bản vẽ",
+    "CloseSketchARIA": "Đóng điều hướng tệp Bản vẽ",
+    "UnsavedChangesARIA": "Bản vẽ có thay đổi chưa lưu",
+    "KeyUpLineNumber": "dòng {{lineNumber}}"
+  },
+  "EditorAccessibility": {
+    "NoLintMessages": "Không có thông báo lint",
+    "CurrentLine": "Dòng hiện tại"
+  },
+  "Timer": {
+    "SavedAgo": "Đã lưu: {{timeAgo}}"
+  },
+  "formatDate": {
+    "JustNow": "vừa rồi",
+    "15Seconds": "15 giây trước",
+    "25Seconds": "25 giây trước",
+    "35Seconds": "35 giây trước",
+    "Ago": "{{timeAgo}} trước"
+  },
+  "AddRemoveButton": {
+    "AltAddARIA": "Thêm vào bộ sưu tập",
+    "AltRemoveARIA": "Xóa khỏi bộ sưu tập"
+  },
+  "CopyableInput": {
+    "CopiedARIA": "Đã sao chép vào Clipboard!",
+    "OpenViewTabARIA": "Mở {{label}} xem trong tab mới"
+  },
+  "EditableInput": {
+    "EditValue": "Chỉnh sửa giá trị {{display}}",
+    "EmptyPlaceholder": "Không có giá trị"
+  },
+  "PreviewNav": {
+    "EditSketchARIA": "Chỉnh sửa Bản vẽ",
+    "ByUser": "bởi"
+  },
+  "MobilePreferences": {
+    "Settings": "Cài đặt",
+    "GeneralSettings": "Cài đặt chung",
+    "Accessibility": "Khả năng tiếp cận",
+    "AccessibleOutput": "Đầu ra dễ tiếp cận",
+    "Theme": "Chủ đề",
+    "LightTheme": "Sáng",
+    "DarkTheme": "Tối",
+    "HighContrastTheme": "Tối làm nổi bật",
+    "Autosave": "Tự động lưu",
+    "AutocompleteHinter": "Hỗ trợ tự động hoàn thành",
+    "WordWrap": "Bọc từ",
+    "LineNumbers": "Số dòng",
+    "LintWarningSound": "Âm cảnh báo lint",
+    "UsedScreenReader": "Sử dụng với đọc màn hình",
+    "PlainText": "Văn bản thuần",
+    "TableText": "Văn bản bảng",
+    "Sound": "Âm thanh"
+  },
+  "PreferenceCreators": {
+    "On": "Bật",
+    "Off": "Tắt"
+  },
+  "MobileIDEView": {
+    "Preferences": "Ưa thích",
+    "MyStuff": "Đồ của tôi",
+    "Examples": "Ví dụ",
+    "OriginalEditor": "Biên tập viên gốc",
+    "Login": "Đăng nhập",
+    "Logout": "Đăng xuất"
+  },
+  "MobileDashboardView": {
+    "Examples": "Ví dụ",
+    "Sketches": "Bản vẽ",
+    "Collections": "Bộ sưu tập",
+    "Assets": "Tài nguyên",
+    "MyStuff": "Đồ của tôi",
+    "CreateSketch": "Tạo Bản vẽ",
+    "CreateCollection": "Tạo Bộ sưu tập"
+  },
+  "Explorer": {
+    "Files": "Tệp"
+  },
+  "Cookies": {
+    "Header": "Cookies",
+    "Body": "Trình soạn thảo p5.js sử dụng cookies. Một số cookies là bắt buộc để chức năng của trang web và cho phép bạn quản lý tài khoản và ưu tiên. Những cookies khác không bắt buộc—chúng được sử dụng cho mục đích phân tích và cho phép chúng tôi tìm hiểu thêm về cộng đồng của chúng tôi. <strong>Chúng tôi không bao giờ bán dữ liệu này hoặc sử dụng nó cho quảng cáo.</strong> Bạn có thể quyết định xem bạn muốn cho phép cookies nào và tìm hiểu thêm trong <0>Chính sách quyền riêng tư<0> của chúng tôi.",
+    "AllowAll": "Cho phép tất cả",
+    "AllowEssential": "Cho phép các cookie quan trọng"
+  },
+  "Legal": {
+    "PrivacyPolicy": "Chính sách quyền riêng tư",
+    "TermsOfUse": "Điều khoản sử dụng",
+    "CodeOfConduct": "Quy tắc ứng xử"
+  }
+}

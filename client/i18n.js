@@ -18,7 +18,8 @@ import {
   uk,
   sv,
   tr,
-  enIN
+  enIN,
+  vi
 } from 'date-fns/locale';
 
 const fallbackLng = ['en-US'];
@@ -39,7 +40,8 @@ export const availableLanguages = [
   'zh-CN',
   'zh-TW',
   'tr',
-  'ur'
+  'ur',
+  'vi'
 ];
 
 export function languageKeyToLabel(lang) {
@@ -59,7 +61,8 @@ export function languageKeyToLabel(lang) {
     'zh-CN': '简体中文',
     'zh-TW': '正體中文',
     tr: 'Türkçe',
-    ur: 'اردو'
+    ur: 'اردو',
+    vi: 'Tiếng Việt'
   };
   return languageMap[lang];
 }
@@ -81,7 +84,8 @@ export function languageKeyToDateLocale(lang) {
     'zh-CN': zhCN,
     'zh-TW': zhTW,
     tr,
-    ur: enIN
+    ur: enIN,
+    vi
   };
   return languageMap[lang];
 }
