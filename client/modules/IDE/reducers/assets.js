@@ -9,7 +9,10 @@ const assetsSlice = createSlice({
   name: 'assets',
   initialState,
   reducers: {
-    setAssets: (state, action) => action.payload,
+    setAssets: (state, action) => {
+      state.list = action.payload.assets;
+      state.totalSize = action.payload.totalSize;
+    },
     deleteAsset: (state, action) => {
       const key = action.payload;
       const index = state.list.findIndex((asset) => asset.key === key);
