@@ -4,7 +4,8 @@
 }
 
 .sidebar__header {
-  padding: #{8 / $base-font-size}rem #{12 / $base-font-size}rem;
+  padding-left: #{12 / $base-font-size}rem;
+  padding-right: #{12 / $base-font-size}rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -13,7 +14,7 @@
 }
 
 .sidebar__title {
-  font-size: #{16 / $base-font-size}rem;
+  font-size: #{14 / $base-font-size}rem;
   font-weight: 500;
   display: inline-block;
   .sidebar--contracted & {
@@ -28,8 +29,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 10px;
   & svg {
-    width: #{18 / $base-font-size}rem;
+    width: #{30 / $base-font-size}rem;
     height: #{18 / $base-font-size}rem;
   }
   @include themify() {
@@ -229,7 +231,7 @@
   left: #{0 / $base-font-size}rem;
   height: #{25 / $base-font-size}rem;
   width: #{49 / $base-font-size}rem;
-  border-radius: 2px;
+  border-radius: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
