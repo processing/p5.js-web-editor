@@ -4,6 +4,7 @@ import { useParams } from 'react-router';
 import {
   autosaveProject,
   exportProjectAsZip,
+  exportAllProjectsAsZip,
   newProject,
   saveProject,
   setProjectName
@@ -44,6 +45,10 @@ const useSketchActions = () => {
     exportProjectAsZip(project.id);
   }
 
+  function downloadAllSketches() {
+    exportAllProjectsAsZip(params.username);
+  }
+
   function shareSketch() {
     const { username } = params;
     dispatch(showShareModal(project.id, project.name, username));
@@ -61,6 +66,7 @@ const useSketchActions = () => {
     newSketch,
     saveSketch,
     downloadSketch,
+    downloadAllSketches,
     shareSketch,
     changeSketchName,
     canEditProjectName

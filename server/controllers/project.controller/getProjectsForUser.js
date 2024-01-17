@@ -5,7 +5,7 @@ import createApplicationErrorClass from '../../utils/createApplicationErrorClass
 
 const UserNotFoundError = createApplicationErrorClass('UserNotFoundError');
 
-function getProjectsForUserName(username) {
+export function getProjectsForUserName(username) {
   return new Promise((resolve, reject) => {
     User.findByUsername(username, (err, user) => {
       if (err) {

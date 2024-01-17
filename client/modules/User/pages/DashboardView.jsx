@@ -13,6 +13,7 @@ import CollectionList from '../../IDE/components/CollectionList';
 import SketchList from '../../IDE/components/SketchList';
 import RootPage from '../../../components/RootPage';
 import { newProject } from '../../IDE/actions/project';
+import { useSketchActions } from '../../IDE/hooks';
 import {
   CollectionSearchbar,
   SketchSearchbar
@@ -35,8 +36,14 @@ const DashboardView = () => {
 
   const [collectionCreateVisible, setCollectionCreateVisible] = useState(false);
 
+  const { downloadAllSketches } = useSketchActions();
+
   const createNewSketch = () => {
     dispatch(newProject());
+  };
+
+  const downloadAll = () => {
+    downloadAllSketches(params.username);
   };
 
   const selectedTabKey = useCallback(() => {
@@ -89,6 +96,9 @@ const DashboardView = () => {
                 {t('DashboardView.NewSketch')}
               </Button>
             )}
+            <Button onClick={downloadAll}>
+              {t('DashboardView.DownloadAll')}
+            </Button>
             <SketchSearchbar />
           </>
         );
