@@ -13,7 +13,7 @@
 }
 
 .sidebar__title {
-  font-size: #{16 / $base-font-size}rem;
+  font-size: #{15 / $base-font-size}rem;
   font-weight: 500;
   display: inline-block;
   .sidebar--contracted & {
@@ -25,6 +25,8 @@
 
 .sidebar__add {
   padding: #{2 / $base-font-size}rem;
+  border-radius:#{10 / $base-font-size}rem ;
+  width:  #{35 / $base-font-size}rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -249,6 +251,7 @@
 
 .sidebar__expand {
   display: none;
+  border-radius: #{10 / $base-font-size}rem;
   &:hover {
     cursor: e-resize;
   }
@@ -258,6 +261,7 @@
 }
 
 .sidebar__contract {
+  border-radius: #{10 / $base-font-size}rem;
   &:hover {
     cursor: w-resize;
   }
