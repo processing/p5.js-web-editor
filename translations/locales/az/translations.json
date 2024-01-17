@@ -254,188 +254,184 @@
     "InvalidExtension": "Qovluq adı fayl uzantısı ehtiva etməməlidir"
   },
   "NewFolderForm": {
-    "AddFolderSubmit": "Klasör Ekle",
-    "Placeholder": "İsim"
+    "AddFolderSubmit": "Qovluq Əlavə et",
+    "Placeholder": "Ad"
   },
   "ResetPasswordForm": {
-    "Email": "Kayıt için kullanılan e-posta",
-    "EmailARIA": "e-posta",
-    "Submit": "Şifre Sıfırlama e-postası Gönder"
+    "Email": "Qeydiyyat üçün istifadə olunan e-poçt",
+    "EmailARIA": "e-poçt",
+    "Submit": "Şifrə yeniləmə e-poçtu göndər"
   },
   "ResetPasswordView": {
-    "Title": "p5.js Web Editörü | Şifreyi Sıfırla",
-    "Reset": "Şifrenizi Sıfırlayın",
-    "Submitted": "Şifre sıfırlama e-postanız yakında ulaşacaktır. Eğer göremezseniz,\n spam klasöründe olabilir.",
-    "Login": "Giriş Yap",
-    "LoginOr": "veya",
-    "SignUp": "Kayıt Ol"
+    "Title": "p5.js veb redaktoru | Şifrəni sıfırla",
+    "Reset": "Şifrənizi sıfırlayın",
+    "Submitted": "Şifrə sıfırlama e-poçtunuz tezliklə çatacaq. Əgər görə bilməsəniz,\n spam qovluğunda ola bilər.",
+    "Login": "Daxil olun",
+    "LoginOr": "və ya",
+    "SignUp": "Qeydiyyatdan Keç"
   },
   "ReduxFormUtils": {
-    "errorInvalidEmail": "Lütfen geçerli bir e-posta adresi girin",
-    "errorEmptyEmail": "Lütfen bir e-posta adresi girin",
-    "errorPasswordMismatch": "Şifreler eşleşmiyor",
-    "errorEmptyPassword": "Lütfen bir şifre girin",
-    "errorShortPassword": "Şifre en az 6 karakter olmalıdır",
-    "errorConfirmPassword": "Lütfen şifrenizi doğrulayın",
-    "errorNewPassword": "Lütfen yeni bir şifre girin veya mevcut şifreyi boş bırakın.",
-    "errorEmptyUsername": "Lütfen bir kullanıcı adı girin.",
-    "errorLongUsername": "Kullanıcı adı 20 karakterden az olmalıdır.",
-    "errorValidUsername": "Kullanıcı adı sadece sayılar, harfler, noktalar, tireler ve alt çizgilerden oluşmalıdır."
+    "errorInvalidEmail": "Zəhmət olmasa etibarlı bir e-poçt ünvanı daxil edin",
+    "errorEmptyEmail": "Zəhmət olmasa bir e-poçt ünvanı daxil edin",
+    "errorPasswordMismatch": "Şifrələr uyğun gəlmir",
+    "errorEmptyPassword": "Zəhmət olmasa bir şifrə daxil edin",
+    "errorShortPassword": "Şifrə ən azı 6 simvol olmalıdır",
+    "errorConfirmPassword": "Zəhmət olmasa şifrənizi təsdiqləyin",
+    "errorNewPassword": "Zəhmət olmasa yeni bir şifrə daxil edin və ya mövcud şifrəni boş buraxın.",
+    "errorEmptyUsername": "Zəhmət olmasa bir istifadəçi adı daxil edin.",
+    "errorLongUsername": "İstifadəçi adı 20 simvoldan az olmalıdır.",
+    "errorValidUsername": "İstifadəçi adı yalnız rəqəmlər, hərflər, nöqtələr, tirelər və alt xəttlərdən ibarət olmalıdır."
   },
   "NewPasswordView": {
-    "Title": "p5.js Web Düzenleyici | Yeni Şifre",
-    "Description": "Yeni Şifre Belirle",
-    "TokenInvalidOrExpired": "Şifre sıfırlama bağlantısı geçersiz veya süresi dolmuş.",
-    "EmptyPassword": "Lütfen bir şifre girin",
-    "PasswordConfirmation": "Lütfen şifre onayını girin",
-    "PasswordMismatch": "Şifreler eşleşmiyor"
+    "Title": "p5.js veb redaktoru | Yeni şifrə",
+    "Description": "Yeni şifrə müəyyənləşdir",
+    "TokenInvalidOrExpired": "Şifrə yeniləmə bağlantısı etibarsız və ya vaxtı keçmişdir.",
+    "EmptyPassword": "Zəhmət olmasa bir şifrə daxil edin",
+    "PasswordConfirmation": "Zəhmət olmasa şifrə təsdiqini daxil edin",
+    "PasswordMismatch": "Şifrələr uyğun gəlmir"
   },
   "AccountForm": {
-    "Email": "E-posta",
-    "EmailARIA": "e-posta",
-    "Unconfirmed": "Onaylanmamış.",
-    "EmailSent": "Onay e-postası gönderildi, e-postanızı kontrol edin.",
-    "Resend": "Onay e-postasını yeniden gönder",
-    "UserName": "Kullanıcı Adı",
-    "UserNameARIA": "Kullanıcı adı",
-    "CurrentPassword": "Mevcut Şifre",
-    "CurrentPasswordARIA": "Mevcut Şifre",
-    "NewPassword": "Yeni Şifre",
-    "NewPasswordARIA": "Yeni Şifre",
-    "SubmitSaveAllSettings": "Tüm Ayarları Kaydet"
+    "Email": "E-poçt",
+    "EmailARIA": "e-poçt",
+    "Unconfirmed": "Təsdiqlənməmiş.",
+    "EmailSent": "Təsdiq e-poçtu göndərildi, e-poçtunuzu yoxlayın.",
+    "Resend": "Təsdiq e-poçtunu yenidən göndər",
+    "UserName": "İstifadəçi adı",
+    "UserNameARIA": "İstifadəçi adı",
+    "CurrentPassword": "Mövcud Şifrə",
+    "CurrentPasswordARIA": "Mövcud Şifrə",
+    "NewPassword": "Yeni Şifrə",
+    "NewPasswordARIA": "Yeni Şifrə",
+    "SubmitSaveAllSettings": "Bütün Ayarları Yadda Saxla"
   },
   "AccountView": {
-    "SocialLogin": "Sosyal Giriş",
-    "SocialLoginDescription": "GitHub veya Google hesabınızı kullanarak p5.js Web Düzenleyici'ne giriş yapın.",
-    "Title": "p5.js Web Düzenleyici | Hesap Ayarları",
-    "Settings": "Hesap Ayarları",
-    "AccountTab": "Hesap",
-    "AccessTokensTab": "Erişim Anahtarları"
+    "SocialLogin": "Sosial avtorizasiya",
+    "SocialLoginDescription": "GitHub və ya Google hesabınızı istifadə edərək p5.js veb redaktoruna daxil olun.",
+    "Title": "p5.js veb redaktoru | Hesab ayarları",
+    "Settings": "Hesab ayarları",
+    "AccountTab": "Hesab",
+    "AccessTokensTab": "Giriş açarları"
   },
   "APIKeyForm": {
-    "ConfirmDelete": "{{key_label}} silmek istediğinizden emin misiniz?",
-    "Summary": "Kişisel Erişim Anahtarları, otomatik komutların Editör API'sine erişim sağlamak için şifreniz gibi davranır. Her otomatik komut için yeni bir anahtar oluşturun.",
-    "CreateToken": "Yeni anahtar oluştur",
-    "TokenLabel": "Bu anahtar ne için?",
-    "TokenPlaceholder": "Bu anahtar ne için? Örn. Örnek içe aktarma betiği",
-    "CreateTokenSubmit": "Oluştur",
-    "NoTokens": "Mevcut anahtarınız yok.",
-    "NewTokenTitle": "Yeni erişim anahtarınız",
-    "NewTokenInfo": "Yeni kişisel erişim anahtarınızı kopyaladığınızdan emin olun. Bir daha göremeyeceksiniz!",
-    "ExistingTokensTitle": "Mevcut anahtarlar"
+    "ConfirmDelete": "{{key_label}} silmək istədiyinizdən əminsiniz?",
+    "Summary": "Şəxsi giriş açarları, avtomatik əmrlərin Redaktor API-sinə giriş təmin etmək üçün şifrəniz kimi davranır. Hər avtomatik əmr üçün yeni bir açar yaradın.",
+    "CreateToken": "Yeni açar yarat",
+    "TokenLabel": "Bu açar nə üçündür?",
+    "TokenPlaceholder": "Bu açar nə üçündür? Məsələn, Nümunə idxal skripti",
+    "CreateTokenSubmit": "Yarat",
+    "NoTokens": "Mövcud açarınız yoxdur.",
+    "NewTokenTitle": "Yeni giriş açarınız",
+    "NewTokenInfo": "Yeni şəxsi giriş açarınızı kopyaladığınızdan əmin olun. Bir daha görməyəcəksiniz!",
+    "ExistingTokensTitle": "Mövcud açarlar"
   },
   "APIKeyList": {
-    "Name": "İsim",
-    "Created": "Oluşturulma tarihi",
-    "LastUsed": "Son kullanma",
-    "Actions": "Eylemler",
-    "Never": "Hiçbir zaman",
-    "DeleteARIA": "API Anahtarını Sil"
+    "Name": "Ad",
+    "Created": "Yaradılma tarixi",
+    "LastUsed": "Son istifadə",
+    "Actions": "Əməliyyatlar",
+    "Never": "Heç vaxt",
+    "DeleteARIA": "API Açarını Sil"
   },
   "NewPasswordForm": {
-    "Title": "Şifre",
-    "TitleARIA": "Şifre",
-    "ConfirmPassword": "Şifreyi Onayla",
-    "ConfirmPasswordARIA": "Şifreyi Onayla",
-    "SubmitSetNewPassword": "Yeni Şifreyi Ayarla"
+    "Title": "Şifrə",
+    "TitleARIA": "Şifrə",
+    "ConfirmPassword": "Şifrəni təsdiqlə",
+    "ConfirmPasswordARIA": "Şifrəni təsdiqlə",
+    "SubmitSetNewPassword": "Yeni Şifrəni Müəyyənləşdir"
   },
   "SignupForm": {
-    "Title": "Kullanıcı Adı",
-    "TitleARIA": "kullanıcı adı",
-    "Email": "E-posta",
-    "EmailARIA": "e-posta",
-    "Password": "Şifre",
-    "PasswordARIA": "şifre",
-    "ConfirmPassword": "Şifreyi Onayla",
-    "ConfirmPasswordARIA": "şifreyi onayla",
-    "SubmitSignup": "Kaydol"
+    "Title": "İstifadəçi adı",
+    "TitleARIA": "istifadəçi adı",
+    "Email": "E-poçt",
+    "EmailARIA": "e-poçt",
+    "Password": "Şifrə",
+    "PasswordARIA": "şifrə",
+    "ConfirmPassword": "Şifrəni Təsdiqlə",
+    "ConfirmPasswordARIA": "şifrəni təsdiqlə",
+    "SubmitSignup": "Qeydiyyatdan Keç"
   },
   "SignupView": {
-    "Title": "p5.js Web Düzenleyicisi | Kaydol",
-    "Description": "Kaydol",
-    "Or": "Veya",
-    "AlreadyHave": "Zaten bir hesabın var mı?",
-    "Login": "Giriş yap"
+    "Title": "p5.js Veb Düzenleyicisi | Qeydiyyatdan Keç",
+    "Description": "Qeydiyyatdan Keç",
+    "Or": "Və ya",
+    "AlreadyHave": "Artıq bir hesabınız var mı?",
+    "Login": "Daxil Ol"
   },
   "EmailVerificationView": {
-    "Title": "p5.js Web Düzenleyicisi | E-posta Doğrulama",
-    "Verify": "E-postanızı doğrulayın",
-    "InvalidTokenNull": "Bağlantı geçersiz.",
-    "Checking": "Bağlantı doğrulanıyor, lütfen bekleyin...",
-    "Verified": "E-posta adresiniz doğrulandı.",
-    "InvalidState": "Bir şeyler yanlış gitti."
+    "Title": "p5.js Veb redaktoru | E-poçt təsdiqi",
+    "Verify": "E-poçtunuzu təsdiqləyin",
+    "InvalidTokenNull": "Bağlantı etibarsızdır.",
+    "Checking": "Bağlantı təsdiqlənir, zəhmət olmasa gözləyin...",
+    "Verified": "E-poçt ünvanınız təsdiqləndi.",
+    "InvalidState": "Bir şeylər yanlış getdi."
   },
   "AssetList": {
-    "Title": "p5.js Web Düzenleyicisi | Benim varlıklarım",
-    "ToggleOpenCloseARIA": "Varlık seçeneklerini aç/kapat",
+    "Title": "p5.js Veb redaktoru | Mənim aktivlərim",
+    "ToggleOpenCloseARIA": "Aktiv seçimlərini aç/bağla",
     "Delete": "Sil",
-    "OpenNewTab": "Yeni Sekmede Aç",
-    "NoUploadedAssets": "Yüklenen varlık yok.",
-    "HeaderName": "Adı",
-    "HeaderSize": "Boyutu",
+    "OpenNewTab": "Yeni Sekmədə Aç",
+    "NoUploadedAssets": "Yüklənmiş aktiv yoxdur.",
+    "HeaderName": "Ad",
+    "HeaderSize": "Ölçü",
     "HeaderSketch": "Eskiz"
   },
   "Feedback": {
-    "Title": "p5.js Web Düzenleyicisi | Geri Bildirim",
-    "ViaGithubHeader": "Github Hataları ile",
-    "ViaGithubDescription": "Github'a aşina iseniz, geri bildirimlerinizi ve hata raporlarınızı buradan gönderebilirsiniz.",
-    "GoToGithub": "Github'a Git",
-    "ViaGoogleHeader": "Google Formu ile",
-    "ViaGoogleDescription": "Ayrıca bu hızlı formu doldurarak da geri bildirim gönderebilirsiniz.",
-    "GoToForm": "Form'a Git"
+    "Title": "p5.js Veb redaktoru | Geri bildirim",
+    "ViaGithubHeader": "Github Xətaları ilə",
+    "ViaGithubDescription": "Github ilə tanışsanız, geri bildirimlərinizi və xəta hesabatlarınızı buradan göndərə bilərsiniz.",
+    "GoToGithub": "Github-a get",
+    "ViaGoogleHeader": "Google Formu ilə",
+    "ViaGoogleDescription": "Həmçinin bu sürətli formu dolduraraq geri bildirim göndərə bilərsiniz.",
+    "GoToForm": "Form'a Get"
   },
   "Searchbar": {
-    "SearchSketch": "Eskizleri Ara...",
-    "SearchCollection": "Koleksiyonları Ara...",
-    "ClearTerm": "Temizle"
+    "SearchSketch": "Eskizləri Axtar...",
+    "SearchCollection": "Kolleksiyaları axtar...",
+    "ClearTerm": "Təmizlə"
   },
   "UploadFileModal": {
-    "Title": "Dosya Yükle",
-    "CloseButtonARIA": "Dosya yükleme penceresini kapat",
-    "SizeLimitError": "Hata: Daha fazla dosya yükleyemezsiniz. Toplam boyut sınırına ulaştınız. \n Yüklemek isterseniz, lütfen artık kullanmadıklarınızı kaldırın. \n "
+    "Title": "Fayl Yüklə",
+    "CloseButtonARIA": "Fayl yükləmə pəncərəsini bağla",
+    "SizeLimitError": "Xəta: Daha çox fayl yükləyə bilməzsiniz. Ümumi ölçü limitinə çatmısınız. \n Yükləmək istəyirsinizsə, zəhmət olmasa artıq istifadə etmədiyinizləri silin. \n "
   },
   "FileUploader": {
-    "DictDefaultMessage": "Dosyaları buraya bırakın veya dosya tarayıcısını kullanmak için tıklayın"
+    "DictDefaultMessage": "Faylları buraya atın və ya fayl tarayıcısını istifadə etmək üçün tıklayın"
   },
   "ErrorModal": {
-    "MessageLogin": "Eskizleri kaydetmek için giriş yapmalısınız. Lütfen ",
-    "Login": "Giriş Yap",
-    "LoginOr": " veya ",
-    "SignUp": "Kayıt Ol",
-    "MessageLoggedOut": "Çıkış yaptığınız görünüyor. Lütfen ",
-    "LogIn": "Giriş Yap",
-    "SavedDifferentWindow": "Kaydetmeye çalıştığınız proje başka bir pencereden kaydedilmiş.\n Lütfen en son sürümü görmek için sayfayı yenileyin.",
-    "LinkTitle": "Hesap Bağlantı Hatası",
-    "LinkMessage": "{{serviceauth}} hesabınızı p5.js Web Editor hesabınıza bağlama sorunu yaşandı. {{serviceauth}} hesabınız zaten başka bir p5.js Web Editor hesabına bağlı."
+    "MessageLogin": "Eskizləri saxlamaq üçün daxil olmalısınız. Zəhmət olmasa ",
+    "Login": "Daxil ol",
+    "LoginOr": " və ya ",
+    "SignUp": "Qeydiyyatdan keç",
+    "MessageLoggedOut": "Çıxış etdiyiniz görünür. Zəhmət olmasa ",
+    "LogIn": "Daxil olun",
+    "SavedDifferentWindow": "Saxlamağa çalışdığınız layihə başqa bir pəncərədən saxlanılmışdır.\n Ən son versiyanı görmək üçün zəhmət olmasa səhifəni yeniləyin.",
+    "LinkTitle": "Hesab bağlantı xətası",
+    "LinkMessage": "{{serviceauth}} hesabınızı p5.js Veb Redaktor hesabınıza bağlama problemi yaşanıb. {{serviceauth}} hesabınız artıq başqa bir p5.js veb redaktor hesabına bağlanıb."
   },
   "ShareModal": {
-    "Embed": "Gömülü",
-    "Present": "Sunum",
+    "Embed": "Daxil edilmiş",
+    "Present": "Təqdimat",
     "Fullscreen": "Tam Ekran",
-    "Edit": "Düzenle"
+    "Edit": "Düzəliş et"
   },
   "CollectionView": {
-    "TitleCreate": "Koleksiyon Oluştur",
-    "TitleDefault": "koleksiyon"
-  },
-  "Collection": {
-    "Title": "p5.js Web Editor | Benim koleksiyonlarım",
-    "AnothersTitle": "p5.js Web Editor | {{anotheruser}}'ın koleksiyonları",
+    "TitleCreate": "Kolleksiyon Yarat",
+    "TitleDefault": "kolleksiyon",
     "Share": "Paylaş",
-    "URLLink": "Koleksiyonun bağlantısı",
-    "AddSketch": "Eskiz ekle",
-    "DeleteFromCollection": "{{name_sketch}} eskizini koleksiyondan kaldırmak istediğinizden emin misiniz?",
+    "URLLink": "Kolleksiyonun bağlantısı",
+    "AddSketch": "Eskiz əlavə et",
+    "DeleteFromCollection": "{{name_sketch}} eskizini kolleksiyadan çıxarmaq istədiyinizdən əminsiniz?",
     "SketchDeleted": "Eskiz silindi",
-    "SketchRemoveARIA": "Eskiz koleksiyondan kaldır",
-    "DescriptionPlaceholder": "Açıklama ekle",
-    "Description": "açıklama",
-    "NumSketches": "{{count}} çizim",
-    "NumSketches_plural": "{{count}} çizimler",
-    "By": "Tarafından ",
-    "NoSketches": "Koleksiyonda eskiz yok",
-    "TableSummary": "tüm koleksiyonları içeren tablo",
-    "HeaderName": "İsim",
-    "HeaderCreatedAt": "Eklenme Tarihi",
+    "SketchRemoveARIA": "Eskizi kolleksiyadan çıxar",
+    "DescriptionPlaceholder": "Açıqlama əlavə et",
+    "Description": "açıqlama",
+    "NumSketches": "{{count}} skeç",
+    "NumSketches_plural": "{{count}} skeçlər",
+    "By": "tərəfindən ",
+    "NoSketches": "Kolleksiyada eskiz yoxdur",
+    "TableSummary": "bütün kolleksiyaları əhatə edən cədvəl",
+    "HeaderName": "Ad",
+    "HeaderCreatedAt": "Əlavə edilmə tarixi",
     "HeaderUser": "Sahibi",
     "DirectionAscendingARIA": "Artan sıralama",
     "DirectionDescendingARIA": "Azalan sıralama",
@@ -443,178 +439,169 @@
     "ButtonLabelDescendingARIA": "{{displayName}} azalan sıralama."
   },
   "AddToCollectionList": {
-    "Title": "p5.js Web Düzenleyicisi | Benim koleksiyonlarım",
-    "AnothersTitle": "p5.js Web Düzenleyicisi | {{anotheruser}}'ın koleksiyonları",
-    "Empty": "Koleksiyon yok"
+    "Title": "p5.js Veb Redaktoru | Mənim kolleksiyalarım",
+    "AnothersTitle": "p5.js Veb Redaktoru | {{anotheruser}} - kolleksiyalarım",
+    "Empty": "Kolleksiya yoxdur"
   },
   "CollectionCreate": {
-    "Title": "p5.js Web Düzenleyicisi | Koleksiyon oluştur",
-    "FormError": "Koleksiyon oluşturulamadı",
-    "FormLabel": "Koleksiyon adı",
+    "Title": "p5.js Veb Redaktoru | Kolleksiya yarat",
+    "FormError": "Kolleksiya yaradıla bilmədi",
+    "FormLabel": "Kolleksiya adı",
     "FormLabelARIA": "ad",
-    "NameRequired": "Koleksiyon adı gereklidir",
-    "Description": "Açıklama (isteğe bağlı)",
-    "DescriptionARIA": "açıklama",
-    "DescriptionPlaceholder": "Favori eskizlerim",
-    "SubmitCollectionCreate": "Koleksiyon oluştur"
+    "NameRequired": "Kolleksiya adı tələb olunur",
+    "Description": "Açıqlama (istəyə bağlı)",
+    "DescriptionARIA": "açıqlama",
+    "DescriptionPlaceholder": "Sevimli eskizlərim",
+    "SubmitCollectionCreate": "Kolleksiya yarat"
   },
   "DashboardView": {
-    "CreateCollection": "Koleksiyon oluştur",
+    "CreateCollection": "Kolleksiya yarat",
     "NewSketch": "Yeni eskiz",
-    "CreateCollectionOverlay": "Koleksiyon oluştur"
+    "CreateCollectionOverlay": "Kolleksiya yarat"
   },
   "DashboardTabSwitcher": {
-    "Sketches": "Eskizler",
-    "Collections": "Koleksiyonlar",
-    "Assets": "Varlıklar"
+    "Sketches": "Eskizlər",
+    "Collections": "Kolleksiyalar",
+    "Assets": "Aktivlər"
   },
   "CollectionList": {
-    "Title": "p5.js Web Düzenleyicisi | Benim koleksiyonlarım",
-    "AnothersTitle": "p5.js Web Düzenleyicisi | {{anotheruser}}'ın koleksiyonları",
-    "NoCollections": "Koleksiyon yok.",
-    "TableSummary": "tüm koleksiyonları içeren tablo",
+    "Title": "p5.js Veb Redaktoru | Mənim kolleksiyalarım",
+    "AnothersTitle": "p5.js Veb Redaktoru | {{anotheruser}} kolleksiyaları",
+    "NoCollections": "Kolleksiya yoxdur.",
+    "TableSummary": "bütün kolleksiyonları əhatə edən cədvəl",
     "HeaderName": "Ad",
-    "HeaderCreatedAt": "Oluşturulma Tarihi",
-    "HeaderCreatedAt_mobile": "Oluşturulma",
-    "HeaderUpdatedAt": "Güncelleme Tarihi",
-    "HeaderUpdatedAt_mobile": "Güncelleme",
-    "HeaderNumItems": "# eskizler",
-    "HeaderNumItems_mobile": "# eskizler",
+    "HeaderCreatedAt": "Yaradılma tarixi",
+    "HeaderCreatedAt_mobile": "Yaradılma",
+    "HeaderUpdatedAt": "Yenilənmə tarixi",
+    "HeaderUpdatedAt_mobile": "Yenilənmə",
+    "HeaderNumItems": "# eskizlər",
+    "HeaderNumItems_mobile": "# eskizlər",
     "DirectionAscendingARIA": "Artan sıralama",
     "DirectionDescendingARIA": "Azalan sıralama",
     "ButtonLabelAscendingARIA": "{{displayName}} artan sıralama.",
     "ButtonLabelDescendingARIA": "{{displayName}} azalan sıralama.",
-    "AddSketch": "Eskiz ekle"
+    "AddSketch": "Eskiz əlavə et"
   },
   "CollectionListRow": {
-    "ToggleCollectionOptionsARIA": "Koleksiyon seçeneklerini aç/kapat",
-    "AddSketch": "Eskiz ekle",
+    "ToggleCollectionOptionsARIA": "Kolleksiya seçimlərini aç/bağla",
+    "AddSketch": "Eskiz əlavə et",
     "Delete": "Sil",
-    "Rename": "Yeniden adlandır"
+    "Rename": "Yenidən adlandır"
   },
   "Overlay": {
-    "AriaLabel": "{{title}} kapama penceresi"
+    "AriaLabel": "{{title}} bağlama pəncərəsi"
   },
   "QuickAddList": {
-    "ButtonRemoveARIA": "Koleksiyondan kaldır",
-    "ButtonAddToCollectionARIA": "Koleksiyona ekle",
-    "View": "Görüntüle"
+    "ButtonRemoveARIA": "Kolleksiyadan çıxar",
+    "ButtonAddToCollectionARIA": "Kolleksiyaya əlavə et",
+    "View": "Görünüş"
   },
   "SketchList": {
-    "View": "Görünüm",
-    "Title": "p5.js Web Editörü | Benim eskizlerim",
-    "AnothersTitle": "p5.js Web Editörü | {{anotheruser}}'in eskizleri",
-    "ToggleLabelARIA": "Eskiz Seçeneklerini Aç/Kapa",
-    "DropdownRename": "Yeniden Adlandır",
-    "DropdownDownload": "İndir",
+    "View": "Görünüş",
+    "Title": "p5.js Veb Redaktoru | Mənim eskizlərim",
+    "AnothersTitle": "p5.js Veb Redaktoru | {{anotheruser}} - eskizlərim",
+    "ToggleLabelARIA": "Eskiz seçimlərini aç/bağla",
+    "DropdownRename": "Yenidən adlandır",
+    "DropdownDownload": "Yüklə",
     "DropdownDuplicate": "Kopyala",
-    "DropdownAddToCollection": "Koleksiyona Ekle",
+    "DropdownAddToCollection": "Kolleksiyaya əlavə et",
     "DropdownDelete": "Sil",
     "DirectionAscendingARIA": "Artan",
     "DirectionDescendingARIA": "Azalan",
-    "ButtonLabelAscendingARIA": "{{displayName}}'e göre artan sıralama.",
-    "ButtonLabelDescendingARIA": "{{displayName}}'e göre azalan sıralama.",
-    "AddToCollectionOverlayTitle": "Koleksiyona Ekle",
-    "TableSummary": "Tüm kaydedilmiş projeleri içeren tablo",
+    "ButtonLabelAscendingARIA": "{{displayName}}'ə görə artan sıralama.",
+    "ButtonLabelDescendingARIA": "{{displayName}}'ə görə azalan sıralama.",
+    "AddToCollectionOverlayTitle": "Kolleksiyaya əlavə et",
+    "TableSummary": "Bütün qeyd edilmiş layihələri əhatə edən cədvəl",
     "HeaderName": "Eskiz",
-    "HeaderCreatedAt": "Oluşturma Tarihi",
-    "HeaderCreatedAt_mobile": "Oluşturulma",
-    "HeaderUpdatedAt": "Güncelleme Tarihi",
-    "HeaderUpdatedAt_mobile": "Güncelleme",
-    "NoSketches": "Eskiz yok."
+    "HeaderCreatedAt": "Yaradılma tarixi",
+    "HeaderCreatedAt_mobile": "Yaradılma",
+    "HeaderUpdatedAt": "Yenilənmə Tarixi",
+    "HeaderUpdatedAt_mobile": "Yenilənmə",
+    "NoSketches": "Eskiz yoxdur."
   },
   "AddToCollectionSketchList": {
-    "Title": "p5.js Web Editörü | Benim eskizlerim",
-    "AnothersTitle": "p5.js Web Editörü | {{anotheruser}}'in eskizleri",
-    "NoCollections": "Koleksiyon yok."
+    "Title": "p5.js Veb Redaktoru | Mənim eskizlərim",
+    "AnothersTitle": "p5.js veb redaktoru | {{anotheruser}} - eskizlərim",
+    "NoCollections": "Kolleksiya yoxdur."
   },
   "Editor": {
-    "OpenSketchARIA": "Eskiz dosyaları gezintisini aç",
-    "CloseSketchARIA": "Eskiz dosyaları gezintisini kapat",
-    "UnsavedChangesARIA": "Eskiz kaydedilmemiş değişiklikler içeriyor",
-    "KeyUpLineNumber": "{{lineNumber}}. satır"
+    "OpenSketchARIA": "Eskiz fayllarını naviqasiyasını aç",
+    "CloseSketchARIA": "Eskiz fayllarını naviqasiyasını bağla",
+    "UnsavedChangesARIA": "Eskiz saxlanılmamış dəyişikliklər ehtiva edir",
+    "KeyUpLineNumber": "{{lineNumber}}. xətt"
   },
   "EditorAccessibility": {
-    "NoLintMessages": "Lint mesajı yok ",
-    "CurrentLine": " Şu anki satır"
+    "NoLintMessages": "Lint mesajı yoxdur",
+    "CurrentLine": " Cari xətt"
   },
   "Timer": {
-    "SavedAgo": "Kaydedildi: {{timeAgo}}"
+    "SavedAgo": "Saxlanıldı: {{timeAgo}}"
   },
   "formatDate": {
-    "JustNow": "az önce",
-    "15Seconds": "15 saniye önce",
-    "25Seconds": "25 saniye önce",
-    "35Seconds": "35 saniye önce",
-    "Ago": "{{timeAgo}} önce"
+    "JustNow": "dəqiqə əvvəl",
+    "15Seconds": "15 saniyə əvvəl",
+    "25Seconds": "25 saniyə əvvəl",
+    "35Seconds": "35 saniyə əvvəl",
+    "Ago": "{{timeAgo}} əvvəl"
   },
   "AddRemoveButton": {
-    "AltAddARIA": "Koleksiyona ekle",
-    "AltRemoveARIA": "Koleksiyondan çıkar"
+    "AltAddARIA": "Kolleksiyaya əlavə et",
+    "AltRemoveARIA": "Kolleksiyadan çıxar"
   },
   "CopyableInput": {
-    "CopiedARIA": "Panoya kopyalandı!",
-    "OpenViewTabARIA": "Yeni sekmede {{label}} görünümünü aç"
+    "CopiedARIA": "Klipborda kopyalandı!",
+    "OpenViewTabARIA": "{{label}} görünüşünü yeni tabda aç"
   },
   "EditableInput": {
-    "EditValue": "{{display}} değerini düzenle",
-    "EmptyPlaceholder": "Değer yok"
+    "EditValue": "{{display}} dəyərini düzəlt",
+    "EmptyPlaceholder": "Dəyər yoxdur"
   },
   "PreviewNav": {
-    "EditSketchARIA": "Eskizi düzenle",
-    "ByUser": "tarafından"
+    "EditSketchARIA": "Eskizi düzəlt",
+    "ByUser": "tərəfindən"
   },
   "MobilePreferences": {
     "Settings": "Ayarlar",
-    "GeneralSettings": "Genel ayarlar",
-    "Accessibility": "Erişilebilirlik",
-    "AccessibleOutput": "Erişilebilir Çıktı",
-    "Theme": "Tema",
-    "LightTheme": "Aydınlık",
-    "DarkTheme": "Karanlık",
-    "HighContrastTheme": "Yüksek Kontrast",
-    "Autosave": "Otomatik Kaydet",
-    "WordWrap": "Satır Kaydırma",
-    "LineNumbers": "Satır Numaraları",
-    "LintWarningSound": "Lint Uyarı Sesleri",
-    "UsedScreenReader": "Ekran Okuyucu ile kullanıldı",
-    "PlainText": "Düz Metin",
-    "TableText": "Tablo Metni",
-    "Sound": "Ses"
+    "GeneralSettings": "Ümumi ayarlar",
+    "Accessibility": "Əlçatanlıq",
+    "AccessibleOutput": "Əlçatan nəticə çıxışı",
+    "Theme": "Üslub",
+    "LightTheme": "Aydın",
+    "DarkTheme": "Qaranlıq",
+    "HighContrastTheme": "Yüksək kontrast",
+    "Autosave": "Avtomatik yadda saxla",
+    "WordWrap": "Sətir bölünməsi",
+    "LineNumbers": "Sətir nömrələri",
+    "LintWarningSound": "Lint xəbərdarlıq Səsləri",
+    "UsedScreenReader": "Ekran oxuyucusu istifadə edildi",
+    "PlainText": "Adi mətn",
+    "TableText": "Cədvəl mətni",
+    "Sound": "Səs"
   },
   "PreferenceCreators": {
-    "On": "Açık",
-    "Off": "Kapalı"
+    "On": "Açıq",
+    "Off": "Bağlı"
   },
   "MobileIDEView": {
-    "Preferences": "Tercihler",
-    "MyStuff": "Benim Şeylerim",
-    "Examples": "Örnekler",
-    "OriginalEditor": "Orijinal Editör",
-    "Login": "Giriş Yap",
-    "Logout": "Çıkış Yap"
-  },
-  "MobileDashboardView": {
-    "Examples": "Örnekler",
-    "Sketches": "Eskizler",
-    "Collections": "Koleksiyonlar",
-    "Assets": "Varlıklar",
-    "MyStuff": "Benim Şeylerim",
-    "CreateSketch": "Eskiz Oluştur",
-    "CreateCollection": "Koleksiyon Oluştur"
+    "Preferences": "Tənzimləmələr",
+    "MyStuff": "Mənim əşyalarım",
+    "Examples": "Nümunələr",
+    "OriginalEditor": "Orjinal redaktor",
+    "Login": "Daxil Ol",
+    "Logout": "Çıxış"
   },
   "Explorer": {
-    "Files": "Dosyalar"
+    "Files": "Fayllar"
   },
   "Cookies": {
-    "Header": "Çerezler",
-    "Body": "p5.js Editörü çerezleri kullanır. Bazıları web sitesi işlevselliği için önemlidir ve hesabınızı ve tercihlerinizi yönetmenize olanak tanır. Diğerleri önemli değildir - analiz için kullanılırlar ve topluluğumuz hakkında daha fazla bilgi edinmemizi sağlarlar. <strong> Bu verileri asla satmıyoruz veya reklam için kullanmıyoruz. </strong> Hangi çerezlere izin vermek istediğinize karar verebilirsiniz ve <0>Gizlilik Politikamızda<0> daha fazla bilgi edinebilirsiniz.",
-    "AllowAll": "Tümüne İzin Ver",
-    "AllowEssential": "Önemli Olanlara İzin Ver"
+    "Header": "Kukilər",
+    "Body": "p5.js redaktoru kukilərdən istifadə edir. Onlardan bəziləri veb sayt funksiyaları üçün vacibdir və hesabınızı və tərcihlərinizi idarə etməyə imkan verir. Digərləri əhəmiyyətli deyil - onlar təhlil üçün istifadə olunur və publikamız barədə daha çox məlumat əldə etməyimizə kömək edir. <strong> Bu məlumatları heç vaxt satmırıq və reklam üçün istifadə etmirik. </strong> Hansı kukilərə icazə vermək istədiyinizi siz qərarlaşdıra bilərsiniz və <0>Məxfilik siyasətimiz<0> ilə tanış olaraq daha çox məlumat əldə edə bilərsiniz.",
+    "AllowAll": "Hamısına İcazə Ver",
+    "AllowEssential": "Əsas Olanlara İcazə Ver"
   },
   "Legal": {
-    "PrivacyPolicy": "Gizlilik Politikası",
-    "TermsOfUse": "Kullanım Koşulları",
-    "CodeOfConduct": "Davranış Kuralları"
+    "PrivacyPolicy": "Məxfilik siyasəti",
+    "TermsOfUse": "İstifadə şərtləri",
+    "CodeOfConduct": "Davranış qaydaları"
   }
 }
