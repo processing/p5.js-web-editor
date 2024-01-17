@@ -1,0 +1,633 @@
+{
+  "Nav": {
+    "File": {
+      "Title": "Plik",
+      "New": "Nowy",
+      "Share": "Udostępnij",
+      "Duplicate": "Duplikuj",
+      "Open": "Otwórz",
+      "Download": "Pobierz",
+      "AddToCollection": "Dodaj do kolekcji",
+      "Examples": "Przykłady"
+    },
+    "Edit": {
+      "Title": "Edytuj",
+      "TidyCode": "Układaj kod",
+      "Find": "Znajdź",
+      "Replace": "Zamień"
+    },
+    "Sketch": {
+      "Title": "Szkic",
+      "AddFile": "Dodaj plik",
+      "AddFolder": "Dodaj folder",
+      "Run": "Uruchom",
+      "Stop": "Zatrzymaj"
+    },
+    "Help": {
+      "Title": "Pomoc",
+      "KeyboardShortcuts": "Skróty klawiaturowe",
+      "Reference": "Odniesienie",
+      "About": "O programie"
+    },
+    "Lang": "Język",
+    "BackEditor": "Powrót do edytora",
+    "WarningUnsavedChanges": "Czy na pewno chcesz opuścić tę stronę? Masz niezapisane zmiany.",
+    "Login": "Zaloguj się",
+    "LoginOr": "lub",
+    "SignUp": "Zarejestruj się",
+    "Auth": {
+      "Welcome": "Witaj",
+      "Hello": "Cześć",
+      "MyAccount": "Moje konto",
+      "My": "Moje",
+      "MySketches": "Moje szkice",
+      "MyCollections": "Moje kolekcje",
+      "Asset": "Zasób",
+      "MyAssets": "Moje zasoby",
+      "LogOut": "Wyloguj się"
+    },
+    "Fundraiser": "Wspomóż p5.js i Processing Foundation!"
+  },
+  "CodemirrorFindAndReplace": {
+    "ToggleReplace": "Przełącz zamianę",
+    "Find": "Znajdź",
+    "FindPlaceholder": "Znajdź w plikach",
+    "Replace": "Zamień",
+    "ReplaceAll": "Zamień wszystko",
+    "ReplacePlaceholder": "Tekst do zamiany",
+    "Regex": "Wyrażenie regularne",
+    "CaseSensitive": "Z uwzględnieniem wielkości liter",
+    "WholeWords": "Całe wyrazy",
+    "Previous": "Poprzedni",
+    "Next": "Następny",
+    "NoResults": "Brak wyników",
+    "Close": "Zamknij"
+  },
+  "LoginForm": {
+    "UsernameOrEmail": "Email lub Nazwa użytkownika",
+    "UsernameOrEmailARIA": "Email lub Nazwa użytkownika",
+    "Password": "Hasło",
+    "PasswordARIA": "Hasło",
+    "Submit": "Zaloguj się"
+  },
+  "LoginView": {
+    "Title": "p5.js Web Editor | Logowanie",
+    "Login": "Zaloguj się",
+    "LoginOr": "lub",
+    "SignUp": "Zarejestruj się",
+    "Email": "email",
+    "Username": "nazwa użytkownika",
+    "DontHaveAccount": "Nie masz konta? ",
+    "ForgotPassword": "Zapomniałeś hasła? ",
+    "ResetPassword": "Zresetuj hasło"
+  },
+  "SocialAuthButton": {
+    "Connect": "Połącz konto {{serviceauth}}",
+    "Unlink": "Odłącz konto {{serviceauth}}",
+    "Login": "Zaloguj się za pomocą konta {{serviceauth}}",
+    "LogoARIA": "Logo {{serviceauth}}"
+  },
+  "About": {
+    "Title": "O nas",
+    "TitleHelmet": "p5.js Web Editor | O nas",
+    "Contribute": "Wspomóż",
+    "NewP5": "Nowy w p5.js?",
+    "Report": "Zgłoś błąd",
+    "Learn": "Dowiedz się",
+    "Resources": "Zasoby",
+    "Libraries": "Biblioteki",
+    "Forum": "Forum",
+    "Examples": "Przykłady",
+    "PrivacyPolicy": "Polityka prywatności",
+    "TermsOfUse": "Warunki korzystania",
+    "CodeOfConduct": "Kodeks postępowania"
+  },
+  "Toast": {
+    "OpenedNewSketch": "Otworzono nowy szkic.",
+    "SketchSaved": "Szkic zapisany.",
+    "SketchFailedSave": "Nie udało się zapisać szkicu.",
+    "AutosaveEnabled": "Automatyczne zapisywanie włączone.",
+    "LangChange": "Zmiana języka",
+    "SettingsSaved": "Ustawienia zapisane."
+  },
+  "Toolbar": {
+    "Preview": "Podgląd",
+    "Auto-refresh": "Automatyczne odświeżanie",
+    "OpenPreferencesARIA": "Otwórz preferencje",
+    "PlaySketchARIA": "Uruchom szkic",
+    "PlayOnlyVisualSketchARIA": "Uruchom tylko wizualny szkic",
+    "StopSketchARIA": "Zatrzymaj szkic",
+    "EditSketchARIA": "Edytuj nazwę szkicu",
+    "NewSketchNameARIA": "Nowa nazwa szkicu",
+    "By": " przez "
+  },
+  "Console": {
+    "Title": "Konsola",
+    "Clear": "Wyczyść",
+    "ClearARIA": "Wyczyść konsolę",
+    "Close": "Zamknij",
+    "CloseARIA": "Zamknij konsolę",
+    "Open": "Otwórz",
+    "OpenARIA": "Otwórz konsolę"
+  },
+  "Preferences": {
+    "Settings": "Ustawienia",
+    "GeneralSettings": "Ogólne ustawienia",
+    "Accessibility": "Dostępność",
+    "Theme": "Motyw",
+    "LightTheme": "Jasny",
+    "LightThemeARIA": "jasny motyw włączony",
+    "DarkTheme": "Ciemny",
+    "DarkThemeARIA": "ciemny motyw włączony",
+    "HighContrastTheme": "Wysoki kontrast",
+    "HighContrastThemeARIA": "wysoki kontrast włączony",
+    "TextSize": "Rozmiar tekstu",
+    "DecreaseFont": "Zmniejsz",
+    "DecreaseFontARIA": "zmniejsz rozmiar czcionki",
+    "IncreaseFont": "Zwiększ",
+    "IncreaseFontARIA": "zwiększ rozmiar czcionki",
+    "FontSize": "Rozmiar czcionki",
+    "SetFontSize": "ustaw rozmiar czcionki",
+    "Autosave": "Automatyczne zapisywanie",
+    "On": "Włączone",
+    "AutosaveOnARIA": "automatyczne zapisywanie włączone",
+    "Off": "Wyłączone",
+    "AutosaveOffARIA": "automatyczne zapisywanie wyłączone",
+    "AutocloseBracketsQuotes": "Automatyczne zamykanie nawiasów i cudzysłowów",
+    "AutocloseBracketsQuotesOnARIA": "automatyczne zamykanie nawiasów i cudzysłowów włączone",
+    "AutocloseBracketsQuotesOffARIA": "automatyczne zamykanie nawiasów i cudzysłowów wyłączone",
+    "AutocompleteHinter": "Podpowiedzi automatycznego uzupełniania",
+    "AutocompleteHinterOnARIA": "podpowiedzi automatycznego uzupełniania włączone",
+    "AutocompleteHinterOffARIA": "podpowiedzi automatycznego uzupełniania wyłączone",
+    "WordWrap": "Zawijanie wiersza",
+    "LineWrapOnARIA": "zawijanie wiersza włączone",
+    "LineWrapOffARIA": "zawijanie wiersza wyłączone",
+    "LineNumbers": "Numery wierszy",
+    "LineNumbersOnARIA": "numery wierszy włączone",
+    "LineNumbersOffARIA": "numery wierszy wyłączone",
+    "LintWarningSound": "Dźwięk ostrzeżenia linta",
+    "LintWarningOnARIA": "dźwięk ostrzeżenia linta włączony",
+    "LintWarningOffARIA": "dźwięk ostrzeżenia linta wyłączony",
+    "PreviewSound": "Dźwięk podglądu",
+    "PreviewSoundARIA": "dźwięk podglądu",
+    "AccessibleTextBasedCanvas": "Dostępny tekstowy canvas",
+    "UsedScreenReader": "Używane z czytnikiem ekranowym",
+    "PlainText": "Zwykły tekst",
+    "TextOutputARIA": "wyjście tekstowe włączone",
+    "TableText": "Tekst w tabeli",
+    "TableOutputARIA": "wyjście tabeli włączone"
+  },
+  "KeyboardShortcuts": {
+    "Title": "Skróty klawiszowe",
+    "ShortcutsFollow": "Skróty klawiszowe do edycji kodu",
+    "SublimeText": "Skróty Sublime Text",
+    "CodeEditing": {
+      "Tidy": "Uporządkuj",
+      "FindText": "Znajdź tekst",
+      "FindNextMatch": "Znajdź następne dopasowanie",
+      "FindPrevMatch": "Znajdź poprzednie dopasowanie",
+      "ReplaceTextMatch": "Zastąp tekst dopasowania",
+      "IndentCodeLeft": "Wcięcie kodu w lewo",
+      "IndentCodeRight": "Wcięcie kodu w prawo",
+      "CommentLine": "Skomentuj linię",
+      "FindNextTextMatch": "Znajdź następny tekst dopasowania",
+      "FindPreviousTextMatch": "Znajdź poprzedni tekst dopasowania",
+      "CodeEditing": "Edycja kodu",
+      "ColorPicker": "Pokaż kolorowy wybierak"
+    },
+    "General": {
+      "StartSketch": "Uruchom szkic",
+      "StopSketch": "Zatrzymaj szkic",
+      "TurnOnAccessibleOutput": "Włącz dostępne wyjście",
+      "TurnOffAccessibleOutput": "Wyłącz dostępne wyjście"
+    }
+  },
+  "Fundraiser": {
+    "Title": "Wspomóż nasze oprogramowanie i zespół",
+    "Description": "🎉 Dołącz do nas w świętowaniu Dekady Kodu! 🎉 Wspieraj p5.js i Fundację Processing i zdobywaj unikalne nagrody. 🙂",
+    "CallToAction": "Przyczynij się i dowiedz się więcej!"
+  },
+  "Sidebar": {
+    "Title": "Pliki szkiców",
+    "ToggleARIA": "Przełącz opcje otwierania/zamykania plików szkiców",
+    "AddFolder": "Utwórz folder",
+    "AddFolderARIA": "dodaj folder",
+    "AddFile": "Utwórz plik",
+    "AddFileARIA": "dodaj plik",
+    "UploadFile": "Prześlij plik",
+    "UploadFileARIA": "prześlij plik"
+  },
+  "FileNode": {
+    "OpenFolderARIA": "Otwórz zawartość folderu",
+    "CloseFolderARIA": "Zamknij zawartość folderu",
+    "ToggleFileOptionsARIA": "Przełącz opcje otwierania/zamykania pliku",
+    "AddFolder": "Utwórz folder",
+    "AddFolderARIA": "dodaj folder",
+    "AddFile": "Utwórz plik",
+    "AddFileARIA": "dodaj plik",
+    "UploadFile": "Prześlij plik",
+    "UploadFileARIA": "prześlij plik",
+    "Rename": "Zmień nazwę",
+    "Delete": "Usuń"
+  },
+  "Common": {
+    "SiteName": "Edytor internetowy p5.js",
+    "Error": "Błąd",
+    "ErrorARIA": "Błąd",
+    "Save": "Zapisz",
+    "p5logoARIA": "Logo p5.js",
+    "PFlogoARIA": "Logo Fundacji Processing",
+    "DeleteConfirmation": "Czy na pewno chcesz usunąć {{name}}?"
+  },
+  "IDEView": {
+    "SubmitFeedback": "Prześlij opinię",
+    "SubmitFeedbackARIA": "prześlij-opinię",
+    "AddCollectionTitle": "Dodaj do kolekcji",
+    "AddCollectionARIA": "dodaj-do-kolekcji",
+    "ShareTitle": "Udostępnij",
+    "ShareARIA": "udostępnij"
+  },
+  "NewFileModal": {
+    "Title": "Utwórz plik",
+    "CloseButtonARIA": "Zamknij nowe okno pliku",
+    "EnterName": "Proszę podać nazwę",
+    "InvalidType": "Nieprawidłowy rodzaj pliku. Dopuszczalne rozszerzenia to .js, .css, .json, .xml, .stl, .txt, .csv, .tsv, .frag i .vert."
+  },
+  "NewFileForm": {
+    "AddFileSubmit": "Dodaj plik",
+    "Placeholder": "Nazwa"
+  },
+  "NewFolderModal": {
+    "Title": "Utwórz folder",
+    "CloseButtonARIA": "Zamknij nowe okno folderu",
+    "EnterName": "Proszę podać nazwę",
+    "EmptyName": "Nazwa folderu nie może zawierać samych spacji",
+    "InvalidExtension": "Nazwa folderu nie może zawierać rozszerzenia"
+  },
+  "NewFolderForm": {
+    "AddFolderSubmit": "Dodaj folder",
+    "Placeholder": "Nazwa"
+  },
+  "ResetPasswordForm": {
+    "Email": "E-mail używany do rejestracji",
+    "EmailARIA": "e-mail",
+    "Submit": "Wyślij e-mail resetujący hasło"
+  },
+  "ResetPasswordView": {
+    "Title": "Edytor internetowy p5.js | Resetowanie hasła",
+    "Reset": "Resetuj swoje hasło",
+    "Submitted": "Twój e-mail resetujący hasło powinien niedługo dotrzeć. Jeśli go nie widzisz, sprawdź\n            folder ze spamem, ponieważ czasami tam trafia.",
+    "Login": "Zaloguj się",
+    "LoginOr": "lub",
+    "SignUp": "Zarejestruj się"
+  },
+  "ReduxFormUtils": {
+    "errorInvalidEmail": "Proszę podać prawidłowy adres e-mail",
+    "errorEmptyEmail": "Proszę podać adres e-mail",
+    "errorPasswordMismatch": "Hasła muszą być zgodne",
+    "errorEmptyPassword": "Proszę podać hasło",
+    "errorShortPassword": "Hasło musi mieć co najmniej 6 znaków",
+    "errorConfirmPassword": "Proszę potwierdzić hasło",
+    "errorNewPassword": "Proszę podać nowe hasło lub pozostawić puste pole na aktualne hasło.",
+    "errorEmptyUsername": "Proszę podać nazwę użytkownika.",
+    "errorLongUsername": "Nazwa użytkownika musi mieć mniej niż 20 znaków.",
+    "errorValidUsername": "Nazwa użytkownika może składać się tylko z cyfr, liter, kropek, myślników i podkreśleń."
+  },
+  "NewPasswordView": {
+    "Title": "Edytor internetowy p5.js | Nowe hasło",
+    "Description": "Ustaw nowe hasło",
+    "TokenInvalidOrExpired": "Token resetujący hasło jest nieprawidłowy lub wygasł.",
+    "EmptyPassword": "Proszę podać hasło",
+    "PasswordConfirmation": "Proszę potwierdzić hasło",
+    "PasswordMismatch": "Hasła muszą być zgodne"
+  },
+  "AccountForm": {
+    "Email": "E-mail",
+    "EmailARIA": "e-mail",
+    "Unconfirmed": "Niepotwierdzone.",
+    "EmailSent": "Wysłano potwierdzenie, sprawdź swój e-mail.",
+    "Resend": "Wyślij ponownie e-mail potwierdzający",
+    "UserName": "Nazwa użytkownika",
+    "UserNameARIA": "Nazwa użytkownika",
+    "CurrentPassword": "Aktualne hasło",
+    "CurrentPasswordARIA": "Aktualne hasło",
+    "NewPassword": "Nowe hasło",
+    "NewPasswordARIA": "Nowe hasło",
+    "SubmitSaveAllSettings": "Zapisz wszystkie ustawienia"
+  },
+  "AccountView": {
+    "SocialLogin": "Logowanie za pomocą mediów społecznościowych",
+    "SocialLoginDescription": "Użyj swojego konta GitHub lub Google, aby zalogować się do Edytora internetowego p5.js.",
+    "Title": "Edytor internetowy p5.js | Ustawienia konta",
+    "Settings": "Ustawienia konta",
+    "AccountTab": "Konto",
+    "AccessTokensTab": "Tokeny dostępu"
+  },
+  "APIKeyForm": {
+    "ConfirmDelete": "Czy na pewno chcesz usunąć {{key_label}}?",
+    "Summary": "Tokeny dostępu osobistego działają jak hasło, pozwalając skryptom\n          automatycznym uzyskać dostęp do API Edytora. Utwórz token dla każdego skryptu,\n          który potrzebuje dostępu.",
+    "CreateToken": "Utwórz nowy token",
+    "TokenLabel": "Do czego służy ten token?",
+    "TokenPlaceholder": "Do czego służy ten token? np. Skrypt importujący przykład",
+    "CreateTokenSubmit": "Utwórz",
+    "NoTokens": "Nie masz żadnych istniejących tokenów.",
+    "NewTokenTitle": "Twój nowy token dostępu",
+    "NewTokenInfo": "Upewnij się, że skopiowałeś swój nowy osobisty token dostępu teraz.\n                  Nie będziesz w stanie go ponownie zobaczyć!",
+    "ExistingTokensTitle": "Istniejące tokeny"
+  },
+  "APIKeyList": {
+    "Name": "Nazwa",
+    "Created": "Utworzono",
+    "LastUsed": "Ostatnie użycie",
+    "Actions": "Akcje",
+    "Never": "Nigdy",
+    "DeleteARIA": "Usuń klucz API"
+  },
+  "NewPasswordForm": {
+    "Title": "Hasło",
+    "TitleARIA": "Hasło",
+    "ConfirmPassword": "Potwierdź hasło",
+    "ConfirmPasswordARIA": "Potwierdź hasło",
+    "SubmitSetNewPassword": "Ustaw nowe hasło"
+  },
+  "SignupForm": {
+    "Title": "Nazwa użytkownika",
+    "TitleARIA": "nazwa użytkownika",
+    "Email": "E-mail",
+    "EmailARIA": "e-mail",
+    "Password": "Hasło",
+    "PasswordARIA": "hasło",
+    "ConfirmPassword": "Potwierdź hasło",
+    "ConfirmPasswordARIA": "Potwierdź hasło",
+    "SubmitSignup": "Zarejestruj się"
+  },
+  "SignupView": {
+    "Title": "Edytor internetowy p5.js | Rejestracja",
+    "Description": "Zarejestruj się",
+    "Or": "Albo",
+    "AlreadyHave": "Masz już konto?",
+    "Login": "Zaloguj się",
+    "Warning": "Rejestrując się, zgadzasz się z <0>Warunkami korzystania</0> i <1>Polityką prywatności</1> Edytora p5.js."
+  },
+  "EmailVerificationView": {
+    "Title": "Edytor internetowy p5.js | Weryfikacja e-mail",
+    "Verify": "Zweryfikuj swój e-mail",
+    "InvalidTokenNull": "Ten link jest nieprawidłowy.",
+    "Checking": "Trwa weryfikacja tokenu, proszę czekać...",
+    "Verified": "Wszystko gotowe, twój adres e-mail został zweryfikowany.",
+    "InvalidState": "Coś poszło nie tak."
+  },
+  "AssetList": {
+    "Title": "Edytor internetowy p5.js | Moje zasoby",
+    "ToggleOpenCloseARIA": "Przełącz opcje otwierania/zamykania zasobów",
+    "Delete": "Usuń",
+    "OpenNewTab": "Otwórz w nowej karcie",
+    "NoUploadedAssets": "Brak przesłanych zasobów.",
+    "HeaderName": "Nazwa",
+    "HeaderSize": "Rozmiar",
+    "HeaderSketch": "Szkic"
+  },
+  "Feedback": {
+    "Title": "Edytor internetowy p5.js | Opinie",
+    "ViaGithubHeader": "Za pomocą problemów na Githubie",
+    "ViaGithubDescription": "Jeśli znasz się na Githubie, to nasza preferowana metoda otrzymywania raportów o błędach i opinii.",
+    "GoToGithub": "Przejdź do Githuba",
+    "ViaGoogleHeader": "Za pomocą formularza Google",
+    "ViaGoogleDescription": "Możesz także wysłać ten szybki formularz.",
+    "GoToForm": "Przejdź do formularza"
+  },
+  "Searchbar": {
+    "SearchSketch": "Szukaj szkiców...",
+    "SearchCollection": "Szukaj kolekcji...",
+    "ClearTerm": "wyczyść"
+  },
+  "UploadFileModal": {
+    "Title": "Prześlij plik",
+    "CloseButtonARIA": "Zamknij okno przesyłania pliku",
+    "SizeLimitError": "Błąd: Nie możesz przesyłać więcej plików. Osiągnąłeś łączny limit rozmiaru {{sizeLimit}}.\n                Jeśli chcesz przesłać więcej, usuń te, których już nie używasz,\n                w swoim "
+  },
+  "FileUploader": {
+    "DictDefaultMessage": "Upuść pliki tutaj lub kliknij, aby użyć przeglądarki plików"
+  },
+  "ErrorModal": {
+    "MessageLogin": "Aby zapisać szkice, musisz być zalogowany. Proszę ",
+    "Login": "zaloguj się",
+    "LoginOr": "lub ",
+    "SignUp": "zarejestruj się",
+    "MessageLoggedOut": "Wygląda na to, że zostałeś wylogowany. Proszę ",
+    "LogIn": "zaloguj się",
+    "SavedDifferentWindow": "Projekt, który próbujesz zapisać, został zapisany z innego okna.\n        Proszę odświeżyć stronę, aby zobaczyć najnowszą wersję.",
+    "LinkTitle": "Błąd łączenia konta",
+    "LinkMessage": "Wystąpił problem podczas łączenia twojego konta {{serviceauth}} z kontem Edytora internetowego p5.js. Twoje konto {{serviceauth}} zostało już połączone z innym kontem Edytora internetowego p5.js."
+  },
+  "ShareModal": {
+    "Embed": "Osadź",
+    "Present": "Prezentuj",
+    "Fullscreen": "Pełny ekran",
+    "Edit": "Edytuj"
+  },
+  "CollectionView": {
+    "TitleCreate": "Utwórz kolekcję",
+    "TitleDefault": "kolekcja"
+  },
+  "Collection": {
+    "Title": "Edytor internetowy p5.js | Moje kolekcje",
+    "AnothersTitle": "Edytor internetowy p5.js | Kolekcje użytkownika {{anotheruser}}",
+    "Share": "Udostępnij",
+    "URLLink": "Link do kolekcji",
+    "AddSketch": "Dodaj szkic",
+    "DeleteFromCollection": "Czy na pewno chcesz usunąć {{name_sketch}} z tej kolekcji?",
+    "SketchDeleted": "Szkic usunięty",
+    "SketchRemoveARIA": "Usuń szkic z kolekcji",
+    "DescriptionPlaceholder": "Dodaj opis",
+    "Description": "opis",
+    "NumSketches": "{{count}} szkic",
+    "NumSketches_plural": "{{count}} szkice",
+    "By": "Kolekcja autorstwa ",
+    "NoSketches": "Brak szkiców w kolekcji",
+    "TableSummary": "tabela zawierająca wszystkie kolekcje",
+    "HeaderName": "Nazwa",
+    "HeaderCreatedAt": "Data dodania",
+    "HeaderUser": "Właściciel",
+    "DirectionAscendingARIA": "Rosnąco",
+    "DirectionDescendingARIA": "Malejąco",
+    "ButtonLabelAscendingARIA": "Sortuj według {{displayName}} rosnąco.",
+    "ButtonLabelDescendingARIA": "Sortuj według {{displayName}} malejąco."
+  },
+  "AddToCollectionList": {
+    "Title": "Edytor internetowy p5.js | Moje kolekcje",
+    "AnothersTitle": "Edytor internetowy p5.js | Kolekcje użytkownika {{anotheruser}}",
+    "Empty": "Brak kolekcji"
+  },
+  "CollectionCreate": {
+    "Title": "Edytor internetowy p5.js | Utwórz kolekcję",
+    "FormError": "Nie udało się utworzyć kolekcji",
+    "FormLabel": "Nazwa kolekcji",
+    "FormLabelARIA": "nazwa",
+    "NameRequired": "Nazwa kolekcji jest wymagana",
+    "Description": "Opis (opcjonalny)",
+    "DescriptionARIA": "opis",
+    "DescriptionPlaceholder": "Moje ulubione szkice",
+    "SubmitCollectionCreate": "Utwórz kolekcję"
+  },
+  "DashboardView": {
+    "CreateCollection": "Utwórz kolekcję",
+    "NewSketch": "Nowy szkic",
+    "CreateCollectionOverlay": "Utwórz kolekcję"
+  },
+  "DashboardTabSwitcher": {
+    "Sketches": "Szkice",
+    "Collections": "Kolekcje",
+    "Assets": "Zasoby"
+  },
+  "CollectionList": {
+    "Title": "Edytor internetowy p5.js | Moje kolekcje",
+    "AnothersTitle": "Edytor internetowy p5.js | Kolekcje użytkownika {{anotheruser}}",
+    "NoCollections": "Brak kolekcji.",
+    "TableSummary": "tabela zawierająca wszystkie kolekcje",
+    "HeaderName": "Nazwa",
+    "HeaderCreatedAt": "Data utworzenia",
+    "HeaderCreatedAt_mobile": "Utworzono",
+    "HeaderUpdatedAt": "Data aktualizacji",
+    "HeaderUpdatedAt_mobile": "Aktualizowano",
+    "HeaderNumItems": "# szkiców",
+    "HeaderNumItems_mobile": "# szkiców",
+    "DirectionAscendingARIA": "Rosnąco",
+    "DirectionDescendingARIA": "Malejąco",
+    "ButtonLabelAscendingARIA": "Sortuj według {{displayName}} rosnąco.",
+    "ButtonLabelDescendingARIA": "Sortuj według {{displayName}} malejąco.",
+    "AddSketch": "Dodaj szkic"
+  },
+  "CollectionListRow": {
+    "ToggleCollectionOptionsARIA": "Przełącz opcje otwierania/zamykania kolekcji",
+    "AddSketch": "Dodaj szkic",
+    "Delete": "Usuń",
+    "Rename": "Zmień nazwę"
+  },
+  "Overlay": {
+    "AriaLabel": "Zamknij nakładkę {{title}}"
+  },
+  "QuickAddList": {
+    "ButtonRemoveARIA": "Usuń z kolekcji",
+    "ButtonAddToCollectionARIA": "Dodaj do kolekcji",
+    "View": "Widok"
+  },
+  "SketchList": {
+    "View": "Widok",
+    "Title": "Edytor internetowy p5.js | Moje szkice",
+    "AnothersTitle": "Edytor internetowy p5.js | Szkice użytkownika {{anotheruser}}",
+    "ToggleLabelARIA": "Przełącz opcje otwierania/zamykania opcji szkicu",
+    "DropdownRename": "Zmień nazwę",
+    "DropdownDownload": "Pobierz",
+    "DropdownDuplicate": "Duplikuj",
+    "DropdownAddToCollection": "Dodaj do kolekcji",
+    "DropdownDelete": "Usuń",
+    "DirectionAscendingARIA": "Rosnąco",
+    "DirectionDescendingARIA": "Malejąco",
+    "ButtonLabelAscendingARIA": "Sortuj według {{displayName}} rosnąco.",
+    "ButtonLabelDescendingARIA": "Sortuj według {{displayName}} malejąco.",
+    "AddToCollectionOverlayTitle": "Dodaj do kolekcji",
+    "TableSummary": "tabela zawierająca wszystkie zapisane projekty",
+    "HeaderName": "Szkic",
+    "HeaderCreatedAt": "Data utworzenia",
+    "HeaderCreatedAt_mobile": "Utworzono",
+    "HeaderUpdatedAt": "Data aktualizacji",
+    "HeaderUpdatedAt_mobile": "Aktualizowano",
+    "NoSketches": "Brak szkiców."
+  },
+  "AddToCollectionSketchList": {
+    "Title": "Edytor internetowy p5.js | Moje szkice",
+    "AnothersTitle": "Edytor internetowy p5.js | Szkice użytkownika {{anotheruser}}",
+    "NoCollections": "Brak kolekcji."
+  },
+  "Editor": {
+    "OpenSketchARIA": "Otwórz nawigację plików szkiców",
+    "CloseSketchARIA": "Zamknij nawigację plików szkiców",
+    "UnsavedChangesARIA": "Szkic zawiera niezapisane zmiany",
+    "KeyUpLineNumber": "linia {{lineNumber}}"
+  },
+  "EditorAccessibility": {
+    "NoLintMessages": "Brak komunikatów lint",
+    "CurrentLine": "Bieżąca linia"
+  },
+  "Timer": {
+    "SavedAgo": "Zapisano: {{timeAgo}}"
+  },
+  "formatDate": {
+    "JustNow": "teraz",
+    "15Seconds": "15 sekund temu",
+    "25Seconds": "25 sekund temu",
+    "35Seconds": "35 sekund temu",
+    "Ago": "{{timeAgo}} temu"
+  },
+  "AddRemoveButton": {
+    "AltAddARIA": "Dodaj do kolekcji",
+    "AltRemoveARIA": "Usuń z kolekcji"
+  },
+  "CopyableInput": {
+    "CopiedARIA": "Skopiowane do schowka!",
+    "OpenViewTabARIA": "Otwórz widok {{label}} w nowej karcie"
+  },
+  "EditableInput": {
+    "EditValue": "Edytuj wartość {{display}}",
+    "EmptyPlaceholder": "Brak wartości"
+  },
+  "PreviewNav": {
+    "EditSketchARIA": "Edytuj szkic",
+    "ByUser": "przez"
+  },
+  "MobilePreferences": {
+    "Settings": "Ustawienia",
+    "GeneralSettings": "Ustawienia ogólne",
+    "Accessibility": "Dostępność",
+    "AccessibleOutput": "Dostępny wynik",
+    "Theme": "Motyw",
+    "LightTheme": "Jasny",
+    "DarkTheme": "Ciemny",
+    "HighContrastTheme": "Wysoki kontrast",
+    "Autosave": "Automatyczne zapisywanie",
+    "AutocompleteHinter": "Podpowiadanie autouzupełniania",
+    "WordWrap": "Zawijanie tekstu",
+    "LineNumbers": "Numery linii",
+    "LintWarningSound": "Dźwięk ostrzeżeń lint",
+    "UsedScreenReader": "Używane z czytnikiem ekranu",
+    "PlainText": "Zwykły tekst",
+    "TableText": "Tekst w tabeli",
+    "Sound": "Dźwięk"
+  },
+  "PreferenceCreators": {
+    "On": "Włączone",
+    "Off": "Wyłączone"
+  },
+  "MobileIDEView": {
+    "Preferences": "Preferencje",
+    "MyStuff": "Moje rzeczy",
+    "Examples": "Przykłady",
+    "OriginalEditor": "Oryginalny edytor",
+    "Login": "Zaloguj",
+    "Logout": "Wyloguj"
+  },
+  "MobileDashboardView": {
+    "Examples": "Przykłady",
+    "Sketches": "Szkice",
+    "Collections": "Kolekcje",
+    "Assets": "Zasoby",
+    "MyStuff": "Moje rzeczy",
+    "CreateSketch": "Utwórz szkic",
+    "CreateCollection": "Utwórz kolekcję"
+  },
+  "Explorer": {
+    "Files": "Pliki"
+  },
+  "Cookies": {
+    "Header": "Ciasteczka",
+    "Body": "Edytor p5.js używa ciasteczek. Niektóre z nich są niezbędne do funkcji strony internetowej i pozwalają zarządzać kontem i preferencjami. Inne nie są niezbędne - są używane do analiz i pozwalają nam dowiedzieć się więcej o społeczności. <strong>Nigdy nie sprzedajemy tych danych ani nie używamy ich w celach reklamowych.</strong> Możesz zdecydować, które ciasteczka chcesz zezwolić, i dowiedzieć się więcej w naszej <0>Polityce prywatności<0>.",
+    "AllowAll": "Zezwól na wszystkie",
+    "AllowEssential": "Zezwól na niezbędne"
+  },
+  "Legal": {
+    "PrivacyPolicy": "Polityka prywatności",
+    "TermsOfUse": "Warunki korzystania",
+    "CodeOfConduct": "Kodeks postępowania"
+  }
+}
