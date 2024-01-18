@@ -6,7 +6,6 @@ import { setToastText, showToast } from './toast';
 
 const TOAST_DISPLAY_TIME_MS = 1500;
 
-// eslint-disable-next-line
 export function getCollections(username) {
   return (dispatch) => {
     dispatch(startLoader());
@@ -16,8 +15,7 @@ export function getCollections(username) {
     } else {
       url = '/collections';
     }
-    console.log(url);
-    apiClient
+    return apiClient
       .get(url)
       .then((response) => {
         dispatch({
@@ -27,10 +25,9 @@ export function getCollections(username) {
         dispatch(stopLoader());
       })
       .catch((error) => {
-        const { response } = error;
         dispatch({
           type: ActionTypes.ERROR,
-          error: response.data
+          error: error?.response?.data
         });
         dispatch(stopLoader());
       });
@@ -59,11 +56,9 @@ export function createCollection(collection) {
         browserHistory.push(location);
       })
       .catch((error) => {
-        const { response } = error;
-        console.error('Error creating collection', response.data);
         dispatch({
           type: ActionTypes.ERROR,
-          error: response.data
+          error: error?.response?.data
         });
         dispatch(stopLoader());
       });
@@ -91,14 +86,11 @@ export function addToCollection(collectionId, projectId) {
         return response.data;
       })
       .catch((error) => {
-        const { response } = error;
         dispatch({
           type: ActionTypes.ERROR,
-          error: response.data
+          error: error?.response?.data
         });
         dispatch(stopLoader());
-
-        return response.data;
       });
   };
 }
@@ -124,14 +116,11 @@ export function removeFromCollection(collectionId, projectId) {
         return response.data;
       })
       .catch((error) => {
-        const { response } = error;
         dispatch({
           type: ActionTypes.ERROR,
-          error: response.data
+          error: error?.response?.data
         });
         dispatch(stopLoader());
-
-        return response.data;
       });
   };
 }
@@ -149,13 +138,10 @@ export function editCollection(collectionId, { name, description }) {
         return response.data;
       })
       .catch((error) => {
-        const { response } = error;
         dispatch({
           type: ActionTypes.ERROR,
-          error: response.data
+          error: error?.response?.data
         });
-
-        return response.data;
       });
   };
 }
@@ -174,13 +160,10 @@ export function deleteCollection(collectionId) {
         return response.data;
       })
       .catch((error) => {
-        const { response } = error;
         dispatch({
           type: ActionTypes.ERROR,
-          error: response.data
+          error: error?.response?.data
         });
-
-        return response.data;
       });
   };
 }

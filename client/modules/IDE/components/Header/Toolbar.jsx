@@ -1,13 +1,9 @@
-import React, { useRef, useState } from 'react';
+import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import {
-  hideEditProjectName,
-  showEditProjectName
-} from '../../actions/project';
 import {
   openPreferences,
   startAccessibleSketch,
@@ -19,12 +15,11 @@ import {
   setGridOutput,
   setTextOutput
 } from '../../actions/preferences';
-import { useSketchActions } from '../../hooks';
 
 import PlayIcon from '../../../../images/play.svg';
 import StopIcon from '../../../../images/stop.svg';
 import PreferencesIcon from '../../../../images/preferences.svg';
-import EditProjectNameIcon from '../../../../images/pencil.svg';
+import ProjectName from './ProjectName';
 
 const Toolbar = (props) => {
   const { isPlaying, infiniteLoop, preferencesIsVisible } = useSelector(
@@ -35,34 +30,6 @@ const Toolbar = (props) => {
   const dispatch = useDispatch();
 
   const { t } = useTranslation();
-  const { changeSketchName, canEditProjectName } = useSketchActions();
-
-  const projectNameInputRef = useRef();
-  const [nameInputValue, setNameInputValue] = useState(project.name);
-
-  function handleKeyPress(event) {
-    if (event.key === 'Enter') {
-      dispatch(hideEditProjectName());
-      projectNameInputRef.current?.blur();
-    }
-  }
-
-  function handleProjectNameClick() {
-    if (canEditProjectName) {
-      dispatch(showEditProjectName());
-      setTimeout(() => {
-        projectNameInputRef.current?.focus();
-      }, 140);
-    }
-  }
-
-  function handleProjectNameSave() {
-    const newName = nameInputValue;
-    if (newName.length > 0) {
-      dispatch(hideEditProjectName());
-      changeSketchName(newName);
-    }
-  }
 
   const playButtonClass = classNames({
     'toolbar__play-button': true,
@@ -75,10 +42,6 @@ const Toolbar = (props) => {
   const preferencesButtonClass = classNames({
     'toolbar__preferences-button': true,
     'toolbar__preferences-button--selected': preferencesIsVisible
-  });
-  const nameContainerClass = classNames({
-    'toolbar__project-name-container': true,
-    'toolbar__project-name-container--editing': project.isEditingName
   });
 
   return (
@@ -124,40 +87,17 @@ const Toolbar = (props) => {
           checked={autorefresh}
           onChange={(event) => {
             dispatch(setAutorefresh(event.target.checked));
+            if (event.target.checked) {
+              dispatch(startSketch());
+            }
           }}
         />
         <label htmlFor="autorefresh" className="toolbar__autorefresh-label">
           {t('Toolbar.Auto-refresh')}
         </label>
       </div>
-      <div className={nameContainerClass}>
-        <button
-          className="toolbar__project-name"
-          onClick={handleProjectNameClick}
-          disabled={!canEditProjectName}
-          aria-label={t('Toolbar.EditSketchARIA')}
-        >
-          <span>{project.name}</span>
-          {canEditProjectName && (
-            <EditProjectNameIcon
-              className="toolbar__edit-name-button"
-              focusable="false"
-              aria-hidden="true"
-            />
-          )}
-        </button>
-        <input
-          type="text"
-          maxLength="128"
-          className="toolbar__project-name-input"
-          aria-label={t('Toolbar.NewSketchNameARIA')}
-          disabled={!canEditProjectName}
-          ref={projectNameInputRef}
-          value={nameInputValue}
-          onChange={(e) => setNameInputValue(e.target.value)}
-          onBlur={handleProjectNameSave}
-          onKeyPress={handleKeyPress}
-        />
+      <div className="toolbar__project-name-container">
+        <ProjectName />
         {(() => {
           if (project.owner) {
             return (
