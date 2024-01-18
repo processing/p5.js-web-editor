@@ -41,7 +41,6 @@ const TableDropdown = styled(DropdownMenu).attrs({
   }
   & ul {
     top: 63%;
-    right: calc(100% - 26px);
   }
 `;
 

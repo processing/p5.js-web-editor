@@ -1,17 +1,15 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-import { connect, useDispatch } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
 import prettyBytes from 'pretty-bytes';
-import { useTranslation, withTranslation } from 'react-i18next';
+import PropTypes from 'prop-types';
+import React, { useEffect, useMemo } from 'react';
+import { Helmet } from 'react-helmet';
+import { useTranslation } from 'react-i18next';
+import { connect, useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import MenuItem from '../../../components/Dropdown/MenuItem';
 import TableDropdown from '../../../components/Dropdown/TableDropdown';
-
-import Loader from '../../App/components/loader';
-import { deleteAssetRequest } from '../actions/assets';
-import * as AssetActions from '../actions/assets';
+import { deleteAssetRequest, getAssets } from '../actions/assets';
+import { DIRECTION } from '../actions/sorting';
+import ConnectedTableBase from './ConnectedTableBase';
 
 const AssetMenu = ({ item: asset }) => {
   const { t } = useTranslation();
@@ -82,106 +80,63 @@ function mapStateToPropsAssetListRow(state) {
   };
 }
 
-function mapDispatchToPropsAssetListRow(dispatch) {
-  return bindActionCreators(AssetActions, dispatch);
-}
+const AssetListRow = connect(mapStateToPropsAssetListRow)(AssetListRowBase);
 
-const AssetListRow = connect(
-  mapStateToPropsAssetListRow,
-  mapDispatchToPropsAssetListRow
-)(AssetListRowBase);
+const AssetList = () => {
+  const { t } = useTranslation();
 
-class AssetList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.props.getAssets();
-  }
+  const dispatch = useDispatch();
 
-  getAssetsTitle() {
-    return this.props.t('AssetList.Title');
-  }
+  useEffect(() => {
+    dispatch(getAssets());
+  }, []);
 
-  hasAssets() {
-    return !this.props.loading && this.props.assetList.length > 0;
-  }
+  const isLoading = useSelector((state) => state.loading);
 
-  renderLoader() {
-    if (this.props.loading) return <Loader />;
-    return null;
-  }
+  const assetList = useSelector((state) => state.assets.list);
 
-  renderEmptyTable() {
-    if (!this.props.loading && this.props.assetList.length === 0) {
-      return (
-        <p className="asset-table__empty">
-          {this.props.t('AssetList.NoUploadedAssets')}
-        </p>
-      );
-    }
-    return null;
-  }
+  const items = useMemo(
+    // This is a hack to use the order from the API as the initial sort
+    () => assetList?.map((asset, i) => ({ ...asset, index: i, id: asset.key })),
+    [assetList]
+  );
 
-  render() {
-    const { assetList, t } = this.props;
-    return (
-      <article className="asset-table-container">
-        <Helmet>
-          <title>{this.getAssetsTitle()}</title>
-        </Helmet>
-        {this.renderLoader()}
-        {this.renderEmptyTable()}
-        {this.hasAssets() && (
-          <table className="asset-table">
-            <thead>
-              <tr>
-                <th>{t('AssetList.HeaderName')}</th>
-                <th>{t('AssetList.HeaderSize')}</th>
-                <th>{t('AssetList.HeaderSketch')}</th>
-                <th scope="col"></th>
-              </tr>
-            </thead>
-            <tbody>
-              {assetList.map((asset) => (
-                <AssetListRow asset={asset} key={asset.key} t={t} />
-              ))}
-            </tbody>
-          </table>
-        )}
-      </article>
-    );
-  }
-}
-
-AssetList.propTypes = {
-  user: PropTypes.shape({
-    username: PropTypes.string
-  }).isRequired,
-  assetList: PropTypes.arrayOf(
-    PropTypes.shape({
-      key: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      url: PropTypes.string.isRequired,
-      sketchName: PropTypes.string,
-      sketchId: PropTypes.string
-    })
-  ).isRequired,
-  getAssets: PropTypes.func.isRequired,
-  loading: PropTypes.bool.isRequired,
-  t: PropTypes.func.isRequired
+  return (
+    <article className="asset-table-container">
+      <Helmet>
+        <title>{t('AssetList.Title')}</title>
+      </Helmet>
+      <ConnectedTableBase
+        className="asset-table"
+        items={items}
+        isLoading={isLoading}
+        columns={[
+          {
+            field: 'name',
+            title: t('AssetList.HeaderName'),
+            defaultOrder: DIRECTION.ASC
+          },
+          {
+            field: 'size',
+            title: t('AssetList.HeaderSize'),
+            defaultOrder: DIRECTION.DESC
+          },
+          {
+            field: 'sketchName',
+            title: t('AssetList.HeaderSketch'),
+            defaultOrder: DIRECTION.ASC
+          }
+        ]}
+        addDropdownColumn
+        initialSort={{
+          field: 'index',
+          direction: DIRECTION.ASC
+        }}
+        emptyMessage={t('AssetList.NoUploadedAssets')}
+        renderRow={(asset) => <AssetListRow asset={asset} key={asset.key} />}
+      />
+    </article>
+  );
 };
 
-function mapStateToProps(state) {
-  return {
-    user: state.user,
-    assetList: state.assets.list,
-    loading: state.loading
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(Object.assign({}, AssetActions), dispatch);
-}
-
-export default withTranslation()(
-  connect(mapStateToProps, mapDispatchToProps)(AssetList)
-);
+export default AssetList;

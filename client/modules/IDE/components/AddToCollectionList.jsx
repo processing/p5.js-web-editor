@@ -10,7 +10,7 @@ import {
   getCollections,
   removeFromCollection
 } from '../actions/collections';
-import getSortedCollections from '../selectors/collections';
+import getFilteredCollections from '../selectors/collections';
 import QuickAddList from './QuickAddList';
 import { remSize } from '../../../theme';
 
@@ -34,7 +34,7 @@ const AddToCollectionList = ({ projectId }) => {
 
   const username = useSelector((state) => state.user.username);
 
-  const collections = useSelector(getSortedCollections);
+  const collections = useSelector(getFilteredCollections);
 
   // TODO: improve loading state
   const loading = useSelector((state) => state.loading);

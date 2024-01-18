@@ -248,6 +248,7 @@ export default {
   ...baseThemes,
   [Theme.contrast]: extend(baseThemes[Theme.dark], {
     inactiveTextColor: grays.light,
+    accentColor: colors.yellow,
 
     Button: {
       primary: {

@@ -2,25 +2,69 @@
 
 exports[`<Sketchlist /> snapshot testing 1`] = `
 <DocumentFragment>
-  .c0 > button {
+  .c3 > button {
   width: 2.0833333333333335rem;
   height: 2.0833333333333335rem;
   padding: 0;
 }
 
-.c0 > button svg {
+.c3 > button svg {
   max-width: 100%;
   max-height: 100%;
 }
 
-.c0 > button polygon,
-.c0 > button path {
+.c3 > button polygon,
+.c3 > button path {
   fill: #666;
 }
 
-.c0 ul {
+.c3 ul {
   top: 63%;
   right: calc(100% - 26px);
+}
+
+.c1 {
+  border-bottom: 2px dashed transparent;
+  padding: 0.25rem 0;
+  color: #666;
+}
+
+.c2 {
+  border-bottom: 2px dashed transparent;
+  padding: 0.25rem 0;
+  color: #666;
+  border-color: #ed225d;
+}
+
+.c0 {
+  height: 2.6666666666666665rem;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: #FBFBFB;
+  font-weight: normal;
+}
+
+.c0:nth-child(1) {
+  padding-left: 1rem;
+}
+
+.c0 button {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  height: 2.9166666666666665rem;
+}
+
+.c0 button svg {
+  margin-left: 0.6666666666666666rem;
+  fill: #666;
 }
 
 <article
@@ -33,53 +77,59 @@ exports[`<Sketchlist /> snapshot testing 1`] = `
       <thead>
         <tr>
           <th
+            class="c0"
             scope="col"
           >
             <button
-              aria-label="Sort by Sketch descending."
-              class="sketch-list__sort-button"
+              aria-label="Sort by Sketch ascending."
+              aria-pressed="false"
             >
               <span
-                class="sketches-table__header"
+                class="c1"
               >
                 Sketch
               </span>
             </button>
           </th>
           <th
+            aria-sort="descending"
+            class="c0"
             scope="col"
           >
             <button
               aria-label="Sort by Date Created ascending."
-              class="sketch-list__sort-button"
+              aria-pressed="true"
             >
               <span
-                class="sketches-table__header sketches-table__header--selected"
+                class="c2"
               >
                 Date Created
               </span>
               <test-file-stub
                 aria-label="Descending"
+                classname="sc-kEqXSa ggxouL"
                 focusable="false"
                 role="img"
               />
             </button>
           </th>
           <th
+            class="c0"
             scope="col"
           >
             <button
               aria-label="Sort by Date Updated descending."
-              class="sketch-list__sort-button"
+              aria-pressed="false"
             >
               <span
-                class="sketches-table__header"
+                class="c1"
               >
                 Date Updated
               </span>
             </button>
           </th>
           <th
+            class="c0"
             scope="col"
           />
         </tr>
@@ -107,7 +157,7 @@ exports[`<Sketchlist /> snapshot testing 1`] = `
             class="sketch-list__dropdown-column"
           >
             <div
-              class="c0"
+              class="c3"
             >
               <button
                 aria-label="Toggle Open/Close Sketch Options"
@@ -143,7 +193,7 @@ exports[`<Sketchlist /> snapshot testing 1`] = `
             class="sketch-list__dropdown-column"
           >
             <div
-              class="c0"
+              class="c3"
             >
               <button
                 aria-label="Toggle Open/Close Sketch Options"

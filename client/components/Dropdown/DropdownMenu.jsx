@@ -1,10 +1,16 @@
 import PropTypes from 'prop-types';
 import React, { forwardRef, useCallback, useRef, useState } from 'react';
+import styled from 'styled-components';
 import useModalClose from '../../common/useModalClose';
 import DownArrowIcon from '../../images/down-filled-triangle.svg';
 import { DropdownWrapper } from '../Dropdown';
 
 // TODO: enable arrow keys to navigate options from list
+
+const Container = styled.div`
+  position: relative;
+  width: fit-content;
+`;
 
 const DropdownMenu = forwardRef(
   (
@@ -38,7 +44,7 @@ const DropdownMenu = forwardRef(
     };
 
     return (
-      <div ref={anchorRef} className={className}>
+      <Container ref={anchorRef} className={className}>
         <button
           className={classes.button}
           aria-label={ariaLabel}
@@ -62,7 +68,7 @@ const DropdownMenu = forwardRef(
             {children}
           </DropdownWrapper>
         )}
-      </div>
+      </Container>
     );
   }
 );

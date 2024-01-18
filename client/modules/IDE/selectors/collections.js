@@ -1,11 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
-import differenceInMilliseconds from 'date-fns/differenceInMilliseconds';
-import { find, orderBy } from 'lodash';
-import { DIRECTION } from '../actions/sorting';
+import { find } from 'lodash';
 
 const getCollections = (state) => state.collections;
-const getField = (state) => state.sorting.field;
-const getDirection = (state) => state.sorting.direction;
 const getSearchTerm = (state) => state.search.collectionSearchTerm;
 
 const getFilteredCollections = createSelector(
@@ -30,35 +26,8 @@ const getFilteredCollections = createSelector(
   }
 );
 
-const getSortedCollections = createSelector(
-  getFilteredCollections,
-  getField,
-  getDirection,
-  (collections, field, direction) => {
-    if (field === 'name') {
-      if (direction === DIRECTION.DESC) {
-        return orderBy(collections, 'name', 'desc');
-      }
-      return orderBy(collections, 'name', 'asc');
-    } else if (field === 'numItems') {
-      if (direction === DIRECTION.DESC) {
-        return orderBy(collections, 'items.length', 'desc');
-      }
-      return orderBy(collections, 'items.length', 'asc');
-    }
-    const sortedCollections = [...collections].sort((a, b) => {
-      const result =
-        direction === DIRECTION.ASC
-          ? differenceInMilliseconds(new Date(a[field]), new Date(b[field]))
-          : differenceInMilliseconds(new Date(b[field]), new Date(a[field]));
-      return result;
-    });
-    return sortedCollections;
-  }
-);
-
 export function getCollection(state, id) {
   return find(getCollections(state), { id });
 }
 
-export default getSortedCollections;
+export default getFilteredCollections;

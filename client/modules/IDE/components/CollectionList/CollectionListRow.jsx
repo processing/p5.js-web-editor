@@ -77,7 +77,7 @@ const CollectionListRowBase = (props) => {
   };
 
   const renderActions = () => {
-    const userIsOwner = props.user.username === props.username;
+    const { userIsOwner } = props;
 
     return (
       <TableDropdown
@@ -159,10 +159,7 @@ CollectionListRowBase.propTypes = {
     )
   }).isRequired,
   username: PropTypes.string.isRequired,
-  user: PropTypes.shape({
-    username: PropTypes.string,
-    authenticated: PropTypes.bool.isRequired
-  }).isRequired,
+  userIsOwner: PropTypes.bool.isRequired,
   deleteCollection: PropTypes.func.isRequired,
   editCollection: PropTypes.func.isRequired,
   onAddSketches: PropTypes.func.isRequired,
