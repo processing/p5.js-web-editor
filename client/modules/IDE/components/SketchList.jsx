@@ -322,10 +322,7 @@ const SketchList = ({ username, mobile }) => {
             setSketchToAddToCollection(null);
           }}
         >
-          <AddToCollectionList
-            project={sketchToAddToCollection}
-            username={username}
-          />
+          <AddToCollectionList projectId={sketchToAddToCollection.id} />
         </Overlay>
       )}
     </article>

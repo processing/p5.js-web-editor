@@ -1,4 +1,4 @@
-import { createSelector } from 'reselect';
+import { createSelector } from '@reduxjs/toolkit';
 import getConfig from '../../../utils/getConfig';
 
 export const getAuthenticated = (state) => state.user.authenticated;

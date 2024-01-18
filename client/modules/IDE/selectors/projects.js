@@ -1,4 +1,4 @@
-import { createSelector } from 'reselect';
+import { createSelector } from '@reduxjs/toolkit';
 
 const getSketches = (state) => state.sketches;
 const getSearchTerm = (state) => state.search.sketchSearchTerm;

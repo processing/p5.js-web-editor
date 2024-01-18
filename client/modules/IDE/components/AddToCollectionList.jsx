@@ -1,21 +1,18 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { withTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import * as ProjectActions from '../actions/project';
-import * as ProjectsActions from '../actions/projects';
-import * as CollectionsActions from '../actions/collections';
-import * as ToastActions from '../actions/toast';
-import getFilteredCollections from '../selectors/collections';
 import Loader from '../../App/components/loader';
+import {
+  addToCollection,
+  getCollections,
+  removeFromCollection
+} from '../actions/collections';
+import getFilteredCollections from '../selectors/collections';
 import QuickAddList from './QuickAddList';
 import { remSize } from '../../../theme';
-
-const projectInCollection = (project, collection) =>
-  collection.items.find((item) => item.projectId === project.id) != null;
 
 export const CollectionAddSketchWrapper = styled.div`
   width: ${remSize(600)};
@@ -30,164 +27,67 @@ export const QuickAddWrapper = styled.div`
   height: 100%;
 `;
 
-class CollectionList extends React.Component {
-  constructor(props) {
-    super(props);
+const AddToCollectionList = ({ projectId }) => {
+  const { t } = useTranslation();
 
-    if (props.projectId) {
-      props.getProject(props.projectId);
-    }
+  const dispatch = useDispatch();
 
-    this.props.getCollections(this.props.username);
+  const username = useSelector((state) => state.user.username);
 
-    this.state = {
-      hasLoadedData: false
-    };
-  }
+  const collections = useSelector(getFilteredCollections);
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.loading === true && this.props.loading === false) {
-      // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({
-        hasLoadedData: true
-      });
-    }
-  }
+  // TODO: improve loading state
+  const loading = useSelector((state) => state.loading);
+  const [hasLoadedData, setHasLoadedData] = useState(false);
+  const showLoader = loading && !hasLoadedData;
 
-  getTitle() {
-    if (this.props.username === this.props.user.username) {
-      return this.props.t('AddToCollectionList.Title');
-    }
-    return this.props.t('AddToCollectionList.AnothersTitle', {
-      anotheruser: this.props.username
-    });
-  }
+  useEffect(() => {
+    dispatch(getCollections(username)).then(() => setHasLoadedData(true));
+  }, [dispatch, username]);
 
-  handleCollectionAdd = (collection) => {
-    this.props.addToCollection(collection.id, this.props.project.id);
+  const handleCollectionAdd = (collection) => {
+    dispatch(addToCollection(collection.id, projectId));
   };
 
-  handleCollectionRemove = (collection) => {
-    this.props.removeFromCollection(collection.id, this.props.project.id);
+  const handleCollectionRemove = (collection) => {
+    dispatch(removeFromCollection(collection.id, projectId));
   };
 
-  render() {
-    const { collections, project } = this.props;
-    const hasCollections = collections.length > 0;
-    const collectionWithSketchStatus = collections.map((collection) => ({
-      ...collection,
-      url: `/${collection.owner.username}/collections/${collection.id}`,
-      isAdded: projectInCollection(project, collection)
-    }));
+  const collectionWithSketchStatus = collections.map((collection) => ({
+    ...collection,
+    url: `/${collection.owner.username}/collections/${collection.id}`,
+    isAdded: collection.items.some((item) => item.projectId === projectId)
+  }));
 
-    let content = null;
-
-    if (this.props.loading && !this.state.hasLoadedData) {
-      content = <Loader />;
-    } else if (hasCollections) {
-      content = (
-        <QuickAddList
-          items={collectionWithSketchStatus}
-          onAdd={this.handleCollectionAdd}
-          onRemove={this.handleCollectionRemove}
-          t={this.props.t}
-        />
-      );
-    } else {
-      content = this.props.t('AddToCollectionList.Empty');
+  const getContent = () => {
+    if (showLoader) {
+      return <Loader />;
+    } else if (collections.length === 0) {
+      return t('AddToCollectionList.Empty');
     }
-
     return (
-      <CollectionAddSketchWrapper>
-        <QuickAddWrapper>
-          <Helmet>
-            <title>{this.getTitle()}</title>
-          </Helmet>
-          {content}
-        </QuickAddWrapper>
-      </CollectionAddSketchWrapper>
+      <QuickAddList
+        items={collectionWithSketchStatus}
+        onAdd={handleCollectionAdd}
+        onRemove={handleCollectionRemove}
+      />
     );
-  }
-}
-
-const ProjectShape = PropTypes.shape({
-  id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  createdAt: PropTypes.string.isRequired,
-  updatedAt: PropTypes.string.isRequired,
-  user: PropTypes.shape({
-    username: PropTypes.string.isRequired
-  }).isRequired
-});
-
-const ItemsShape = PropTypes.shape({
-  createdAt: PropTypes.string.isRequired,
-  updatedAt: PropTypes.string.isRequired,
-  project: ProjectShape
-});
-
-CollectionList.propTypes = {
-  user: PropTypes.shape({
-    username: PropTypes.string,
-    authenticated: PropTypes.bool.isRequired
-  }).isRequired,
-  projectId: PropTypes.string.isRequired,
-  getCollections: PropTypes.func.isRequired,
-  getProject: PropTypes.func.isRequired,
-  addToCollection: PropTypes.func.isRequired,
-  removeFromCollection: PropTypes.func.isRequired,
-  collections: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      description: PropTypes.string,
-      createdAt: PropTypes.string.isRequired,
-      updatedAt: PropTypes.string.isRequired,
-      items: PropTypes.arrayOf(ItemsShape)
-    })
-  ).isRequired,
-  username: PropTypes.string,
-  loading: PropTypes.bool.isRequired,
-  project: PropTypes.shape({
-    id: PropTypes.string,
-    owner: PropTypes.shape({
-      id: PropTypes.string
-    })
-  }),
-  t: PropTypes.func.isRequired
-};
-
-CollectionList.defaultProps = {
-  project: {
-    id: undefined,
-    owner: undefined
-  },
-  username: undefined
-};
-
-function mapStateToProps(state, ownProps) {
-  return {
-    user: state.user,
-    collections: getFilteredCollections(state),
-    loading: state.loading,
-    project: ownProps.project || state.project,
-    projectId: ownProps && ownProps.params ? ownProps.prams.project_id : null
   };
-}
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(
-    Object.assign(
-      {},
-      CollectionsActions,
-      ProjectsActions,
-      ProjectActions,
-      ToastActions
-    ),
-    dispatch
+  return (
+    <CollectionAddSketchWrapper>
+      <QuickAddWrapper>
+        <Helmet>
+          <title>{t('AddToCollectionList.Title')}</title>
+        </Helmet>
+        {getContent()}
+      </QuickAddWrapper>
+    </CollectionAddSketchWrapper>
   );
-}
+};
 
-export default withTranslation()(
-  connect(mapStateToProps, mapDispatchToProps)(CollectionList)
-);
+AddToCollectionList.propTypes = {
+  projectId: PropTypes.string.isRequired
+};
+
+export default AddToCollectionList;

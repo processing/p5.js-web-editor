@@ -1,5 +1,5 @@
-import { createSelector } from 'reselect';
-import find from 'lodash/find';
+import { createSelector } from '@reduxjs/toolkit';
+import { find } from 'lodash';
 
 const getCollections = (state) => state.collections;
 const getSearchTerm = (state) => state.search.collectionSearchTerm;
