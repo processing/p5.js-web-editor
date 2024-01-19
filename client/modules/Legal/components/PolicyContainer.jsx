@@ -7,10 +7,10 @@ import { remSize, prop } from '../../../theme';
 
 const PolicyContainerMain = styled.main`
   max-width: ${remSize(700)};
-  min-height: 100vh;
   margin: 0 auto;
   padding: ${remSize(10)};
   line-height: 1.5em;
+  overflow: auto;
   & p {
     margin-bottom: ${remSize(10)};
   }
