@@ -12,7 +12,7 @@ import EditableInput from '../../IDE/components/EditableInput';
 import { SketchSearchbar } from '../../IDE/components/Searchbar';
 import { getCollection } from '../../IDE/selectors/collections';
 import ShareURL from './CollectionShareButton';
-import AddToOthersCollectionSketchList from '../../IDE/components/AddToOthersCollectionSketchList';
+import SendSketchRequest from '../../IDE/components/sendSketchRequest';
 
 function CollectionMetadata({ collectionId }) {
   const { t } = useTranslation();
@@ -130,7 +130,7 @@ function CollectionMetadata({ collectionId }) {
           closeOverlay={() => setIsSendingReq(false)}
           isFixedHeight
         >
-          <AddToOthersCollectionSketchList
+          <SendSketchRequest
             username={username}
             collection={collection}
             collectionOwner={collectionOwnerId}

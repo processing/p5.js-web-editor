@@ -4,12 +4,16 @@ import slugify from 'slugify';
 
 const { Schema } = mongoose;
 
+// i am not sure about this schema at this moment, the another possibility we can remove msg and display the msg from client. Additionally, instead of storing inidividual IDs,
+// we can store whole object ? but it may not be ideal as we won't be using all of their properties. I'm open to discussing and refining the message schema further.
+
 const MessagesSchema = new Schema(
   {
     _id: { type: String, default: shortid.generate },
     msg: { type: String },
-    reqSender: { type: String },
-    collectionOwner: { type: String },
+    reqReceiver: { type: Schema.Types.ObjectId, ref: 'User' },
+    reqSenderID: { type: Schema.Types.ObjectId, ref: 'User' },
+    reqSenderUsername: { type: String },
     projectID: { type: String },
     collectionID: { type: String },
     slug: { type: String }

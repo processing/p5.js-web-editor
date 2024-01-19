@@ -1,6 +1,3 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable react/jsx-no-comment-textnodes */
 import React, { useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { sortBy } from 'lodash';
@@ -36,7 +33,7 @@ import MobileNav from './MobileNav';
 import Messages from './Messages';
 import Button from '../../../../common/Button';
 import Overlay from '../../../App/components/Overlay';
-import { getMessages } from '../../actions/collections';
+import { getOthersRequests } from '../../actions/collections';
 
 const Nav = ({ layout }) => (
   <MediaQuery minWidth={770}>
@@ -295,11 +292,13 @@ const UnauthenticatedUserMenu = () => {
 const AuthenticatedUserMenu = () => {
   const username = useSelector((state) => state.user.username);
   const dispatch = useDispatch();
+  const { t } = useTranslation();
+  const [isReadingMsgs, setIsReadingMsgs] = React.useState(false);
   const [msgs, setMsgs] = React.useState([]);
 
   const getMsgs = async () => {
     try {
-      const data = await dispatch(getMessages());
+      const data = await dispatch(getOthersRequests());
       setMsgs(data);
     } catch (error) {
       console.error(error);
@@ -309,8 +308,6 @@ const AuthenticatedUserMenu = () => {
   React.useEffect(() => {
     getMsgs();
   }, []);
-  const { t } = useTranslation();
-  const [isReadingMsgs, setIsReadingMsgs] = React.useState(false);
 
   return (
     <ul className="nav__items-right" title="user-menu">
@@ -354,17 +351,6 @@ const AuthenticatedUserMenu = () => {
         <NavMenuItem href={`/${username}/assets`}>
           {t('Nav.Auth.MyAssets')}
         </NavMenuItem>
-        {/* // eslint-disable-next-line jsx-a11y/click-events-have-key-events,
-        jsx-a11y/click-events-have-key-events */}
-
-        {/* {overlay && (
-          <Overlay
-            title={t('Preferences.Settings')}
-            closeOverlay={() => setOverlay(false)}
-            isFixedHeight
-          > */}
-        {/* </Overlay> */}
-        {/* )} */}
         <NavMenuItem href="/account">{t('Preferences.Settings')}</NavMenuItem>
         <NavMenuItem onClick={() => dispatch(logoutUser())}>
           {t('Nav.Auth.LogOut')}

@@ -30,7 +30,7 @@ import { requestsOfTypeJSON } from './utils/requestsOfType';
 
 import { renderIndex } from './views/index';
 import { get404Sketch } from './views/404Page';
-import { reqToOwner } from './controllers/collection.controller';
+import { sendSketchRequest } from './controllers/collection.controller';
 
 const app = new Express();
 const MongoStore = connectMongo(session);
@@ -192,7 +192,7 @@ app.get('*', (req, res) => {
   res.type('txt').send('Not found.');
 });
 
-app.post('/collections/:id/:projectId/request', reqToOwner);
+app.post('/collections/:collectionId/:projectId/request', sendSketchRequest);
 // start app
 app.listen(process.env.PORT, (error) => {
   if (!error) {

@@ -14,7 +14,13 @@ router.get(
 router.get(
   '/collections/messages/',
   isAuthenticated,
-  CollectionController.getMessages
+  CollectionController.getOthersRequests
+);
+
+router.get(
+  '/collections/messages/your/',
+  isAuthenticated,
+  CollectionController.getYourRequests
 );
 router.get('/:username/collections', CollectionController.listCollections);
 
@@ -48,15 +54,15 @@ router.delete(
 );
 
 router.post(
-  '/collections/:id/:projectId/request',
+  '/collections/:collectionId/:projectId/request',
   isAuthenticated,
-  CollectionController.reqToOwner
+  CollectionController.sendSketchRequest
 );
 
 router.delete(
   '/collections/:collectionId/:projectId/disallow',
   isAuthenticated,
-  CollectionController.disallowReq
+  CollectionController.declineRequest
 );
 
 export default router;

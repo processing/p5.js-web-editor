@@ -8,8 +8,8 @@ import {
 } from '../AddToCollectionList';
 import {
   addToCollection,
-  disallowReq,
-  getMessages
+  declineRequest,
+  getOthersRequests
 } from '../../actions/collections';
 import Button from '../../../../common/Button';
 
@@ -21,7 +21,7 @@ const Messages = () => {
 
   const getMsgs = async () => {
     try {
-      const data = await dispatch(getMessages());
+      const data = await dispatch(getOthersRequests());
       setMsgs(data);
     } catch (error) {
       console.error(error);
@@ -32,7 +32,7 @@ const Messages = () => {
     getMsgs();
   }, []);
 
-  const allowProject = (msgindex) => {
+  const allowRequest = (msgindex) => {
     const { collectionID, projectID } = msgindex;
     try {
       dispatch(addToCollection(collectionID, projectID));
@@ -42,14 +42,13 @@ const Messages = () => {
     }
   };
 
-  const disallowProject = (singleMsg) => {
+  const disallowRequest = (singleMsg) => {
     const { collectionID, projectID } = singleMsg;
-
     try {
-      dispatch(disallowReq(collectionID, projectID));
+      dispatch(declineRequest(collectionID, projectID));
       getMsgs();
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
   return (
@@ -58,7 +57,7 @@ const Messages = () => {
         <Helmet>
           <title>{t('Message.Messages')}</title>
         </Helmet>
-        {msgs.length === 0 && <p>{t('Message.NoMsg')}`</p>}
+        {msgs.length === 0 && <p>{t('Message.NoMsg')}</p>}
         {msgs.map((msg, index) => (
           <ul className="messages__add">
             <li className="messages__list">
@@ -66,16 +65,16 @@ const Messages = () => {
                 <p>{msg.msg}</p>
                 <a
                   className="messages__view"
-                  href={`/${msg.reqSender}/sketches/${msg.projectID}`}
+                  href={`/${msg.reqSenderUsername}/sketches/${msg.projectID}`}
                 >
                   {t('Message.View')}
                 </a>
               </div>
               <div className="messages__buttons">
-                <Button onClick={() => allowProject(msg)}>
+                <Button onClick={() => allowRequest(msg)}>
                   {t('Message.Accept')}
                 </Button>
-                <Button onClick={() => disallowProject(msg)}>
+                <Button onClick={() => disallowRequest(msg)}>
                   {t('Message.Reject')}
                 </Button>
               </div>

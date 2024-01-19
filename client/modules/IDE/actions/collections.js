@@ -95,21 +95,16 @@ export function addToCollection(collectionId, projectId) {
   };
 }
 
-export function reqToOwner(
-  collectionId,
-  projectId,
-  collectionOwner,
-  currentUsername
-) {
+export function sendSketchRequest(collectionId, projectId, collectionOwner) {
   return (dispatch) => {
     dispatch(startLoader());
     dispatch(setToastText('Request has been sent!'));
     dispatch(showToast(TOAST_DISPLAY_TIME_MS));
     const url = `/collections/${collectionId}/${projectId}/request`;
+    console.log(url);
 
     const reqBody = {
       collectionOwner,
-      currentUsername,
       collectionId
     };
     return apiClient
@@ -130,7 +125,7 @@ export function reqToOwner(
   };
 }
 
-export function disallowReq(collectionId, projectId) {
+export function declineRequest(collectionId, projectId) {
   return (dispatch) => {
     dispatch(startLoader());
     dispatch(setToastText('Request disallowed'));
@@ -154,7 +149,8 @@ export function disallowReq(collectionId, projectId) {
       });
   };
 }
-export function getMessages() {
+// fetching requests that have been sent for you
+export function getOthersRequests() {
   return async (dispatch) => {
     try {
       dispatch(startLoader());
@@ -162,7 +158,30 @@ export function getMessages() {
 
       const response = await apiClient.get(url);
       dispatch(stopLoader());
-      console.log(response.data);
+
+      const { data } = response;
+
+      return data;
+    } catch (err) {
+      dispatch({
+        type: ActionTypes.ERROR,
+        error: err?.response?.data
+      });
+      dispatch(stopLoader());
+      throw err;
+    }
+  };
+}
+
+// fetching requests that you have sent
+export function getYourRequests() {
+  return async (dispatch) => {
+    try {
+      dispatch(startLoader());
+      const url = '/collections/messages/your/';
+
+      const response = await apiClient.get(url);
+      dispatch(stopLoader());
 
       const { data } = response;
 

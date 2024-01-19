@@ -1,6 +1,6 @@
 import Messages from '../../models/messages';
 
-export default async function disallowReq(req, res) {
+export default async function declineRequest(req, res) {
   const { projectId, collectionId } = req.params;
 
   if (collectionId == null) {

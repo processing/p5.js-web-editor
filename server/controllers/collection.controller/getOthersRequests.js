@@ -1,11 +1,11 @@
 import Messages from '../../models/messages';
 
-export default async function getMessages(req, res) {
+export default async function getOthersRequests(req, res) {
   const owner = req.user._id;
 
   try {
     const messages = await Messages.find({
-      collectionOwner: owner
+      reqReceiver: owner
     });
     return res.status(200).json(messages);
   } catch (error) {

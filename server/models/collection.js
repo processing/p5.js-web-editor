@@ -34,8 +34,7 @@ const collectionSchema = new Schema(
     description: { type: String },
     slug: { type: String },
     owner: { type: Schema.Types.ObjectId, ref: 'User' },
-    items: { type: [collectedProjectSchema] },
-    collabOwner: { type: [collectedProjectSchema] }
+    items: { type: [collectedProjectSchema] }
   },
   { timestamps: true, usePushEach: true }
 );
