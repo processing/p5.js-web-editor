@@ -13,6 +13,9 @@ import {
 import getSortedCollections from '../selectors/collections';
 import QuickAddList from './QuickAddList';
 import { remSize } from '../../../theme';
+import Button from '../../../common/Button';
+import Overlay from '../../App/components/Overlay';
+import CollectionCreate from '../../User/components/CollectionCreate';
 
 export const CollectionAddSketchWrapper = styled.div`
   width: ${remSize(600)};
@@ -35,6 +38,12 @@ const AddToCollectionList = ({ projectId }) => {
   const username = useSelector((state) => state.user.username);
 
   const collections = useSelector(getSortedCollections);
+
+  const [collectionCreateVisible, setCollectionCreateVisible] = useState(false);
+
+  const toggleCollectionCreate = () => {
+    setCollectionCreateVisible((prevState) => !prevState);
+  };
 
   // TODO: improve loading state
   const loading = useSelector((state) => state.loading);
@@ -80,7 +89,20 @@ const AddToCollectionList = ({ projectId }) => {
         <Helmet>
           <title>{t('AddToCollectionList.Title')}</title>
         </Helmet>
+        <div className="createCollection-button">
+          <Button onClick={toggleCollectionCreate}>
+            {t('DashboardView.CreateCollection')}
+          </Button>
+        </div>
         {getContent()}
+        {collectionCreateVisible && (
+          <Overlay
+            title={t('DashboardView.CreateCollectionOverlay')}
+            closeOverlay={toggleCollectionCreate}
+          >
+            <CollectionCreate />
+          </Overlay>
+        )}
       </QuickAddWrapper>
     </CollectionAddSketchWrapper>
   );
