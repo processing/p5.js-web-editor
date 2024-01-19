@@ -84,27 +84,29 @@ const AddToCollectionList = ({ projectId }) => {
   };
 
   return (
-    <CollectionAddSketchWrapper>
-      <QuickAddWrapper>
-        <Helmet>
-          <title>{t('AddToCollectionList.Title')}</title>
-        </Helmet>
-        <div className="createCollection-button">
-          <Button onClick={toggleCollectionCreate}>
-            {t('DashboardView.CreateCollection')}
-          </Button>
-        </div>
-        {getContent()}
-        {collectionCreateVisible && (
-          <Overlay
-            title={t('DashboardView.CreateCollectionOverlay')}
-            closeOverlay={toggleCollectionCreate}
-          >
-            <CollectionCreate />
-          </Overlay>
-        )}
-      </QuickAddWrapper>
-    </CollectionAddSketchWrapper>
+    <>
+      <div className="createCollection-button">
+        <Button onClick={toggleCollectionCreate}>
+          {t('DashboardView.CreateCollection')}
+        </Button>
+      </div>
+      <CollectionAddSketchWrapper>
+        <QuickAddWrapper>
+          <Helmet>
+            <title>{t('AddToCollectionList.Title')}</title>
+          </Helmet>
+          {getContent()}
+          {collectionCreateVisible && (
+            <Overlay
+              title={t('DashboardView.CreateCollectionOverlay')}
+              closeOverlay={toggleCollectionCreate}
+            >
+              <CollectionCreate />
+            </Overlay>
+          )}
+        </QuickAddWrapper>
+      </CollectionAddSketchWrapper>
+    </>
   );
 };
 
