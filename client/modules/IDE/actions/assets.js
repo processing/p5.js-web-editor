@@ -10,7 +10,13 @@ export function getAssets() {
     dispatch(startLoader());
     try {
       const response = await apiClient.get('/S3/objects');
-      dispatch(setAssets(response.data.assets, response.data.totalSize));
+
+      const assetData = {
+        assets: response.data.assets,
+        totalSize: response.data.totalSize
+      };
+
+      dispatch(setAssets(assetData));
       dispatch(stopLoader());
     } catch (error) {
       dispatch({
