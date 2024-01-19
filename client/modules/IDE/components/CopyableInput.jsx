@@ -1,95 +1,91 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Clipboard from 'clipboard';
 import classNames from 'classnames';
-import { withTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 import ShareIcon from '../../../images/share.svg';
 
-class CopyableInput extends React.Component {
-  constructor(props) {
-    super(props);
-    this.onMouseLeaveHandler = this.onMouseLeaveHandler.bind(this);
-  }
+const CopyableInput = ({ label, value, hasPreviewLink }) => {
+  const { t } = useTranslation();
 
-  componentDidMount() {
-    this.clipboard = new Clipboard(this.input, {
-      target: () => this.input
+  const [isCopied, setIsCopied] = useState(false);
+
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    const input = inputRef.current;
+
+    if (!input) return; // should never happen
+
+    const clipboard = new Clipboard(input, {
+      target: () => input
     });
 
-    this.clipboard.on('success', (e) => {
-      this.tooltip.classList.add('tooltipped');
-      this.tooltip.classList.add('tooltipped-n');
+    clipboard.on('success', () => {
+      setIsCopied(true);
     });
-  }
 
-  componentWillUnmount() {
-    this.clipboard.destroy();
-  }
+    // eslint-disable-next-line consistent-return
+    return () => {
+      clipboard.destroy();
+    };
+  }, [inputRef, setIsCopied]);
 
-  onMouseLeaveHandler() {
-    this.tooltip.classList.remove('tooltipped');
-    this.tooltip.classList.remove('tooltipped-n');
-  }
-
-  render() {
-    const { label, value, hasPreviewLink } = this.props;
-    const copyableInputClass = classNames({
-      'copyable-input': true,
-      'copyable-input--with-preview': hasPreviewLink
-    });
-    return (
-      <div className={copyableInputClass}>
-        <div
-          className="copyable-input__value-container tooltipped-no-delay"
-          aria-label={this.props.t('CopyableInput.CopiedARIA')}
-          ref={(element) => {
-            this.tooltip = element;
-          }}
-          onMouseLeave={this.onMouseLeaveHandler}
-        >
-          <label
-            className="copyable-input__label"
-            htmlFor={`copyable-input__value-${label}`}
-          >
-            <div className="copyable-input__label-container">{label}</div>
-            <input
-              type="text"
-              className="copyable-input__value"
-              id={`copyable-input__value-${label}`}
-              value={value}
-              ref={(element) => {
-                this.input = element;
-              }}
-              readOnly
-            />
-          </label>
-        </div>
-        {hasPreviewLink && (
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href={value}
-            className="copyable-input__preview"
-            aria-label={this.props.t('CopyableInput.CopiedARIA', { label })}
-          >
-            <ShareIcon focusable="false" aria-hidden="true" />
-          </a>
+  return (
+    <div
+      className={classNames(
+        'copyable-input',
+        hasPreviewLink && 'copyable-input--with-preview'
+      )}
+    >
+      <div
+        className={classNames(
+          'copyable-input__value-container',
+          'tooltipped-no-delay',
+          isCopied && 'tooltipped tooltipped-n'
         )}
+        aria-label={t('CopyableInput.CopiedARIA')}
+        onMouseLeave={() => setIsCopied(false)}
+      >
+        <label
+          className="copyable-input__label"
+          htmlFor={`copyable-input__value-${label}`}
+        >
+          <div className="copyable-input__label-container">{label}</div>
+          <input
+            type="text"
+            className="copyable-input__value"
+            id={`copyable-input__value-${label}`}
+            value={value}
+            ref={inputRef}
+            readOnly
+          />
+        </label>
       </div>
-    );
-  }
-}
+      {hasPreviewLink && (
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href={value}
+          className="copyable-input__preview"
+          aria-label={t('CopyableInput.CopiedARIA', { label })}
+        >
+          <ShareIcon focusable="false" aria-hidden="true" />
+        </a>
+      )}
+    </div>
+  );
+};
 
 CopyableInput.propTypes = {
   label: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
-  hasPreviewLink: PropTypes.bool,
-  t: PropTypes.func.isRequired
+  hasPreviewLink: PropTypes.bool
 };
 
 CopyableInput.defaultProps = {
   hasPreviewLink: false
 };
 
-export default withTranslation()(CopyableInput);
+export default CopyableInput;

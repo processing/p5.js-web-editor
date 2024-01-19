@@ -1,20 +1,30 @@
-import * as ActionTypes from '../../../constants';
+import { createSlice } from '@reduxjs/toolkit';
 
-// 1,000,000 bytes in a MB. can't upload if totalSize is bigger than this.
 const initialState = {
   list: [],
   totalSize: 0
 };
 
-const assets = (state = initialState, action) => {
-  switch (action.type) {
-    case ActionTypes.SET_ASSETS:
-      return { list: action.assets, totalSize: action.totalSize };
-    case ActionTypes.DELETE_ASSET:
-      return { list: state.list.filter((asset) => asset.key !== action.key) };
-    default:
-      return state;
+const assetsSlice = createSlice({
+  name: 'assets',
+  initialState,
+  reducers: {
+    setAssets: (state, action) => {
+      state.list = action.payload.assets;
+      state.totalSize = action.payload.totalSize;
+    },
+    deleteAsset: (state, action) => {
+      const key = action.payload;
+      const index = state.list.findIndex((asset) => asset.key === key);
+      if (index !== -1) {
+        const asset = state.list[index];
+        state.totalSize -= asset.size;
+        state.list.splice(index, 1);
+      }
+    }
   }
-};
+});
 
-export default assets;
+export const assetsActions = assetsSlice.actions;
+
+export default assetsSlice.reducer;
