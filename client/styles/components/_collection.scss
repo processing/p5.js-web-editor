@@ -104,6 +104,7 @@
   @extend %dropdown-open-right;
   padding: #{20 / $base-font-size}rem;
   width: #{350 / $base-font-size}rem;
+  gap: 1rem;
 }
 
 .collection-content {

@@ -215,7 +215,7 @@ function bundleExternalLibs(project) {
   });
 }
 
-function addFileToZip(file, files, zip, path = '') {
+export function addFileToZip(file, files, zip, path = '') {
   return new Promise((resolve, reject) => {
     if (file.fileType === 'folder') {
       const newPath = file.name === 'root' ? path : `${path}${file.name}/`;

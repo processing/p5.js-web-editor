@@ -262,6 +262,14 @@ export function exportProjectAsZip(projectId) {
   win.focus();
 }
 
+export function exportCollectionAsZip(collectionId) {
+  const win = window.open(
+    `${ROOT_URL}/downloadCollection/${collectionId}`,
+    '_blank'
+  );
+  win.focus();
+}
+
 export function resetProject() {
   return {
     type: ActionTypes.RESET_PROJECT
