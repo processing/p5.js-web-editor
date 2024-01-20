@@ -1,7 +1,8 @@
 import Collection from '../../models/collection';
+import Messages from '../../models/messages';
 import Project from '../../models/project';
 
-export default function addProjectToCollection(req, res) {
+export default async function addProjectToCollection(req, res) {
   const owner = req.user._id;
   const { id: collectionId, projectId } = req.params;
 
@@ -19,7 +20,7 @@ export default function addProjectToCollection(req, res) {
     res.status(200).json(collection);
   }
 
-  function updateCollection([collection, project]) {
+  async function updateCollection([collection, project]) {
     if (collection == null) {
       sendFailure(404, 'Collection not found');
       return null;
@@ -47,6 +48,17 @@ export default function addProjectToCollection(req, res) {
     try {
       collection.items.push({ project });
 
+      // Delete the sketch request after the acception if it exists
+      const reqExists = Messages.findOne({
+        projectID: projectId,
+        collectionID: collectionId
+      });
+      if (reqExists) {
+        await Messages.findOneAndDelete({
+          projectID: projectId,
+          collectionID: collectionId
+        });
+      }
       return collection.save();
     } catch (error) {
       console.error(error);

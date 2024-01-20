@@ -601,6 +601,15 @@
   },
   "Explorer": {
     "Files": "Dateien"
-  }
+  },
+  "Message": {
+    "Messages": "Berichten",
+    "Accept": "Accepteren",
+    "Reject": "Afwijzen",
+    "View": "Bekijken",
+    "SendRequest": "Verzoek versturen",
+    "SendReqToAddSketches": "Verzoek om schetsen toe te voegen sturen",
+    "NoMsg": "Geen bericht voor jou"
+  }  
 }
 

@@ -1,17 +1,16 @@
+/* eslint-disable react/require-default-props */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-
 import Icons from './Icons';
 
 const Item = ({ isAdded, onSelect, name, url }) => {
   const { t } = useTranslation();
-  const buttonLabel = isAdded
-    ? t('QuickAddList.ButtonRemoveARIA')
-    : t('QuickAddList.ButtonAddToCollectionARIA');
+  const buttonLabel = t('QuickAddList.ButtonAddToCollectionARIA');
   return (
-    <li className="quick-add__item" onClick={onSelect}> { /* eslint-disable-line */ }
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
+    <li className="quick-add__item" onClick={onSelect}>
       <button
         className="quick-add__item-toggle"
         onClick={onSelect}
@@ -53,7 +52,6 @@ const QuickAddList = ({ items, onAdd, onRemove }) => {
       onAdd(item);
     }
   };
-
   return (
     <ul className="quick-add">
       {items.map((item) => (
@@ -74,7 +72,9 @@ const QuickAddList = ({ items, onAdd, onRemove }) => {
 QuickAddList.propTypes = {
   items: PropTypes.arrayOf(ItemType).isRequired,
   onAdd: PropTypes.func.isRequired,
-  onRemove: PropTypes.func.isRequired
+  onRemove: PropTypes.func,
+  declineReq: PropTypes.func,
+  collectionId: PropTypes.string
 };
 
 export default QuickAddList;

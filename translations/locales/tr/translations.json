@@ -617,5 +617,14 @@
     "PrivacyPolicy": "Gizlilik Politikası",
     "TermsOfUse": "Kullanım Koşulları",
     "CodeOfConduct": "Davranış Kuralları"
-  }
+  },
+  "Message": {
+    "Messages": "Mesajlar",
+    "Accept": "Kabul Et",
+    "Reject": "Reddet",
+    "View": "Görüntüle",
+    "SendRequest": "İstek gönder",
+    "SendReqToAddSketches": "Eskiz eklemek için istek gönder",
+    "NoMsg": "Senin için mesaj yok"
+  }  
 }

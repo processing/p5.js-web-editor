@@ -30,6 +30,10 @@ import {
 import { logoutUser } from '../../../User/actions';
 import { CmControllerContext } from '../../pages/IDEView';
 import MobileNav from './MobileNav';
+import Messages from './Messages';
+import Button from '../../../../common/Button';
+import Overlay from '../../../App/components/Overlay';
+import { getOthersRequests } from '../../actions/collections';
 
 const Nav = ({ layout }) => (
   <MediaQuery minWidth={770}>
@@ -265,6 +269,7 @@ const UnauthenticatedUserMenu = () => {
   return (
     <ul className="nav__items-right" title="user-menu">
       {getConfig('TRANSLATIONS_ENABLED') && <LanguageMenu />}
+
       <li className="nav__item">
         <Link to="/login" className="nav__auth-button">
           <span className="nav__item-header" title="Login">
@@ -286,13 +291,46 @@ const UnauthenticatedUserMenu = () => {
 
 const AuthenticatedUserMenu = () => {
   const username = useSelector((state) => state.user.username);
-
-  const { t } = useTranslation();
   const dispatch = useDispatch();
+  const { t } = useTranslation();
+  const [isReadingMsgs, setIsReadingMsgs] = React.useState(false);
+  const [msgs, setMsgs] = React.useState([]);
+
+  const getMsgs = async () => {
+    try {
+      const data = await dispatch(getOthersRequests());
+      setMsgs(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  React.useEffect(() => {
+    getMsgs();
+  }, []);
 
   return (
     <ul className="nav__items-right" title="user-menu">
+      <div className="button-container">
+        <Button onClick={() => setIsReadingMsgs(true)}>
+          {t('Message.Messages')}
+        </Button>
+        {msgs.length > 0 && (
+          <span className="notification-circle">{msgs.length}</span>
+        )}
+      </div>
+
+      {isReadingMsgs && (
+        <Overlay
+          title={t('Message.Messages')}
+          closeOverlay={() => setIsReadingMsgs(false)}
+          isFixedHeight
+        >
+          <Messages />
+        </Overlay>
+      )}
       {getConfig('TRANSLATIONS_ENABLED') && <LanguageMenu />}
+
       <NavDropdownMenu
         id="account"
         title={
