@@ -12,7 +12,7 @@ import EditableInput from '../../IDE/components/EditableInput';
 import { SketchSearchbar } from '../../IDE/components/Searchbar';
 import { getCollection } from '../../IDE/selectors/collections';
 import ShareURL from './CollectionShareButton';
-import SendSketchRequest from '../../IDE/components/sendSketchRequest';
+import SendSketchRequest from '../../IDE/components/SketchRequest';
 
 function CollectionMetadata({ collectionId }) {
   const { t } = useTranslation();
