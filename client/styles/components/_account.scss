@@ -4,7 +4,6 @@
     background-color: getThemifyVariable('background-color');
   }
   min-height: 100%;
-
   @media (max-width: 770px) {
     .account-settings__header {
       display: none;
@@ -25,11 +24,16 @@
 
 .account__social-text {
   padding-bottom: #{15 / $base-font-size}rem;
+  display: flex;
+  justify-content: center;
 }
 
 
 .account__social-stack {
   display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
   @media (max-width: 770px) {
     flex-direction: column;
     align-items: center;
@@ -44,4 +48,30 @@
 
 .account__social-stack > * {
   margin-right: #{15 / $base-font-size}rem;
+}
+
+.account-settings__header{
+  display: flex;
+  justify-content: center;
+}
+
+form.form{
+  display:grid;
+  justify-content: center;
+}
+
+.form-container__divider{
+  display: flex;
+  justify-content: center;
+}
+
+.form__label{
+  display: block;
+  text-align: center;
+}
+
+.form__context{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
