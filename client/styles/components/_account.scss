@@ -13,13 +13,10 @@
 }
 
 .account-settings {
-  height: 100%;
-	max-width: 90vw;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	margin-bottom: 20px;
+  max-width: #{700 / $base-font-size}rem;
+  align-self: center;
+  padding: 0 #{10 / $base-font-size}rem;
+  margin: 0 auto;
 }
 
 .account__tabs {
