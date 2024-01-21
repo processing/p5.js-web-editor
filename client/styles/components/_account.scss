@@ -25,11 +25,14 @@
 
 .account__social-text {
   padding-bottom: #{15 / $base-font-size}rem;
+  display: flex;
+  justify-content: center;
 }
 
 
 .account__social-stack {
   display: flex;
+  justify-content: center;
   @media (max-width: 770px) {
     flex-direction: column;
     align-items: center;
@@ -44,4 +47,19 @@
 
 .account__social-stack > * {
   margin-right: #{15 / $base-font-size}rem;
+}
+
+.account-settings__header{
+  display: flex;
+  justify-content: center;
+}
+
+form.form{
+  display: grid;
+  justify-content: center;
+}
+
+.form-container__divider{
+  display: flex;
+  justify-content: center;
 }
