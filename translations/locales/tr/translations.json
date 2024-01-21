@@ -356,7 +356,8 @@
     "Description": "Kaydol",
     "Or": "Veya",
     "AlreadyHave": "Zaten bir hesabın var mı?",
-    "Login": "Giriş yap"
+    "Login": "Giriş yap",
+    "Warning": "Kaydolarak p5.js Editör'ün <0>Kullanım Koşullarını</0> ve <1>Gizlilik Politikası</1>'nı kabul etmiş olursunuz."
   },
   "EmailVerificationView": {
     "Title": "p5.js Web Düzenleyicisi | E-posta Doğrulama",

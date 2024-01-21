@@ -350,7 +350,8 @@
     "Description": "Criar Conta",
     "Or": "Ou",
     "AlreadyHave": "Já tem uma conta?",
-    "Login": "Entrar"
+    "Login": "Entrar",
+    "Warning": "Ao se inscrever, você concorda com os <0>Termos de Serviço</0> e a <1>Política de Privacidade</1> do Editor p5.js."
   },
   "EmailVerificationView": {
     "Title": "Editor de Web p5.js | Verificação de Email",
