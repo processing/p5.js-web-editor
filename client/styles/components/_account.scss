@@ -31,7 +31,7 @@
 
 
 .account__social-stack {
-  display: flex;
+  display: grid;
   justify-content: center;
   @media (max-width: 770px) {
     flex-direction: column;
@@ -43,6 +43,10 @@
       margin-right: 0;
     }
   }
+}
+
+.account__social-stack a {
+  margin-bottom: 10px;
 }
 
 .account__social-stack > * {
@@ -58,6 +62,22 @@ form.form{
   display: grid;
   justify-content: center;
 }
+
+label.form__label{
+  display: flex;
+  justify-content: center;
+}
+
+span.form__status {
+    display: flex;
+    justify-content: center;
+}
+
+.form__context {
+    display: grid;
+    justify-content: center;
+}
+
 
 .form-container__divider{
   display: flex;
