@@ -30,6 +30,20 @@
   }
 }
 
+.keyboard-shortcuts__description a {
+  font-size: 16px;
+  text-decoration: underline;
+
+  &:hover {
+    @include themify {
+        color: getThemifyVariable("logo-color"); 
+      }
+    }
+  }
+
+
+
+
 .keyboard-shortcuts__title {
   padding-bottom: #{10 / $base-font-size}rem;
 }
