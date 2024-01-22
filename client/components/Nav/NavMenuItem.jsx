@@ -3,7 +3,7 @@ import React, { useContext, useMemo } from 'react';
 import ButtonOrLink from '../../common/ButtonOrLink';
 import { NavBarContext, ParentMenuContext } from './contexts';
 
-function NavMenuItem({ hideIf, ...rest }) {
+function NavMenuItem({ hideIf, className, ...rest }) {
   const parent = useContext(ParentMenuContext);
 
   const { createMenuItemHandlers } = useContext(NavBarContext);
@@ -18,7 +18,7 @@ function NavMenuItem({ hideIf, ...rest }) {
   }
 
   return (
-    <li className="nav__dropdown-item">
+    <li className={className}>
       <ButtonOrLink {...rest} {...handlers} />
     </li>
   );
@@ -31,13 +31,15 @@ NavMenuItem.propTypes = {
   /**
    * Provides a way to deal with optional items.
    */
-  hideIf: PropTypes.bool
+  hideIf: PropTypes.bool,
+  className: PropTypes.string
 };
 
 NavMenuItem.defaultProps = {
   onClick: null,
   value: null,
-  hideIf: false
+  hideIf: false,
+  className: 'nav__dropdown-item'
 };
 
 export default NavMenuItem;

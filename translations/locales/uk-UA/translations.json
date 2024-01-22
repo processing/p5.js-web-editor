@@ -218,6 +218,7 @@
     "Delete": "Видалити"
   },
   "Common": {
+    "SiteName": "p5.js Web Editor",
     "Error": "Помилка",
     "ErrorARIA": "Помилка",
     "Save": "Зберегти",
@@ -531,8 +532,8 @@
     "KeyUpLineNumber": "рядок {{lineNumber}}"
   },
   "EditorAccessibility": {
-    "NoLintMessages": "Жодних повідомлень ",
-    "CurrentLine": " Поточний рядок"
+    "NoLintMessages": "Жодних повідомлень",
+    "CurrentLine": "Поточний рядок"
   },
   "Timer": {
     "SavedAgo": "Збережено: {{timeAgo}}"
