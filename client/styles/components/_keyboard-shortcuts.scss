@@ -38,6 +38,10 @@
   padding-bottom: #{10 / $base-font-size}rem;
 }
 
+.keyboard-shortcuts__description a {
+  font-weight: bold;
+}
+
 .keyboard-shortcuts__list:not(:last-of-type) {
   padding-bottom: #{10 / $base-font-size}rem;
 }
