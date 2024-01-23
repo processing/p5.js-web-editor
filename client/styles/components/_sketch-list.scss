@@ -148,6 +148,11 @@
     color: getThemifyVariable("primary-text-color");
   }
 }
+.sketches-table__row a:hover{
+  @include themify() {
+    color: getThemifyVariable("logo-color");
+  }
+}
 
 .sketches-table__row.is-deleted > * {
   font-style: italic;
