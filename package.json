@@ -2,6 +2,10 @@
   "name": "p5.js-web-editor",
   "version": "2.11.0",
   "description": "The web editor for p5.js.",
+  "volta": {
+    "node": "16.14.2",
+    "npm": "8.5.0"
+  },
   "scripts": {
     "clean": "rimraf dist",
     "start": "cross-env BABEL_DISABLE_CACHE=1 NODE_ENV=development nodemon index.js",
