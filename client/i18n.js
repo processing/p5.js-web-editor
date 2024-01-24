@@ -17,6 +17,7 @@ import {
   zhTW,
   uk,
   sv,
+  th,
   tr,
   enIN
 } from 'date-fns/locale';
@@ -38,6 +39,7 @@ export const availableLanguages = [
   'uk-UA',
   'zh-CN',
   'zh-TW',
+  'th',
   'tr',
   'ur'
 ];
@@ -58,6 +60,7 @@ export function languageKeyToLabel(lang) {
     'uk-UA': 'Українська',
     'zh-CN': '简体中文',
     'zh-TW': '正體中文',
+    th: 'ไทย',
     tr: 'Türkçe',
     ur: 'اردو'
   };
@@ -80,6 +83,7 @@ export function languageKeyToDateLocale(lang) {
     'uk-UA': uk,
     'zh-CN': zhCN,
     'zh-TW': zhTW,
+    th,
     tr,
     ur: enIN
   };
