@@ -1,0 +1,633 @@
+{
+  "Nav": {
+    "File": {
+      "Title": "Soubor",
+      "New": "Nový",
+      "Share": "Sdílet",
+      "Duplicate": "Duplikovat",
+      "Open": "Otevřít",
+      "Download": "Stáhnout",
+      "AddToCollection": "Přidat do kolekce",
+      "Examples": "Příklady"
+    },
+    "Edit": {
+      "Title": "Upravit",
+      "TidyCode": "Upravit kód",
+      "Find": "Najít",
+      "Replace": "Nahradit"
+    },
+    "Sketch": {
+      "Title": "Sketch",
+      "AddFile": "Přidat soubor",
+      "AddFolder": "Přidat složku",
+      "Run": "Spustit",
+      "Stop": "Zastavit"
+    },
+    "Help": {
+      "Title": "Nápověda",
+      "KeyboardShortcuts": "Klávesové zkratky",
+      "Reference": "Reference",
+      "About": "O aplikaci"
+    },
+    "Lang": "Jazyk",
+    "BackEditor": "Zpět do editoru",
+    "WarningUnsavedChanges": "Opravdu chcete opustit tuto stránku? Máte neuložené změny.",
+    "Login": "Přihlásit se",
+    "LoginOr": "nebo",
+    "SignUp": "Zaregistrovat se",
+    "Auth": {
+      "Welcome": "Vítejte",
+      "Hello": "Ahoj",
+      "MyAccount": "Můj účet",
+      "My": "Můj",
+      "MySketches": "Moje skici",
+      "MyCollections": "Moje kolekce",
+      "Asset": "Aktivum",
+      "MyAssets": "Moje aktiva",
+      "LogOut": "Odhlásit se"
+    },
+    "Fundraiser": "Podpořte p5.js a Processing Foundation!"
+  },
+  "CodemirrorFindAndReplace": {
+    "ToggleReplace": "Přepnout nahrazení",
+    "Find": "Najít",
+    "FindPlaceholder": "Najít ve souborech",
+    "Replace": "Nahradit",
+    "ReplaceAll": "Nahradit vše",
+    "ReplacePlaceholder": "Text k nahrazení",
+    "Regex": "Regulární výraz",
+    "CaseSensitive": "Rozlišovat velká/malá písmena",
+    "WholeWords": "Celá slova",
+    "Previous": "Předchozí",
+    "Next": "Další",
+    "NoResults": "Žádné výsledky",
+    "Close": "Zavřít"
+  },
+  "LoginForm": {
+    "UsernameOrEmail": "Email nebo uživatelské jméno",
+    "UsernameOrEmailARIA": "Email nebo uživatelské jméno",
+    "Password": "Heslo",
+    "PasswordARIA": "Heslo",
+    "Submit": "Přihlásit se"
+  },
+  "LoginView": {
+    "Title": "p5.js Web Editor | Přihlášení",
+    "Login": "Přihlásit se",
+    "LoginOr": "nebo",
+    "SignUp": "Zaregistrovat se",
+    "Email": "email",
+    "Username": "uživatelské jméno",
+    "DontHaveAccount": "Nemáte účet? ",
+    "ForgotPassword": "Zapomněli jste heslo? ",
+    "ResetPassword": "Obnovit heslo"
+  },
+  "SocialAuthButton": {
+    "Connect": "Připojit účet {{serviceauth}}",
+    "Unlink": "Odpojit účet {{serviceauth}}",
+    "Login": "Přihlásit se pomocí účtu {{serviceauth}}",
+    "LogoARIA": "Logo {{serviceauth}}"
+  },
+  "About": {
+    "Title": "O aplikaci",
+    "TitleHelmet": "p5.js Web Editor | O aplikaci",
+    "Contribute": "Přispějte",
+    "NewP5": "První zkušenost s p5.js?",
+    "Report": "Nahlásit chybu",
+    "Learn": "Učit se",
+    "Resources": "Zdroje",
+    "Libraries": "Knihovny",
+    "Forum": "Fórum",
+    "Examples": "Příklady",
+    "PrivacyPolicy": "Zásady ochrany osobních údajů",
+    "TermsOfUse": "Podmínky užívání",
+    "CodeOfConduct": "Etický kodex"
+  },
+  "Toast": {
+    "OpenedNewSketch": "Otevřen nový náčrt.",
+    "SketchSaved": "Náčrt uložen.",
+    "SketchFailedSave": "Nepodařilo se uložit náčrt.",
+    "AutosaveEnabled": "Automatické ukládání povoleno.",
+    "LangChange": "Změna jazyka",
+    "SettingsSaved": "Nastavení uloženo."
+  },
+  "Toolbar": {
+    "Preview": "Náhled",
+    "Auto-refresh": "Automatické obnovení",
+    "OpenPreferencesARIA": "Otevřít nastavení",
+    "PlaySketchARIA": "Spustit náčrt",
+    "PlayOnlyVisualSketchARIA": "Přehrát pouze vizuální náčrt",
+    "StopSketchARIA": "Zastavit náčrt",
+    "EditSketchARIA": "Upravit název náčrtu",
+    "NewSketchNameARIA": "Nový název náčrtu",
+    "By": " od "
+  },
+  "Console": {
+    "Title": "Konzole",
+    "Clear": "Vymazat",
+    "ClearARIA": "Vyčistit konzoli",
+    "Close": "Zavřít",
+    "CloseARIA": "Zavřít konzoli",
+    "Open": "Otevřít",
+    "OpenARIA": "Otevřít konzoli"
+  },
+  "Preferences": {
+    "Settings": "Nastavení",
+    "GeneralSettings": "Obecná nastavení",
+    "Accessibility": "Přístupnost",
+    "Theme": "Téma",
+    "LightTheme": "Světlé",
+    "LightThemeARIA": "světlé téma zapnuto",
+    "DarkTheme": "Tmavé",
+    "DarkThemeARIA": "tmavé téma zapnuto",
+    "HighContrastTheme": "Vysoký kontrast",
+    "HighContrastThemeARIA": "vysoký kontrast zapnutý",
+    "TextSize": "Velikost textu",
+    "DecreaseFont": "Zmenšit",
+    "DecreaseFontARIA": "zmenšit velikost písma",
+    "IncreaseFont": "Zvětšit",
+    "IncreaseFontARIA": "zvětšit velikost písma",
+    "FontSize": "Velikost písma",
+    "SetFontSize": "nastavit velikost písma",
+    "Autosave": "Automatické ukládání",
+    "On": "Zapnuto",
+    "AutosaveOnARIA": "automatické ukládání zapnuto",
+    "Off": "Vypnuto",
+    "AutosaveOffARIA": "automatické ukládání vypnuto",
+    "AutocloseBracketsQuotes": "Automatické uzavírání závorek a uvozovek",
+    "AutocloseBracketsQuotesOnARIA": "automatické uzavírání závorek a uvozovek zapnuto",
+    "AutocloseBracketsQuotesOffARIA": "automatické uzavírání závorek a uvozovek vypnuto",
+    "AutocompleteHinter": "Automatický doplňovač",
+    "AutocompleteHinterOnARIA": "automatický doplňovač zapnuto",
+    "AutocompleteHinterOffARIA": "automatický doplňovač vypnuto",
+    "WordWrap": "Obtékání slov",
+    "LineWrapOnARIA": "obtékání slov zapnuto",
+    "LineWrapOffARIA": "obtékání slov vypnuto",
+    "LineNumbers": "Čísla řádků",
+    "LineNumbersOnARIA": "čísla řádků zapnuta",
+    "LineNumbersOffARIA": "čísla řádků vypnuta",
+    "LintWarningSound": "Zvuk upozornění na chyby v kódu",
+    "LintWarningOnARIA": "upozornění na chyby v kódu zapnuto",
+    "LintWarningOffARIA": "upozornění na chyby v kódu vypnuto",
+    "PreviewSound": "Zvuk náhledu",
+    "PreviewSoundARIA": "zvuk náhledu",
+    "AccessibleTextBasedCanvas": "Přístupný textový plátno",
+    "UsedScreenReader": "Použito se čtečkou obrazovky",
+    "PlainText": "Prostý text",
+    "TextOutputARIA": "výstupní text zapnut",
+    "TableText": "Tabulka-text",
+    "TableOutputARIA": "výstupní tabulka zapnutá"
+  },
+  "KeyboardShortcuts": {
+    "Title": "Klávesové zkratky",
+    "ShortcutsFollow": "Klávesové zkratky pro úpravu kódu následují",
+    "SublimeText": "Zkratky Sublime Text",
+    "CodeEditing": {
+      "Tidy": "Uspořádat",
+      "FindText": "Najít text",
+      "FindNextMatch": "Najít další shodu",
+      "FindPrevMatch": "Najít předchozí shodu",
+      "ReplaceTextMatch": "Nahradit shodu textu",
+      "IndentCodeLeft": "Odsadit kód doleva",
+      "IndentCodeRight": "Odsadit kód doprava",
+      "CommentLine": "Okomentovat řádek",
+      "FindNextTextMatch": "Najít další shodu textu",
+      "FindPreviousTextMatch": "Najít předchozí shodu textu",
+      "CodeEditing": "Úprava kódu",
+      "ColorPicker": "Zobrazit vložený výběr barvy"
+    },
+    "General": {
+      "StartSketch": "Spustit náčrt",
+      "StopSketch": "Zastavit náčrt",
+      "TurnOnAccessibleOutput": "Zapnout přístupný výstup",
+      "TurnOffAccessibleOutput": "Vypnout přístupný výstup"
+    }
+  },
+  "Fundraiser": {
+    "Title": "Podpořte naše software a tým",
+    "Description": "🎉 Připojte se k nám při oslavě desetiletí kódování! 🎉 Podpořte p5.js a Processing Foundation a získejte jedinečné odměny. 🙂",
+    "CallToAction": "Přispějte a dozvíte se více!"
+  },
+  "Sidebar": {
+    "Title": "Soubory náčrtu",
+    "ToggleARIA": "Přepnout otevřít/zavřít možnosti souboru náčrtu",
+    "AddFolder": "Vytvořit složku",
+    "AddFolderARIA": "přidat složku",
+    "AddFile": "Vytvořit soubor",
+    "AddFileARIA": "přidat soubor",
+    "UploadFile": "Nahrát soubor",
+    "UploadFileARIA": "nahrát soubor"
+  },
+  "FileNode": {
+    "OpenFolderARIA": "Otevřít obsah složky",
+    "CloseFolderARIA": "Zavřít obsah složky",
+    "ToggleFileOptionsARIA": "Přepnout otevřít/zavřít možnosti souboru",
+    "AddFolder": "Vytvořit složku",
+    "AddFolderARIA": "přidat složku",
+    "AddFile": "Vytvořit soubor",
+    "AddFileARIA": "přidat soubor",
+    "UploadFile": "Nahrát soubor",
+    "UploadFileARIA": "nahrát soubor",
+    "Rename": "Přejmenovat",
+    "Delete": "Smazat"
+  },
+  "Common": {
+    "SiteName": "p5.js Web Editor",
+    "Error": "Chyba",
+    "ErrorARIA": "Chyba",
+    "Save": "Uložit",
+    "p5logoARIA": "Logo p5.js",
+    "PFlogoARIA": "Logo Processing Foundation",
+    "DeleteConfirmation": "Opravdu chcete smazat {{name}}?"
+  },
+  "IDEView": {
+    "SubmitFeedback": "Odeslat zpětnou vazbu",
+    "SubmitFeedbackARIA": "odeslat-zpetnou-vazbu",
+    "AddCollectionTitle": "Přidat do kolekce",
+    "AddCollectionARIA": "přidat-do-kolekce",
+    "ShareTitle": "Sdílet",
+    "ShareARIA": "sdílet"
+  },
+  "NewFileModal": {
+    "Title": "Vytvořit soubor",
+    "CloseButtonARIA": "Zavřít modální okno pro nový soubor",
+    "EnterName": "Zadejte prosím název",
+    "InvalidType": "Neplatný typ souboru. Platné přípony jsou .js, .css, .json, .xml, .stl, .txt, .csv, .tsv, .frag a .vert."
+  },
+  "NewFileForm": {
+    "AddFileSubmit": "Přidat soubor",
+    "Placeholder": "Název"
+  },
+  "NewFolderModal": {
+    "Title": "Vytvořit složku",
+    "CloseButtonARIA": "Zavřít modální okno pro novou složku",
+    "EnterName": "Zadejte prosím název",
+    "EmptyName": "Název složky nesmí obsahovat pouze mezery",
+    "InvalidExtension": "Název složky nesmí obsahovat příponu"
+  },
+  "NewFolderForm": {
+    "AddFolderSubmit": "Přidat složku",
+    "Placeholder": "Název"
+  },
+  "ResetPasswordForm": {
+    "Email": "E-mail použitý při registraci",
+    "EmailARIA": "email",
+    "Submit": "Odeslat e-mail pro obnovení hesla"
+  },
+  "ResetPasswordView": {
+    "Title": "p5.js Web Editor | Obnovení hesla",
+    "Reset": "Obnovit heslo",
+    "Submitted": "E-mail pro obnovení hesla by měl brzy dorazit. Pokud ho nevidíte, zkontrolujte\n            složku se spamem, protože se tam někdy dostane.",
+    "Login": "Přihlásit se",
+    "LoginOr": "nebo",
+    "SignUp": "Zaregistrovat se"
+  },
+  "ReduxFormUtils": {
+    "errorInvalidEmail": "Zadejte platnou e-mailovou adresu",
+    "errorEmptyEmail": "Zadejte e-mail",
+    "errorPasswordMismatch": "Hesla se musí shodovat",
+    "errorEmptyPassword": "Zadejte heslo",
+    "errorShortPassword": "Heslo musí obsahovat alespoň 6 znaků",
+    "errorConfirmPassword": "Potvrďte své heslo",
+    "errorNewPassword": "Zadejte nové heslo nebo ponechte pole pro stávající heslo prázdné.",
+    "errorEmptyUsername": "Zadejte uživatelské jméno.",
+    "errorLongUsername": "Uživatelské jméno musí mít méně než 20 znaků.",
+    "errorValidUsername": "Uživatelské jméno může obsahovat pouze číslice, písmena, tečky, pomlčky a podtržítka."
+  },
+  "NewPasswordView": {
+    "Title": "p5.js Web Editor | Nové heslo",
+    "Description": "Nastavit nové heslo",
+    "TokenInvalidOrExpired": "Token pro obnovení hesla je neplatný nebo vypršel platnost.",
+    "EmptyPassword": "Zadejte heslo",
+    "PasswordConfirmation": "Potvrďte své heslo",
+    "PasswordMismatch": "Hesla se musí shodovat"
+  },
+  "AccountForm": {
+    "Email": "E-mail",
+    "EmailARIA": "email",
+    "Unconfirmed": "Nepotvrzeno.",
+    "EmailSent": "Potvrzení odesláno, zkontrolujte svůj e-mail.",
+    "Resend": "Znovu odeslat potvrzovací e-mail",
+    "UserName": "Uživatelské jméno",
+    "UserNameARIA": "Uživatelské jméno",
+    "CurrentPassword": "Stávající heslo",
+    "CurrentPasswordARIA": "Stávající heslo",
+    "NewPassword": "Nové heslo",
+    "NewPasswordARIA": "Nové heslo",
+    "SubmitSaveAllSettings": "Uložit všechna nastavení"
+  },
+  "AccountView": {
+    "SocialLogin": "Sociální přihlášení",
+    "SocialLoginDescription": "Použijte svůj účet GitHub nebo Google k přihlášení do p5.js Web Editoru.",
+    "Title": "p5.js Web Editor | Nastavení účtu",
+    "Settings": "Nastavení účtu",
+    "AccountTab": "Účet",
+    "AccessTokensTab": "Přístupové tokeny"
+  },
+  "APIKeyForm": {
+    "ConfirmDelete": "Jste si jisti, že chcete smazat {{key_label}}?",
+    "Summary": "Osobní přístupové tokeny fungují jako vaše heslo, umožňují automatickým\n          skriptům přistupovat k API editoru. Vytvořte token pro každý skript,\n          který potřebuje přístup.",
+    "CreateToken": "Vytvořit nový token",
+    "TokenLabel": "K čemu slouží tento token?",
+    "TokenPlaceholder": "K čemu slouží tento token? např. Ukázkový importní skript",
+    "CreateTokenSubmit": "Vytvořit",
+    "NoTokens": "Nemáte žádné existující tokeny.",
+    "NewTokenTitle": "Váš nový přístupový token",
+    "NewTokenInfo": "Ujistěte se, že si svůj nový osobní přístupový token zkopírujete.\n                  Nebudete jej moci znovu vidět!",
+    "ExistingTokensTitle": "Existující tokeny"
+  },
+  "APIKeyList": {
+    "Name": "Název",
+    "Created": "Vytvořeno",
+    "LastUsed": "Naposledy použito",
+    "Actions": "Akce",
+    "Never": "Nikdy",
+    "DeleteARIA": "Smazat klíč API"
+  },
+  "NewPasswordForm": {
+    "Title": "Heslo",
+    "TitleARIA": "Heslo",
+    "ConfirmPassword": "Potvrďte heslo",
+    "ConfirmPasswordARIA": "Potvrďte heslo",
+    "SubmitSetNewPassword": "Nastavit nové heslo"
+  },
+  "SignupForm": {
+    "Title": "Uživatelské jméno",
+    "TitleARIA": "uživatelské jméno",
+    "Email": "E-mail",
+    "EmailARIA": "email",
+    "Password": "Heslo",
+    "PasswordARIA": "heslo",
+    "ConfirmPassword": "Potvrďte heslo",
+    "ConfirmPasswordARIA": "Potvrďte heslo",
+    "SubmitSignup": "Zaregistrovat se"
+  },
+  "SignupView": {
+    "Title": "p5.js Web Editor | Registrace",
+    "Description": "Registrovat se",
+    "Or": "Nebo",
+    "AlreadyHave": "Už máte účet?",
+    "Login": "Přihlásit se",
+    "Warning": "Při registraci souhlasíte s <0>Podmínkami použití</0> a <1>Zásadami ochrany osobních údajů</1> editoru p5.js."
+  },
+  "EmailVerificationView": {
+    "Title": "p5.js Web Editor | Ověření e-mailu",
+    "Verify": "Ověřte svůj e-mail",
+    "InvalidTokenNull": "Tento odkaz je neplatný.",
+    "Checking": "Ověřuje se token, čekejte prosím...",
+    "Verified": "Hotovo, váš e-mail byl ověřen.",
+    "InvalidState": "Něco se pokazilo."
+  },
+  "AssetList": {
+    "Title": "p5.js Web Editor | Mé prostředky",
+    "ToggleOpenCloseARIA": "Přepnout možnosti otevření/zavření prostředků",
+    "Delete": "Smazat",
+    "OpenNewTab": "Otevřít v nové kartě",
+    "NoUploadedAssets": "Žádné nahrané prostředky.",
+    "HeaderName": "Název",
+    "HeaderSize": "Velikost",
+    "HeaderSketch": "Náčrt"
+  },
+  "Feedback": {
+    "Title": "p5.js Web Editor | Zpětná vazba",
+    "ViaGithubHeader": "Přes Github Issues",
+    "ViaGithubDescription": "Pokud znáte Github, je to naše preferovaná metoda pro přijímání hlášení o chybách a zpětné vazby.",
+    "GoToGithub": "Přejít na Github",
+    "ViaGoogleHeader": "Přes Google Form",
+    "ViaGoogleDescription": "Můžete také odeslat tento rychlý formulář.",
+    "GoToForm": "Přejít na formulář"
+  },
+  "Searchbar": {
+    "SearchSketch": "Hledat náčrty...",
+    "SearchCollection": "Hledat kolekce...",
+    "ClearTerm": "vymazat"
+  },
+  "UploadFileModal": {
+    "Title": "Nahrát soubor",
+    "CloseButtonARIA": "Zavřít modální okno pro nahrání souboru",
+    "SizeLimitError": "Chyba: Nemůžete nahrát žádné další soubory. Dosáhli jste celkové velikostní limitace {{sizeLimit}}.\n                Pokud chcete nahrát více, odeberte ty, které již nepoužíváte,\n                ve svém "
+  },
+  "FileUploader": {
+    "DictDefaultMessage": "Přetáhněte soubory sem nebo klikněte pro otevření prohlížeče souborů"
+  },
+  "ErrorModal": {
+    "MessageLogin": "Abyste mohli ukládat náčrty, musíte být přihlášeni. Prosím, ",
+    "Login": "Přihlásit se",
+    "LoginOr": " nebo ",
+    "SignUp": "Zaregistrovat se",
+    "MessageLoggedOut": "Zdá se, že jste byli odhlášeni. Prosím, ",
+    "LogIn": "přihlaste se",
+    "SavedDifferentWindow": "Projekt, který jste se pokusili uložit, byl uložen z jiného okna.\n        Aktualizujte stránku, abyste viděli nejnovější verzi.",
+    "LinkTitle": "Chyba při propojení účtu",
+    "LinkMessage": "Při propojení účtu {{serviceauth}} s účtem editoru p5.js Web Editor došlo k problému. Váš účet {{serviceauth}} je již propojen s jiným účtem editoru p5.js Web Editor."
+  },
+  "ShareModal": {
+    "Embed": "Vložit",
+    "Present": "Představit",
+    "Fullscreen": "Celá obrazovka",
+    "Edit": "Upravit"
+  },
+  "CollectionView": {
+    "TitleCreate": "Vytvořit kolekci",
+    "TitleDefault": "kolekce"
+  },
+  "Collection": {
+    "Title": "p5.js Web Editor | Moje kolekce",
+    "AnothersTitle": "p5.js Web Editor | Kolekce uživatele {{anotheruser}}",
+    "Share": "Sdílet",
+    "URLLink": "Odkaz na kolekci",
+    "AddSketch": "Přidat náčrtek",
+    "DeleteFromCollection": "Jste si jisti, že chcete odebrat {{name_sketch}} z této kolekce?",
+    "SketchDeleted": "Náčrtek smazán",
+    "SketchRemoveARIA": "Odstranit náčrtek z kolekce",
+    "DescriptionPlaceholder": "Přidat popis",
+    "Description": "popis",
+    "NumSketches": "{{count}} náčrtek",
+    "NumSketches_plural": "{{count}} náčrty",
+    "By": "Kolekce od ",
+    "NoSketches": "Žádné náčrty v kolekci",
+    "TableSummary": "tabulka obsahující všechny kolekce",
+    "HeaderName": "Název",
+    "HeaderCreatedAt": "Datum přidání",
+    "HeaderUser": "Vlastník",
+    "DirectionAscendingARIA": "Vzestupně",
+    "DirectionDescendingARIA": "Sestupně",
+    "ButtonLabelAscendingARIA": "Seřadit podle {{displayName}} vzestupně.",
+    "ButtonLabelDescendingARIA": "Seřadit podle {{displayName}} sestupně."
+  },
+  "AddToCollectionList": {
+    "Title": "p5.js Web Editor | Moje kolekce",
+    "AnothersTitle": "p5.js Web Editor | Kolekce uživatele {{anotheruser}}",
+    "Empty": "Žádné kolekce"
+  },
+  "CollectionCreate": {
+    "Title": "p5.js Web Editor | Vytvořit kolekci",
+    "FormError": "Nepodařilo se vytvořit kolekci",
+    "FormLabel": "Název kolekce",
+    "FormLabelARIA": "název",
+    "NameRequired": "Název kolekce je povinný",
+    "Description": "Popis (volitelně)",
+    "DescriptionARIA": "popis",
+    "DescriptionPlaceholder": "Moje oblíbené náčrty",
+    "SubmitCollectionCreate": "Vytvořit kolekci"
+  },
+  "DashboardView": {
+    "CreateCollection": "Vytvořit kolekci",
+    "NewSketch": "Nový náčrtek",
+    "CreateCollectionOverlay": "Vytvořit kolekci"
+  },
+  "DashboardTabSwitcher": {
+    "Sketches": "Náčrty",
+    "Collections": "Kolekce",
+    "Assets": "Prostředky"
+  },
+  "CollectionList": {
+    "Title": "p5.js Web Editor | Moje kolekce",
+    "AnothersTitle": "p5.js Web Editor | Kolekce uživatele {{anotheruser}}",
+    "NoCollections": "Žádné kolekce.",
+    "TableSummary": "tabulka obsahující všechny kolekce",
+    "HeaderName": "Název",
+    "HeaderCreatedAt": "Datum vytvoření",
+    "HeaderCreatedAt_mobile": "Vytvořeno",
+    "HeaderUpdatedAt": "Datum aktualizace",
+    "HeaderUpdatedAt_mobile": "Aktualizováno",
+    "HeaderNumItems": "# náčrtků",
+    "HeaderNumItems_mobile": "# náčrtků",
+    "DirectionAscendingARIA": "Vzestupně",
+    "DirectionDescendingARIA": "Sestupně",
+    "ButtonLabelAscendingARIA": "Seřadit podle {{displayName}} vzestupně.",
+    "ButtonLabelDescendingARIA": "Seřadit podle {{displayName}} sestupně.",
+    "AddSketch": "Přidat náčrtek"
+  },
+  "CollectionListRow": {
+    "ToggleCollectionOptionsARIA": "Přepnout možnosti otevření/zavření kolekce",
+    "AddSketch": "Přidat náčrtek",
+    "Delete": "Smazat",
+    "Rename": "Přejmenovat"
+  },
+  "Overlay": {
+    "AriaLabel": "Zavřít překryv {{title}}"
+  },
+  "QuickAddList": {
+    "ButtonRemoveARIA": "Odebrat z kolekce",
+    "ButtonAddToCollectionARIA": "Přidat do kolekce",
+    "View": "Zobrazit"
+  },
+  "SketchList": {
+    "View": "Zobrazit",
+    "Title": "p5.js Web Editor | Moje náčrty",
+    "AnothersTitle": "p5.js Web Editor | Náčrty uživatele {{anotheruser}}",
+    "ToggleLabelARIA": "Přepnout otevření/zavření možností náčrtu",
+    "DropdownRename": "Přejmenovat",
+    "DropdownDownload": "Stáhnout",
+    "DropdownDuplicate": "Duplikovat",
+    "DropdownAddToCollection": "Přidat do kolekce",
+    "DropdownDelete": "Smazat",
+    "DirectionAscendingARIA": "Vzestupně",
+    "DirectionDescendingARIA": "Sestupně",
+    "ButtonLabelAscendingARIA": "Seřadit podle {{displayName}} vzestupně.",
+    "ButtonLabelDescendingARIA": "Seřadit podle {{displayName}} sestupně.",
+    "AddToCollectionOverlayTitle": "Přidat do kolekce",
+    "TableSummary": "tabulka obsahující všechny uložené projekty",
+    "HeaderName": "Náčrtek",
+    "HeaderCreatedAt": "Datum vytvoření",
+    "HeaderCreatedAt_mobile": "Vytvořeno",
+    "HeaderUpdatedAt": "Datum aktualizace",
+    "HeaderUpdatedAt_mobile": "Aktualizováno",
+    "NoSketches": "Žádné náčrty."
+  },
+  "AddToCollectionSketchList": {
+    "Title": "p5.js Web Editor | Moje náčrty",
+    "AnothersTitle": "p5.js Web Editor | Náčrty uživatele {{anotheruser}}",
+    "NoCollections": "Žádné kolekce."
+  },
+  "Editor": {
+    "OpenSketchARIA": "Otevřít navigaci souborů náčrtu",
+    "CloseSketchARIA": "Zavřít navigaci souborů náčrtu",
+    "UnsavedChangesARIA": "Náčrt má neuložené změny",
+    "KeyUpLineNumber": "řádek {{lineNumber}}"
+  },
+  "EditorAccessibility": {
+    "NoLintMessages": "Nejsou žádné lint zprávy",
+    "CurrentLine": "Aktuální řádek"
+  },
+  "Timer": {
+    "SavedAgo": "Uloženo: {{timeAgo}}"
+  },
+  "formatDate": {
+    "JustNow": "právě teď",
+    "15Seconds": "před 15 sekundami",
+    "25Seconds": "před 25 sekundami",
+    "35Seconds": "před 35 sekundami",
+    "Ago": "{{timeAgo}} před"
+  },
+  "AddRemoveButton": {
+    "AltAddARIA": "Přidat do kolekce",
+    "AltRemoveARIA": "Odebrat z kolekce"
+  },
+  "CopyableInput": {
+    "CopiedARIA": "Zkopírováno do schránky!",
+    "OpenViewTabARIA": "Otevřít zobrazení {{label}} v nové kartě"
+  },
+  "EditableInput": {
+    "EditValue": "Upravit hodnotu {{display}}",
+    "EmptyPlaceholder": "Žádná hodnota"
+  },
+  "PreviewNav": {
+    "EditSketchARIA": "Upravit náčrtek",
+    "ByUser": "od"
+  },
+  "MobilePreferences": {
+    "Settings": "Nastavení",
+    "GeneralSettings": "Obecná nastavení",
+    "Accessibility": "Přístupnost",
+    "AccessibleOutput": "Přístupný výstup",
+    "Theme": "Téma",
+    "LightTheme": "Světlé",
+    "DarkTheme": "Tmavé",
+    "HighContrastTheme": "Vysoký kontrast",
+    "Autosave": "Automatické ukládání",
+    "AutocompleteHinter": "Nápověda k automatickému dokončování",
+    "WordWrap": "Zalamování slov",
+    "LineNumbers": "Čísla řádků",
+    "LintWarningSound": "Zvuk upozornění na lint",
+    "UsedScreenReader": "Použito se čtečkou obrazovky",
+    "PlainText": "Prostý text",
+    "TableText": "Text v tabulce",
+    "Sound": "Zvuk"
+  },
+  "PreferenceCreators": {
+    "On": "Zapnuto",
+    "Off": "Vypnuto"
+  },
+  "MobileIDEView": {
+    "Preferences": "Předvolby",
+    "MyStuff": "Moje věci",
+    "Examples": "Příklady",
+    "OriginalEditor": "Původní editor",
+    "Login": "Přihlášení",
+    "Logout": "Odhlášení"
+  },
+  "MobileDashboardView": {
+    "Examples": "Příklady",
+    "Náčrty": "Náčrty",
+    "Kolekce": "Kolekce",
+    "Prostředky": "Prostředky",
+    "Moje věci": "Moje věci",
+    "Vytvořit náčrtek": "Vytvořit náčrtek",
+    "Vytvořit kolekci": "Vytvořit kolekci"
+  },
+  "Explorer": {
+    "Files": "Soubory"
+  },
+  "Cookies": {
+    "Header": "Cookies",
+    "Body": "Editor p5.js používá cookies. Některé jsou nezbytné pro funkčnost webu a umožňují správu účtu a preferencí. Jiné nejsou nezbytné - slouží k analýze a umožňují nám získat více informací o naší komunitě. <strong> Tato data nikdy neprodáváme ani je nepoužíváme k reklamě. </strong> Můžete si vybrat, které cookies chcete povolit, a dozvědět se více v naší <0>Prohlášení o ochraně soukromí<0>.",
+    "AllowAll": "Povolit všechny",
+    "AllowEssential": "Povolit nezbytné"
+  },
+  "Legal": {
+    "PrivacyPolicy": "Prohlášení o ochraně soukromí",
+    "TermsOfUse": "Podmínky užívání",
+    "CodeOfConduct": "Etický kodex"
+  }
+}
