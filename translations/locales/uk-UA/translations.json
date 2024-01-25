@@ -70,7 +70,7 @@
     "Submit": "Увійти"
   },
   "LoginView": {
-    "Title": "p5.js Web Editor | Вхід",
+    "Title": "p5.js веб-редактор | Вхід",
     "Login": "Увійти",
     "LoginOr": "або",
     "SignUp": "Зареєструватися",
@@ -88,7 +88,7 @@
   },
   "About": {
     "Title": "Про редактор",
-    "TitleHelmet": "p5.js Web Editor | Про редактор",
+    "TitleHelmet": "p5.js веб-редактор | Про редактор",
     "Contribute": "Внесок",
     "NewP5": "Початківець в p5.js?",
     "Report": "Повідомити про помилку",
@@ -268,7 +268,7 @@
     "Submit": "Надіслати електронний лист для скидання пароля"
   },
   "ResetPasswordView": {
-    "Title": "p5.js Web Editor | Скинути пароль",
+    "Title": "p5.js веб-редактор | Скинути пароль",
     "Reset": "Скинути пароль",
     "Submitted": "Лист для скидання пароля має надійти незабаром на вашу електронну пошту.\n            Якщо лист не прийшов, перевірте папку із спамом.",
     "Login": "Увійти",
@@ -288,7 +288,7 @@
     "errorValidUsername": "Ім'я користувача має складатися лише з цифр, літер, крапок, тире та символа підкреслення."
   },
   "NewPasswordView": {
-    "Title": "p5.js Web Editor | Новий пароль",
+    "Title": "p5.js веб-редактор | Новий пароль",
     "Description": "Встановити новий пароль",
     "TokenInvalidOrExpired": "Помилка скидання пароля або термін дії минув.",
     "EmptyPassword": "Введіть пароль",
@@ -311,8 +311,8 @@
   },
   "AccountView": {
     "SocialLogin": "Увійти через соціальну мережу",
-    "SocialLoginDescription": "Використовуйте свій обліковий запис GitHub або Google, щоб увійти у p5.js Web Editor.",
-    "Title": "p5.js Web Editor | Налаштування акаунта",
+    "SocialLoginDescription": "Використовуйте свій обліковий запис GitHub або Google, щоб увійти у p5.js веб-редактор.",
+    "Title": "p5.js веб-редактор | Налаштування акаунта",
     "Settings": "Налаштування акаунта",
     "AccountTab": "Акаунт",
     "AccessTokensTab": "Ключі"
@@ -356,14 +356,14 @@
     "SubmitSignup": "Зареєструватися"
   },
   "SignupView": {
-    "Title": "p5.js Web Editor | Реєстрація",
+    "Title": "p5.js веб-редактор | Реєстрація",
     "Description": "Реєстрація",
     "Or": "Або",
     "AlreadyHave": "Ви вже маєте акаунт? ",
     "Login": "Увійти"
   },
   "EmailVerificationView": {
-    "Title": "p5.js Web Editor | Підтвердження електронної пошти",
+    "Title": "p5.js веб-редактор | Підтвердження електронної пошти",
     "Verify": "Підтвердьте свою електронну адресу",
     "InvalidTokenNull": "Це посилання недійсне.",
     "Checking": "Перевірка ключа, зачекайте...",
@@ -371,7 +371,7 @@
     "InvalidState": "Щось пішло не так."
   },
   "AssetList": {
-    "Title": "p5.js Web Editor | Мої файли",
+    "Title": "p5.js веб-редактор | Мої файли",
     "ToggleOpenCloseARIA": "Увімкнути/вимкнути параметри файлів",
     "Delete": "Видалити",
     "OpenNewTab": "Відкрити у новій вкладці",
@@ -381,7 +381,7 @@
     "HeaderSketch": "Скетч"
   },
   "Feedback": {
-    "Title": "p5.js Web Editor | Зворотний зв'язок",
+    "Title": "p5.js веб-редактор | Зворотний зв'язок",
     "ViaGithubHeader": "Через Github Issues",
     "ViaGithubDescription": "Якщо ви знайомі з Github, це наш найкращий спосіб отримання звітів про помилки та відгуків.",
     "GoToGithub": "Перейти на Github",
@@ -411,7 +411,7 @@
     "LogIn": "Увійти",
     "SavedDifferentWindow": "Проєкт, який ви намагалися зберегти, було збережено у іншому вікні.\n        Оновіть сторінку, щоб побачити останню версію.",
     "LinkTitle": "Помилка зв'язування облікового запису",
-    "LinkMessage": "Не вдалося пов'язати ваш обліковий запис {{serviceauth}} з вашим обліковим записом p5.js Web Editor. Ваш обліковий запис {{serviceauth}} вже пов'язаний з іншим обліковим записом p5.js Web Editor."
+    "LinkMessage": "Не вдалося пов'язати ваш обліковий запис {{serviceauth}} з вашим обліковим записом p5.js веб-редактор. Ваш обліковий запис {{serviceauth}} вже пов'язаний з іншим обліковим записом p5.js веб-редактор."
   },
   "ShareModal": {
     "Embed": "Вбудувати",
@@ -424,8 +424,8 @@
     "TitleDefault": "колекція"
   },
   "Collection": {
-    "Title": "p5.js Web Editor | Мої колекції",
-    "AnothersTitle": "p5.js Web Editor | Колекції {{anotheruser}}",
+    "Title": "p5.js веб-редактор | Мої колекції",
+    "AnothersTitle": "p5.js веб-редактор | Колекції {{anotheruser}}",
     "Share": "Поділитися",
     "URLLink": "Посилання на колекцію",
     "AddSketch": "Додати скетч",
@@ -448,12 +448,12 @@
     "ButtonLabelDescendingARIA": "Сортувати {{displayName}} за спаданням."
   },
   "AddToCollectionList": {
-    "Title": "p5.js Web Editor | Мої колекції",
-    "AnothersTitle": "p5.js Web Editor | Колекції {{anotheruser}}",
+    "Title": "p5.js веб-редактор | Мої колекції",
+    "AnothersTitle": "p5.js веб-редактор | Колекції {{anotheruser}}",
     "Empty": "Немає колекцій"
   },
   "CollectionCreate": {
-    "Title": "p5.js Web Editor | Створити колекцію",
+    "Title": "p5.js веб-редактор | Створити колекцію",
     "FormError": "Не вдалося створити колекцію",
     "FormLabel": "Ім'я колекції",
     "FormLabelARIA": "ім'я",
@@ -474,8 +474,8 @@
     "Assets": "Файли"
   },
   "CollectionList": {
-    "Title": "p5.js Web Editor | Мої колекції",
-    "AnothersTitle": "p5.js Web Editor | Колекції {{anotheruser}}",
+    "Title": "p5.js веб-редактор | Мої колекції",
+    "AnothersTitle": "p5.js веб-редактор | Колекції {{anotheruser}}",
     "NoCollections": "Немає колекцій.",
     "TableSummary": "таблиця, що містить усі колекції",
     "HeaderName": "Ім'я",
@@ -507,8 +507,8 @@
   },
   "SketchList": {
     "View": "Перегляд",
-    "Title": "p5.js Web Editor | Мої скетчі",
-    "AnothersTitle": "p5.js Web Editor | Скетчі {{anotheruser}}",
+    "Title": "p5.js веб-редактор | Мої скетчі",
+    "AnothersTitle": "p5.js веб-редактор | Скетчі {{anotheruser}}",
     "ToggleLabelARIA": "Відкрити/закрити параметри скетчу",
     "DropdownRename": "Перейменувати",
     "DropdownDownload": "Завантажити",
@@ -529,8 +529,8 @@
     "NoSketches": "Немає скетчів."
   },
   "AddToCollectionSketchList": {
-    "Title": "p5.js Web Editor | Мої скетчі",
-    "AnothersTitle": "p5.js Web Editor | Скетчі {{anotheruser}}",
+    "Title": "p5.js веб-редактор | Мої скетчі",
+    "AnothersTitle": "p5.js веб-редактор | Скетчі {{anotheruser}}",
     "NoCollections": "Немає колекцій."
   },
   "Editor": {
