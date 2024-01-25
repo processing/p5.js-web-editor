@@ -96,7 +96,15 @@
       "Resources": "साधन",
       "Libraries": "लाइब्रेरीज़",
       "Forum": "समूह",
-      "Examples": "उदाहरण"
+      "Examples": "उदाहरण",
+      "Home": "होम",
+      "Twitter": "ट्विटर",
+      "Instagram": "इंस्टाग्राम",
+      "Discord": "डिस्कॉर्ड",
+      "PrivacyPolicy": "प्राइवेसी पालिसी",
+      "TermsOfUse": "टर्म्स ऑफ़ यूज़",
+      "CodeOfConduct": "कोड ऑफ़ कंडक्ट",
+      "WebEditor": "वेब एडिटर"
     },
     "Toast": {
       "OpenedNewSketch": "नया स्केच खोला",
@@ -142,6 +150,8 @@
       "DecreaseFontARIA": "फॉन्ट साइज़ कम करें",
       "IncreaseFont": "बढ़ाएं",
       "IncreaseFontARIA": "फॉन्ट साइज़ बढ़ाएं",
+      "FontSize": "फ़ॉन्ट आकार",
+      "SetFontSize": "फ़ॉन्ट आकार सेट करें",
       "Autosave": "ऑटोसेव",
       "On": "चालू",
       "AutosaveOnARIA": "ऑटोसेव चालू",
@@ -174,7 +184,7 @@
     "KeyboardShortcuts": {
       "Title": " कीबोर्ड शॉर्टकट",
       "ShortcutsFollow": "कोड संपादन कीबोर्ड शॉर्टकट अनुसरण करते हैं",
-      "SublimeText": "Sublime Text शॉर्टकट",
+      "SublimeText": "सबलाइम टेक्स्ट शॉर्टकट",
       "CodeEditing": {
         "Tidy": "साफ",
         "FindText": "शब्द ढूंढे",
@@ -186,7 +196,9 @@
         "CommentLine": "टिप्पणी लाइन",
         "FindNextTextMatch": "अगला शब्द मिलान खोजें",
         "FindPreviousTextMatch": "पिछला शब्द मिलान खोजें",
-        "CodeEditing": "कोड संपादन"
+        "CodeEditing": "कोड संपादन",
+        "ColorPicker": "इनलाइन कलर पिकर दिखाएँ"
+
       },
       "General": {
         "StartSketch": "स्केच शुरू करें",
@@ -573,6 +585,7 @@
       "DarkTheme": "डार्क",
       "HighContrastTheme": "ज़्यादा कंट्रास्ट",
       "Autosave": "ऑटोसेव",
+      "AutocompleteHinter": "ऑटोकंप्लीट हिंटर",
       "WordWrap": "वर्ड रैप",
       "LineNumbers": "लाइन नम्बर्ज़",
       "LintWarningSound": "लिन्ट वॉर्निंग साउन्ड",
@@ -604,6 +617,17 @@
     },
     "Explorer": {
       "Files": "फ़ाइलें"
+    },
+    "Cookies": {
+      "Header": "कुकीज",
+      "Body": "p5.js संपादक कुकीज़ का उपयोग करता है। कुछ वेबसाइट की कार्यक्षमता के लिए आवश्यक हैं और आपको खाता और प्राथमिकताएँ प्रबंधित करने की अनुमति देते हैं। अन्य आवश्यक नहीं हैं - उनका उपयोग विश्लेषण के लिए किया जाता है और हमें अपने समुदाय के बारे में अधिक जानने की अनुमति मिलती है। <strong> हम इस डेटा को कभी नहीं बेचते हैं या विज्ञापन के लिए इसका उपयोग नहीं करते हैं। </strong> आप यह तय कर सकते हैं कि आप किन कुकीज़ को अनुमति देना चाहते हैं, और हमारी <0>गोपनीयता नीति<0> में और अधिक जान सकते हैं।",
+      "AllowAll": "सभी को अनुमति दें",
+      "AllowEssential": "आवश्यक अनुमति दें"
+    },
+    "Legal": {
+      "PrivacyPolicy": "गोपनीयता नीति",
+      "TermsOfUse": "उपयोग की शर्तें",
+      "CodeOfConduct": "आचार संहिता"
     }
   }
  
