@@ -604,6 +604,11 @@
     },
     "Explorer": {
       "Files": "फ़ाइलें"
+    },
+    "Legal": {
+      "PrivacyPolicy": "प्राइवेसी पॉलिसी",
+      "TermsOfUse": "टर्म्स ऑफ़ यूज़",
+      "CodeOfConduct": "कोड ऑफ़ कंडक्ट"
     }
   }
  
