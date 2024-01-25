@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import SquareLogoIcon from '../../../images/p5js-square-logo.svg';
 // import PlayIcon from '../../../images/play.svg';
 import AsteriskIcon from '../../../images/p5-asterisk.svg';
@@ -28,7 +28,7 @@ function About(props) {
         />
         <div className="about__content-column">
           <p className="about__version-info">
-            Web Editor: <span>v{packageData?.version}</span>
+            {t('About.WebEditor')}: <span>v{packageData?.version}</span>
           </p>
           <p className="about__version-info">
             p5.js: <span>v{p5version}</span>
@@ -44,7 +44,7 @@ function About(props) {
               aria-hidden="true"
               focusable="false"
             />
-            Home
+            {t('About.Home')}
           </a>
         </p>
         <p className="about__content-column-list">
@@ -86,7 +86,7 @@ function About(props) {
               aria-hidden="true"
               focusable="false"
             />
-            Twitter
+            {t('About.Twitter')}
           </a>
         </p>
         <p className="about__content-column-list">
@@ -100,7 +100,7 @@ function About(props) {
               aria-hidden="true"
               focusable="false"
             />
-            Instagram
+            {t('About.Instagram')}
           </a>
         </p>
       </div>
@@ -159,7 +159,7 @@ function About(props) {
               aria-hidden="true"
               focusable="false"
             />
-            Discord
+            {t('About.Discord')}
           </a>
         </p>
         <p className="about__content-column-list">

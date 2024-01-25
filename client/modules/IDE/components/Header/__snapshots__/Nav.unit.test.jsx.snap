@@ -1,0 +1,1092 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Nav renders dashboard version for desktop 1`] = `
+<DocumentFragment>
+  <header>
+    <nav
+      class="nav"
+    >
+      <ul
+        class="nav__items-left"
+      >
+        <li
+          class="nav__item-logo"
+        >
+          <test-file-stub
+            aria-label="p5.js Logo"
+            classname="svg__logo"
+            focusable="false"
+            role="img"
+          />
+        </li>
+        <li
+          class="nav__item nav__item--no-icon"
+        >
+          <a
+            class="nav__back-link"
+            href="/"
+          >
+            <test-file-stub
+              aria-hidden="true"
+              classname="nav__back-icon"
+              focusable="false"
+            />
+            <span
+              class="nav__item-header"
+            >
+              Back to Editor
+            </span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+</DocumentFragment>
+`;
+
+exports[`Nav renders dashboard version for mobile 1`] = `
+<DocumentFragment>
+  .c4.c4.c4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  color: #333;
+  cursor: pointer;
+  border: none;
+  line-height: 1;
+}
+
+.c4.c4.c4 svg * {
+  fill: #333;
+}
+
+.c4.c4.c4:disabled {
+  cursor: not-allowed;
+}
+
+.c4.c4.c4 > * + * {
+  margin-left: 0.6666666666666666rem;
+}
+
+.c5 {
+  width: 4rem;
+}
+
+.c5 > svg {
+  width: 100%;
+  height: 100%;
+}
+
+.c0 {
+  background: #F0F0F0;
+  color: #333;
+  padding: 0.6666666666666666rem 0;
+  gap: 1.1666666666666667rem;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  font-size: 0.8333333333333334rem;
+  box-shadow: #00000030 0px 2px 8px 0px;
+  z-index: 10;
+}
+
+.c1 {
+  width: 2.3333333333333335rem;
+  aspect-ratio: 1;
+  margin-left: 1.1666666666666667rem;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c1 > svg {
+  width: 100%;
+  height: 100%;
+}
+
+.c1 > svg > path {
+  fill: #ed225d;
+  stroke: #ed225d;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  gap: 0.16666666666666666rem;
+}
+
+.c2 * {
+  padding: 0;
+  margin: 0;
+}
+
+.c2 > h5 {
+  font-size: 1.0833333333333333rem;
+  font-weight: normal;
+}
+
+.c3 {
+  margin-left: auto;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c3 ul.opened {
+  -webkit-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
+  opacity: 1;
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.c3 > div {
+  position: relative;
+}
+
+.c3 > div ul {
+  foreground: #000;
+  background: #F0F0F0;
+  border: #A6A6A6;
+  position: absolute;
+  overflow: hidden;
+  z-index: 10;
+  right: 10px;
+  -webkit-transform: translateX(0.5rem);
+  -ms-transform: translateX(0.5rem);
+  transform: translateX(0.5rem);
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  -webkit-transform: scale(0);
+  -ms-transform: scale(0);
+  transform: scale(0);
+  opacity: 0;
+  -webkit-transform-origin: top;
+  -ms-transform-origin: top;
+  transform-origin: top;
+  -webkit-transition: opacity 100ms,-webkit-transform 100ms 200ms;
+  -webkit-transition: opacity 100ms,transform 100ms 200ms;
+  transition: opacity 100ms,transform 100ms 200ms;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  gap: 0.16666666666666666rem;
+  box-shadow: rgba(60,64,67,0.3) 0px 1px 2px 0px, rgba(60,64,67,0.15) 0px 1px 3px 1px;
+  min-width: 10rem;
+  border-radius: 0.16666666666666666rem;
+}
+
+.c3 > div ul li.user {
+  color: #2D67F6;
+  font-size: 1.3333333333333333rem;
+  font-weight: bold;
+  margin: 0.5rem 1rem;
+}
+
+.c3 > div ul > b {
+  margin: 0.5rem 1rem;
+  position: relative;
+  width: -webkit-min-content;
+  width: -moz-min-content;
+  width: min-content;
+}
+
+.c3 > div ul > b::after {
+  content: '';
+  position: absolute;
+  opacity: calc(0.5);
+  top: 50%;
+  -webkit-transform: translate(100%,-50%);
+  -ms-transform: translate(100%,-50%);
+  transform: translate(100%,-50%);
+  right: -0.5rem;
+  width: 4.583333333333333rem;
+  height: 1px;
+  background-color: #4D4D4D;
+}
+
+.c3 > div ul > li {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+}
+
+.c3 > div ul > li a,
+.c3 > div ul > li button {
+  width: 100%;
+  padding: 0.6666666666666666rem 1.25rem 0.6666666666666666rem 0.8333333333333334rem;
+  font-size: 1.5rem;
+  text-align: left;
+}
+
+.c3 > div ul > li a:hover,
+.c3 > div ul > li button:hover {
+  background-color: #ed225d;
+  color: #FFF;
+}
+
+<header>
+    <nav
+      class="c0"
+    >
+      <div
+        class="c1"
+      >
+        <test-file-stub />
+      </div>
+      <div
+        class="c2"
+      >
+        <h1>
+          <span
+            class="editable-input editable-input--is-not-editing editable-input--has-value "
+          >
+            <button
+              aria-hidden="false"
+              aria-label="Edit sketch name"
+              class="editable-input__label"
+            >
+              <span>
+                Test project name
+              </span>
+              <test-file-stub
+                aria-hidden="true"
+                classname="editable-input__icon"
+                focusable="false"
+              />
+            </button>
+            <input
+              aria-hidden="true"
+              aria-label="New sketch name"
+              class="editable-input__input"
+              disabled=""
+              maxlength="128"
+              type="text"
+              value="Test project name"
+            />
+          </span>
+        </h1>
+      </div>
+      <div
+        class="c3"
+      >
+        <div>
+          <a
+            href="/login"
+          >
+            <button
+              class="c4 c5"
+              display="inline"
+              focusable="false"
+              kind="primary"
+              type="button"
+            >
+              <test-file-stub
+                aria-hidden="true"
+                classname="sc-fujyAs cSTVlM"
+                focusable="false"
+              />
+            </button>
+          </a>
+        </div>
+        <div>
+          <button
+            class="c4 c5"
+            display="inline"
+            focusable="false"
+            kind="primary"
+            type="button"
+          >
+            <test-file-stub
+              aria-hidden="true"
+              classname="sc-iqAclL iOZiVo"
+              focusable="false"
+            />
+          </button>
+          <ul
+            class=""
+          >
+            <b>
+              File
+            </b>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                New
+              </button>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                Save
+              </button>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <a
+                href="/p5/sketches"
+              >
+                Examples
+              </a>
+            </li>
+            <b>
+              Edit
+            </b>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                Tidy Code
+              </button>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                Find
+              </button>
+            </li>
+            <b>
+              Sketch
+            </b>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                Add File
+              </button>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                Add Folder
+              </button>
+            </li>
+            <b>
+              Settings
+            </b>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                Preferences
+              </button>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                Language
+              </button>
+            </li>
+            <b>
+              Help
+            </b>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                Keyboard Shortcuts
+              </button>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <a
+                href="https://p5js.org/reference/"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Reference
+              </a>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <a
+                href="/about"
+              >
+                About
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+</DocumentFragment>
+`;
+
+exports[`Nav renders editor version for desktop 1`] = `
+<DocumentFragment>
+  <header>
+    <nav
+      class="nav"
+    >
+      <ul
+        class="nav__items-left"
+      >
+        <li
+          class="nav__item-logo"
+        >
+          <test-file-stub
+            aria-label="p5.js Logo"
+            classname="svg__logo"
+            focusable="false"
+            role="img"
+          />
+        </li>
+        <li
+          class="nav__item"
+        >
+          <button>
+            <span
+              class="nav__item-header"
+            >
+              File
+            </span>
+            <test-file-stub
+              aria-hidden="true"
+              classname="nav__item-header-triangle"
+              focusable="false"
+            />
+          </button>
+          <ul
+            class="nav__dropdown"
+          >
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                New
+              </button>
+            </li>
+          </ul>
+        </li>
+        <li
+          class="nav__item"
+        >
+          <button>
+            <span
+              class="nav__item-header"
+            >
+              Edit
+            </span>
+            <test-file-stub
+              aria-hidden="true"
+              classname="nav__item-header-triangle"
+              focusable="false"
+            />
+          </button>
+          <ul
+            class="nav__dropdown"
+          >
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                Tidy Code
+                <span
+                  class="nav__keyboard-shortcut"
+                >
+                  ⌃+⇧+F
+                </span>
+              </button>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                Find
+                <span
+                  class="nav__keyboard-shortcut"
+                >
+                  ⌃+F
+                </span>
+              </button>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                Replace
+                <span
+                  class="nav__keyboard-shortcut"
+                >
+                  ⌃+H
+                </span>
+              </button>
+            </li>
+          </ul>
+        </li>
+        <li
+          class="nav__item"
+        >
+          <button>
+            <span
+              class="nav__item-header"
+            >
+              Sketch
+            </span>
+            <test-file-stub
+              aria-hidden="true"
+              classname="nav__item-header-triangle"
+              focusable="false"
+            />
+          </button>
+          <ul
+            class="nav__dropdown"
+          >
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                Add File
+              </button>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                Add Folder
+              </button>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                Run
+                <span
+                  class="nav__keyboard-shortcut"
+                >
+                  ⌃+Enter
+                </span>
+              </button>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                Stop
+                <span
+                  class="nav__keyboard-shortcut"
+                >
+                  ⇧+⌃+Enter
+                </span>
+              </button>
+            </li>
+          </ul>
+        </li>
+        <li
+          class="nav__item"
+        >
+          <button>
+            <span
+              class="nav__item-header"
+            >
+              Help
+            </span>
+            <test-file-stub
+              aria-hidden="true"
+              classname="nav__item-header-triangle"
+              focusable="false"
+            />
+          </button>
+          <ul
+            class="nav__dropdown"
+          >
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                Keyboard Shortcuts
+              </button>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <a
+                href="https://p5js.org/reference/"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Reference
+              </a>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <a
+                href="/about"
+              >
+                About
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+  </header>
+</DocumentFragment>
+`;
+
+exports[`Nav renders editor version for mobile 1`] = `
+<DocumentFragment>
+  .c4.c4.c4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  color: #333;
+  cursor: pointer;
+  border: none;
+  line-height: 1;
+}
+
+.c4.c4.c4 svg * {
+  fill: #333;
+}
+
+.c4.c4.c4:disabled {
+  cursor: not-allowed;
+}
+
+.c4.c4.c4 > * + * {
+  margin-left: 0.6666666666666666rem;
+}
+
+.c5 {
+  width: 4rem;
+}
+
+.c5 > svg {
+  width: 100%;
+  height: 100%;
+}
+
+.c0 {
+  background: #F0F0F0;
+  color: #333;
+  padding: 0.6666666666666666rem 0;
+  gap: 1.1666666666666667rem;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  font-size: 0.8333333333333334rem;
+  box-shadow: #00000030 0px 2px 8px 0px;
+  z-index: 10;
+}
+
+.c1 {
+  width: 2.3333333333333335rem;
+  aspect-ratio: 1;
+  margin-left: 1.1666666666666667rem;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c1 > svg {
+  width: 100%;
+  height: 100%;
+}
+
+.c1 > svg > path {
+  fill: #ed225d;
+  stroke: #ed225d;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  gap: 0.16666666666666666rem;
+}
+
+.c2 * {
+  padding: 0;
+  margin: 0;
+}
+
+.c2 > h5 {
+  font-size: 1.0833333333333333rem;
+  font-weight: normal;
+}
+
+.c3 {
+  margin-left: auto;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c3 ul.opened {
+  -webkit-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
+  opacity: 1;
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.c3 > div {
+  position: relative;
+}
+
+.c3 > div ul {
+  foreground: #000;
+  background: #F0F0F0;
+  border: #A6A6A6;
+  position: absolute;
+  overflow: hidden;
+  z-index: 10;
+  right: 10px;
+  -webkit-transform: translateX(0.5rem);
+  -ms-transform: translateX(0.5rem);
+  transform: translateX(0.5rem);
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  -webkit-transform: scale(0);
+  -ms-transform: scale(0);
+  transform: scale(0);
+  opacity: 0;
+  -webkit-transform-origin: top;
+  -ms-transform-origin: top;
+  transform-origin: top;
+  -webkit-transition: opacity 100ms,-webkit-transform 100ms 200ms;
+  -webkit-transition: opacity 100ms,transform 100ms 200ms;
+  transition: opacity 100ms,transform 100ms 200ms;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  gap: 0.16666666666666666rem;
+  box-shadow: rgba(60,64,67,0.3) 0px 1px 2px 0px, rgba(60,64,67,0.15) 0px 1px 3px 1px;
+  min-width: 10rem;
+  border-radius: 0.16666666666666666rem;
+}
+
+.c3 > div ul li.user {
+  color: #2D67F6;
+  font-size: 1.3333333333333333rem;
+  font-weight: bold;
+  margin: 0.5rem 1rem;
+}
+
+.c3 > div ul > b {
+  margin: 0.5rem 1rem;
+  position: relative;
+  width: -webkit-min-content;
+  width: -moz-min-content;
+  width: min-content;
+}
+
+.c3 > div ul > b::after {
+  content: '';
+  position: absolute;
+  opacity: calc(0.5);
+  top: 50%;
+  -webkit-transform: translate(100%,-50%);
+  -ms-transform: translate(100%,-50%);
+  transform: translate(100%,-50%);
+  right: -0.5rem;
+  width: 4.583333333333333rem;
+  height: 1px;
+  background-color: #4D4D4D;
+}
+
+.c3 > div ul > li {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+}
+
+.c3 > div ul > li a,
+.c3 > div ul > li button {
+  width: 100%;
+  padding: 0.6666666666666666rem 1.25rem 0.6666666666666666rem 0.8333333333333334rem;
+  font-size: 1.5rem;
+  text-align: left;
+}
+
+.c3 > div ul > li a:hover,
+.c3 > div ul > li button:hover {
+  background-color: #ed225d;
+  color: #FFF;
+}
+
+<header>
+    <nav
+      class="c0"
+    >
+      <div
+        class="c1"
+      >
+        <test-file-stub />
+      </div>
+      <div
+        class="c2"
+      >
+        <h1>
+          <span
+            class="editable-input editable-input--is-not-editing editable-input--has-value "
+          >
+            <button
+              aria-hidden="false"
+              aria-label="Edit sketch name"
+              class="editable-input__label"
+            >
+              <span>
+                Test project name
+              </span>
+              <test-file-stub
+                aria-hidden="true"
+                classname="editable-input__icon"
+                focusable="false"
+              />
+            </button>
+            <input
+              aria-hidden="true"
+              aria-label="New sketch name"
+              class="editable-input__input"
+              disabled=""
+              maxlength="128"
+              type="text"
+              value="Test project name"
+            />
+          </span>
+        </h1>
+      </div>
+      <div
+        class="c3"
+      >
+        <div>
+          <a
+            href="/login"
+          >
+            <button
+              class="c4 c5"
+              display="inline"
+              focusable="false"
+              kind="primary"
+              type="button"
+            >
+              <test-file-stub
+                aria-hidden="true"
+                classname="sc-fujyAs cSTVlM"
+                focusable="false"
+              />
+            </button>
+          </a>
+        </div>
+        <div>
+          <button
+            class="c4 c5"
+            display="inline"
+            focusable="false"
+            kind="primary"
+            type="button"
+          >
+            <test-file-stub
+              aria-hidden="true"
+              classname="sc-iqAclL iOZiVo"
+              focusable="false"
+            />
+          </button>
+          <ul
+            class=""
+          >
+            <b>
+              File
+            </b>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                New
+              </button>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                Save
+              </button>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <a
+                href="/p5/sketches"
+              >
+                Examples
+              </a>
+            </li>
+            <b>
+              Edit
+            </b>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                Tidy Code
+              </button>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                Find
+              </button>
+            </li>
+            <b>
+              Sketch
+            </b>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                Add File
+              </button>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                Add Folder
+              </button>
+            </li>
+            <b>
+              Settings
+            </b>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                Preferences
+              </button>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                Language
+              </button>
+            </li>
+            <b>
+              Help
+            </b>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                Keyboard Shortcuts
+              </button>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <a
+                href="https://p5js.org/reference/"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Reference
+              </a>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <a
+                href="/about"
+              >
+                About
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+</DocumentFragment>
+`;
