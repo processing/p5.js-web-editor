@@ -14,7 +14,7 @@ export function renderIndex() {
       ${process.env.NODE_ENV === 'production' ? `<link rel='stylesheet' href='${assetsManifest['/app.css']}' />` : ''}
       <link href='https://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>
       <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
-      <link rel='shortcut icon' href='favicon.ico' type='image/x-icon' / >
+      <link rel='shortcut icon' href='/favicon.ico' type='image/x-icon' / >
       <script>
         if (!window.process) {
           window.process = {};
@@ -34,7 +34,6 @@ export function renderIndex() {
         window.process.env.UI_ACCESS_TOKEN_ENABLED = ${process.env.UI_ACCESS_TOKEN_ENABLED === 'false' ? false : true};
         window.process.env.UI_COLLECTIONS_ENABLED = ${process.env.UI_COLLECTIONS_ENABLED === 'false' ? false : true};
         window.process.env.UPLOAD_LIMIT = ${process.env.UPLOAD_LIMIT ? `${process.env.UPLOAD_LIMIT}` : undefined};
-        window.process.env.MOBILE_ENABLED = ${process.env.MOBILE_ENABLED ? `${process.env.MOBILE_ENABLED}` : undefined};
         window.process.env.TRANSLATIONS_ENABLED = ${process.env.TRANSLATIONS_ENABLED === 'true' ? true : false}; 
         window.process.env.PREVIEW_URL = '${process.env.PREVIEW_URL}';
         window.process.env.GA_MEASUREMENT_ID='${process.env.GA_MEASUREMENT_ID}';

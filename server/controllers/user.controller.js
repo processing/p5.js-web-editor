@@ -29,12 +29,6 @@ const random = (done) => {
   });
 };
 
-export function findUserByUsername(username, cb) {
-  User.findByUsername(username, (err, user) => {
-    cb(user);
-  });
-}
-
 export function createUser(req, res, next) {
   const { username, email } = req.body;
   const { password } = req.body;
