@@ -1,6 +1,8 @@
 import loopProtect from 'loop-protect';
 import { Hook, Decode, Encode } from 'console-feed';
 import StackTrace from 'stacktrace-js';
+import { resolvePathToFile } from '../../server/utils/filePath';
+import { EXTERNAL_LINK_REGEX } from '../../server/utils/fileUtils';
 import evaluateExpression from './evaluateExpression';
 
 // should postMessage user the dispatcher? does the parent window need to
@@ -178,3 +180,33 @@ if (_report) {
     _report.apply(window.p5, [newMessage, method, color]);
   };
 }
+
+const __patchedMethods = {};
+
+function applyPatching(methodName) {
+  __patchedMethods[methodName] = window.p5.prototype[methodName];
+  if (__patchedMethods[methodName]) {
+    window.p5.prototype[methodName] = function patched(path, ...args) {
+      let resolvedPath = path;
+      if (!EXTERNAL_LINK_REGEX.test(path)) {
+        const file = resolvePathToFile(path, window.files);
+        if (file && file.url) {
+          resolvedPath = file.url;
+        }
+      }
+      return __patchedMethods[methodName].apply(this, [resolvedPath, ...args]);
+    };
+  }
+}
+
+[
+  'loadImage',
+  'loadModel',
+  'loadJSON',
+  'loadStrings',
+  'loadTable',
+  'loadXML',
+  'loadBytes',
+  'loadFont',
+  'loadShader'
+].forEach(applyPatching);

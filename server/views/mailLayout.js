@@ -18,10 +18,9 @@ export default ({
     </mj-raw>
   </mj-head>
   <mj-body>
-    <mj-container>
       <mj-section>
         <mj-column>
-          <mj-image width="192" src="${domain}/images/p5js-square-logo.png" alt="p5.js" />
+          <mj-image width="192px" src="${domain}/images/p5js-square-logo.png" alt="p5.js" />
           <mj-divider border-color="#ed225d"></mj-divider>
         </mj-column>
       </mj-section>
@@ -59,7 +58,6 @@ export default ({
           </mj-text>
         </mj-column>
       </mj-section>
-    </mj-container>
   </mj-body>
 </mjml>
 `;

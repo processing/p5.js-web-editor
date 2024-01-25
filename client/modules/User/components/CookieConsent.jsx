@@ -4,9 +4,9 @@ import Cookies from 'js-cookie';
 import styled from 'styled-components';
 import ReactGA from 'react-ga';
 import { Transition } from 'react-transition-group';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
-import { PropTypes } from 'prop-types';
+import PropTypes from 'prop-types';
 import getConfig from '../../../utils/getConfig';
 import { setUserCookieConsent } from '../actions';
 import { remSize, prop, device } from '../../../theme';
@@ -15,11 +15,12 @@ import Button from '../../../common/Button';
 const CookieConsentContainer = styled.div`
   position: fixed;
   transition: 1.6s cubic-bezier(0.165, 0.84, 0.44, 1);
-  bottom: ${({ state }) => {
+  bottom: 0;
+  transform: ${({ state }) => {
     if (state === 'entered') {
-      return '0';
+      return 'translateY(0)';
     }
-    return remSize(-300);
+    return 'translateY(105%)';
   }};
   left: 0;
   right: 0;

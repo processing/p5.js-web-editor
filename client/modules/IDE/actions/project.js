@@ -1,7 +1,7 @@
-import { browserHistory } from 'react-router';
 import objectID from 'bson-objectid';
 import each from 'async/each';
-import isEqual from 'lodash/isEqual';
+import { isEqual } from 'lodash';
+import browserHistory from '../../../browserHistory';
 import apiClient from '../../../utils/apiClient';
 import getConfig from '../../../utils/getConfig';
 import * as ActionTypes from '../../../constants';
@@ -61,10 +61,9 @@ export function getProject(id, username) {
         dispatch(setUnsavedChanges(false));
       })
       .catch((error) => {
-        const { response } = error;
         dispatch({
           type: ActionTypes.ERROR,
-          error: response.data
+          error: error?.response?.data
         });
       });
   };
@@ -270,9 +269,7 @@ export function resetProject() {
 }
 
 export function newProject() {
-  setTimeout(() => {
-    browserHistory.push('/');
-  }, 0);
+  browserHistory.push('/', { confirmed: true });
   return resetProject();
 }
 
@@ -340,26 +337,13 @@ export function cloneProject(project) {
             dispatch(setNewProject(response.data));
           })
           .catch((error) => {
-            const { response } = error;
             dispatch({
               type: ActionTypes.PROJECT_SAVE_FAIL,
-              error: response.data
+              error: error?.response?.data
             });
           });
       }
     );
-  };
-}
-
-export function showEditProjectName() {
-  return {
-    type: ActionTypes.SHOW_EDIT_PROJECT_NAME
-  };
-}
-
-export function hideEditProjectName() {
-  return {
-    type: ActionTypes.HIDE_EDIT_PROJECT_NAME
   };
 }
 
@@ -390,10 +374,9 @@ export function changeProjectName(id, newName) {
         }
       })
       .catch((error) => {
-        const { response } = error;
         dispatch({
           type: ActionTypes.PROJECT_SAVE_FAIL,
-          error: response.data
+          error: error?.response?.data
         });
       });
   };
