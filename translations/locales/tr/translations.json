@@ -222,6 +222,7 @@
     "Delete": "Sil"
   },
   "Common": {
+    "SiteName": "p5.js Web Editör",
     "Error": "Hata",
     "ErrorARIA": "Hata",
     "Save": "Kaydet",
@@ -355,7 +356,8 @@
     "Description": "Kaydol",
     "Or": "Veya",
     "AlreadyHave": "Zaten bir hesabın var mı?",
-    "Login": "Giriş yap"
+    "Login": "Giriş yap",
+    "Warning":"Kaydolarak p5.js Editörün Kullanım <0>Koşullarını</0> ve <1>Gizlilik Politikasını</1> kabul etmiş olursunuz."
   },
   "EmailVerificationView": {
     "Title": "p5.js Web Düzenleyicisi | E-posta Doğrulama",

@@ -29,12 +29,6 @@ const random = (done) => {
   });
 };
 
-export function findUserByUsername(username, cb) {
-  User.findByUsername(username, (err, user) => {
-    cb(user);
-  });
-}
-
 export function createUser(req, res, next) {
   const { username, email } = req.body;
   const { password } = req.body;
@@ -314,10 +308,13 @@ export function updatePassword(req, res) {
   // eventually send email that the password has been reset
 }
 
-export function userExists(username, callback) {
-  User.findByUsername(username, (err, user) =>
-    user ? callback(true) : callback(false)
-  );
+/**
+ * @param {string} username
+ * @return {Promise<boolean>}
+ */
+export async function userExists(username) {
+  const user = await User.findByUsername(username);
+  return user != null;
 }
 
 export function saveUser(res, user) {
