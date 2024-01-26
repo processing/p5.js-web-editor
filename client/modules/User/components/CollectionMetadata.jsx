@@ -102,10 +102,7 @@ function CollectionMetadata({ collection, isOwner }) {
           closeOverlay={() => setIsAddingSketches(false)}
           isFixedHeight
         >
-          <AddToCollectionSketchList
-            username={currentUsername}
-            collection={collection}
-          />
+          <AddToCollectionSketchList collection={collection} />
         </Overlay>
       )}
     </header>

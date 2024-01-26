@@ -26,12 +26,8 @@
         @include themify() {
           color: getThemifyVariable("inactive-text-color");
           opacity: 0.7;
-        }
-      }
 
-      .dashboard-header__tab--selected {
-        .dashboard-header__tab__title {
-          @include themify() {
+          &.dashboard-header__tab--selected {
             color: getThemifyVariable("primary-text-color");
             opacity: 1;
           }
@@ -88,24 +84,12 @@
 .dashboard-header__tab {
   @include themify() {
     color: getThemifyVariable("inactive-text-color");
-    border-bottom: #{4 / $base-font-size}rem solid transparent;
-
     padding: 0;
     margin-right: #{26 / $base-font-size}rem;
-
-    &:hover,
-    &:focus,
-    &.dashboard-header__tab--selected {
-      color: getThemifyVariable("primary-text-color");
-      border-bottom-color: getThemifyVariable("nav-hover-color");
-      cursor: pointer;
-    }
-
     @media (max-width: 770px) {
       margin-right: #{20 / $base-font-size}rem;
     }
   }
-
   font-size: #{12 / $base-font-size}rem;
 }
 
@@ -119,12 +103,19 @@
 
 .dashboard-header__tab__title {
   margin: 0;
-  padding: 0;
-}
-
-.dashboard-header__tab__title > * {
   display: inline-block;
   padding: 0 #{5 / $base-font-size}rem #{5 / $base-font-size}rem;
+  border-bottom: #{4 / $base-font-size}rem solid transparent;
+
+  @include themify() {
+    &:hover,
+    &:focus,
+    &.dashboard-header__tab--selected {
+      color: getThemifyVariable("primary-text-color");
+      border-bottom-color: getThemifyVariable("nav-hover-color");
+      cursor: pointer;
+    }
+  }
 }
 
 .dashboard-header__actions {
