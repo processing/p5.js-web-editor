@@ -23,6 +23,7 @@ import 'codemirror/addon/fold/comment-fold';
 import 'codemirror/addon/fold/foldcode';
 import 'codemirror/addon/fold/foldgutter';
 import 'codemirror/addon/fold/indent-fold';
+import 'codemirror/addon/fold/xml-fold';
 import 'codemirror/addon/comment/comment';
 import 'codemirror/keymap/sublime';
 import 'codemirror/addon/search/searchcursor';
