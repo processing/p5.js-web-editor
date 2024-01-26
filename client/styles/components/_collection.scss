@@ -104,7 +104,16 @@
   @extend %dropdown-open-right;
   padding: #{20 / $base-font-size}rem;
   width: #{350 / $base-font-size}rem;
+
+  @media (max-width: 600px) {
+    transform: translate(-50%, 7%);
+    left:50%
+    
 }
+}
+
+
+
 
 .collection-content {
   display: flex;
