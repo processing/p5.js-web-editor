@@ -178,3 +178,33 @@
   font-size: #{16 / $base-font-size}rem;
   padding: #{42 / $base-font-size}rem 0;
 }
+
+.pagination {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  justify-content: center;
+
+  .pagination-ul {
+    bottom: 0;
+    margin-top: auto;
+    display: flex;
+    justify-content: center;
+
+    .page-btn {
+      background-color: #ed225d;
+      color: white;
+      font-weight: 900;
+    }
+
+    .page-item-data {
+      margin: 0 5px; 
+      display: flex;
+    }
+
+    .current-page {
+      color: #ed225d;
+    }
+  }
+}
