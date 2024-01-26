@@ -226,7 +226,6 @@ class CollectionList extends React.Component {
             isFixedHeight
           >
             <AddToCollectionSketchList
-              username={this.props.username}
               collection={find(this.props.collections, {
                 id: this.state.addingSketchesToCollectionId
               })}

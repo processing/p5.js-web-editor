@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import Overlay from '../../App/components/Overlay';
 import {
   closeKeyboardShortcutModal,
@@ -25,6 +25,7 @@ export default function IDEOverlays() {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const location = useLocation();
+  const params = useParams();
 
   const {
     modalIsVisible,
@@ -77,9 +78,7 @@ export default function IDEOverlays() {
           actions={<CollectionSearchbar />}
           isFixedHeight
         >
-          <AddToCollectionList
-            projectId={this.state.sketchToAddToCollection.id}
-          />
+          <AddToCollectionList projectId={params.project_id} />
         </Overlay>
       )}
       {shareModalVisible && (
