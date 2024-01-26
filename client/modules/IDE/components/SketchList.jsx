@@ -487,13 +487,6 @@ class SketchList extends React.Component {
           </ul>
         </div>
 
-        {console.log(
-          this.state.currentPage,
-          this.props.sketches.length,
-          sketchesPerPage,
-          TotalPages
-        )}
-
         {this.state.sketchToAddToCollection && (
           <Overlay
             isFixedHeight
