@@ -68,6 +68,29 @@
   }
 }
 
+.pagination {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  justify-content: center;
+
+  .pagination-ul {
+    bottom: 0;
+    margin-top: auto;
+    display: flex;
+    justify-content: center;
+
+    .page-item .page-link {
+      @include themify() {
+        background-color: #ed225d;
+        color: white;
+        font-weight: 900;
+      }
+    }
+  }
+}
+
 .sketches-table {
   width: 100%;
 
