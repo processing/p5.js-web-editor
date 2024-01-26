@@ -7,10 +7,8 @@ import { withTranslation } from 'react-i18next';
 
 import * as IDEActions from '../actions/ide';
 import * as FileActions from '../actions/files';
-import DownArrowIcon from '../../../images/down-filled-triangle.svg';
-import FolderRightIcon from '../../../images/triangle-arrow-right.svg';
-import FolderDownIcon from '../../../images/triangle-arrow-down.svg';
 import FileIcon from '../../../images/file.svg';
+import { FolderClose, FolderOpen, ShowOptionIcon } from './FolderIcon';
 
 function parseFileName(name) {
   const nameArray = name.split('.');
@@ -278,11 +276,7 @@ class FileNode extends React.Component {
                   aria-label={t('FileNode.OpenFolderARIA')}
                   title={t('FileNode.OpenFolderARIA')}
                 >
-                  <FolderRightIcon
-                    className="folder-right"
-                    focusable="false"
-                    aria-hidden="true"
-                  />
+                  <FolderClose />
                 </button>
                 <button
                   className="sidebar__file-item-open"
@@ -290,11 +284,7 @@ class FileNode extends React.Component {
                   aria-label={t('FileNode.CloseFolderARIA')}
                   title={t('FileNode.CloseFolderARIA')}
                 >
-                  <FolderDownIcon
-                    className="folder-down"
-                    focusable="false"
-                    aria-hidden="true"
-                  />
+                  <FolderOpen />
                 </button>
               </div>
             )}
@@ -330,7 +320,7 @@ class FileNode extends React.Component {
               onBlur={this.onBlurComponent}
               onFocus={this.onFocusComponent}
             >
-              <DownArrowIcon focusable="false" aria-hidden="true" />
+              <ShowOptionIcon />
             </button>
             <div className="sidebar__file-item-options">
               <ul title="file options">

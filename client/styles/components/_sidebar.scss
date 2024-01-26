@@ -170,8 +170,11 @@
 }
 
 .sidebar__file-item-show-options {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: #{20 / $base-font-size}rem;
-  height: #{20 / $base-font-size}rem;
+  height: 100%;
   @include icon();
   @include themify() {
     margin-right: #{5 / $base-font-size}rem;
@@ -192,7 +195,7 @@
     }
   }
   & svg {
-    width: #{10 / $base-font-size}rem;
+    width: 100%;
   }
   .sidebar__file-item--open > .file-item__content & {
     display: inline-block;
