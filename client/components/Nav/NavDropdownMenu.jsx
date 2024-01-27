@@ -23,7 +23,11 @@ function NavDropdownMenu({ id, title, children }) {
   const { isOpen, handlers } = useMenuProps(id);
 
   return (
-    <li className={classNames('nav__item', isOpen && 'nav__item--open')}>
+    <li
+      role="menuitem"
+      className={classNames('nav__item', isOpen && 'nav__item--open')}
+      aria-haspopup="menu"
+    >
       <button {...handlers}>
         <span className="nav__item-header">{title}</span>
         <TriangleIcon
@@ -32,7 +36,7 @@ function NavDropdownMenu({ id, title, children }) {
           aria-hidden="true"
         />
       </button>
-      <ul className="nav__dropdown">
+      <ul className="nav__dropdown" role="menu">
         <ParentMenuContext.Provider value={id}>
           {children}
         </ParentMenuContext.Provider>

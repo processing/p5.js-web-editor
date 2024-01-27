@@ -69,7 +69,7 @@ function NavBar({ children, className }) {
   return (
     <NavBarContext.Provider value={contextValue}>
       <header>
-        <nav className={className} ref={nodeRef}>
+        <nav className={className} ref={nodeRef} role="menubar">
           <MenuOpenContext.Provider value={dropdownOpen}>
             {children}
           </MenuOpenContext.Provider>
