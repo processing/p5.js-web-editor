@@ -69,6 +69,9 @@ export default function SideBar(props) {
 
   const handleToggleSideBar = () => {
     dispatch(collapseSidebar());
+    if (projectOptionsVisible) {
+      dispatch(closeProjectOptions());
+    }
   };
 
   return (
