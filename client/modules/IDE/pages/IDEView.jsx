@@ -48,6 +48,26 @@ function WarnIfUnsavedChanges() {
 
   const currentLocation = useLocation();
 
+  // beforeunload handles closing or refreshing the window.
+  useEffect(() => {
+    const handleUnload = (e) => {
+      // See: https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeunload_event#browser_compatibility
+      e.preventDefault();
+      e.returnValue = t('Nav.WarningUnsavedChanges');
+    };
+
+    if (hasUnsavedChanges) {
+      window.addEventListener('beforeunload', handleUnload);
+    } else {
+      window.removeEventListener('beforeunload', handleUnload);
+    }
+
+    return () => {
+      window.removeEventListener('beforeunload', handleUnload);
+    };
+  }, [t, hasUnsavedChanges]);
+
+  // Prompt handles internal navigation between pages.
   return (
     <Prompt
       when={hasUnsavedChanges}
@@ -82,6 +102,7 @@ const IDEView = () => {
   const [consoleSize, setConsoleSize] = useState(150);
   const [sidebarSize, setSidebarSize] = useState(160);
   const [isOverlayVisible, setIsOverlayVisible] = useState(false);
+  const [MaxSize, setMaxSize] = useState(window.innerWidth);
 
   const cmRef = useRef({});
 
@@ -126,6 +147,17 @@ const IDEView = () => {
       }
     };
   }, [shouldAutosave, dispatch]);
+  useEffect(() => {
+    const updateInnerWidth = (e) => {
+      setMaxSize(e.target.innerWidth);
+    };
+
+    window.addEventListener('resize', updateInnerWidth);
+
+    return () => {
+      window.removeEventListener('resize', updateInnerWidth);
+    };
+  }, [setMaxSize]);
 
   const consoleCollapsedSize = 29;
   const currentConsoleSize = ide.consoleIsExpanded
@@ -154,11 +186,12 @@ const IDEView = () => {
                   setSidebarSize(size);
                 }}
                 allowResize={ide.sidebarIsExpanded}
-                minSize={125}
+                minSize={150}
               >
                 <Sidebar />
                 <SplitPane
                   split="vertical"
+                  maxSize={MaxSize * 0.965}
                   defaultSize="50%"
                   onChange={() => {
                     setIsOverlayVisible(true);
