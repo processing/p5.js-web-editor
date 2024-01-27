@@ -18,7 +18,7 @@ function NavMenuItem({ hideIf, className, ...rest }) {
   }
 
   return (
-    <li className={className}>
+    <li className={className} role="menuitem">
       <ButtonOrLink {...rest} {...handlers} />
     </li>
   );
