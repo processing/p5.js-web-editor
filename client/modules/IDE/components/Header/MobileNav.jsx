@@ -35,6 +35,8 @@ import { setLanguage } from '../../actions/preferences';
 import Overlay from '../../../App/components/Overlay';
 import ProjectName from './ProjectName';
 import CollectionCreate from '../../../User/components/CollectionCreate';
+import { cloneProject } from '../../actions/project';
+import EditIcon from '../../../../images/pencil.svg';
 
 const Nav = styled(NavBar)`
   background: ${prop('MobilePanel.default.background')};
@@ -67,15 +69,20 @@ const LogoContainer = styled.div`
 
 const Title = styled.div`
   display: flex;
-  flex-direction: column;
-  gap: ${remSize(2)};
+  gap: ${remSize(10)};
 
   * {
     padding: 0;
     margin: 0;
   }
 
-  > h5 {
+  p {
+    margin-left: 2px;
+    padding: 3px 8px;
+  }
+
+  h5 {
+    margin-top: 2px;
     font-size: ${remSize(13)};
     font-weight: normal;
   }
@@ -205,6 +212,8 @@ const MobileNav = () => {
   const user = useSelector((state) => state.user);
 
   const { t } = useTranslation();
+  const theme = useSelector((state) => state.preferences.theme);
+  console.log(theme);
 
   const editorLink = useSelector(selectSketchPath);
   const pageName = useWhatPage();
@@ -228,7 +237,7 @@ const MobileNav = () => {
   }
 
   const title = useMemo(resolveTitle, [pageName, project.name]);
-
+  const dispatch = useDispatch();
   const Logo = AsteriskIcon;
   return (
     <Nav>
@@ -236,10 +245,35 @@ const MobileNav = () => {
         <Logo />
       </LogoContainer>
       <Title>
-        <h1>{title === project.name ? <ProjectName /> : title}</h1>
-        {project?.owner && title === project.name && (
-          <h5>by {project?.owner?.username}</h5>
-        )}
+        <div>
+          <h1>{title === project.name ? <ProjectName /> : title}</h1>
+          {project?.owner && title === project.name && (
+            <h5>by {project?.owner?.username}</h5>
+          )}
+        </div>
+
+        <div>
+          {title === project.name &&
+            project.owner &&
+            user.username !== project.owner.username && (
+              // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
+              <p
+                className={`toolbar__duplicatetoedit ${
+                  theme === 'contrast' ? 'contrast' : 'normal'
+                }`}
+                onClick={() => dispatch(cloneProject())}
+              >
+                {t('Toolbar.DuplicateToEdit')}{' '}
+                <EditIcon
+                  className={`toolbar__icon ${
+                    theme === 'contrast' ? 'contrast' : 'normal'
+                  }`}
+                  focusable="false"
+                  aria-hidden="true"
+                />
+              </p>
+            )}
+        </div>
       </Title>
       {/* check if the user is in login page */}
       {pageName === 'login' || pageName === 'signup' ? (

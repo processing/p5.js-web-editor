@@ -123,7 +123,8 @@
       "StopSketchARIA": "स्केच बंद करे",
       "EditSketchARIA": "स्केच का नाम संपादित करें",
       "NewSketchNameARIA": "नया स्केच नाम",
-      "By": " द्वारा "
+      "By": " द्वारा ",
+      "DuplicateToEdit": "संपादित करने के लिए नक़ल बनाएं"
     },
     "Console": {
       "Title": "कंसोल",

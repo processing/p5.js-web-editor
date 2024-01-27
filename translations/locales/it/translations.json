@@ -118,7 +118,8 @@
     "StopSketchARIA": "Ferma sketch",
     "EditSketchARIA": "Modifica nome sketch",
     "NewSketchNameARIA": "Nome nuovo sketch",
-    "By": " da "
+    "By": " da ",
+    "DuplicateToEdit": "Duplica per modificare"
   },
   "Console": {
     "Title": "Terminale",

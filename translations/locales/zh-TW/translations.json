@@ -115,7 +115,8 @@
     "StopSketchARIA": "停止",
     "EditSketchARIA": "編輯草稿名稱",
     "NewSketchNameARIA": "新草稿名稱",
-    "By": " 作者： "
+    "By": " 作者： ",
+    "DuplicateToEdit": "複製以編輯"
   },
   "Console": {
     "Title": "主控台",

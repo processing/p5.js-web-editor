@@ -41,7 +41,7 @@ import { CSSLint } from 'csslint';
 import { HTMLHint } from 'htmlhint';
 import classNames from 'classnames';
 import { debounce } from 'lodash';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import MediaQuery from 'react-responsive';
 import '../../../../utils/htmlmixed';
@@ -505,7 +505,14 @@ class Editor extends React.Component {
     const editorHolderClass = classNames({
       'editor-holder': true,
       'editor-holder--hidden':
-        this.props.file.fileType === 'folder' || this.props.file.url
+        this.props.file.fileType === 'folder' || this.props.file.url,
+      // eslint-disable-next-line no-dupe-keys
+      'editor-holder--readonly':
+        //  Check if there is a project owner, the user has a username,
+        // and the project owner's username is not the same as the user's username
+        this.props.project.owner && this.props.user.username
+          ? this.props.project.owner?.username !== this.props.user.username
+          : ''
     });
 
     return (
@@ -567,6 +574,12 @@ class Editor extends React.Component {
               </header>
               <section>
                 <EditorHolder
+                  readOnly={
+                    this.props.project.owner &&
+                    this.props.user.username &&
+                    this.props.project.owner.username !==
+                      this.props.user.username
+                  }
                   ref={(element) => {
                     this.codemirrorContainer = element;
                   }}
@@ -588,6 +601,10 @@ class Editor extends React.Component {
 }
 
 Editor.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  user: PropTypes.object.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  project: PropTypes.object.isRequired,
   autocloseBracketsQuotes: PropTypes.bool.isRequired,
   autocompleteHinter: PropTypes.bool.isRequired,
   lineNumbers: PropTypes.bool.isRequired,

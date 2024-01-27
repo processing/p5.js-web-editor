@@ -96,6 +96,7 @@ const IDEView = () => {
   const isUserOwner = useSelector(getIsUserOwner);
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const user = useSelector((state) => state.user);
 
   const params = useParams();
 
@@ -218,6 +219,8 @@ const IDEView = () => {
                     className="editor-preview-subpanel"
                   >
                     <Editor
+                      user={user}
+                      project={project}
                       provideController={(ctl) => {
                         cmRef.current = ctl;
                       }}

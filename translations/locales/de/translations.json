@@ -115,7 +115,8 @@
     "StopSketchARIA": "Sketch stoppen",
     "EditSketchARIA": "Sketch Namen bearbeiten",
     "NewSketchNameARIA": "Neuer Sketch name",
-    "By": " von "
+    "By": " von ",
+    "DuplicateToEdit": "Dupliceren om te bewerken"
   },
   "Console": {
     "Title": "Konsole",

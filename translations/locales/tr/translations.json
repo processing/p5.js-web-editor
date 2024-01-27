@@ -118,7 +118,8 @@
     "StopSketchARIA": "Eskizi Durdur",
     "EditSketchARIA": "Eskiz Adını Düzenle",
     "NewSketchNameARIA": "Yeni Eskiz Adı",
-    "By": " tarafından "
+    "By": " tarafından ",
+    "DuplicateToEdit": "Düzenlemek için kopyala"
   },
   "Console": {
     "Title": "Konsol",

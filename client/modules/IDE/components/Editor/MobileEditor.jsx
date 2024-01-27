@@ -33,6 +33,7 @@ export const EditorContainer = styled.div`
 
 export const EditorHolder = styled.div`
   min-height: 100%;
+  pointer-events: ${(props) => (props.readOnly ? 'none' : '')};
 `;
 
 export const PreviewWrapper = styled.div`

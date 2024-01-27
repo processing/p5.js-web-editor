@@ -139,10 +139,7 @@ exports[`Nav renders dashboard version for mobile 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  gap: 0.16666666666666666rem;
+  gap: 0.8333333333333334rem;
 }
 
 .c2 * {
@@ -150,7 +147,13 @@ exports[`Nav renders dashboard version for mobile 1`] = `
   margin: 0;
 }
 
-.c2 > h5 {
+.c2 p {
+  margin-left: 2px;
+  padding: 3px 8px;
+}
+
+.c2 h5 {
+  margin-top: 2px;
   font-size: 1.0833333333333333rem;
   font-weight: normal;
 }
@@ -277,35 +280,38 @@ exports[`Nav renders dashboard version for mobile 1`] = `
       <div
         class="c2"
       >
-        <h1>
-          <span
-            class="editable-input editable-input--is-not-editing editable-input--has-value "
-          >
-            <button
-              aria-hidden="false"
-              aria-label="Edit sketch name"
-              class="editable-input__label"
+        <div>
+          <h1>
+            <span
+              class="editable-input editable-input--is-not-editing editable-input--has-value "
             >
-              <span>
-                Test project name
-              </span>
-              <test-file-stub
+              <button
+                aria-hidden="false"
+                aria-label="Edit sketch name"
+                class="editable-input__label"
+              >
+                <span>
+                  Test project name
+                </span>
+                <test-file-stub
+                  aria-hidden="true"
+                  classname="editable-input__icon"
+                  focusable="false"
+                />
+              </button>
+              <input
                 aria-hidden="true"
-                classname="editable-input__icon"
-                focusable="false"
+                aria-label="New sketch name"
+                class="editable-input__input"
+                disabled=""
+                maxlength="128"
+                type="text"
+                value="Test project name"
               />
-            </button>
-            <input
-              aria-hidden="true"
-              aria-label="New sketch name"
-              class="editable-input__input"
-              disabled=""
-              maxlength="128"
-              type="text"
-              value="Test project name"
-            />
-          </span>
-        </h1>
+            </span>
+          </h1>
+        </div>
+        <div />
       </div>
       <div
         class="c3"
@@ -769,10 +775,7 @@ exports[`Nav renders editor version for mobile 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  gap: 0.16666666666666666rem;
+  gap: 0.8333333333333334rem;
 }
 
 .c2 * {
@@ -780,7 +783,13 @@ exports[`Nav renders editor version for mobile 1`] = `
   margin: 0;
 }
 
-.c2 > h5 {
+.c2 p {
+  margin-left: 2px;
+  padding: 3px 8px;
+}
+
+.c2 h5 {
+  margin-top: 2px;
   font-size: 1.0833333333333333rem;
   font-weight: normal;
 }
@@ -907,35 +916,38 @@ exports[`Nav renders editor version for mobile 1`] = `
       <div
         class="c2"
       >
-        <h1>
-          <span
-            class="editable-input editable-input--is-not-editing editable-input--has-value "
-          >
-            <button
-              aria-hidden="false"
-              aria-label="Edit sketch name"
-              class="editable-input__label"
+        <div>
+          <h1>
+            <span
+              class="editable-input editable-input--is-not-editing editable-input--has-value "
             >
-              <span>
-                Test project name
-              </span>
-              <test-file-stub
+              <button
+                aria-hidden="false"
+                aria-label="Edit sketch name"
+                class="editable-input__label"
+              >
+                <span>
+                  Test project name
+                </span>
+                <test-file-stub
+                  aria-hidden="true"
+                  classname="editable-input__icon"
+                  focusable="false"
+                />
+              </button>
+              <input
                 aria-hidden="true"
-                classname="editable-input__icon"
-                focusable="false"
+                aria-label="New sketch name"
+                class="editable-input__input"
+                disabled=""
+                maxlength="128"
+                type="text"
+                value="Test project name"
               />
-            </button>
-            <input
-              aria-hidden="true"
-              aria-label="New sketch name"
-              class="editable-input__input"
-              disabled=""
-              maxlength="128"
-              type="text"
-              value="Test project name"
-            />
-          </span>
-        </h1>
+            </span>
+          </h1>
+        </div>
+        <div />
       </div>
       <div
         class="c3"
