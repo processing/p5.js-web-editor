@@ -1,4 +1,5 @@
-import React, { useContext } from 'react';
+import axios from 'axios';
+import React, { useContext, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { sortBy } from 'lodash';
 import { Link } from 'react-router-dom';
@@ -83,6 +84,23 @@ const UserMenu = () => {
   }
 
   return null;
+};
+
+const FundraiserSection = () => {
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
+  return (
+    <>
+      <button
+        className="nav__fundraiser-btn"
+        onClick={() => dispatch(showFundraiserModal())}
+        aria-label="2023-fundraiser-button"
+        title="2023 Fundraiser Button"
+      >
+        {t('Nav.Fundraiser')}
+      </button>
+    </>
+  );
 };
 
 const DashboardMenu = () => {
@@ -240,13 +258,30 @@ const ProjectMenu = () => {
 };
 
 const LanguageMenu = () => {
+  const [currentLanguage, setCurrentLanguage] = useState('');
   const language = useSelector((state) => state.preferences.language);
   const dispatch = useDispatch();
 
-  function handleLangSelection(event) {
-    dispatch(setLanguage(event.target.value));
+ 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+       await axios.post('/editor/currentLanguage', { language: currentLanguage });
+      } catch (error) {
+        console.error('Error sending language to server:', error);
+      }
+    };
+    fetchData();
+  
+  }, [currentLanguage]);
+  
+  const handleLangSelection = (event) => {
+    const selectedLanguage = event.target.value;
+    dispatch(setLanguage(selectedLanguage));
+    setCurrentLanguage(selectedLanguage);
     dispatch(showToast('Toast.LangChange'));
-  }
+  };
+  
 
   return (
     <NavDropdownMenu id="lang" title={languageKeyToLabel(language)}>
