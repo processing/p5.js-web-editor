@@ -1,5 +1,4 @@
-import omitBy from 'lodash/omitBy';
-import isUndefined from 'lodash/isUndefined';
+import { omitBy, isUndefined } from 'lodash';
 import Collection from '../../models/collection';
 
 function removeUndefined(obj) {

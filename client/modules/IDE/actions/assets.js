@@ -1,51 +1,41 @@
 import apiClient from '../../../utils/apiClient';
 import * as ActionTypes from '../../../constants';
 import { startLoader, stopLoader } from './loader';
+import { assetsActions } from '../reducers/assets';
 
-function setAssets(assets, totalSize) {
-  return {
-    type: ActionTypes.SET_ASSETS,
-    assets,
-    totalSize
-  };
-}
+const { setAssets, deleteAsset } = assetsActions;
 
 export function getAssets() {
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch(startLoader());
-    apiClient
-      .get('/S3/objects')
-      .then((response) => {
-        dispatch(setAssets(response.data.assets, response.data.totalSize));
-        dispatch(stopLoader());
-      })
-      .catch(() => {
-        dispatch({
-          type: ActionTypes.ERROR
-        });
-        dispatch(stopLoader());
-      });
-  };
-}
+    try {
+      const response = await apiClient.get('/S3/objects');
 
-export function deleteAsset(assetKey) {
-  return {
-    type: ActionTypes.DELETE_ASSET,
-    key: assetKey
+      const assetData = {
+        assets: response.data.assets,
+        totalSize: response.data.totalSize
+      };
+
+      dispatch(setAssets(assetData));
+      dispatch(stopLoader());
+    } catch (error) {
+      dispatch({
+        type: ActionTypes.ERROR
+      });
+      dispatch(stopLoader());
+    }
   };
 }
 
 export function deleteAssetRequest(assetKey) {
-  return (dispatch) => {
-    apiClient
-      .delete(`/S3/${assetKey}`)
-      .then((response) => {
-        dispatch(deleteAsset(assetKey));
-      })
-      .catch(() => {
-        dispatch({
-          type: ActionTypes.ERROR
-        });
+  return async (dispatch) => {
+    try {
+      await apiClient.delete(`/S3/${assetKey}`);
+      dispatch(deleteAsset(assetKey));
+    } catch (error) {
+      dispatch({
+        type: ActionTypes.ERROR
       });
+    }
   };
 }

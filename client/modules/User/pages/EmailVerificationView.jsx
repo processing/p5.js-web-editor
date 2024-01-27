@@ -1,94 +1,56 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { withTranslation } from 'react-i18next';
+import React, { useEffect, useMemo } from 'react';
 import { Helmet } from 'react-helmet';
-import browserHistory from '../../../browserHistory';
+import { useLocation, useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { verifyEmailConfirmation } from '../actions';
 import RootPage from '../../../components/RootPage';
 import Nav from '../../IDE/components/Header/Nav';
 
-class EmailVerificationView extends React.Component {
-  static defaultProps = {
-    emailVerificationTokenState: null
-  };
-
-  componentWillMount() {
-    const verificationToken = this.verificationToken();
-    if (verificationToken != null) {
-      this.props.verifyEmailConfirmation(verificationToken);
-    }
-  }
-
-  verificationToken = () => {
-    const { location } = this.props;
+const EmailVerificationView = () => {
+  const { t } = useTranslation();
+  const location = useLocation();
+  const dispatch = useDispatch();
+  const browserHistory = useHistory();
+  const emailVerificationTokenState = useSelector(
+    (state) => state.user.emailVerificationTokenState
+  );
+  const verificationToken = useMemo(() => {
     const searchParams = new URLSearchParams(location.search);
     return searchParams.get('t');
-  };
-
-  render() {
-    let status = null;
-    const { emailVerificationTokenState } = this.props;
-
-    if (this.verificationToken() == null) {
-      status = <p>{this.props.t('EmailVerificationView.InvalidTokenNull')}</p>;
-    } else if (emailVerificationTokenState === 'checking') {
-      status = <p>{this.props.t('EmailVerificationView.Checking')}</p>;
-    } else if (emailVerificationTokenState === 'verified') {
-      status = <p>{this.props.t('EmailVerificationView.Verified')}</p>;
-      setTimeout(() => browserHistory.push('/'), 1000);
-    } else if (emailVerificationTokenState === 'invalid') {
-      status = <p>{this.props.t('EmailVerificationView.InvalidState')}</p>;
+  }, [location.search]);
+  useEffect(() => {
+    if (verificationToken) {
+      dispatch(verifyEmailConfirmation(verificationToken));
     }
-
-    return (
-      <RootPage>
-        <Nav layout="dashboard" />
-        <div className="form-container">
-          <Helmet>
-            <title>{this.props.t('EmailVerificationView.Title')}</title>
-          </Helmet>
-          <div className="form-container__content">
-            <h2 className="form-container__title">
-              {this.props.t('EmailVerificationView.Verify')}
-            </h2>
-            {status}
-          </div>
-        </div>
-      </RootPage>
-    );
+  }, [dispatch, verificationToken]);
+  let status = null;
+  if (!verificationToken) {
+    status = <p>{t('EmailVerificationView.InvalidTokenNull')}</p>;
+  } else if (emailVerificationTokenState === 'checking') {
+    status = <p>{t('EmailVerificationView.Checking')}</p>;
+  } else if (emailVerificationTokenState === 'verified') {
+    status = <p>{t('EmailVerificationView.Verified')}</p>;
+    setTimeout(() => browserHistory.push('/'), 1000);
+  } else if (emailVerificationTokenState === 'invalid') {
+    status = <p>{t('EmailVerificationView.InvalidState')}</p>;
   }
-}
 
-function mapStateToProps(state) {
-  return {
-    emailVerificationTokenState: state.user.emailVerificationTokenState
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(
-    {
-      verifyEmailConfirmation
-    },
-    dispatch
+  return (
+    <RootPage>
+      <Nav layout="dashboard" />
+      <div className="form-container">
+        <Helmet>
+          <title>{t('EmailVerificationView.Title')}</title>
+        </Helmet>
+        <div className="form-container__content">
+          <h2 className="form-container__title">
+            {t('EmailVerificationView.Verify')}
+          </h2>
+          {status}
+        </div>
+      </div>
+    </RootPage>
   );
-}
-
-EmailVerificationView.propTypes = {
-  emailVerificationTokenState: PropTypes.oneOf([
-    'checking',
-    'verified',
-    'invalid'
-  ]),
-  verifyEmailConfirmation: PropTypes.func.isRequired,
-  t: PropTypes.func.isRequired,
-  location: PropTypes.shape({
-    search: PropTypes.string.isRequired
-  }).isRequired
 };
-
-export default withTranslation()(
-  connect(mapStateToProps, mapDispatchToProps)(EmailVerificationView)
-);
+export default EmailVerificationView;

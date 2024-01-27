@@ -164,20 +164,25 @@
     position: absolute;
   }
 }
-.svg__logo g > path {
+
+.svg__logo {
+
   @include themify() {
-    fill: getThemifyVariable('logo-color');
+    // Set background color of the logo
+    background-color: getThemifyVariable('logo-color');
   }
-}
-.svg__logo g g:first-of-type path {
-  fill: none;
+
 }
 
-.svg__logo g g:first-of-type use {
+.svg__logo g path{
+  
   @include themify() {
+    // Set internal color of the logo;
     fill: getThemifyVariable('logo-background-color');
   }
+
 }
+
 
 .nav__keyboard-shortcut {
   font-size: #{math.div(12, $base-font-size)}rem;
