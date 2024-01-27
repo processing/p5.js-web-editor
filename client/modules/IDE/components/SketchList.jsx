@@ -243,7 +243,8 @@ class SketchList extends React.Component {
     this.props.resetSorting();
 
     this.state = {
-      isInitialDataLoad: true
+      isInitialDataLoad: true,
+      currentPage: 1
     };
   }
 
@@ -359,6 +360,18 @@ class SketchList extends React.Component {
         ? this.props.username
         : this.props.user.username;
     const { mobile } = this.props;
+    const pageNumbers = [];
+    let sketchesPerPage = 5;
+    if (mobile) {
+      sketchesPerPage = 7;
+    }
+    const totalSketches = this.props.sketches.length;
+    const indexOfLastSketch = this.state.currentPage * sketchesPerPage;
+    const indexOfFirstSketch = indexOfLastSketch - sketchesPerPage;
+    const TotalPages = Math.ceil(totalSketches / sketchesPerPage);
+    for (let i = 1; i <= TotalPages; i += 1) {
+      pageNumbers.push(i);
+    }
     return (
       <article className="sketches-table-container">
         <Helmet>
@@ -393,22 +406,97 @@ class SketchList extends React.Component {
               </tr>
             </thead>
             <tbody>
-              {this.props.sketches.map((sketch) => (
-                <SketchListRow
-                  mobile={mobile}
-                  key={sketch.id}
-                  sketch={sketch}
-                  user={this.props.user}
-                  username={username}
-                  onAddToCollection={() => {
-                    this.setState({ sketchToAddToCollection: sketch });
-                  }}
-                  t={this.props.t}
-                />
-              ))}
+              {this.props.sketches
+                .slice(indexOfFirstSketch, indexOfLastSketch)
+                .map((sketch) => (
+                  <SketchListRow
+                    mobile={mobile}
+                    key={sketch.id}
+                    sketch={sketch}
+                    user={this.props.user}
+                    username={username}
+                    onAddToCollection={() => {
+                      this.setState({ sketchToAddToCollection: sketch });
+                    }}
+                    t={this.props.t}
+                  />
+                ))}
             </tbody>
           </table>
         )}
+        <div className="pagination">
+          <ul className="pagination-ul">
+            <li className="page-item">
+              <button
+                onClick={() =>
+                  this.setState({
+                    currentPage: Math.max(this.state.currentPage - 1, 1)
+                  })
+                }
+                className="page-link"
+              >
+                Prev
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={() =>
+                  this.setState({
+                    currentPage: 1
+                  })
+                }
+                className="page-link"
+              >
+                1
+              </button>
+            </li>
+            <li>
+              <span>.......</span>
+            </li>
+            <li>
+              <button
+                onClick={() =>
+                  this.setState({
+                    currentPage: this.state.currentPage
+                  })
+                }
+                className="page-link"
+              >
+                {this.state.currentPage}
+              </button>
+            </li>
+            <li>
+              <span>&nbsp;of&nbsp;</span>
+            </li>
+            <li>
+              <button
+                onClick={() =>
+                  this.setState({
+                    currentPage: TotalPages
+                  })
+                }
+                className="page-link"
+              >
+                {TotalPages}
+              </button>
+            </li>
+            <li className="page-item">
+              <button
+                onClick={() =>
+                  this.setState({
+                    currentPage: Math.min(
+                      this.state.currentPage + 1,
+                      TotalPages
+                    )
+                  })
+                }
+                className="page-link"
+              >
+                Next
+              </button>
+            </li>
+          </ul>
+        </div>
         {this.state.sketchToAddToCollection && (
           <Overlay
             isFixedHeight
