@@ -112,7 +112,9 @@
       "SketchFailedSave": "स्केच सेव करने में असमर्थ",
       "AutosaveEnabled": "ऑटोसेव चालू",
       "LangChange": "भाषा बदली",
-      "SettingsSaved": "सेटिंग्स सेव की"
+      "SettingsSaved": "सेटिंग्स सेव की",
+      "EmptyCurrentPass": "वर्तमान पासवर्ड फ़ील्ड खाली है",
+      "IncorrectCurrentPass": "वर्तमान पासवर्ड गलत है "
     },
     "Toolbar": {
       "Preview": "पूर्वावलोकन",

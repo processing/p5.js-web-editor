@@ -275,7 +275,14 @@ export function submitSettings(formValues) {
 
 export function updateSettings(formValues) {
   return (dispatch) =>
-    new Promise((resolve) =>
+    new Promise((resolve) => {
+      if (!formValues.currentPassword && formValues.newPassword) {
+        dispatch(showToast(5500));
+        dispatch(setToastText('Toast.EmptyCurrentPass'));
+        resolve();
+        return;
+      }
+
       submitSettings(formValues)
         .then((response) => {
           dispatch(updateSettingsSuccess(response.data));
@@ -283,8 +290,11 @@ export function updateSettings(formValues) {
           dispatch(setToastText('Toast.SettingsSaved'));
           resolve();
         })
-        .catch((error) => resolve({ error }))
-    );
+        .catch((error) => {
+          dispatch(showToast(5500));
+          dispatch(setToastText('Toast.IncorrectCurrentPass'));
+        });
+    });
 }
 
 export function createApiKeySuccess(user) {
