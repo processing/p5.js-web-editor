@@ -365,8 +365,9 @@ class SketchList extends React.Component {
     if (mobile) {
       sketchesPerPage = 7;
     }
+    const { currentPage } = this.state;
     const totalSketches = this.props.sketches.length;
-    const indexOfLastSketch = this.state.currentPage * sketchesPerPage;
+    const indexOfLastSketch = currentPage * sketchesPerPage;
     const indexOfFirstSketch = indexOfLastSketch - sketchesPerPage;
     const TotalPages = Math.ceil(totalSketches / sketchesPerPage);
     for (let i = 1; i <= TotalPages; i += 1) {
@@ -428,24 +429,25 @@ class SketchList extends React.Component {
           <ul className="pagination-ul">
             <li className="page-item">
               <button
+                className="page-link"
                 onClick={() =>
                   this.setState({
-                    currentPage: Math.max(this.state.currentPage - 1, 1)
+                    currentPage: Math.max(currentPage - 1, 1)
                   })
                 }
-                className="page-link"
+                disabled={currentPage === 1}
               >
                 Prev
               </button>
             </li>
             <li>
               <button
+                className="page-link"
                 onClick={() =>
                   this.setState({
                     currentPage: 1
                   })
                 }
-                className="page-link"
               >
                 1
               </button>
@@ -454,43 +456,32 @@ class SketchList extends React.Component {
               <span>.......</span>
             </li>
             <li>
-              <button
-                onClick={() =>
-                  this.setState({
-                    currentPage: this.state.currentPage
-                  })
-                }
-                className="page-link"
-              >
-                {this.state.currentPage}
-              </button>
+              <button className="page-link"> {currentPage} </button>
             </li>
             <li>
               <span>&nbsp;of&nbsp;</span>
             </li>
             <li>
               <button
+                className="page-link"
                 onClick={() =>
                   this.setState({
                     currentPage: TotalPages
                   })
                 }
-                className="page-link"
               >
                 {TotalPages}
               </button>
             </li>
             <li className="page-item">
               <button
+                className="page-link"
                 onClick={() =>
                   this.setState({
-                    currentPage: Math.min(
-                      this.state.currentPage + 1,
-                      TotalPages
-                    )
+                    currentPage: Math.min(currentPage + 1, TotalPages)
                   })
                 }
-                className="page-link"
+                disabled={currentPage === TotalPages}
               >
                 Next
               </button>
