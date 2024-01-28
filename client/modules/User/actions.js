@@ -282,7 +282,6 @@ export function updateSettings(formValues) {
         resolve();
         return;
       }
-
       submitSettings(formValues)
         .then((response) => {
           dispatch(updateSettingsSuccess(response.data));
@@ -291,8 +290,24 @@ export function updateSettings(formValues) {
           resolve();
         })
         .catch((error) => {
-          dispatch(showToast(5500));
-          dispatch(setToastText('Toast.IncorrectCurrentPass'));
+          if (error.response) {
+            switch (error.response.status) {
+              case 401:
+                dispatch(showToast(5500));
+                dispatch(setToastText('Toast.IncorrectCurrentPass'));
+                break;
+              case 404:
+                dispatch(showToast(5500));
+                dispatch(setToastText('Toast.UserNotFound'));
+                break;
+              default:
+                dispatch(showToast(5500));
+                dispatch(setToastText('Toast.DefaultError'));
+            }
+          } else {
+            dispatch(showToast(5500));
+            dispatch(setToastText('Toast.NetworkError'));
+          }
         });
     });
 }
