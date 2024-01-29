@@ -168,6 +168,26 @@ function AccountForm() {
               </p>
             )}
           </Field>
+          <Field name="confirmNewPassword">
+            {(field) => (
+              <p className="form__field">
+                <label htmlFor="confirm new password" className="form__label">
+                  {t('AccountForm.ConfirmNewPassword')}
+                </label>
+                <input
+                  className="form__input"
+                  aria-label={t('AccountForm.ConfirmNewPasswordARIA')}
+                  type="password"
+                  id="confirmNewPassword"
+                  autoComplete="confirm-new-password"
+                  {...field.input}
+                />
+                {field.meta.touched && field.meta.error && (
+                  <span className="form-error">{field.meta.error}</span>
+                )}
+              </p>
+            )}
+          </Field>
           <Button type="submit" disabled={submitting || invalid}>
             {t('AccountForm.SubmitSaveAllSettings')}
           </Button>

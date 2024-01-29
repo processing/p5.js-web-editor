@@ -303,7 +303,8 @@
     "CurrentPasswordARIA": "Password attuale",
     "NewPassword": "Nuova Password",
     "NewPasswordARIA": "Nuova Password",
-    "SubmitSaveAllSettings": "Salva tutte le impostazioni"
+    "SubmitSaveAllSettings": "Salva tutte le impostazioni",
+    "ConfirmNewPassword": "Conferma la nuova password"
   },
   "AccountView": {
     "SocialLogin": "Accesso ai social",

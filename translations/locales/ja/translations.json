@@ -297,7 +297,8 @@
       "CurrentPasswordARIA": "現在のパスワード",
       "NewPassword": "新しいパスワード",
       "NewPasswordARIA": "新しいパスワード",
-      "SubmitSaveAllSettings": "すべての設定を保存"
+      "SubmitSaveAllSettings": "すべての設定を保存",
+      "ConfirmNewPassword": "新しいパスワードを確認"
     },
     "AccountView": {
       "SocialLogin": "ソーシャルログイン",
