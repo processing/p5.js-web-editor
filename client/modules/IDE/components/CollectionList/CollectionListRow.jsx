@@ -1,21 +1,17 @@
 import PropTypes from 'prop-types';
 import React, { useState, useRef } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { bindActionCreators } from 'redux';
-import { withTranslation } from 'react-i18next';
 import MenuItem from '../../../../components/Dropdown/MenuItem';
 import TableDropdown from '../../../../components/Dropdown/TableDropdown';
-import * as ProjectActions from '../../actions/project';
-import * as CollectionsActions from '../../actions/collections';
-import * as IdeActions from '../../actions/ide';
-import * as ToastActions from '../../actions/toast';
 import dates from '../../../../utils/formatDate';
+import { deleteCollection, editCollection } from '../../actions/collections';
 
 const formatDateCell = (date, mobile = false) =>
   dates.format(date, { showTime: !mobile });
 
-const CollectionListRowBase = (props) => {
+const CollectionListRow = (props) => {
+  const dispatch = useDispatch();
   const [renameOpen, setRenameOpen] = useState(false);
   const [renameValue, setRenameValue] = useState('');
   const renameInput = useRef(null);
@@ -27,9 +23,11 @@ const CollectionListRowBase = (props) => {
   const updateName = () => {
     const isValid = renameValue.trim().length !== 0;
     if (isValid) {
-      props.editCollection(props.collection.id, {
-        name: renameValue.trim()
-      });
+      dispatch(
+        editCollection(props.collection.id, {
+          name: renameValue.trim()
+        })
+      );
     }
   };
 
@@ -47,7 +45,7 @@ const CollectionListRowBase = (props) => {
         })
       )
     ) {
-      props.deleteCollection(props.collection.id);
+      dispatch(deleteCollection(props.collection.id));
     }
   };
 
@@ -141,7 +139,7 @@ const CollectionListRowBase = (props) => {
   );
 };
 
-CollectionListRowBase.propTypes = {
+CollectionListRow.propTypes = {
   collection: PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
@@ -163,30 +161,13 @@ CollectionListRowBase.propTypes = {
     username: PropTypes.string,
     authenticated: PropTypes.bool.isRequired
   }).isRequired,
-  deleteCollection: PropTypes.func.isRequired,
-  editCollection: PropTypes.func.isRequired,
   onAddSketches: PropTypes.func.isRequired,
   mobile: PropTypes.bool,
   t: PropTypes.func.isRequired
 };
 
-CollectionListRowBase.defaultProps = {
+CollectionListRow.defaultProps = {
   mobile: false
 };
 
-function mapDispatchToPropsSketchListRow(dispatch) {
-  return bindActionCreators(
-    Object.assign(
-      {},
-      CollectionsActions,
-      ProjectActions,
-      IdeActions,
-      ToastActions
-    ),
-    dispatch
-  );
-}
-
-export default withTranslation()(
-  connect(null, mapDispatchToPropsSketchListRow)(CollectionListRowBase)
-);
+export default CollectionListRow;
