@@ -24,6 +24,7 @@
   display: flex;
   flex-wrap: wrap;
   flex-flow: column;
+  max-height: 80%;
   max-width: 80%;
   position: relative;
   padding-bottom: #{math.div(12, $base-font-size)}rem;
@@ -34,6 +35,10 @@
     height: 100vh;
     width: 100vw;
   }
+}
+
+.overlay__body:has(.collection-create){
+  max-height: none;
 }
 
 .overlay__header {
