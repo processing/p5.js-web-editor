@@ -1,4 +1,4 @@
-/* eslint-disable react/react-in-jsx-scope */
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { useDispatch, useSelector } from 'react-redux';
@@ -25,12 +25,10 @@ const CollectionList = (props) => {
   const { project_id: projectId } = useParams() || { project_id: null };
   const [hasLoadedData, setHasLoadedData] = useState(false);
 
-  const { user, sorting, loading, collections } = useSelector((state) => ({
-    user: state.user,
-    sorting: state.sorting,
-    loading: state.loading,
-    collections: getSortedCollections(state)
-  }));
+  const user = useSelector((state) => state.user);
+  const sorting = useSelector((state) => state.sorting);
+  const loading = useSelector((state) => state.loading);
+  const collections = useSelector((state) => getSortedCollections(state));
 
   const [
     addingSketchesToCollectionId,
@@ -175,7 +173,6 @@ const CollectionList = (props) => {
                 user={user}
                 username={props.username}
                 onAddSketches={() => showAddSketches(collection.id)}
-                t={t}
               />
             ))}
           </tbody>

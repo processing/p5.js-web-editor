@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import MenuItem from '../../../../components/Dropdown/MenuItem';
 import TableDropdown from '../../../../components/Dropdown/TableDropdown';
@@ -11,6 +12,7 @@ const formatDateCell = (date, mobile = false) =>
   dates.format(date, { showTime: !mobile });
 
 const CollectionListRow = (props) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const [renameOpen, setRenameOpen] = useState(false);
   const [renameValue, setRenameValue] = useState('');
@@ -40,7 +42,7 @@ const CollectionListRow = (props) => {
     closeAll();
     if (
       window.confirm(
-        props.t('Common.DeleteConfirmation', {
+        t('Common.DeleteConfirmation', {
           name: props.collection.name
         })
       )
@@ -79,16 +81,16 @@ const CollectionListRow = (props) => {
 
     return (
       <TableDropdown
-        aria-label={props.t('CollectionListRow.ToggleCollectionOptionsARIA')}
+        aria-label={t('CollectionListRow.ToggleCollectionOptionsARIA')}
       >
         <MenuItem onClick={handleAddSketches}>
-          {props.t('CollectionListRow.AddSketch')}
+          {t('CollectionListRow.AddSketch')}
         </MenuItem>
         <MenuItem hideIf={!userIsOwner} onClick={handleCollectionDelete}>
-          {props.t('CollectionListRow.Delete')}
+          {t('CollectionListRow.Delete')}
         </MenuItem>
         <MenuItem hideIf={!userIsOwner} onClick={handleRenameOpen}>
-          {props.t('CollectionListRow.Rename')}
+          {t('CollectionListRow.Rename')}
         </MenuItem>
       </TableDropdown>
     );
@@ -162,8 +164,7 @@ CollectionListRow.propTypes = {
     authenticated: PropTypes.bool.isRequired
   }).isRequired,
   onAddSketches: PropTypes.func.isRequired,
-  mobile: PropTypes.bool,
-  t: PropTypes.func.isRequired
+  mobile: PropTypes.bool
 };
 
 CollectionListRow.defaultProps = {
