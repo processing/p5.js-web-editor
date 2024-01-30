@@ -1,8 +1,10 @@
+@use "sass:math";
+
 .asset-size {
   position: relative;
   flex: 1;
-  margin-bottom: #{18 / $base-font-size}rem;
-  font-size: #{14 / $base-font-size}rem;
+  margin-bottom: #{math.div(18, $base-font-size)}rem;
+  font-size: #{math.div(14, $base-font-size)}rem;
 }
 
 .asset-size-bar {
@@ -12,7 +14,7 @@
   width: 200px;
   height: 20px;
 
-  border-radius: #{3 / $base-font-size}rem;
+  border-radius: #{math.div(3, $base-font-size)}rem;
   border: 1px solid transparent;
   overflow: hidden;
 
@@ -37,12 +39,12 @@
 
 .asset-current {
   position: absolute;
-  top: #{28 / $base-font-size}rem;
+  top: #{math.div(28, $base-font-size)}rem;
   left: 0;
 }
 
 .asset-max {
   position: absolute;
   top: 0;
-  left: #{210 / $base-font-size}rem;
+  left: #{math.div(210, $base-font-size)}rem;
 }
