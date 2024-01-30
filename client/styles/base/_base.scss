@@ -1,3 +1,5 @@
+@use "sass:math";
+
 * {
 	box-sizing: border-box;
 }
@@ -65,10 +67,10 @@ button {
 
 input,
 textarea {
-	padding: #{5 / $base-font-size}rem;
+	padding: #{math.div(5, $base-font-size)}rem;
 	border: 1px solid;
 	border-radius: 2px;
-	padding: #{10 / $base-font-size}rem;
+	padding: #{math.div(10, $base-font-size)}rem;
 	@include themify() {
 		color: getThemifyVariable("input-text-color");
 		background-color: getThemifyVariable("input-background-color");
@@ -105,23 +107,23 @@ button {
 }
 
 h1 {
-	font-size: #{21 / $base-font-size}em;
+	font-size: #{math.div(21, $base-font-size)}em;
 }
 
 h2 {
-	font-size: #{21 / $base-font-size}em;
+	font-size: #{math.div(21, $base-font-size)}em;
 }
 
 h3 {
 	font-weight: normal;
-	font-size: #{16 / $base-font-size}rem;
+	font-size: #{math.div(16, $base-font-size)}rem;
 }
 h4 {
 	font-weight: normal;
 }
 h6 {
 	font-weight: normal;
-	font-size: #{12 / $base-font-size}rem;
+	font-size: #{math.div(12, $base-font-size)}rem;
 }
 thead {
 	text-align: left;
