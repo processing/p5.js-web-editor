@@ -97,9 +97,14 @@
     "Libraries": "Libraries",
     "Forum": "Forum",
     "Examples": "Examples",
+    "Home": "Home",
+    "Twitter": "Twitter",
+    "Instagram": "Instagram",
+    "Discord": "Discord",
     "PrivacyPolicy": "Privacy Policy",
     "TermsOfUse": "Terms of Use",
-    "CodeOfConduct": "Code of Conduct"
+    "CodeOfConduct": "Code of Conduct",
+    "WebEditor": "Web Editor"
   },
   "Toast": {
     "OpenedNewSketch": "Opened new sketch.",
