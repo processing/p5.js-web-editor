@@ -10,7 +10,6 @@ FROM base as development
 ENV NODE_ENV development
 COPY package.json package-lock.json ./
 RUN npm install
-RUN npm rebuild node-sass
 COPY .babelrc index.js nodemon.json ./
 COPY ./webpack ./webpack
 COPY client ./client
@@ -27,6 +26,5 @@ FROM base as production
 ENV NODE_ENV=production
 COPY package.json package-lock.json index.js ./
 RUN npm install --production
-RUN npm rebuild node-sass
 COPY --from=build $APP_HOME/dist ./dist
 CMD ["npm", "run", "start:prod"]
