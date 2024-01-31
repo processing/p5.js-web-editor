@@ -1,20 +1,22 @@
+@use "sass:math";
+
 .preview-console {
 	@include themify() {
 		background: getThemifyVariable('console-background-color');
 		border-color: getThemifyVariable('ide-border-color');
 	}
-	border-left: #{1 / $base-font-size}rem solid;
-	border-right: #{1 / $base-font-size}rem solid;
+	border-left: math.div(1, $base-font-size)rem solid;
+	border-right: math.div(1, $base-font-size)rem solid;
 	width: 100%;
 	height: 100%;
 	z-index: 1000;
 	display: flex;
 	flex-direction: column;
 
-	& > {
-		position:relative;
-		text-align:left;
-	}
+	& > * {
+		position: relative;
+		text-align: left;
+	  }
 }
 
 .preview-console__header {
@@ -22,15 +24,15 @@
 		background-color: getThemifyVariable('console-header-background-color');
 		color: getThemifyVariable('console-header-color');
 	}
-	min-height: #{30 / $base-font-size}rem;
-	padding: #{5 / $base-font-size}rem;
+	min-height: #{math.div(30, $base-font-size)}rem;
+	padding: #{math.div(5, $base-font-size)}rem;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 }
 
 .preview-console__header-title {
-	font-size: #{12 / $base-font-size}rem;
+	font-size: #{math.div(12, $base-font-size)}rem;
 	font-weight: normal;
 }
 
@@ -47,7 +49,7 @@
 }
 
 .preview-console__collapse {
-	padding-top: #{3 / $base-font-size}rem;
+	padding-top: #{math.div(3, $base-font-size)}rem;
 	@include icon();
 	@include themify() {
 		& g,
@@ -62,7 +64,7 @@
 }
 
 .preview-console__expand {
-	padding-top: #{3 / $base-font-size}rem;
+	padding-top: #{math.div(3, $base-font-size)}rem;
 	@include icon();
 	@include themify() {
 		& g,
@@ -92,7 +94,7 @@
 	}
 	background: transparent;
 	border: none;
-	padding-right: #{10 / $base-font-size}rem;
+	padding-right: #{math.div(10, $base-font-size)}rem;
 	.preview-console--collapsed & {
 		display: none;
 	}
@@ -101,5 +103,5 @@
 .preview-console__body {
 	display: flex;
 	flex-direction: column;
-	height: calc(100% - #{30 / $base-font-size}rem);
+	height: calc(100% - #{math.div(30, $base-font-size)}rem);
 }
