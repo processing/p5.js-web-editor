@@ -166,7 +166,9 @@ function AccountForm() {
                       }
                     }}
                   >
-                    {showCurrentPassword ? 'Hide' : 'Show'}
+                    {showCurrentPassword
+                      ? t('AccountForm.HidePassword')
+                      : t('AccountForm.ShowPassword')}
                   </span>
                 </div>
 
@@ -202,7 +204,9 @@ function AccountForm() {
                       }
                     }}
                   >
-                    {showNewPassword ? 'Hide' : 'Show'}
+                    {showNewPassword
+                      ? t('AccountForm.HidePassword')
+                      : t('AccountForm.ShowPassword')}
                   </span>
                 </div>
 

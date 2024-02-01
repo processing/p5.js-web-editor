@@ -76,7 +76,9 @@ function LoginForm() {
                         }
                       }}
                     >
-                      {showPassword ? 'Hide' : 'Show'}
+                      {showPassword
+                        ? t('LoginForm.HidePassword')
+                        : t('LoginForm.ShowPassword')}
                     </span>
                   </div>
                   {field.meta.touched && field.meta.error && (

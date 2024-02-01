@@ -67,7 +67,9 @@
     "UsernameOrEmailARIA": "Email or Username",
     "Password": "Password",
     "PasswordARIA": "Password",
-    "Submit": "Log In"
+    "Submit": "Log In",
+    "ShowPassword": "Show",
+    "HidePassword": "Hide"
   },
   "LoginView": {
     "Title": "p5.js Web Editor | Login",
@@ -311,7 +313,9 @@
     "CurrentPasswordARIA": "Current Password",
     "NewPassword": "New Password",
     "NewPasswordARIA": "New Password",
-    "SubmitSaveAllSettings": "Save All Settings"
+    "SubmitSaveAllSettings": "Save All Settings",
+    "ShowPassword": "Show",
+    "HidePassword": "Hide"
   },
   "AccountView": {
     "SocialLogin": "Social Login",
@@ -357,7 +361,9 @@
     "PasswordARIA": "password",
     "ConfirmPassword": "Confirm Password",
     "ConfirmPasswordARIA": "Confirm password",
-    "SubmitSignup": "Sign Up"
+    "SubmitSignup": "Sign Up",
+    "ShowPassword": "Show",
+    "HidePassword": "Hide"
   },
   "SignupView": {
     "Title": "p5.js Web Editor | Signup",

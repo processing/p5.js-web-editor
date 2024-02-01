@@ -130,7 +130,9 @@ function SignupForm() {
                       }
                     }}
                   >
-                    {showPassword ? 'Hide' : 'Show'}
+                    {showPassword
+                      ? t('SignupForm.HidePassword')
+                      : t('SignupForm.ShowPassword')}
                   </span>
                 </div>
 
@@ -166,7 +168,9 @@ function SignupForm() {
                       }
                     }}
                   >
-                    {ConfirmShowPassword ? 'Hide' : 'Show'}
+                    {ConfirmShowPassword
+                      ? t('SignupForm.HidePassword')
+                      : t('SignupForm.ShowPassword')}
                   </span>
                 </div>
                 {field.meta.touched && field.meta.error && (
