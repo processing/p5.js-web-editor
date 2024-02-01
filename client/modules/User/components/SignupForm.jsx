@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form, Field } from 'react-final-form';
 import { useDispatch } from 'react-redux';
@@ -33,6 +34,17 @@ function validateEmail(email) {
 }
 
 function SignupForm() {
+  const [showPassword, setShowPassword] = useState(false);
+  const [ConfirmShowPassword, setConfirmShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const toggleConfirmPasswordVisibility = () => {
+    setConfirmShowPassword(!ConfirmShowPassword);
+  };
+
   const { t } = useTranslation();
 
   const dispatch = useDispatch();
@@ -98,14 +110,30 @@ function SignupForm() {
                 <label htmlFor="password" className="form__label">
                   {t('SignupForm.Password')}
                 </label>
-                <input
-                  className="form__input"
-                  aria-label={t('SignupForm.PasswordARIA')}
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                  {...field.input}
-                />
+                <div className="password-input-container">
+                  <input
+                    className="form__input"
+                    aria-label={t('SignupForm.PasswordARIA')}
+                    type={showPassword ? 'text' : 'password'}
+                    id="password"
+                    autoComplete="new-password"
+                    {...field.input}
+                  />
+                  <span
+                    role="button"
+                    tabIndex="0"
+                    className="show-hide-button"
+                    onClick={togglePasswordVisibility}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        togglePasswordVisibility();
+                      }
+                    }}
+                  >
+                    {showPassword ? 'Hide' : 'Show'}
+                  </span>
+                </div>
+
                 {field.meta.touched && field.meta.error && (
                   <span className="form-error">{field.meta.error}</span>
                 )}
@@ -118,14 +146,29 @@ function SignupForm() {
                 <label htmlFor="confirm password" className="form__label">
                   {t('SignupForm.ConfirmPassword')}
                 </label>
-                <input
-                  className="form__input"
-                  type="password"
-                  aria-label={t('SignupForm.ConfirmPasswordARIA')}
-                  id="confirm password"
-                  autoComplete="new-password"
-                  {...field.input}
-                />
+                <div className="password-input-container">
+                  <input
+                    className="form__input"
+                    type={ConfirmShowPassword ? 'text' : 'password'}
+                    aria-label={t('SignupForm.ConfirmPasswordARIA')}
+                    id="confirm password"
+                    autoComplete="new-password"
+                    {...field.input}
+                  />
+                  <span
+                    role="button"
+                    tabIndex="0"
+                    className="show-hide-button"
+                    onClick={toggleConfirmPasswordVisibility}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        toggleConfirmPasswordVisibility();
+                      }
+                    }}
+                  >
+                    {ConfirmShowPassword ? 'Hide' : 'Show'}
+                  </span>
+                </div>
                 {field.meta.touched && field.meta.error && (
                   <span className="form-error">{field.meta.error}</span>
                 )}

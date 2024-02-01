@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState } from 'react';
 import { Form, Field } from 'react-final-form';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -25,6 +26,17 @@ function asyncValidate(fieldToValidate, value) {
 }
 
 function AccountForm() {
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+
+  const toggleCurrentPasswordVisibility = () => {
+    setShowCurrentPassword(!showCurrentPassword);
+  };
+
+  const toggleConfirmPasswordVisibility = () => {
+    setShowNewPassword(!showNewPassword);
+  };
+
   const { t } = useTranslation();
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -134,14 +146,30 @@ function AccountForm() {
                 <label htmlFor="current password" className="form__label">
                   {t('AccountForm.CurrentPassword')}
                 </label>
-                <input
-                  className="form__input"
-                  aria-label={t('AccountForm.CurrentPasswordARIA')}
-                  type="password"
-                  id="currentPassword"
-                  autoComplete="current-password"
-                  {...field.input}
-                />
+                <div className="password-input-container">
+                  <input
+                    className="form__input"
+                    aria-label={t('AccountForm.CurrentPasswordARIA')}
+                    type={showCurrentPassword ? 'text' : 'password'}
+                    id="currentPassword"
+                    autoComplete="current-password"
+                    {...field.input}
+                  />
+                  <span
+                    role="button"
+                    tabIndex="0"
+                    className="show-hide-button"
+                    onClick={toggleCurrentPasswordVisibility}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        toggleCurrentPasswordVisibility();
+                      }
+                    }}
+                  >
+                    {showCurrentPassword ? 'Hide' : 'Show'}
+                  </span>
+                </div>
+
                 {field.meta.touched && field.meta.error && (
                   <span className="form-error">{field.meta.error}</span>
                 )}
@@ -154,14 +182,30 @@ function AccountForm() {
                 <label htmlFor="new password" className="form__label">
                   {t('AccountForm.NewPassword')}
                 </label>
-                <input
-                  className="form__input"
-                  aria-label={t('AccountForm.NewPasswordARIA')}
-                  type="password"
-                  id="newPassword"
-                  autoComplete="new-password"
-                  {...field.input}
-                />
+                <div className="password-input-container">
+                  <input
+                    className="form__input"
+                    aria-label={t('AccountForm.NewPasswordARIA')}
+                    type={showNewPassword ? 'text' : 'password'}
+                    id="newPassword"
+                    autoComplete="new-password"
+                    {...field.input}
+                  />
+                  <span
+                    role="button"
+                    tabIndex="0"
+                    className="show-hide-button"
+                    onClick={toggleConfirmPasswordVisibility}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        toggleConfirmPasswordVisibility();
+                      }
+                    }}
+                  >
+                    {showNewPassword ? 'Hide' : 'Show'}
+                  </span>
+                </div>
+
                 {field.meta.touched && field.meta.error && (
                   <span className="form-error">{field.meta.error}</span>
                 )}
