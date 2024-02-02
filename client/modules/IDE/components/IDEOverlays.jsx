@@ -34,9 +34,6 @@ export default function IDEOverlays() {
     preferencesIsVisible,
     keyboardShortcutVisible,
     shareModalVisible,
-    shareModalProjectId,
-    shareModalProjectName,
-    shareModalProjectUsername,
     errorType,
     previousPath
   } = useSelector((state) => state.ide);
@@ -87,11 +84,7 @@ export default function IDEOverlays() {
           ariaLabel={t('IDEView.ShareARIA')}
           closeOverlay={() => dispatch(closeShareModal())}
         >
-          <ShareModal
-            projectId={shareModalProjectId}
-            projectName={shareModalProjectName}
-            ownerUsername={shareModalProjectUsername}
-          />
+          <ShareModal />
         </Overlay>
       )}
       {keyboardShortcutVisible && (
