@@ -55,11 +55,15 @@ function NewFileForm() {
                 </React.Fragment>
               )}
             </Field>
-            <Button type="submit" disabled={invalid || submitting}>
-              {t('NewFileForm.AddFileSubmit')}
-            </Button>
+            <Field name="submitButton">
+              {() => (
+                <Button type="submit" disabled={submitting}>
+                  {t('NewFileForm.AddFileSubmit')}
+                </Button>
+              )}
+            </Field>
           </div>
-          {touched.name && errors.name && (
+          {touched.submitButton && errors.name && (
             <span className="form-error">{errors.name}</span>
           )}
         </form>
