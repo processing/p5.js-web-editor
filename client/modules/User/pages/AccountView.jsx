@@ -1,11 +1,10 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router-dom';
 import { parse } from 'query-string';
-import { createApiKey, removeApiKey } from '../actions';
 import AccountForm from '../components/AccountForm';
 import SocialAuthButton from '../components/SocialAuthButton';
 import APIKeyForm from '../components/APIKeyForm';
@@ -51,9 +50,6 @@ function AccountView() {
   const showError = !!queryParams.error;
   const errorType = queryParams.error;
   const accessTokensUIEnabled = window.process.env.UI_ACCESS_TOKEN_ENABLED;
-
-  const apiKeys = useSelector((state) => state.user.apiKeys);
-  const dispatch = useDispatch();
   const history = useHistory();
 
   return (
@@ -103,13 +99,7 @@ function AccountView() {
               <SocialLoginPanel />
             </TabPanel>
             <TabPanel>
-              <APIKeyForm
-                // TODO: it makes more sense to connect the APIKeyForm component directly -Linda
-                apiKeys={apiKeys}
-                createApiKey={() => dispatch(createApiKey)}
-                removeApiKey={() => dispatch(removeApiKey)}
-                t={t}
-              />
+              <APIKeyForm />
             </TabPanel>
           </Tabs>
         )}
