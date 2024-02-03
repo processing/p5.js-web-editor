@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form, Field } from 'react-final-form';
 import { useDispatch } from 'react-redux';
-import { validateSignup } from '../../../utils/reduxFormUtils';
+import { SignupFormInput } from '../../../common/zod';
 import { validateAndSignUpUser } from '../actions';
 import Button from '../../../common/Button';
 import apiClient from '../../../utils/apiClient';
@@ -24,14 +24,6 @@ function asyncValidate(fieldToValidate, value) {
     });
 }
 
-function validateUsername(username) {
-  return asyncValidate('username', username);
-}
-
-function validateEmail(email) {
-  return asyncValidate('email', email);
-}
-
 function SignupForm() {
   const { t } = useTranslation();
 
@@ -43,16 +35,12 @@ function SignupForm() {
   return (
     <Form
       fields={['username', 'email', 'password', 'confirmPassword']}
-      validate={validateSignup}
+      validate={(values) => SignupFormInput.safeParse(values)}
       onSubmit={onSubmit}
     >
       {({ handleSubmit, pristine, submitting, invalid }) => (
         <form className="form" onSubmit={handleSubmit}>
-          <Field
-            name="username"
-            validate={validateUsername}
-            validateFields={[]}
-          >
+          <Field name="username" validateFields={[]}>
             {(field) => (
               <p className="form__field">
                 <label htmlFor="username" className="form__label">
@@ -72,7 +60,7 @@ function SignupForm() {
               </p>
             )}
           </Field>
-          <Field name="email" validate={validateEmail} validateFields={[]}>
+          <Field name="email" validateFields={[]}>
             {(field) => (
               <p className="form__field">
                 <label htmlFor="email" className="form__label">

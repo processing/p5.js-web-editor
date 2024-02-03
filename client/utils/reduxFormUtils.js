@@ -13,12 +13,12 @@ export const domOnlyProps = ({
   visited,
   autofilled,
   error,
-  ...domProps }) => domProps;
+  ...domProps
+}) => domProps;
 /* eslint-enable */
 
 /* eslint-disable */
-const EMAIL_REGEX =
-  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i;
+const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i;
 /* eslint-enable */
 
 function validateNameEmail(formProps, errors) {
@@ -54,50 +54,6 @@ export function validateSettings(formProps) {
   return errors;
 }
 
-export function validateLogin(formProps) {
-  const errors = {};
-  if (!formProps.email) {
-    errors.email = i18n.t('ReduxFormUtils.errorEmptyEmail');
-  }
-  if (!formProps.password) {
-    errors.password = i18n.t('ReduxFormUtils.errorEmptyPassword');
-  }
-  return errors;
-}
-
-function validatePasswords(formProps, errors) {
-  if (!formProps.password) {
-    errors.password = i18n.t('ReduxFormUtils.errorEmptyPassword');
-  }
-  if (formProps.password && formProps.password.length < 6) {
-    errors.password = i18n.t('ReduxFormUtils.errorShortPassword');
-  }
-  if (!formProps.confirmPassword) {
-    errors.confirmPassword = i18n.t('ReduxFormUtils.errorConfirmPassword');
-  }
-
-  if (
-    formProps.password !== formProps.confirmPassword &&
-    formProps.confirmPassword
-  ) {
-    errors.confirmPassword = i18n.t('ReduxFormUtils.errorPasswordMismatch');
-  }
-}
-
-export function validateNewPassword(formProps) {
-  const errors = {};
-  validatePasswords(formProps, errors);
-  return errors;
-}
-
-export function validateSignup(formProps) {
-  const errors = {};
-
-  validateNameEmail(formProps, errors);
-  validatePasswords(formProps, errors);
-
-  return errors;
-}
 export function validateResetPassword(formProps) {
   const errors = {};
   if (!formProps.email) {
