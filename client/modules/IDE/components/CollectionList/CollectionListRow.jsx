@@ -55,9 +55,6 @@ const CollectionListRowBase = (props) => {
     closeAll();
     setRenameOpen(true);
     setRenameValue(props.collection.name);
-    if (renameInput.current) {
-      renameInput.current.focus();
-    }
   };
 
   const handleRenameChange = (e) => {
@@ -68,6 +65,12 @@ const CollectionListRowBase = (props) => {
     if (e.key === 'Enter') {
       updateName();
       closeAll();
+    }
+  };
+
+  const handleRenameFocus = () => {
+    if (renameInput.current) {
+      renameInput.current.focus();
     }
   };
 
@@ -116,7 +119,10 @@ const CollectionListRowBase = (props) => {
             onKeyUp={handleRenameEnter}
             onBlur={handleRenameBlur}
             onClick={(e) => e.stopPropagation()}
-            ref={renameInput}
+            ref={(node) => {
+              renameInput.current = node;
+              handleRenameFocus();
+            }}
           />
         )}
       </>
