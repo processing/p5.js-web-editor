@@ -24,6 +24,14 @@ function asyncValidate(fieldToValidate, value) {
     });
 }
 
+function validateUsername(username) {
+  return asyncValidate('username', username);
+}
+
+function validateEmail(email) {
+  return asyncValidate('email', email);
+}
+
 function SignupForm() {
   const { t } = useTranslation();
 
@@ -40,7 +48,11 @@ function SignupForm() {
     >
       {({ handleSubmit, pristine, submitting, invalid }) => (
         <form className="form" onSubmit={handleSubmit}>
-          <Field name="username" validateFields={[]}>
+          <Field
+            name="username"
+            validate={validateUsername}
+            validateFields={[]}
+          >
             {(field) => (
               <p className="form__field">
                 <label htmlFor="username" className="form__label">
@@ -60,7 +72,7 @@ function SignupForm() {
               </p>
             )}
           </Field>
-          <Field name="email" validateFields={[]}>
+          <Field name="email" validate={validateEmail} validateFields={[]}>
             {(field) => (
               <p className="form__field">
                 <label htmlFor="email" className="form__label">
