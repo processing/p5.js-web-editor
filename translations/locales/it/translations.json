@@ -70,7 +70,7 @@
     "Submit": "Accedi"
   },
   "LoginView": {
-    "Title": "p5.js Web Editor | Accesso",
+    "Title": "p5.js redattore web | Accesso",
     "Login": "Accedi",
     "LoginOr": "o",
     "SignUp": "Registrati",
@@ -88,7 +88,7 @@
   },
   "About": {
     "Title": "Informazioni",
-    "TitleHelmet": "p5.js Web Editor | Informazioni",
+    "TitleHelmet": "p5.js redattore web | Informazioni",
     "Contribute": "Contribuisci",
     "NewP5": "Sei nuovo su p5.js?",
     "Report": "Riporta un bug",
@@ -264,7 +264,7 @@
     "Submit": "Spedisci email per resettare la password"
   },
   "ResetPasswordView": {
-    "Title": "p5.js Web Editor | Reset Password",
+    "Title": "p5.js redattore web | Reset Password",
     "Reset": "Reset Password",
     "Submitted": "Dovrebbe arrivarti a breve una email per resettare la password. Se non la vedi, controlla\n            nella tua cartella di posta indesiderata potrebbe essere finita là.",
     "Login": "Accedi",
@@ -284,7 +284,7 @@
     "errorValidUsername": "Il nome utente dev'essere composto solo da numeri, lettere, must only consist of numbers, letters, punti, trattini e trattini bassi."
   },
   "NewPasswordView": {
-    "Title": "p5.js Web Editor | Nuova password",
+    "Title": "p5.js redattore web | Nuova password",
     "Description": "Imposta una nuova password",
     "TokenInvalidOrExpired": "Il codice di reset password non è valido o è scaduto.",
     "EmptyPassword": "Per favore inserisci una password",
@@ -307,8 +307,8 @@
   },
   "AccountView": {
     "SocialLogin": "Accesso ai social",
-    "SocialLoginDescription": "Usa il tuo account GitHub o Google per accedere al web editor p5.js.",
-    "Title": "p5.js Web Editor | Impostazioni account",
+    "SocialLoginDescription": "Usa il tuo account GitHub o Google per accedere al redattore web p5.js.",
+    "Title": "p5.js redattore web | Impostazioni account",
     "Settings": "Impostazioni Account",
     "AccountTab": "Account",
     "AccessTokensTab": "Codici di accesso"
@@ -352,14 +352,14 @@
     "SubmitSignup": "Registrati"
   },
   "SignupView": {
-    "Title": "p5.js Web Editor | Registrazione",
+    "Title": "p5.js redattore web | Registrazione",
     "Description": "Registrati",
     "Or": "o",
     "AlreadyHave": "Hai già un account?",
     "Login": "Accedi"
   },
   "EmailVerificationView": {
-    "Title": "p5.js Web Editor | Verifica email",
+    "Title": "p5.js redattore web | Verifica email",
     "Verify": "Verifica la tua email",
     "InvalidTokenNull": "Quel link non è valido.",
     "Checking": "Validazione codice, prego attendere...",
@@ -367,7 +367,7 @@
     "InvalidState": "Qualcosa è andato storto."
   },
   "AssetList": {
-    "Title": "p5.js Web Editor | Mie risorse",
+    "Title": "p5.js redattore web | Mie risorse",
     "ToggleOpenCloseARIA": "Abilita/disabilita l'opzione Apri/Chiudi risorse",
     "Delete": "Cancella",
     "OpenNewTab": "Apri in nuova pagina",
@@ -377,7 +377,7 @@
     "HeaderSketch": "Sketch"
   },
   "Feedback": {
-    "Title": "p5.js Web Editor | Feedback",
+    "Title": "p5.js redattore web | Feedback",
     "ViaGithubHeader": "Problema tramite GitHub",
     "ViaGithubDescription": "Se sei pratico con GitHub, questo è il nostro metodo preferito per ricevere report di bug o feedback.",
     "GoToGithub": "Vai a Github",
@@ -407,7 +407,7 @@
     "LogIn": "Accedi",
     "SavedDifferentWindow": "Il progetto che hai tentato di salvare è stato salvato da un'altra finestra.\n        Aggiorna la pagina per vedere l'ultima versione.",
     "LinkTitle": "Errore durante il collegamento dell'account",
-    "LinkMessage": "Si è verificato un problema durante il collegamento del tuo {{serviceauth}} account al tuo account del Web Editor p5.js. Il tuo {{serviceauth}} account è già stato collegato ad un account del web editor p5.js."
+    "LinkMessage": "Si è verificato un problema durante il collegamento del tuo {{serviceauth}} account al tuo account del redattore web p5.js. Il tuo {{serviceauth}} account è già stato collegato ad un account del redattore web p5.js."
   },
   "ShareModal": {
     "Embed": "Incorporare",
@@ -420,8 +420,8 @@
     "TitleDefault": "collezione"
   },
   "Collection": {
-    "Title": "p5.js Web Editor | Mie collezioni",
-    "AnothersTitle": "p5.js Web Editor | Le collezioni di {{anotheruser}}",
+    "Title": "p5.js redattore web | Mie collezioni",
+    "AnothersTitle": "p5.js redattore web | Le collezioni di {{anotheruser}}",
     "Share": "Condividi",
     "URLLink": "Collegamento alla collezione",
     "AddSketch": "Aggiungi sketch",
@@ -444,12 +444,12 @@
     "ButtonLabelDescendingARIA": "Ordine per {{displayName}} discendente."
   },
   "AddToCollectionList": {
-    "Title": "p5.js Web Editor | Le mie collezioni",
-    "AnothersTitle": "p5.js Web Editor | Collezioni di{{anotheruser}}",
+    "Title": "p5.js redattore web | Le mie collezioni",
+    "AnothersTitle": "p5.js redattore web | Collezioni di{{anotheruser}}",
     "Empty": "Nessuna collezione"
   },
   "CollectionCreate": {
-    "Title": "p5.js Web Editor | Crea collezione",
+    "Title": "p5.js redattore web | Crea collezione",
     "FormError": "Non posso creare la collezione",
     "FormLabel": "Nome collezione",
     "FormLabelARIA": "nome",
@@ -470,8 +470,8 @@
     "Assets": "Risorse"
   },
   "CollectionList": {
-    "Title": "p5.js Web Editor | Le mie collezioni",
-    "AnothersTitle": "p5.js Web Editor | Le collezioni di {{anotheruser}}",
+    "Title": "p5.js redattore web | Le mie collezioni",
+    "AnothersTitle": "p5.js redattore web | Le collezioni di {{anotheruser}}",
     "NoCollections": "Nessuna collezione.",
     "TableSummary": "pagina contenente tutte le collezioni",
     "HeaderName": "Nome",
@@ -503,8 +503,8 @@
   },
   "SketchList": {
     "View": "Vista",
-    "Title": "p5.js Web Editor | I miei sketch",
-    "AnothersTitle": "p5.js Web Editor | Sketch di {{anotheruser}}",
+    "Title": "p5.js redattore web | I miei sketch",
+    "AnothersTitle": "p5.js redattore web | Sketch di {{anotheruser}}",
     "ToggleLabelARIA": "Alterna opzione Apri/Chiudi Sketch",
     "DropdownRename": "Rinomina",
     "DropdownDownload": "Scarica",
@@ -525,8 +525,8 @@
     "NoSketches": "Nessuno sketch."
   },
   "AddToCollectionSketchList": {
-    "Title": "p5.js Web Editor | I miei sketch",
-    "AnothersTitle": "p5.js Web Editor | Sketch di {{anotheruser}}",
+    "Title": "p5.js redattore web | I miei sketch",
+    "AnothersTitle": "p5.js redattore web | Sketch di {{anotheruser}}",
     "NoCollections": "Nessuna collezione."
   },
   "Editor": {

@@ -1,10 +1,12 @@
+@use "sass:math";
+
 .toolbar__play-button {
 	@include themify() {
 		@extend %toolbar-button;
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		padding: 0 0 0 #{3 / $base-font-size}rem;
+		padding: 0 0 0 #{math.div(3, $base-font-size)}rem;
 		&--selected {
 			@extend %toolbar-button--selected;
 		}
@@ -21,14 +23,14 @@
 			}
 	    }
 	}
-	margin-right: #{15 / $base-font-size}rem;
+	margin-right: #{math.div(15, $base-font-size)}rem;
 	span {
-		padding-left: #{4 / $base-font-size}rem;
+		padding-left: #{math.div(4, $base-font-size)}rem;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		width: #{20 / $base-font-size}rem;
-		height: #{20 / $base-font-size}rem;
+		width: #{math.div(20, $base-font-size)}rem;
+		height: #{math.div(20, $base-font-size)}rem;
 	}
 }
 
@@ -42,7 +44,7 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		margin-right: #{15 / $base-font-size}rem;
+		margin-right: #{math.div(15, $base-font-size)}rem;
 		padding: 0;
 		&--selected {
 			@extend %toolbar-button--selected;
@@ -52,8 +54,8 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		width: #{20 / $base-font-size}rem;
-		height: #{20 / $base-font-size}rem;
+		width: #{math.div(20, $base-font-size)}rem;
+		height: #{math.div(20, $base-font-size)}rem;
 	}
 }
 
@@ -70,17 +72,17 @@
 	}
 	margin-left: auto;
 	& span {
-		padding-left: #{1 / $base-font-size}rem;
+		padding-left: #{math.div(1, $base-font-size)}rem;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		width: #{20 / $base-font-size}rem;
-		height: #{20 / $base-font-size}rem;
+		width: #{math.div(20, $base-font-size)}rem;
+		height: #{math.div(20, $base-font-size)}rem;
 	}
 }
 
 .toolbar__logo {
-	margin-right: #{30 / $base-font-size}rem;
+	margin-right: #{math.div(30, $base-font-size)}rem;
 	@include themify() {
 		& g, & path {
 			fill: getThemifyVariable('logo-color');
@@ -89,7 +91,7 @@
 }
 
 .toolbar {
-	padding: #{10 / $base-font-size}rem #{20 / $base-font-size}rem;
+	padding: #{math.div(10, $base-font-size)}rem #{math.div(20, $base-font-size)}rem;
 	display: flex;
 	align-items: center;
 	@include themify() {
@@ -98,8 +100,8 @@
 }
 
 .toolbar__project-name-container {
-	margin-left: #{10 / $base-font-size}rem;
-	padding-left: #{10 / $base-font-size}rem;
+	margin-left: #{math.div(10, $base-font-size)}rem;
+	padding-left: #{math.div(10, $base-font-size)}rem;
   display: flex;
   align-items: center;
 }
@@ -118,7 +120,7 @@
 }
 
 .toolbar__project-owner {
-	margin-left: #{5 / $base-font-size}rem;
+	margin-left: #{math.div(5, $base-font-size)}rem;
 	@include themify() {
 		color: getThemifyVariable('secondary-text-color');
 	}
@@ -132,8 +134,8 @@
 			color: getThemifyVariable('logo-color');
 		}
 	}
-	margin-left: #{5 / $base-font-size}rem;
-	font-size: #{12 / $base-font-size}rem;
+	margin-left: #{math.div(5, $base-font-size)}rem;
+	font-size: #{math.div(12, $base-font-size)}rem;
 }
 
 .toolbar__autorefresh {
