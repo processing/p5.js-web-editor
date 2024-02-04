@@ -1,29 +1,23 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 import browserHistory from '../browserHistory';
 
-const RedirectToUser = ({ username, url = '/:username/sketches' }) => {
-  React.useEffect(() => {
+const RedirectToUser = ({ url = '/:username/sketches' }) => {
+  const username = useSelector((state) =>
+    state.user ? state.user.username : null
+  );
+  useEffect(() => {
     if (username == null) {
       return;
     }
-
     browserHistory.replace(url.replace(':username', username));
-  }, [username]);
-
+  }, [username, url]);
   return null;
 };
 
-function mapStateToProps(state) {
-  return {
-    username: state.user ? state.user.username : null
-  };
-}
+RedirectToUser.propTypes = {
+  url: PropTypes.string.isRequired
+};
 
-const ConnectedRedirectToUser = connect(mapStateToProps)(RedirectToUser);
-
-const createRedirectWithUsername = (url) => (props) => (
-  <ConnectedRedirectToUser {...props} url={url} />
-);
-
-export default createRedirectWithUsername;
+export default RedirectToUser;
