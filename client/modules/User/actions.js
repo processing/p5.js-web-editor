@@ -4,7 +4,7 @@ import browserHistory from '../../browserHistory';
 import apiClient from '../../utils/apiClient';
 import { showErrorModal, justOpenedProject } from '../IDE/actions/ide';
 import { setLanguage } from '../IDE/actions/preferences';
-import { showToast, setToastText } from '../IDE/actions/toast';
+import { showToast } from '../IDE/actions/toast';
 
 export function authError(error) {
   return {
@@ -279,8 +279,7 @@ export function updateSettings(formValues) {
       submitSettings(formValues)
         .then((response) => {
           dispatch(updateSettingsSuccess(response.data));
-          dispatch(showToast(5500));
-          dispatch(setToastText('Toast.SettingsSaved'));
+          dispatch(showToast('Toast.SettingsSaved', 5500));
           resolve();
         })
         .catch((error) => resolve({ error }))

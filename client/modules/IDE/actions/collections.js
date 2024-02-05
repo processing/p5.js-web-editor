@@ -2,9 +2,7 @@ import browserHistory from '../../../browserHistory';
 import apiClient from '../../../utils/apiClient';
 import * as ActionTypes from '../../../constants';
 import { startLoader, stopLoader } from './loader';
-import { setToastText, showToast } from './toast';
-
-const TOAST_DISPLAY_TIME_MS = 1500;
+import { showToast } from './toast';
 
 export function getCollections(username) {
   return (dispatch) => {
@@ -47,8 +45,7 @@ export function createCollection(collection) {
         dispatch(stopLoader());
 
         const newCollection = response.data;
-        dispatch(setToastText(`Created "${newCollection.name}"`));
-        dispatch(showToast(TOAST_DISPLAY_TIME_MS));
+        dispatch(showToast(`Created "${newCollection.name}"`));
 
         const pathname = `/${newCollection.owner.username}/collections/${newCollection.id}`;
         const location = { pathname, state: { skipSavingPath: true } };
@@ -80,8 +77,7 @@ export function addToCollection(collectionId, projectId) {
 
         const collectionName = response.data.name;
 
-        dispatch(setToastText(`Added to "${collectionName}`));
-        dispatch(showToast(TOAST_DISPLAY_TIME_MS));
+        dispatch(showToast(`Added to "${collectionName}`));
 
         return response.data;
       })
@@ -110,8 +106,7 @@ export function removeFromCollection(collectionId, projectId) {
 
         const collectionName = response.data.name;
 
-        dispatch(setToastText(`Removed from "${collectionName}`));
-        dispatch(showToast(TOAST_DISPLAY_TIME_MS));
+        dispatch(showToast(`Removed from "${collectionName}`));
 
         return response.data;
       })

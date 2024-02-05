@@ -10,7 +10,6 @@ import classNames from 'classnames';
 import * as ProjectActions from '../../IDE/actions/project';
 import * as ProjectsActions from '../../IDE/actions/projects';
 import * as CollectionsActions from '../../IDE/actions/collections';
-import * as ToastActions from '../../IDE/actions/toast';
 import * as SortingActions from '../../IDE/actions/sorting';
 import * as IdeActions from '../../IDE/actions/ide';
 import { getCollection } from '../../IDE/selectors/collections';
@@ -350,13 +349,7 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
-    Object.assign(
-      {},
-      CollectionsActions,
-      ProjectsActions,
-      ToastActions,
-      SortingActions
-    ),
+    Object.assign({}, CollectionsActions, ProjectsActions, SortingActions),
     dispatch
   );
 }
