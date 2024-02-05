@@ -100,3 +100,9 @@
 .about__footer-list {
   padding-top: #{math.div(12, $base-font-size)}rem;
 }
+
+@media (max-width:641px){
+  .about__content-column-title{
+    padding-top: 20px;
+  }
+}
