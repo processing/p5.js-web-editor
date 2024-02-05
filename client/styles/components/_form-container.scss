@@ -30,7 +30,6 @@
 }
 
 .form-container__content {
-	padding-top: 50px;
 	height: 100%;
 	max-width: 90vw;
 	display: flex;
@@ -38,6 +37,9 @@
 	justify-content: center;
 	align-items: center;
 	margin-bottom: 20px;
+}
+.signup-form-alignment{
+	padding-top: 40px;
 }
 
 .form-container--align-left .form-container__content {

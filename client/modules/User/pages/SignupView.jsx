@@ -16,7 +16,7 @@ function SignupView() {
         <Helmet>
           <title>{t('SignupView.Title')}</title>
         </Helmet>
-        <div className="form-container__content">
+        <div className="form-container__content signup-form-alignment">
           <h2 className="form-container__title">
             {t('SignupView.Description')}
           </h2>
