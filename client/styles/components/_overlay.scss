@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .overlay {
   position: fixed;
   top: 0;
@@ -25,7 +27,7 @@
   max-height: 80%;
   max-width: 80%;
   position: relative;
-  padding-bottom: #{25 / $base-font-size}rem;
+  padding-bottom: #{math.div(25, $base-font-size)}rem;
 
   @media (max-width: 650px) {
     max-width: 100%;
@@ -38,7 +40,7 @@
 .overlay__header {
   display: flex;
   justify-content: space-between;
-  padding: #{20 / $base-font-size}rem;
+  padding: #{math.div(20, $base-font-size)}rem;
 }
 
 .overlay__actions {
@@ -46,12 +48,12 @@
 }
 
 .overlay__title {
-  font-size: #{21 / $base-font-size}rem;
+  font-size: #{math.div(21, $base-font-size)}rem;
 }
 
 .overlay__close-button {
   @include icon();
-  padding: #{3 / $base-font-size}rem 0 #{3 / $base-font-size}rem #{10 / $base-font-size}rem;
+  padding: #{math.div(3, $base-font-size)}rem 0 #{math.div(3, $base-font-size)}rem #{math.div(10, $base-font-size)}rem;
 }
 
 /* Fixed height overlay */
