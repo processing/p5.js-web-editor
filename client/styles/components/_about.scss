@@ -47,7 +47,11 @@
   font-size: #{math.div(21, $base-font-size)}rem;
   padding-left: #{math.div(17, $base-font-size)}rem;
 }
-
+@media (max-width: 650px) { 
+    .about__content-column-title{
+      padding-top: 20px;
+    }
+  }
 .about__content-column-asterisk {
   padding-right: #{math.div(5, $base-font-size)}rem;
   @include themify() {
