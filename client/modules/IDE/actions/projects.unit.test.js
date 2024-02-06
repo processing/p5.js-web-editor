@@ -33,9 +33,9 @@ describe('projects action creator tests', () => {
     store = mockStore(initialTestState);
 
     const expectedActions = [
-      { type: ActionTypes.START_LOADING },
+      { type: 'loading/startLoader' },
       { type: ActionTypes.SET_PROJECTS, projects: mockProjects },
-      { type: ActionTypes.STOP_LOADING }
+      { type: 'loading/stopLoader' }
     ];
 
     return store

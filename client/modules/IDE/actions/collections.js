@@ -1,7 +1,7 @@
 import browserHistory from '../../../browserHistory';
 import apiClient from '../../../utils/apiClient';
 import * as ActionTypes from '../../../constants';
-import { startLoader, stopLoader } from './loader';
+import { startLoader, stopLoader } from '../reducers/loading';
 import { setToastText, showToast } from './toast';
 
 const TOAST_DISPLAY_TIME_MS = 1500;

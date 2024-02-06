@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -12,23 +12,18 @@ import {
   CollectionAddSketchWrapper,
   QuickAddWrapper
 } from './AddToCollectionList';
+import { startLoader, stopLoader } from '../reducers/loading';
 
 const AddToCollectionSketchList = ({ collection }) => {
   const { t } = useTranslation();
-
   const dispatch = useDispatch();
-
   const username = useSelector((state) => state.user.username);
-
   const sketches = useSelector(getSortedSketches);
-
-  // TODO: improve loading state
   const loading = useSelector((state) => state.loading);
-  const [hasLoadedData, setHasLoadedData] = useState(false);
-  const showLoader = loading && !hasLoadedData;
 
   useEffect(() => {
-    dispatch(getProjects(username)).then(() => setHasLoadedData(true));
+    dispatch(startLoader());
+    dispatch(getProjects(username)).then(() => dispatch(stopLoader()));
   }, [dispatch, username]);
 
   const handleCollectionAdd = (sketch) => {
@@ -48,7 +43,7 @@ const AddToCollectionSketchList = ({ collection }) => {
   }));
 
   const getContent = () => {
-    if (showLoader) {
+    if (loading) {
       return <Loader />;
     } else if (sketches.length === 0) {
       // TODO: shouldn't it be NoSketches? -Linda

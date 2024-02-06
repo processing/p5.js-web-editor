@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,6 +13,7 @@ import {
 import getSortedCollections from '../selectors/collections';
 import QuickAddList from './QuickAddList';
 import { remSize } from '../../../theme';
+import { startLoader, stopLoader } from '../reducers/loading';
 
 export const CollectionAddSketchWrapper = styled.div`
   width: ${remSize(600)};
@@ -29,20 +30,14 @@ export const QuickAddWrapper = styled.div`
 
 const AddToCollectionList = ({ projectId }) => {
   const { t } = useTranslation();
-
   const dispatch = useDispatch();
-
   const username = useSelector((state) => state.user.username);
-
   const collections = useSelector(getSortedCollections);
-
-  // TODO: improve loading state
   const loading = useSelector((state) => state.loading);
-  const [hasLoadedData, setHasLoadedData] = useState(false);
-  const showLoader = loading && !hasLoadedData;
 
   useEffect(() => {
-    dispatch(getCollections(username)).then(() => setHasLoadedData(true));
+    dispatch(startLoader());
+    dispatch(getCollections(username)).then(() => dispatch(stopLoader()));
   }, [dispatch, username]);
 
   const handleCollectionAdd = (collection) => {
@@ -60,7 +55,7 @@ const AddToCollectionList = ({ projectId }) => {
   }));
 
   const getContent = () => {
-    if (showLoader) {
+    if (loading) {
       return <Loader />;
     } else if (collections.length === 0) {
       return t('AddToCollectionList.Empty');
