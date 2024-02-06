@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .error-modal {
   @extend %modal;
   display: flex;
@@ -8,7 +10,7 @@
 .error-modal__header {
   display: flex;
   justify-content: space-between;
-  padding: #{20 / $base-font-size}rem;
+  padding: #{math.div(20, $base-font-size)}rem;
 }
 
 .error-modal__exit-button {
@@ -16,11 +18,11 @@
 }
 
 .error-modal__content {
-  padding: #{20 / $base-font-size}rem;
-  padding-top: #{40 / $base-font-size}rem;
-  padding-bottom: #{60 / $base-font-size}rem;
-  max-width: #{500 / $base-font-size}rem;
+  padding: #{math.div(20, $base-font-size)}rem;
+  padding-top: #{math.div(40, $base-font-size)}rem;
+  padding-bottom: #{math.div(60, $base-font-size)}rem;
+  max-width: #{math.div(500, $base-font-size)}rem;
   & p {
-    font-size: #{16 / $base-font-size}rem;
+    font-size: #{math.div(16, $base-font-size)}rem;
   }
 }
