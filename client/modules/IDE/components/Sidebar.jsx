@@ -14,12 +14,12 @@ import { selectRootFile } from '../selectors/files';
 import { getAuthenticated, selectCanEditSketch } from '../selectors/users';
 
 import ConnectedFileNode from './FileNode';
-import { PlusIcon } from '../../../common/icons';
+import { PlusIcon, LeftArrowIcon } from '../../../common/icons';
 import { FileDrawer } from './Editor/MobileEditor';
 
 // TODO: use a generic Dropdown UI component
 
-export default function SideBar() {
+export default function SideBar(props) {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
@@ -66,6 +66,9 @@ export default function SideBar() {
     'sidebar--project-options': projectOptionsVisible,
     'sidebar--cant-edit': !canEditProject
   });
+  const handleToggleSideBar = () => {
+    dispatch(collapseSidebar());
+  };
 
   return (
     <FileDrawer>
@@ -89,6 +92,9 @@ export default function SideBar() {
             <span>{t('Sidebar.Title')}</span>
           </h3>
           <div className="sidebar__icons">
+            <button onClick={handleToggleSideBar}>
+              <LeftArrowIcon className="leftarrow" />
+            </button>
             <button
               aria-label={t('Sidebar.ToggleARIA')}
               className="sidebar__add"

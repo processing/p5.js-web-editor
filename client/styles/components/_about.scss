@@ -45,7 +45,11 @@
   font-size: #{21 / $base-font-size}rem;
   padding-left: #{17 / $base-font-size}rem;
 }
-
+@media (max-width: 650px) { 
+  .about__content-column-title{
+    padding-top: 20px;
+  }
+}
 .about__content-column-asterisk {
   padding-right: #{5 / $base-font-size}rem;
   @include themify() {
@@ -93,4 +97,9 @@
 
 .about__footer-list {
   padding-top: #{12 / $base-font-size}rem;
+}
+@media (max-width:650px){
+  .about__content-column-title{
+    padding-top: 20px;
+  }
 }
