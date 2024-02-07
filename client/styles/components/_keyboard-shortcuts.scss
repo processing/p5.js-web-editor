@@ -4,7 +4,7 @@
   padding: #{math.div(20, $base-font-size)}rem;
   margin-right: #{math.div(20, $base-font-size)}rem;
   padding-bottom: #{math.div(40, $base-font-size)}rem;
-  width: calc(100% - #{20 / $base-font-size}rem);
+  width: calc(100% - #{math.div(20, $base-font-size)}rem);
   overflow-y: auto;
 }
 
