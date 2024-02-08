@@ -4,14 +4,12 @@ import React, { useEffect, useState } from 'react';
 import Helmet from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
 import RouterTab from '../../../common/RouterTab';
 import RootPage from '../../../components/RootPage';
 import { remSize } from '../../../theme';
 import Loader from '../../App/components/loader';
 import Nav from '../../IDE/components/Header/Nav';
 import PolicyContainer from '../components/PolicyContainer';
-import { startLoader, stopLoader } from '../../IDE/reducers/loading';
 
 const StyledTabList = styled.nav`
   display: flex;
@@ -26,17 +24,15 @@ const StyledTabList = styled.nav`
 
 function Legal({ policyFile, title }) {
   const { t } = useTranslation();
-  const loading = useSelector((state) => state.loading);
-  const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(true);
   const [policy, setPolicy] = useState('');
 
   useEffect(() => {
-    dispatch(startLoader());
     axios.get(policyFile).then((response) => {
-      dispatch(stopLoader());
       setPolicy(response.data);
+      setIsLoading(false);
     });
-  }, [dispatch, policyFile]);
+  }, [policyFile]);
 
   return (
     <RootPage>
@@ -55,7 +51,7 @@ function Legal({ policyFile, title }) {
         </ul>
       </StyledTabList>
       <PolicyContainer policy={policy} />
-      {loading && <Loader />}
+      {isLoading && <Loader />}
     </RootPage>
   );
 }
