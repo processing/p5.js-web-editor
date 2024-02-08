@@ -11,6 +11,7 @@ import PreviewFrame from '../components/PreviewFrame';
 import Console from '../components/Console';
 import Toast from '../components/Toast';
 import { updateFileContent } from '../actions/files';
+import MobileNavigation from '../components/MobileNavigation';
 
 import {
   autosaveProject,
@@ -246,6 +247,11 @@ const IDEView = () => {
                 syncFileContent={syncFileContent}
                 offsetBottom={ide.isPlaying ? currentConsoleSize : 0}
               />
+              <div>
+                {ide.isPlaying ? (
+                  <MobileNavigation title="Back to Editor" />
+                ) : null}
+              </div>
               <PreviewWrapper show={ide.isPlaying}>
                 <SplitPane
                   style={{ position: 'static' }}
