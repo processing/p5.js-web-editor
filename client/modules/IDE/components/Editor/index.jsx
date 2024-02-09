@@ -513,7 +513,7 @@ class Editor extends React.Component {
         {(matches) =>
           matches ? (
             <section className={editorSectionClass}>
-              <div className="editor__header">
+              <header className="editor__header">
                 <button
                   aria-label={this.props.t('Editor.OpenSketchARIA')}
                   className="sidebar__contract"
@@ -538,7 +538,7 @@ class Editor extends React.Component {
                   </span>
                   <Timer />
                 </div>
-              </div>
+              </header>
               <article
                 ref={(element) => {
                   this.codemirrorContainer = element;
@@ -555,7 +555,7 @@ class Editor extends React.Component {
             </section>
           ) : (
             <EditorContainer expanded={this.props.isExpanded}>
-              <div>
+              <header>
                 <IconButton
                   onClick={this.props.expandSidebar}
                   icon={FolderIcon}
@@ -564,7 +564,7 @@ class Editor extends React.Component {
                   {this.props.file.name}
                   <UnsavedChangesIndicator />
                 </span>
-              </div>
+              </header>
               <section>
                 <EditorHolder
                   ref={(element) => {
