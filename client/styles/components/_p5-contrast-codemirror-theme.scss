@@ -10,6 +10,8 @@
 //light gray: #f4f4f4
 //dark gray: #b5b5b5
 
+@use "sass:math";
+
 $p5-contrast-black: #1C1C1C;
 $p5-contrast-gray: #A0A0A0;
 $p5-contrast-white: #FDFDFD;
@@ -143,5 +145,5 @@ $p5-contrast-activeline: #999999;
 
 .cm-s-p5-contrast .cm-searching.CodeMirror-selectedtext {
   // background-color: $medium-dark;
-  outline: #{1 / $base-font-size}rem solid $p5-contrast-white;
+  outline: #{math.div(1, $base-font-size)}rem solid $p5-contrast-white;
 }
