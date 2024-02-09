@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { sortBy } from 'lodash';
 import { Link } from 'react-router-dom';
@@ -30,6 +30,8 @@ import {
 import { logoutUser } from '../../../User/actions';
 import { CmControllerContext } from '../../pages/IDEView';
 import MobileNav from './MobileNav';
+import Modal from '../Modal';
+import Button from '../../../../common/Button';
 
 const Nav = ({ layout }) => (
   <MediaQuery minWidth={770}>
@@ -286,39 +288,71 @@ const UnauthenticatedUserMenu = () => {
 
 const AuthenticatedUserMenu = () => {
   const username = useSelector((state) => state.user.username);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const dispatch = useDispatch();
+  const handleCancel = () => setIsModalOpen(false);
+  const handleConfirm = () => {
+    dispatch(logoutUser());
+    setIsModalOpen(false);
+  };
 
   const { t } = useTranslation();
-  const dispatch = useDispatch();
 
   return (
-    <ul className="nav__items-right" title="user-menu">
-      {getConfig('TRANSLATIONS_ENABLED') && <LanguageMenu />}
-      <NavDropdownMenu
-        id="account"
-        title={
-          <span>
-            {t('Nav.Auth.Hello')}, {username}!
-          </span>
-        }
-      >
-        <NavMenuItem href={`/${username}/sketches`}>
-          {t('Nav.Auth.MySketches')}
-        </NavMenuItem>
-        <NavMenuItem
-          href={`/${username}/collections`}
-          hideIf={!getConfig('UI_COLLECTIONS_ENABLED')}
+    <>
+      {isModalOpen && (
+        <div>
+          <Modal
+            title="Are you  sure you want to logout?"
+            closeAriaLabel="test_labe"
+            contentClassName="logout-confirmation"
+            onClose={handleCancel}
+          >
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-around'
+              }}
+            >
+              <Button onClick={handleConfirm}>Confirm</Button>
+              <Button onClick={handleCancel}>Cancel</Button>
+            </div>
+          </Modal>
+        </div>
+      )}
+      <ul className="nav__items-right" title="user-menu">
+        {getConfig('TRANSLATIONS_ENABLED') && <LanguageMenu />}
+        <NavDropdownMenu
+          id="account"
+          title={
+            <span>
+              {t('Nav.Auth.Hello')}, {username}!
+            </span>
+          }
         >
-          {t('Nav.Auth.MyCollections')}
-        </NavMenuItem>
-        <NavMenuItem href={`/${username}/assets`}>
-          {t('Nav.Auth.MyAssets')}
-        </NavMenuItem>
-        <NavMenuItem href="/account">{t('Preferences.Settings')}</NavMenuItem>
-        <NavMenuItem onClick={() => dispatch(logoutUser())}>
+          <NavMenuItem href={`/${username}/sketches`}>
+            {t('Nav.Auth.MySketches')}
+          </NavMenuItem>
+          <NavMenuItem
+            href={`/${username}/collections`}
+            hideIf={!getConfig('UI_COLLECTIONS_ENABLED')}
+          >
+            {t('Nav.Auth.MyCollections')}
+          </NavMenuItem>
+          <NavMenuItem href={`/${username}/assets`}>
+            {t('Nav.Auth.MyAssets')}
+          </NavMenuItem>
+          <NavMenuItem href="/account">{t('Preferences.Settings')}</NavMenuItem>
+          {/* <NavMenuItem onClick={() => dispatch(logoutUser())}>
           {t('Nav.Auth.LogOut')}
-        </NavMenuItem>
-      </NavDropdownMenu>
-    </ul>
+        </NavMenuItem> */}
+          <NavMenuItem onClick={() => setIsModalOpen(true)}>
+            {t('Nav.Auth.LogOut')}
+          </NavMenuItem>
+        </NavDropdownMenu>
+      </ul>
+    </>
   );
 };
 
