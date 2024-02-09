@@ -9,7 +9,7 @@ export const EditorContainer = styled.div`
   transform: ${(props) =>
     props.expanded ? 'translateX(50%)' : 'translateX(0)'};
 
-  > div {
+  > header {
     display: flex;
     ${prop('MobilePanel.secondary')}
     > span {
