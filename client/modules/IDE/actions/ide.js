@@ -184,18 +184,6 @@ export function closeKeyboardShortcutModal() {
   };
 }
 
-export function showFundraiserModal() {
-  return {
-    type: ActionTypes.SHOW_FUNDRAISER_MODAL
-  };
-}
-
-export function closeFundraiserModal() {
-  return {
-    type: ActionTypes.CLOSE_FUNDRAISER_MODAL
-  };
-}
-
 export function setUnsavedChanges(value) {
   return {
     type: ActionTypes.SET_UNSAVED_CHANGES,

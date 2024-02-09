@@ -24,7 +24,6 @@ import {
   newFile,
   newFolder,
   showKeyboardShortcutModal,
-  showFundraiserModal,
   startSketch,
   stopSketch
 } from '../../actions/ide';
@@ -38,7 +37,6 @@ const Nav = ({ layout }) => (
       matches ? (
         <NavBar>
           <LeftLayout layout={layout} />
-          <FundraiserSection />
           <UserMenu />
         </NavBar>
       ) : (
@@ -85,24 +83,6 @@ const UserMenu = () => {
   }
 
   return null;
-};
-
-const FundraiserSection = () => {
-  const { t } = useTranslation();
-  const dispatch = useDispatch();
-
-  return (
-    <>
-      <button
-        className="nav__fundraiser-btn"
-        onClick={() => dispatch(showFundraiserModal())}
-        aria-label="2023-fundraiser-button"
-        title="2023 Fundraiser Button"
-      >
-        {t('Nav.Fundraiser')}
-      </button>
-    </>
-  );
 };
 
 const DashboardMenu = () => {
@@ -292,7 +272,7 @@ const UnauthenticatedUserMenu = () => {
           </span>
         </Link>
       </li>
-      <span className="nav__item-or">{t('Nav.LoginOr')}</span>
+      <li className="nav__item-or">{t('Nav.LoginOr')}</li>
       <li className="nav__item">
         <Link to="/signup" className="nav__auth-button">
           <span className="nav__item-header" title="SignUp">
