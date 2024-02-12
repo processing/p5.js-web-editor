@@ -1,7 +1,7 @@
 {
-	"extends": ["airbnb", "prettier", "plugin:storybook/recommended"],
-	"parser": "@babel/eslint-parser",
-	"env": {
+  "extends": ["airbnb", "prettier", "plugin:storybook/recommended"],
+  "parser": "@typescript-eslint/parser",
+  "env": {
     "browser": true,
     "node": true,
     "jest": true
@@ -15,7 +15,7 @@
     "import/namespace": 0,
     "import/no-unresolved": 0,
     "import/no-named-as-default": 2,
-    "comma-dangle": 0,  // not sure why airbnb turned this on. gross!
+    "comma-dangle": 0,
     "indent": 0,
     "no-console": 0,
     "no-alert": 0,
@@ -67,10 +67,10 @@
     ]
   },
   "plugins": [
-    "react", "jsx-a11y", "import", "prettier"
+    "react", "jsx-a11y", "import", "prettier", "@typescript-eslint"
   ],
   "settings": {
-    "import/parser": "@babel/eslint-parser",
+    "import/parser": "@typescript-eslint/parser",
     "import/resolve": {
       "moduleDirectory": ["node_modules"]
     }
