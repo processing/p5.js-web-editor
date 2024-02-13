@@ -118,25 +118,28 @@ userSchema.pre('save', function checkPassword(next) {
 userSchema.pre('save', async function checkApiKey(next) {
   const user = this;
   if (!user.isModified('apiKeys')) {
-    next();
-    return;
+      next();
+      return;
   }
 
   try {
-    await Promise.all(user.apiKeys.map(async (k) => {
-      if (k.isNew) {
-        const salt = await bcrypt.genSalt(10);
-        const hash = await bcrypt.hash(k.hashedKey, salt);
-        k.hashedKey = hash;
-        k.isNew = false; // Set isNew flag to false after hashing
-      }
-    }));
+    const hashTasks = user.apiKeys
+      .filter(k => k.isNew)
+      .map(async (k) => {
+         const salt = await bcrypt.genSalt(10);
+         const hash = await bcrypt.hash(k.hashedKey, salt);
+         k.hashedKey = hash;
+      });
 
-    next(); // Call next if all operations are successful
+    await Promise.all(hashTasks);
+
+    next(); 
   } catch (err) {
-    next(err); // Pass any error to the next middleware
+    next(err);
   }
 });
+
+
 userSchema.virtual('id').get(function idToString() {
   return this._id.toHexString();
 });
