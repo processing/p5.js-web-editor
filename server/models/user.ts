@@ -27,11 +27,12 @@ apiKeySchema.virtual('id').get(function getApiKeyId(this: ApiKey) {
   return this._id!.toHexString();
 });
 
-function apiKeyMetadata(
-  doc: ApiKey,
-  ret: Record<string, unknown>,
-  options: Record<string, unknown>
-) {
+/**
+ * When serialising an APIKey instance, the `hashedKey` field
+ * should never be exposed to the client. So we only return
+ * a safe list of fields when toObject and toJSON are called.
+ */
+function apiKeyMetadata(doc: ApiKey) {
   return {
     id: doc.id,
     label: doc.label,
@@ -84,11 +85,46 @@ interface User extends Document {
   totalSize: number;
   cookieConsent: 'none' | 'essential' | 'all';
   banned: boolean;
-  comparePassword: (candidatePassword: string, cb: (err: Error | null, isMatch: boolean) => void) => void;
-  findMatchingKey: (candidateKey: string, cb: (err: Error | null, isMatch: boolean, key?: ApiKey) => void) => void;
+  comparePassword: (
+    candidatePassword: string,
+    cb: (err: Error | null, isMatch: boolean) => void
+  ) => void;
+  findMatchingKey: (
+    candidateKey: string,
+    cb: (err: Error | null, isMatch: boolean, key?: ApiKey) => void
+  ) => void;
 }
 
-const userSchema = new Schema<User>(
+type FindUserCallback = (err: Error | null, doc?: User) => void;
+
+interface UserStatics {
+  findByEmail: (
+    email: string | string[],
+    cb?: FindUserCallback
+  ) => Promise<User>;
+  findByUsername: (
+    username: string,
+    options?: { caseInsensitive?: boolean },
+    cb?: FindUserCallback
+  ) => Promise<User>;
+  findByEmailOrUsername: (
+    value: string,
+    options?: { caseInsensitive?: boolean; valueType?: 'email' | 'username' },
+    cb?: FindUserCallback
+  ) => Promise<User>;
+  findByEmailAndUsername: (
+    email: string,
+    username: string,
+    cb?: FindUserCallback
+  ) => Promise<User>;
+  EmailConfirmation: typeof EmailConfirmationStates;
+}
+
+export interface UserModel extends Model<User>, UserStatics {
+  statics: UserStatics;
+}
+
+const userSchema = new Schema<User, UserModel>(
   {
     name: { type: String, default: '' },
     username: { type: String, required: true, unique: true },
@@ -125,11 +161,14 @@ const userSchema = new Schema<User>(
       enum: ['none', 'essential', 'all'],
       default: 'none'
     },
-    banned: { type: Boolean, default: false },
+    banned: { type: Boolean, default: false }
   },
   { timestamps: true, usePushEach: true }
 );
 
+/**
+ * Password hash middleware.
+ */
 userSchema.pre<User>('save', function checkPassword(next) {
   const user = this;
   if (!user.isModified('password')) {
@@ -152,6 +191,9 @@ userSchema.pre<User>('save', function checkPassword(next) {
   });
 });
 
+/**
+ * API keys hash middleware
+ */
 userSchema.pre<User>('save', function checkApiKey(next) {
   const user = this;
   if (!user.isModified('apiKeys')) {
@@ -189,6 +231,9 @@ userSchema.set('toJSON', {
   virtuals: true
 });
 
+/**
+ * Helper method for validating user's password.
+ */
 userSchema.methods.comparePassword = function comparePassword(
   this: User,
   candidatePassword: string,
@@ -199,6 +244,9 @@ userSchema.methods.comparePassword = function comparePassword(
   });
 };
 
+/**
+ * Helper method for validating a user's api key
+ */
 userSchema.methods.findMatchingKey = function findMatchingKey(
   this: User,
   candidateKey: string,
@@ -214,8 +262,16 @@ userSchema.methods.findMatchingKey = function findMatchingKey(
   if (!foundOne) cb(new Error('Matching API key not found !'), false);
 };
 
+/**
+ *
+ * Queries User collection by email and returns one User document.
+ *
+ * @param email - Email string or array of email strings
+ * @param [cb] - Optional error-first callback that passes User document
+ * @return - Returns Promise fulfilled by User document
+ */
 userSchema.statics.findByEmail = function findByEmail(
-  this: Model<User>,
+  this: UserModel,
   email: string | string[],
   cb?: (err: Error | null, doc?: User) => void
 ) {
@@ -229,22 +285,44 @@ userSchema.statics.findByEmail = function findByEmail(
       email
     };
   }
+  // Email addresses should be case-insensitive unique
+  // In MongoDB, you must use collation in order to do a case-insensitive query
   return this.findOne(query).collation({ locale: 'en', strength: 2 }).exec(cb);
 };
 
+/**
+ *
+ * Queries User collection by emails and returns all Users that match.
+ *
+ * @param emails - Array of email strings
+ * @param [cb] - Optional error-first callback that passes User document
+ * @return - Returns Promise fulfilled by User document
+ */
 userSchema.statics.findAllByEmails = function findAllByEmails(
-  this: Model<User>,
+  this: UserModel,
   emails: string[],
   cb?: (err: Error | null, doc?: User[]) => void
 ) {
   const query = {
     email: { $in: emails }
   };
+  // Email addresses should be case-insensitive unique
+  // In MongoDB, you must use collation in order to do a case-insensitive query
   return this.find(query).collation({ locale: 'en', strength: 2 }).exec(cb);
 };
 
+/**
+ *
+ * Queries User collection by username and returns one User document.
+ *
+ * @param username - Username string
+ * @param [options] - Optional options
+ * @param [options.caseInsensitive] - Does a caseInsensitive query, defaults to false
+ * @param [cb] - Optional error-first callback that passes User document
+ * @return - Returns Promise fulfilled by User document
+ */
 userSchema.statics.findByUsername = function findByUsername(
-  this: Model<User>,
+  this: UserModel,
   username: string,
   options?: { caseInsensitive?: boolean },
   cb?: (err: Error | null, doc?: User) => void
@@ -266,8 +344,23 @@ userSchema.statics.findByUsername = function findByUsername(
   return this.findOne(query, callback);
 };
 
+/**
+ *
+ * Queries User collection using email or username with optional callback.
+ * This function will determine automatically whether the data passed is
+ * a username or email, unless you specify options.valueType
+ *
+ * @param value - Email or username
+ * @param [options] - Optional options
+ * @param [options.caseInsensitive] - Does a caseInsensitive query rather than
+ *                                          default query for username or email, defaults
+ *                                          to false
+ * @param [options.valueType] - Prevents automatic type inference
+ * @param [cb] - Optional error-first callback that passes User document
+ * @return {Promise<Object>} - Returns Promise fulfilled by User document
+ */
 userSchema.statics.findByEmailOrUsername = function findByEmailOrUsername(
-  this: Model<User>,
+  this: UserModel,
   value: string,
   options?: { caseInsensitive?: boolean; valueType?: 'email' | 'username' },
   cb?: (err: Error | null, doc?: User) => void
@@ -278,6 +371,7 @@ userSchema.statics.findByEmailOrUsername = function findByEmailOrUsername(
   } else {
     isEmail = value.indexOf('@') > -1;
   }
+  // do the case insensitive stuff
   if (
     (arguments.length === 3 && options?.caseInsensitive) ||
     (arguments.length === 2 &&
@@ -296,8 +390,18 @@ userSchema.statics.findByEmailOrUsername = function findByEmailOrUsername(
   return this.findByUsername(value, callback);
 };
 
+/**
+ *
+ * Queries User collection, performing a MongoDB logical or with the email
+ * and username (i.e. if either one matches, will return the first document).
+ *
+ * @param email
+ * @param username
+ * @param [cb] - Optional error-first callback that passes User document
+ * @return - Returns Promise fulfilled by User document
+ */
 userSchema.statics.findByEmailAndUsername = function findByEmailAndUsername(
-  this: Model<User>,
+  this: UserModel,
   email: string,
   username: string,
   cb?: (err: Error | null, doc?: User) => void
@@ -313,4 +417,5 @@ userSchema.statics.EmailConfirmation = EmailConfirmationStates;
 userSchema.index({ username: 1 }, { collation: { locale: 'en', strength: 2 } });
 userSchema.index({ email: 1 }, { collation: { locale: 'en', strength: 2 } });
 
-export default mongoose.models.User as Model<User> || mongoose.model<User>('User', userSchema);
+export default (mongoose.models.User ||
+  mongoose.model<User>('User', userSchema)) as UserModel;

@@ -1,6 +1,6 @@
 {
   "extends": ["airbnb", "prettier", "plugin:storybook/recommended"],
-  "parser": "@typescript-eslint/parser",
+  "parser": "@babel/eslint-parser",
   "env": {
     "browser": true,
     "node": true,
@@ -15,6 +15,16 @@
     "import/namespace": 0,
     "import/no-unresolved": 0,
     "import/no-named-as-default": 2,
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
+    ],
     "comma-dangle": 0,
     "indent": 0,
     "no-console": 0,
@@ -67,11 +77,14 @@
     ]
   },
   "plugins": [
-    "react", "jsx-a11y", "import", "prettier", "@typescript-eslint"
+    "react", "jsx-a11y", "import", "prettier"
   ],
   "settings": {
-    "import/parser": "@typescript-eslint/parser",
-    "import/resolve": {
+    "import/parser": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
+    "import/resolver": {
+      "typescript": true,
       "moduleDirectory": ["node_modules"]
     }
   },
@@ -88,6 +101,10 @@
       "rules": {
         "import/no-extraneous-dependencies": "off"
       }
+    },
+    {
+      "files": ["**/*.ts", "**/*.tsx"],
+      "parser": "@typescript-eslint/parser"
     }
   ]
 }
