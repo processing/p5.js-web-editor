@@ -187,11 +187,19 @@ class FileNode extends React.Component {
     if (
       hasEmptyFilename ||
       hasNoExtension ||
-      notSameExtension ||
       hasOnlyExtension ||
       hasExtensionIfFolder
     ) {
       this.setUpdatedName(currentName);
+    } else if (notSameExtension) {
+      const userResponse = window.confirm(
+        'Are you sure you want to change the file extension?'
+      );
+      if (userResponse) {
+        this.saveUpdatedFileName();
+      } else {
+        this.setUpdatedName(currentName);
+      }
     } else {
       this.saveUpdatedFileName();
     }
