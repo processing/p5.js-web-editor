@@ -210,17 +210,9 @@ class FileNode extends React.Component {
     }
   };
 
-  handleOnKeyboardDelete = (event) => {
-    console.log(event.key);
+  handleKeyDown = (event) => {
     if (event.key === 'Delete') {
-      const { id, parentId, name, t } = this.props;
-      const prompt = t('Common.DeleteConfirmation', { name });
-
-      if (window.confirm(prompt)) {
-        this.setState({ isDeleting: true });
-        this.props.resetSelectedFile(id);
-        setTimeout(() => this.props.deleteFile(id, parentId), 100);
-      }
+      this.handleClickDelete();
     }
   };
 
@@ -317,7 +309,7 @@ class FileNode extends React.Component {
               className="sidebar__file-item-name"
               onClick={this.handleFileClick}
               data-testid="file-name"
-              onKeyDown={this.handleOnKeyboardDelete}
+              onKeyDown={this.handleKeyDown}
             >
               <FileName name={this.state.updatedName} />
             </button>
