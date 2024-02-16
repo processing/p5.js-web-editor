@@ -115,28 +115,37 @@ userSchema.pre('save', function checkPassword(next) {
 /**
  * API keys hash middleware
  */
-userSchema.pre('save', async function checkApiKey(next) {
+userSchema.pre('save', function checkApiKey(next) {
+  // eslint-disable-line consistent-return
   const user = this;
   if (!user.isModified('apiKeys')) {
     next();
     return;
   }
-
-  try {
-    await Promise.all(user.apiKeys.map(async (k) => {
-      if (k.isNew) {
-        const salt = await bcrypt.genSalt(10);
-        const hash = await bcrypt.hash(k.hashedKey, salt);
-        k.hashedKey = hash;
-        k.isNew = false; // Set isNew flag to false after hashing
-      }
-    }));
-
-    next(); // Call next if all operations are successful
-  } catch (err) {
-    next(err); // Pass any error to the next middleware
-  }
+  let hasNew = false;
+  user.apiKeys.forEach((k) => {
+    if (k.isNew) {
+      hasNew = true;
+      bcrypt.genSalt(10, (err, salt) => {
+        // eslint-disable-line consistent-return
+        if (err) {
+          next(err);
+          return;
+        }
+        bcrypt.hash(k.hashedKey, salt, (innerErr, hash) => {
+          if (innerErr) {
+            next(innerErr);
+            return;
+          }
+          k.hashedKey = hash;
+          next();
+        });
+      });
+    }
+  });
+  if (!hasNew) next();
 });
+
 userSchema.virtual('id').get(function idToString() {
   return this._id.toHexString();
 });
