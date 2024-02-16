@@ -318,7 +318,6 @@ class FileNode extends React.Component {
               onClick={this.handleFileClick}
               data-testid="file-name"
               onKeyDown={this.handleOnKeyboardDelete}
-              tabIndex={0}
             >
               <FileName name={this.state.updatedName} />
             </button>
