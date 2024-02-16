@@ -20,6 +20,8 @@ import PlayIcon from '../../../../images/play.svg';
 import StopIcon from '../../../../images/stop.svg';
 import PreferencesIcon from '../../../../images/preferences.svg';
 import ProjectName from './ProjectName';
+import { changeVisibility } from '../../actions/project';
+import Button from '../../../../common/Button';
 
 const Toolbar = (props) => {
   const { isPlaying, infiniteLoop, preferencesIsVisible } = useSelector(
@@ -28,8 +30,22 @@ const Toolbar = (props) => {
   const project = useSelector((state) => state.project);
   const autorefresh = useSelector((state) => state.preferences.autorefresh);
   const dispatch = useDispatch();
-
   const { t } = useTranslation();
+  const [visibility, setVisibility] = React.useState(project.visibility);
+  console.log(project);
+  const toggleVisibility = () => {
+    try {
+      setVisibility((prev) => (prev === 'Public' ? 'Private' : 'Public'));
+      dispatch(
+        changeVisibility(
+          project.id,
+          visibility === 'Public' ? 'Private' : 'Public'
+        )
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const playButtonClass = classNames({
     'toolbar__play-button': true,
@@ -112,6 +128,15 @@ const Toolbar = (props) => {
           return null;
         })()}
       </div>
+      {project?.owner && (
+        <section>
+          {visibility === 'Private' ? (
+            <Button onClick={toggleVisibility}>Private</Button>
+          ) : (
+            <Button onClick={toggleVisibility}>Public</Button>
+          )}
+        </section>
+      )}
       <button
         className={preferencesButtonClass}
         onClick={() => dispatch(openPreferences())}

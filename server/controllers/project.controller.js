@@ -96,6 +96,7 @@ export function getProject(req, res) {
       $or: [{ _id: projectId }, { slug: projectId }]
     })
       .populate('user', 'username')
+      .select('visibility')
       .exec((err, project) => { // eslint-disable-line
         if (err) {
           console.log(err);
@@ -269,4 +270,41 @@ export function downloadProjectAsZip(req, res) {
     // save project to some path
     buildZip(project, req, res);
   });
+}
+
+export async function changeProjectVisibility(req, res) {
+  try {
+    const { projectId, visibility: newVisibility } = req.body;
+
+    const project = await Project.findOne({
+      $or: [{ _id: projectId }, { slug: projectId }]
+    });
+
+    if (!project) {
+      return res
+        .status(404)
+        .json({ success: false, message: 'No project found.' });
+    }
+
+    if (newVisibility !== 'Private' && newVisibility !== 'Public') {
+      return res.status(400).json({ success: false, message: 'Invalid data.' });
+    }
+
+    const updatedProject = await Project.findByIdAndUpdate(
+      projectId,
+      {
+        visibility: newVisibility
+      },
+      {
+        new: true
+      }
+    );
+    const updatedProjectWithoutFiles = await Project.findById(
+      updatedProject._id
+    ).select('-files');
+
+    return res.status(200).json(updatedProjectWithoutFiles);
+  } catch (error) {
+    return res.status(500).json(error);
+  }
 }

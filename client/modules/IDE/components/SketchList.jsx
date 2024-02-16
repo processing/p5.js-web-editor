@@ -24,6 +24,7 @@ import getConfig from '../../../utils/getConfig';
 
 import ArrowUpIcon from '../../../images/sort-arrow-up.svg';
 import ArrowDownIcon from '../../../images/sort-arrow-down.svg';
+import Button from '../../../common/Button';
 
 const ROOT_URL = getConfig('API_URL');
 
@@ -35,10 +36,23 @@ class SketchListRowBase extends React.Component {
     super(props);
     this.state = {
       renameOpen: false,
-      renameValue: props.sketch.name
+      renameValue: props.sketch.name,
+      newVisibility: props.sketch.visibility || 'Public',
+      visibleDialogOpen: false
     };
     this.renameInput = React.createRef();
   }
+
+  toggleVisibility = () => {
+    this.setState((prev) => ({
+      newVisibility: prev.newVisibility === 'Public' ? 'Private' : 'Public'
+    }));
+    this.props.changeVisibility(
+      this.props.sketch.id,
+      this.state.newVisibility === 'Public' ? 'Private' : 'Public'
+    );
+    this.setState({ visibleDialogOpen: false });
+  };
 
   openRename = () => {
     this.setState(
@@ -137,6 +151,12 @@ class SketchListRowBase extends React.Component {
             {this.props.t('SketchList.DropdownDuplicate')}
           </MenuItem>
           <MenuItem
+            hideIf={!userIsOwner}
+            onClick={() => this.setState({ visibleDialogOpen: true })}
+          >
+            Change Visibility
+          </MenuItem>
+          <MenuItem
             hideIf={!this.props.user.authenticated}
             onClick={() => {
               this.props.onAddToCollection();
@@ -159,12 +179,21 @@ class SketchListRowBase extends React.Component {
   };
 
   render() {
+    console.log(this.props.sketch.visibility);
     const { sketch, username, mobile } = this.props;
     const { renameOpen, renameValue } = this.state;
     let url = `/${username}/sketches/${sketch.id}`;
     if (username === 'p5') {
       url = `/${username}/sketches/${slugify(sketch.name, '_')}`;
     }
+    const title = (
+      <p>
+        Make {this.props.sketch.name}
+        <span className="sketch-visibility__title">
+          {this.state.newVisibility === 'Private' ? 'Public' : 'Private'}
+        </span>
+      </p>
+    );
 
     const name = (
       <React.Fragment>
@@ -179,6 +208,33 @@ class SketchListRowBase extends React.Component {
             ref={this.renameInput}
           />
         )}
+
+        {this.state.visibleDialogOpen && (
+          <Overlay
+            title={title}
+            closeOverlay={() => this.setState({ visibleDialogOpen: false })}
+          >
+            <div className="sketch-visibility">
+              <hr />
+
+              <ul>
+                <li>The sketch will not be visible to others.</li>
+                <li>
+                  Other users will not be able to fork, edit or look the sketch
+                </li>
+                <li>
+                  You can always comeback and change the sketchs visibility
+                  nonetheless
+                </li>
+              </ul>
+
+              <hr />
+              <Button onClick={this.toggleVisibility}>
+                I have read and understand these effects
+              </Button>
+            </div>
+          </Overlay>
+        )}
       </React.Fragment>
     );
 
@@ -189,7 +245,11 @@ class SketchListRowBase extends React.Component {
           key={sketch.id}
           onClick={this.handleRowClick}
         >
-          <th scope="row">{name}</th>
+          <th scope="row" className="sketches-table__rowname">
+            {this.state.newVisibility === 'Private' && <p>Lock</p>}
+            {this.state.newVisibility}
+            {name}
+          </th>
           <td>{formatDateCell(sketch.createdAt, mobile)}</td>
           <td>{formatDateCell(sketch.updatedAt, mobile)}</td>
           {this.renderDropdown()}
@@ -204,7 +264,8 @@ SketchListRowBase.propTypes = {
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     createdAt: PropTypes.string.isRequired,
-    updatedAt: PropTypes.string.isRequired
+    updatedAt: PropTypes.string.isRequired,
+    visibility: PropTypes.string
   }).isRequired,
   username: PropTypes.string.isRequired,
   user: PropTypes.shape({
@@ -216,6 +277,7 @@ SketchListRowBase.propTypes = {
   cloneProject: PropTypes.func.isRequired,
   changeProjectName: PropTypes.func.isRequired,
   onAddToCollection: PropTypes.func.isRequired,
+  changeVisibility: PropTypes.func.isRequired,
   mobile: PropTypes.bool,
   t: PropTypes.func.isRequired
 };
@@ -241,7 +303,6 @@ class SketchList extends React.Component {
     super(props);
     this.props.getProjects(this.props.username);
     this.props.resetSorting();
-
     this.state = {
       isInitialDataLoad: true
     };
@@ -354,6 +415,8 @@ class SketchList extends React.Component {
   };
 
   render() {
+    const userIsOwner = this.props.user.username === this.props.username;
+
     const username =
       this.props.username !== undefined
         ? this.props.username
@@ -393,19 +456,23 @@ class SketchList extends React.Component {
               </tr>
             </thead>
             <tbody>
-              {this.props.sketches.map((sketch) => (
-                <SketchListRow
-                  mobile={mobile}
-                  key={sketch.id}
-                  sketch={sketch}
-                  user={this.props.user}
-                  username={username}
-                  onAddToCollection={() => {
-                    this.setState({ sketchToAddToCollection: sketch });
-                  }}
-                  t={this.props.t}
-                />
-              ))}
+              {this.props.sketches
+                .filter(
+                  (sketch) => userIsOwner || sketch.visibility === 'Public'
+                )
+                .map((sketch) => (
+                  <SketchListRow
+                    mobile={mobile}
+                    key={sketch.id}
+                    sketch={sketch}
+                    user={this.props.user}
+                    username={username}
+                    onAddToCollection={() => {
+                      this.setState({ sketchToAddToCollection: sketch });
+                    }}
+                    t={this.props.t}
+                  />
+                ))}
             </tbody>
           </table>
         )}
@@ -438,7 +505,8 @@ SketchList.propTypes = {
       id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
       createdAt: PropTypes.string.isRequired,
-      updatedAt: PropTypes.string.isRequired
+      updatedAt: PropTypes.string.isRequired,
+      visibility: PropTypes.string
     })
   ).isRequired,
   username: PropTypes.string,

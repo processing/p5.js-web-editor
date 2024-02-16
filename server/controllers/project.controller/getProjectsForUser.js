@@ -23,7 +23,7 @@ const createCoreHandler = (mapProjectsToResponse) => async (req, res) => {
     }
     const projects = await Project.find({ user: user._id })
       .sort('-createdAt')
-      .select('name files id createdAt updatedAt')
+      .select('name files id createdAt updatedAt visibility')
       .exec();
     const response = mapProjectsToResponse(projects);
     res.json(response);

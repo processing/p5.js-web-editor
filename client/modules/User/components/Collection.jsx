@@ -32,6 +32,8 @@ const CollectionItemRowBase = ({
 
   const projectIsDeleted = item.isDeleted;
 
+  const projectIsPrivate = !isOwner && item.project.visibility === 'Private';
+
   const handleSketchRemove = () => {
     const name = projectIsDeleted ? 'deleted sketch' : item.project.name;
 
@@ -44,13 +46,18 @@ const CollectionItemRowBase = ({
     }
   };
 
-  const name = projectIsDeleted ? (
-    <span>{t('Collection.SketchDeleted')}</span>
-  ) : (
-    <Link to={`/${item.project.user.username}/sketches/${item.projectId}`}>
-      {item.project.name}
-    </Link>
-  );
+  let name;
+  if (projectIsDeleted) {
+    name = <span>{t('Collection.SketchDeleted')}</span>;
+  } else if (projectIsPrivate) {
+    name = <span>Project is Private</span>;
+  } else {
+    name = (
+      <Link to={`/${item.project.user.username}/sketches/${item.projectId}`}>
+        {item.project.name}
+      </Link>
+    );
+  }
 
   const sketchOwnerUsername = projectIsDeleted
     ? null
@@ -90,6 +97,7 @@ CollectionItemRowBase.propTypes = {
     project: PropTypes.shape({
       id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
+      visibility: PropTypes.string,
       user: PropTypes.shape({
         username: PropTypes.string.isRequired
       })
