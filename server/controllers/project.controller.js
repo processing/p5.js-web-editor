@@ -21,25 +21,32 @@ export {
 } from './project.controller/getProjectsForUser';
 
 export async function updateProject(req, res) {
-  const project = await Project.findById(req.params.project_id).exec();
-  if (!project.user.equals(req.user._id)) {
-    res.status(403).send({
-      success: false,
-      message: 'Session does not match owner of project.'
-    });
-    return;
-  }
-  if (
-    req.body.updatedAt &&
-    isAfter(new Date(project.updatedAt), new Date(req.body.updatedAt))
-  ) {
-    res.status(409).send({
-      success: false,
-      message: 'Attempted to save stale version of project.'
-    });
-    return;
-  }
   try {
+    const project = await Project.findById(req.params.project_id).exec();
+    if (!project) {
+      res.status(404).send({
+        success: false,
+        message: 'Project with that id does not exist.'
+      });
+      return;
+    }
+    if (!project.user.equals(req.user._id)) {
+      res.status(403).send({
+        success: false,
+        message: 'Session does not match owner of project.'
+      });
+      return;
+    }
+    if (
+      req.body.updatedAt &&
+      isAfter(new Date(project.updatedAt), new Date(req.body.updatedAt))
+    ) {
+      res.status(409).send({
+        success: false,
+        message: 'Attempted to save stale version of project.'
+      });
+      return;
+    }
     const updatedProject = await Project.findByIdAndUpdate(
       req.params.project_id,
       {
@@ -68,7 +75,8 @@ export async function updateProject(req, res) {
       res.json(updatedProject);
     }
   } catch (error) {
-    res.status(400).json({ success: false });
+    console.error(error);
+    res.status(500).json({ success: false });
   }
 }
 
@@ -152,7 +160,7 @@ export async function projectExists(projectId) {
 
 /**
  * @param {string} username
- * @param {string} projectId
+ * @param {string} projectId - the database id or the slug or the project
  * @return {Promise<boolean>}
  */
 export async function projectForUserExists(username, projectId) {
@@ -165,12 +173,18 @@ export async function projectForUserExists(username, projectId) {
   return project != null;
 }
 
+/**
+ * Adds URLs referenced in <script> tags to the `files` array of the project
+ * so that they can be downloaded along with other remote files from S3.
+ * @param {object} project
+ * @void - modifies the `project` parameter
+ */
 function bundleExternalLibs(project) {
   const indexHtml = project.files.find((file) => file.name === 'index.html');
   const { window } = new JSDOM(indexHtml.content);
   const scriptTags = window.document.getElementsByTagName('script');
 
-  Object.values(scriptTags).forEach(async ({ src }, i) => {
+  Object.values(scriptTags).forEach(({ src }) => {
     if (!isUrl(src)) return;
 
     const path = src.split('/');
@@ -186,6 +200,13 @@ function bundleExternalLibs(project) {
   });
 }
 
+/**
+ * Recursively adds a file and all of its children to the JSZip instance.
+ * @param {object} file
+ * @param {Array<object>} files
+ * @param {JSZip} zip
+ * @return {Promise<void>} - modifies the `zip` parameter
+ */
 async function addFileToZip(file, files, zip) {
   if (file.fileType === 'folder') {
     const folderZip = file.name === 'root' ? zip : zip.folder(file.name);
@@ -237,9 +258,10 @@ async function buildZip(project, req, res) {
 }
 
 export async function downloadProjectAsZip(req, res) {
-  const project = await Project.findById(req.params.project_id);
+  const project = await Project.findById(req.params.project_id).exec();
   if (!project) {
     res.status(404).send({ message: 'Project with that id does not exist' });
+    return;
   }
   // save project to some path
   buildZip(project, req, res);
