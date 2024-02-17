@@ -65,7 +65,9 @@ const CollectionItemRowBase = ({
 
   return (
     <tr
-      className={`sketches-table__row ${projectIsDeleted ? 'is-deleted' : ''}`}
+      className={`sketches-table__row ${
+        projectIsDeleted || projectIsPrivate ? 'is-deleted-or-private' : ''
+      }`}
     >
       <th scope="row">{name}</th>
       <td>{dates.format(item.createdAt)}</td>

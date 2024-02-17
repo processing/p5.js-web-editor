@@ -28,11 +28,13 @@ const Toolbar = (props) => {
     (state) => state.ide
   );
   const project = useSelector((state) => state.project);
+  const user = useSelector((state) => state.user);
   const autorefresh = useSelector((state) => state.preferences.autorefresh);
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const [visibility, setVisibility] = React.useState(project.visibility);
-  console.log(project);
+
+  const userIsOwner = user?.username === project.owner?.username;
   const toggleVisibility = () => {
     try {
       setVisibility((prev) => (prev === 'Public' ? 'Private' : 'Public'));
@@ -128,7 +130,7 @@ const Toolbar = (props) => {
           return null;
         })()}
       </div>
-      {project?.owner && (
+      {userIsOwner && project.owner && (
         <section>
           {visibility === 'Private' ? (
             <Button onClick={toggleVisibility}>Private</Button>

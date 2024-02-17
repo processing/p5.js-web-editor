@@ -8,6 +8,7 @@ import slugify from 'slugify';
 import Project from '../models/project';
 import User from '../models/user';
 import { resolvePathToFile } from '../utils/filePath';
+import { get404Sketch } from '../views/404Page';
 import generateFileSystemSafeName from '../utils/generateFileSystemSafeName';
 
 export {
@@ -96,13 +97,20 @@ export function getProject(req, res) {
       $or: [{ _id: projectId }, { slug: projectId }]
     })
       .populate('user', 'username')
-      .select('visibility')
       .exec((err, project) => { // eslint-disable-line
         if (err) {
           console.log(err);
           return res
             .status(404)
             .send({ message: 'Project with that id does not exist' });
+        }
+        // TODO: most probably, this will require its own 'SketchIsPrivate'  page in future.
+        if (
+          project.visibility === 'Private' &&
+          project.owner.username !== username
+        ) {
+          res.status(401);
+          return get404Sketch((html) => res.send(html));
         }
         return res.json(project);
       });
@@ -122,6 +130,26 @@ export function getProjectsForUserId(userId) {
       });
   });
 }
+
+// eslint-disable-next-line consistent-return
+// export async function getProjectsForUserId(userId) {
+//   try {
+//     const projects = await Project.find({ user: userId })
+//       // .select('name files id createdAt updatedAt visibility owner.username')
+//       .sort('-createdAt');
+//     // const user = await User.findById(userId);
+
+//     // const filteredProjects = projects.filter((project) => {
+//     //   const userIsOwner = project.owner.username === user.username;
+//     //   return userIsOwner || project.visibility === 'Public';
+//     // });
+
+//     return projects;
+//   } catch (error) {
+//     console.log(error);
+//     console.log(error);
+//   }
+// }
 
 export function getProjectAsset(req, res) {
   const projectId = req.params.project_id;

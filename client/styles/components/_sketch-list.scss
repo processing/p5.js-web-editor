@@ -1,81 +1,48 @@
 @use "sass:math";
 
+.sketch-visibility__title {
+  @include themify() {
+    color: getThemifyVariable('hint-arrow-background-color');
+  }
+}
+
 .sketch-visibility {
-  text-align: center;
-}
-
-sketch-visibility__title {
-  color: red;
-  text-decoration: underline;
-}
-
-.sketch-visibility h1 {
-  font-size: 24px;
-  font-weight: bold;
-  color: #333;
-  /* Adjust color as needed */
-  margin-bottom: 20px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .sketch-visibility hr {
   border: none;
-  border-top: 1px solid rgba(255, 255, 255, 0.5);
-  /* Adjust color as needed */
-  width: 80%;
+  height: 1px;
+  background: linear-gradient(to right, transparent, white, transparent);
 }
 
-.sketch-visibility ul {
+.sketch-visibility_ul {
   list-style-type: none;
   padding: 0;
-  text-align: left;
-  margin-bottom: 20px;
+  margin: 0;
+  margin-bottom: 7px;
 }
 
-.sketch-visibility ul li {
-  position: relative;
-  padding-left: 20px;
-  /* Add padding for the text */
+.sketch-visibility_ul li {
+  margin-bottom: 7px;
+  display: flex;
+  align-items: center;
 }
 
-.sketch-visibility ul li::before {
+.sketch-visibility_ul li::before {
   content: "\2022";
-  /* Bullet character */
-  color: #333;
-  /* Adjust color as needed */
-  display: inline-block;
-  width: 15px;
-  /* Increase the width to make the circle bigger */
-  height: 15px;
-  /* Increase the height to make the circle bigger */
-  border-radius: 50%;
-  /* Make it a circle */
-  background-color: #333;
-  /* Adjust color as needed */
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
+
+  @include themify() {
+    color: getThemifyVariable('hint-arrow-background-color');
+  }
+
+  font-size: 34px;
+  margin-right: 10px;
 }
 
-.sketch-visibility button {
-  display: block;
-  margin: 0 auto;
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: #007bff;
-  /* Adjust color as needed */
-  color: #fff;
-  /* Adjust color as needed */
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.sketch-visibility button:hover {
-  background-color: #0056b3;
-  /* Adjust color as needed */
-}
 
 
 .sketches-table-container {
@@ -239,7 +206,7 @@ sketch-visibility__title {
   }
 }
 
-.sketches-table__row.is-deleted>* {
+.sketches-table__row.is-deleted-or-private>* {
   font-style: italic;
 }
 

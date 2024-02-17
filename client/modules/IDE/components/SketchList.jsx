@@ -179,7 +179,6 @@ class SketchListRowBase extends React.Component {
   };
 
   render() {
-    console.log(this.props.sketch.visibility);
     const { sketch, username, mobile } = this.props;
     const { renameOpen, renameValue } = this.state;
     let url = `/${username}/sketches/${sketch.id}`;
@@ -188,7 +187,7 @@ class SketchListRowBase extends React.Component {
     }
     const title = (
       <p>
-        Make {this.props.sketch.name}
+        Make {this.props.sketch.name}{' '}
         <span className="sketch-visibility__title">
           {this.state.newVisibility === 'Private' ? 'Public' : 'Private'}
         </span>
@@ -215,18 +214,41 @@ class SketchListRowBase extends React.Component {
             closeOverlay={() => this.setState({ visibleDialogOpen: false })}
           >
             <div className="sketch-visibility">
-              <hr />
+              {this.state.newVisibility === 'Public' ? (
+                <ul className="sketch-visibility_ul">
+                  <li>
+                    Your sketch will stay private and will not be seen by
+                    others.
+                  </li>
+                  <li>
+                    Others will not be able to copy, change, or even see your
+                    sketch.
+                  </li>
+                  <li>This keeps your work safe and private.</li>
 
-              <ul>
-                <li>The sketch will not be visible to others.</li>
-                <li>
-                  Other users will not be able to fork, edit or look the sketch
-                </li>
-                <li>
-                  You can always comeback and change the sketchs visibility
-                  nonetheless
-                </li>
-              </ul>
+                  <li>
+                    you can focus on being creative without worrying about
+                    others seeing your work.
+                  </li>
+                  <li>
+                    You can always come back and adjust who can see your sketch.
+                  </li>
+                </ul>
+              ) : (
+                <ul className="sketch-visibility_ul">
+                  <li>Your sketch will be visible to everyone.</li>
+                  <li>Others can copy, edit, or just check out your sketch.</li>
+
+                  <li>
+                    This helps everyone share ideas and be more creative
+                    together.
+                  </li>
+                  <li>
+                    You can always change who can see your sketch whenever you
+                    want.
+                  </li>
+                </ul>
+              )}
 
               <hr />
               <Button onClick={this.toggleVisibility}>
@@ -415,8 +437,7 @@ class SketchList extends React.Component {
   };
 
   render() {
-    const userIsOwner = this.props.user.username === this.props.username;
-
+    // const userIsOwner = this.props.user.username === this.props.username;
     const username =
       this.props.username !== undefined
         ? this.props.username
@@ -456,23 +477,19 @@ class SketchList extends React.Component {
               </tr>
             </thead>
             <tbody>
-              {this.props.sketches
-                .filter(
-                  (sketch) => userIsOwner || sketch.visibility === 'Public'
-                )
-                .map((sketch) => (
-                  <SketchListRow
-                    mobile={mobile}
-                    key={sketch.id}
-                    sketch={sketch}
-                    user={this.props.user}
-                    username={username}
-                    onAddToCollection={() => {
-                      this.setState({ sketchToAddToCollection: sketch });
-                    }}
-                    t={this.props.t}
-                  />
-                ))}
+              {this.props.sketches.map((sketch) => (
+                <SketchListRow
+                  mobile={mobile}
+                  key={sketch.id}
+                  sketch={sketch}
+                  user={this.props.user}
+                  username={username}
+                  onAddToCollection={() => {
+                    this.setState({ sketchToAddToCollection: sketch });
+                  }}
+                  t={this.props.t}
+                />
+              ))}
             </tbody>
           </table>
         )}
