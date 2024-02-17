@@ -45,12 +45,12 @@ passport.use(
           done(null, false, { msg: accountSuspensionMessage });
           return;
         }
-        user.comparePassword(password, (innerErr, isMatch) => {
+        user.comparePassword(password).then((isMatch) => {
           if (isMatch) {
             done(null, user);
-            return;
+          } else {
+            done(null, false, { msg: 'Invalid email or password.' });
           }
-          done(null, false, { msg: 'Invalid email or password.' });
         });
       })
       .catch((err) => done(null, false, { msg: err }));
