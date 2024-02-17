@@ -30,8 +30,7 @@ const random = (done) => {
 };
 
 export function createUser(req, res, next) {
-  const { username, email } = req.body;
-  const { password } = req.body;
+  const { username, email, password } = req.body;
   const emailLowerCase = email.toLowerCase();
   const EMAIL_VERIFY_TOKEN_EXPIRY_TIME = Date.now() + 3600000 * 24; // 24 hours
   random((tokenError, token) => {
