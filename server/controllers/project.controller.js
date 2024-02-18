@@ -169,29 +169,28 @@ export function getProjects(req, res) {
   }
 }
 
-export function projectExists(projectId, callback) {
-  Project.findById(projectId, (err, project) =>
-    project ? callback(true) : callback(false)
-  );
+/**
+ * @param {string} projectId
+ * @return {Promise<boolean>}
+ */
+export async function projectExists(projectId) {
+  const project = await Project.findById(projectId);
+  return project != null;
 }
 
-export function projectForUserExists(username, projectId, callback) {
-  User.findByUsername(username, (err, user) => {
-    if (!user) {
-      callback(false);
-      return;
-    }
-    Project.findOne(
-      { user: user._id, $or: [{ _id: projectId }, { slug: projectId }] },
-      (innerErr, project) => {
-        if (!project) {
-          callback(false);
-          return;
-        }
-        callback(true);
-      }
-    );
+/**
+ * @param {string} username
+ * @param {string} projectId
+ * @return {Promise<boolean>}
+ */
+export async function projectForUserExists(username, projectId) {
+  const user = await User.findByUsername(username);
+  if (!user) return false;
+  const project = await Project.findOne({
+    user: user._id,
+    $or: [{ _id: projectId }, { slug: projectId }]
   });
+  return project != null;
 }
 
 function bundleExternalLibs(project) {
@@ -215,48 +214,27 @@ function bundleExternalLibs(project) {
   });
 }
 
-function addFileToZip(file, files, zip, path = '') {
-  return new Promise((resolve, reject) => {
-    if (file.fileType === 'folder') {
-      const newPath = file.name === 'root' ? path : `${path}${file.name}/`;
-      const numChildFiles = file.children.filter((f) => f.fileType !== 'folder')
-        .length;
-      let childrenAdded = 0;
-      if (numChildFiles === 0) {
-        zip.folder(file.name);
-        resolve();
-      }
-      file.children.forEach(async (fileId) => {
+async function addFileToZip(file, files, zip) {
+  if (file.fileType === 'folder') {
+    const folderZip = file.name === 'root' ? zip : zip.folder(file.name);
+    await Promise.all(
+      file.children.map((fileId) => {
         const childFile = files.find((f) => f.id === fileId);
-
-        try {
-          await addFileToZip(childFile, files, zip, newPath);
-          childrenAdded += 1;
-
-          if (childrenAdded === numChildFiles) {
-            resolve();
-          }
-        } catch (err) {
-          reject(err);
-        }
+        return addFileToZip(childFile, files, folderZip);
+      })
+    );
+  } else if (file.url) {
+    try {
+      const res = await axios.get(file.url, {
+        responseType: 'arraybuffer'
       });
-    } else if (file.url) {
-      axios
-        .get(file.url, {
-          responseType: 'arraybuffer'
-        })
-        .then(({ data }) => {
-          zip.file(`${path}${file.name}`, data);
-          resolve();
-        })
-        .catch((err) => {
-          reject(err);
-        });
-    } else {
-      zip.file(`${path}${file.name}`, file.content);
-      resolve();
+      zip.file(file.name, res.data);
+    } catch (e) {
+      zip.file(file.name, new ArrayBuffer(0));
     }
-  });
+  } else {
+    zip.file(file.name, file.content);
+  }
 }
 
 async function buildZip(project, req, res) {
