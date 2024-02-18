@@ -6,6 +6,13 @@
   }
 }
 
+.sketch-visibility__icons {
+  height: 30px;
+  width: 30px;
+  display: flex;
+  gap: 5px;
+}
+
 .sketch-visibility {
   padding: 30px;
   display: flex;
@@ -45,6 +52,7 @@
 
 
 
+
 .sketches-table-container {
   overflow-y: auto;
   max-width: 100%;
@@ -71,6 +79,8 @@
         flex-direction: column;
         gap: #{math.div(12, $base-font-size)}rem;
 
+
+
         .sketches-table__row {
           margin: 0;
           position: relative;
@@ -85,12 +95,13 @@
             background-color: getThemifyVariable("search-background-color") !important;
           }
 
-          >th {
-            padding-left: 0;
-            width: 100%;
+          .sketches-table_name {
+            display: flex;
+            gap: 5px;
             font-weight: bold;
-            margin-bottom: #{math.div(6, $base-font-size)}rem;
+            align-items: center;
           }
+
 
           >td {
             padding-left: 0;

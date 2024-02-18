@@ -11,7 +11,6 @@ const createCoreHandler = (mapProjectsToResponse) => async (req, res) => {
   try {
     const { username } = req.params;
     const currentUser = req.user?._id || '';
-    console.log('current user', currentUser);
 
     if (!username) {
       res.status(422).json({ message: 'Username not provided' });
@@ -28,15 +27,20 @@ const createCoreHandler = (mapProjectsToResponse) => async (req, res) => {
 
     const projects = await Project.find({ user: user._id })
       .sort('-createdAt')
-      .select('name files user id createdAt updatedAt visibility')
+      .select('name files id createdAt updatedAt visibility')
       .exec();
 
     const publicProjectsOnly = projects.filter(
       (project) => project.visibility === 'Public'
     );
 
+    if (!req.user) {
+      res.json(publicProjectsOnly);
+      return;
+    }
+
     const response = mapProjectsToResponse(
-      currentUser !== user._id ? publicProjectsOnly : projects
+      !currentUser.equals(user._id) ? publicProjectsOnly : projects
     );
 
     res.json(response);

@@ -117,15 +117,31 @@
 	}
 }
 
+.lock-icon {
+	height: 60%;
+	width: 60%;
+}
+
+.unlock-icon {
+	height: 60%;
+	width: 60%;
+}
+
+
 .toolbar__project-name-container {
 	margin-left: #{math.div(10, $base-font-size)}rem;
 	padding-left: #{math.div(10, $base-font-size)}rem;
 	display: flex;
 	align-items: center;
 
-	section {
-		margin-left: 5px;
+	>section {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: 30px;
+		width: 30px;
 	}
+
 }
 
 .toolbar .editable-input__label {

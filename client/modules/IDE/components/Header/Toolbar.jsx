@@ -21,7 +21,8 @@ import StopIcon from '../../../../images/stop.svg';
 import PreferencesIcon from '../../../../images/preferences.svg';
 import ProjectName from './ProjectName';
 import { changeVisibility } from '../../actions/project';
-import Button from '../../../../common/Button';
+import IconButton from '../../../../common/IconButton';
+import { LockIcon, UnlockIcon } from '../../../../common/icons';
 
 const Toolbar = (props) => {
   const { isPlaying, infiniteLoop, preferencesIsVisible } = useSelector(
@@ -32,8 +33,9 @@ const Toolbar = (props) => {
   const autorefresh = useSelector((state) => state.preferences.autorefresh);
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const [visibility, setVisibility] = React.useState(project.visibility);
-
+  const [visibility, setVisibility] = React.useState(
+    project.visibility || 'Public'
+  );
   const userIsOwner = user?.username === project.owner?.username;
   const toggleVisibility = () => {
     try {
@@ -129,16 +131,16 @@ const Toolbar = (props) => {
           }
           return null;
         })()}
+        {userIsOwner && project.owner && (
+          <section>
+            {visibility !== 'Private' ? (
+              <IconButton icon={UnlockIcon} onClick={toggleVisibility} />
+            ) : (
+              <IconButton icon={LockIcon} onClick={toggleVisibility} />
+            )}
+          </section>
+        )}
       </div>
-      {userIsOwner && project.owner && (
-        <section>
-          {visibility === 'Private' ? (
-            <Button onClick={toggleVisibility}>Private</Button>
-          ) : (
-            <Button onClick={toggleVisibility}>Public</Button>
-          )}
-        </section>
-      )}
       <button
         className={preferencesButtonClass}
         onClick={() => dispatch(openPreferences())}

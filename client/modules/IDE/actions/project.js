@@ -416,7 +416,6 @@ export function changeVisibility(projectId, visibility) {
     apiClient
       .patch('/project/visibility', { projectId, visibility })
       .then((response) => {
-        console.log(response.data);
         const { visibility: newVisibility } = response.data;
 
         dispatch({
@@ -424,7 +423,7 @@ export function changeVisibility(projectId, visibility) {
           payload: { visibility: response.data.visibility }
         });
 
-        dispatch(setToastText(`Sketch is switched to ${newVisibility}`));
+        dispatch(setToastText(`Sketch is ${newVisibility}`));
         dispatch(showToast(2000));
       })
       .catch((error) => {

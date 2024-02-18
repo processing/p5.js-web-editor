@@ -88,12 +88,14 @@ exports[`<Sketchlist /> snapshot testing 1`] = `
         <tr
           class="sketches-table__row"
         >
-          <th
+          <th 
             scope="row"
+            class="sketches-table_name"
           >
             <a
               href="/happydog/sketches/testid1"
             >
+              <LockIcon />
               testsketch1
             </a>
           </th>

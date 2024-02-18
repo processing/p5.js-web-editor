@@ -25,6 +25,7 @@ import getConfig from '../../../utils/getConfig';
 import ArrowUpIcon from '../../../images/sort-arrow-up.svg';
 import ArrowDownIcon from '../../../images/sort-arrow-down.svg';
 import Button from '../../../common/Button';
+import { LockIcon } from '../../../common/icons';
 
 const ROOT_URL = getConfig('API_URL');
 
@@ -213,6 +214,7 @@ class SketchListRowBase extends React.Component {
             title={title}
             closeOverlay={() => this.setState({ visibleDialogOpen: false })}
           >
+            {/* TODO: these <li> should come from translate.json */}
             <div className="sketch-visibility">
               {this.state.newVisibility === 'Public' ? (
                 <ul className="sketch-visibility_ul">
@@ -250,7 +252,6 @@ class SketchListRowBase extends React.Component {
                 </ul>
               )}
 
-              <hr />
               <Button onClick={this.toggleVisibility}>
                 I have read and understand these effects
               </Button>
@@ -267,10 +268,8 @@ class SketchListRowBase extends React.Component {
           key={sketch.id}
           onClick={this.handleRowClick}
         >
-          <th scope="row" className="sketches-table__rowname">
-            {this.state.newVisibility === 'Private' && <p>Lock</p>}
-            {this.state.newVisibility}
-            {name}
+          <th scope="row" className="sketches-table_name">
+            {this.state.newVisibility === 'Private' && <LockIcon />} {name}
           </th>
           <td>{formatDateCell(sketch.createdAt, mobile)}</td>
           <td>{formatDateCell(sketch.updatedAt, mobile)}</td>
