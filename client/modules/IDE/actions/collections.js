@@ -80,7 +80,7 @@ export function addToCollection(collectionId, projectId) {
 
         const collectionName = response.data.name;
 
-        dispatch(setToastText(`Added to "${collectionName}`));
+        dispatch(setToastText(`Added to "${collectionName}"`));
         dispatch(showToast(TOAST_DISPLAY_TIME_MS));
 
         return response.data;
@@ -110,7 +110,7 @@ export function removeFromCollection(collectionId, projectId) {
 
         const collectionName = response.data.name;
 
-        dispatch(setToastText(`Removed from "${collectionName}`));
+        dispatch(setToastText(`Removed from "${collectionName}"`));
         dispatch(showToast(TOAST_DISPLAY_TIME_MS));
 
         return response.data;
