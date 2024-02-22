@@ -123,9 +123,7 @@ passport.use(
       User.findOne({ github: profile.id }, (findByGithubErr, existingUser) => {
         if (existingUser) {
           if (req.user && req.user.email !== existingUser.email) {
-            done(
-              new Error('GitHub account is already linked to another account.')
-            );
+           done(null, false, { msg: 'Invalid email or password.' }); 
             return;
           } else if (existingUser.banned) {
             done(new Error(accountSuspensionMessage));
