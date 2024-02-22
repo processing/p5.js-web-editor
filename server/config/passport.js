@@ -121,18 +121,16 @@ passport.use(
     },
     (req, accessToken, refreshToken, profile, done) => {
       User.findOne({ github: profile.id }, (findByGithubErr, existingUser) => {
-        if (existingUser) {
+       if (existingUser) {
           if (req.user && req.user.email !== existingUser.email) {
-            done(
-              new Error('GitHub account is already linked to another account.')
-            );
+            done(null, false, { msg: 'GitHub account is already linked to another account.' });
             return;
           } else if (existingUser.banned) {
-            done(new Error(accountSuspensionMessage));
+            done(null, false, { msg: accountSuspensionMessage });
             return;
           }
           done(null, existingUser);
-          return;
+          return;          
         }
 
         const emails = getVerifiedEmails(profile.emails);
@@ -159,7 +157,7 @@ passport.use(
                 [existingEmailUser] = existingEmailUsers;
               }
               if (existingEmailUser.banned) {
-                done(new Error(accountSuspensionMessage));
+                done(null,false, {msg:accountSuspensionMessage});
                 return;
               }
               existingEmailUser.email = existingEmailUser.email || primaryEmail;
@@ -218,14 +216,10 @@ passport.use(
         (findByGoogleErr, existingUser) => {
           if (existingUser) {
             if (req.user && req.user.email !== existingUser.email) {
-              done(
-                new Error(
-                  'Google account is already linked to another account.'
-                )
-              );
+              done(null,false,{msg:'Google account is already linked to another account.'});
               return;
             } else if (existingUser.banned) {
-              done(new Error(accountSuspensionMessage));
+              done(null,false,{msg:accountSuspensionMessage});
               return;
             }
             done(null, existingUser);
@@ -256,7 +250,7 @@ passport.use(
                     // then, append a random friendly word?
                     if (existingEmailUser) {
                       if (existingEmailUser.banned) {
-                        done(new Error(accountSuspensionMessage));
+                        done(null,false,{msg:accountSuspensionMessage});
                         return;
                       }
                       existingEmailUser.email =
