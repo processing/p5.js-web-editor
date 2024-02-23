@@ -30,8 +30,7 @@ const random = (done) => {
 };
 
 export function createUser(req, res, next) {
-  const { username, email } = req.body;
-  const { password } = req.body;
+  const { username, email, password } = req.body;
   const emailLowerCase = email.toLowerCase();
   const EMAIL_VERIFY_TOKEN_EXPIRY_TIME = Date.now() + 3600000 * 24; // 24 hours
   random((tokenError, token) => {
@@ -308,10 +307,13 @@ export function updatePassword(req, res) {
   // eventually send email that the password has been reset
 }
 
-export function userExists(username, callback) {
-  User.findByUsername(username, (err, user) =>
-    user ? callback(true) : callback(false)
-  );
+/**
+ * @param {string} username
+ * @return {Promise<boolean>}
+ */
+export async function userExists(username) {
+  const user = await User.findByUsername(username);
+  return user != null;
 }
 
 export function saveUser(res, user) {
