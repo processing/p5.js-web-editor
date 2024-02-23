@@ -8,7 +8,8 @@ const ProjectDeletionError = createApplicationErrorClass(
 );
 
 function deleteFilesFromS3(files) {
-  deleteObjectsFromS3(
+  // Return the Promise returned by deleteObjectsFromS3
+  return deleteObjectsFromS3(
     files
       .filter((file) => {
         if (
@@ -59,16 +60,25 @@ export default function deleteProject(req, res) {
       return;
     }
 
-    deleteFilesFromS3(project.files);
+    // Wait for the delete operation to complete before proceeding
+    deleteFilesFromS3(project.files)
+      .then(() => {
+        project.remove((removeProjectError) => {
+          if (removeProjectError) {
+            sendProjectNotFound();
+            return;
+          }
 
-    project.remove((removeProjectError) => {
-      if (removeProjectError) {
-        sendProjectNotFound();
-        return;
-      }
-
-      res.status(200).end();
-    });
+          res.status(200).end();
+        });
+      })
+      .catch((error) => {
+        sendFailure(
+          new ProjectDeletionError('Error deleting files from S3', {
+            code: 500
+          })
+        );
+      });
   }
 
   return Project.findById(req.params.project_id)
