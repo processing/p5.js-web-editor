@@ -1,9 +1,11 @@
 version: '3.4'
+
 services:
   mongo:
     image: mongo:4.4
     volumes:
       - dbdata:/data/db
+
   app:
     build:
       context: ./
@@ -18,6 +20,8 @@ services:
       - '8000:8000'
       - '8002:8002'
     depends_on:
-      - mongo
+      mongo:
+        condition: service_healthy
+
 volumes:
   dbdata:
