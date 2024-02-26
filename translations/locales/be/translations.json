@@ -306,7 +306,8 @@
     "CurrentPasswordARIA": "বর্তমান পাসওয়ার্ড",
     "NewPassword": "নতুন পাসওয়ার্ড",
     "NewPasswordARIA": "নতুন পাসওয়ার্ড",
-    "SubmitSaveAllSettings": "সমস্ত সেটিংস সংরক্ষণ করুন"
+    "SubmitSaveAllSettings": "সমস্ত সেটিংস সংরক্ষণ করুন",
+    "ConfirmNewPassword": "নিশ্চিত কর নতুন গোপননম্বর"
   },
   "AccountView": {
     "SocialLogin": "সোশ্যাল লগইন",

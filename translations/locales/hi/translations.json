@@ -312,7 +312,8 @@
       "CurrentPasswordARIA": "वर्तमान पासवर्ड",
       "NewPassword": "नया पासवर्ड",
       "NewPasswordARIA": "नया पासवर्ड",
-      "SubmitSaveAllSettings": "सभी सेटिंग्स सेव करें"
+      "SubmitSaveAllSettings": "सभी सेटिंग्स सेव करें",
+      "ConfirmNewPassword": "नए पासवर्ड की पुष्टि करें"
     },
     "AccountView": {
       "SocialLogin": "सामाजिक लॉग इन",

@@ -297,7 +297,8 @@
     "CurrentPasswordARIA": "Contraseña Actual",
     "NewPassword": "Nueva Contraseña",
     "NewPasswordARIA": "Nueva Contraseña",
-    "SubmitSaveAllSettings": "Guardar Todas Las Configuraciones"
+    "SubmitSaveAllSettings": "Guardar Todas Las Configuraciones",
+    "ConfirmNewPassword": "Confirmar nueva contraseña"
   },
   "AccountView": {
     "SocialLogin": "Identificacion usando redes sociales",

@@ -300,7 +300,8 @@
       "CurrentPasswordARIA": "Mot de passe actuel",
       "NewPassword": "Nouveau mot de passe",
       "NewPasswordARIA": "Nouveau mot de passe",
-      "SubmitSaveAllSettings": "Sauvegarder tous les paramrètres"
+      "SubmitSaveAllSettings": "Sauvegarder tous les paramrètres",
+      "ConfirmNewPassword": "Confirmer le nouveau mot de passe"
     },
     "AccountView": {
       "SocialLogin": "Identification à l'aide des réseaux sociaux",
