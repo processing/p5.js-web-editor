@@ -41,7 +41,6 @@ const useSketchActions = () => {
 
   function downloadSketch() {
     dispatch(autosaveProject());
-    // Only export the project if there is a logged-in user and they are the owner
     if (authenticated && project.owner === authenticated.userId) {
       exportProjectAsZip(project.id);
     }
