@@ -176,7 +176,10 @@ class Editor extends React.Component {
       // hack to prevent that.
       [`${metaKey}-K`]: (cm, event) =>
         cm.state.colorpicker.popup_color_picker({ length: 0 }),
-      [`${metaKey}-.`]: 'toggleComment' // Note: most adblockers use the shortcut ctrl+.
+      [`${metaKey}-.`]: 'toggleComment', // Note: most adblockers use the shortcut ctrl+.
+      [`Ctrl-C`]: (cm) => {
+        this.copyRichText(cm);
+      }
     });
 
     this.initializeDocuments(this.props.files);
@@ -350,6 +353,40 @@ class Editor extends React.Component {
     const content = this._cm.getValue();
     const updatedFile = Object.assign({}, this.props.file, { content });
     return updatedFile;
+  }
+
+  async copyRichText(cm) {
+    const plaintext = cm.doc.getSelection();
+    const selectedElementsArr = document.getElementsByClassName(
+      'CodeMirror-selectedtext'
+    );
+
+    let richText = plaintext[0] === '\n' ? '</br>' : '';
+    let plaintextcounter = plaintext[0] === '\n' ? 1 : 0;
+    for (let i = 0; i < selectedElementsArr.length; i += 1) {
+      const { color, fontWeight, fontSize } = window.getComputedStyle(
+        selectedElementsArr[i]
+      );
+      const cssToken = `color: ${color}; font-weight: ${fontWeight}; font-size: ${fontSize}`;
+      richText += `<span style='${cssToken}'>${selectedElementsArr[i].textContent}</span>`;
+      plaintextcounter += selectedElementsArr[i].textContent.length;
+      while (
+        plaintextcounter < plaintext.length &&
+        plaintext[plaintextcounter] === '\n'
+      ) {
+        richText += '<br/>';
+        plaintextcounter += 1;
+      }
+    }
+
+    try {
+      const type = 'text/html';
+      const blob = new Blob([richText], { type });
+      const data = [new window.ClipboardItem({ [type]: blob })];
+      navigator.clipboard.write(data);
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   showFind() {
