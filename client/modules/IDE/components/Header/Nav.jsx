@@ -302,16 +302,7 @@ const AuthenticatedUserMenu = () => {
         }
       >
         <NavMenuItem href={`/${username}/sketches`}>
-          {t('Nav.Auth.MySketches')}
-        </NavMenuItem>
-        <NavMenuItem
-          href={`/${username}/collections`}
-          hideIf={!getConfig('UI_COLLECTIONS_ENABLED')}
-        >
-          {t('Nav.Auth.MyCollections')}
-        </NavMenuItem>
-        <NavMenuItem href={`/${username}/assets`}>
-          {t('Nav.Auth.MyAssets')}
+          {t('Nav.Auth.MyStuff')}
         </NavMenuItem>
         <NavMenuItem href="/account">{t('Preferences.Settings')}</NavMenuItem>
         <NavMenuItem onClick={() => dispatch(logoutUser())}>
