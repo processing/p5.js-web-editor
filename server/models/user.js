@@ -156,15 +156,13 @@ userSchema.set('toJSON', {
 
 /**
  * Helper method for validating user's password.
+ * @param {string} candidatePassword
+ * @return {Promise<boolean>}
  */
-userSchema.methods.comparePassword = function comparePassword(
-  candidatePassword,
-  cb
+userSchema.methods.comparePassword = async function comparePassword(
+  candidatePassword
 ) {
-  // userSchema.methods.comparePassword = (candidatePassword, cb) => {
-  bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
-    cb(err, isMatch);
-  });
+  return bcrypt.compare(candidatePassword, this.password);
 };
 
 /**
