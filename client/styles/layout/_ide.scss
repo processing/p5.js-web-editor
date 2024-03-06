@@ -8,6 +8,11 @@
   z-index: 0;
 }
 
+// Select and animate the split-pane which covers the console
+.editor-preview-subpanel > div:last-child {
+  transition: 0.2s ease-in-out;
+}
+
 .editor-accessibility {
   @extend %hidden-element;
 }
