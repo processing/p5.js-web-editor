@@ -32,8 +32,13 @@ export default function useKeyDownHandlers(keyHandlers) {
     if (!e.key) return;
     const isMac = navigator.userAgent.toLowerCase().indexOf('mac') !== -1;
     const isCtrl = isMac ? e.metaKey : e.ctrlKey;
+
     if (e.shiftKey && isCtrl) {
       handlers.current[`ctrl-shift-${e.key.toLowerCase()}`]?.(e);
+    } else if (e.altKey && e.shiftKey) {
+      handlers.current[`alt-shift-${e.key.toLowerCase()}`]?.(e);
+    } else if (e.altKey) {
+      handlers.current[`alt-${e.key.toLowerCase()}`]?.(e);
     } else if (isCtrl) {
       handlers.current[`ctrl-${e.key.toLowerCase()}`]?.(e);
     }

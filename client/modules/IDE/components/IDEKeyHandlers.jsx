@@ -2,10 +2,13 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateFileContent } from '../actions/files';
 import {
+  closeProjectOptions,
   collapseConsole,
   collapseSidebar,
   expandConsole,
   expandSidebar,
+  newFile,
+  newFolder,
   showErrorModal,
   startSketch,
   stopSketch
@@ -18,12 +21,14 @@ import {
   getIsUserOwner,
   getSketchOwner
 } from '../selectors/users';
+import { selectRootFile } from '../selectors/files';
 
 export const useIDEKeyHandlers = ({ getContent }) => {
   const dispatch = useDispatch();
 
   const sidebarIsExpanded = useSelector((state) => state.ide.sidebarIsExpanded);
   const consoleIsExpanded = useSelector((state) => state.ide.consoleIsExpanded);
+  const rootFile = useSelector(selectRootFile);
 
   const isUserOwner = useSelector(getIsUserOwner);
   const isAuthenticated = useSelector(getAuthenticated);
@@ -75,6 +80,18 @@ export const useIDEKeyHandlers = ({ getContent }) => {
     'ctrl-`': (e) => {
       e.preventDefault();
       dispatch(consoleIsExpanded ? collapseConsole() : expandConsole());
+    },
+    'alt-n': (e) => {
+      e.preventDefault();
+      // For Creating new Files
+      dispatch(newFile(rootFile.id));
+      setTimeout(() => dispatch(closeProjectOptions()), 0);
+    },
+    'alt-shift-n': (e) => {
+      e.preventDefault();
+      // For Creating new Folder
+      dispatch(newFolder(rootFile.id));
+      setTimeout(() => dispatch(closeProjectOptions()), 0);
     }
   });
 };
