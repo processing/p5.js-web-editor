@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
@@ -63,49 +63,46 @@ FileName.propTypes = {
   name: PropTypes.string.isRequired
 };
 
-class FileNode extends React.Component {
-  constructor(props) {
-    super(props);
+function FileNode(props) {
+  const [isOptionsOpen, setIsOptionsOpen] = useState(false);
+  const [isEditingName, setIsEditingName] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [updatedName, setUpdatedName] = useState(props.name);
+  const fileNameInputRef = useRef(null);
+  const fileOptionsRef = useRef(null);
 
-    this.state = {
-      isOptionsOpen: false,
-      isEditingName: false,
-      isFocused: false,
-      isDeleting: false,
-      updatedName: this.props.name
-    };
-  }
-
-  onFocusComponent = () => {
-    this.setState({ isFocused: true });
+  const onFocusComponent = () => {
+    setIsFocused(true);
   };
 
-  onBlurComponent = () => {
-    this.setState({ isFocused: false });
+  const hideFileOptions = () => {
+    setIsOptionsOpen(false);
+  };
+
+  const hideEditFileName = () => {
+    setIsEditingName(false);
+  };
+
+  const onBlurComponent = () => {
+    setIsFocused(false);
     setTimeout(() => {
-      if (!this.state.isFocused) {
-        this.hideFileOptions();
+      if (!isFocused) {
+        hideFileOptions();
       }
     }, 200);
   };
 
-  setUpdatedName = (updatedName) => {
-    this.setState({ updatedName });
-  };
-
-  saveUpdatedFileName = () => {
-    const { updatedName } = this.state;
-    const { name, updateFileName, id } = this.props;
-
+  const saveUpdatedFileName = () => {
+    const { name, updateFileName, id } = props;
     if (updatedName !== name) {
       updateFileName(id, updatedName);
     }
   };
 
-  handleFileClick = (event) => {
+  const handleFileClick = (event) => {
     event.stopPropagation();
-    const { isDeleting } = this.state;
-    const { id, setSelectedFile, name, onClickFile } = this.props;
+    const { id, setSelectedFile, name, onClickFile } = props;
     if (name !== 'root' && !isDeleting) {
       setSelectedFile(id);
     }
@@ -116,67 +113,13 @@ class FileNode extends React.Component {
     }
   };
 
-  handleFileNameChange = (event) => {
-    const newName = event.target.value;
-    this.setUpdatedName(newName);
-  };
-
-  handleFileNameBlur = () => {
-    this.validateFileName();
-    this.hideEditFileName();
-  };
-
-  handleClickRename = () => {
-    this.setUpdatedName(this.props.name);
-    this.showEditFileName();
-    setTimeout(() => this.fileNameInput.focus(), 0);
-    setTimeout(() => this.hideFileOptions(), 0);
-  };
-
-  handleClickAddFile = () => {
-    this.props.newFile(this.props.id);
-    setTimeout(() => this.hideFileOptions(), 0);
-  };
-
-  handleClickAddFolder = () => {
-    this.props.newFolder(this.props.id);
-    setTimeout(() => this.hideFileOptions(), 0);
-  };
-
-  handleClickUploadFile = () => {
-    this.props.openUploadFileModal(this.props.id);
-    setTimeout(this.hideFileOptions, 0);
-  };
-
-  handleClickDelete = () => {
-    const prompt = this.props.t('Common.DeleteConfirmation', {
-      name: this.props.name
-    });
-
-    if (window.confirm(prompt)) {
-      this.setState({ isDeleting: true });
-      this.props.resetSelectedFile(this.props.id);
-      setTimeout(
-        () => this.props.deleteFile(this.props.id, this.props.parentId),
-        100
-      );
-    }
-  };
-
-  handleKeyPress = (event) => {
-    if (event.key === 'Enter') {
-      this.hideEditFileName();
-    }
-  };
-
-  validateFileName = () => {
-    const currentName = this.props.name;
-    const { updatedName } = this.state;
+  const validateFileName = () => {
+    const currentName = props.name;
     const oldFileExtension = currentName.match(/\.[0-9a-z]+$/i);
     const newFileExtension = updatedName.match(/\.[0-9a-z]+$/i);
     const hasPeriod = updatedName.match(/\.+/);
     const hasNoExtension = oldFileExtension && !newFileExtension;
-    const hasExtensionIfFolder = this.props.fileType === 'folder' && hasPeriod;
+    const hasExtensionIfFolder = props.fileType === 'folder' && hasPeriod;
     const notSameExtension =
       oldFileExtension &&
       newFileExtension &&
@@ -191,219 +134,251 @@ class FileNode extends React.Component {
       hasOnlyExtension ||
       hasExtensionIfFolder
     ) {
-      this.setUpdatedName(currentName);
+      setUpdatedName(currentName);
     } else {
-      this.saveUpdatedFileName();
+      saveUpdatedFileName();
     }
   };
 
-  toggleFileOptions = (event) => {
+  const handleFileNameChange = (event) => {
+    const newName = event.target.value;
+    setUpdatedName(newName);
+  };
+
+  const handleFileNameBlur = () => {
+    validateFileName();
+    hideEditFileName();
+  };
+
+  const showEditFileName = () => {
+    setIsEditingName(true);
+  };
+
+  const handleClickRename = () => {
+    setUpdatedName(props.name);
+    showEditFileName();
+    setTimeout(() => fileNameInputRef.current.focus(), 0);
+    setTimeout(() => hideFileOptions(), 0);
+  };
+
+  const handleClickAddFile = () => {
+    props.newFile(props.id);
+    setTimeout(() => hideFileOptions(), 0);
+  };
+
+  const handleClickAddFolder = () => {
+    props.newFolder(props.id);
+    setTimeout(() => hideFileOptions(), 0);
+  };
+
+  const handleClickUploadFile = () => {
+    props.openUploadFileModal(props.id);
+    setTimeout(hideFileOptions, 0);
+  };
+
+  const handleClickDelete = () => {
+    const prompt = props.t('Common.DeleteConfirmation', {
+      name: props.name
+    });
+
+    if (window.confirm(prompt)) {
+      setIsDeleting(true);
+      props.resetSelectedFile(props.id);
+      setTimeout(() => props.deleteFile(props.id, props.parentId), 100);
+    }
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      hideEditFileName();
+    }
+  };
+
+  const toggleFileOptions = (event) => {
     event.preventDefault();
-    if (!this.props.canEdit) {
+    if (!props.canEdit) {
       return;
     }
-    if (this.state.isOptionsOpen) {
-      this.setState({ isOptionsOpen: false });
+    if (isOptionsOpen) {
+      setIsOptionsOpen(false);
     } else {
-      this[`fileOptions-${this.props.id}`].focus();
-      this.setState({ isOptionsOpen: true });
+      fileOptionsRef.current.focus();
+      setIsOptionsOpen(true);
     }
   };
 
-  hideFileOptions = () => {
-    this.setState({ isOptionsOpen: false });
+  const showFolderChildren = () => {
+    props.showFolderChildren(props.id);
   };
 
-  showEditFileName = () => {
-    this.setState({ isEditingName: true });
+  const hideFolderChildren = () => {
+    props.hideFolderChildren(props.id);
   };
 
-  hideEditFileName = () => {
-    this.setState({ isEditingName: false });
-  };
-
-  showFolderChildren = () => {
-    this.props.showFolderChildren(this.props.id);
-  };
-
-  hideFolderChildren = () => {
-    this.props.hideFolderChildren(this.props.id);
-  };
-
-  renderChild = (childId) => (
+  const renderChild = (childId) => (
     <li key={childId}>
       <ConnectedFileNode
         id={childId}
-        parentId={this.props.id}
-        canEdit={this.props.canEdit}
-        onClickFile={this.props.onClickFile}
+        parentId={props.id}
+        canEdit={props.canEdit}
+        onClickFile={props.onClickFile}
       />
     </li>
   );
 
-  render() {
-    const itemClass = classNames({
-      'sidebar__root-item': this.props.name === 'root',
-      'sidebar__file-item': this.props.name !== 'root',
-      'sidebar__file-item--selected': this.props.isSelectedFile,
-      'sidebar__file-item--open': this.state.isOptionsOpen,
-      'sidebar__file-item--editing': this.state.isEditingName,
-      'sidebar__file-item--closed': this.props.isFolderClosed
-    });
+  const itemClass = classNames({
+    'sidebar__root-item': props.name === 'root',
+    'sidebar__file-item': props.name !== 'root',
+    'sidebar__file-item--selected': props.isSelectedFile,
+    'sidebar__file-item--open': isOptionsOpen,
+    'sidebar__file-item--editing': isEditingName,
+    'sidebar__file-item--closed': props.isFolderClosed
+  });
 
-    const isFile = this.props.fileType === 'file';
-    const isFolder = this.props.fileType === 'folder';
-    const isRoot = this.props.name === 'root';
+  const isFile = props.fileType === 'file';
+  const isFolder = props.fileType === 'folder';
+  const isRoot = props.name === 'root';
+  const { t } = props;
 
-    const { t } = this.props;
-
-    return (
-      <div className={itemClass}>
-        {!isRoot && (
-          <div
-            className="file-item__content"
-            onContextMenu={this.toggleFileOptions}
-          >
-            <span className="file-item__spacer"></span>
-            {isFile && (
-              <span className="sidebar__file-item-icon">
-                <FileIcon focusable="false" aria-hidden="true" />
-              </span>
-            )}
-            {isFolder && (
-              <div className="sidebar__file-item--folder">
-                <button
-                  className="sidebar__file-item-closed"
-                  onClick={this.showFolderChildren}
-                  aria-label={t('FileNode.OpenFolderARIA')}
-                  title={t('FileNode.OpenFolderARIA')}
-                >
-                  <FolderRightIcon
-                    className="folder-right"
-                    focusable="false"
-                    aria-hidden="true"
-                  />
-                </button>
-                <button
-                  className="sidebar__file-item-open"
-                  onClick={this.hideFolderChildren}
-                  aria-label={t('FileNode.CloseFolderARIA')}
-                  title={t('FileNode.CloseFolderARIA')}
-                >
-                  <FolderDownIcon
-                    className="folder-down"
-                    focusable="false"
-                    aria-hidden="true"
-                  />
-                </button>
-              </div>
-            )}
-            <button
-              aria-label={this.state.updatedName}
-              className="sidebar__file-item-name"
-              onClick={this.handleFileClick}
-              data-testid="file-name"
-            >
-              <FileName name={this.state.updatedName} />
-            </button>
-            <input
-              data-testid="input"
-              type="text"
-              className="sidebar__file-item-input"
-              value={this.state.updatedName}
-              maxLength="128"
-              onChange={this.handleFileNameChange}
-              ref={(element) => {
-                this.fileNameInput = element;
-              }}
-              onBlur={this.handleFileNameBlur}
-              onKeyPress={this.handleKeyPress}
-            />
-            <button
-              className="sidebar__file-item-show-options"
-              aria-label={t('FileNode.ToggleFileOptionsARIA')}
-              ref={(element) => {
-                this[`fileOptions-${this.props.id}`] = element;
-              }}
-              tabIndex="0"
-              onClick={this.toggleFileOptions}
-              onBlur={this.onBlurComponent}
-              onFocus={this.onFocusComponent}
-            >
-              <DownArrowIcon focusable="false" aria-hidden="true" />
-            </button>
-            <div className="sidebar__file-item-options">
-              <ul title="file options">
-                {isFolder && (
-                  <React.Fragment>
-                    <li>
-                      <button
-                        aria-label={t('FileNode.AddFolderARIA')}
-                        onClick={this.handleClickAddFolder}
-                        onBlur={this.onBlurComponent}
-                        onFocus={this.onFocusComponent}
-                        className="sidebar__file-item-option"
-                      >
-                        {t('FileNode.AddFolder')}
-                      </button>
-                    </li>
-                    <li>
-                      <button
-                        aria-label={t('FileNode.AddFileARIA')}
-                        onClick={this.handleClickAddFile}
-                        onBlur={this.onBlurComponent}
-                        onFocus={this.onFocusComponent}
-                        className="sidebar__file-item-option"
-                      >
-                        {t('FileNode.AddFile')}
-                      </button>
-                    </li>
-                    {this.props.authenticated && (
-                      <li>
-                        <button
-                          aria-label={t('FileNode.UploadFileARIA')}
-                          onClick={this.handleClickUploadFile}
-                          onBlur={this.onBlurComponent}
-                          onFocus={this.onFocusComponent}
-                        >
-                          {t('FileNode.UploadFile')}
-                        </button>
-                      </li>
-                    )}
-                  </React.Fragment>
-                )}
-                <li>
-                  <button
-                    onClick={this.handleClickRename}
-                    onBlur={this.onBlurComponent}
-                    onFocus={this.onFocusComponent}
-                    className="sidebar__file-item-option"
-                  >
-                    {t('FileNode.Rename')}
-                  </button>
-                </li>
-                <li>
-                  <button
-                    onClick={this.handleClickDelete}
-                    onBlur={this.onBlurComponent}
-                    onFocus={this.onFocusComponent}
-                    className="sidebar__file-item-option"
-                  >
-                    {t('FileNode.Delete')}
-                  </button>
-                </li>
-              </ul>
+  return (
+    <div className={itemClass}>
+      {!isRoot && (
+        <div className="file-item__content" onContextMenu={toggleFileOptions}>
+          <span className="file-item__spacer"></span>
+          {isFile && (
+            <span className="sidebar__file-item-icon">
+              <FileIcon focusable="false" aria-hidden="true" />
+            </span>
+          )}
+          {isFolder && (
+            <div className="sidebar__file-item--folder">
+              <button
+                className="sidebar__file-item-closed"
+                onClick={showFolderChildren}
+                aria-label={t('FileNode.OpenFolderARIA')}
+                title={t('FileNode.OpenFolderARIA')}
+              >
+                <FolderRightIcon
+                  className="folder-right"
+                  focusable="false"
+                  aria-hidden="true"
+                />
+              </button>
+              <button
+                className="sidebar__file-item-open"
+                onClick={hideFolderChildren}
+                aria-label={t('FileNode.CloseFolderARIA')}
+                title={t('FileNode.CloseFolderARIA')}
+              >
+                <FolderDownIcon
+                  className="folder-down"
+                  focusable="false"
+                  aria-hidden="true"
+                />
+              </button>
             </div>
+          )}
+          <button
+            aria-label={updatedName}
+            className="sidebar__file-item-name"
+            onClick={handleFileClick}
+            data-testid="file-name"
+          >
+            <FileName name={updatedName} />
+          </button>
+          <input
+            data-testid="input"
+            type="text"
+            className="sidebar__file-item-input"
+            value={updatedName}
+            maxLength="128"
+            onChange={handleFileNameChange}
+            ref={fileNameInputRef}
+            onBlur={handleFileNameBlur}
+            onKeyPress={handleKeyPress}
+          />
+          <button
+            className="sidebar__file-item-show-options"
+            aria-label={t('FileNode.ToggleFileOptionsARIA')}
+            ref={fileOptionsRef}
+            tabIndex="0"
+            onClick={toggleFileOptions}
+            onBlur={onBlurComponent}
+            onFocus={onFocusComponent}
+          >
+            <DownArrowIcon focusable="false" aria-hidden="true" />
+          </button>
+          <div className="sidebar__file-item-options">
+            <ul title="file options">
+              {isFolder && (
+                <React.Fragment>
+                  <li>
+                    <button
+                      aria-label={t('FileNode.AddFolderARIA')}
+                      onClick={handleClickAddFolder}
+                      onBlur={onBlurComponent}
+                      onFocus={onFocusComponent}
+                      className="sidebar__file-item-option"
+                    >
+                      {t('FileNode.AddFolder')}
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      aria-label={t('FileNode.AddFileARIA')}
+                      onClick={handleClickAddFile}
+                      onBlur={onBlurComponent}
+                      onFocus={onFocusComponent}
+                      className="sidebar__file-item-option"
+                    >
+                      {t('FileNode.AddFile')}
+                    </button>
+                  </li>
+                  {props.authenticated && (
+                    <li>
+                      <button
+                        aria-label={t('FileNode.UploadFileARIA')}
+                        onClick={handleClickUploadFile}
+                        onBlur={onBlurComponent}
+                        onFocus={onFocusComponent}
+                      >
+                        {t('FileNode.UploadFile')}
+                      </button>
+                    </li>
+                  )}
+                </React.Fragment>
+              )}
+              <li>
+                <button
+                  onClick={handleClickRename}
+                  onBlur={onBlurComponent}
+                  onFocus={onFocusComponent}
+                  className="sidebar__file-item-option"
+                >
+                  {t('FileNode.Rename')}
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={handleClickDelete}
+                  onBlur={onBlurComponent}
+                  onFocus={onFocusComponent}
+                  className="sidebar__file-item-option"
+                >
+                  {t('FileNode.Delete')}
+                </button>
+              </li>
+            </ul>
           </div>
-        )}
-        {this.props.children && (
-          <ul className="file-item__children">
-            {this.props.children.map(this.renderChild)}
-          </ul>
-        )}
-      </div>
-    );
-  }
+        </div>
+      )}
+      {props.children && (
+        <ul className="file-item__children">
+          {props.children.map(renderChild)}
+        </ul>
+      )}
+    </div>
+  );
 }
 
 FileNode.propTypes = {
