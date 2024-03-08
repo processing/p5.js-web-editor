@@ -1,4 +1,5 @@
 import { initialState as initialFilesState } from '../modules/IDE/reducers/files';
+import { initialState as initialPrefState } from '../modules/IDE/reducers/preferences';
 
 const mockProjects = [
   {
@@ -46,20 +47,7 @@ const initialTestState = {
     parentId: undefined
   },
   files: initialFilesState(),
-  preferences: {
-    fontSize: 18,
-    autosave: true,
-    linewrap: true,
-    lineNumbers: true,
-    lintWarning: false,
-    textOutput: false,
-    gridOutput: false,
-    theme: 'light',
-    autorefresh: false,
-    language: 'en-US',
-    autocloseBracketsQuotes: true,
-    autocompleteHinter: false
-  },
+  preferences: initialPrefState,
   user: {
     email: 'happydog@example.com',
     username: 'happydog',
