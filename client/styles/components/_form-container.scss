@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .form-container {
 	text-align: center;
 	display: flex;
@@ -22,17 +24,19 @@
 
 .form-container__header {
 	width: 100%;
-	padding: #{15 / $base-font-size}rem #{34 / $base-font-size}rem;
+	padding: #{math.div(15, $base-font-size)}rem #{math.div(34, $base-font-size)}rem;
 	display: flex;
 	justify-content: space-between;
 }
 
 .form-container__content {
 	height: 100%;
+	max-width: 90vw;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	margin-bottom: 20px;
 }
 
 .form-container--align-left .form-container__content {
@@ -57,7 +61,11 @@
 }
 
 .form-container__divider {
-	padding: #{20 / $base-font-size}rem 0;
+	padding: #{math.div(20, $base-font-size)}rem 0;
+
+	@media (max-width: 770px) {
+		text-align: center;
+	}
 }
 
 .form-container__logo-button {
@@ -69,5 +77,8 @@
 }
 
 .form-container__stack > * + * {
-	margin-top: #{10 / $base-font-size}rem;
+	margin-top: #{math.div(10, $base-font-size)}rem;
 }
+.form__navigation-options a {
+	font-weight: bold;
+  }
