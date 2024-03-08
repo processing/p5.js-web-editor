@@ -158,10 +158,28 @@ const files = (state, action) => {
         }
         return Object.assign({}, file, { blobURL: action.blobURL });
       });
-    case ActionTypes.NEW_PROJECT:
-      return setFilePaths(action.files);
-    case ActionTypes.SET_PROJECT:
-      return setFilePaths(action.files);
+    case ActionTypes.NEW_PROJECT: {
+      const newFiles = action.files.map((file) => {
+        const corrospondingObj = state.find((obj) => obj.id === file.id);
+        if (corrospondingObj && corrospondingObj.fileType === 'folder') {
+          const isFolderClosed = corrospondingObj.isFolderClosed || false;
+          return { ...file, isFolderClosed };
+        }
+        return file;
+      });
+      return setFilePaths(newFiles);
+    }
+    case ActionTypes.SET_PROJECT: {
+      const newFiles = action.files.map((file) => {
+        const corrospondingObj = state.find((obj) => obj.id === file.id);
+        if (corrospondingObj && corrospondingObj.fileType === 'folder') {
+          const isFolderClosed = corrospondingObj.isFolderClosed || false;
+          return { ...file, isFolderClosed };
+        }
+        return file;
+      });
+      return setFilePaths(newFiles);
+    }
     case ActionTypes.RESET_PROJECT:
       return initialState();
     case ActionTypes.CREATE_FILE: {
@@ -188,6 +206,7 @@ const files = (state, action) => {
           filePath
         }
       ];
+
       return newState.map((file) => {
         if (file.id === action.parentId) {
           file.children = sortedChildrenId(newState, file.children);

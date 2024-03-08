@@ -87,6 +87,9 @@ const Toolbar = (props) => {
           checked={autorefresh}
           onChange={(event) => {
             dispatch(setAutorefresh(event.target.checked));
+            if (event.target.checked) {
+              dispatch(startSketch());
+            }
           }}
         />
         <label htmlFor="autorefresh" className="toolbar__autorefresh-label">

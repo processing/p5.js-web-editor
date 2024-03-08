@@ -23,6 +23,7 @@ import 'codemirror/addon/fold/comment-fold';
 import 'codemirror/addon/fold/foldcode';
 import 'codemirror/addon/fold/foldgutter';
 import 'codemirror/addon/fold/indent-fold';
+import 'codemirror/addon/fold/xml-fold';
 import 'codemirror/addon/comment/comment';
 import 'codemirror/keymap/sublime';
 import 'codemirror/addon/search/searchcursor';
@@ -70,7 +71,7 @@ import EditorAccessibility from '../EditorAccessibility';
 import UnsavedChangesIndicator from '../UnsavedChangesIndicator';
 import { EditorContainer, EditorHolder } from './MobileEditor';
 import { FolderIcon } from '../../../../common/icons';
-import IconButton from '../../../../components/mobile/IconButton';
+import IconButton from '../../../../common/IconButton';
 
 emmet(CodeMirror);
 
@@ -594,7 +595,8 @@ Editor.propTypes = {
   linewrap: PropTypes.bool.isRequired,
   lintMessages: PropTypes.arrayOf(
     PropTypes.shape({
-      severity: PropTypes.string.isRequired,
+      severity: PropTypes.oneOf(['error', 'hint', 'info', 'warning'])
+        .isRequired,
       line: PropTypes.number.isRequired,
       message: PropTypes.string.isRequired,
       id: PropTypes.number.isRequired
