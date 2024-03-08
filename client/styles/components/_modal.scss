@@ -1,6 +1,8 @@
+@use "sass:math";
+
 .modal {
   position: absolute;
-  top: #{60 / $base-font-size}rem;
+  top: #{math.div(60, $base-font-size)}rem;
   right: 50%;
   transform: translate(50%, 0);
   z-index: 100;
@@ -9,9 +11,13 @@
 
 .modal-content {
   @extend %modal;
-  min-height: #{150 / $base-font-size}rem;
-  width: #{500 / $base-font-size}rem;
-  padding: #{20 / $base-font-size}rem;
+  min-height: #{math.div(150, $base-font-size)}rem;
+  padding: #{math.div(20, $base-font-size)}rem;
+
+  @media (min-width: 770px) {
+    width: #{math.div(500, $base-font-size)}rem;
+  }
+
   .modal--reduced & {
     //min-height: #{150 / $base-font-size}rem;
   }
@@ -19,7 +25,7 @@
 
 .modal-content-folder {
   @extend .modal-content;
-  height: #{150 / $base-font-size}rem;
+  height: #{math.div(150, $base-font-size)}rem;
 }
 
 .modal__exit-button {
@@ -29,7 +35,7 @@
 .modal__header {
   display: flex;
   justify-content: space-between;
-  margin-bottom: #{20 / $base-font-size}rem;
+  margin-bottom: #{math.div(20, $base-font-size)}rem;
 }
 
 .new-folder-form__input-wrapper, .new-file-form__input-wrapper {
@@ -41,11 +47,11 @@
 }
 
 .new-file-form__name-input, .new-folder-form__name-input {
-  margin-right: #{10 / $base-font-size}rem;
+  margin-right: #{math.div(10, $base-font-size)}rem;
   flex: 1;
 }
 
 .modal__divider {
   text-align: center;
-  margin: #{20 / $base-font-size}rem 0;
+  margin: #{math.div(20, $base-font-size)}rem 0;
 }

@@ -1,3 +1,5 @@
+import get404Sketch from './404Page';
+
 export function renderIndex() {
   const assetsManifest = process.env.webpackAssets && JSON.parse(process.env.webpackAssets);
   return `
@@ -32,7 +34,6 @@ export function renderIndex() {
         window.process.env.UI_ACCESS_TOKEN_ENABLED = ${process.env.UI_ACCESS_TOKEN_ENABLED === 'false' ? false : true};
         window.process.env.UI_COLLECTIONS_ENABLED = ${process.env.UI_COLLECTIONS_ENABLED === 'false' ? false : true};
         window.process.env.UPLOAD_LIMIT = ${process.env.UPLOAD_LIMIT ? `${process.env.UPLOAD_LIMIT}` : undefined};
-        window.process.env.MOBILE_ENABLED = ${process.env.MOBILE_ENABLED ? `${process.env.MOBILE_ENABLED}` : undefined};
         window.process.env.TRANSLATIONS_ENABLED = ${process.env.TRANSLATIONS_ENABLED === 'true' ? true : false}; 
         window.process.env.PREVIEW_URL = '${process.env.PREVIEW_URL}';
         window.process.env.GA_MEASUREMENT_ID='${process.env.GA_MEASUREMENT_ID}';
@@ -46,3 +47,18 @@ export function renderIndex() {
   </html>
   `;
 }
+
+/**
+ * Send a 404 page if `exists` is false.
+ * @param {import('express').e.Request} req
+ * @param {import('express').e.Response} res
+ * @param {boolean} [exists]
+ */
+export default function sendHtml(req, res, exists = true) {
+  if (!exists) {
+    res.status(404);
+    get404Sketch((html) => res.send(html));
+  } else {
+    res.send(renderIndex());
+  }
+};
