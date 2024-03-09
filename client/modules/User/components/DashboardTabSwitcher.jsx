@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import MediaQuery from 'react-responsive';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { FilterIcon } from '../../../common/icons';
@@ -9,6 +8,7 @@ import IconButton from '../../../common/IconButton';
 import RouterTab from '../../../common/RouterTab';
 import { Options } from '../../IDE/components/Header/MobileNav';
 import { toggleDirectionForField } from '../../IDE/actions/sorting';
+import useIsMobile from '../../IDE/hooks/useIsMobile';
 
 export const TabKey = {
   assets: 'assets',
@@ -26,6 +26,7 @@ const FilterOptions = styled(Options)`
 `;
 
 const DashboardTabSwitcher = ({ currentTab, isOwner, username }) => {
+  const isMobile = useIsMobile();
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
@@ -44,56 +45,47 @@ const DashboardTabSwitcher = ({ currentTab, isOwner, username }) => {
           </RouterTab>
         )}
       </ul>
-      <MediaQuery maxWidth={770}>
-        {(mobile) =>
-          mobile &&
-          currentTab !== TabKey.assets && (
-            <FilterOptions>
-              <div>
-                <IconButton icon={FilterIcon} />
-                <ul>
-                  <li>
-                    <button
-                      onClick={() => dispatch(toggleDirectionForField('name'))}
-                    >
-                      {t('CollectionList.HeaderName')}
-                    </button>
-                  </li>
-                  <li>
-                    <button
-                      onClick={() =>
-                        dispatch(toggleDirectionForField('createdAt'))
-                      }
-                    >
-                      {t('CollectionList.HeaderCreatedAt')}
-                    </button>
-                  </li>
-                  <li>
-                    <button
-                      onClick={() =>
-                        dispatch(toggleDirectionForField('updatedAt'))
-                      }
-                    >
-                      {t('CollectionList.HeaderUpdatedAt')}
-                    </button>
-                  </li>
-                  {currentTab === TabKey.collections && (
-                    <li>
-                      <button
-                        onClick={() =>
-                          dispatch(toggleDirectionForField('numItems'))
-                        }
-                      >
-                        {t('CollectionList.HeaderNumItems')}
-                      </button>
-                    </li>
-                  )}
-                </ul>
-              </div>
-            </FilterOptions>
-          )
-        }
-      </MediaQuery>
+      {isMobile && currentTab !== TabKey.assets && (
+        <FilterOptions>
+          <div>
+            <IconButton icon={FilterIcon} />
+            <ul>
+              <li>
+                <button
+                  onClick={() => dispatch(toggleDirectionForField('name'))}
+                >
+                  {t('CollectionList.HeaderName')}
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => dispatch(toggleDirectionForField('createdAt'))}
+                >
+                  {t('CollectionList.HeaderCreatedAt')}
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => dispatch(toggleDirectionForField('updatedAt'))}
+                >
+                  {t('CollectionList.HeaderUpdatedAt')}
+                </button>
+              </li>
+              {currentTab === TabKey.collections && (
+                <li>
+                  <button
+                    onClick={() =>
+                      dispatch(toggleDirectionForField('numItems'))
+                    }
+                  >
+                    {t('CollectionList.HeaderNumItems')}
+                  </button>
+                </li>
+              )}
+            </ul>
+          </div>
+        </FilterOptions>
+      )}
     </div>
   );
 };

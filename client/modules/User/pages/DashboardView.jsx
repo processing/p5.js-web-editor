@@ -1,6 +1,5 @@
 import React, { useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import MediaQuery from 'react-responsive';
 import { useLocation, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
@@ -22,8 +21,10 @@ import CollectionCreate from '../components/CollectionCreate';
 import DashboardTabSwitcherPublic, {
   TabKey
 } from '../components/DashboardTabSwitcher';
+import useIsMobile from '../../IDE/hooks/useIsMobile';
 
 const DashboardView = () => {
+  const isMobile = useIsMobile();
   const { t } = useTranslation();
 
   const params = useParams();
@@ -134,9 +135,7 @@ const DashboardView = () => {
         </div>
 
         <div className="dashboard-content">
-          <MediaQuery maxWidth={770}>
-            {(mobile) => renderContent(currentTab, params.username, mobile)}
-          </MediaQuery>
+          {renderContent(currentTab, params.username, isMobile)}
         </div>
       </main>
       {collectionCreateVisible && (
