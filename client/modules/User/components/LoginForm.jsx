@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Form, Field } from 'react-final-form';
 import { useDispatch } from 'react-redux';
 import Button from '../../../common/Button';
-import { validateLogin } from '../../../utils/reduxFormUtils';
+import { LoginFormInput } from '../../../common/zod';
 import { validateAndLoginUser } from '../actions';
 
 function LoginForm() {
@@ -17,7 +17,7 @@ function LoginForm() {
   return (
     <Form
       fields={['email', 'password']}
-      validate={validateLogin}
+      validate={(values) => LoginFormInput.safeParse(values)}
       onSubmit={onSubmit}
     >
       {({ handleSubmit, submitError, submitting, modifiedSinceLastSubmit }) => (

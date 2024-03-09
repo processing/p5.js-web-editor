@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form, Field } from 'react-final-form';
 import { useDispatch } from 'react-redux';
-import { validateSignup } from '../../../utils/reduxFormUtils';
+import { SignupFormInput } from '../../../common/zod';
 import { validateAndSignUpUser } from '../actions';
 import Button from '../../../common/Button';
 import apiClient from '../../../utils/apiClient';
@@ -43,7 +43,7 @@ function SignupForm() {
   return (
     <Form
       fields={['username', 'email', 'password', 'confirmPassword']}
-      validate={validateSignup}
+      validate={(values) => SignupFormInput.safeParse(values)}
       onSubmit={onSubmit}
     >
       {({ handleSubmit, pristine, submitting, invalid }) => (
