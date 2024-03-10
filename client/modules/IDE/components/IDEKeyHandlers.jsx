@@ -8,7 +8,8 @@ import {
   expandSidebar,
   showErrorModal,
   startSketch,
-  stopSketch
+  stopSketch,
+  newFile
 } from '../actions/ide';
 import { setAllAccessibleOutput } from '../actions/preferences';
 import { cloneProject, saveProject } from '../actions/project';
@@ -75,6 +76,11 @@ export const useIDEKeyHandlers = ({ getContent }) => {
     'ctrl-`': (e) => {
       e.preventDefault();
       dispatch(consoleIsExpanded ? collapseConsole() : expandConsole());
+    },
+    'alt-n': (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      dispatch(newFile());
     }
   });
 };
