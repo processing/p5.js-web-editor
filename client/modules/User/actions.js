@@ -143,18 +143,21 @@ export function resetProject(dispatch) {
 
 export function logoutUser() {
   return (dispatch) => {
-    apiClient
-      .get('/logout')
-      .then(() => {
-        dispatch({
-          type: ActionTypes.UNAUTH_USER
+    const confirmation = window.confirm('Are you sure you want to logout?');
+    if (confirmation) {
+      apiClient
+        .get('/logout')
+        .then(() => {
+          dispatch({
+            type: ActionTypes.UNAUTH_USER
+          });
+          resetProject(dispatch);
+        })
+        .catch((error) => {
+          const { response } = error;
+          dispatch(authError(response.data.error));
         });
-        resetProject(dispatch);
-      })
-      .catch((error) => {
-        const { response } = error;
-        dispatch(authError(response.data.error));
-      });
+    }
   };
 }
 
