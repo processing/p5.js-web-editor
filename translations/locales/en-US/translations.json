@@ -289,7 +289,8 @@
     "errorNewPassword": "Please enter a new password or leave the current password empty.",
     "errorEmptyUsername": "Please enter a username.",
     "errorLongUsername": "Username must be less than 20 characters.",
-    "errorValidUsername": "Username must only consist of numbers, letters, periods, dashes, and underscores."
+    "errorValidUsername": "Username must only consist of numbers, letters, periods, dashes, and underscores.",
+    "errorNewPasswordNotCorrect":"New Password entered should be different from Current Password ."
   },
   "NewPasswordView": {
     "Title": "p5.js Web Editor | New Password",
