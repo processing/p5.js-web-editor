@@ -26,6 +26,7 @@ export const defaultHTML = `<!DOCTYPE html>
 export const defaultCSS = `html, body {
   margin: 0;
   padding: 0;
+  color: black;
 }
 canvas {
   display: block;
