@@ -1,6 +1,6 @@
 import * as ActionTypes from '../../../constants';
 
-const initialState = {
+export const initialState = {
   fontSize: 18,
   autosave: true,
   linewrap: true,
