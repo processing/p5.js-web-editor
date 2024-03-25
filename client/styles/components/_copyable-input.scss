@@ -1,10 +1,12 @@
+@use "sass:math";
+
 .copyable-input__value-container {
   position: relative;
 }
 
 .copyable-input__value {
   width: 100%;
-  font-size: #{16 / $base-font-size}rem;
+  font-size: #{math.div(16, $base-font-size)}rem;
   .copyable-input--with-preview & {
     border-radius: 2px 0 0 2px;
   }
@@ -12,8 +14,8 @@
 
 .copyable-input__label {
   width: 100%;
-  font-size: #{12 / $base-font-size}rem;
-  padding-bottom: #{5 / $base-font-size}rem;
+  font-size: #{math.div(12, $base-font-size)}rem;
+  padding-bottom: #{math.div(5, $base-font-size)}rem;
   @include themify() {
     color: getThemifyVariable('inactive-text-color');
   }
@@ -25,7 +27,7 @@
 }
 
 .copyable-input {
-  padding-bottom: #{30 / $base-font-size}rem;
+  padding-bottom: #{math.div(30, $base-font-size)}rem;
   display: flex;
 }
 
@@ -39,7 +41,7 @@
     color: getThemifyVariable('button-hover-color');
   }
   font-family: Montserrat, sans-serif;
-  font-size: #{12 / $base-font-size}rem;
+  font-size: #{math.div(12, $base-font-size)}rem;
 }
 
 .tooltipped-n::before,
@@ -56,10 +58,10 @@
   @include themify() {
     align-self: flex-end;
     border-radius: 0 2px 2px 0;
-    padding: #{2 / $base-font-size}rem 0;
+    padding: #{math.div(2, $base-font-size)}rem 0;
   }
   & svg {
-    height: #{30 / $base-font-size}rem;
-    width: #{30 / $base-font-size}rem;
+    height: #{math.div(30, $base-font-size)}rem;
+    width: #{math.div(30, $base-font-size)}rem;
   }
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import { act, fireEvent, reduxRender, screen } from '../../../../test-utils';
+import { initialState } from '../../reducers/preferences';
 import Preferences from './index';
 import * as PreferencesActions from '../../actions/preferences';
 
@@ -15,7 +16,10 @@ describe('<Preferences />', () => {
   const subject = (initialPreferences = {}) =>
     reduxRender(<Preferences />, {
       initialState: {
-        preferences: initialPreferences
+        preferences: {
+          ...initialState,
+          ...initialPreferences
+        }
       }
     });
 

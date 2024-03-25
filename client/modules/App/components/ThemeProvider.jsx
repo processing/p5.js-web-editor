@@ -1,23 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
+import theme from '../../../theme';
 
-import theme, { Theme } from '../../../theme';
-
-const Provider = ({ children, currentTheme }) => (
-  <ThemeProvider theme={{ ...theme[currentTheme] }}>{children}</ThemeProvider>
-);
-
-Provider.propTypes = {
-  children: PropTypes.node.isRequired,
-  currentTheme: PropTypes.oneOf(Object.keys(Theme)).isRequired
+const Provider = ({ children }) => {
+  const currentTheme = useSelector((state) => state.preferences.theme);
+  return (
+    <ThemeProvider theme={{ ...theme[currentTheme] }}>{children}</ThemeProvider>
+  );
 };
 
-function mapStateToProps(state) {
-  return {
-    currentTheme: state.preferences.theme
-  };
-}
+Provider.propTypes = {
+  children: PropTypes.node.isRequired
+};
 
-export default connect(mapStateToProps)(Provider);
+export default Provider;
