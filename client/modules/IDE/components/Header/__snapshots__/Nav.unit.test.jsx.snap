@@ -533,7 +533,7 @@ exports[`Nav renders editor version for desktop 1`] = `
                 <span
                   class="nav__keyboard-shortcut"
                 >
-                  ⌃+⇧+F
+                  Ctrl+Shift+F
                 </span>
               </button>
             </li>
@@ -545,7 +545,7 @@ exports[`Nav renders editor version for desktop 1`] = `
                 <span
                   class="nav__keyboard-shortcut"
                 >
-                  ⌃+F
+                  Ctrl+F
                 </span>
               </button>
             </li>
@@ -557,7 +557,7 @@ exports[`Nav renders editor version for desktop 1`] = `
                 <span
                   class="nav__keyboard-shortcut"
                 >
-                  ⌃+H
+                  Ctrl+H
                 </span>
               </button>
             </li>
@@ -603,7 +603,7 @@ exports[`Nav renders editor version for desktop 1`] = `
                 <span
                   class="nav__keyboard-shortcut"
                 >
-                  ⌃+Enter
+                  Ctrl+Enter
                 </span>
               </button>
             </li>
@@ -615,7 +615,7 @@ exports[`Nav renders editor version for desktop 1`] = `
                 <span
                   class="nav__keyboard-shortcut"
                 >
-                  ⇧+⌃+Enter
+                  Shift+Ctrl+Enter
                 </span>
               </button>
             </li>
