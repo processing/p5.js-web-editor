@@ -5,6 +5,7 @@ import { rest } from 'msw';
 
 import * as ProjectActions from './projects';
 import * as ActionTypes from '../../../constants';
+import { startLoader, stopLoader } from '../reducers/loading';
 import {
   initialTestState,
   mockProjects
@@ -33,9 +34,9 @@ describe('projects action creator tests', () => {
     store = mockStore(initialTestState);
 
     const expectedActions = [
-      { type: ActionTypes.START_LOADING },
+      { type: startLoader.type },
       { type: ActionTypes.SET_PROJECTS, projects: mockProjects },
-      { type: ActionTypes.STOP_LOADING }
+      { type: stopLoader.type }
     ];
 
     return store

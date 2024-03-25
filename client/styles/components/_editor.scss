@@ -1,26 +1,28 @@
+@use "sass:math";
+
 .CodeMirror {
   font-family: Inconsolata, monospace;
   height: 100%;
 }
 
 .CodeMirror-linenumbers {
-  padding-right: #{10 / $base-font-size}rem;
+  padding-right: #{math.div(10, $base-font-size)}rem;
 }
 
 .CodeMirror-linenumber {
-  width: #{32 / $base-font-size}rem;
-  left: #{-3 / $base-font-size}rem !important;
+  width: #{math.div(32, $base-font-size)}rem;
+  left: #{math.div(-3, $base-font-size)}rem !important;
   @include themify() {
     color: getThemifyVariable("inactive-text-color");
   }
 }
 
 .CodeMirror-lines {
-  padding-top: #{25 / $base-font-size}rem;
+  padding-top: #{math.div(25, $base-font-size)}rem;
 }
 
 pre.CodeMirror-line {
-  padding-left: #{5 / $base-font-size}rem;
+  padding-left: #{math.div(5, $base-font-size)}rem;
 }
 
 .CodeMirror-gutter-wrapper {
@@ -33,7 +35,7 @@ pre.CodeMirror-line {
 .CodeMirror-lint-marker-error,
 .CodeMirror-lint-marker-multiple {
   background-image: none;
-  width: #{49 / $base-font-size}rem;
+  width: #{math.div(49, $base-font-size)}rem;
   position: absolute;
   height: 100%;
   right: 100%;
@@ -55,7 +57,7 @@ pre.CodeMirror-line {
 
 .CodeMirror-gutter-elt:not(.CodeMirror-linenumber) {
   opacity: 0.2;
-  width: #{49 / $base-font-size}rem !important;
+  width: #{math.div(49, $base-font-size)}rem !important;
   height: 100%;
   left: 49px !important;
   // background-color: rgb(255, 95, 82);
@@ -78,7 +80,7 @@ pre.CodeMirror-line {
     border-color: getThemifyVariable("ide-border-color");
   }
   // left: 0 !important;
-  width: #{48 / $base-font-size}rem;
+  width: #{math.div(48, $base-font-size)}rem;
 }
 
 /*
@@ -89,8 +91,8 @@ pre.CodeMirror-line {
   position: fixed;
   top: 0;
   left: 50%;
-  margin-left: -#{552/2 / $base-font-size}rem;
-
+  margin-left: #{math.div(-552 * 0.5, $base-font-size)}rem;
+  
   @media (max-width: 770px) {
     left: 0;
     right: 0;
@@ -98,12 +100,12 @@ pre.CodeMirror-line {
     margin-left: 0;
   }
 
-  z-index: 1;
+  z-index: 10;
 
   width: 580px;
   font-family: Montserrat, sans-serif;
 
-  padding: #{8 / $base-font-size}rem #{10 / $base-font-size}rem #{5 / $base-font-size}rem #{9 / $base-font-size}rem;
+  padding: #{math.div(8, $base-font-size)}rem #{math.div(10, $base-font-size)}rem #{math.div(5, $base-font-size)}rem #{math.div(9, $base-font-size)}rem;
 
   border-radius: 2px;
 
@@ -121,7 +123,7 @@ pre.CodeMirror-line {
 }
 
 .Toggle-replace-btn-div {
-  height: #{40 / $base-font-size}rem;
+  height: #{math.div(40, $base-font-size)}rem;
   padding: 0;
 }
 
@@ -131,14 +133,17 @@ pre.CodeMirror-line {
 }
 
 .CodeMirror-search-results {
-  margin: 0 #{20 / $base-font-size}rem;
-  width: #{75 / $base-font-size}rem;
-  font-size: #{12 / $base-font-size}rem;
+  margin: 0 #{math.div(20, $base-font-size)}rem;
+  width: #{math.div(75, $base-font-size)}rem;
+  font-size: #{math.div(12, $base-font-size)}rem;
 }
 
 .CodeMirror-find-controls {
+  width: 100%;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  height: #{math.div(35, $base-font-size)}rem;
 }
 .CodeMirror-search-inputs {
   width: 30%;
@@ -150,39 +155,41 @@ pre.CodeMirror-line {
   align-items: center;
 }
 .CodeMirror-search-controls {
+  width: 60%;
   display: flex;
-  align-items: center;
-  justify-content: end;
+  flex-wrap: wrap-reverse;
+  justify-content: flex-start;
+  align-items: flex-end;
 }
 .CodeMirror-replace-controls {
   display: flex;
-  margin-left: #{10 / $base-font-size}rem;
+  margin-left: #{math.div(10, $base-font-size)}rem;
 }
 
 .CodeMirror-replace-options {
-  width: #{552 / $base-font-size}rem;
-  height: #{65 / $base-font-size}rem;
+  width: #{math.div(552, $base-font-size)}rem;
+  height: #{math.div(65, $base-font-size)}rem;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 .CodeMirror-replace-options button {
-  width: #{200 / $base-font-size}rem;
+  width: #{math.div(200, $base-font-size)}rem;
 }
 
 .CodeMirror-search-title {
   display: block;
-  margin-bottom: #{12 / $base-font-size}rem;
+  margin-bottom: #{math.div(12, $base-font-size)}rem;
 
-  font-size: #{21 / $base-font-size}rem;
+  font-size: #{math.div(21, $base-font-size)}rem;
   font-weight: bold;
 }
 
 .CodeMirror-search-field {
   display: block;
   width: 100%;
-  max-width: #{166 / $base-font-size}rem;
-  margin-bottom: #{4 / $base-font-size}rem;
+  max-width: #{math.div(166, $base-font-size)}rem;
+  margin-bottom: #{math.div(4, $base-font-size)}rem;
   @include themify() {
     color: getThemifyVariable("input-text-color");
     background-color: getThemifyVariable("input-secondary-background-color");
@@ -200,7 +207,7 @@ pre.CodeMirror-line {
 
 .CodeMirror-search-count {
   display: block;
-  height: #{20 / $base-font-size}rem;
+  height: #{math.div(20, $base-font-size)}rem;
   text-align: right;
 }
 
@@ -213,7 +220,7 @@ pre.CodeMirror-line {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  margin-left: #{10 / $base-font-size}rem;
+  margin-left: #{math.div(10, $base-font-size)}rem;
 
   @media (max-width: 579px) {
     display: none;
@@ -225,17 +232,17 @@ pre.CodeMirror-line {
 .CodeMirror-word-button {
   @include themify() {
     // @extend %button;
-    padding: #{2 / $base-font-size}rem #{7 / $base-font-size}rem;
+    padding: #{math.div(2, $base-font-size)}rem #{math.div(7, $base-font-size)}rem;
     border: 2px solid transparent;
     &:hover {
       border-color: getThemifyVariable("button-border-color");
     }
   }
-  width: #{35 / $base-font-size}rem;
-  height: #{35 / $base-font-size}rem;
+  width: #{math.div(35, $base-font-size)}rem;
+  height: #{math.div(35, $base-font-size)}rem;
 
   & + & {
-    margin-left: #{3 / $base-font-size}rem;
+    margin-left: #{math.div(3, $base-font-size)}rem;
   }
 
   word-break: keep-all;
@@ -266,13 +273,13 @@ pre.CodeMirror-line {
 }
 
 .CodeMirror-search-button {
-  margin-right: #{10 / $base-font-size}rem;
+  margin-right: #{math.div(10, $base-font-size)}rem;
 }
 
 .CodeMirror-search-match {
   background: gold;
-  border-top: #{1 / $base-font-size}rem solid orange;
-  border-bottom: #{1 / $base-font-size}rem solid orange;
+  border-top: #{math.div(1, $base-font-size)}rem solid orange;
+  border-bottom: #{math.div(1, $base-font-size)}rem solid orange;
   box-sizing: border-box;
   opacity: 0.5;
 }
@@ -354,7 +361,7 @@ pre.CodeMirror-line {
   vertical-align: middle;
   height: 0.85em;
   line-height: 0.7;
-  padding: 0 #{5 / $base-font-size}rem;
+  padding: 0 #{math.div(5, $base-font-size)}rem;
   font-family: serif;
 }
 
@@ -369,7 +376,7 @@ pre.CodeMirror-line {
 }
 
 .editor-holder {
-  height: calc(100% - #{29 / $base-font-size}rem);
+  height: calc(100% - #{math.div(29, $base-font-size)}rem);
   width: 100%;
   position: absolute;
   @include themify() {
@@ -381,23 +388,23 @@ pre.CodeMirror-line {
 }
 
 .editor__header {
-  height: #{29 / $base-font-size}rem;
+  height: #{math.div(29, $base-font-size)}rem;
 }
 
 .editor__file-name {
   @include themify() {
     color: getThemifyVariable("primary-text-color");
   }
-  height: #{29 / $base-font-size}rem;
-  padding-top: #{7 / $base-font-size}rem;
-  padding-left: #{56 / $base-font-size}rem;
-  font-size: #{12 / $base-font-size}rem;
+  height: #{math.div(29, $base-font-size)}rem;
+  padding-top: #{math.div(7, $base-font-size)}rem;
+  padding-left: #{math.div(56, $base-font-size)}rem;
+  font-size: #{math.div(12, $base-font-size)}rem;
   display: flex;
   justify-content: space-between;
 }
 
 .editor__unsaved-changes {
-  margin-left: #{2 / $base-font-size}rem;
+  margin-left: #{math.div(2, $base-font-size)}rem;
 }
 
 /** Inline abbreviation preview */
@@ -413,8 +420,8 @@ pre.CodeMirror-line {
   }
   & .CodeMirror {
     height: auto;
-    max-width: #{400 / $base-font-size}rem;
-    max-height: #{300 / $base-font-size}rem;
+    max-width: #{math.div(400, $base-font-size)}rem;
+    max-height: #{math.div(300, $base-font-size)}rem;
     border: none;
   }
 }
