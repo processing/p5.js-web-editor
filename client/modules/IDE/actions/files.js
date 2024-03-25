@@ -89,25 +89,22 @@ export function handleCreateFile(formProps, setSelected = true) {
     const { files } = state;
     const { parentId } = state.ide;
     const projectId = state.project.id;
-    return new Promise((resolve) => {
-      submitFile(formProps, files, parentId, projectId)
-        .then((response) => {
-          const { file, updatedAt } = response;
-          dispatch(createFile(file, parentId));
-          if (updatedAt) dispatch(setProjectSavedTime(updatedAt));
-          dispatch(closeNewFileModal());
-          dispatch(setUnsavedChanges(true));
-          if (setSelected) {
-            dispatch(setSelectedFile(file.id));
-          }
-          resolve();
-        })
-        .catch((error) => {
-          const { response } = error;
-          dispatch(createError(response.data));
-          resolve({ error });
-        });
-    });
+    submitFile(formProps, files, parentId, projectId)
+      .then((response) => {
+        const { file, updatedAt } = response;
+        dispatch(createFile(file, parentId));
+        if (updatedAt) dispatch(setProjectSavedTime(updatedAt));
+        dispatch(closeNewFileModal());
+        dispatch(setUnsavedChanges(true));
+        if (setSelected) {
+          dispatch(setSelectedFile(file.id));
+        }
+      })
+      .catch((error) => {
+        const { response } = error;
+        dispatch(createError(response.data));
+        return { error };
+      });
   };
 }
 
@@ -149,22 +146,19 @@ export function handleCreateFolder(formProps) {
     const { files } = state;
     const { parentId } = state.ide;
     const projectId = state.project.id;
-    return new Promise((resolve) => {
-      submitFolder(formProps, files, parentId, projectId)
-        .then((response) => {
-          const { file, updatedAt } = response;
-          dispatch(createFile(file, parentId));
-          if (updatedAt) dispatch(setProjectSavedTime(updatedAt));
-          dispatch(closeNewFolderModal());
-          dispatch(setUnsavedChanges(true));
-          resolve();
-        })
-        .catch((error) => {
-          const { response } = error;
-          dispatch(createError(response.data));
-          resolve({ error });
-        });
-    });
+    return submitFolder(formProps, files, parentId, projectId)
+      .then((response) => {
+        const { file, updatedAt } = response;
+        dispatch(createFile(file, parentId));
+        if (updatedAt) dispatch(setProjectSavedTime(updatedAt));
+        dispatch(closeNewFolderModal());
+        dispatch(setUnsavedChanges(true));
+      })
+      .catch((error) => {
+        const { response } = error;
+        dispatch(createError(response.data));
+        return { error };
+      });
   };
 }
 
