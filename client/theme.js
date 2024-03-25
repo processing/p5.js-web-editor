@@ -20,7 +20,7 @@ export const colors = {
   lightsteelblue: '#B0C4DE',
   dodgerblue: '#1E90FF',
   p5ContrastPink: ' #FFA9D9',
-
+  p5ContrastYellow: '#fff001',
   borderColor: ' #B5B5B5',
   outlineColor: '#0F9DD7'
 };
@@ -106,8 +106,8 @@ const baseThemes = {
           border: colors.p5jsPink
         },
         hover: {
-          foreground: grays.lightest,
-          background: colors.p5jsPink,
+          foreground: colors.p5jsPink,
+          background: colors.p5jsActivePink,
           border: colors.p5jsPink
         },
         active: {
@@ -194,8 +194,8 @@ const baseThemes = {
         },
         hover: {
           foreground: grays.lightest,
-          background: colors.p5jsPink,
-          border: colors.p5jsPink
+          background: colors.p5jsActivePink,
+          border: colors.p5jsActivePink
         },
         active: {
           foreground: grays.lightest,
@@ -253,8 +253,8 @@ export default {
       primary: {
         hover: {
           foreground: grays.dark,
-          background: colors.yellow,
-          border: colors.yellow
+          background: colors.p5ContrastYellow,
+          border: colors.p5ContrastYellow
         },
         active: {
           foreground: grays.dark
@@ -268,8 +268,8 @@ export default {
         },
         hover: {
           foreground: grays.dark,
-          background: colors.yellow,
-          border: colors.yellow
+          background: colors.p5ContrastYellow,
+          border: colors.p5ContrastYellow
         },
         active: {
           foreground: grays.dark
