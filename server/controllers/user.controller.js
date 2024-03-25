@@ -1,5 +1,4 @@
 import crypto from 'crypto';
-import async from 'async';
 
 import User from '../models/user';
 import mail from '../utils/mail';
@@ -22,19 +21,30 @@ export function userResponse(user) {
   };
 }
 
-const random = (done) => {
-  crypto.randomBytes(20, (err, buf) => {
-    const token = buf.toString('hex');
-    done(err, token);
+/**
+ * Create a new verification token.
+ * Note: can be done synchronously - https://nodejs.org/api/crypto.html#cryptorandombytessize-callback
+ * @return Promise<string>
+ */
+async function generateToken() {
+  return new Promise((resolve, reject) => {
+    crypto.randomBytes(20, (err, buf) => {
+      if (err) {
+        reject(err);
+      } else {
+        const token = buf.toString('hex');
+        resolve(token);
+      }
+    });
   });
-};
+}
 
-export function createUser(req, res, next) {
-  const { username, email } = req.body;
-  const { password } = req.body;
-  const emailLowerCase = email.toLowerCase();
-  const EMAIL_VERIFY_TOKEN_EXPIRY_TIME = Date.now() + 3600000 * 24; // 24 hours
-  random((tokenError, token) => {
+export async function createUser(req, res) {
+  try {
+    const { username, email, password } = req.body;
+    const emailLowerCase = email.toLowerCase();
+    const EMAIL_VERIFY_TOKEN_EXPIRY_TIME = Date.now() + 3600000 * 24; // 24 hours
+    const token = await generateToken();
     const user = new User({
       username,
       email: emailLowerCase,
@@ -43,348 +53,282 @@ export function createUser(req, res, next) {
       verifiedToken: token,
       verifiedTokenExpires: EMAIL_VERIFY_TOKEN_EXPIRY_TIME
     });
-
-    User.findByEmailAndUsername(email, username, (err, existingUser) => {
-      if (err) {
-        res.status(404).send({ error: err });
-        return;
+    const existingUser = await User.findByEmailAndUsername(email, username);
+    if (existingUser) {
+      const fieldInUse =
+        existingUser.email.toLowerCase() === emailLowerCase
+          ? 'Email'
+          : 'Username';
+      res.status(422).send({ error: `${fieldInUse} is in use` });
+      return;
+    }
+    await user.save();
+    req.logIn(user, (loginErr) => {
+      if (loginErr) {
+        throw loginErr;
       }
-
-      if (existingUser) {
-        const fieldInUse =
-          existingUser.email.toLowerCase() === emailLowerCase
-            ? 'Email'
-            : 'Username';
-        res.status(422).send({ error: `${fieldInUse} is in use` });
-        return;
-      }
-      user.save((saveErr) => {
-        if (saveErr) {
-          next(saveErr);
-          return;
-        }
-        req.logIn(user, (loginErr) => {
-          if (loginErr) {
-            next(loginErr);
-            return;
-          }
-
-          const protocol =
-            process.env.NODE_ENV === 'production' ? 'https' : 'http';
-          const mailOptions = renderEmailConfirmation({
-            body: {
-              domain: `${protocol}://${req.headers.host}`,
-              link: `${protocol}://${req.headers.host}/verify?t=${token}`
-            },
-            to: req.user.email
-          });
-
-          mail.send(mailOptions, (mailErr, result) => {
-            // eslint-disable-line no-unused-vars
-            res.json(userResponse(req.user));
-          });
-        });
-      });
     });
-  });
+
+    const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
+    const mailOptions = renderEmailConfirmation({
+      body: {
+        domain: `${protocol}://${req.headers.host}`,
+        link: `${protocol}://${req.headers.host}/verify?t=${token}`
+      },
+      to: req.user.email
+    });
+
+    await mail.send(mailOptions);
+    res.json(userResponse(req.user));
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
 }
 
-export function duplicateUserCheck(req, res) {
+export async function duplicateUserCheck(req, res) {
   const checkType = req.query.check_type;
   const value = req.query[checkType];
   const options = { caseInsensitive: true, valueType: checkType };
-  User.findByEmailOrUsername(value, options, (err, user) => {
-    if (user) {
-      return res.json({
-        exists: true,
-        message: `This ${checkType} is already taken.`,
-        type: checkType
-      });
-    }
+  const user = await User.findByEmailOrUsername(value, options);
+  if (user) {
     return res.json({
-      exists: false,
+      exists: true,
+      message: `This ${checkType} is already taken.`,
       type: checkType
     });
+  }
+  return res.json({
+    exists: false,
+    type: checkType
   });
 }
 
-export function updatePreferences(req, res) {
-  User.findById(req.user.id, (err, user) => {
-    if (err) {
-      res.status(500).json({ error: err });
-      return;
-    }
+export async function updatePreferences(req, res) {
+  try {
+    const user = await User.findById(req.user.id).exec();
     if (!user) {
-      res.status(404).json({ error: 'Document not found' });
+      res.status(404).json({ error: 'User not found' });
       return;
     }
-
-    const preferences = Object.assign(
-      {},
-      user.preferences,
-      req.body.preferences
-    );
-    user.preferences = preferences;
-
-    user.save((saveErr) => {
-      if (saveErr) {
-        res.status(500).json({ error: saveErr });
-        return;
-      }
-
-      res.json(user.preferences);
-    });
-  });
+    // Shallow merge the new preferences with the existing.
+    user.preferences = { ...user.preferences, ...req.body.preferences };
+    await user.save();
+    res.json(user.preferences);
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
 }
 
-export function resetPasswordInitiate(req, res) {
-  async.waterfall(
-    [
-      random,
-      (token, done) => {
-        User.findByEmail(req.body.email, (err, user) => {
-          if (!user) {
-            res.json({
-              success: true,
-              message:
-                'If the email is registered with the editor, an email has been sent.'
-            });
-            return;
-          }
-          user.resetPasswordToken = token;
-          user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
-
-          user.save((saveErr) => {
-            done(saveErr, token, user);
-          });
-        });
-      },
-      (token, user, done) => {
-        const protocol =
-          process.env.NODE_ENV === 'production' ? 'https' : 'http';
-        const mailOptions = renderResetPassword({
-          body: {
-            domain: `${protocol}://${req.headers.host}`,
-            link: `${protocol}://${req.headers.host}/reset-password/${token}`
-          },
-          to: user.email
-        });
-
-        mail.send(mailOptions, done);
-      }
-    ],
-    (err) => {
-      if (err) {
-        console.log(err);
-        res.json({ success: false });
-        return;
-      }
+export async function resetPasswordInitiate(req, res) {
+  try {
+    const token = await generateToken();
+    const user = await User.findByEmail(req.body.email);
+    if (!user) {
       res.json({
         success: true,
         message:
           'If the email is registered with the editor, an email has been sent.'
       });
+      return;
     }
-  );
+    user.resetPasswordToken = token;
+    user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+
+    await user.save();
+    const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
+    const mailOptions = renderResetPassword({
+      body: {
+        domain: `${protocol}://${req.headers.host}`,
+        link: `${protocol}://${req.headers.host}/reset-password/${token}`
+      },
+      to: user.email
+    });
+
+    await mail.send(mailOptions);
+    res.json({
+      success: true,
+      message:
+        'If the email is registered with the editor, an email has been sent.'
+    });
+  } catch (err) {
+    console.log(err);
+    res.json({ success: false });
+  }
 }
 
-export function validateResetPasswordToken(req, res) {
-  User.findOne(
-    {
-      resetPasswordToken: req.params.token,
-      resetPasswordExpires: { $gt: Date.now() }
-    },
-    (err, user) => {
-      if (!user) {
-        res.status(401).json({
-          success: false,
-          message: 'Password reset token is invalid or has expired.'
-        });
-        return;
-      }
-      res.json({ success: true });
-    }
-  );
+export async function validateResetPasswordToken(req, res) {
+  const user = await User.findOne({
+    resetPasswordToken: req.params.token,
+    resetPasswordExpires: { $gt: Date.now() }
+  }).exec();
+  if (!user) {
+    res.status(401).json({
+      success: false,
+      message: 'Password reset token is invalid or has expired.'
+    });
+    return;
+  }
+  res.json({ success: true });
 }
 
-export function emailVerificationInitiate(req, res) {
-  async.waterfall([
-    random,
-    (token, done) => {
-      User.findById(req.user.id, (err, user) => {
-        if (err) {
-          res.status(500).json({ error: err });
-          return;
-        }
-        if (!user) {
-          res.status(404).json({ error: 'Document not found' });
-          return;
-        }
-
-        if (user.verified === User.EmailConfirmation.Verified) {
-          res.status(409).json({ error: 'Email already verified' });
-          return;
-        }
-
-        const protocol =
-          process.env.NODE_ENV === 'production' ? 'https' : 'http';
-        const mailOptions = renderEmailConfirmation({
-          body: {
-            domain: `${protocol}://${req.headers.host}`,
-            link: `${protocol}://${req.headers.host}/verify?t=${token}`
-          },
-          to: user.email
-        });
-
-        mail.send(mailOptions, (mailErr, result) => {
-          // eslint-disable-line no-unused-vars
-          if (mailErr != null) {
-            res.status(500).send({ error: 'Error sending mail' });
-          } else {
-            const EMAIL_VERIFY_TOKEN_EXPIRY_TIME = Date.now() + 3600000 * 24; // 24 hours
-            user.verified = User.EmailConfirmation.Resent;
-            user.verifiedToken = token;
-            user.verifiedTokenExpires = EMAIL_VERIFY_TOKEN_EXPIRY_TIME; // 24 hours
-            user.save();
-
-            res.json(userResponse(req.user));
-          }
-        });
-      });
+export async function emailVerificationInitiate(req, res) {
+  try {
+    const token = await generateToken();
+    const user = await User.findById(req.user.id).exec();
+    if (!user) {
+      res.status(404).json({ error: 'User not found' });
+      return;
     }
-  ]);
+    if (user.verified === User.EmailConfirmation.Verified) {
+      res.status(409).json({ error: 'Email already verified' });
+      return;
+    }
+    const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
+    const mailOptions = renderEmailConfirmation({
+      body: {
+        domain: `${protocol}://${req.headers.host}`,
+        link: `${protocol}://${req.headers.host}/verify?t=${token}`
+      },
+      to: user.email
+    });
+    try {
+      await mail.send(mailOptions);
+    } catch (mailErr) {
+      res.status(500).send({ error: 'Error sending mail' });
+      return;
+    }
+    const EMAIL_VERIFY_TOKEN_EXPIRY_TIME = Date.now() + 3600000 * 24; // 24 hours
+    user.verified = User.EmailConfirmation.Resent;
+    user.verifiedToken = token;
+    user.verifiedTokenExpires = EMAIL_VERIFY_TOKEN_EXPIRY_TIME; // 24 hours
+    await user.save();
+
+    res.json(userResponse(req.user));
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
 }
 
-export function verifyEmail(req, res) {
+export async function verifyEmail(req, res) {
   const token = req.query.t;
-
-  User.findOne(
-    { verifiedToken: token, verifiedTokenExpires: { $gt: new Date() } },
-    (err, user) => {
-      if (!user) {
-        res.status(401).json({
-          success: false,
-          message: 'Token is invalid or has expired.'
-        });
-        return;
-      }
-
-      user.verified = User.EmailConfirmation.Verified;
-      user.verifiedToken = null;
-      user.verifiedTokenExpires = null;
-      user.save().then((result) => {
-        // eslint-disable-line
-        res.json({ success: true });
-      });
-    }
-  );
+  const user = await User.findOne({
+    verifiedToken: token,
+    verifiedTokenExpires: { $gt: new Date() }
+  }).exec();
+  if (!user) {
+    res.status(401).json({
+      success: false,
+      message: 'Token is invalid or has expired.'
+    });
+    return;
+  }
+  user.verified = User.EmailConfirmation.Verified;
+  user.verifiedToken = null;
+  user.verifiedTokenExpires = null;
+  await user.save();
+  res.json({ success: true });
 }
 
-export function updatePassword(req, res) {
-  User.findOne(
-    {
-      resetPasswordToken: req.params.token,
-      resetPasswordExpires: { $gt: Date.now() }
-    },
-    (err, user) => {
-      if (!user) {
-        res.status(401).json({
-          success: false,
-          message: 'Password reset token is invalid or has expired.'
-        });
-        return;
-      }
+export async function updatePassword(req, res) {
+  const user = await User.findOne({
+    resetPasswordToken: req.params.token,
+    resetPasswordExpires: { $gt: Date.now() }
+  }).exec();
+  if (!user) {
+    res.status(401).json({
+      success: false,
+      message: 'Password reset token is invalid or has expired.'
+    });
+    return;
+  }
 
-      user.password = req.body.password;
-      user.resetPasswordToken = undefined;
-      user.resetPasswordExpires = undefined;
+  user.password = req.body.password;
+  user.resetPasswordToken = undefined;
+  user.resetPasswordExpires = undefined;
 
-      user.save((saveErr) => {
-        req.logIn(user, (loginErr) => res.json(userResponse(req.user)));
-      });
-    }
-  );
-
+  await user.save();
+  req.logIn(user, (loginErr) => res.json(userResponse(req.user)));
   // eventually send email that the password has been reset
 }
 
-export function userExists(username, callback) {
-  User.findByUsername(username, (err, user) =>
-    user ? callback(true) : callback(false)
-  );
+/**
+ * @param {string} username
+ * @return {Promise<boolean>}
+ */
+export async function userExists(username) {
+  const user = await User.findByUsername(username);
+  return user != null;
 }
 
-export function saveUser(res, user) {
-  user.save((saveErr) => {
-    if (saveErr) {
-      res.status(500).json({ error: saveErr });
-      return;
-    }
-
+/**
+ * Updates the user object and sets the response.
+ * Response is the user or a 500 error.
+ * @param res
+ * @param user
+ */
+export async function saveUser(res, user) {
+  try {
+    await user.save();
     res.json(userResponse(user));
-  });
+  } catch (error) {
+    res.status(500).json({ error });
+  }
 }
 
-export function updateSettings(req, res) {
-  User.findById(req.user.id, (err, user) => {
-    if (err) {
-      res.status(500).json({ error: err });
-      return;
-    }
+export async function updateSettings(req, res) {
+  try {
+    const user = await User.findById(req.user.id);
     if (!user) {
-      res.status(404).json({ error: 'Document not found' });
+      res.status(404).json({ error: 'User not found' });
       return;
     }
-
     user.username = req.body.username;
 
     if (req.body.currentPassword) {
-      user.comparePassword(req.body.currentPassword, (passwordErr, isMatch) => {
-        if (passwordErr) throw passwordErr;
-        if (!isMatch) {
-          res.status(401).json({ error: 'Current password is invalid.' });
-          return;
-        }
-        user.password = req.body.newPassword;
-        saveUser(res, user);
-      });
+      const isMatch = await user.comparePassword(req.body.currentPassword);
+      if (!isMatch) {
+        res.status(401).json({ error: 'Current password is invalid.' });
+        return;
+      }
+      user.password = req.body.newPassword;
+      await saveUser(res, user);
     } else if (user.email !== req.body.email) {
       const EMAIL_VERIFY_TOKEN_EXPIRY_TIME = Date.now() + 3600000 * 24; // 24 hours
       user.verified = User.EmailConfirmation.Sent;
 
       user.email = req.body.email;
 
-      random((error, token) => {
-        user.verifiedToken = token;
-        user.verifiedTokenExpires = EMAIL_VERIFY_TOKEN_EXPIRY_TIME;
+      const token = await generateToken();
+      user.verifiedToken = token;
+      user.verifiedTokenExpires = EMAIL_VERIFY_TOKEN_EXPIRY_TIME;
 
-        saveUser(res, user);
+      await saveUser(res, user);
 
-        const protocol =
-          process.env.NODE_ENV === 'production' ? 'https' : 'http';
-        const mailOptions = renderEmailConfirmation({
-          body: {
-            domain: `${protocol}://${req.headers.host}`,
-            link: `${protocol}://${req.headers.host}/verify?t=${token}`
-          },
-          to: user.email
-        });
-
-        mail.send(mailOptions);
+      const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
+      const mailOptions = renderEmailConfirmation({
+        body: {
+          domain: `${protocol}://${req.headers.host}`,
+          link: `${protocol}://${req.headers.host}/verify?t=${token}`
+        },
+        to: user.email
       });
+
+      await mail.send(mailOptions);
     } else {
-      saveUser(res, user);
+      await saveUser(res, user);
     }
-  });
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
 }
 
-export function unlinkGithub(req, res) {
+export async function unlinkGithub(req, res) {
   if (req.user) {
     req.user.github = undefined;
     req.user.tokens = req.user.tokens.filter(
       (token) => token.kind !== 'github'
     );
-    saveUser(res, req.user);
+    await saveUser(res, req.user);
     return;
   }
   res.status(404).json({
@@ -393,13 +337,13 @@ export function unlinkGithub(req, res) {
   });
 }
 
-export function unlinkGoogle(req, res) {
+export async function unlinkGoogle(req, res) {
   if (req.user) {
     req.user.google = undefined;
     req.user.tokens = req.user.tokens.filter(
       (token) => token.kind !== 'google'
     );
-    saveUser(res, req.user);
+    await saveUser(res, req.user);
     return;
   }
   res.status(404).json({
@@ -408,19 +352,17 @@ export function unlinkGoogle(req, res) {
   });
 }
 
-export function updateCookieConsent(req, res) {
-  User.findById(req.user.id, (err, user) => {
-    if (err) {
-      res.status(500).json({ error: err });
-      return;
-    }
+export async function updateCookieConsent(req, res) {
+  try {
+    const user = await User.findById(req.user.id).exec();
     if (!user) {
-      res.status(404).json({ error: 'Document not found' });
+      res.status(404).json({ error: 'User not found' });
       return;
     }
-
     const { cookieConsent } = req.body;
     user.cookieConsent = cookieConsent;
-    saveUser(res, user);
-  });
+    await saveUser(res, user);
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
 }
