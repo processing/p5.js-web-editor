@@ -71,7 +71,7 @@ const CollectionCreate = () => {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder={t('CollectionCreate.DescriptionPlaceholder')}
-              rows="4"
+              rows="6"
             />
           </p>
           <Button type="submit" disabled={invalid}>
