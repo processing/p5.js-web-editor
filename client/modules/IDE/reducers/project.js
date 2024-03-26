@@ -8,7 +8,8 @@ const initialState = () => {
   return {
     name: generatedName,
     updatedAt: '',
-    isSaving: false
+    isSaving: false,
+    visibility: 'Public'
   };
 };
 
@@ -25,7 +26,8 @@ const project = (state, action) => {
         name: action.project.name,
         updatedAt: action.project.updatedAt,
         owner: action.owner,
-        isSaving: false
+        isSaving: false,
+        visibility: action.project.visibility
       };
     case ActionTypes.SET_PROJECT:
       return {
@@ -33,7 +35,8 @@ const project = (state, action) => {
         name: action.project.name,
         updatedAt: action.project.updatedAt,
         owner: action.owner,
-        isSaving: false
+        isSaving: false,
+        visibility: action.project.visibility
       };
     case ActionTypes.RESET_PROJECT:
       return initialState();

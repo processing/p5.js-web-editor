@@ -24,6 +24,8 @@ import getConfig from '../../../utils/getConfig';
 
 import ArrowUpIcon from '../../../images/sort-arrow-up.svg';
 import ArrowDownIcon from '../../../images/sort-arrow-down.svg';
+import Button from '../../../common/Button';
+import { LockIcon } from '../../../common/icons';
 
 const ROOT_URL = getConfig('API_URL');
 
@@ -35,10 +37,23 @@ class SketchListRowBase extends React.Component {
     super(props);
     this.state = {
       renameOpen: false,
-      renameValue: props.sketch.name
+      renameValue: props.sketch.name,
+      newVisibility: props.sketch.visibility || 'Public',
+      visibleDialogOpen: false
     };
     this.renameInput = React.createRef();
   }
+
+  toggleVisibility = () => {
+    this.setState((prev) => ({
+      newVisibility: prev.newVisibility === 'Public' ? 'Private' : 'Public'
+    }));
+    this.props.changeVisibility(
+      this.props.sketch.id,
+      this.state.newVisibility === 'Public' ? 'Private' : 'Public'
+    );
+    this.setState({ visibleDialogOpen: false });
+  };
 
   openRename = () => {
     this.setState(
@@ -137,6 +152,12 @@ class SketchListRowBase extends React.Component {
             {this.props.t('SketchList.DropdownDuplicate')}
           </MenuItem>
           <MenuItem
+            hideIf={!userIsOwner}
+            onClick={() => this.setState({ visibleDialogOpen: true })}
+          >
+            Change Visibility
+          </MenuItem>
+          <MenuItem
             hideIf={!this.props.user.authenticated}
             onClick={() => {
               this.props.onAddToCollection();
@@ -165,6 +186,14 @@ class SketchListRowBase extends React.Component {
     if (username === 'p5') {
       url = `/${username}/sketches/${slugify(sketch.name, '_')}`;
     }
+    const title = (
+      <p>
+        Make {this.props.sketch.name}{' '}
+        <span className="sketch-visibility__title">
+          {this.state.newVisibility === 'Private' ? 'Public' : 'Private'}
+        </span>
+      </p>
+    );
 
     const name = (
       <React.Fragment>
@@ -179,6 +208,56 @@ class SketchListRowBase extends React.Component {
             ref={this.renameInput}
           />
         )}
+
+        {this.state.visibleDialogOpen && (
+          <Overlay
+            title={title}
+            closeOverlay={() => this.setState({ visibleDialogOpen: false })}
+          >
+            {/* TODO: these <li> should come from translate.json */}
+            <div className="sketch-visibility">
+              {this.state.newVisibility === 'Public' ? (
+                <ul className="sketch-visibility_ul">
+                  <li>
+                    Your sketch will stay private and will not be seen by
+                    others.
+                  </li>
+                  <li>
+                    Others will not be able to copy, change, or even see your
+                    sketch.
+                  </li>
+                  <li>This keeps your work safe and private.</li>
+
+                  <li>
+                    you can focus on being creative without worrying about
+                    others seeing your work.
+                  </li>
+                  <li>
+                    You can always come back and adjust who can see your sketch.
+                  </li>
+                </ul>
+              ) : (
+                <ul className="sketch-visibility_ul">
+                  <li>Your sketch will be visible to everyone.</li>
+                  <li>Others can copy, edit, or just check out your sketch.</li>
+
+                  <li>
+                    This helps everyone share ideas and be more creative
+                    together.
+                  </li>
+                  <li>
+                    You can always change who can see your sketch whenever you
+                    want.
+                  </li>
+                </ul>
+              )}
+
+              <Button onClick={this.toggleVisibility}>
+                I have read and understand these effects
+              </Button>
+            </div>
+          </Overlay>
+        )}
       </React.Fragment>
     );
 
@@ -189,7 +268,9 @@ class SketchListRowBase extends React.Component {
           key={sketch.id}
           onClick={this.handleRowClick}
         >
-          <th scope="row">{name}</th>
+          <th scope="row" className="sketches-table_name">
+            {this.state.newVisibility === 'Private' && <LockIcon />} {name}
+          </th>
           <td>{formatDateCell(sketch.createdAt, mobile)}</td>
           <td>{formatDateCell(sketch.updatedAt, mobile)}</td>
           {this.renderDropdown()}
@@ -204,7 +285,8 @@ SketchListRowBase.propTypes = {
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     createdAt: PropTypes.string.isRequired,
-    updatedAt: PropTypes.string.isRequired
+    updatedAt: PropTypes.string.isRequired,
+    visibility: PropTypes.string
   }).isRequired,
   username: PropTypes.string.isRequired,
   user: PropTypes.shape({
@@ -216,6 +298,7 @@ SketchListRowBase.propTypes = {
   cloneProject: PropTypes.func.isRequired,
   changeProjectName: PropTypes.func.isRequired,
   onAddToCollection: PropTypes.func.isRequired,
+  changeVisibility: PropTypes.func.isRequired,
   mobile: PropTypes.bool,
   t: PropTypes.func.isRequired
 };
@@ -241,7 +324,6 @@ class SketchList extends React.Component {
     super(props);
     this.props.getProjects(this.props.username);
     this.props.resetSorting();
-
     this.state = {
       isInitialDataLoad: true
     };
@@ -354,6 +436,7 @@ class SketchList extends React.Component {
   };
 
   render() {
+    // const userIsOwner = this.props.user.username === this.props.username;
     const username =
       this.props.username !== undefined
         ? this.props.username
@@ -438,7 +521,8 @@ SketchList.propTypes = {
       id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
       createdAt: PropTypes.string.isRequired,
-      updatedAt: PropTypes.string.isRequired
+      updatedAt: PropTypes.string.isRequired,
+      visibility: PropTypes.string
     })
   ).isRequired,
   username: PropTypes.string,

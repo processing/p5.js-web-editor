@@ -38,6 +38,10 @@ const projectSchema = new Schema(
     serveSecure: { type: Boolean, default: false },
     files: { type: [fileSchema] },
     _id: { type: String, default: shortid.generate },
+    visibility: {
+      type: String,
+      enum: ['Private', 'Public']
+    },
     slug: { type: String }
   },
   { timestamps: true, usePushEach: true }
@@ -57,7 +61,7 @@ projectSchema.pre('save', function generateSlug(next) {
   if (!project.slug) {
     project.slug = slugify(project.name, '_');
   }
-
+  project.visibility = 'Public';
   return next();
 });
 

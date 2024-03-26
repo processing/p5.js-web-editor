@@ -410,3 +410,26 @@ export function deleteProject(id) {
       });
   };
 }
+
+export function changeVisibility(projectId, visibility) {
+  return (dispatch) =>
+    apiClient
+      .patch('/project/visibility', { projectId, visibility })
+      .then((response) => {
+        const { visibility: newVisibility } = response.data;
+
+        dispatch({
+          type: ActionTypes.CHANGE_VISIBILITY,
+          payload: { visibility: response.data.visibility }
+        });
+
+        dispatch(setToastText(`Sketch is ${newVisibility}`));
+        dispatch(showToast(2000));
+      })
+      .catch((error) => {
+        dispatch({
+          type: ActionTypes.ERROR,
+          error: error?.response?.data
+        });
+      });
+}
