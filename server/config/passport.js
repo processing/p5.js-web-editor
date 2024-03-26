@@ -6,6 +6,7 @@ import passport from 'passport';
 import GitHubStrategy from 'passport-github2';
 import LocalStrategy from 'passport-local';
 import GoogleStrategy from 'passport-google-oauth20';
+import LdapStrategy from 'passport-ldapauth';
 import { BasicStrategy } from 'passport-http';
 
 import User from '../models/user';
@@ -34,28 +35,76 @@ passport.deserializeUser((id, done) => {
 /**
  * Sign in using Email/Username and Password.
  */
-passport.use(
-  new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
-    User.findByEmailOrUsername(email)
-      .then((user) => {
-        if (!user) {
-          done(null, false, { msg: `Email ${email} not found.` });
-          return;
-        } else if (user.banned) {
-          done(null, false, { msg: accountSuspensionMessage });
-          return;
-        }
-        user.comparePassword(password).then((isMatch) => {
-          if (isMatch) {
-            done(null, user);
-          } else {
-            done(null, false, { msg: 'Invalid email or password.' });
+const useLdap = process.env.USE_LDAP === 'true';
+if (!useLdap) {
+  passport.use(
+    new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
+      User.findByEmailOrUsername(email)
+        .then((user) => {
+          if (!user) {
+            done(null, false, { msg: `Email ${email} not found.` });
+            return;
+          } else if (user.banned) {
+            done(null, false, { msg: accountSuspensionMessage });
+            return;
           }
-        });
-      })
-      .catch((err) => done(null, false, { msg: err }));
-  })
-);
+          user.comparePassword(password).then((isMatch) => {
+            if (isMatch) {
+              done(null, user);
+            } else {
+              done(null, false, { msg: 'Invalid email or password.' });
+            }
+          });
+        })
+        .catch((err) => done(null, false, { msg: err }));
+    })
+  );
+} else {
+  // if (useLdap)
+  passport.use(
+    new LdapStrategy(
+      {
+        server: {
+          url: process.env.LDAP_URL,
+          bindDN: process.env.LDAP_BIND_DN,
+          bindCredentials: process.env.LDAP_BIND_CREDENTIALS,
+          searchBase: process.env.LDAP_USER_SEARCH_BASE,
+          searchFilter:
+            process.env.LDAP_USER_SEARCH_FILTER ||
+            '(|(uid={{username}})(mail={{username}}))'
+        },
+        usernameField: 'email'
+      },
+      (ldapUser, done) => {
+        const email = ldapUser[process.env.LDAP_MAIL_ATTR || 'mail'];
+        const username = ldapUser[process.env.LDAP_USER_ATTR || 'uid'];
+        const displayName = ldapUser[process.env.LDAP_DISPLAY_ATTR || 'cn'];
+        User.findByEmailAndUsername(email, username)
+          .then(async (user) => {
+            if (!user) {
+              const newUser = new User({
+                name: displayName,
+                username,
+                email,
+                verified: User.EmailConfirmation.Verified
+              });
+              await newUser.save();
+              return newUser;
+            }
+            return user;
+          })
+          .then((user) => {
+            if (user.banned) {
+              done(null, false, { msg: accountSuspensionMessage });
+              return;
+            }
+            done(null, user);
+          })
+          .catch((err) => done(null, false, { msg: err }));
+      }
+    )
+  );
+}
 
 /**
  * Authentificate using Basic Auth (Username + Api Key)
