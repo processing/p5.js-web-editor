@@ -65,10 +65,6 @@
   display: none;
 }
 
-.quick-add__in-icon {
-  display: inline-block;
-}
-
 .quick-add__icon--in-collection .quick-add__in-icon {
   @include themify() {
     // icon graphic
@@ -87,6 +83,26 @@
   transform: rotate(45deg);
 }
 
+.quick-add__icon--in-collection {
+  .quick-add__remove-icon {
+    display: inline-block;
+  }
+
+  .quick-add__add-icon {
+    display: none;
+  }
+}
+
+.quick-add__icon--not-in-collection {
+  .quick-add__add-icon {
+    display: inline-block;
+  }
+
+  .quick-add__remove-icon {
+    display: none;
+  }
+}
+
 .quick-add__item:hover,
 .quick-add__item-toggle:hover,
 .quick-add__item-toggle:focus {
@@ -98,30 +114,6 @@
 
     & .quick-add__icon path:first-child {
       fill: getThemifyVariable('table-button-background-hover-color');
-    }
-  }
-
-  & .quick-add__in-icon {
-    display: none;
-  }
-
-  & .quick-add__icon--in-collection {
-    .quick-add__remove-icon {
-      display: inline-block;
-    }
-
-    .quick-add__add-icon {
-      display: none;
-    }
-  }
-
-  & .quick-add__icon--not-in-collection {
-    .quick-add__add-icon {
-      display: inline-block;
-    }
-
-    .quick-add__remove-icon {
-      display: none;
     }
   }
 }
