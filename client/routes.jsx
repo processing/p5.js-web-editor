@@ -17,7 +17,7 @@ import NewPasswordView from './modules/User/pages/NewPasswordView';
 import AccountView from './modules/User/pages/AccountView';
 import CollectionView from './modules/User/pages/CollectionView';
 import DashboardView from './modules/User/pages/DashboardView';
-import createRedirectWithUsername from './components/createRedirectWithUsername';
+import RedirectToUser from './components/createRedirectWithUsername';
 import { getUser } from './modules/User/actions';
 import {
   userIsAuthenticated,
@@ -84,11 +84,11 @@ const routes = (
 
     <Route
       path="/sketches"
-      component={createRedirectWithUsername('/:username/sketches')}
+      component={() => <RedirectToUser url="/:username/sketches" />}
     />
     <Route
       path="/assets"
-      component={createRedirectWithUsername('/:username/assets')}
+      component={() => <RedirectToUser url="/:username/assets" />}
     />
     <Route path="/account" component={userIsAuthenticated(AccountView)} />
     <Route path="/about" component={IDEView} />
