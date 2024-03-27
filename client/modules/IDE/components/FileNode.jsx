@@ -210,6 +210,12 @@ class FileNode extends React.Component {
     }
   };
 
+  handleKeyDown = (event) => {
+    if (event.key === 'Delete') {
+      this.handleClickDelete();
+    }
+  };
+
   hideFileOptions = () => {
     this.setState({ isOptionsOpen: false });
   };
@@ -303,6 +309,7 @@ class FileNode extends React.Component {
               className="sidebar__file-item-name"
               onClick={this.handleFileClick}
               data-testid="file-name"
+              onKeyDown={this.handleKeyDown}
             >
               <FileName name={this.state.updatedName} />
             </button>
