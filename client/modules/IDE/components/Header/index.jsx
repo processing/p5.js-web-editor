@@ -9,8 +9,10 @@ const Header = (props) => {
   const project = useSelector((state) => state.project);
 
   return (
-    <header>
-      <Nav />
+    <div>
+      <nav>
+        <Nav />
+      </nav>
       <MediaQuery minWidth={770}>
         {(matches) => {
           if (matches)
@@ -23,7 +25,7 @@ const Header = (props) => {
           return null;
         }}
       </MediaQuery>
-    </header>
+    </div>
   );
 };
 
