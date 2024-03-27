@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
-import CheckIcon from '../../../../images/check_encircled.svg';
 import CloseIcon from '../../../../images/close.svg';
+import CheckIcon from '../../../../images/check_encircled.svg';
 
 const Icons = ({ isAdded }) => {
   const classes = [
@@ -21,12 +20,6 @@ const Icons = ({ isAdded }) => {
         focusable="false"
       />
       <CheckIcon
-        className="quick-add__in-icon"
-        role="img"
-        aria-label="Descending"
-        focusable="false"
-      />
-      <CloseIcon
         className="quick-add__add-icon"
         role="img"
         aria-label="Descending"
