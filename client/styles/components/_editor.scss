@@ -91,7 +91,7 @@ pre.CodeMirror-line {
   position: fixed;
   top: 0;
   left: 50%;
-  margin-left: math.div(552 * 0.5, $base-font-size);
+  margin-left: #{math.div(-552 * 0.5, $base-font-size)}rem;
   
   @media (max-width: 770px) {
     left: 0;
@@ -100,7 +100,7 @@ pre.CodeMirror-line {
     margin-left: 0;
   }
 
-  z-index: 1;
+  z-index: 10;
 
   width: 580px;
   font-family: Montserrat, sans-serif;
@@ -139,8 +139,11 @@ pre.CodeMirror-line {
 }
 
 .CodeMirror-find-controls {
+  width: 100%;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  height: #{math.div(35, $base-font-size)}rem;
 }
 .CodeMirror-search-inputs {
   width: 30%;
@@ -152,9 +155,11 @@ pre.CodeMirror-line {
   align-items: center;
 }
 .CodeMirror-search-controls {
+  width: 60%;
   display: flex;
-  align-items: center;
-  justify-content: end;
+  flex-wrap: wrap-reverse;
+  justify-content: flex-start;
+  align-items: flex-end;
 }
 .CodeMirror-replace-controls {
   display: flex;
