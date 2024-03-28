@@ -278,6 +278,7 @@ const Console = () => {
             theme={theme}
             dispatchConsoleEvent={dispatchConsoleEvent}
             fontSize={fontSize}
+            placeholder={t('Console.Placeholder')}
           />
         )}
       </div>
