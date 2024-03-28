@@ -117,3 +117,25 @@
 // .form--inline [type="submit"][disabled] {
 //   cursor: not-allowed;
 // }
+
+.password-input-container {
+  position: relative;
+}
+
+.form__input {
+  padding-right: 35px; 
+}
+
+.show-hide-button {
+  position: absolute;
+  top: 50%;
+  right: 10px; 
+  transform: translateY(-50%);
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+
+:focus-visible {
+  outline-color: lightgreen;
+}
