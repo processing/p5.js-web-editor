@@ -1,21 +1,22 @@
+@use "sass:math";
+
 .sidebar {
   display: flex;
   flex-flow: column;
 }
 
 .sidebar__header {
-  padding-right: #{6 / $base-font-size}rem;
-  padding-left: #{19 / $base-font-size}rem;
+  padding: #{math.div(8, $base-font-size)}rem #{math.div(12, $base-font-size)}rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: #{29 / $base-font-size}rem;
-  min-height: #{29 / $base-font-size}rem;
+  min-height: #{math.div(29, $base-font-size)}rem;
   position: relative;
 }
 
 .sidebar__title {
-  font-size: #{12 / $base-font-size}rem;
+  font-size: #{math.div(16, $base-font-size)}rem;
+  font-weight: 500;
   display: inline-block;
   .sidebar--contracted & {
     display: none;
@@ -25,14 +26,20 @@
 }
 
 .sidebar__add {
-  width: #{20 / $base-font-size}rem;
-  height: #{20 / $base-font-size}rem;
-  @include icon();
+  padding: #{math.div(2, $base-font-size)}rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  & svg {
+    width: #{math.div(18, $base-font-size)}rem;
+    height: #{math.div(18, $base-font-size)}rem;
+  }
+  @include themify() {
+    background-color: getThemifyVariable('ide-border-color');
+  }
+
   .sidebar--contracted & {
     display: none;
-  }
-  & svg {
-    width: #{10 / $base-font-size}rem;
   }
 }
 
@@ -49,17 +56,26 @@
 .sidebar__root-item {
   position: relative;
   overflow-y: auto;
+  padding-top: #{math.div(6, $base-font-size)}rem;
   flex: 1 1 auto;
-  @include themify() {
-    border-top: 1px solid map-get($theme-map, 'ide-border-color');
+  @media (min-width: 770px) {
+    @include themify() {
+      border-top: 1px solid map-get($theme-map, 'ide-border-color');
+    }
   }
   .sidebar--contracted & {
     border: none;
   }
 }
 
+.file-item__children {
+  display: flex;
+  flex-direction: column;
+  gap: #{math.div(4, $base-font-size)}rem;
+}
+
 .sidebar__file-item {
-  font-size: #{12 / $base-font-size}rem;
+  font-size: #{math.div(12, $base-font-size)}rem;
   cursor: pointer;
   position: relative;
   @include themify() {
@@ -73,6 +89,11 @@
 
 .sidebar__file-item--folder {
   z-index: 1;
+  display: flex;
+  align-items: center;
+  > button {
+    padding-left: #{math.div(1, $base-font-size)}rem;
+  }
 }
 
 // to indent each row in the file tree
@@ -81,15 +102,15 @@
 .file-item__spacer {
   flex-shrink: 0;
   .sidebar__file-item & {
-    width: #{19 / $base-font-size}rem;
+    width: #{math.div(19, $base-font-size)}rem;
     .sidebar__file-item & {
-      width: #{39 / $base-font-size}rem;
+      width: #{math.div(39, $base-font-size)}rem;
       .sidebar__file-item & {
-        width: #{59 / $base-font-size}rem;
+        width: #{math.div(59, $base-font-size)}rem;
         .sidebar__file-item & {
-          width: #{79 / $base-font-size}rem;
+          width: #{math.div(79, $base-font-size)}rem;
           .sidebar__file-item & {
-            width: #{99 / $base-font-size}rem;
+            width: #{math.div(99, $base-font-size)}rem;
           }
         }
       }
@@ -114,7 +135,7 @@
   overflow-x: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  min-width: #{7 / $base-font-size}rem;
+  min-width: #{math.div(7, $base-font-size)}rem;
   white-space: pre;
 }
 
@@ -122,16 +143,16 @@
   display: flex;
   width: 100%;
   overflow: hidden;
-  min-width: #{50 / $base-font-size}rem;
+  min-width: #{math.div(50, $base-font-size)}rem;
   white-space: nowrap;
   text-align: left;
 }
 
 .sidebar__file-item-name {
-  padding: #{4 / $base-font-size}rem 0;
-  padding-right: #{25 / $base-font-size}rem;
+  padding: #{math.div(4, $base-font-size)}rem 0;
+  padding-right: #{math.div(25, $base-font-size)}rem;
   font-family: Inconsolata, monospace;
-  font-size: #{14 / $base-font-size}rem;
+  font-size: #{math.div(15, $base-font-size)}rem;
   overflow: hidden;
   .sidebar__file-item--editing & {
     display: none;
@@ -151,11 +172,11 @@
 }
 
 .sidebar__file-item-show-options {
-  width: #{20 / $base-font-size}rem;
-  height: #{20 / $base-font-size}rem;
+  width: #{math.div(20, $base-font-size)}rem;
+  height: #{math.div(20, $base-font-size)}rem;
   @include icon();
   @include themify() {
-    margin-right: #{5 / $base-font-size}rem;
+    margin-right: #{math.div(5, $base-font-size)}rem;
   }
   display: none;
   position: absolute;
@@ -173,7 +194,7 @@
     }
   }
   & svg {
-    width: #{10 / $base-font-size}rem;
+    width: #{math.div(10, $base-font-size)}rem;
   }
   .sidebar__file-item--open > .file-item__content & {
     display: inline-block;
@@ -184,7 +205,7 @@
   @extend %dropdown-open-right;
   display: none;
   width: 100%;
-  max-width: #{180 / $base-font-size}rem;
+  max-width: #{math.div(180, $base-font-size)}rem;
   .sidebar__file-item--open > .file-item__content & {
     display: flex;
   }
@@ -194,9 +215,9 @@
   display: none;
   padding: 0;
   border: 0;
-  width: calc(100% - #{63 / $base-font-size}rem);
+  width: calc(100% - #{math.div(63, $base-font-size)}rem);
   font-family: Inconsolata, monospace;
-  font-size: #{14 / $base-font-size}rem;
+  font-size: #{math.div(14, $base-font-size)}rem;
   .sidebar__file-item--editing & {
     display: inline-block;
   }
@@ -206,10 +227,10 @@
 .sidebar__contract {
   @include icon();
   position: absolute;
-  top: #{2 / $base-font-size}rem;
-  left: #{0 / $base-font-size}rem;
-  height: #{25 / $base-font-size}rem;
-  width: #{49 / $base-font-size}rem;
+  top: #{math.div(2, $base-font-size)}rem;
+  left: #{math.div(0, $base-font-size)}rem;
+  height: #{math.div(25, $base-font-size)}rem;
+  width: #{math.div(49, $base-font-size)}rem;
   border-radius: 2px;
   display: flex;
   justify-content: center;
@@ -257,21 +278,22 @@
 }
 
 .sidebar__folder-icon {
-  padding: #{4 / $base-font-size}rem 0;
-  margin-right: #{5 / $base-font-size}rem;
+  padding: #{math.div(4, $base-font-size)}rem 0;
+  margin-right: #{math.div(5, $base-font-size)}rem;
   & path {
     @include themify() {
       fill: map-get($theme-map, 'primary-text-color');
     }
   }
   & svg {
-    width: #{10 / $base-font-size}rem;
+    width: #{math.div(10, $base-font-size)}rem;
   }
 }
 
 .sidebar__file-item-icon {
-  padding: #{4 / $base-font-size}rem 0;
-  margin-right: #{5 / $base-font-size}rem;
+  margin-right: #{math.div(5, $base-font-size)}rem;
+  display: flex;
+  align-items: center;
   & path {
     @include themify() {
       fill: getThemifyVariable('secondary-text-color');
@@ -305,7 +327,7 @@
   @extend %dropdown-open-right;
   display: none;
   width: 100%;
-  max-width: #{180 / $base-font-size}rem;
+  max-width: #{math.div(180, $base-font-size)}rem;
   .sidebar--project-options & {
     display: flex;
   }

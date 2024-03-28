@@ -1,27 +1,28 @@
+@use "sass:math";
+
 .CodeMirror {
   font-family: Inconsolata, monospace;
   height: 100%;
 }
 
 .CodeMirror-linenumbers {
-	padding-right: #{10 / $base-font-size}rem;
-
+  padding-right: #{math.div(10, $base-font-size)}rem;
 }
 
 .CodeMirror-linenumber {
-	width: #{32 / $base-font-size}rem;
-  left: #{-3 / $base-font-size}rem !important;
+  width: #{math.div(32, $base-font-size)}rem;
+  left: #{math.div(-3, $base-font-size)}rem !important;
   @include themify() {
-    color: getThemifyVariable('inactive-text-color');
+    color: getThemifyVariable("inactive-text-color");
   }
 }
 
 .CodeMirror-lines {
-  padding-top: #{25 / $base-font-size}rem;
+  padding-top: #{math.div(25, $base-font-size)}rem;
 }
 
 pre.CodeMirror-line {
-	padding-left: #{5 / $base-font-size}rem;
+  padding-left: #{math.div(5, $base-font-size)}rem;
 }
 
 .CodeMirror-gutter-wrapper {
@@ -30,15 +31,18 @@ pre.CodeMirror-line {
   bottom: 0;
 }
 
-.CodeMirror-lint-marker-warning, .CodeMirror-lint-marker-error, .CodeMirror-lint-marker-multiple {
+.CodeMirror-lint-marker-warning,
+.CodeMirror-lint-marker-error,
+.CodeMirror-lint-marker-multiple {
   background-image: none;
-  width: #{49 / $base-font-size}rem;
+  width: #{math.div(49, $base-font-size)}rem;
   position: absolute;
   height: 100%;
   right: 100%;
 }
 
-.CodeMirror-lint-message-error, .CodeMirror-lint-message-warning {
+.CodeMirror-lint-message-error,
+.CodeMirror-lint-message-warning {
   background-image: none;
   padding-left: inherit;
 }
@@ -53,7 +57,7 @@ pre.CodeMirror-line {
 
 .CodeMirror-gutter-elt:not(.CodeMirror-linenumber) {
   opacity: 0.2;
-  width: #{49 / $base-font-size}rem !important;
+  width: #{math.div(49, $base-font-size)}rem !important;
   height: 100%;
   left: 49px !important;
   // background-color: rgb(255, 95, 82);
@@ -61,10 +65,10 @@ pre.CodeMirror-line {
 
 .CodeMirror-lint-tooltip {
   @include themify() {
-    background-color: getThemifyVariable('modal-background-color');
-    border: 1px solid getThemifyVariable('modal-border-color');
-    box-shadow: 0 12px 12px getThemifyVariable('shadow-color');
-    color: getThemifyVariable('primary-text-color');
+    background-color: getThemifyVariable("modal-background-color");
+    border: 1px solid getThemifyVariable("modal-border-color");
+    box-shadow: 0 12px 12px getThemifyVariable("shadow-color");
+    color: getThemifyVariable("primary-text-color");
   }
   border-radius: 2px;
   font-family: Montserrat, sans-serif;
@@ -72,11 +76,11 @@ pre.CodeMirror-line {
 
 .CodeMirror-gutters {
   @include themify() {
-    background-color: getThemifyVariable('editor-gutter-color');
-    border-color: getThemifyVariable('ide-border-color');
+    background-color: getThemifyVariable("editor-gutter-color");
+    border-color: getThemifyVariable("ide-border-color");
   }
   // left: 0 !important;
-  width: #{48 / $base-font-size}rem;
+  width: #{math.div(48, $base-font-size)}rem;
 }
 
 /*
@@ -87,21 +91,28 @@ pre.CodeMirror-line {
   position: fixed;
   top: 0;
   left: 50%;
-  margin-left: - #{552/2/$base-font-size}rem;
+  margin-left: #{math.div(-552 * 0.5, $base-font-size)}rem;
+  
+  @media (max-width: 770px) {
+    left: 0;
+    right: 0;
+    width: 100%;
+    margin-left: 0;
+  }
 
   z-index: 10;
 
   width: 580px;
   font-family: Montserrat, sans-serif;
 
-  padding: #{8 / $base-font-size}rem #{10 / $base-font-size}rem #{5 / $base-font-size}rem #{9 / $base-font-size}rem;
+  padding: #{math.div(8, $base-font-size)}rem #{math.div(10, $base-font-size)}rem #{math.div(5, $base-font-size)}rem #{math.div(9, $base-font-size)}rem;
 
   border-radius: 2px;
 
   @include themify() {
-    background-color: getThemifyVariable('modal-background-color');
-    box-shadow: 0 12px 12px 0 getThemifyVariable('shadow-color');
-    border: solid 0.5px getThemifyVariable('modal-border-color');
+    background-color: getThemifyVariable("modal-background-color");
+    box-shadow: 0 12px 12px 0 getThemifyVariable("shadow-color");
+    border: solid 0.5px getThemifyVariable("modal-border-color");
   }
 }
 
@@ -112,7 +123,7 @@ pre.CodeMirror-line {
 }
 
 .Toggle-replace-btn-div {
-  height: #{40 / $base-font-size}rem;
+  height: #{math.div(40, $base-font-size)}rem;
   padding: 0;
 }
 
@@ -121,18 +132,18 @@ pre.CodeMirror-line {
   height: 100%;
 }
 
-.CodeMirror-search-modifiers {
-  margin-left: #{10 / $base-font-size}rem;
-}
-
 .CodeMirror-search-results {
-  margin: 0 #{20 / $base-font-size}rem;
-  width: #{75 / $base-font-size}rem;
-  font-size: #{12/$base-font-size}rem;
+  margin: 0 #{math.div(20, $base-font-size)}rem;
+  width: #{math.div(75, $base-font-size)}rem;
+  font-size: #{math.div(12, $base-font-size)}rem;
 }
 
 .CodeMirror-find-controls {
+  width: 100%;
   display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: #{math.div(35, $base-font-size)}rem;
 }
 .CodeMirror-search-inputs {
   width: 30%;
@@ -152,39 +163,39 @@ pre.CodeMirror-line {
 }
 .CodeMirror-replace-controls {
   display: flex;
-  margin-left: #{10 / $base-font-size}rem;
+  margin-left: #{math.div(10, $base-font-size)}rem;
 }
 
 .CodeMirror-replace-options {
-  width: #{552 / $base-font-size}rem;
-  height: #{65 / $base-font-size}rem;
+  width: #{math.div(552, $base-font-size)}rem;
+  height: #{math.div(65, $base-font-size)}rem;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 .CodeMirror-replace-options button {
-  width: #{200 / $base-font-size}rem;
+  width: #{math.div(200, $base-font-size)}rem;
 }
 
 .CodeMirror-search-title {
   display: block;
-  margin-bottom: #{12 / $base-font-size}rem;
+  margin-bottom: #{math.div(12, $base-font-size)}rem;
 
-  font-size: #{21 / $base-font-size}rem;
+  font-size: #{math.div(21, $base-font-size)}rem;
   font-weight: bold;
 }
 
 .CodeMirror-search-field {
   display: block;
   width: 100%;
-  max-width: #{166/$base-font-size}rem;
-  margin-bottom: #{4 / $base-font-size}rem;
+  max-width: #{math.div(166, $base-font-size)}rem;
+  margin-bottom: #{math.div(4, $base-font-size)}rem;
   @include themify() {
-    color: getThemifyVariable('input-text-color');
-    background-color: getThemifyVariable('input-secondary-background-color');
-    border: solid 0.5px getThemifyVariable('button-border-color');
+    color: getThemifyVariable("input-text-color");
+    background-color: getThemifyVariable("input-secondary-background-color");
+    border: solid 0.5px getThemifyVariable("button-border-color");
     &::placeholder {
-      color: getThemifyVariable('inactive-text-color');
+      color: getThemifyVariable("inactive-text-color");
     }
   }
 }
@@ -196,7 +207,7 @@ pre.CodeMirror-line {
 
 .CodeMirror-search-count {
   display: block;
-  height: #{20 / $base-font-size}rem;
+  height: #{math.div(20, $base-font-size)}rem;
   text-align: right;
 }
 
@@ -209,6 +220,11 @@ pre.CodeMirror-line {
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  margin-left: #{math.div(10, $base-font-size)}rem;
+
+  @media (max-width: 579px) {
+    display: none;
+  }
 }
 
 .CodeMirror-regexp-button,
@@ -216,18 +232,17 @@ pre.CodeMirror-line {
 .CodeMirror-word-button {
   @include themify() {
     // @extend %button;
-    padding: #{2 / $base-font-size}rem #{7 / $base-font-size}rem;
+    padding: #{math.div(2, $base-font-size)}rem #{math.div(7, $base-font-size)}rem;
     border: 2px solid transparent;
     &:hover {
       border-color: getThemifyVariable("button-border-color");
     }
-
   }
-  width: #{35 / $base-font-size}rem;
-  height: #{35 / $base-font-size}rem;
+  width: #{math.div(35, $base-font-size)}rem;
+  height: #{math.div(35, $base-font-size)}rem;
 
   & + & {
-    margin-left: #{3 / $base-font-size}rem;
+    margin-left: #{math.div(3, $base-font-size)}rem;
   }
 
   word-break: keep-all;
@@ -258,34 +273,38 @@ pre.CodeMirror-line {
 }
 
 .CodeMirror-search-button {
-  margin-right: #{10 / $base-font-size}rem;
+  margin-right: #{math.div(10, $base-font-size)}rem;
 }
 
 .CodeMirror-search-match {
   background: gold;
-  border-top: #{1 / $base-font-size}rem solid orange;
-  border-bottom: #{1 / $base-font-size}rem solid orange;
+  border-top: #{math.div(1, $base-font-size)}rem solid orange;
+  border-bottom: #{math.div(1, $base-font-size)}rem solid orange;
   box-sizing: border-box;
-  opacity: .5;
+  opacity: 0.5;
 }
 
 /*
   Close button
 */
-  .CodeMirror-close-button-container {
+.CodeMirror-close-button-container {
   display: flex;
   align-items: center;
 }
 
 // foldgutter
 .CodeMirror-foldmarker {
-  text-shadow: -1px 0 #ed225d, 0 1px #ed225d, 1px 0 #ed225d, 0 -1px #ed225d;
-  color: #FFF;
+  text-shadow:
+    -1px 0 #ed225d,
+    0 1px #ed225d,
+    1px 0 #ed225d,
+    0 -1px #ed225d;
+  color: #fff;
   /* background-color: rgba(237, 34, 93, 0.42); */
   /* border-radius: 3px; */
   font-weight: bold;
   font-family: arial;
-  line-height: .3;
+  line-height: 0.3;
   cursor: pointer;
   opacity: 0.75;
 }
@@ -297,7 +316,7 @@ pre.CodeMirror-line {
   cursor: pointer;
   padding-bottom: 0.4em;
   text-align: right;
-  line-height: 1.0;
+  line-height: 1;
 }
 .CodeMirror-foldgutter-open:after {
   content: "\25BE";
@@ -306,20 +325,21 @@ pre.CodeMirror-line {
   content: "\25B8";
 }
 
-.CodeMirror-foldgutter-open, .CodeMirror-foldgutter-folded {
+.CodeMirror-foldgutter-open,
+.CodeMirror-foldgutter-folded {
   position: absolute;
   right: 100%;
 }
 
 .CodeMirror-foldgutter-open:after {
   @include themify() {
-    background-image: getThemifyVariable('codefold-icon-open');
+    background-image: getThemifyVariable("codefold-icon-open");
   }
 }
 
 .CodeMirror-foldgutter-folded:after {
   @include themify() {
-    background-image: getThemifyVariable('codefold-icon-closed');
+    background-image: getThemifyVariable("codefold-icon-closed");
   }
 }
 
@@ -341,10 +361,9 @@ pre.CodeMirror-line {
   vertical-align: middle;
   height: 0.85em;
   line-height: 0.7;
-  padding: 0 #{5 / $base-font-size}rem;
+  padding: 0 #{math.div(5, $base-font-size)}rem;
   font-family: serif;
 }
-
 
 .line-runtime-error + .CodeMirror-activeline-gutter {
   background-color: rgb(255, 95, 82);
@@ -357,11 +376,11 @@ pre.CodeMirror-line {
 }
 
 .editor-holder {
-  height: calc(100% - #{29 / $base-font-size}rem);
+  height: calc(100% - #{math.div(29, $base-font-size)}rem);
   width: 100%;
   position: absolute;
   @include themify() {
-    border: 1px solid getThemifyVariable('ide-border-color');
+    border: 1px solid getThemifyVariable("ide-border-color");
   }
   &.editor-holder--hidden .CodeMirror {
     display: none;
@@ -369,23 +388,23 @@ pre.CodeMirror-line {
 }
 
 .editor__header {
-  height: #{29 / $base-font-size}rem;
+  height: #{math.div(29, $base-font-size)}rem;
 }
 
 .editor__file-name {
   @include themify() {
-    color: getThemifyVariable('primary-text-color');
+    color: getThemifyVariable("primary-text-color");
   }
-  height: #{29 / $base-font-size}rem;
-  padding-top: #{7 / $base-font-size}rem;
-  padding-left: #{56 / $base-font-size}rem;
-  font-size: #{12 / $base-font-size}rem;
+  height: #{math.div(29, $base-font-size)}rem;
+  padding-top: #{math.div(7, $base-font-size)}rem;
+  padding-left: #{math.div(56, $base-font-size)}rem;
+  font-size: #{math.div(12, $base-font-size)}rem;
   display: flex;
   justify-content: space-between;
 }
 
 .editor__unsaved-changes {
-  margin-left: #{2 / $base-font-size}rem;
+  margin-left: #{math.div(2, $base-font-size)}rem;
 }
 
 /** Inline abbreviation preview */
@@ -394,35 +413,36 @@ pre.CodeMirror-line {
   @extend %modal;
   position: absolute;
   @include themify() {
-    background: getThemifyVariable('background-color');
+    background: getThemifyVariable("background-color");
   }
   & .CodeMirror-lines {
     padding: 0;
   }
   & .CodeMirror {
     height: auto;
-    max-width: #{400 / $base-font-size}rem;
-    max-height: #{300 / $base-font-size}rem;
+    max-width: #{math.div(400, $base-font-size)}rem;
+    max-height: #{math.div(300, $base-font-size)}rem;
     border: none;
   }
 }
 
 .emmet-abbreviation-preview:not(.has-error) .emmet-abbreviation-preview-error {
-    display: none;
+  display: none;
 }
 
 .emmet-abbreviation-preview.has-error .CodeMirror {
-    display: none;
+  display: none;
 }
 
 .emmet-abbreviation-preview .CodeMirror-cursors {
-    visibility: hidden !important;
+  visibility: hidden !important;
 }
 
 .emmet-abbreviation-preview .emmet-error-snippet-message {
-    padding: 5px;
+  padding: 5px;
 }
 
-.emmet-open-tag, .emmet-close-tag {
-    text-decoration: underline;
+.emmet-open-tag,
+.emmet-close-tag {
+  text-decoration: underline;
 }

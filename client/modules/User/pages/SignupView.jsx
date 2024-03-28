@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import { useTranslation } from 'react-i18next';
+import { useTranslation, Trans } from 'react-i18next';
 import SignupForm from '../components/SignupForm';
 import SocialAuthButton from '../components/SocialAuthButton';
-import Nav from '../../../components/Nav';
+import Nav from '../../IDE/components/Header/Nav';
 import RootPage from '../../../components/RootPage';
 
 function SignupView() {
@@ -27,9 +27,13 @@ function SignupView() {
             <SocialAuthButton service={SocialAuthButton.services.google} />
           </div>
           <p className="form__navigation-options">
-            By signing up, you agree to the p5.js Editor&apos;s{' '}
-            <Link to="/terms-of-use">Terms of Use</Link> and{' '}
-            <Link to="/privacy-policy">Privacy Policy</Link>.
+            <Trans
+              i18nKey="SignupView.Warning"
+              components={[
+                <Link to="/terms-of-use">Terms of use</Link>,
+                <Link to="/privacy-policy">Privacy Policy</Link>
+              ]}
+            />
           </p>
           <p className="form__navigation-options">
             {t('SignupView.AlreadyHave')}{' '}

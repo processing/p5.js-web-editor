@@ -21,13 +21,7 @@ function LoginForm() {
       validate={validateLogin}
       onSubmit={onSubmit}
     >
-      {({
-        handleSubmit,
-        submitError,
-        pristine,
-        submitting,
-        modifiedSinceLastSubmit
-      }) => (
+      {({ handleSubmit, submitError, submitting, modifiedSinceLastSubmit }) => (
         <form className="form" onSubmit={handleSubmit}>
           <FinalFormField
             name="email"
@@ -48,7 +42,7 @@ function LoginForm() {
           {submitError && !modifiedSinceLastSubmit && (
             <span className="form-error">{submitError}</span>
           )}
-          <Button type="submit" disabled={submitting || pristine}>
+          <Button type="submit" disabled={submitting}>
             {t('LoginForm.Submit')}
           </Button>
         </form>

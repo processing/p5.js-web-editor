@@ -1,87 +1,153 @@
+@use "sass:math";
+
 .sketches-table-container {
   overflow-y: auto;
   max-width: 100%;
   min-height: 100%;
+
+  @media (max-width: 770px) {
+    @include themify() {
+      background-color: getThemifyVariable("modal-background-color");
+    }
+
+    .sketches-table {
+      display: flex;
+      flex-direction: column;
+      padding: #{math.div(16, $base-font-size)}rem;
+      height: 100%;
+      overflow-y: auto;
+
+      thead {
+        display: none;
+      }
+
+      tbody {
+        display: flex;
+        flex-direction: column;
+        gap: #{math.div(12, $base-font-size)}rem;
+
+        .sketches-table__row {
+          margin: 0;
+          position: relative;
+          display: flex;
+          flex-wrap: wrap;
+          padding: #{math.div(15, $base-font-size)}rem;
+          height: fit-content;
+          gap: #{math.div(8, $base-font-size)}rem;
+
+          @include themify() {
+            border: 1px solid getThemifyVariable("modal-border-color");
+            background-color: getThemifyVariable("search-background-color") !important;
+          }
+
+          > th {
+            padding-left: 0;
+            width: 100%;
+            font-weight: bold;
+            margin-bottom: #{math.div(6, $base-font-size)}rem;
+          }
+
+          > td {
+            padding-left: 0;
+            width: 30%;
+            font-size: #{math.div(14, $base-font-size)}rem;
+
+            @include themify() {
+              color: getThemifyVariable("modal-border-color");
+            }
+          }
+
+          .sketch-list__dropdown-column {
+            position: absolute;
+            top: 0;
+            right: #{math.div(4, $base-font-size)}rem;
+            width: auto;
+            margin: #{math.div(8, $base-font-size)}rem;
+          }
+        }
+      }
+    }
+  }
 }
 
 .sketches-table {
   width: 100%;
-  
+
   max-height: 100%;
   border-spacing: 0;
   & .sketch-list__dropdown-column {
-    width: #{60 / $base-font-size}rem;
+    width: #{math.div(60, $base-font-size)}rem;
     position: relative;
   }
 }
 
 .sketches-table thead th {
-  height: #{32 / $base-font-size}rem;
+  height: #{math.div(32, $base-font-size)}rem;
   position: sticky;
   top: 0;
   z-index: 1;
   @include themify() {
-    background-color: getThemifyVariable('background-color');
+    background-color: getThemifyVariable("background-color");
   }
 }
 
 .sketch-list__sort-button {
   display: flex;
   align-items: center;
-  height: #{35 / $base-font-size}rem;
+  height: #{math.div(35, $base-font-size)}rem;
 
   & .isvg {
-    margin-left: #{8 / $base-font-size}rem;
+    margin-left: #{math.div(8, $base-font-size)}rem;
   }
 
   & svg {
     @include themify() {
-      fill: getThemifyVariable('inactive-text-color')
+      fill: getThemifyVariable("inactive-text-color");
     }
   }
 }
 
 .sketches-table__header {
   border-bottom: 2px dashed transparent;
-  padding: #{3 / $base-font-size}rem 0;
+  padding: #{math.div(3, $base-font-size)}rem 0;
   @include themify() {
-    color: getThemifyVariable('inactive-text-color')
+    color: getThemifyVariable("inactive-text-color");
   }
 }
 
 .sketches-table__header--selected {
   @include themify() {
-    border-color: getThemifyVariable('logo-color');
+    border-color: getThemifyVariable("logo-color");
   }
 }
 
-.sketches-table thead th:nth-child(1){
-  padding-left: #{12 / $base-font-size}rem;
+.sketches-table thead th:nth-child(1) {
+  padding-left: #{math.div(12, $base-font-size)}rem;
 }
 
 .sketches-table__row {
-  margin: #{10 / $base-font-size}rem;
-  height: #{72 / $base-font-size}rem;
-  font-size: #{16 / $base-font-size}rem;
+  margin: #{math.div(10, $base-font-size)}rem;
+  height: #{math.div(72, $base-font-size)}rem;
+  font-size: #{math.div(16, $base-font-size)}rem;
 }
 
 .sketches-table__row:nth-child(odd) {
   @include themify() {
-    background: getThemifyVariable('table-row-stripe-color');
+    background: getThemifyVariable("table-row-stripe-color");
   }
 }
 
 .sketches-table__row > th:nth-child(1) {
-  padding-left: #{12 / $base-font-size}rem;
+  padding-left: #{math.div(12, $base-font-size)}rem;
 }
 
 .sketches-table__row > td {
-  padding-left: #{8 / $base-font-size}rem;
+  padding-left: #{math.div(8, $base-font-size)}rem;
 }
 
 .sketches-table__row a {
   @include themify() {
-    color: getThemifyVariable('primary-text-color');
+    color: getThemifyVariable("primary-text-color");
   }
 }
 
@@ -90,25 +156,14 @@
 }
 
 .sketches-table thead {
-  font-size: #{12 / $base-font-size}rem;
+  font-size: #{math.div(12, $base-font-size)}rem;
   @include themify() {
-    color: getThemifyVariable('inactive-text-color')
+    color: getThemifyVariable("inactive-text-color");
   }
 }
 
 .sketches-table th {
   font-weight: normal;
-}
-
-
-.sketch-list__dropdown-button {
-  width:#{25 / $base-font-size}rem;
-  height:#{25 / $base-font-size}rem;
-  @include themify() {
-      & polygon, & path {
-        fill: getThemifyVariable('inactive-text-color');
-      }
-  }
 }
 
 .sketches-table__name {
@@ -117,17 +172,11 @@
 }
 
 .sketches-table__icon-cell {
-  width: #{35 / $base-font-size}rem;
-}
-
-.sketch-list__action-dialogue {
-  @extend %dropdown-open-right;
-  top: 63%;
-  right: calc(100% - 26px);
+  width: #{math.div(35, $base-font-size)}rem;
 }
 
 .sketches-table__empty {
   text-align: center;
-  font-size: #{16 / $base-font-size}rem;
-  padding: #{42 / $base-font-size}rem 0;
+  font-size: #{math.div(16, $base-font-size)}rem;
+  padding: #{math.div(42, $base-font-size)}rem 0;
 }

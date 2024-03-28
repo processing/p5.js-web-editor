@@ -79,10 +79,18 @@
     "NewP5": "p5.js가 처음인가요?",
     "Report": "버그 리포트",
     "Learn": "배우기",
+    "Twitter": "Twitter",
+    "Home": "홈",
+    "Instagram": "Instagram",
+    "Discord": "Discord",
+    "WebEditor": "웹 에디터",
     "Resources": "연관 자료",
     "Libraries": "라이브러리",
     "Forum": "포럼",
-    "Examples": "예제"
+    "Examples": "예제",
+    "PrivacyPolicy": "개인정보 처리방침",
+    "TermsOfUse": "이용약관",
+    "CodeOfConduct": "행동 강령"
   },
   "Toast": {
     "OpenedNewSketch": "새 스케치 열기 완료.",
@@ -133,50 +141,51 @@
     "AutosaveOnARIA": "자동저장 켜짐",
     "Off": "끄기",
     "AutosaveOffARIA": "자동저장 꺼짐",
-    "AutocloseBracketsQuotes": "Autoclose Brackets and Quotes",
-    "AutocloseBracketsQuotesOnARIA": "autoclose brackets and quotes on",
-    "AutocloseBracketsQuotesOffARIA": "autoclose brackets and quotes off",
-    "WordWrap": "Word Wrap",
-    "LineWrapOnARIA": "linewrap on",
-    "LineWrapOffARIA": "linewrap off",
-    "LineNumbers": "Line numbers",
-    "LineNumbersOnARIA": "line numbers on",
-    "LineNumbersOffARIA": "line numbers off",
-    "LintWarningSound": "Lint warning sound",
-    "LintWarningOnARIA": "lint warning on",
-    "LintWarningOffARIA": "lint warning off",
-    "PreviewSound": "Preview sound",
-    "PreviewSoundARIA": "preview sound",
-    "AccessibleTextBasedCanvas": "Accessible text-based canvas",
-    "UsedScreenReader": "Used with screen reader",
-    "PlainText": "Plain-text",
-    "TextOutputARIA": "text output on",
-    "TableText": "Table-text",
-    "TableOutputARIA": "table output on",
-    "Sound": "Sound",
-    "SoundOutputARIA": "sound output on"
+    "AutocloseBracketsQuotes": "괄호 및 따옴표 자동 닫기",
+    "AutocloseBracketsQuotesOnARIA": "괄호 및 따옴표 자동 닫기 켜기",
+    "AutocloseBracketsQuotesOffARIA": "괄호 및 따옴표 자동 닫기 끄기",
+    "WordWrap": "단어 자동 줄 바꿈",
+    "LineWrapOnARIA": "줄 바꿈 켜기",
+    "LineWrapOffARIA": "줄 바꿈 끄기",
+    "LineNumbers": "줄 번호",
+    "LineNumbersOnARIA": "줄 번호 켜기",
+    "LineNumbersOffARIA": "줄 번호 끄기",
+    "LintWarningSound": "린트 경고 소리",
+    "LintWarningOnARIA": "린트 경고 켜기",
+    "LintWarningOffARIA": "린트 경고 끄기",
+    "PreviewSound": "미리보기 소리",
+    "PreviewSoundARIA": "미리보기 소리",
+    "AccessibleTextBasedCanvas": "접근 가능한 텍스트 기반 캔버스",
+    "UsedScreenReader": "스크린 리더 사용",
+    "PlainText": "일반 텍스트",
+    "TextOutputARIA": "텍스트 출력 켜기",
+    "TableText": "테이블 텍스트",
+    "TableOutputARIA": "테이블 출력 켜기",
+    "Sound": "소리",
+    "SoundOutputARIA": "소리 출력 켜기"
   },
   "KeyboardShortcuts": {
     "Title": " 단축키",
-    "ShortcutsFollow": "Code editing keyboard shortcuts follow",
-    "SublimeText": "Sublime Text shortcuts",
+    "ShortcutsFollow": "코드 편집 키보드 단축키는 다음과 같습니다",
+    "SublimeText": "서블라임 텍스트",
     "CodeEditing": {
-      "Tidy": "Tidy",
-      "FindText": "Find Text",
-      "FindNextMatch": "Find Next Match",
-      "FindPrevMatch": "Find Previous Match",
-      "IndentCodeLeft": "Indent Code Left",
-      "IndentCodeRight": "Indent Code Right",
-      "CommentLine": "Comment Line",
-      "FindNextTextMatch": "Find Next Text Match",
-      "FindPreviousTextMatch": "Find Previous Text Match",
-      "CodeEditing": "Code Editing"
+      "Tidy": "정돈하기",
+      "FindText": "텍스트 찾기",
+      "FindNextMatch": "다음 일치 항목 찾기",
+      "FindPrevMatch": "이전 일치 항목 찾기",
+      "ReplaceTextMatch": "텍스트 일치 항목 바꾸기",
+      "IndentCodeLeft": "코드 왼쪽 들여쓰기",
+      "IndentCodeRight": "코드 오른쪽 들여쓰기",
+      "CommentLine": "주석 처리",
+      "FindNextTextMatch": "다음 텍스트 일치 항목 찾기",
+      "FindPreviousTextMatch": "이전 텍스트 일치 항목 찾기",
+      "CodeEditing": "코드 편집"
     },
     "General": {
-      "StartSketch": "Start Sketch",
-      "StopSketch": "Stop Sketch",
-      "TurnOnAccessibleOutput": "Turn On Accessible Output",
-      "TurnOffAccessibleOutput": "Turn Off Accessible Output"
+      "StartSketch": "스케치 시작",
+      "StopSketch": "스케치 중지",
+      "TurnOnAccessibleOutput": "접근 가능한 출력 활성화",
+      "TurnOffAccessibleOutput": "접근 가능한 출력 비활성화"
     }
   },
   "Sidebar": {
@@ -203,6 +212,7 @@
     "Delete": "Delete"
   },
   "Common": {
+    "SiteName": "p5.js 웹에디터",
     "Error": "에러",
     "ErrorARIA": "에러",
     "Save": "저장",
@@ -257,7 +267,7 @@
     "errorPasswordMismatch": "Passwords must match",
     "errorEmptyPassword": "Please enter a password",
     "errorShortPassword": "Password must be at least 6 characters",
-    "errorConfirmPassword": "Please enter a password confirmation",
+    "errorConfirmPassword": "Please confirm your password",
     "errorNewPassword": "Please enter a new password or leave the current password empty.",
     "errorEmptyUsername": "Please enter a username.",
     "errorLongUsername": "Username must be less than 20 characters.",
@@ -268,7 +278,7 @@
     "Description": "Set a New Password",
     "TokenInvalidOrExpired": "The password reset token is invalid or has expired.",
     "EmptyPassword": "Please enter a password",
-    "PasswordConfirmation": "Please enter a password confirmation",
+    "PasswordConfirmation": "Please confirm your password",
     "PasswordMismatch": "Passwords must match"
   },
   "AccountForm": {
@@ -516,8 +526,8 @@
     "KeyUpLineNumber": "line {{lineNumber}}"
   },
   "EditorAccessibility": {
-    "NoLintMessages": "There are no lint messages ",
-    "CurrentLine": " Current line"
+    "NoLintMessages": "There are no lint messages",
+    "CurrentLine": "Current line"
   },
   "Timer": {
     "SavedAgo": "Saved: {{timeAgo}}"

@@ -1,10 +1,10 @@
-import { createSelector } from 'reselect';
+import { createSelector } from '@reduxjs/toolkit';
 import getConfig from '../../../utils/getConfig';
 
 export const getAuthenticated = (state) => state.user.authenticated;
 const getTotalSize = (state) => state.user.totalSize;
 const getAssetsTotalSize = (state) => state.assets.totalSize;
-const getSketchOwner = (state) => state.project.owner;
+export const getSketchOwner = (state) => state.project.owner;
 const getUserId = (state) => state.user.id;
 const limit = getConfig('UPLOAD_LIMIT') || 250000000;
 

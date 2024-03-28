@@ -88,15 +88,23 @@
   },
   "About": {
     "Title": "关于",
-    "TitleHelmet": "p5.js 在线编辑器 ｜ 关于",
+    "TitleHelmet": "p5.js 在线编辑器 | 关于",
     "Contribute": "贡献",
     "NewP5": "p5.js 新手？",
     "Report": "报告问题",
     "Learn": "学习",
+    "Twitter": "Twitter",
+    "Home": "主页",
+    "Instagram": "Instagram",
+    "Discord": "Discord",
+    "WebEditor": "Web 编辑器",
     "Resources": "资源",
     "Libraries": "第三方库",
     "Forum": "论坛",
-    "Examples": "范例"
+    "Examples": "范例",
+    "PrivacyPolicy": "隐私政策",
+    "TermsOfUse": "使用条款",
+   "CodeOfConduct": "行为准则"
   },
   "Toast": {
     "OpenedNewSketch": "打开了新项目。",
@@ -219,6 +227,7 @@
     "Delete": "删除"
   },
   "Common": {
+    "SiteName": "p5.js 在线编辑器",
     "Error": "错误",
     "ErrorARIA": "错误",
     "Save": "保存",

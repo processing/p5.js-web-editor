@@ -1,42 +1,55 @@
+@use "sass:math";
+
 * {
 	box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
 	font-size: #{$base-font-size}px;
 }
 
-/*Scrollbar theming */
-/* width */
-::-webkit-scrollbar {
-	width: 10px;
-  }
-  /* Track */
-  ::-webkit-scrollbar-track {
-	@include themify() {
-		color: getThemifyVariable('modal-border-color');
-	}
-  }
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-	background: #888;
-  }
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
-	background: #555;
-}
 
-body, input, textarea {
-	@include themify() {
-		color: getThemifyVariable('primary-text-color');
+/* Styles for non-touch devices */
+@media (hover: hover) and (pointer: fine) {
+	/*Scrollbar theming */
+	/* width */
+	::-webkit-scrollbar {
+		width: 10px;
+	}
+	/* Track */
+	::-webkit-scrollbar-track {
+		@include themify() {
+			color: getThemifyVariable("modal-border-color");
+		}
+	}
+	/* Handle */
+	::-webkit-scrollbar-thumb {
+		background: #888;
+	}
+	/* Handle on hover */
+	::-webkit-scrollbar-thumb:hover {
+		background: #555;
 	}
 }
 
-body, input, textarea, button {
+body,
+input,
+textarea {
+	@include themify() {
+		color: getThemifyVariable("primary-text-color");
+	}
+}
+
+body,
+input,
+textarea,
+button {
 	font-family: Montserrat, sans-serif;
 }
 
-.root-app, .app {
+.root-app,
+.app {
 	min-height: 100%;
 	height: 100%;
 }
@@ -47,28 +60,29 @@ a {
 	}
 }
 
-input, button {
+input,
+button {
 	font-size: 1rem;
 }
 
 input,
 textarea {
-	padding: #{5 / $base-font-size}rem;
-	border: 1px solid ;
+	padding: #{math.div(5, $base-font-size)}rem;
+	border: 1px solid;
 	border-radius: 2px;
-	padding: #{10 / $base-font-size}rem;
+	padding: #{math.div(10, $base-font-size)}rem;
 	@include themify() {
-		color: getThemifyVariable('input-text-color');
-		background-color: getThemifyVariable('input-background-color');
-		border-color: getThemifyVariable('input-border-color');
+		color: getThemifyVariable("input-text-color");
+		background-color: getThemifyVariable("input-background-color");
+		border-color: getThemifyVariable("input-border-color");
 	}
 }
 
 input::selection,
 textarea::selection {
 	@include themify() {
-		color: getThemifyVariable('input-selection-text-color');
-		background-color: getThemifyVariable('input-selection-background-color');
+		color: getThemifyVariable("input-selection-text-color");
+		background-color: getThemifyVariable("input-selection-background-color");
 	}
 }
 
@@ -81,7 +95,7 @@ input[type="submit"] {
 
 button[type="submit"]:disabled,
 input[type="submit"]:disabled {
-  cursor: not-allowed;
+	cursor: not-allowed;
 }
 
 button {
@@ -93,23 +107,23 @@ button {
 }
 
 h1 {
-	font-size: #{21 / $base-font-size}em;
+	font-size: #{math.div(21, $base-font-size)}em;
 }
 
 h2 {
-	font-size: #{21 / $base-font-size}em;
+	font-size: #{math.div(21, $base-font-size)}em;
 }
 
 h3 {
 	font-weight: normal;
-	font-size: #{16 / $base-font-size}rem;
+	font-size: #{math.div(16, $base-font-size)}rem;
 }
 h4 {
 	font-weight: normal;
 }
 h6 {
 	font-weight: normal;
-	font-size: #{12 / $base-font-size}rem;
+	font-size: #{math.div(12, $base-font-size)}rem;
 }
 thead {
 	text-align: left;

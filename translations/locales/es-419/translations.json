@@ -93,10 +93,18 @@
     "NewP5": "¿Empezando con p5.js?",
     "Report": "Reporta un error",
     "Learn": "Aprender",
+    "Twitter": "Twitter",
+    "Home": "Inicio",
+    "Instagram": "Instagram",
+    "Discord": "Discord",
+    "WebEditor": "Editor web",
     "Resources": "Recursos",
     "Libraries": "Bibliotecas",
     "Forum": "Foro",
-    "Examples": "Ejemplos"
+    "Examples": "Ejemplos",
+    "PrivacyPolicy": "Política de privacidad",
+    "TermsOfUse": "Términos de uso",
+    "CodeOfConduct": "Código de conducta"
   },
   "Toast": {
     "OpenedNewSketch": "Abriste un nuevo bosquejo.",
@@ -216,6 +224,7 @@
     "Delete": "Borrar"
   },
   "Common": {
+    "SiteName": "Editor Web p5.js",
     "Error": "Error",
     "ErrorARIA": "Error",
     "Save": "Guardar",
@@ -530,7 +539,7 @@
   },
   "EditorAccessibility": {
     "NoLintMessages": "No hay mensajes de Lint",
-    "CurrentLine": " Línea actual"
+    "CurrentLine": "Línea actual"
   },
   "Timer": {
     "SavedAgo": "Guardado: {{timeAgo}}"
