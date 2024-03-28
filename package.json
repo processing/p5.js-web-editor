@@ -1,6 +1,6 @@
 {
   "name": "p5.js-web-editor",
-  "version": "2.12.1",
+  "version": "2.12.2",
   "description": "The web editor for p5.js.",
   "scripts": {
     "clean": "rimraf dist",
@@ -255,7 +255,7 @@
     "url": "^0.11.0",
     "uuid": "^8.3.2",
     "webpack": "^5.76.0",
-    "webpack-dev-middleware": "^5.3.1",
+    "webpack-dev-middleware": "^5.3.4",
     "xhr": "^2.6.0"
   }
 }
