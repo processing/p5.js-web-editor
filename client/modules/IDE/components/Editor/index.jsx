@@ -340,6 +340,8 @@ class Editor extends React.Component {
       mode = 'x-shader/x-fragment';
     } else if (fileName.match(/.+\.(vert|stl)$/i)) {
       mode = 'x-shader/x-vertex';
+    } else if (fileName.match(/.+\.mtl$/i)) {
+      mode = 'x-shader/x-vertex'; // or any other mode that you want to use for .mtl files
     } else {
       mode = 'text/plain';
     }
