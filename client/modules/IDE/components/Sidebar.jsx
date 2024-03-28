@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -66,6 +66,23 @@ export default function SideBar() {
     'sidebar--project-options': projectOptionsVisible,
     'sidebar--cant-edit': !canEditProject
   });
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (
+        projectOptionsVisible &&
+        !sidebarOptionsRef.current.contains(e.target)
+      ) {
+        dispatch(closeProjectOptions());
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, [projectOptionsVisible, dispatch]);
 
   return (
     <FileDrawer>
