@@ -40,7 +40,7 @@ const useSketchActions = () => {
   }
 
   function downloadSketch() {
-    dispatch(autosaveProject());
+    if (authenticated && canEditProjectName) dispatch(autosaveProject());
     exportProjectAsZip(project.id);
   }
 
