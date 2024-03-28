@@ -45,12 +45,12 @@ passport.use(
           done(null, false, { msg: accountSuspensionMessage });
           return;
         }
-        user.comparePassword(password, (innerErr, isMatch) => {
+        user.comparePassword(password).then((isMatch) => {
           if (isMatch) {
             done(null, user);
-            return;
+          } else {
+            done(null, false, { msg: 'Invalid email or password.' });
           }
-          done(null, false, { msg: 'Invalid email or password.' });
         });
       })
       .catch((err) => done(null, false, { msg: err }));
@@ -123,12 +123,12 @@ passport.use(
       User.findOne({ github: profile.id }, (findByGithubErr, existingUser) => {
         if (existingUser) {
           if (req.user && req.user.email !== existingUser.email) {
-            done(
-              new Error('GitHub account is already linked to another account.')
-            );
+            done(null, false, {
+              msg: 'GitHub account is already linked to another account.'
+            });
             return;
           } else if (existingUser.banned) {
-            done(new Error(accountSuspensionMessage));
+            done(null, false, { msg: accountSuspensionMessage });
             return;
           }
           done(null, existingUser);
@@ -159,7 +159,7 @@ passport.use(
                 [existingEmailUser] = existingEmailUsers;
               }
               if (existingEmailUser.banned) {
-                done(new Error(accountSuspensionMessage));
+                done(null, false, { msg: accountSuspensionMessage });
                 return;
               }
               existingEmailUser.email = existingEmailUser.email || primaryEmail;
@@ -218,14 +218,12 @@ passport.use(
         (findByGoogleErr, existingUser) => {
           if (existingUser) {
             if (req.user && req.user.email !== existingUser.email) {
-              done(
-                new Error(
-                  'Google account is already linked to another account.'
-                )
-              );
+              done(null, false, {
+                msg: 'Google account is already linked to another account.'
+              });
               return;
             } else if (existingUser.banned) {
-              done(new Error(accountSuspensionMessage));
+              done(null, false, { msg: accountSuspensionMessage });
               return;
             }
             done(null, existingUser);
@@ -256,7 +254,7 @@ passport.use(
                     // then, append a random friendly word?
                     if (existingEmailUser) {
                       if (existingEmailUser.banned) {
-                        done(new Error(accountSuspensionMessage));
+                        done(null, false, { msg: accountSuspensionMessage });
                         return;
                       }
                       existingEmailUser.email =
