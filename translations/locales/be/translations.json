@@ -249,7 +249,7 @@
     "Title": "ফাইল তৈরি করুন",
     "CloseButtonARIA": "নতুন ফাইল মোডাল বন্ধ করুন",
     "EnterName": "নাম লিখুন",
-    "InvalidType": "অবৈধ ফাইল ধরন। বৈধ এক্সটেনশনগুলি হলো .js, .css, .json, .xml, .stl, .txt, .csv, .tsv, .frag এবং .vert."
+    "InvalidType": "অবৈধ ফাইল ধরন। বৈধ এক্সটেনশনগুলি হলো .js, .css, .json, .xml, .stl, .txt, .csv, .tsv, .mtl, .frag এবং .vert."
   },
   "NewFileForm": {
     "AddFileSubmit": "ফাইল যোগ করুন",
