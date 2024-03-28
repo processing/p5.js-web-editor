@@ -23,7 +23,7 @@ describe('project.controller', () => {
   });
 
   describe('getProjectsForUser()', () => {
-    it('returns empty array user not supplied as parameter', (done) => {
+    it('returns validation error if username not provided', (done) => {
       const request = new Request();
       request.setParams({});
       const response = new Response();
@@ -31,8 +31,10 @@ describe('project.controller', () => {
       const promise = getProjectsForUser(request, response);
 
       function expectations() {
-        expect(response.status).toHaveBeenCalledWith(200);
-        expect(response.json).toHaveBeenCalledWith([]);
+        expect(response.status).toHaveBeenCalledWith(422);
+        expect(response.json).toHaveBeenCalledWith({
+          message: 'Username not provided'
+        });
 
         done();
       }
@@ -47,7 +49,7 @@ describe('project.controller', () => {
 
       UserMock.expects('findOne')
         .withArgs({ username: 'abc123' })
-        .yields(null, null);
+        .resolves(null);
 
       const promise = getProjectsForUser(request, response);
 
@@ -70,15 +72,15 @@ describe('project.controller', () => {
 
       UserMock.expects('findOne')
         .withArgs({ username: 'abc123' })
-        .yields(new Error(), null);
+        .rejects(new Error());
 
       const promise = getProjectsForUser(request, response);
 
       function expectations() {
-        expect(response.status).toHaveBeenCalledWith(500);
         expect(response.json).toHaveBeenCalledWith({
           message: 'Error fetching projects'
         });
+        expect(response.status).toHaveBeenCalledWith(500);
 
         done();
       }
@@ -88,7 +90,7 @@ describe('project.controller', () => {
   });
 
   describe('apiGetProjectsForUser()', () => {
-    it('returns validation error if user id not provided', (done) => {
+    it('returns validation error if username not provided', (done) => {
       const request = new Request();
       request.setParams({});
       const response = new Response();
@@ -114,7 +116,7 @@ describe('project.controller', () => {
 
       UserMock.expects('findOne')
         .withArgs({ username: 'abc123' })
-        .yields(null, null);
+        .resolves(null);
 
       const promise = apiGetProjectsForUser(request, response);
 
@@ -137,7 +139,7 @@ describe('project.controller', () => {
 
       UserMock.expects('findOne')
         .withArgs({ username: 'abc123' })
-        .yields(new Error(), null);
+        .rejects(new Error());
 
       const promise = apiGetProjectsForUser(request, response);
 
