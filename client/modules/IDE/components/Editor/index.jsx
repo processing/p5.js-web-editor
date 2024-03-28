@@ -338,7 +338,7 @@ class Editor extends React.Component {
       mode = 'application/json';
     } else if (fileName.match(/.+\.(frag|glsl)$/i)) {
       mode = 'x-shader/x-fragment';
-    } else if (fileName.match(/.+\.(vert|stl)$/i)) {
+    } else if (fileName.match(/.+\.(vert|stl|mtl)$/i)) {
       mode = 'x-shader/x-vertex';
     } else {
       mode = 'text/plain';
