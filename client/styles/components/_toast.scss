@@ -1,13 +1,15 @@
+@use "sass:math";
+
 .toast {
   background-color: $toast-background-color;
   color: $toast-text-color;
-  padding: #{10 / $base-font-size}rem;
+  padding: #{math.div(10, $base-font-size)}rem;
   position: fixed;
   top: 0;
   left: 50%;
   transform: translate(-50%, 0);
-  min-width: #{375 / $base-font-size}rem; //500px
-  font-size: #{20 / $base-font-size}rem;
+  min-width: #{math.div(375, $base-font-size)}rem; //500px
+  font-size: #{math.div(20, $base-font-size)}rem;
   display: flex;
   z-index: 9999;
   align-items: center;
@@ -19,6 +21,6 @@
   @include themify() {
     @extend %icon-toast;
   }
-  padding-top: #{10 / $base-font-size}rem;
-  margin-left: #{40 / $base-font-size}rem;
+  padding-top: #{math.div(10, $base-font-size)}rem;
+  margin-left: #{math.div(40, $base-font-size)}rem;
 }
