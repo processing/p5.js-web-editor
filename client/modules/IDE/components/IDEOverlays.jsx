@@ -75,10 +75,7 @@ export default function IDEOverlays() {
           actions={<CollectionSearchbar />}
           isFixedHeight
         >
-          <AddToCollectionList
-            projectId={params.project_id}
-            username={params.username}
-          />
+          <AddToCollectionList projectId={params.project_id} />
         </Overlay>
       )}
       {shareModalVisible && (
