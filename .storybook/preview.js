@@ -2,10 +2,10 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
 
-import ThemeProvider from '../client/modules/App/components/ThemeProvider';
 import configureStore from '../client/store';
 import '../client/i18n-test';
 import '../client/styles/storybook.css'
+import { withThemeProvider, themeToolbarItem } from './decorator-theme';
 
 const initialState = window.__INITIAL_STATE__;
 
@@ -21,5 +21,9 @@ export const decorators = [
       </MemoryRouter>
     </Provider>
   ),
-]
+  withThemeProvider
+];
 
+export const globalTypes = {
+  theme: themeToolbarItem
+};

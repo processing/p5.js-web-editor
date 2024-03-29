@@ -87,16 +87,24 @@
     "LogoARIA": "{{serviceauth}} logo"
   },
   "About": {
-    "Title": "Über",
+    "Title": "Über",  
     "TitleHelmet": "p5.js Web Editor | Über",
     "Contribute": "Mitwirken",
     "NewP5": "Neu bei p5.js?",
     "Report": "Einen Fehler melden",
     "Learn": "Lernen",
+    "Twitter": "Twitter",
+    "Home": "Startseite",
+    "Instagram": "Instagram",
+    "Discord": "Discord",
+    "WebEditor": "Web Editor",
     "Resources": "Ressourcen",
     "Libraries": "Bibliotheken",
     "Forum": "Forum",
-    "Examples": "Beispiele"
+    "Examples": "Beispiele",
+    "PrivacyPolicy": "Datenschutzbestimmungen",
+    "TermsOfUse": "Nutzungsbedingungen",
+    "CodeOfConduct": "Verhaltenskodex"
   },
   "Toast": {
     "OpenedNewSketch": "Neuer Sketch geöffnet.",
@@ -216,6 +224,7 @@
     "Delete": "Löschen"
   },
   "Common": {
+    "SiteName": "p5.js Web Editor",
     "Error": "Fehler",
     "ErrorARIA": "Fehler",
     "Save": "Speichern",
@@ -530,8 +539,8 @@
     "KeyUpLineNumber": "Zeile {{lineNumber}}"
   },
   "EditorAccessibility": {
-    "NoLintMessages": "Keine Lint-Warnungen vorhanden ",
-    "CurrentLine": " Aktuelle Zeile"
+    "NoLintMessages": "Keine Lint-Warnungen vorhanden",
+    "CurrentLine": "Aktuelle Zeile"
   },
   "Timer": {
     "SavedAgo": "Gesichert: {{timeAgo}}"
