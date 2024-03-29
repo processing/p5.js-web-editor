@@ -94,6 +94,11 @@
     "NewP5": "p5.js নতুন?",
     "Report": "একটি বাগ রিপোর্ট করুন",
     "Learn": "শেখা",
+    "Twitter": "টুইটারে",
+    "Home": "হোম",
+    "Instagram": "ইনস্টাগ্রাম",
+    "Discord": "ডিসকর্ড",
+    "WebEditor": "ওয়েব এডিটর",
     "Resources": "সম্পদসমূহ",
     "Libraries": "লাইব্রেরিসমূহ",
     "Forum": "ফোরাম",
@@ -244,7 +249,7 @@
     "Title": "ফাইল তৈরি করুন",
     "CloseButtonARIA": "নতুন ফাইল মোডাল বন্ধ করুন",
     "EnterName": "নাম লিখুন",
-    "InvalidType": "অবৈধ ফাইল ধরন। বৈধ এক্সটেনশনগুলি হলো .js, .css, .json, .xml, .stl, .txt, .csv, .tsv, .frag এবং .vert."
+    "InvalidType": "অবৈধ ফাইল ধরন। বৈধ এক্সটেনশনগুলি হলো .js, .css, .json, .xml, .stl, .txt, .csv, .tsv, .mtl, .frag এবং .vert."
   },
   "NewFileForm": {
     "AddFileSubmit": "ফাইল যোগ করুন",
@@ -359,7 +364,8 @@
     "Description": "নিবন্ধন করুন",
     "Or": "অথবা",
     "AlreadyHave": "ইতিমধ্যে একটি অ্যাকাউন্ট আছে?",
-    "Login": "লগ ইন"
+    "Login": "লগ ইন",
+    "Warning":"সাইন আপ করে , আপনি p5.js সম্পাদকের <0>ব্যবহারের শর্তাবলী</0> এবং <1>গোপনীয়তা নীতিতে </1> সম্মত হবেন|"
   },
   "EmailVerificationView": {
     "Title": "p5.js ওয়েব এডিটর | ইমেল যাচাই",
