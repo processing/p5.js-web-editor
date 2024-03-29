@@ -79,10 +79,18 @@
     "NewP5": "p5.js가 처음인가요?",
     "Report": "버그 리포트",
     "Learn": "배우기",
+    "Twitter": "Twitter",
+    "Home": "홈",
+    "Instagram": "Instagram",
+    "Discord": "Discord",
+    "WebEditor": "웹 에디터",
     "Resources": "연관 자료",
     "Libraries": "라이브러리",
     "Forum": "포럼",
-    "Examples": "예제"
+    "Examples": "예제",
+    "PrivacyPolicy": "개인정보 처리방침",
+    "TermsOfUse": "이용약관",
+    "CodeOfConduct": "행동 강령"
   },
   "Toast": {
     "OpenedNewSketch": "새 스케치 열기 완료.",
