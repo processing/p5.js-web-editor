@@ -31,17 +31,6 @@ If you have found a bug in the p5.js Web Editor, you can file it under the ["iss
 
 To see which pull requests and issues are currently being reviewed, check the [PR Review Board](https://github.com/processing/p5.js-web-editor/projects/9) or the following Milestones: [MINOR Release](https://github.com/processing/p5.js-web-editor/milestone/8). 
 
-Issues and Pull Requests categorized under the PATCH or MINOR Release Milestones will be prioritized since they are planned to be merged for the next release to Production. Please feel free to [comment on this pinned issue](https://github.com/processing/p5.js-web-editor/issues/2534) if you would like your issue to be considered for the next release!
-
-
-### When Will the Next Production Release Be?
-
-We will aim to deploy on a 1-2 month basis. Here are some dates we’re working towards: 
-
-2.12.0 MINOR Release: By February 27, 2024
-
-[You can read more about Semantic Versioning and the differences between a MINOR and PATCH release](https://semver.org/). 
-
 
 ## References for Contributing to the p5.js Web Editor
 
