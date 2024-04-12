@@ -14,7 +14,7 @@ _Note_: The installation steps assume you are using a Unix-like shell. If you ar
    $ git clone https://github.com/YOUR_USERNAME/p5.js-web-editor.git
    ```
 
-4. If you are using nvm, run `$ nvm use` to set your Node version to 16.14.2
+4. If you are using nvm, run `$ nvm use 16.14.2` to set your Node version to 16.14.2
 5. Ensure your npm version is set to 8.5.0. If it isn't, run `npm install -g npm@8.5.0` to install it. 
 6. Navigate into the project folder and install all its necessary dependencies with npm.
 
@@ -27,12 +27,14 @@ _Note_: The installation steps assume you are using a Unix-like shell. If you ar
    * For Windows and Linux: [MongoDB Installation](https://docs.mongodb.com/manual/installation/)
 8. `$ cp .env.example .env`
 9. (Optional) Update `.env` with necessary keys to enable certain app behaviors, i.e. add Github ID and Github Secret if you want to be able to log in with Github.
-10. Run `$ npm run fetch-examples` to download the example sketches into a user called 'p5'. Note that you need to configure your GitHub Credentials, which you can do by following the [Github API Configuration](#github-api-configuration) section.
-11. Enable Prettier in your text editor by following [this guide](https://prettier.io/docs/en/editors.html).
-12. `$ npm start`
-13. Navigate to [http://localhost:8000](http://localhost:8000) in your browser
-14. Install the [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en)
-15. Open and close the Redux DevTools using `ctrl+h`, and move them with `ctrl+w`
+   * See the [GitHub API Configuration](#github-api-configuration) section for information on how to authenticate with Github.
+   * See the [S3 Bucket Configuration](#s3-bucket-configuration) section for information on how to set up an S3 bucket
+11. Run `$ npm run fetch-examples` to download the example sketches into a user called 'p5'. Note that you need to configure your GitHub Credentials, which you can do by following the [Github API Configuration](#github-api-configuration) section.
+12. Enable Prettier in your text editor by following [this guide](https://prettier.io/docs/en/editors.html).
+13. `$ npm start`
+14. Navigate to [http://localhost:8000](http://localhost:8000) in your browser
+15. Install the [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en)
+16. Open and close the Redux DevTools using `ctrl+h`, and move them with `ctrl+w`
 
 ## Docker Installation
 
@@ -50,6 +52,8 @@ Note that this takes up a significant amount of space on your machine. Make sure
 4. `$ docker-compose -f docker-compose-development.yml build`
 5. `$ cp .env.example .env`
 6. (Optional) Update `.env` with necessary keys to enable certain app behaviors, i.e. add Github ID and Github Secret if you want to be able to log in with Github.
+   * See the [GitHub API Configuration](#github-api-configuration) section for information on how to authenticate with Github.
+   * See the [S3 Bucket Configuration](#s3-bucket-configuration) section for information on how to set up an S3 bucket
 7. `$ docker-compose -f docker-compose-development.yml run --rm app npm run fetch-examples` -  note that you need to configure your GitHub Credentials, which you can do by following the [Github API Configuration](#github-api-configuration) section.
 8. Enable Prettier in your text editor by following [this guide](https://prettier.io/docs/en/editors.html).
 
@@ -94,9 +98,15 @@ In this application, GitHub credentials are used for:
 
 If you are working on a part of the application that requires one of the above uses, then you will need to get GitHub API credentials.
 
-When you go to the Developer settings in your GitHub account, you will see that you can create two types of Apps: `GitHub Apps` and `OAuth Apps` ([differences between GitHub Apps and OAuth Apps](https://docs.github.com/en/free-pro-team@latest/developers/apps/differences-between-github-apps-and-oauth-apps)). This project requires you to make an `OAuth App`. After clicking on "New OAuth App", you will need to fill in the following fields:
+When you go to the (Developer settings)[https://github.com/settings/developers] in your GitHub account, you will see that you can create two types of Apps: `GitHub Apps` and `OAuth Apps` ([differences between GitHub Apps and OAuth Apps](https://docs.github.com/en/free-pro-team@latest/developers/apps/differences-between-github-apps-and-oauth-apps)). This project requires you to make an `OAuth App`. After clicking on "New OAuth App", you will need to fill in the following fields:
 - **Application name**: `p5.js Web Editor - Local`
 - **Homepage URL**: `http://localhost:8000`
 - **Authorization Callback URL**: `http://localhost:8000/auth/github/callback`
+
+Once you've created a new OAuth app, update your `.env`:
+```
+GITHUB_ID={GITHUB_ID}
+GITHUB_SECRET={GITHUB_SECRET}
+```
 
 If you would like to learn more about what you can do with the GitHub API, you can look at the [API documentation](https://developer.github.com/v3/).
