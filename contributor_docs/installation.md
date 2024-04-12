@@ -85,7 +85,7 @@ In this application, GitHub credentials are used for:
 
 If you are working on a part of the application that requires one of the above uses, then you will need to get GitHub API credentials.
 
-When you go to the (Developer settings)[https://github.com/settings/developers] in your GitHub account, you will see that you can create two types of Apps: `GitHub Apps` and `OAuth Apps` ([differences between GitHub Apps and OAuth Apps](https://docs.github.com/en/free-pro-team@latest/developers/apps/differences-between-github-apps-and-oauth-apps)). This project requires you to make an `OAuth App`. After clicking on "New OAuth App", you will need to fill in the following fields:
+When you go to the [Developer settings](https://github.com/settings/developers) in your GitHub account, you will see that you can create two types of Apps: `GitHub Apps` and `OAuth Apps` ([differences between GitHub Apps and OAuth Apps](https://docs.github.com/en/free-pro-team@latest/developers/apps/differences-between-github-apps-and-oauth-apps)). This project requires you to make an `OAuth App`. After clicking on "New OAuth App", you will need to fill in the following fields:
 - **Application name**: `p5.js Web Editor - Local`
 - **Homepage URL**: `http://localhost:8000`
 - **Authorization Callback URL**: `http://localhost:8000/auth/github/callback`
