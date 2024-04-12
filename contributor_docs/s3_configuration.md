@@ -1,5 +1,5 @@
 # S3 Bucket Configuration
-1. (Create an S3 bucket)[https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-bucket-overview.html], with any name
+1. [Create an S3 bucket](https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-bucket-overview.html), with any name
 2. Navigate to the S3 bucket permissions and add the following CORS policy. This is for development only, as it allows CORS from any origin.
 ```
 [
@@ -61,6 +61,4 @@ name, you can also set it using this variable. I.e.:
 
 `S3_BUCKET_URL_BASE=https://files.mydomain.com`
 
-For more information on using a custom domain, see this documentation link:
-
-http://docs.aws.amazon.com/AmazonS3/latest/dev/VirtualHosting.html#VirtualHostingCustomURLs
+For more information on using a custom domain, see [this documentation link](http://docs.aws.amazon.com/AmazonS3/latest/dev/VirtualHosting.html#VirtualHostingCustomURLs).
