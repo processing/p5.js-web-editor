@@ -10,6 +10,7 @@ const PolicyContainerMain = styled.main`
   margin: 0 auto;
   padding: ${remSize(10)};
   line-height: 1.5em;
+  overflow: auto;
   & p {
     margin-bottom: ${remSize(10)};
   }

@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { remSize, prop } from '../theme';
-import IconButton from './mobile/IconButton';
+import IconButton from '../common/IconButton';
 
-const DropdownWrapper = styled.ul`
+export const DropdownWrapper = styled.ul`
   background-color: ${prop('Modal.background')};
   border: 1px solid ${prop('Modal.border')};
   box-shadow: 0 0 18px 0 ${prop('shadowColor')};
@@ -52,6 +52,7 @@ const DropdownWrapper = styled.ul`
     & button span,
     & a {
       padding: ${remSize(8)} ${remSize(16)};
+      font-size: ${remSize(12)};
     }
 
     * {

@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .editable-input {
   height: 70%;
   display: flex;
@@ -21,7 +23,7 @@ button.editable-input__label {
     }
   }
   cursor: pointer;
-  line-height: #{18 / $base-font-size}rem;
+  line-height: #{math.div(18, $base-font-size)}rem;
 
   font-size: unset;
   font-weight: unset;
