@@ -9,17 +9,14 @@ import Routing from './routes';
 import ThemeProvider from './modules/App/components/ThemeProvider';
 import Loader from './modules/App/components/loader';
 import './i18n';
-
-require('./styles/main.scss');
+import './styles/main.scss';
 
 // Load the p5 png logo, so that webpack will use it
-require('./images/p5js-square-logo.png');
+import './images/p5js-square-logo.png';
 
 const initialState = window.__INITIAL_STATE__;
 
-const store = configureStore(initialState);
-
-const App = () => (
+const App = ({ store }) => (
   <Provider store={store}>
     <ThemeProvider>
       <Router history={browserHistory}>
@@ -29,9 +26,14 @@ const App = () => (
   </Provider>
 );
 
-render(
-  <Suspense fallback={<Loader />}>
-    <App />
-  </Suspense>,
-  document.getElementById('root')
-);
+const Root = () => {
+  const store = configureStore(initialState);
+
+  return (
+    <Suspense fallback={<Loader />}>
+      <App store={store} />
+    </Suspense>
+  );
+};
+
+render(<Root />, document.getElementById('root'));
