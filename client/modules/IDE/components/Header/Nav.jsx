@@ -133,16 +133,18 @@ const ProjectMenu = () => {
 
   const replaceCommand =
     metaKey === 'Ctrl' ? `${metaKeyName}+H` : `${metaKeyName}+⌥+F`;
-
+  const userSketches = `${user.username}/sketches`;
   return (
     <ul className="nav__items-left">
       <li className="nav__item-logo">
-        <LogoIcon
-          role="img"
-          aria-label={t('Common.p5logoARIA')}
-          focusable="false"
-          className="svg__logo"
-        />
+        <Link to={userSketches}>
+          <LogoIcon
+            role="img"
+            aria-label={t('Common.p5logoARIA')}
+            focusable="false"
+            className="svg__logo"
+          />
+        </Link>
       </li>
       <NavDropdownMenu id="file" title={t('Nav.File.Title')}>
         <NavMenuItem onClick={newSketch}>{t('Nav.File.New')}</NavMenuItem>
