@@ -2,8 +2,10 @@ import passport from 'passport';
 
 import { userResponse } from './user.controller';
 
+const useLdap = process.env.USE_LDAP === 'true';
+
 export function createSession(req, res, next) {
-  passport.authenticate('local', (err, user) => {
+  passport.authenticate(useLdap ? 'ldapauth' : 'local', (err, user) => {
     if (err) {
       next(err);
       return;
