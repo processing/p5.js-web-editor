@@ -91,24 +91,23 @@ export function validateAndSignUpUser(formValues) {
 }
 
 export function getUser() {
-  return (dispatch) => {
-    apiClient
-      .get('/session')
-      .then((response) => {
-        dispatch(authenticateUser(response.data));
-        dispatch({
-          type: ActionTypes.SET_PREFERENCES,
-          preferences: response.data.preferences
-        });
-        setLanguage(response.data.preferences.language, {
-          persistPreference: false
-        });
-      })
-      .catch((error) => {
-        const { response } = error;
-        const message = response.message || response.data.error;
-        dispatch(authError(message));
+  return async (dispatch) => {
+    try {
+      const response = await apiClient.get('/session');
+      const { data } = response;
+
+      dispatch(authenticateUser(data));
+      dispatch({
+        type: ActionTypes.SET_PREFERENCES,
+        preferences: data.preferences
       });
+      setLanguage(data.preferences.language, { persistPreference: false });
+    } catch (error) {
+      const message = error.response
+        ? error.response.data.error || error.response.message
+        : 'Unknown error.';
+      dispatch(authError(message));
+    }
   };
 }
 
