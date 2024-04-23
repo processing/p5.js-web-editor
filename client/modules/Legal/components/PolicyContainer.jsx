@@ -41,6 +41,7 @@ const PolicyContainerMain = styled.main`
 
   @media (max-width: 770px) {
     overflow: auto;
+    min-height: none;
   }
 `;
 
