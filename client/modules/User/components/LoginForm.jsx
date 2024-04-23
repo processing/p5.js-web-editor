@@ -1,8 +1,9 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Form, Field } from 'react-final-form';
+import { Form } from 'react-final-form';
 import { useDispatch } from 'react-redux';
 import Button from '../../../common/Button';
+import FinalFormField from '../../../common/FinalFormField';
 import { validateLogin } from '../../../utils/reduxFormUtils';
 import { validateAndLoginUser } from '../actions';
 
@@ -22,46 +23,22 @@ function LoginForm() {
     >
       {({ handleSubmit, submitError, submitting, modifiedSinceLastSubmit }) => (
         <form className="form" onSubmit={handleSubmit}>
-          <Field name="email">
-            {(field) => (
-              <p className="form__field">
-                <label htmlFor="email" className="form__label">
-                  {t('LoginForm.UsernameOrEmail')}
-                </label>
-                <input
-                  className="form__input"
-                  aria-label={t('LoginForm.UsernameOrEmailARIA')}
-                  type="text"
-                  id="email"
-                  autoComplete="username"
-                  {...field.input}
-                />
-                {field.meta.touched && field.meta.error && (
-                  <span className="form-error">{field.meta.error}</span>
-                )}
-              </p>
-            )}
-          </Field>
-          <Field name="password">
-            {(field) => (
-              <p className="form__field">
-                <label htmlFor="password" className="form__label">
-                  {t('LoginForm.Password')}
-                </label>
-                <input
-                  className="form__input"
-                  aria-label={t('LoginForm.PasswordARIA')}
-                  type="password"
-                  id="password"
-                  autoComplete="current-password"
-                  {...field.input}
-                />
-                {field.meta.touched && field.meta.error && (
-                  <span className="form-error">{field.meta.error}</span>
-                )}
-              </p>
-            )}
-          </Field>
+          <FinalFormField
+            name="email"
+            id="email"
+            type="text"
+            autoComplete="username"
+            label={t('LoginForm.UsernameOrEmail')}
+            ariaLabel={t('LoginForm.UsernameOrEmailARIA')}
+          />
+          <FinalFormField
+            name="password"
+            id="password"
+            type="password"
+            autoComplete="current-password"
+            label={t('LoginForm.Password')}
+            ariaLabel={t('LoginForm.PasswordARIA')}
+          />
           {submitError && !modifiedSinceLastSubmit && (
             <span className="form-error">{submitError}</span>
           )}
