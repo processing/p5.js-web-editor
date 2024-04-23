@@ -18,15 +18,12 @@ class Mail {
     };
   }
 
-  sendMail(mailOptions) {
-    return new Promise((resolve, reject) => {
-      this.client.sendMail(mailOptions, (err, info) => {
-        resolve(err, info);
-      });
-    });
+  async sendMail(mailOptions) {
+    const response = await this.client.sendMail(mailOptions);
+    return response;
   }
 
-  dispatchMail(data, callback) {
+  async send(data) {
     const mailOptions = {
       to: data.to,
       subject: data.subject,
@@ -34,13 +31,8 @@ class Mail {
       html: data.html
     };
 
-    return this.sendMail(mailOptions).then((err, res) => {
-      callback(err, res);
-    });
-  }
-
-  send(data, callback) {
-    return this.dispatchMail(data, callback);
+    const response = await this.sendMail(mailOptions);
+    return response;
   }
 }
 

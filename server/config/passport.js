@@ -35,26 +35,31 @@ passport.deserializeUser((id, done) => {
  * Sign in using Email/Username and Password.
  */
 passport.use(
-  new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
-    User.findByEmailOrUsername(email)
-      .then((user) => {
+  new LocalStrategy(
+    { usernameField: 'email' },
+    async (email, password, done) => {
+      try {
+        const user = await User.findByEmailOrUsername(email);
+
         if (!user) {
-          done(null, false, { msg: `Email ${email} not found.` });
-          return;
+          return done(null, false, { msg: `Email ${email} not found.` });
         } else if (user.banned) {
-          done(null, false, { msg: accountSuspensionMessage });
-          return;
+          return done(null, false, { msg: 'Your account has been suspended.' });
         }
-        user.comparePassword(password).then((isMatch) => {
-          if (isMatch) {
-            done(null, user);
-          } else {
-            done(null, false, { msg: 'Invalid email or password.' });
-          }
-        });
-      })
-      .catch((err) => done(null, false, { msg: err }));
-  })
+
+        const isMatch = await user.comparePassword(password);
+
+        if (isMatch) {
+          return done(null, user);
+        } else { // eslint-disable-line
+          return done(null, false, { msg: 'Invalid email or password' });
+        }
+      } catch (err) {
+        console.error(err);
+        return done(null, false, { msg: err });
+      }
+    }
+  )
 );
 
 /**
