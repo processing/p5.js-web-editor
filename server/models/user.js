@@ -163,7 +163,8 @@ userSchema.methods.comparePassword = async function comparePassword(
   candidatePassword
 ) {
   if (!this.password) {
-    throw new Error('No password is set for this user.');
+    console.error('No password is set for this user.');
+    return false;
   }
 
   try {
