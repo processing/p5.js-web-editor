@@ -47,7 +47,7 @@ export function destroySession(req, res, next) {
         next(error);
         return;
       }
-      res.clearCookie('connect.sid');
+
       res.json({ success: true });
     });
   });
