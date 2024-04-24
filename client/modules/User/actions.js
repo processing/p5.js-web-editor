@@ -112,21 +112,19 @@ export function getUser() {
 }
 
 export function validateSession() {
-  return (dispatch, getState) => {
-    apiClient
-      .get('/session')
-      .then((response) => {
-        const state = getState();
-        if (state.user.username !== response.data.username) {
-          dispatch(showErrorModal('staleSession'));
-        }
-      })
-      .catch((error) => {
-        const { response } = error;
-        if (response.status === 404) {
-          dispatch(showErrorModal('staleSession'));
-        }
-      });
+  return async (dispatch, getState) => {
+    try {
+      const response = await apiClient.get('/session');
+      const state = getState();
+
+      if (state.user.username !== response.data.username) {
+        dispatch(showErrorModal('staleSession'));
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 404) {
+        dispatch(showErrorModal('staleSession'));
+      }
+    }
   };
 }
 
