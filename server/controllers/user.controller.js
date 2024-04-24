@@ -43,6 +43,16 @@ export async function createUser(req, res) {
   try {
     const { username, email, password } = req.body;
     const emailLowerCase = email.toLowerCase();
+    const existingUser = await User.findByEmailAndUsername(email, username);
+    if (existingUser) {
+      const fieldInUse =
+        existingUser.email.toLowerCase() === emailLowerCase
+          ? 'Email'
+          : 'Username';
+      res.status(422).send({ error: `${fieldInUse} is in use` });
+      return;
+    }
+
     const EMAIL_VERIFY_TOKEN_EXPIRY_TIME = Date.now() + 3600000 * 24; // 24 hours
     const token = await generateToken();
     const user = new User({
@@ -53,34 +63,35 @@ export async function createUser(req, res) {
       verifiedToken: token,
       verifiedTokenExpires: EMAIL_VERIFY_TOKEN_EXPIRY_TIME
     });
-    const existingUser = await User.findByEmailAndUsername(email, username);
-    if (existingUser) {
-      const fieldInUse =
-        existingUser.email.toLowerCase() === emailLowerCase
-          ? 'Email'
-          : 'Username';
-      res.status(422).send({ error: `${fieldInUse} is in use` });
-      return;
-    }
+
     await user.save();
-    req.logIn(user, (loginErr) => {
+
+    req.logIn(user, async (loginErr) => {
       if (loginErr) {
-        throw loginErr;
+        console.error(loginErr);
+        res.status(500).json({ error: 'Failed to log in user.' });
+        return;
+      }
+
+      const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
+      const mailOptions = renderEmailConfirmation({
+        body: {
+          domain: `${protocol}://${req.headers.host}`,
+          link: `${protocol}://${req.headers.host}/verify?t=${token}`
+        },
+        to: req.user.email
+      });
+
+      try {
+        await mail.send(mailOptions);
+        res.json(userResponse(user));
+      } catch (mailErr) {
+        console.error(mailErr);
+        res.status(500).json({ error: 'Failed to send verification email.' });
       }
     });
-
-    const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
-    const mailOptions = renderEmailConfirmation({
-      body: {
-        domain: `${protocol}://${req.headers.host}`,
-        link: `${protocol}://${req.headers.host}/verify?t=${token}`
-      },
-      to: req.user.email
-    });
-
-    await mail.send(mailOptions);
-    res.json(userResponse(req.user));
   } catch (err) {
+    console.error(err);
     res.status(500).json({ error: err });
   }
 }
