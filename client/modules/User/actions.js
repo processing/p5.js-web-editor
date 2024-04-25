@@ -96,6 +96,11 @@ export function getUser() {
       const response = await apiClient.get('/session');
       const { data } = response;
 
+      // If data.user is null, undefined, or not present
+      if (!data?.user) {
+        return;
+      }
+
       dispatch(authenticateUser(data));
       dispatch({
         type: ActionTypes.SET_PREFERENCES,
