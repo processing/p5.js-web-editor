@@ -45,7 +45,6 @@ export function destroySession(req, res, next) {
         next(error);
         return;
       }
-
       res.json({ success: true });
     });
   });
