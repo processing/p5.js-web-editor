@@ -4,30 +4,26 @@ import passport from 'passport';
 const router = new Router();
 
 const authenticateOAuth = (service) => (req, res, next) => {
-  passport.authenticate(
-    service,
-    { failureRedirect: '/login' },
-    (err, user, info) => {
-      if (err) {
-        // use query string param to show error;
-        res.redirect(`/account?error=${service}`);
-        return;
-      }
-
-      if (!user) {
-        res.redirect(`/account?error=${service}NoUser`);
-        return;
-      }
-
-      req.logIn(user, (loginErr) => {
-        if (loginErr) {
-          next(loginErr);
-          return;
-        }
-        res.redirect('/');
-      });
+  passport.authenticate(service, { failureRedirect: '/login' }, (err, user) => {
+    if (err) {
+      // use query string param to show error;
+      res.redirect(`/account?error=${service}`);
+      return;
     }
-  )(req, res, next);
+
+    if (!user) {
+      res.redirect(`/account?error=${service}NoUser`);
+      return;
+    }
+
+    req.logIn(user, (loginErr) => {
+      if (loginErr) {
+        next(loginErr);
+        return;
+      }
+      res.redirect('/');
+    });
+  })(req, res, next);
 };
 
 router.get('/auth/github', passport.authenticate('github'));
