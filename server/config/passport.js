@@ -22,7 +22,11 @@ function generateUniqueUsername(username) {
 }
 
 passport.serializeUser((user, done) => {
-  done(null, user.id);
+  if (user) {
+    done(null, user.id);
+  } else {
+    done(new Error('User is not available for serialization.'));
+  }
 });
 
 passport.deserializeUser((id, done) => {
