@@ -19,8 +19,13 @@ class Mail {
   }
 
   async sendMail(mailOptions) {
-    const response = await this.client.sendMail(mailOptions);
-    return response;
+    try {
+      const response = await this.client.sendMail(mailOptions);
+      return response;
+    } catch (error) {
+      console.error('Failed to send email: ', error);
+      throw new Error('Email failed to send.');
+    }
   }
 
   async send(data) {
@@ -31,8 +36,13 @@ class Mail {
       html: data.html
     };
 
-    const response = await this.sendMail(mailOptions);
-    return response;
+    try {
+      const response = await this.sendMail(mailOptions);
+      return response;
+    } catch (error) {
+      console.error('Error in prepping email.', error);
+      throw new Error('Error in prepping email.');
+    }
   }
 }
 
