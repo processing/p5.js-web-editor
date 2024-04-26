@@ -43,33 +43,36 @@ export function getObjectKey(url) {
 export async function deleteObjectsFromS3(keyList, callback) {
   const objectsToDelete = keyList?.map((key) => ({ Key: key }));
 
-  if (objectsToDelete.length > 0) {
-    const params = {
-      Bucket: process.env.S3_BUCKET,
-      Delete: { Objects: objectsToDelete }
-    };
+  if (!objectsToDelete.length) {
+    callback?.();
+    return;
+  }
 
-    try {
-      await s3Client.send(new DeleteObjectsCommand(params));
-      if (callback) {
-        callback();
-      }
-    } catch (error) {
-      console.error('Error deleting objects from S3: ', error);
-      if (callback) {
-        callback(error);
-      }
-    }
-  } else if (callback) {
-    callback();
+  const params = {
+    Bucket: process.env.S3_BUCKET,
+    Delete: { Objects: objectsToDelete }
+  };
+
+  try {
+    const deleteResult = await s3Client.send(new DeleteObjectsCommand(params));
+    callback?.(null, deleteResult);
+  } catch (error) {
+    callback?.(error);
   }
 }
 
 export function deleteObjectFromS3(req, res) {
   const { objectKey, userId } = req.params;
   const fullObjectKey = userId ? `${userId}/${objectKey}` : objectKey;
-  deleteObjectsFromS3([fullObjectKey], () => {
-    res.json({ success: true });
+
+  deleteObjectsFromS3([fullObjectKey], (error, result) => {
+    if (error) {
+      return res
+        .status(500)
+        .json({ error: 'Failed to delete object from s3.' });
+    }
+
+    return res.json({ success: true, message: 'Object deleted successfully.' });
   });
 }
 
