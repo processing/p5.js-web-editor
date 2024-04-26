@@ -109,7 +109,12 @@ export async function copyObjectInS3(url, userId) {
     Key: objectKey
   };
 
-  await s3Client.send(new HeadObjectCommand(headParams));
+  try {
+    await s3Client.send(new HeadObjectCommand(headParams));
+  } catch (error) {
+    console.error('Error fetching object metadata: ', error);
+    throw error;
+  }
 
   const params = {
     Bucket: process.env.S3_BUCKET,
@@ -128,9 +133,13 @@ export async function copyObjectInS3(url, userId) {
 }
 
 export async function copyObjectInS3RequestHandler(req, res) {
-  const { url } = req.body;
-  const newUrl = await copyObjectInS3(url, req.user.id);
-  res.json({ url: newUrl });
+  try {
+    const { url } = req.body;
+    const newUrl = await copyObjectInS3(url, req.user.id);
+    res.json({ url: newUrl });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 }
 
 export async function moveObjectToUserInS3(url, userId) {
