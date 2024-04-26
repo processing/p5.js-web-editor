@@ -3,10 +3,7 @@
  */
 import { Request, Response } from 'jest-express';
 
-import Project, {
-  createMock,
-  createInstanceMock
-} from '../../../models/project';
+import Project from '../../../models/project';
 import User from '../../../models/user';
 import deleteProject from '../../project.controller/deleteProject';
 import { deleteObjectsFromS3 } from '../../aws.controller';
@@ -14,101 +11,71 @@ import { deleteObjectsFromS3 } from '../../aws.controller';
 jest.mock('../../../models/project');
 jest.mock('../../aws.controller');
 
+// TODO: incomplete test, 500 response status needs to be added
+
 describe('project.controller', () => {
-  describe('deleteProject()', () => {
-    let ProjectMock;
-    let ProjectInstanceMock;
+  let request;
+  let response;
 
-    beforeEach(() => {
-      ProjectMock = createMock();
-      ProjectInstanceMock = createInstanceMock();
+  beforeEach(() => {
+    request = new Request();
+    response = new Response();
+    Project.findById = jest.fn();
+  });
+
+  afterEach(() => {
+    request.resetMocked();
+    response.resetMocked();
+  });
+
+  it('returns 403 if project is not owned by authenticated user', async () => {
+    const user = new User();
+    const project = new Project();
+    project.user = user;
+
+    request.setParams({ project_id: project._id });
+    request.user = { _id: 'abc123' };
+
+    Project.findById.mockResolvedValue(project);
+
+    await deleteProject(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(403);
+    expect(response.json).toHaveBeenCalledWith({
+      message: 'Authenticated user does not match owner of project'
     });
+  });
 
-    afterEach(() => {
-      ProjectMock.restore();
-      ProjectInstanceMock.restore();
+  it('returns 404 if project does not exist', async () => {
+    request.setParams({ project_id: 'random_id' });
+    request.user = { _id: 'abc123' };
+
+    Project.findById.mockResolvedValue(null);
+
+    await deleteProject(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(404);
+    expect(response.json).toHaveBeenCalledWith({
+      message: 'Project with that id does not exist'
     });
+  });
 
-    it('returns 403 if project is not owned by authenticated user', (done) => {
-      const user = new User();
-      const project = new Project();
-      project.user = user;
+  it('delete project and dependent files from S3', async () => {
+    const user = new User();
+    const project = new Project();
+    project.user = user;
+    project.remove = jest.fn().mockResolvedValue();
 
-      const request = new Request();
-      request.setParams({ project_id: project._id });
-      request.user = { _id: 'abc123' };
+    request.setParams({ project_id: project._id });
+    request.user = { _id: user._id };
 
-      const response = new Response();
+    Project.findById.mockResolvedValue(project);
+    deleteObjectsFromS3.mockResolvedValue();
 
-      ProjectMock.expects('findById').resolves(project);
+    await deleteProject(request, response);
 
-      const promise = deleteProject(request, response);
-
-      function expectations() {
-        expect(response.status).toHaveBeenCalledWith(403);
-        expect(response.json).toHaveBeenCalledWith({
-          message: 'Authenticated user does not match owner of project'
-        });
-
-        done();
-      }
-
-      promise.then(expectations, expectations).catch(expectations);
-    });
-
-    it('returns 404 if project does not exist', (done) => {
-      const user = new User();
-      const project = new Project();
-      project.user = user;
-
-      const request = new Request();
-      request.setParams({ project_id: project._id });
-      request.user = { _id: 'abc123' };
-
-      const response = new Response();
-
-      ProjectMock.expects('findById').resolves(null);
-
-      const promise = deleteProject(request, response);
-
-      function expectations() {
-        expect(response.status).toHaveBeenCalledWith(404);
-        expect(response.json).toHaveBeenCalledWith({
-          message: 'Project with that id does not exist'
-        });
-
-        done();
-      }
-
-      promise.then(expectations, expectations).catch(expectations);
-    });
-
-    it('deletes project and dependent files from S3 ', (done) => {
-      const user = new User();
-      const project = new Project();
-      project.user = user;
-
-      const request = new Request();
-      request.setParams({ project_id: project._id });
-      request.user = { _id: user._id };
-
-      const response = new Response();
-
-      ProjectMock.expects('findById').resolves(project);
-
-      ProjectInstanceMock.expects('remove').yields();
-
-      const promise = deleteProject(request, response);
-
-      function expectations() {
-        expect(response.status).toHaveBeenCalledWith(200);
-        expect(response.json).not.toHaveBeenCalled();
-        expect(deleteObjectsFromS3).toHaveBeenCalled();
-
-        done();
-      }
-
-      promise.then(expectations, expectations).catch(expectations);
-    });
+    expect(response.status).toHaveBeenCalledWith(200);
+    expect(deleteObjectsFromS3).toHaveBeenCalled();
+    expect(project.remove).toHaveBeenCalled();
   });
 });
