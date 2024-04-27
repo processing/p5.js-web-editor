@@ -41,7 +41,7 @@ export function getObjectKey(url) {
 }
 
 export async function deleteObjectsFromS3(keyList, callback) {
-  const objectsToDelete = keyList.map((key) => ({ Key: key }));
+  const objectsToDelete = keyList?.map((key) => ({ Key: key }));
 
   if (objectsToDelete.length > 0) {
     const params = {
@@ -168,7 +168,7 @@ export async function listObjectsInS3ForUser(userId) {
 
     const data = await s3Client.send(new ListObjectsCommand(params));
 
-    assets = data.Contents.map((object) => ({
+    assets = data.Contents?.map((object) => ({
       key: object.Key,
       size: object.Size
     }));
@@ -177,7 +177,7 @@ export async function listObjectsInS3ForUser(userId) {
     const projectAssets = [];
     let totalSize = 0;
 
-    assets.forEach((asset) => {
+    assets?.forEach((asset) => {
       const name = asset.key.split('/').pop();
       const foundAsset = {
         key: asset.key,
