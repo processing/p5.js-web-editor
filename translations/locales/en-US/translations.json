@@ -632,5 +632,8 @@
     "PrivacyPolicy": "Privacy Policy",
     "TermsOfUse": "Terms of Use",
     "CodeOfConduct": "Code of Conduct"
+  },
+  "SkipLink": {
+    "PlaySketch": "Skip to Play Sketch"
   }
 }
