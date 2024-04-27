@@ -7,45 +7,42 @@ const ProjectDeletionError = createApplicationErrorClass(
   'ProjectDeletionError'
 );
 
-function deleteFilesFromS3(files) {
-  deleteObjectsFromS3(
-    files
-      .filter((file) => {
-        if (
-          file.url &&
+async function deleteFilesFromS3(files) {
+  const filteredFiles = files
+    .filter((file) => {
+      const isValidFile =
+        (file.url &&
           (file.url.includes(process.env.S3_BUCKET_URL_BASE) ||
-            file.url.includes(process.env.S3_BUCKET))
-        ) {
-          if (
-            !process.env.S3_DATE ||
-            (process.env.S3_DATE &&
-              isBefore(new Date(process.env.S3_DATE), new Date(file.createdAt)))
-          ) {
-            return true;
-          }
-        }
-        return false;
-      })
-      .map((file) => getObjectKey(file.url))
-  );
+            file.url.includes(process.env.S3_BUCKET)) &&
+          !process.env.S3_DATE) ||
+        (process.env.S3_DATE &&
+          isBefore(new Date(process.env.S3_DATE), new Date(file.createdAt)));
+
+      return isValidFile;
+    })
+    .map((file) => getObjectKey(file.url));
+
+  try {
+    await deleteObjectsFromS3(filteredFiles);
+  } catch (error) {
+    console.error('Failed to delete files from S3:', error);
+  }
 }
 
-export default function deleteProject(req, res) {
-  function sendFailure(error) {
+export default async function deleteProject(req, res) {
+  const sendFailure = (error) => {
     res.status(error.code).json({ message: error.message });
-  }
+  };
 
-  function sendProjectNotFound() {
-    sendFailure(
-      new ProjectDeletionError('Project with that id does not exist', {
-        code: 404
-      })
-    );
-  }
+  try {
+    const project = await Project.findById(req.params.project_id);
 
-  function handleProjectDeletion(project) {
-    if (project == null) {
-      sendProjectNotFound();
+    if (!project) {
+      sendFailure(
+        new ProjectDeletionError('Project with that id does not exist', {
+          code: 404
+        })
+      );
       return;
     }
 
@@ -59,19 +56,20 @@ export default function deleteProject(req, res) {
       return;
     }
 
-    deleteFilesFromS3(project.files);
+    try {
+      await deleteFilesFromS3(project.files);
+    } catch (error) {
+      sendFailure(
+        new ProjectDeletionError('Failed to delete associated project files.', {
+          code: 500
+        })
+      );
+      return;
+    }
 
-    project.remove((removeProjectError) => {
-      if (removeProjectError) {
-        sendProjectNotFound();
-        return;
-      }
-
-      res.status(200).end();
-    });
+    await project.remove();
+    res.status(200).end();
+  } catch (error) {
+    sendFailure(error);
   }
-
-  return Project.findById(req.params.project_id)
-    .then(handleProjectDeletion)
-    .catch(sendFailure);
 }

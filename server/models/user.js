@@ -163,7 +163,6 @@ userSchema.methods.comparePassword = async function comparePassword(
   candidatePassword
 ) {
   if (!this.password) {
-    console.error('No password is set for this user.');
     return false;
   }
 
@@ -267,7 +266,7 @@ userSchema.statics.findByUsername = function findByUsername(
 
 /**
  *
- * Queries User collection using email or username with optional callback.
+ * Queries User collection using email or username.
  * This function will determine automatically whether the data passed is
  * a username or email, unless you specify options.valueType
  *
@@ -277,37 +276,30 @@ userSchema.statics.findByUsername = function findByUsername(
  *                                          default query for username or email, defaults
  *                                          to false
  * @param {("email"|"username")} options.valueType - Prevents automatic type inferrence
- * @callback [cb] - Optional error-first callback that passes User document
  * @return {Promise<Object>} - Returns Promise fulfilled by User document
  */
 userSchema.statics.findByEmailOrUsername = function findByEmailOrUsername(
   value,
-  options,
-  cb
+  options
 ) {
-  let isEmail;
-  if (options && options.valueType) {
-    isEmail = options.valueType === 'email';
-  } else {
-    isEmail = value.indexOf('@') > -1;
-  }
+  const isEmail = options?.valueType
+    ? options.valueType === 'email'
+    : value.includes('@');
+
+  const query = isEmail ? { email: value } : { username: value };
+  const queryOptions = {
+    collation: { locale: 'en', strength: 2 },
+    maxTimeMS: 10000 // Set a timeout of 10 seconds to help prevent long-running queries
+  };
+  const queryPromise = this.findOne(query, queryOptions).exec();
+
   // do the case insensitive stuff
-  if (
-    (arguments.length === 3 && options.caseInsensitive) ||
-    (arguments.length === 2 &&
-      typeof options === 'object' &&
-      options.caseInsensitive)
-  ) {
-    const query = isEmail ? { email: value } : { username: value };
-    return this.findOne(query)
-      .collation({ locale: 'en', strength: 2 })
-      .exec(cb);
-  }
-  const callback = typeof options === 'function' ? options : cb;
-  if (isEmail) {
-    return this.findByEmail(value, callback);
-  }
-  return this.findByUsername(value, callback);
+  // TODO: Handling options should be figured out. At the moment, I think scenarios where it's currently used can be case insensitive?
+  // if (options?.caseInsensitive) {
+  //   return queryPromise;
+  // }
+
+  return queryPromise;
 };
 
 /**
