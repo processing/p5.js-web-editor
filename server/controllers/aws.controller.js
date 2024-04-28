@@ -39,37 +39,40 @@ export function getObjectKey(url) {
   }
   return objectKey;
 }
-
+// TODO: callback should be removed
 export async function deleteObjectsFromS3(keyList, callback) {
-  const objectsToDelete = keyList.map((key) => ({ Key: key }));
+  const objectsToDelete = keyList?.map((key) => ({ Key: key }));
 
-  if (objectsToDelete.length > 0) {
-    const params = {
-      Bucket: process.env.S3_BUCKET,
-      Delete: { Objects: objectsToDelete }
-    };
+  if (!objectsToDelete.length) {
+    callback?.();
+    return;
+  }
 
-    try {
-      await s3Client.send(new DeleteObjectsCommand(params));
-      if (callback) {
-        callback();
-      }
-    } catch (error) {
-      console.error('Error deleting objects from S3: ', error);
-      if (callback) {
-        callback(error);
-      }
-    }
-  } else if (callback) {
-    callback();
+  const params = {
+    Bucket: process.env.S3_BUCKET,
+    Delete: { Objects: objectsToDelete }
+  };
+
+  try {
+    const deleteResult = await s3Client.send(new DeleteObjectsCommand(params));
+    callback?.(null, deleteResult);
+  } catch (error) {
+    callback?.(error);
   }
 }
 
 export function deleteObjectFromS3(req, res) {
   const { objectKey, userId } = req.params;
   const fullObjectKey = userId ? `${userId}/${objectKey}` : objectKey;
-  deleteObjectsFromS3([fullObjectKey], () => {
-    res.json({ success: true });
+
+  deleteObjectsFromS3([fullObjectKey], (error, result) => {
+    if (error) {
+      return res
+        .status(500)
+        .json({ error: 'Failed to delete object from s3.' });
+    }
+
+    return res.json({ success: true, message: 'Object deleted successfully.' });
   });
 }
 
@@ -106,7 +109,12 @@ export async function copyObjectInS3(url, userId) {
     Key: objectKey
   };
 
-  await s3Client.send(new HeadObjectCommand(headParams));
+  try {
+    await s3Client.send(new HeadObjectCommand(headParams));
+  } catch (error) {
+    console.error('Error fetching object metadata: ', error);
+    throw error;
+  }
 
   const params = {
     Bucket: process.env.S3_BUCKET,
@@ -125,9 +133,13 @@ export async function copyObjectInS3(url, userId) {
 }
 
 export async function copyObjectInS3RequestHandler(req, res) {
-  const { url } = req.body;
-  const newUrl = await copyObjectInS3(url, req.user.id);
-  res.json({ url: newUrl });
+  try {
+    const { url } = req.body;
+    const newUrl = await copyObjectInS3(url, req.user.id);
+    res.json({ url: newUrl });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 }
 
 export async function moveObjectToUserInS3(url, userId) {
@@ -168,7 +180,7 @@ export async function listObjectsInS3ForUser(userId) {
 
     const data = await s3Client.send(new ListObjectsCommand(params));
 
-    assets = data.Contents.map((object) => ({
+    assets = data.Contents?.map((object) => ({
       key: object.Key,
       size: object.Size
     }));
@@ -177,7 +189,7 @@ export async function listObjectsInS3ForUser(userId) {
     const projectAssets = [];
     let totalSize = 0;
 
-    assets.forEach((asset) => {
+    assets?.forEach((asset) => {
       const name = asset.key.split('/').pop();
       const foundAsset = {
         key: asset.key,

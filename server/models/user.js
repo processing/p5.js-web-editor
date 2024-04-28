@@ -162,7 +162,16 @@ userSchema.set('toJSON', {
 userSchema.methods.comparePassword = async function comparePassword(
   candidatePassword
 ) {
-  return bcrypt.compare(candidatePassword, this.password);
+  if (!this.password) {
+    return false;
+  }
+
+  try {
+    return await bcrypt.compare(candidatePassword, this.password);
+  } catch (error) {
+    console.error('Password comparison failed!', error);
+    return false;
+  }
 };
 
 /**
