@@ -43,6 +43,8 @@ export function getObjectKey(url) {
 export async function deleteObjectsFromS3(keyList, callback) {
   const objectsToDelete = keyList?.map((key) => ({ Key: key }));
 
+  console.log('objects to delete: ', objectsToDelete);
+
   if (!objectsToDelete.length) {
     callback?.();
     return;
@@ -54,9 +56,11 @@ export async function deleteObjectsFromS3(keyList, callback) {
   };
 
   try {
+    console.log('we here');
     await s3Client.send(new DeleteObjectsCommand(params));
     callback?.();
   } catch (error) {
+    console.log('error: ', error);
     callback?.(error);
   }
 }
