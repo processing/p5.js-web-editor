@@ -22,8 +22,6 @@ async function deleteFilesFromS3(files) {
     })
     .map((file) => getObjectKey(file.url));
 
-  console.log('filtered files: ', filteredFiles);
-
   try {
     await deleteObjectsFromS3(filteredFiles);
   } catch (error) {
