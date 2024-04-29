@@ -44,20 +44,19 @@ export async function deleteObjectsFromS3(keyList, callback) {
   const objectsToDelete = keyList?.map((key) => ({ Key: key }));
 
   if (objectsToDelete.length > 0) {
-    callback?.();
-    return;
-  }
+    const params = {
+      Bucket: process.env.S3_BUCKET,
+      Delete: { Objects: objectsToDelete }
+    };
 
-  const params = {
-    Bucket: process.env.S3_BUCKET,
-    Delete: { Objects: objectsToDelete }
-  };
-
-  try {
-    await s3Client.send(new DeleteObjectsCommand(params));
+    try {
+      await s3Client.send(new DeleteObjectsCommand(params));
+      callback?.();
+    } catch (error) {
+      callback?.(error);
+    }
+  } else {
     callback?.();
-  } catch (error) {
-    callback?.(error);
   }
 }
 
