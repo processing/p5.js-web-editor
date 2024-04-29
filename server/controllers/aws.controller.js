@@ -39,7 +39,7 @@ export function getObjectKey(url) {
   }
   return objectKey;
 }
-// TODO: callback should be removed
+// TODO: callbacks should be removed from deleteObjectsFromS3 and deleteObjectFromS3
 export async function deleteObjectsFromS3(keyList, callback) {
   const objectsToDelete = keyList?.map((key) => ({ Key: key }));
 
@@ -54,8 +54,8 @@ export async function deleteObjectsFromS3(keyList, callback) {
   };
 
   try {
-    const deleteResult = await s3Client.send(new DeleteObjectsCommand(params));
-    callback?.(null, deleteResult);
+    await s3Client.send(new DeleteObjectsCommand(params));
+    callback?.();
   } catch (error) {
     callback?.(error);
   }
