@@ -43,6 +43,19 @@ export function getObjectKey(url) {
 export async function deleteObjectsFromS3(keyList, callback) {
   const objectsToDelete = keyList?.map((key) => ({ Key: key }));
 
+  const sendResponse = (cb, err) => {
+    if (cb && err) {
+      callback(err);
+    } else if (cb) {
+      callback();
+    } else if (!cb && err) {
+      console.error('Failed to delete objects from S3.');
+      throw err;
+    }
+
+    return 'Objects successfully deleted from S3.';
+  };
+
   if (objectsToDelete.length > 0) {
     const params = {
       Bucket: process.env.S3_BUCKET,
@@ -51,12 +64,12 @@ export async function deleteObjectsFromS3(keyList, callback) {
 
     try {
       await s3Client.send(new DeleteObjectsCommand(params));
-      callback?.();
+      sendResponse();
     } catch (error) {
-      callback?.(error);
+      sendResponse();
     }
   } else {
-    callback?.();
+    sendResponse();
   }
 }
 
