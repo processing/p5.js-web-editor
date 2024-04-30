@@ -39,25 +39,37 @@ export function getObjectKey(url) {
   }
   return objectKey;
 }
-// TODO: callback should be removed
+// TODO: callbacks should be removed from deleteObjectsFromS3 and deleteObjectFromS3
 export async function deleteObjectsFromS3(keyList, callback) {
   const objectsToDelete = keyList?.map((key) => ({ Key: key }));
 
-  if (!objectsToDelete.length) {
-    callback?.();
-    return;
-  }
+  const sendResponse = (cb, err) => {
+    if (cb && err) {
+      callback(err);
+    } else if (cb) {
+      callback();
+    } else if (!cb && err) {
+      console.error('Failed to delete objects from S3.');
+      throw err;
+    }
 
-  const params = {
-    Bucket: process.env.S3_BUCKET,
-    Delete: { Objects: objectsToDelete }
+    return 'Objects successfully deleted from S3.';
   };
 
-  try {
-    const deleteResult = await s3Client.send(new DeleteObjectsCommand(params));
-    callback?.(null, deleteResult);
-  } catch (error) {
-    callback?.(error);
+  if (objectsToDelete.length > 0) {
+    const params = {
+      Bucket: process.env.S3_BUCKET,
+      Delete: { Objects: objectsToDelete }
+    };
+
+    try {
+      await s3Client.send(new DeleteObjectsCommand(params));
+      sendResponse();
+    } catch (error) {
+      sendResponse();
+    }
+  } else {
+    sendResponse();
   }
 }
 

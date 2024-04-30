@@ -56,17 +56,7 @@ export default async function deleteProject(req, res) {
       return;
     }
 
-    try {
-      await deleteFilesFromS3(project.files);
-    } catch (error) {
-      sendFailure(
-        new ProjectDeletionError('Failed to delete associated project files.', {
-          code: 500
-        })
-      );
-      return;
-    }
-
+    await deleteFilesFromS3(project.files);
     await project.remove();
     res.status(200).end();
   } catch (error) {
