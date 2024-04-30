@@ -1,3 +1,4 @@
+import blobUtil from 'blob-util';
 import PropTypes from 'prop-types';
 import React, { useRef, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
@@ -272,6 +273,7 @@ function getHtmlFile(files) {
 function EmbedFrame({ files, isPlaying, basePath, gridOutput, textOutput }) {
   const iframe = useRef();
   const htmlFile = useMemo(() => getHtmlFile(files), [files]);
+  const srcRef = useRef();
 
   useEffect(() => {
     const unsubscribe = registerFrame(
@@ -296,9 +298,14 @@ function EmbedFrame({ files, isPlaying, basePath, gridOutput, textOutput }) {
         content: htmlDoc
       };
       const htmlUrl = createBlobUrl(generatedHtmlFile);
+      const toRevoke = srcRef.current;
+      srcRef.current = htmlUrl;
       // BRO FOR SOME REASON YOU HAVE TO DO THIS TO GET IT TO WORK ON SAFARI
       setTimeout(() => {
         doc.src = htmlUrl;
+        if (toRevoke) {
+          blobUtil.revokeObjectURL(toRevoke);
+        }
       }, 0);
     } else {
       doc.src = '';

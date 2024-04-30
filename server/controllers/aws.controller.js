@@ -39,41 +39,39 @@ export function getObjectKey(url) {
   }
   return objectKey;
 }
-// TODO: callback should be removed
-export async function deleteObjectsFromS3(keyList, callback) {
+
+export async function deleteObjectsFromS3(keyList) {
   const objectsToDelete = keyList?.map((key) => ({ Key: key }));
 
-  if (!objectsToDelete.length) {
-    callback?.();
-    return;
-  }
+  if (objectsToDelete.length > 0) {
+    const params = {
+      Bucket: process.env.S3_BUCKET,
+      Delete: { Objects: objectsToDelete }
+    };
 
-  const params = {
-    Bucket: process.env.S3_BUCKET,
-    Delete: { Objects: objectsToDelete }
-  };
-
-  try {
-    const deleteResult = await s3Client.send(new DeleteObjectsCommand(params));
-    callback?.(null, deleteResult);
-  } catch (error) {
-    callback?.(error);
+    try {
+      await s3Client.send(new DeleteObjectsCommand(params));
+    } catch (error) {
+      if (error.name === 'NotFound') {
+        console.log('Object does not exist:', error);
+      } else {
+        console.error('Error deleting objects from S3: ', error);
+      }
+    }
   }
 }
 
-export function deleteObjectFromS3(req, res) {
+export async function deleteObjectFromS3(req, res) {
   const { objectKey, userId } = req.params;
   const fullObjectKey = userId ? `${userId}/${objectKey}` : objectKey;
 
-  deleteObjectsFromS3([fullObjectKey], (error, result) => {
-    if (error) {
-      return res
-        .status(500)
-        .json({ error: 'Failed to delete object from s3.' });
-    }
+  try {
+    await deleteObjectsFromS3([fullObjectKey]);
 
     return res.json({ success: true, message: 'Object deleted successfully.' });
-  });
+  } catch (err) {
+    return res.status(500).json({ error: 'Failed to delete object from s3.' });
+  }
 }
 
 export function signS3(req, res) {
@@ -112,8 +110,12 @@ export async function copyObjectInS3(url, userId) {
   try {
     await s3Client.send(new HeadObjectCommand(headParams));
   } catch (error) {
-    console.error('Error fetching object metadata: ', error);
-    throw error;
+    if (error.name === 'NotFound') {
+      console.log('Object does not exist:', error);
+    } else {
+      console.error('Error fetching object metadata:', error);
+      throw error;
+    }
   }
 
   const params = {
@@ -127,7 +129,12 @@ export async function copyObjectInS3(url, userId) {
     await s3Client.send(new CopyObjectCommand(params));
     return `${s3Bucket}${userId}/${newFilename}`;
   } catch (error) {
-    console.error('Error copying object in S3:', error);
+    // temporary error handling for sketches with missing assets
+    if (error.startsWith('TypeError')) {
+      console.log('Object does not exist:', error);
+      return null;
+    }
+    console.error('Error copying object:', error);
     throw error;
   }
 }
@@ -220,31 +227,30 @@ export async function listObjectsInS3ForUser(userId) {
 
     return { assets: projectAssets, totalSize };
   } catch (error) {
-    console.log('Got an error:', error);
+    if (error.name === 'NotFound') {
+      console.log('Object does not exist:', error);
+      return null;
+    }
+    console.error('Got an error: ', error);
     throw error;
   }
 }
 
-export function listObjectsInS3ForUserRequestHandler(req, res) {
+export async function listObjectsInS3ForUserRequestHandler(req, res) {
   const { username } = req.user;
-  User.findByUsername(username, (err, user) => {
-    if (err) {
-      console.error('Error fetching user:', err.message);
-      res.status(500).json({ error: 'Failed to fetch user' });
-      return;
-    }
+
+  try {
+    const user = await User.findByUsername(username);
+
     if (!user) {
       res.status(404).json({ error: 'User not found' });
       return;
     }
-    const userId = user.id;
-    listObjectsInS3ForUser(userId)
-      .then((objects) => {
-        res.json(objects);
-      })
-      .catch((error) => {
-        console.error('Error listing objects in S3:', error.message);
-        res.status(500).json({ error: 'Failed to list objects in S3' });
-      });
-  });
+
+    const objects = await listObjectsInS3ForUser(user.id);
+    res.json(objects);
+  } catch (error) {
+    console.error('Error listing objects in S3:', error.message);
+    res.status(500).json({ error: 'Failed to list objects in S3' });
+  }
 }

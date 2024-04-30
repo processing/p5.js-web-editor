@@ -70,30 +70,30 @@ passport.use(
  * Authentificate using Basic Auth (Username + Api Key)
  */
 passport.use(
-  new BasicStrategy((userid, key, done) => {
-    User.findByUsername(userid, (err, user) => {
-      if (err) {
-        done(err);
-        return;
-      }
+  new BasicStrategy(async (userid, key, done) => {
+    try {
+      const user = await User.findByUsername(userid);
+
       if (!user) {
-        done(null, false);
-        return;
+        return done(null, false);
       }
+
       if (user.banned) {
-        done(null, false, { msg: accountSuspensionMessage });
-        return;
+        return done(null, false, { msg: accountSuspensionMessage });
       }
-      user.findMatchingKey(key, (innerErr, isMatch, keyDocument) => {
-        if (isMatch) {
-          keyDocument.lastUsedAt = Date.now();
-          user.save();
-          done(null, user);
-          return;
-        }
-        done(null, false, { msg: 'Invalid username or API key' });
-      });
-    });
+
+      const { isMatch, keyDocument } = await user.findMatchingKey(key);
+      if (!isMatch) {
+        return done(null, false, { message: 'Invalid API key' });
+      }
+
+      keyDocument.lastUsedAt = Date.now();
+      await user.save();
+      return done(null, user);
+    } catch (err) {
+      console.error(err);
+      return done(null, false, { msg: err });
+    }
   })
 );
 
@@ -128,20 +128,19 @@ passport.use(
       scope: ['user:email'],
       allRawEmails: true
     },
-    (req, accessToken, refreshToken, profile, done) => {
-      User.findOne({ github: profile.id }, (findByGithubErr, existingUser) => {
+    async (req, accessToken, refreshToken, profile, done) => {
+      try {
+        const existingUser = await User.findOne({ github: profile.id });
+
         if (existingUser) {
           if (req.user && req.user.email !== existingUser.email) {
-            done(null, false, {
+            return done(null, false, {
               msg: 'GitHub account is already linked to another account.'
             });
-            return;
           } else if (existingUser.banned) {
-            done(null, false, { msg: accountSuspensionMessage });
-            return;
+            return done(null, false, { msg: accountSuspensionMessage });
           }
-          done(null, existingUser);
-          return;
+          return done(null, existingUser);
         }
 
         const emails = getVerifiedEmails(profile.emails);
@@ -153,58 +152,63 @@ passport.use(
             req.user.tokens.push({ kind: 'github', accessToken });
             req.user.verified = User.EmailConfirmation.Verified;
           }
-          req.user.save((saveErr) => done(null, req.user));
-        } else {
-          User.findAllByEmails(emails, (findByEmailErr, existingEmailUsers) => {
-            if (existingEmailUsers.length) {
-              let existingEmailUser;
-              // Handle case where user has made multiple p5.js Editor accounts,
-              // with emails that are connected to the same GitHub account
-              if (existingEmailUsers.length > 1) {
-                existingEmailUser = existingEmailUsers.find(
-                  (u) => (u.email = primaryEmail)
-                );
-              } else {
-                [existingEmailUser] = existingEmailUsers;
-              }
-              if (existingEmailUser.banned) {
-                done(null, false, { msg: accountSuspensionMessage });
-                return;
-              }
-              existingEmailUser.email = existingEmailUser.email || primaryEmail;
-              existingEmailUser.github = profile.id;
-              existingEmailUser.username =
-                existingEmailUser.username || profile.username;
-              existingEmailUser.tokens.push({ kind: 'github', accessToken });
-              existingEmailUser.name =
-                existingEmailUser.name || profile.displayName;
-              existingEmailUser.verified = User.EmailConfirmation.Verified;
-              existingEmailUser.save((saveErr) =>
-                done(null, existingEmailUser)
-              );
-            } else {
-              let { username } = profile;
-              User.findByUsername(
-                username,
-                { caseInsensitive: true },
-                (findByUsernameErr, existingUsernameUser) => {
-                  if (existingUsernameUser) {
-                    username = generateUniqueUsername(username);
-                  }
-                  const user = new User();
-                  user.email = primaryEmail;
-                  user.github = profile.id;
-                  user.username = profile.username;
-                  user.tokens.push({ kind: 'github', accessToken });
-                  user.name = profile.displayName;
-                  user.verified = User.EmailConfirmation.Verified;
-                  user.save((saveErr) => done(null, user));
-                }
-              );
-            }
-          });
+          req.user.save();
+          return done(null, req.user);
         }
-      });
+
+        const existingEmailUsers = await User.findAllByEmails(emails);
+
+        if (existingEmailUsers.length) {
+          let existingEmailUser;
+
+          // Handle case where user has made multiple p5.js Editor accounts,
+          // with emails that are connected to the same GitHub account
+          if (existingEmailUsers.length > 1) {
+            existingEmailUser = existingEmailUsers.find(
+              (u) => (u.email = primaryEmail)
+            );
+          } else {
+            [existingEmailUser] = existingEmailUsers;
+          }
+
+          if (existingEmailUser.banned) {
+            return done(null, false, { msg: accountSuspensionMessage });
+          }
+          existingEmailUser.email = existingEmailUser.email || primaryEmail;
+          existingEmailUser.github = profile.id;
+          existingEmailUser.username =
+            existingEmailUser.username || profile.username;
+          existingEmailUser.tokens.push({ kind: 'github', accessToken });
+          existingEmailUser.name =
+            existingEmailUser.name || profile.displayName;
+          existingEmailUser.verified = User.EmailConfirmation.Verified;
+          existingEmailUser.save();
+          return done(null, existingEmailUser);
+        }
+
+        let { username } = profile;
+
+        const existingUsernameUser = await User.findByUsername(username, {
+          caseInsensitive: true
+        });
+
+        if (existingUsernameUser) {
+          username = generateUniqueUsername(username);
+        }
+        const user = new User();
+        user.email = primaryEmail;
+        user.github = profile.id;
+        user.username = profile.username;
+        user.tokens.push({ kind: 'github', accessToken });
+        user.name = profile.displayName;
+        user.verified = User.EmailConfirmation.Verified;
+        await user.save();
+
+        return done(null, user);
+      } catch (err) {
+        console.error(err);
+        return done(null, false, { msg: err });
+      }
     }
   )
 );
@@ -221,92 +225,78 @@ passport.use(
       passReqToCallback: true,
       scope: ['openid email']
     },
-    (req, accessToken, refreshToken, profile, done) => {
-      User.findOne(
-        { google: profile._json.emails[0].value },
-        (findByGoogleErr, existingUser) => {
-          if (existingUser) {
-            if (req.user && req.user.email !== existingUser.email) {
-              done(null, false, {
-                msg: 'Google account is already linked to another account.'
-              });
-              return;
-            } else if (existingUser.banned) {
-              done(null, false, { msg: accountSuspensionMessage });
-              return;
-            }
-            done(null, existingUser);
-            return;
-          }
-          const primaryEmail = profile._json.emails[0].value;
+    async (req, accessToken, refreshToken, profile, done) => {
+      try {
+        const existingUser = await User.findOne({
+          google: profile._json.emails[0].value
+        });
 
-          if (req.user) {
-            if (!req.user.google) {
-              req.user.google = profile._json.emails[0].value;
-              req.user.tokens.push({ kind: 'google', accessToken });
-              req.user.verified = User.EmailConfirmation.Verified;
-            }
-            req.user.save((saveErr) => done(null, req.user));
-          } else {
-            User.findByEmail(
-              primaryEmail,
-              (findByEmailErr, existingEmailUser) => {
-                let username = profile._json.emails[0].value.split('@')[0];
-                User.findByUsername(
-                  username,
-                  { caseInsensitive: true },
-                  (findByUsernameErr, existingUsernameUser) => {
-                    if (existingUsernameUser) {
-                      username = generateUniqueUsername(username);
-                    }
-                    // what if a username is already taken from the display name too?
-                    // then, append a random friendly word?
-                    if (existingEmailUser) {
-                      if (existingEmailUser.banned) {
-                        done(null, false, { msg: accountSuspensionMessage });
-                        return;
-                      }
-                      existingEmailUser.email =
-                        existingEmailUser.email || primaryEmail;
-                      existingEmailUser.google = profile._json.emails[0].value;
-                      existingEmailUser.username =
-                        existingEmailUser.username || username;
-                      existingEmailUser.tokens.push({
-                        kind: 'google',
-                        accessToken
-                      });
-                      existingEmailUser.name =
-                        existingEmailUser.name || profile._json.displayName;
-                      existingEmailUser.verified =
-                        User.EmailConfirmation.Verified;
-                      existingEmailUser.save((saveErr) => {
-                        if (saveErr) {
-                          console.log(saveErr);
-                        }
-                        done(null, existingEmailUser);
-                      });
-                    } else {
-                      const user = new User();
-                      user.email = primaryEmail;
-                      user.google = profile._json.emails[0].value;
-                      user.username = username;
-                      user.tokens.push({ kind: 'google', accessToken });
-                      user.name = profile._json.displayName;
-                      user.verified = User.EmailConfirmation.Verified;
-                      user.save((saveErr) => {
-                        if (saveErr) {
-                          console.log(saveErr);
-                        }
-                        done(null, user);
-                      });
-                    }
-                  }
-                );
-              }
-            );
+        if (existingUser) {
+          if (req.user && req.user.email !== existingUser.email) {
+            return done(null, false, {
+              msg: 'Google account is already linked to another account.'
+            });
+          } else if (existingUser.banned) {
+            return done(null, false, { msg: accountSuspensionMessage });
           }
+          return done(null, existingUser);
         }
-      );
+
+        const primaryEmail = profile._json.emails[0].value;
+
+        if (req.user) {
+          if (!req.user.google) {
+            req.user.google = profile._json.emails[0].value;
+            req.user.tokens.push({ kind: 'google', accessToken });
+            req.user.verified = User.EmailConfirmation.Verified;
+          }
+          req.user.save();
+          return done(null, req.user);
+        }
+        let username = profile._json.emails[0].value.split('@')[0];
+        const existingEmailUser = await User.findByEmail(primaryEmail);
+        const existingUsernameUser = await User.findByUsername(username, {
+          caseInsensitive: true
+        });
+
+        if (existingUsernameUser) {
+          username = generateUniqueUsername(username);
+        }
+        // what if a username is already taken from the display name too?
+        // then, append a random friendly word?
+        if (existingEmailUser) {
+          if (existingEmailUser.banned) {
+            return done(null, false, { msg: accountSuspensionMessage });
+          }
+          existingEmailUser.email = existingEmailUser.email || primaryEmail;
+          existingEmailUser.google = profile._json.emails[0].value;
+          existingEmailUser.username = existingEmailUser.username || username;
+          existingEmailUser.tokens.push({
+            kind: 'google',
+            accessToken
+          });
+          existingEmailUser.name =
+            existingEmailUser.name || profile._json.displayName;
+          existingEmailUser.verified = User.EmailConfirmation.Verified;
+
+          await existingEmailUser.save();
+          return done(null, existingEmailUser);
+        }
+
+        const user = new User();
+        user.email = primaryEmail;
+        user.google = profile._json.emails[0].value;
+        user.username = username;
+        user.tokens.push({ kind: 'google', accessToken });
+        user.name = profile._json.displayName;
+        user.verified = User.EmailConfirmation.Verified;
+
+        await user.save();
+        return done(null, user);
+      } catch (err) {
+        console.error(err);
+        return done(null, false, { msg: err });
+      }
     }
   )
 );
