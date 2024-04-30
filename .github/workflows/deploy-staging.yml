@@ -3,7 +3,7 @@ on:
   workflow_run:
     workflows: ["Test"]
     branches:
-      - release-testing
+      - release-delete-sketch
     types:
       - completed
 env:
