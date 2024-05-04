@@ -156,15 +156,22 @@ userSchema.set('toJSON', {
 
 /**
  * Helper method for validating user's password.
+ * @param {string} candidatePassword
+ * @return {Promise<boolean>}
  */
-userSchema.methods.comparePassword = function comparePassword(
-  candidatePassword,
-  cb
+userSchema.methods.comparePassword = async function comparePassword(
+  candidatePassword
 ) {
-  // userSchema.methods.comparePassword = (candidatePassword, cb) => {
-  bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
-    cb(err, isMatch);
-  });
+  if (!this.password) {
+    return false;
+  }
+
+  try {
+    return await bcrypt.compare(candidatePassword, this.password);
+  } catch (error) {
+    console.error('Password comparison failed!', error);
+    return false;
+  }
 };
 
 /**
@@ -192,20 +199,17 @@ userSchema.methods.findMatchingKey = function findMatchingKey(
  * @callback [cb] - Optional error-first callback that passes User document
  * @return {Promise<Object>} - Returns Promise fulfilled by User document
  */
-userSchema.statics.findByEmail = function findByEmail(email, cb) {
-  let query;
-  if (Array.isArray(email)) {
-    query = {
-      email: { $in: email }
-    };
-  } else {
-    query = {
-      email
-    };
-  }
+userSchema.statics.findByEmail = async function findByEmail(email) {
+  const user = this;
+  const query = Array.isArray(email) ? { email: { $in: email } } : { email };
+
   // Email addresses should be case-insensitive unique
   // In MongoDB, you must use collation in order to do a case-insensitive query
-  return this.findOne(query).collation({ locale: 'en', strength: 2 }).exec(cb);
+  const userFoundByEmail = await user
+    .findOne(query)
+    .collation({ locale: 'en', strength: 2 })
+    .exec();
+  return userFoundByEmail;
 };
 
 /**
@@ -213,16 +217,20 @@ userSchema.statics.findByEmail = function findByEmail(email, cb) {
  * Queries User collection by emails and returns all Users that match.
  *
  * @param {string[]} emails - Array of email strings
- * @callback [cb] - Optional error-first callback that passes User document
  * @return {Promise<Object>} - Returns Promise fulfilled by User document
  */
-userSchema.statics.findAllByEmails = function findAllByEmails(emails, cb) {
+userSchema.statics.findAllByEmails = async function findAllByEmails(emails) {
+  const user = this;
   const query = {
     email: { $in: emails }
   };
   // Email addresses should be case-insensitive unique
   // In MongoDB, you must use collation in order to do a case-insensitive query
-  return this.find(query).collation({ locale: 'en', strength: 2 }).exec(cb);
+  const usersFoundByEmails = await user
+    .find(query)
+    .collation({ locale: 'en', strength: 2 })
+    .exec();
+  return usersFoundByEmails;
 };
 
 /**
@@ -232,29 +240,31 @@ userSchema.statics.findAllByEmails = function findAllByEmails(emails, cb) {
  * @param {string} username - Username string
  * @param {Object} [options] - Optional options
  * @param {boolean} options.caseInsensitive - Does a caseInsensitive query, defaults to false
- * @callback [cb] - Optional error-first callback that passes User document
  * @return {Promise<Object>} - Returns Promise fulfilled by User document
  */
-userSchema.statics.findByUsername = function findByUsername(
+userSchema.statics.findByUsername = async function findByUsername(
   username,
-  options,
-  cb
+  options
 ) {
+  const user = this;
   const query = {
     username
   };
+
   if (
-    (arguments.length === 3 && options.caseInsensitive) ||
-    (arguments.length === 2 &&
-      typeof options === 'object' &&
-      options.caseInsensitive)
+    arguments.length === 2 &&
+    typeof options === 'object' &&
+    options.caseInsensitive
   ) {
-    return this.findOne(query)
+    const foundUser = await user
+      .findOne(query)
       .collation({ locale: 'en', strength: 2 })
-      .exec(cb);
+      .exec();
+    return foundUser;
   }
-  const callback = typeof options === 'function' ? options : cb;
-  return this.findOne(query, callback);
+
+  const userFoundByUsername = await user.findOne(query).exec();
+  return userFoundByUsername;
 };
 
 /**
@@ -269,37 +279,39 @@ userSchema.statics.findByUsername = function findByUsername(
  *                                          default query for username or email, defaults
  *                                          to false
  * @param {("email"|"username")} options.valueType - Prevents automatic type inferrence
- * @callback [cb] - Optional error-first callback that passes User document
  * @return {Promise<Object>} - Returns Promise fulfilled by User document
  */
-userSchema.statics.findByEmailOrUsername = function findByEmailOrUsername(
+userSchema.statics.findByEmailOrUsername = async function findByEmailOrUsername(
   value,
-  options,
-  cb
+  options
 ) {
-  let isEmail;
-  if (options && options.valueType) {
-    isEmail = options.valueType === 'email';
-  } else {
-    isEmail = value.indexOf('@') > -1;
-  }
+  const user = this;
+  const isEmail =
+    options && options.valueType
+      ? options.valueType === 'email'
+      : value.indexOf('@') > -1;
+
   // do the case insensitive stuff
   if (
-    (arguments.length === 3 && options.caseInsensitive) ||
-    (arguments.length === 2 &&
-      typeof options === 'object' &&
-      options.caseInsensitive)
+    arguments.length === 2 &&
+    typeof options === 'object' &&
+    options.caseInsensitive
   ) {
     const query = isEmail ? { email: value } : { username: value };
-    return this.findOne(query)
+    const foundUser = await user
+      .findOne(query)
       .collation({ locale: 'en', strength: 2 })
-      .exec(cb);
+      .exec();
+
+    return foundUser;
   }
-  const callback = typeof options === 'function' ? options : cb;
+
   if (isEmail) {
-    return this.findByEmail(value, callback);
+    const userFoundByEmail = await user.findByEmail(value);
+    return userFoundByEmail;
   }
-  return this.findByUsername(value, callback);
+  const userFoundByUsername = await user.findByUsername(value);
+  return userFoundByUsername;
 };
 
 /**

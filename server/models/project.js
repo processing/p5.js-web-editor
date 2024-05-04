@@ -68,34 +68,20 @@ projectSchema.pre('save', function generateSlug(next) {
 
 /**
  * Check if slug is unique for this user's projects
+ * @return {Promise<{ isUnique: boolean; conflictingIds: string[] }>}
  */
-projectSchema.methods.isSlugUnique = async function isSlugUnique(cb) {
+projectSchema.methods.isSlugUnique = async function isSlugUnique() {
   const project = this;
-  const hasCallback = typeof cb === 'function';
 
-  try {
-    const docsWithSlug = await project
-      .model('Project')
-      .find({ user: project.user, slug: project.slug }, '_id')
-      .exec();
+  const docsWithSlug = await project
+    .model('Project')
+    .find({ user: project.user, slug: project.slug }, '_id')
+    .exec();
 
-    const result = {
-      isUnique: docsWithSlug.length === 0,
-      conflictingIds: docsWithSlug.map((d) => d._id) || []
-    };
-
-    if (hasCallback) {
-      cb(null, result);
-    }
-
-    return result;
-  } catch (err) {
-    if (hasCallback) {
-      cb(err, null);
-    }
-
-    throw err;
-  }
+  return {
+    isUnique: docsWithSlug.length === 0,
+    conflictingIds: docsWithSlug.map((d) => d._id) || []
+  };
 };
 
 export default mongoose.models.Project ||

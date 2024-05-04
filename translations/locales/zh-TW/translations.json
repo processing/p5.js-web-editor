@@ -93,10 +93,18 @@
     "NewP5": "p5.js 新手？",
     "Report": "回報臭蟲",
     "Learn": "學習",
+    "Twitter": "Twitter",
+    "Home": "首頁",
+    "Instagram": "Instagram",
+    "Discord": "Discord",
+    "WebEditor": "Web 編輯器",
     "Resources": "資源",
     "Libraries": "程式庫",
     "Forum": "論壇",
-    "Examples": "範例"
+    "Examples": "範例",
+    "PrivacyPolicy": "隱私政策",
+    "TermsOfUse": "使用條款",
+    "CodeOfConduct": "行為準則"
   },
   "Toast": {
     "OpenedNewSketch": "已開啟新草稿",
