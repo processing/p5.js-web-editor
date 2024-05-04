@@ -193,3 +193,18 @@
 		accent-color: getThemifyVariable('logo-color');
 	}
 }
+
+
+.toolbar__makeprivate {
+	display: flex;
+	gap: 2px;
+	align-items: center;
+}
+
+.toolbar__togglevisibility {
+	cursor: pointer;
+
+	@include themify() {
+		accent-color: getThemifyVariable('logo-color');
+	}
+}

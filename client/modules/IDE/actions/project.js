@@ -411,7 +411,7 @@ export function deleteProject(id) {
   };
 }
 
-export function changeVisibility(projectId, visibility) {
+export function changeVisibility(projectId, projectName, visibility) {
   return (dispatch) =>
     apiClient
       .patch('/project/visibility', { projectId, visibility })
@@ -423,7 +423,7 @@ export function changeVisibility(projectId, visibility) {
           payload: { visibility: response.data.visibility }
         });
 
-        dispatch(setToastText(`Sketch is ${newVisibility}`));
+        dispatch(setToastText(`The ${projectName} is now ${newVisibility}!`));
         dispatch(showToast(2000));
       })
       .catch((error) => {

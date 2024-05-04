@@ -50,7 +50,7 @@ const CollectionItemRowBase = ({
   if (projectIsDeleted) {
     name = <span>{t('Collection.SketchDeleted')}</span>;
   } else if (projectIsPrivate) {
-    name = <span>Project is Private</span>;
+    name = <span>Sketch is Private</span>;
   } else {
     name = (
       <Link to={`/${item.project.user.username}/sketches/${item.projectId}`}>

@@ -40,7 +40,8 @@ const projectSchema = new Schema(
     _id: { type: String, default: shortid.generate },
     visibility: {
       type: String,
-      enum: ['Private', 'Public']
+      enum: ['Private', 'Public'],
+      default: 'Public'
     },
     slug: { type: String }
   },

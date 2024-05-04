@@ -10,7 +10,6 @@ import { toApi as toApiProjectObject } from '../../domain-objects/Project';
 const createCoreHandler = (mapProjectsToResponse) => async (req, res) => {
   try {
     const { username } = req.params;
-    const currentUser = req.user?._id || '';
 
     if (!username) {
       res.status(422).json({ message: 'Username not provided' });
@@ -25,29 +24,22 @@ const createCoreHandler = (mapProjectsToResponse) => async (req, res) => {
       return;
     }
 
-    const projects = await Project.find({ user: user._id })
+    const canViewPrivate = req.user && req.user._id.equals(user._id);
+
+    const filter = { user: user._id };
+    if (!canViewPrivate) {
+      filter.visibility = { $ne: 'Private' };
+    }
+
+    const projects = await Project.find(filter)
       .sort('-createdAt')
       .select('name files id createdAt updatedAt visibility')
       .exec();
 
-    const publicProjectsOnly = projects.filter(
-      (project) => project.visibility === 'Public'
-    );
-
-    if (!req.user) {
-      res.json(publicProjectsOnly);
-      return;
-    }
-
-    const response = mapProjectsToResponse(
-      !currentUser.equals(user._id) ? publicProjectsOnly : projects
-    );
-
+    const response = mapProjectsToResponse(projects);
     res.json(response);
   } catch (error) {
-    res
-      .status(500)
-      .json({ success: false, message: 'Error fetching projects' });
+    res.status(500).json({ message: 'Error fetching projects' });
   }
 };
 

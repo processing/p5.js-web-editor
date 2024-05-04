@@ -21,8 +21,8 @@ import StopIcon from '../../../../images/stop.svg';
 import PreferencesIcon from '../../../../images/preferences.svg';
 import ProjectName from './ProjectName';
 import { changeVisibility } from '../../actions/project';
-import IconButton from '../../../../common/IconButton';
-import { LockIcon, UnlockIcon } from '../../../../common/icons';
+// import IconButton from '../../../../common/IconButton';
+// import { LockIcon, UnlockIcon } from '../../../../common/icons';
 
 const Toolbar = (props) => {
   const { isPlaying, infiniteLoop, preferencesIsVisible } = useSelector(
@@ -33,17 +33,17 @@ const Toolbar = (props) => {
   const autorefresh = useSelector((state) => state.preferences.autorefresh);
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const [visibility, setVisibility] = React.useState(
-    project.visibility || 'Public'
-  );
+
   const userIsOwner = user?.username === project.owner?.username;
-  const toggleVisibility = () => {
+  const toggleVisibility = (e) => {
     try {
-      setVisibility((prev) => (prev === 'Public' ? 'Private' : 'Public'));
+      const isChecked = e.target.checked;
+
       dispatch(
         changeVisibility(
           project.id,
-          visibility === 'Public' ? 'Private' : 'Public'
+          project.name,
+          isChecked ? 'Private' : 'Public'
         )
       );
     } catch (error) {
@@ -119,7 +119,20 @@ const Toolbar = (props) => {
       <div className="toolbar__project-name-container">
         <ProjectName />
         {(() => {
-          if (project.owner) {
+          if (project?.owner && userIsOwner) {
+            return (
+              <main className="toolbar__makeprivate">
+                <p>Private</p>
+                <input
+                  type="checkbox"
+                  className="toolbar__togglevisibility"
+                  defaultChecked={project.visibility === 'Private'}
+                  onChange={toggleVisibility}
+                />
+              </main>
+            );
+          }
+          if (project?.owner && !userIsOwner) {
             return (
               <p className="toolbar__project-project.owner">
                 {t('Toolbar.By')}{' '}
@@ -131,15 +144,6 @@ const Toolbar = (props) => {
           }
           return null;
         })()}
-        {userIsOwner && project.owner && (
-          <section>
-            {visibility !== 'Private' ? (
-              <IconButton icon={UnlockIcon} onClick={toggleVisibility} />
-            ) : (
-              <IconButton icon={LockIcon} onClick={toggleVisibility} />
-            )}
-          </section>
-        )}
       </div>
       <button
         className={preferencesButtonClass}
