@@ -52,13 +52,15 @@ export async function deleteObjectsFromS3(keyList) {
     try {
       await s3Client.send(new DeleteObjectsCommand(params));
     } catch (error) {
-      if (error.name === 'NotFound') {
-        console.log('Object does not exist:', error);
-      } else {
-        console.error('Error deleting objects from S3: ', error);
+      if (error instanceof TypeError) {
+        return null;
       }
+      console.error('Error deleting objects from S3: ', error);
+      throw error;
     }
   }
+
+  return objectsToDelete;
 }
 
 export async function deleteObjectFromS3(req, res) {
@@ -110,12 +112,12 @@ export async function copyObjectInS3(url, userId) {
   try {
     await s3Client.send(new HeadObjectCommand(headParams));
   } catch (error) {
-    if (error.name === 'NotFound') {
-      console.log('Object does not exist:', error);
-    } else {
-      console.error('Error fetching object metadata:', error);
-      throw error;
+    // temporary error handling for sketches with missing assets
+    if (error instanceof TypeError) {
+      return null;
     }
+    console.error('Error retrieving object metadat:', error);
+    throw error;
   }
 
   const params = {
@@ -127,16 +129,16 @@ export async function copyObjectInS3(url, userId) {
 
   try {
     await s3Client.send(new CopyObjectCommand(params));
-    return `${s3Bucket}${userId}/${newFilename}`;
   } catch (error) {
     // temporary error handling for sketches with missing assets
-    if (error.startsWith('TypeError')) {
-      console.log('Object does not exist:', error);
+    if (error instanceof TypeError) {
       return null;
     }
     console.error('Error copying object:', error);
     throw error;
   }
+
+  return `${s3Bucket}${userId}/${newFilename}`;
 }
 
 export async function copyObjectInS3RequestHandler(req, res) {
@@ -227,8 +229,7 @@ export async function listObjectsInS3ForUser(userId) {
 
     return { assets: projectAssets, totalSize };
   } catch (error) {
-    if (error.name === 'NotFound') {
-      console.log('Object does not exist:', error);
+    if (error instanceof TypeError) {
       return null;
     }
     console.error('Got an error: ', error);
