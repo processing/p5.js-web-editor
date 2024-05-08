@@ -177,18 +177,27 @@ userSchema.methods.comparePassword = async function comparePassword(
 /**
  * Helper method for validating a user's api key
  */
-userSchema.methods.findMatchingKey = function findMatchingKey(
-  candidateKey,
-  cb
+userSchema.methods.findMatchingKey = async function findMatchingKey(
+  candidateKey
 ) {
-  let foundOne = false;
-  this.apiKeys.forEach((k) => {
-    if (bcrypt.compareSync(candidateKey, k.hashedKey)) {
-      foundOne = true;
-      cb(null, true, k);
+  let keyObj = { isMatch: false, keyDocument: null };
+  /* eslint-disable no-restricted-syntax */
+  for (const k of this.apiKeys) {
+    try {
+      /* eslint-disable no-await-in-loop */
+      const foundOne = await bcrypt.compareSync(candidateKey, k.hashedKey);
+
+      if (foundOne) {
+        keyObj = { isMatch: true, keyDocument: k };
+        return keyObj;
+      }
+    } catch (error) {
+      console.error('Matching API key not found !');
+      return keyObj;
     }
-  });
-  if (!foundOne) cb('Matching API key not found !', false, null);
+  }
+
+  return keyObj;
 };
 
 /**
@@ -197,7 +206,7 @@ userSchema.methods.findMatchingKey = function findMatchingKey(
  *
  * @param {string|string[]} email - Email string or array of email strings
  * @callback [cb] - Optional error-first callback that passes User document
- * @return {Promise<Object>} - Returns Promise fulfilled by User document
+ * @return {Object} - Returns User Object fulfilled by User document
  */
 userSchema.statics.findByEmail = async function findByEmail(email) {
   const user = this;
@@ -240,7 +249,7 @@ userSchema.statics.findAllByEmails = async function findAllByEmails(emails) {
  * @param {string} username - Username string
  * @param {Object} [options] - Optional options
  * @param {boolean} options.caseInsensitive - Does a caseInsensitive query, defaults to false
- * @return {Promise<Object>} - Returns Promise fulfilled by User document
+ * @return {Object} - Returns User Object fulfilled by User document
  */
 userSchema.statics.findByUsername = async function findByUsername(
   username,
@@ -279,7 +288,7 @@ userSchema.statics.findByUsername = async function findByUsername(
  *                                          default query for username or email, defaults
  *                                          to false
  * @param {("email"|"username")} options.valueType - Prevents automatic type inferrence
- * @return {Promise<Object>} - Returns Promise fulfilled by User document
+ * @return {Object} - Returns User Object fulfilled by User document
  */
 userSchema.statics.findByEmailOrUsername = async function findByEmailOrUsername(
   value,
@@ -321,18 +330,22 @@ userSchema.statics.findByEmailOrUsername = async function findByEmailOrUsername(
  *
  * @param {string} email
  * @param {string} username
- * @callback [cb] - Optional error-first callback that passes User document
- * @return {Promise<Object>} - Returns Promise fulfilled by User document
+ * @return {Object} - Returns User Object fulfilled by User document
  */
-userSchema.statics.findByEmailAndUsername = function findByEmailAndUsername(
+userSchema.statics.findByEmailAndUsername = async function findByEmailAndUsername(
   email,
-  username,
-  cb
+  username
 ) {
+  const user = this;
   const query = {
     $or: [{ email }, { username }]
   };
-  return this.findOne(query).collation({ locale: 'en', strength: 2 }).exec(cb);
+  const foundUser = await user
+    .findOne(query)
+    .collation({ locale: 'en', strength: 2 })
+    .exec();
+
+  return foundUser;
 };
 
 userSchema.statics.EmailConfirmation = EmailConfirmationStates;
