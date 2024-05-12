@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .collection-create {
-  padding: #{24 / $base-font-size}rem;
+  padding: #{math.div(24, $base-font-size)}rem;
 }
