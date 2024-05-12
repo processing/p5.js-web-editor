@@ -11,12 +11,12 @@ async function deleteFilesFromS3(files) {
   const filteredFiles = files
     .filter((file) => {
       const isValidFile =
-        (file.url &&
-          (file.url.includes(process.env.S3_BUCKET_URL_BASE) ||
-            file.url.includes(process.env.S3_BUCKET)) &&
-          !process.env.S3_DATE) ||
-        (process.env.S3_DATE &&
-          isBefore(new Date(process.env.S3_DATE), new Date(file.createdAt)));
+        file.url &&
+        (file.url.includes(process.env.S3_BUCKET_URL_BASE) ||
+          file.url.includes(process.env.S3_BUCKET)) &&
+        (!process.env.S3_DATE ||
+          (process.env.S3_DATE &&
+            isBefore(new Date(process.env.S3_DATE), new Date(file.createdAt))));
 
       return isValidFile;
     })
@@ -25,7 +25,7 @@ async function deleteFilesFromS3(files) {
   try {
     await deleteObjectsFromS3(filteredFiles);
   } catch (error) {
-    console.error('Failed to delete files from S3:', error);
+    console.error('Failed to delete files from S3: ', error);
   }
 }
 
@@ -56,17 +56,7 @@ export default async function deleteProject(req, res) {
       return;
     }
 
-    try {
-      await deleteFilesFromS3(project.files);
-    } catch (error) {
-      sendFailure(
-        new ProjectDeletionError('Failed to delete associated project files.', {
-          code: 500
-        })
-      );
-      return;
-    }
-
+    await deleteFilesFromS3(project.files);
     await project.remove();
     res.status(200).end();
   } catch (error) {
