@@ -1,19 +1,20 @@
-import * as ActionTypes from '../../../constants';
+import { createSlice } from '@reduxjs/toolkit';
 
 const consoleMax = 5000;
 const initialState = [];
 
-const console = (state = initialState, action) => {
-  let messages;
-  switch (action.type) {
-    case ActionTypes.CONSOLE_EVENT:
-      messages = [...action.event];
+const consoleSlice = createSlice({
+  name: 'console',
+  initialState,
+  reducers: {
+    dispatchConsoleEvent: (state, action) => {
+      const messages = [...action.event];
       return state.concat(messages).slice(-consoleMax);
-    case ActionTypes.CLEAR_CONSOLE:
-      return [];
-    default:
-      return state;
+    },
+    clearConsole: (state, action) => []
   }
-};
+});
 
-export default console;
+export const consoleActions = consoleSlice.actions;
+
+export default consoleSlice.reducer;
