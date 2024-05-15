@@ -1,6 +1,23 @@
 import i18next from 'i18next';
 import apiClient from '../../../utils/apiClient';
 import * as ActionTypes from '../../../constants';
+import { preferencesActions } from '../reducers/preferences';
+
+const {
+  setFontSizeActions,
+  setAutosaveActions,
+  setLinewrapActions,
+  setLintWarningActions,
+  setTextOutputActions,
+  setGridOutputActions,
+  setPreferencesActions,
+  setThemeActions,
+  setAutorefreshActions,
+  setLineNumbersActions,
+  setAutocloseBracketsQuotesActions,
+  setAutocompleteHinterActions,
+  setLanguageActions
+} = preferencesActions;
 
 function updatePreferences(formParams, dispatch) {
   apiClient
@@ -17,10 +34,7 @@ function updatePreferences(formParams, dispatch) {
 export function setFontSize(value) {
   return (dispatch, getState) => {
     // eslint-disable-line
-    dispatch({
-      type: ActionTypes.SET_FONT_SIZE,
-      value
-    });
+    dispatch(setFontSizeActions(value));
     const state = getState();
     if (state.user.authenticated) {
       const formParams = {
@@ -35,10 +49,7 @@ export function setFontSize(value) {
 
 export function setLineNumbers(value) {
   return (dispatch, getState) => {
-    dispatch({
-      type: ActionTypes.SET_LINE_NUMBERS,
-      value
-    });
+    dispatch(setLineNumbersActions(value));
     const state = getState();
     if (state.user.authenticated) {
       const formParams = {
@@ -53,10 +64,7 @@ export function setLineNumbers(value) {
 
 export function setAutocloseBracketsQuotes(value) {
   return (dispatch, getState) => {
-    dispatch({
-      type: ActionTypes.SET_AUTOCLOSE_BRACKETS_QUOTES,
-      value
-    });
+    dispatch(setAutocloseBracketsQuotesActions(value));
     const state = getState();
     if (state.user.authenticated) {
       const formParams = {
@@ -71,10 +79,7 @@ export function setAutocloseBracketsQuotes(value) {
 
 export function setAutocompleteHinter(value) {
   return (dispatch, getState) => {
-    dispatch({
-      type: ActionTypes.SET_AUTOCOMPLETE_HINTER,
-      value
-    });
+    dispatch(setAutocompleteHinterActions(value));
     const state = getState();
     if (state.user.authenticated) {
       const formParams = {
@@ -89,10 +94,7 @@ export function setAutocompleteHinter(value) {
 
 export function setAutosave(value) {
   return (dispatch, getState) => {
-    dispatch({
-      type: ActionTypes.SET_AUTOSAVE,
-      value
-    });
+    dispatch(setAutosaveActions(value));
     const state = getState();
     if (state.user.authenticated) {
       const formParams = {
@@ -107,10 +109,7 @@ export function setAutosave(value) {
 
 export function setLinewrap(value) {
   return (dispatch, getState) => {
-    dispatch({
-      type: ActionTypes.SET_LINEWRAP,
-      value
-    });
+    dispatch(setLinewrapActions(value));
     const state = getState();
     if (state.user.authenticated) {
       const formParams = {
@@ -125,10 +124,7 @@ export function setLinewrap(value) {
 
 export function setLintWarning(value) {
   return (dispatch, getState) => {
-    dispatch({
-      type: ActionTypes.SET_LINT_WARNING,
-      value
-    });
+    dispatch(setLintWarningActions(value));
     const state = getState();
     if (state.user.authenticated) {
       const formParams = {
@@ -143,10 +139,7 @@ export function setLintWarning(value) {
 
 export function setTextOutput(value) {
   return (dispatch, getState) => {
-    dispatch({
-      type: ActionTypes.SET_TEXT_OUTPUT,
-      value
-    });
+    dispatch(setTextOutputActions(value));
     const state = getState();
     if (state.user.authenticated) {
       const formParams = {
@@ -161,10 +154,7 @@ export function setTextOutput(value) {
 
 export function setGridOutput(value) {
   return (dispatch, getState) => {
-    dispatch({
-      type: ActionTypes.SET_GRID_OUTPUT,
-      value
-    });
+    dispatch(setGridOutputActions(value));
     const state = getState();
     if (state.user.authenticated) {
       const formParams = {
@@ -183,10 +173,7 @@ export function setTheme(value) {
   //   value
   // };
   return (dispatch, getState) => {
-    dispatch({
-      type: ActionTypes.SET_THEME,
-      value
-    });
+    dispatch(setThemeActions(value));
     const state = getState();
     if (state.user.authenticated) {
       const formParams = {
@@ -205,10 +192,7 @@ export function setAutorefresh(value) {
   //   value
   // };
   return (dispatch, getState) => {
-    dispatch({
-      type: ActionTypes.SET_AUTOREFRESH,
-      value
-    });
+    dispatch(setAutorefreshActions(value));
     const state = getState();
     if (state.user.authenticated) {
       const formParams = {
@@ -231,10 +215,7 @@ export function setAllAccessibleOutput(value) {
 export function setLanguage(value, { persistPreference = true } = {}) {
   return (dispatch, getState) => {
     i18next.changeLanguage(value);
-    dispatch({
-      type: ActionTypes.SET_LANGUAGE,
-      language: value
-    });
+    dispatch(setLanguageActions(value));
     const state = getState();
     if (persistPreference && state.user.authenticated) {
       const formParams = {

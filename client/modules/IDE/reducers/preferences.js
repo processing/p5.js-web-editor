@@ -1,4 +1,4 @@
-import * as ActionTypes from '../../../constants';
+import { createSlice } from '@reduxjs/toolkit';
 
 export const initialState = {
   fontSize: 18,
@@ -15,41 +15,52 @@ export const initialState = {
   autocompleteHinter: false
 };
 
-const preferences = (state = initialState, action) => {
-  switch (action.type) {
-    case ActionTypes.SET_FONT_SIZE:
-      return Object.assign({}, state, { fontSize: action.value });
-    case ActionTypes.SET_AUTOSAVE:
-      return Object.assign({}, state, { autosave: action.value });
-    case ActionTypes.SET_LINEWRAP:
-      return Object.assign({}, state, { linewrap: action.value });
-    case ActionTypes.SET_LINT_WARNING:
-      return Object.assign({}, state, { lintWarning: action.value });
-    case ActionTypes.SET_TEXT_OUTPUT:
-      return Object.assign({}, state, { textOutput: action.value });
-    case ActionTypes.SET_GRID_OUTPUT:
-      return Object.assign({}, state, { gridOutput: action.value });
-    case ActionTypes.SET_PREFERENCES:
-      return action.preferences;
-    case ActionTypes.SET_THEME:
-      return Object.assign({}, state, { theme: action.value });
-    case ActionTypes.SET_AUTOREFRESH:
-      return Object.assign({}, state, { autorefresh: action.value });
-    case ActionTypes.SET_LINE_NUMBERS:
-      return Object.assign({}, state, { lineNumbers: action.value });
-    case ActionTypes.SET_LANGUAGE:
-      return Object.assign({}, state, { language: action.language });
-    case ActionTypes.SET_AUTOCLOSE_BRACKETS_QUOTES:
-      return Object.assign({}, state, {
-        autocloseBracketsQuotes: action.value
-      });
-    case ActionTypes.SET_AUTOCOMPLETE_HINTER:
-      return Object.assign({}, state, {
-        autocompleteHinter: action.value
-      });
-    default:
-      return state;
+const preferencesSlice = createSlice({
+  name: 'preferences',
+  initialState,
+  reducers: {
+    setFontSizeActions: (state, action) => {
+      state.fontSize = action.payload;
+    },
+    setAutoSaveActions: (state, action) => {
+      state.autosave = action.payload;
+    },
+    setLineWrapActions: (state, action) => {
+      state.linewrap = action.payload;
+    },
+    setLintWarningActions: (state, action) => {
+      state.lintWarning = action.payload;
+    },
+    setTextOutputActions: (state, action) => {
+      state.textOutput = action.payload;
+    },
+    setGridOutputActions: (state, action) => {
+      state.gridOutput = action.payload;
+    },
+    setPreferencesActions(state, action) {
+      return action.payload;
+    },
+    setThemeActions: (state, action) => {
+      state.theme = action.payload;
+    },
+    setAutoRefreshActions: (state, action) => {
+      state.autorefresh = action.payload;
+    },
+    setLineNumbersActions: (state, action) => {
+      state.lineNumbers = action.payload;
+    },
+    setAutocloseBracketsQuotesActions: (state, action) => {
+      state.autocloseBracketsQuotes = action.payload;
+    },
+    setAutocompleteHinterActions: (state, action) => {
+      state.autocompleteHinter = action.payload;
+    },
+    setLanguageActions: (state, action) => {
+      state.language = action.payload;
+    }
   }
-};
+});
 
-export default preferences;
+export const preferencesActions = preferencesSlice.actions;
+
+export default preferencesSlice.reducer;
