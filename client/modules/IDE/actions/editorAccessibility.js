@@ -1,22 +1,7 @@
-import * as ActionTypes from '../../../constants';
+import { editorAccessibilityActions } from '../reducers/editorAccessibility';
 
-export function updateLintMessage(severity, line, message) {
-  return {
-    type: ActionTypes.UPDATE_LINT_MESSAGE,
-    severity,
-    line,
-    message
-  };
-}
-
-export function clearLintMessage() {
-  return {
-    type: ActionTypes.CLEAR_LINT_MESSAGE
-  };
-}
-
-export function toggleForceDesktop() {
-  return {
-    type: ActionTypes.TOGGLE_FORCE_DESKTOP
-  };
-}
+export const {
+  updateLintMessage,
+  clearLintMessages,
+  toggleForceDesktop
+} = editorAccessibilityActions;
