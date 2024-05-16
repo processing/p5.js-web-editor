@@ -1,33 +1,33 @@
-import * as ActionTypes from '../../../constants';
+import { createSlice } from '@reduxjs/toolkit';
 import { DIRECTION } from '../actions/sorting';
+import * as ActionTypes from '../../../constants';
 
 const initialState = {
   field: 'createdAt',
   direction: DIRECTION.DESC
 };
 
-const sorting = (state = initialState, action) => {
-  switch (action.type) {
-    case ActionTypes.TOGGLE_DIRECTION:
-      if (action.field && action.field !== state.field) {
-        if (action.field === 'name') {
-          return { ...state, field: action.field, direction: DIRECTION.ASC };
-        }
-        return { ...state, field: action.field, direction: DIRECTION.DESC };
+const sortingSlice = createSlice({
+  name: 'sorting',
+  initialState,
+  reducers: {
+    toggleDirection: (state, action) => {
+      const { field } = action.payload;
+      if (field && field !== state.field) {
+        const direction = field === 'name' ? DIRECTION.ASC : DIRECTION.DESC;
+        return { ...state, field, direction };
       }
-      if (state.direction === DIRECTION.ASC) {
-        return { ...state, direction: DIRECTION.DESC };
-      }
-      return { ...state, direction: DIRECTION.ASC };
-    case ActionTypes.SET_SORTING:
-      return {
-        ...state,
-        field: action.payload.field,
-        direction: action.payload.direction
-      };
-    default:
-      return state;
+      const direction =
+        state.direction === DIRECTION.ASC ? DIRECTION.DESC : DIRECTION.ASC;
+      return { ...state, direction };
+    },
+    setSorting: (state, action) => {
+      const { field, direction } = action.payload;
+      return { ...state, field, direction };
+    }
   }
-};
+});
 
-export default sorting;
+export const sortingActions = sortingSlice.actions;
+
+export default sortingSlice.reducer;
