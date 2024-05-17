@@ -6,12 +6,27 @@ import { showErrorModal, justOpenedProject } from '../IDE/actions/ide';
 import { setLanguage } from '../IDE/actions/preferences';
 import { showToast, setToastText } from '../IDE/actions/toast';
 
-export function authError(error) {
-  return {
-    type: ActionTypes.AUTH_ERROR,
-    payload: error
-  };
-}
+import { userActions } from './reducers';
+
+const {
+  authUser,
+  unauthUser,
+  resetPasswordInitiate,
+  emailVerificationInitiate,
+  emailVerificationVerify,
+  emailVerificationVerified,
+  emailVerificationInvalid,
+  invalidResetPasswordToken,
+  apiKeyRemoved,
+  setCookieConsent
+} = userActions;
+
+export const {
+  authError,
+  resetPasswordReset,
+  settingsUpdated,
+  apiKeyCreated
+} = userActions;
 
 export function signUpUser(formValues) {
   return apiClient.post('/signup', formValues);
@@ -19,13 +34,6 @@ export function signUpUser(formValues) {
 
 export function loginUser(formValues) {
   return apiClient.post('/login', formValues);
-}
-
-export function authenticateUser(user) {
-  return {
-    type: ActionTypes.AUTH_USER,
-    user
-  };
 }
 
 export function loginUserFailure(error) {
@@ -49,7 +57,7 @@ export function validateAndLoginUser(formProps) {
     return new Promise((resolve) => {
       loginUser(formProps)
         .then((response) => {
-          dispatch(authenticateUser(response.data));
+          dispatch(authUser(response.data));
           dispatch(setPreferences(response.data.preferences));
           dispatch(
             setLanguage(response.data.preferences.language, {
@@ -76,7 +84,7 @@ export function validateAndSignUpUser(formValues) {
     return new Promise((resolve) => {
       signUpUser(formValues)
         .then((response) => {
-          dispatch(authenticateUser(response.data));
+          dispatch(authUser(response.data));
           dispatch(justOpenedProject());
           browserHistory.push(previousPath);
           resolve();
@@ -100,7 +108,7 @@ export function getUser() {
         return;
       }
 
-      dispatch(authenticateUser(data));
+      dispatch(authUser(data));
       dispatch({
         type: ActionTypes.SET_PREFERENCES,
         preferences: data.preferences
@@ -147,9 +155,7 @@ export function logoutUser() {
     apiClient
       .get('/logout')
       .then(() => {
-        dispatch({
-          type: ActionTypes.UNAUTH_USER
-        });
+        dispatch(unauthUser());
         resetProject(dispatch);
       })
       .catch((error) => {
@@ -162,9 +168,7 @@ export function logoutUser() {
 export function initiateResetPassword(formValues) {
   return (dispatch) =>
     new Promise((resolve) => {
-      dispatch({
-        type: ActionTypes.RESET_PASSWORD_INITIATE
-      });
+      dispatch(resetPasswordInitiate());
       return apiClient
         .post('/reset-password', formValues)
         .then(() => resolve())
@@ -181,9 +185,7 @@ export function initiateResetPassword(formValues) {
 
 export function initiateVerification() {
   return (dispatch) => {
-    dispatch({
-      type: ActionTypes.EMAIL_VERIFICATION_INITIATE
-    });
+    dispatch(emailVerificationInitiate());
     apiClient
       .post('/verify/send', {})
       .then(() => {
@@ -201,31 +203,16 @@ export function initiateVerification() {
 
 export function verifyEmailConfirmation(token) {
   return (dispatch) => {
-    dispatch({
-      type: ActionTypes.EMAIL_VERIFICATION_VERIFY,
-      state: 'checking'
-    });
+    dispatch(emailVerificationVerify({ state: 'checking' }));
     return apiClient
       .get(`/verify?t=${token}`, {})
       .then((response) =>
-        dispatch({
-          type: ActionTypes.EMAIL_VERIFICATION_VERIFIED,
-          message: response.data
-        })
+        dispatch(emailVerificationVerified({ message: response.data }))
       )
       .catch((error) => {
         const { response } = error;
-        dispatch({
-          type: ActionTypes.EMAIL_VERIFICATION_INVALID,
-          message: response.data
-        });
+        dispatch(emailVerificationInvalid({ message: response.data }));
       });
-  };
-}
-
-export function resetPasswordReset() {
-  return {
-    type: ActionTypes.RESET_PASSWORD_RESET
   };
 }
 
@@ -236,11 +223,7 @@ export function validateResetPasswordToken(token) {
       .then(() => {
         // do nothing if the token is valid
       })
-      .catch(() =>
-        dispatch({
-          type: ActionTypes.INVALID_RESET_PASSWORD_TOKEN
-        })
-      );
+      .catch(() => dispatch(invalidResetPasswordToken()));
   };
 }
 
@@ -250,14 +233,12 @@ export function updatePassword(formValues, token) {
       apiClient
         .post(`/reset-password/${token}`, formValues)
         .then((response) => {
-          dispatch(authenticateUser(response.data));
+          dispatch(authUser(response.data));
           browserHistory.push('/');
           resolve();
         })
         .catch((error) => {
-          dispatch({
-            type: ActionTypes.INVALID_RESET_PASSWORD_TOKEN
-          });
+          dispatch(invalidResetPasswordToken());
           resolve({ error });
         })
     );
@@ -313,10 +294,7 @@ export function removeApiKey(keyId) {
     apiClient
       .delete(`/account/api-keys/${keyId}`)
       .then((response) => {
-        dispatch({
-          type: ActionTypes.API_KEY_REMOVED,
-          user: response.data
-        });
+        dispatch(apiKeyRemoved(response.data));
       })
       .catch((error) => {
         const { response } = error;
@@ -330,7 +308,7 @@ export function unlinkService(service) {
     apiClient
       .delete(`/auth/${service}`)
       .then((response) => {
-        dispatch(authenticateUser(response.data));
+        dispatch(authUser(response.data));
       })
       .catch((error) => {
         const { response } = error;
@@ -346,10 +324,7 @@ export function setUserCookieConsent(cookieConsent) {
     apiClient
       .put('/cookie-consent', { cookieConsent })
       .then(() => {
-        dispatch({
-          type: ActionTypes.SET_COOKIE_CONSENT,
-          cookieConsent
-        });
+        dispatch(setCookieConsent(cookieConsent));
       })
       .catch((error) => {
         const { response } = error;
