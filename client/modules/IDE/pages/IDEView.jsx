@@ -27,6 +27,7 @@ import {
 } from '../components/Editor/MobileEditor';
 import IDEOverlays from '../components/IDEOverlays';
 import useIsMobile from '../hooks/useIsMobile';
+import { CrossIcon } from '../../../common/icons';
 
 function getTitle(project) {
   const { id } = project;
@@ -87,37 +88,6 @@ function WarnIfUnsavedChanges() {
   );
 }
 
-function Banner() {
-  // temporary banner to display funding opportunities
-  const [textObj, setTextObj] = useState({});
-
-  useEffect(() => {
-    const grant1 = {
-      copy:
-        'Learn to make art with AI with the Social Software High School Summer Institute. Apply by June 1!',
-      url: 'https://summer.ucla.edu/program/social-software-summer-institute/'
-    };
-
-    const grant2 = {
-      copy:
-        'Join us in contributing to p5.js——receive a $10,000 opportunity to grow within the contributor community!',
-      url: 'https://processingfoundation.org/grants'
-    };
-
-    const allMessages = [grant1, grant2];
-    const randomIndex = Math.floor(Math.random() * allMessages.length);
-    const randomMessage = allMessages[randomIndex];
-
-    setTextObj(randomMessage);
-  }, []);
-
-  return (
-    <div className="banner">
-      <a href={textObj.url}>{textObj.copy}</a>
-    </div>
-  );
-}
-
 export const CmControllerContext = React.createContext({});
 
 const IDEView = () => {
@@ -135,6 +105,7 @@ const IDEView = () => {
   const [sidebarSize, setSidebarSize] = useState(160);
   const [isOverlayVisible, setIsOverlayVisible] = useState(false);
   const [MaxSize, setMaxSize] = useState(window.innerWidth);
+  const [displayBanner, setDisplayBanner] = useState(true);
 
   const cmRef = useRef({});
 
@@ -143,6 +114,45 @@ const IDEView = () => {
   const syncFileContent = () => {
     const file = cmRef.current.getContent();
     dispatch(updateFileContent(file.id, file.content));
+  };
+
+  const Banner = () => {
+    // temporary banner to display funding opportunities
+    const [textObj, setTextObj] = useState({});
+
+    useEffect(() => {
+      const grant1 = {
+        copy:
+          'Learn to make art with AI with the Social Software High School Summer Institute. Apply by June 1!',
+        url: 'https://summer.ucla.edu/program/social-software-summer-institute/'
+      };
+
+      const grant2 = {
+        copy:
+          'Join us in contributing to p5.js——receive a $10,000 opportunity to grow within the contributor community!',
+        url: 'https://processingfoundation.org/grants'
+      };
+
+      const allMessages = [grant1, grant2];
+      const randomIndex = Math.floor(Math.random() * allMessages.length);
+      const randomMessage = allMessages[randomIndex];
+
+      setTextObj(randomMessage);
+    }, []);
+
+    return (
+      <div className="banner">
+        <a href={textObj.url}>{textObj.copy}</a>
+        <button
+          className="banner-close-button"
+          onClick={() => {
+            setDisplayBanner(!displayBanner);
+          }}
+        >
+          <CrossIcon />
+        </button>
+      </div>
+    );
   };
 
   useEffect(() => {
@@ -201,7 +211,7 @@ const IDEView = () => {
       <Helmet>
         <title>{getTitle(project)}</title>
       </Helmet>
-      <Banner />
+      {displayBanner && <Banner />}
       <IDEKeyHandlers getContent={() => cmRef.current?.getContent()} />
       <WarnIfUnsavedChanges />
       <Toast />
