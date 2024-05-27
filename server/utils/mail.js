@@ -18,15 +18,17 @@ class Mail {
     };
   }
 
-  sendMail(mailOptions) {
-    return new Promise((resolve, reject) => {
-      this.client.sendMail(mailOptions, (err, info) => {
-        resolve(err, info);
-      });
-    });
+  async sendMail(mailOptions) {
+    try {
+      const response = await this.client.sendMail(mailOptions);
+      return response;
+    } catch (error) {
+      console.error('Failed to send email: ', error);
+      throw new Error('Email failed to send.');
+    }
   }
 
-  dispatchMail(data, callback) {
+  async send(data) {
     const mailOptions = {
       to: data.to,
       subject: data.subject,
@@ -34,13 +36,13 @@ class Mail {
       html: data.html
     };
 
-    return this.sendMail(mailOptions).then((err, res) => {
-      callback(err, res);
-    });
-  }
-
-  send(data, callback) {
-    return this.dispatchMail(data, callback);
+    try {
+      const response = await this.sendMail(mailOptions);
+      return response;
+    } catch (error) {
+      console.error('Error in prepping email.', error);
+      throw new Error('Error in prepping email.');
+    }
   }
 }
 
