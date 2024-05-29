@@ -11,6 +11,9 @@ import DownArrowIcon from '../../../images/down-filled-triangle.svg';
 import FolderRightIcon from '../../../images/triangle-arrow-right.svg';
 import FolderDownIcon from '../../../images/triangle-arrow-down.svg';
 import FileIcon from '../../../images/file.svg';
+import CssFileIcon from '../../../images/css.svg';
+import HtmlFileIcon from '../../../images/html.svg';
+import JavascriptFileIcon from '../../../images/javascript.svg';
 
 function parseFileName(name) {
   const nameArray = name.split('.');
@@ -38,6 +41,24 @@ function parseFileName(name) {
     middleText
   };
 }
+function AssignIcon({ name }) {
+  const { extension } = parseFileName(name);
+
+  switch (extension) {
+    case '.js':
+      return <JavascriptFileIcon focusable="false" aria-hidden="true" />;
+    case '.css':
+      return <CssFileIcon focusable="false" aria-hidden="true" />;
+    case '.html':
+      return <HtmlFileIcon focusable="false" aria-hidden="true" />;
+    default:
+      return <FileIcon focusable="false" aria-hidden="true" />;
+  }
+}
+
+AssignIcon.propTypes = {
+  name: PropTypes.string.isRequired
+};
 
 function FileName({ name }) {
   const {
@@ -267,7 +288,7 @@ class FileNode extends React.Component {
             <span className="file-item__spacer"></span>
             {isFile && (
               <span className="sidebar__file-item-icon">
-                <FileIcon focusable="false" aria-hidden="true" />
+                <AssignIcon name={this.state.updatedName} />
               </span>
             )}
             {isFolder && (

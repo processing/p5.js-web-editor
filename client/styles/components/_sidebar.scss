@@ -296,10 +296,9 @@
   align-items: center;
   & path {
     @include themify() {
-      fill: getThemifyVariable('secondary-text-color');
+      fill: getThemifyVariable('');
     }
   }
-  background-color: transparent;
   border: none;
 }
 
