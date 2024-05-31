@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet';
 import SplitPane from 'react-split-pane';
-import MediaQuery from 'react-responsive';
 import IDEKeyHandlers from '../components/IDEKeyHandlers';
 import Sidebar from '../components/Sidebar';
 import PreviewFrame from '../components/PreviewFrame';
@@ -27,6 +26,8 @@ import {
   PreviewWrapper
 } from '../components/Editor/MobileEditor';
 import IDEOverlays from '../components/IDEOverlays';
+import useIsMobile from '../hooks/useIsMobile';
+import { CrossIcon } from '../../../common/icons';
 
 function getTitle(project) {
   const { id } = project;
@@ -90,6 +91,7 @@ function WarnIfUnsavedChanges() {
 export const CmControllerContext = React.createContext({});
 
 const IDEView = () => {
+  const isMobile = useIsMobile();
   const ide = useSelector((state) => state.ide);
   const preferences = useSelector((state) => state.preferences);
   const project = useSelector((state) => state.project);
@@ -103,6 +105,7 @@ const IDEView = () => {
   const [sidebarSize, setSidebarSize] = useState(160);
   const [isOverlayVisible, setIsOverlayVisible] = useState(false);
   const [MaxSize, setMaxSize] = useState(window.innerWidth);
+  const [displayBanner, setDisplayBanner] = useState(true);
 
   const cmRef = useRef({});
 
@@ -111,6 +114,45 @@ const IDEView = () => {
   const syncFileContent = () => {
     const file = cmRef.current.getContent();
     dispatch(updateFileContent(file.id, file.content));
+  };
+
+  const Banner = () => {
+    // temporary banner to display funding opportunities
+    const [textObj, setTextObj] = useState({});
+
+    useEffect(() => {
+      const grant1 = {
+        copy:
+          'Learn to make art with AI with the Social Software High School Summer Institute. Apply by June 1!',
+        url: 'https://summer.ucla.edu/program/social-software-summer-institute/'
+      };
+
+      const grant2 = {
+        copy:
+          'Join us in contributing to p5.js——receive a $10,000 opportunity to grow within the contributor community!',
+        url: 'https://processingfoundation.org/grants'
+      };
+
+      const allMessages = [grant1, grant2];
+      const randomIndex = Math.floor(Math.random() * allMessages.length);
+      const randomMessage = allMessages[randomIndex];
+
+      setTextObj(randomMessage);
+    }, []);
+
+    return (
+      <div className="banner">
+        <a href={textObj.url}>{textObj.copy}</a>
+        <button
+          className="banner-close-button"
+          onClick={() => {
+            setDisplayBanner(!displayBanner);
+          }}
+        >
+          <CrossIcon />
+        </button>
+      </div>
+    );
   };
 
   useEffect(() => {
@@ -169,121 +211,118 @@ const IDEView = () => {
       <Helmet>
         <title>{getTitle(project)}</title>
       </Helmet>
+      {displayBanner && <Banner />}
       <IDEKeyHandlers getContent={() => cmRef.current?.getContent()} />
       <WarnIfUnsavedChanges />
       <Toast />
       <CmControllerContext.Provider value={cmRef}>
         <Header syncFileContent={syncFileContent} />
       </CmControllerContext.Provider>
-      <MediaQuery minWidth={770}>
-        {(matches) =>
-          matches ? (
-            <main className="editor-preview-container">
-              <SplitPane
-                split="vertical"
-                size={ide.sidebarIsExpanded ? sidebarSize : 20}
-                onChange={(size) => {
-                  setSidebarSize(size);
-                }}
-                allowResize={ide.sidebarIsExpanded}
-                minSize={150}
-              >
-                <Sidebar />
-                <SplitPane
-                  split="vertical"
-                  maxSize={MaxSize * 0.965}
-                  defaultSize="50%"
-                  onChange={() => {
-                    setIsOverlayVisible(true);
-                  }}
-                  onDragFinished={() => {
-                    setIsOverlayVisible(false);
-                  }}
-                  resizerStyle={{
-                    borderLeftWidth: '2px',
-                    borderRightWidth: '2px',
-                    width: '2px',
-                    margin: '0px 0px'
-                  }}
-                >
-                  <SplitPane
-                    split="horizontal"
-                    primary="second"
-                    size={currentConsoleSize}
-                    minSize={consoleCollapsedSize}
-                    onChange={(size) => {
-                      setConsoleSize(size);
-                    }}
-                    allowResize={ide.consoleIsExpanded}
-                    className="editor-preview-subpanel"
-                  >
-                    <Editor
-                      provideController={(ctl) => {
-                        cmRef.current = ctl;
-                      }}
-                    />
-                    <Console />
-                  </SplitPane>
-                  <section className="preview-frame-holder">
-                    <header className="preview-frame__header">
-                      <h2 className="preview-frame__title">
-                        {t('Toolbar.Preview')}
-                      </h2>
-                    </header>
-                    <div className="preview-frame__content">
-                      <PreviewFrame
-                        cmController={cmRef.current}
-                        isOverlayVisible={isOverlayVisible}
-                      />
-                    </div>
-                  </section>
-                </SplitPane>
-              </SplitPane>
-            </main>
-          ) : (
-            <>
-              <FloatingActionButton
-                syncFileContent={syncFileContent}
-                offsetBottom={ide.isPlaying ? currentConsoleSize : 0}
+      {isMobile ? (
+        <>
+          <FloatingActionButton
+            syncFileContent={syncFileContent}
+            offsetBottom={ide.isPlaying ? currentConsoleSize : 0}
+          />
+          <PreviewWrapper show={ide.isPlaying}>
+            <SplitPane
+              style={{ position: 'static' }}
+              split="horizontal"
+              primary="second"
+              size={currentConsoleSize}
+              minSize={consoleCollapsedSize}
+              onChange={(size) => {
+                setConsoleSize(size);
+                setIsOverlayVisible(true);
+              }}
+              onDragFinished={() => {
+                setIsOverlayVisible(false);
+              }}
+              allowResize={ide.consoleIsExpanded}
+              className="editor-preview-subpanel"
+            >
+              <PreviewFrame
+                fullView
+                hide={!ide.isPlaying}
+                cmController={cmRef.current}
+                isOverlayVisible={isOverlayVisible}
               />
-              <PreviewWrapper show={ide.isPlaying}>
-                <SplitPane
-                  style={{ position: 'static' }}
-                  split="horizontal"
-                  primary="second"
-                  size={currentConsoleSize}
-                  minSize={consoleCollapsedSize}
-                  onChange={(size) => {
-                    setConsoleSize(size);
-                    setIsOverlayVisible(true);
-                  }}
-                  onDragFinished={() => {
-                    setIsOverlayVisible(false);
-                  }}
-                  allowResize={ide.consoleIsExpanded}
-                  className="editor-preview-subpanel"
-                >
-                  <PreviewFrame
-                    fullView
-                    hide={!ide.isPlaying}
-                    cmController={cmRef.current}
-                    isOverlayVisible={isOverlayVisible}
-                  />
-                  <Console />
-                </SplitPane>
-              </PreviewWrapper>
-              <EditorSidebarWrapper show={!ide.isPlaying}>
-                <Sidebar />
+              <Console />
+            </SplitPane>
+          </PreviewWrapper>
+          <EditorSidebarWrapper show={!ide.isPlaying}>
+            <Sidebar />
+            <Editor
+              provideController={(ctl) => {
+                cmRef.current = ctl;
+              }}
+            />
+          </EditorSidebarWrapper>
+        </>
+      ) : (
+        <main className="editor-preview-container">
+          <SplitPane
+            split="vertical"
+            size={ide.sidebarIsExpanded ? sidebarSize : 20}
+            onChange={(size) => {
+              setSidebarSize(size);
+            }}
+            allowResize={ide.sidebarIsExpanded}
+            minSize={150}
+          >
+            <Sidebar />
+            <SplitPane
+              split="vertical"
+              maxSize={MaxSize * 0.965}
+              defaultSize="50%"
+              onChange={() => {
+                setIsOverlayVisible(true);
+              }}
+              onDragFinished={() => {
+                setIsOverlayVisible(false);
+              }}
+              resizerStyle={{
+                borderLeftWidth: '2px',
+                borderRightWidth: '2px',
+                width: '2px',
+                margin: '0px 0px'
+              }}
+            >
+              <SplitPane
+                split="horizontal"
+                primary="second"
+                size={currentConsoleSize}
+                minSize={consoleCollapsedSize}
+                onChange={(size) => {
+                  setConsoleSize(size);
+                }}
+                allowResize={ide.consoleIsExpanded}
+                className="editor-preview-subpanel"
+              >
                 <Editor
                   provideController={(ctl) => {
                     cmRef.current = ctl;
                   }}
                 />
-              </EditorSidebarWrapper>
-            </>
-          )
-        }
-      </MediaQuery>
+                <Console />
+              </SplitPane>
+              <section className="preview-frame-holder">
+                <header className="preview-frame__header">
+                  <h2 className="preview-frame__title">
+                    {t('Toolbar.Preview')}
+                  </h2>
+                </header>
+                <div className="preview-frame__content">
+                  <PreviewFrame
+                    cmController={cmRef.current}
+                    isOverlayVisible={isOverlayVisible}
+                  />
+                </div>
+              </section>
+            </SplitPane>
+          </SplitPane>
+        </main>
+      )}
       <IDEOverlays />
     </RootPage>
   );
