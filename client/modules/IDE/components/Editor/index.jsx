@@ -208,6 +208,10 @@ class Editor extends React.Component {
       if (/^[a-z]$/i.test(e.key) && (mode === 'css' || mode === 'javascript')) {
         this.showHint(_cm);
       }
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        this._cm.getInputField().blur();
+      }
     });
 
     this._cm.getWrapperElement().style[
