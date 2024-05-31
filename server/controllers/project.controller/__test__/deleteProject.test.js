@@ -74,8 +74,8 @@ describe('project.controller', () => {
 
     await deleteProject(request, response);
 
-    expect(response.status).toHaveBeenCalledWith(200);
     expect(deleteObjectsFromS3).toHaveBeenCalled();
     expect(project.remove).toHaveBeenCalled();
+    expect(response.status).toHaveBeenCalledWith(200);
   });
 });

@@ -208,6 +208,10 @@ class Editor extends React.Component {
       if (/^[a-z]$/i.test(e.key) && (mode === 'css' || mode === 'javascript')) {
         this.showHint(_cm);
       }
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        this._cm.getInputField().blur();
+      }
     });
 
     this._cm.getWrapperElement().style[
@@ -523,7 +527,7 @@ class Editor extends React.Component {
         {(matches) =>
           matches ? (
             <section className={editorSectionClass}>
-              <header className="editor__header">
+              <div className="editor__header">
                 <button
                   aria-label={this.props.t('Editor.OpenSketchARIA')}
                   className="sidebar__contract"
@@ -548,7 +552,7 @@ class Editor extends React.Component {
                   </span>
                   <Timer />
                 </div>
-              </header>
+              </div>
               <article
                 ref={(element) => {
                   this.codemirrorContainer = element;
@@ -565,7 +569,7 @@ class Editor extends React.Component {
             </section>
           ) : (
             <EditorContainer expanded={this.props.isExpanded}>
-              <header>
+              <>
                 <IconButton
                   onClick={this.props.expandSidebar}
                   icon={FolderIcon}
@@ -574,7 +578,7 @@ class Editor extends React.Component {
                   {this.props.file.name}
                   <UnsavedChangesIndicator />
                 </span>
-              </header>
+              </>
               <section>
                 <EditorHolder
                   ref={(element) => {
