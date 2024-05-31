@@ -87,37 +87,6 @@ function WarnIfUnsavedChanges() {
   );
 }
 
-function Banner() {
-  // temporary banner to display funding opportunities
-  const [textObj, setTextObj] = useState({});
-
-  useEffect(() => {
-    const grant1 = {
-      copy:
-        'Learn to make art with AI with the Social Software High School Summer Institute. Apply by June 1!',
-      url: 'https://summer.ucla.edu/program/social-software-summer-institute/'
-    };
-
-    const grant2 = {
-      copy:
-        'Join us in contributing to p5.js——receive a $10,000 opportunity to grow within the contributor community!',
-      url: 'https://processingfoundation.org/grants'
-    };
-
-    const allMessages = [grant1, grant2];
-    const randomIndex = Math.floor(Math.random() * allMessages.length);
-    const randomMessage = allMessages[randomIndex];
-
-    setTextObj(randomMessage);
-  }, []);
-
-  return (
-    <div className="banner">
-      <a href={textObj.url}>{textObj.copy}</a>
-    </div>
-  );
-}
-
 export const CmControllerContext = React.createContext({});
 
 const IDEView = () => {
@@ -201,7 +170,6 @@ const IDEView = () => {
       <Helmet>
         <title>{getTitle(project)}</title>
       </Helmet>
-      <Banner />
       <IDEKeyHandlers getContent={() => cmRef.current?.getContent()} />
       <WarnIfUnsavedChanges />
       <Toast />
