@@ -147,12 +147,14 @@ const ProjectMenu = () => {
             />
           </Link>
         ) : (
-          <LogoIcon
-            role="img"
-            aria-label={t('Common.p5logoARIA')}
-            focusable="false"
-            className="svg__logo"
-          />
+          <a href="https://p5js.org">
+            <LogoIcon
+              role="img"
+              aria-label={t('Common.p5logoARIA')}
+              focusable="false"
+              className="svg__logo"
+            />
+          </a>
         )}
       </li>
       <NavDropdownMenu id="file" title={t('Nav.File.Title')}>
