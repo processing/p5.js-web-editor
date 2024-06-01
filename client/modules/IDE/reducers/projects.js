@@ -6,11 +6,14 @@ const sketches = (state = [], action) => {
       return action.projects;
     case ActionTypes.DELETE_PROJECT:
       return state.filter((sketch) => sketch.id !== action.id);
-    case ActionTypes.CHANGE_VISIBILITY:
-      return state.map((sketch) => ({
-        ...sketch,
-        visibility: action.payload.visibility
-      }));
+    case ActionTypes.CHANGE_VISIBILITY: {
+      return state.map((sketch) => {
+        if (sketch.id === action.payload.id) {
+          return { ...sketch, visibility: action.payload.visibility };
+        }
+        return { ...sketch };
+      });
+    }
     case ActionTypes.RENAME_PROJECT: {
       return state.map((sketch) => {
         if (sketch.id === action.payload.id) {

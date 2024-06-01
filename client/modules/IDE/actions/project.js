@@ -410,21 +410,36 @@ export function deleteProject(id) {
       });
   };
 }
-
 export function changeVisibility(projectId, projectName, visibility) {
-  return (dispatch) =>
+  return (dispatch, getState) => {
+    const state = getState();
+
     apiClient
       .patch('/project/visibility', { projectId, visibility })
       .then((response) => {
-        const { visibility: newVisibility } = response.data;
+        if (response.status === 200) {
+          const { visibility: newVisibility } = response.data;
 
-        dispatch({
-          type: ActionTypes.CHANGE_VISIBILITY,
-          payload: { visibility: response.data.visibility }
-        });
+          dispatch({
+            type: ActionTypes.CHANGE_VISIBILITY,
+            payload: {
+              id: response.data.id,
+              visibility: newVisibility
+            }
+          });
 
-        dispatch(setToastText(`The ${projectName} is now ${newVisibility}!`));
-        dispatch(showToast(2000));
+          if (state.project.id === response.data.id) {
+            dispatch({
+              type: ActionTypes.SET_PROJECT_NAME,
+              name: response.data.name
+            });
+          }
+
+          dispatch(
+            setToastText(`${projectName} is now ${newVisibility.toLowerCase()}`)
+          );
+          dispatch(showToast(2000));
+        }
       })
       .catch((error) => {
         dispatch({
@@ -432,4 +447,5 @@ export function changeVisibility(projectId, projectName, visibility) {
           error: error?.response?.data
         });
       });
+  };
 }

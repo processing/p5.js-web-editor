@@ -291,14 +291,14 @@ export async function changeProjectVisibility(req, res) {
         visibility: newVisibility
       },
       {
-        new: true
+        new: true,
+        runValidators: true
       }
-    );
-    const updatedProjectWithoutFiles = await Project.findById(
-      updatedProject._id
-    ).select('-files');
+    )
+      .populate('user', 'username')
+      .exec();
 
-    return res.status(200).json(updatedProjectWithoutFiles);
+    return res.status(200).json(updatedProject);
   } catch (error) {
     return res.status(500).json(error);
   }

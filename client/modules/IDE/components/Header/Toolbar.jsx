@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
@@ -15,14 +15,11 @@ import {
   setGridOutput,
   setTextOutput
 } from '../../actions/preferences';
-
 import PlayIcon from '../../../../images/play.svg';
 import StopIcon from '../../../../images/stop.svg';
 import PreferencesIcon from '../../../../images/preferences.svg';
 import ProjectName from './ProjectName';
 import { changeVisibility } from '../../actions/project';
-// import IconButton from '../../../../common/IconButton';
-// import { LockIcon, UnlockIcon } from '../../../../common/icons';
 
 const Toolbar = (props) => {
   const { isPlaying, infiniteLoop, preferencesIsVisible } = useSelector(
@@ -34,8 +31,7 @@ const Toolbar = (props) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const [visibility, setVisibility] = useState(project.visibility);
-
+  console.log(project.visibility);
   const userIsOwner = user?.username === project.owner?.username;
   const toggleVisibility = (e) => {
     try {
@@ -47,7 +43,6 @@ const Toolbar = (props) => {
           isChecked ? 'Private' : 'Public'
         )
       );
-      setVisibility(isChecked ? 'Private' : 'Public');
     } catch (error) {
       console.log(error);
     }
@@ -128,7 +123,7 @@ const Toolbar = (props) => {
                 <input
                   type="checkbox"
                   className="toolbar__togglevisibility"
-                  defaultChecked={visibility === 'Private'}
+                  defaultChecked={project.visibility === 'Private'}
                   onChange={toggleVisibility}
                 />
               </main>
