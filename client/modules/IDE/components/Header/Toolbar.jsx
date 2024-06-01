@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
@@ -34,11 +34,12 @@ const Toolbar = (props) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
+  const [visibility, setVisibility] = useState(project.visibility);
+
   const userIsOwner = user?.username === project.owner?.username;
   const toggleVisibility = (e) => {
     try {
       const isChecked = e.target.checked;
-
       dispatch(
         changeVisibility(
           project.id,
@@ -46,6 +47,7 @@ const Toolbar = (props) => {
           isChecked ? 'Private' : 'Public'
         )
       );
+      setVisibility(isChecked ? 'Private' : 'Public');
     } catch (error) {
       console.log(error);
     }
@@ -126,7 +128,7 @@ const Toolbar = (props) => {
                 <input
                   type="checkbox"
                   className="toolbar__togglevisibility"
-                  defaultChecked={project.visibility === 'Private'}
+                  defaultChecked={visibility === 'Private'}
                   onChange={toggleVisibility}
                 />
               </main>
