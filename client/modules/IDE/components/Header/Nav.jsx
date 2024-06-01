@@ -270,7 +270,7 @@ const UnauthenticatedUserMenu = () => {
           </span>
         </Link>
       </li>
-      <span className="nav__item-or">{t('Nav.LoginOr')}</span>
+      <li className="nav__item-or">{t('Nav.LoginOr')}</li>
       <li className="nav__item">
         <Link to="/signup" className="nav__auth-button">
           <span className="nav__item-header" title="SignUp">
