@@ -137,14 +137,23 @@ const ProjectMenu = () => {
   return (
     <ul className="nav__items-left">
       <li className="nav__item-logo">
-        <Link to={userSketches}>
+        {user && user.username !== undefined ? (
+          <Link to={userSketches}>
+            <LogoIcon
+              role="img"
+              aria-label={t('Common.p5logoARIA')}
+              focusable="false"
+              className="svg__logo"
+            />
+          </Link>
+        ) : (
           <LogoIcon
             role="img"
             aria-label={t('Common.p5logoARIA')}
             focusable="false"
             className="svg__logo"
           />
-        </Link>
+        )}
       </li>
       <NavDropdownMenu id="file" title={t('Nav.File.Title')}>
         <NavMenuItem onClick={newSketch}>{t('Nav.File.New')}</NavMenuItem>
