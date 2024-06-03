@@ -268,7 +268,11 @@ class FileNode extends React.Component {
             <span className="file-item__spacer"></span>
             {isFile && (
               <span className="sidebar__file-item-icon">
-                <FileTypeIcon fileExtension={extension} />
+                <FileTypeIcon
+                  fileExtension={extension}
+                  focusable="false"
+                  aria-hidden="true"
+                />
               </span>
             )}
             {isFolder && (
