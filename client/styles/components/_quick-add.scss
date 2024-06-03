@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .quick-add {
   width: auto;
   overflow-y: auto;
@@ -10,8 +12,8 @@
 .quick-add__item {
   display: flex;
   align-items: center;
-  height: #{64 / $base-font-size}rem;
-  padding-right: #{24 / $base-font-size}rem;
+  height: #{math.div(64, $base-font-size)}rem;
+  padding-right: #{math.div(24, $base-font-size)}rem;
 
   button, a {
     @include themify() {
@@ -37,9 +39,9 @@
 
 .quick-add__icon {
   display: inline-block;
-  margin-right:#{15 / $base-font-size}rem;
-  width:#{35 / $base-font-size}rem;
-  height:#{35 / $base-font-size}rem;
+  margin-right:#{math.div(15, $base-font-size)}rem;
+  width:#{math.div(35, $base-font-size)}rem;
+  height:#{math.div(35, $base-font-size)}rem;
   @include icon();
   @include themify() {
     // icon graphic
@@ -53,8 +55,8 @@
     }
 
     & svg {
-      width:#{35 / $base-font-size}rem;
-      height:#{35 / $base-font-size}rem;
+      width:#{math.div(35, $base-font-size)}rem;
+      height:#{math.div(35, $base-font-size)}rem;
     }
   }
 }
@@ -81,14 +83,11 @@
   }
 }
 
-.quick-add__add-icon {
-  transform: rotate(45deg);
-}
-
-.quick-add__item:hover,
-.quick-add__item-toggle:hover,
+.quick-add__item,
+.quick-add__item-toggle,
 .quick-add__item-toggle:focus {
   cursor: pointer;
+  
   @include themify() {
     & .quick-add__icon path {
       fill: getThemifyVariable('table-button-hover-color');
@@ -98,28 +97,25 @@
       fill: getThemifyVariable('table-button-background-hover-color');
     }
   }
+}
 
-  & .quick-add__in-icon {
+.quick-add__icon--in-collection {
+  .quick-add__remove-icon {
+    display: inline-block;
+  }
+
+  .quick-add__add-icon {
     display: none;
   }
+}
 
-  & .quick-add__icon--in-collection {
-    .quick-add__remove-icon {
-      display: inline-block;
-    }
-
-    .quick-add__add-icon {
-      display: none;
-    }
+.quick-add__icon--not-in-collection {
+  .quick-add__add-icon {
+    display: inline-block;
   }
 
-  & .quick-add__icon--not-in-collection {
-    .quick-add__add-icon {
-      display: inline-block;
-    }
-
-    .quick-add__remove-icon {
-      display: none;
-    }
+  .quick-add__remove-icon {
+    display: none;
   }
 }
+

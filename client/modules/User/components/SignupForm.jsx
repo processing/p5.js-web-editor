@@ -8,8 +8,9 @@ import Button from '../../../common/Button';
 import apiClient from '../../../utils/apiClient';
 
 function asyncValidate(fieldToValidate, value) {
-  if (!value || value.trim().length === 0)
-    return `Please enter a ${fieldToValidate}.`;
+  if (!value || value.trim().length === 0) {
+    return '';
+  }
   const queryParams = {};
   queryParams[fieldToValidate] = value;
   queryParams.check_type = fieldToValidate;
@@ -63,6 +64,7 @@ function SignupForm() {
                   type="text"
                   id="username"
                   autoComplete="username"
+                  autoCapitalize="none"
                   {...field.input}
                 />
                 {field.meta.touched && field.meta.error && (

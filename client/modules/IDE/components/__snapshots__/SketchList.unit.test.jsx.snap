@@ -2,7 +2,28 @@
 
 exports[`<Sketchlist /> snapshot testing 1`] = `
 <DocumentFragment>
-  <article
+  .c0 > button {
+  width: 2.0833333333333335rem;
+  height: 2.0833333333333335rem;
+  padding: 0;
+}
+
+.c0 > button svg {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.c0 > button polygon,
+.c0 > button path {
+  fill: #666;
+}
+
+.c0 ul {
+  top: 63%;
+  right: calc(100% - 26px);
+}
+
+<article
     class="sketches-table-container"
   >
     <table
@@ -85,15 +106,19 @@ exports[`<Sketchlist /> snapshot testing 1`] = `
           <td
             class="sketch-list__dropdown-column"
           >
-            <button
-              aria-label="Toggle Open/Close Sketch Options"
-              class="sketch-list__dropdown-button"
+            <div
+              class="c0"
             >
-              <test-file-stub
-                aria-hidden="true"
-                focusable="false"
-              />
-            </button>
+              <button
+                aria-label="Toggle Open/Close Sketch Options"
+                tabindex="0"
+              >
+                <test-file-stub
+                  aria-hidden="true"
+                  focusable="false"
+                />
+              </button>
+            </div>
           </td>
         </tr>
         <tr
@@ -117,15 +142,19 @@ exports[`<Sketchlist /> snapshot testing 1`] = `
           <td
             class="sketch-list__dropdown-column"
           >
-            <button
-              aria-label="Toggle Open/Close Sketch Options"
-              class="sketch-list__dropdown-button"
+            <div
+              class="c0"
             >
-              <test-file-stub
-                aria-hidden="true"
-                focusable="false"
-              />
-            </button>
+              <button
+                aria-label="Toggle Open/Close Sketch Options"
+                tabindex="0"
+              >
+                <test-file-stub
+                  aria-hidden="true"
+                  focusable="false"
+                />
+              </button>
+            </div>
           </td>
         </tr>
       </tbody>

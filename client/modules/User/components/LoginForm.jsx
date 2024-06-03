@@ -20,13 +20,7 @@ function LoginForm() {
       validate={validateLogin}
       onSubmit={onSubmit}
     >
-      {({
-        handleSubmit,
-        submitError,
-        pristine,
-        submitting,
-        modifiedSinceLastSubmit
-      }) => (
+      {({ handleSubmit, submitError, submitting, modifiedSinceLastSubmit }) => (
         <form className="form" onSubmit={handleSubmit}>
           <Field name="email">
             {(field) => (
@@ -40,6 +34,7 @@ function LoginForm() {
                   type="text"
                   id="email"
                   autoComplete="username"
+                  autoCapitalize="none"
                   {...field.input}
                 />
                 {field.meta.touched && field.meta.error && (
@@ -71,7 +66,7 @@ function LoginForm() {
           {submitError && !modifiedSinceLastSubmit && (
             <span className="form-error">{submitError}</span>
           )}
-          <Button type="submit" disabled={submitting || pristine}>
+          <Button type="submit" disabled={submitting}>
             {t('LoginForm.Submit')}
           </Button>
         </form>

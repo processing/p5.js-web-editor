@@ -5,10 +5,10 @@ import { Route as RouterRoute, Switch } from 'react-router-dom';
 
 import App from './modules/App/App';
 import IDEView from './modules/IDE/pages/IDEView';
-import MobileIDEView from './modules/IDE/pages/MobileIDEView';
-import MobileSketchView from './modules/Mobile/MobileSketchView';
-import MobilePreferences from './modules/Mobile/MobilePreferences';
 import FullView from './modules/IDE/pages/FullView';
+import CodeOfConduct from './modules/Legal/pages/CodeOfConduct';
+import PrivacyPolicy from './modules/Legal/pages/PrivacyPolicy';
+import TermsOfUse from './modules/Legal/pages/TermsOfUse';
 import LoginView from './modules/User/pages/LoginView';
 import SignupView from './modules/User/pages/SignupView';
 import ResetPasswordView from './modules/User/pages/ResetPasswordView';
@@ -18,17 +18,12 @@ import AccountView from './modules/User/pages/AccountView';
 import CollectionView from './modules/User/pages/CollectionView';
 import DashboardView from './modules/User/pages/DashboardView';
 import createRedirectWithUsername from './components/createRedirectWithUsername';
-import MobileDashboardView from './modules/Mobile/MobileDashboardView';
-// import PrivacyPolicy from './modules/IDE/pages/PrivacyPolicy';
-// import TermsOfUse from './modules/IDE/pages/TermsOfUse';
-import Legal from './modules/Legal/pages/Legal';
 import { getUser } from './modules/User/actions';
 import {
   userIsAuthenticated,
   userIsNotAuthenticated,
   userIsAuthorized
 } from './utils/auth';
-import { mobileFirst, responsiveForm } from './utils/responsive';
 
 /**
  *  `params` is no longer a top-level route component prop in v4.
@@ -48,24 +43,16 @@ const withParams = (Component) => (props) => (
 const Route = ({ component, ...props }) => (
   <RouterRoute component={withParams(component)} {...props} />
 );
-Route.propTypes = { ...RouterRoute.propTypes };
-Route.propTypes.component = PropTypes.elementType.isRequired;
+Route.propTypes = {
+  ...RouterRoute.propTypes,
+  component: PropTypes.elementType.isRequired
+};
 
 const routes = (
   <Switch>
-    <Route exact path="/" component={mobileFirst(MobileIDEView, IDEView)} />
-    <Route
-      path="/login"
-      component={userIsNotAuthenticated(
-        mobileFirst(responsiveForm(LoginView), LoginView)
-      )}
-    />
-    <Route
-      path="/signup"
-      component={userIsNotAuthenticated(
-        mobileFirst(responsiveForm(SignupView), SignupView)
-      )}
-    />
+    <Route exact path="/" component={IDEView} />
+    <Route path="/login" component={userIsNotAuthenticated(LoginView)} />
+    <Route path="/signup" component={userIsNotAuthenticated(SignupView)} />
     <Route
       path="/reset-password/:reset_password_token"
       component={NewPasswordView}
@@ -81,30 +68,19 @@ const routes = (
 
     <Route
       path="/:username/assets"
-      component={userIsAuthenticated(
-        userIsAuthorized(mobileFirst(MobileDashboardView, DashboardView))
-      )}
+      component={userIsAuthenticated(userIsAuthorized(DashboardView))}
     />
     <Route
       path="/:username/sketches/:project_id/add-to-collection"
-      component={mobileFirst(MobileIDEView, IDEView)}
+      component={IDEView}
     />
-    <Route
-      path="/:username/sketches/:project_id"
-      component={mobileFirst(MobileIDEView, IDEView)}
-    />
-    <Route
-      path="/:username/sketches"
-      component={mobileFirst(MobileDashboardView, DashboardView)}
-    />
+    <Route path="/:username/sketches/:project_id" component={IDEView} />
+    <Route path="/:username/sketches" component={DashboardView} />
     <Route
       path="/:username/collections/:collection_id"
       component={CollectionView}
     />
-    <Route
-      path="/:username/collections"
-      component={mobileFirst(MobileDashboardView, DashboardView)}
-    />
+    <Route path="/:username/collections" component={DashboardView} />
 
     <Route
       path="/sketches"
@@ -117,12 +93,9 @@ const routes = (
     <Route path="/account" component={userIsAuthenticated(AccountView)} />
     <Route path="/about" component={IDEView} />
 
-    {/* Mobile-only Routes */}
-    <Route path="/preview" component={MobileSketchView} />
-    <Route path="/preferences" component={MobilePreferences} />
-    <Route path="/privacy-policy" component={Legal} />
-    <Route path="/terms-of-use" component={Legal} />
-    <Route path="/code-of-conduct" component={Legal} />
+    <Route path="/privacy-policy" component={PrivacyPolicy} />
+    <Route path="/terms-of-use" component={TermsOfUse} />
+    <Route path="/code-of-conduct" component={CodeOfConduct} />
   </Switch>
 );
 

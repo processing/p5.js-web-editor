@@ -1,31 +1,49 @@
+@use "sass:math";
+
 .account-settings__container {
   @include themify() {
     color: getThemifyVariable('primary-text-color');
     background-color: getThemifyVariable('background-color');
   }
   min-height: 100%;
+
+  @media (max-width: 770px) {
+    .account-settings__header {
+      display: none;
+    }
+  }
 }
 
 .account-settings {
-  max-width: #{700 / $base-font-size}rem;
+  max-width: #{math.div(700, $base-font-size)}rem;
   align-self: center;
-  padding: 0 #{10 / $base-font-size}rem;
+  padding: 0 #{math.div(10, $base-font-size)}rem;
   margin: 0 auto;
 }
 
 .account__tabs {
-  padding-top: #{20 / $base-font-size}rem;
+  padding-top: #{math.div(20, $base-font-size)}rem;
 }
 
 .account__social-text {
-  padding-bottom: #{15 / $base-font-size}rem;
+  padding-bottom: #{math.div(15, $base-font-size)}rem;
 }
 
 
 .account__social-stack {
   display: flex;
+  @media (max-width: 770px) {
+    flex-direction: column;
+    align-items: center;
+    gap: #{math.div(15, $base-font-size)}rem;
+
+    button, a {
+      width: 100% !important;
+      margin-right: 0;
+    }
+  }
 }
 
 .account__social-stack > * {
-  margin-right: #{15 / $base-font-size}rem;
+  margin-right: #{math.div(15, $base-font-size)}rem;
 }

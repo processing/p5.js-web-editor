@@ -1,92 +1,75 @@
 import PropTypes from 'prop-types';
-import React from 'react';
-import { withTranslation } from 'react-i18next';
+import React, { useCallback, useRef } from 'react';
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import useModalClose from '../../../common/useModalClose';
 
-import browserHistory from '../../../browserHistory';
 import ExitIcon from '../../../images/exit.svg';
-import { DocumentKeyDown } from '../../IDE/hooks/useKeyDownHandlers';
 
-class Overlay extends React.Component {
-  constructor(props) {
-    super(props);
-    this.close = this.close.bind(this);
-    this.handleClick = this.handleClick.bind(this);
-    this.handleClickOutside = this.handleClickOutside.bind(this);
-  }
+const Overlay = ({
+  actions,
+  ariaLabel,
+  children,
+  closeOverlay,
+  isFixedHeight,
+  title
+}) => {
+  const { t } = useTranslation();
 
-  componentWillMount() {
-    document.addEventListener('mousedown', this.handleClick, false);
-  }
+  const previousPath = useSelector((state) => state.ide.previousPath);
 
-  componentDidMount() {
-    this.node.focus();
-  }
+  const ref = useRef(null);
 
-  componentWillUnmount() {
-    document.removeEventListener('mousedown', this.handleClick, false);
-  }
+  const browserHistory = useHistory();
 
-  handleClick(e) {
-    if (this.node.contains(e.target)) {
-      return;
-    }
-
-    this.handleClickOutside(e);
-  }
-
-  handleClickOutside() {
-    this.close();
-  }
-
-  close() {
+  const close = useCallback(() => {
+    const node = ref.current;
+    if (!node) return;
     // Only close if it is the last (and therefore the topmost overlay)
     const overlays = document.getElementsByClassName('overlay');
-    if (this.node.parentElement.parentElement !== overlays[overlays.length - 1])
+    if (node.parentElement.parentElement !== overlays[overlays.length - 1])
       return;
 
-    if (!this.props.closeOverlay) {
-      browserHistory.push(this.props.previousPath);
+    if (!closeOverlay) {
+      browserHistory.push(previousPath);
     } else {
-      this.props.closeOverlay();
+      closeOverlay();
     }
-  }
+  }, [previousPath, closeOverlay, ref]);
 
-  render() {
-    const { ariaLabel, title, children, actions, isFixedHeight } = this.props;
-    return (
-      <div
-        className={`overlay ${isFixedHeight ? 'overlay--is-fixed-height' : ''}`}
-      >
-        <div className="overlay__content">
-          <section
-            role="main"
-            aria-label={ariaLabel}
-            ref={(node) => {
-              this.node = node;
-            }}
-            className="overlay__body"
-          >
-            <header className="overlay__header">
-              <h2 className="overlay__title">{title}</h2>
-              <div className="overlay__actions">
-                {actions}
-                <button
-                  className="overlay__close-button"
-                  onClick={this.close}
-                  aria-label={this.props.t('Overlay.AriaLabel', { title })}
-                >
-                  <ExitIcon focusable="false" aria-hidden="true" />
-                </button>
-              </div>
-            </header>
-            {children}
-            <DocumentKeyDown handlers={{ escape: () => this.close() }} />
-          </section>
-        </div>
+  useModalClose(close, ref);
+
+  return (
+    <div
+      className={`overlay ${isFixedHeight ? 'overlay--is-fixed-height' : ''}`}
+    >
+      <div className="overlay__content">
+        <section
+          role="main"
+          aria-label={ariaLabel}
+          ref={ref}
+          className="overlay__body"
+        >
+          <header className="overlay__header">
+            <h2 className="overlay__title">{title}</h2>
+            <div className="overlay__actions">
+              {actions}
+              <button
+                className="overlay__close-button"
+                onClick={close}
+                aria-label={t('Overlay.AriaLabel', { title })}
+              >
+                <ExitIcon focusable="false" aria-hidden="true" />
+              </button>
+            </div>
+          </header>
+          {children}
+        </section>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 Overlay.propTypes = {
   children: PropTypes.element,
@@ -94,9 +77,7 @@ Overlay.propTypes = {
   closeOverlay: PropTypes.func,
   title: PropTypes.string,
   ariaLabel: PropTypes.string,
-  previousPath: PropTypes.string,
-  isFixedHeight: PropTypes.bool,
-  t: PropTypes.func.isRequired
+  isFixedHeight: PropTypes.bool
 };
 
 Overlay.defaultProps = {
@@ -105,8 +86,7 @@ Overlay.defaultProps = {
   title: 'Modal',
   closeOverlay: null,
   ariaLabel: 'modal',
-  previousPath: '/',
   isFixedHeight: false
 };
 
-export default withTranslation()(Overlay);
+export default Overlay;
