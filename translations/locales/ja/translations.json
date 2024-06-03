@@ -93,10 +93,18 @@
       "NewP5": "p5.jsは初めてですか?",
       "Report": "バグレポート",
       "Learn": "p5.jsを学ぶ",
+      "Twitter": "Twitter",
+      "Home": "ホーム",
+      "Instagram": "Instagram",
+      "Discord": "Discord",
+      "WebEditor": "ウェブエディタ",
       "Resources": "参考資料",
       "Libraries": "ライブラリ",
       "Forum": "フォーラム",
-      "Examples": "サンプルを開く"
+      "Examples": "サンプルを開く",
+      "PrivacyPolicy": "プライバシーポリシー",
+      "TermsOfUse": "利用規約",
+      "CodeOfConduct": "行動規範"
     },
     "Toast": {
       "OpenedNewSketch": "新しいスケッチを開きました",
@@ -235,7 +243,7 @@
       "Title": "ファイル作成",
       "CloseButtonARIA": "新規ファイルモーダルを閉じる",
       "EnterName": "ファイル名を入力してください",
-      "InvalidType": "ファイルタイプが無効です。有効な拡張子は、.js、.css、.json、.xml、.stl、.txt、.csv、.tsv、.frag、.vertです。"
+      "InvalidType": "ファイルタイプが無効です。有効な拡張子は、.js、.css、.json、.xml、.stl、.txt、.csv、.tsv、.mtl、.frag、.vertです。"
     },
     "NewFileForm": {
       "AddFileSubmit": "ファイルを追加",
@@ -350,7 +358,8 @@
       "Description": "ユーザー登録",
       "Or": "もしくは",
       "AlreadyHave": "既にアカウントをお持ちですか？",
-      "Login": "ログイン"
+      "Login": "ログイン",
+      "Warning": "アカウント作成をすると、p5.js エディターの <0>利用規約</0> と <1>プライバシー ポリシー</1> に同意したことになります。"
     },
     "EmailVerificationView": {
       "Title": "p5.js ウェブエディター | メールアドレス認証",

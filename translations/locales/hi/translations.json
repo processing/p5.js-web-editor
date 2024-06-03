@@ -93,6 +93,11 @@
       "NewP5": "p5.js पर नये?",
       "Report": "बग रिपोर्ट",
       "Learn": "सीखें",
+      "Twitter": "ट्विटर",
+      "Home": "होम",
+      "Instagram": "इंस्टाग्राम",
+      "Discord": "डिस्कॉर्ड",
+      "WebEditor": "वेब संपादक",
       "Resources": "साधन",
       "Libraries": "लाइब्रेरीज़",
       "Forum": "समूह",
@@ -101,10 +106,9 @@
       "Twitter": "ट्विटर",
       "Instagram": "इंस्टाग्राम",
       "Discord": "डिस्कॉर्ड",
-      "PrivacyPolicy": "प्राइवेसी पालिसी",
-      "TermsOfUse": "टर्म्स ऑफ़ यूज़",
-      "CodeOfConduct": "कोड ऑफ़ कंडक्ट",
-      "WebEditor": "वेब एडिटर"
+      "PrivacyPolicy": "गोपनीयता नीति",
+      "TermsOfUse": "उपयोग की शर्तें",
+      "CodeOfConduct": "आचार संहिता"
     },
     "Toast": {
       "OpenedNewSketch": "नया स्केच खोला",
@@ -250,7 +254,7 @@
       "Title": "फ़ाइल बनाएँ",
       "CloseButtonARIA": "नई फ़ाइल मोडल बंद करें",
       "EnterName": "कृपया एक नाम दर्ज करें",
-      "InvalidType": "अमान्य फ़ाइल प्रकार। मान्य एक्सटेंशन हैं .js, .css, .json, .xml, .stl, .txt, .csv, .tsv, .frag, और .vert."
+      "InvalidType": "अमान्य फ़ाइल प्रकार। मान्य एक्सटेंशन हैं .js, .css, .json, .xml, .stl, .txt, .csv, .tsv, .mtl, .frag, और .vert."
     },
     "NewFileForm": {
       "AddFileSubmit": "फाइल जोडें",

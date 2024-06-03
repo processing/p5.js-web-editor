@@ -1,20 +1,18 @@
 import React from 'react';
-import { useMediaQuery } from 'react-responsive';
 import styled from 'styled-components';
 import { prop, remSize } from '../../theme';
 import DropdownMenu from './DropdownMenu';
 
 import DownFilledTriangleIcon from '../../images/down-filled-triangle.svg';
 import MoreIconSvg from '../../images/more.svg';
+import useIsMobile from '../../modules/IDE/hooks/useIsMobile';
 
 const DotsHorizontal = styled(MoreIconSvg)`
   transform: rotate(90deg);
 `;
 
 const TableDropdownIcon = () => {
-  // TODO: centralize breakpoints
-  const isMobile = useMediaQuery({ maxWidth: 770 });
-
+  const isMobile = useIsMobile();
   return isMobile ? (
     <DotsHorizontal focusable="false" aria-hidden="true" />
   ) : (
