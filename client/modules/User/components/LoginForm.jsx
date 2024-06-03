@@ -31,7 +31,7 @@ function LoginForm() {
                 <input
                   className="form__input"
                   aria-label={t('LoginForm.UsernameOrEmailARIA')}
-                  type="email"
+                  type="text"
                   id="email"
                   autoComplete="username"
                   autoCapitalize="none"
