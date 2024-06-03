@@ -1,14 +1,13 @@
-import * as ActionTypes from '../../../constants';
+import { createSlice } from '@reduxjs/toolkit';
 
-const loading = (state = false, action) => {
-  switch (action.type) {
-    case ActionTypes.START_LOADING:
-      return true;
-    case ActionTypes.STOP_LOADING:
-      return false;
-    default:
-      return state;
+const loadingSlice = createSlice({
+  name: 'loading',
+  initialState: false,
+  reducers: {
+    startLoader: () => true,
+    stopLoader: () => false
   }
-};
+});
 
-export default loading;
+export const { startLoader, stopLoader } = loadingSlice.actions;
+export default loadingSlice.reducer;

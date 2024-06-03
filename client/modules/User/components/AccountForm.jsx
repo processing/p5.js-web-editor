@@ -128,46 +128,50 @@ function AccountForm() {
               </p>
             )}
           </Field>
-          <Field name="currentPassword">
-            {(field) => (
-              <p className="form__field">
-                <label htmlFor="current password" className="form__label">
-                  {t('AccountForm.CurrentPassword')}
-                </label>
-                <input
-                  className="form__input"
-                  aria-label={t('AccountForm.CurrentPasswordARIA')}
-                  type="password"
-                  id="currentPassword"
-                  autoComplete="current-password"
-                  {...field.input}
-                />
-                {field.meta.touched && field.meta.error && (
-                  <span className="form-error">{field.meta.error}</span>
-                )}
-              </p>
-            )}
-          </Field>
-          <Field name="newPassword">
-            {(field) => (
-              <p className="form__field">
-                <label htmlFor="new password" className="form__label">
-                  {t('AccountForm.NewPassword')}
-                </label>
-                <input
-                  className="form__input"
-                  aria-label={t('AccountForm.NewPasswordARIA')}
-                  type="password"
-                  id="newPassword"
-                  autoComplete="new-password"
-                  {...field.input}
-                />
-                {field.meta.touched && field.meta.error && (
-                  <span className="form-error">{field.meta.error}</span>
-                )}
-              </p>
-            )}
-          </Field>
+          {user.github === undefined && user.google === undefined && (
+            <Field name="currentPassword">
+              {(field) => (
+                <p className="form__field">
+                  <label htmlFor="current password" className="form__label">
+                    {t('AccountForm.CurrentPassword')}
+                  </label>
+                  <input
+                    className="form__input"
+                    aria-label={t('AccountForm.CurrentPasswordARIA')}
+                    type="password"
+                    id="currentPassword"
+                    autoComplete="current-password"
+                    {...field.input}
+                  />
+                  {field.meta.touched && field.meta.error && (
+                    <span className="form-error">{field.meta.error}</span>
+                  )}
+                </p>
+              )}
+            </Field>
+          )}
+          {user.github === undefined && user.google === undefined && (
+            <Field name="newPassword">
+              {(field) => (
+                <p className="form__field">
+                  <label htmlFor="new password" className="form__label">
+                    {t('AccountForm.NewPassword')}
+                  </label>
+                  <input
+                    className="form__input"
+                    aria-label={t('AccountForm.NewPasswordARIA')}
+                    type="password"
+                    id="newPassword"
+                    autoComplete="new-password"
+                    {...field.input}
+                  />
+                  {field.meta.touched && field.meta.error && (
+                    <span className="form-error">{field.meta.error}</span>
+                  )}
+                </p>
+              )}
+            </Field>
+          )}
           <Button type="submit" disabled={submitting || invalid}>
             {t('AccountForm.SubmitSaveAllSettings')}
           </Button>
