@@ -1,6 +1,6 @@
 /* @jest-environment node */
 
-import last from 'lodash/last';
+import { last } from 'lodash';
 import { Request, Response } from 'jest-express';
 
 import User, { createMock, createInstanceMock } from '../../../models/user';
