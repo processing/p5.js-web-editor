@@ -1,12 +1,11 @@
 import browserHistory from '../../../browserHistory';
 import apiClient from '../../../utils/apiClient';
 import * as ActionTypes from '../../../constants';
-import { startLoader, stopLoader } from './loader';
+import { startLoader, stopLoader } from '../reducers/loading';
 import { setToastText, showToast } from './toast';
 
 const TOAST_DISPLAY_TIME_MS = 1500;
 
-// eslint-disable-next-line
 export function getCollections(username) {
   return (dispatch) => {
     dispatch(startLoader());
@@ -16,8 +15,7 @@ export function getCollections(username) {
     } else {
       url = '/collections';
     }
-    console.log(url);
-    apiClient
+    return apiClient
       .get(url)
       .then((response) => {
         dispatch({
@@ -82,7 +80,7 @@ export function addToCollection(collectionId, projectId) {
 
         const collectionName = response.data.name;
 
-        dispatch(setToastText(`Added to "${collectionName}`));
+        dispatch(setToastText(`Added to "${collectionName}"`));
         dispatch(showToast(TOAST_DISPLAY_TIME_MS));
 
         return response.data;
@@ -112,7 +110,7 @@ export function removeFromCollection(collectionId, projectId) {
 
         const collectionName = response.data.name;
 
-        dispatch(setToastText(`Removed from "${collectionName}`));
+        dispatch(setToastText(`Removed from "${collectionName}"`));
         dispatch(showToast(TOAST_DISPLAY_TIME_MS));
 
         return response.data;

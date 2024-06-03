@@ -1,30 +1,32 @@
+@use "sass:math";
+
 .feedback__content {
   display: flex;
-  width: #{650 / $base-font-size}rem;
-  padding-top: #{17 / $base-font-size}rem;
-  padding-right: #{20 / $base-font-size}rem;
-  padding-bottom: #{20 / $base-font-size}rem;
-  padding-left: #{20 / $base-font-size}rem;
+  width: #{math.div(650, $base-font-size)}rem;
+  padding-top: #{math.div(17, $base-font-size)}rem;
+  padding-right: #{math.div(20, $base-font-size)}rem;
+  padding-bottom: #{math.div(20, $base-font-size)}rem;
+  padding-left: #{math.div(20, $base-font-size)}rem;
 }
 
 .feedback__content-pane {
   flex: 1;
   & + & {
-    margin-left: #{20 / $base-font-size}rem;
+    margin-left: #{math.div(20, $base-font-size)}rem;
   }
 }
 
 .feedback__content-pane-header {
-  margin-bottom: #{20 / $base-font-size}rem;
+  margin-bottom: #{math.div(20, $base-font-size)}rem;
 }
 
 .feedback__content-pane-copy {
-  margin-bottom: #{20 / $base-font-size}rem;
+  margin-bottom: #{math.div(20, $base-font-size)}rem;
 }
 
 .feedback__github-logo svg {
-  width: #{12 / $base-font-size}rem;
-  height: #{12 / $base-font-size}rem;
+  width: #{math.div(12, $base-font-size)}rem;
+  height: #{math.div(12, $base-font-size)}rem;
   @include themify() {
     fill: getThemifyVariable('inactive-text-color');
   }
