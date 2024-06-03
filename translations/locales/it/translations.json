@@ -554,10 +554,6 @@
     "35Seconds": "35 secondi fa",
     "Ago": "{{timeAgo}} fa"
   },
-  "AddRemoveButton": {
-    "AltAddARIA": "Aggiungi alla collezione",
-    "AltRemoveARIA": "Remove from collezione"
-  },
   "CopyableInput": {
     "CopiedARIA": "Copiato negli appunti!",
     "OpenViewTabARIA": "Apri {{label}} vista in nuova pagina"
@@ -591,14 +587,6 @@
   "PreferenceCreators": {
     "On": "On",
     "Off": "Off"
-  },
-  "MobileIDEView":{
-    "Preferences": "Preferenze",
-    "MyStuff": "Le mie cose",
-    "Examples": "Esempi",
-    "OriginalEditor": "Editor originale",
-    "Login": "Accedi",
-    "Logout": "Disconnetti"
   },
   "MobileDashboardView": {
     "Examples": "Esempi",

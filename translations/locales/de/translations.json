@@ -552,10 +552,6 @@
     "35Seconds": "vor 35 Sekunden",
     "Ago": "vor {{timeAgo}}"
   },
-  "AddRemoveButton": {
-    "AltAddARIA": "Zur Sammlung hinzufügen",
-    "AltRemoveARIA": "Aus Sammlung entfernen"
-  },
   "CopyableInput": {
     "CopiedARIA": "In die Zwischenablage kopiert",
     "OpenViewTabARIA": "Öffne {{label}} in neuem Tab"
@@ -589,14 +585,6 @@
   "PreferenceCreators": {
     "On": "An",
     "Off": "Aus"
-  },
-  "MobileIDEView": {
-    "Preferences": "Einstellungen",
-    "MyStuff": "Mein Zeug",
-    "Examples": "Beispiele",
-    "OriginalEditor": "Original-Editor",
-    "Login": "Anmelden",
-    "Logout": "Abmelden"
   },
   "MobileDashboardView": {
     "Examples":  "Beispiele",
