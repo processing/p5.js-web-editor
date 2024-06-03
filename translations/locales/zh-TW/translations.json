@@ -70,7 +70,7 @@
     "Submit": "登入"
   },
   "LoginView": {
-    "Title": "p5.js Web Editor | 登入",
+    "Title": "p5.js 網頁編輯器 | 登入",
     "Login": "登入",
     "LoginOr": "或",
     "SignUp": "註冊",
@@ -88,15 +88,23 @@
   },
   "About": {
     "Title": "關於",
-    "TitleHelmet": "p5.js Web Editor | 關於",
+    "TitleHelmet": "p5.js 網頁編輯器 | 關於",
     "Contribute": "貢獻",
     "NewP5": "p5.js 新手？",
     "Report": "回報臭蟲",
     "Learn": "學習",
+    "Twitter": "Twitter",
+    "Home": "首頁",
+    "Instagram": "Instagram",
+    "Discord": "Discord",
+    "WebEditor": "Web 編輯器",
     "Resources": "資源",
     "Libraries": "程式庫",
     "Forum": "論壇",
-    "Examples": "範例"
+    "Examples": "範例",
+    "PrivacyPolicy": "隱私政策",
+    "TermsOfUse": "使用條款",
+    "CodeOfConduct": "行為準則"
   },
   "Toast": {
     "OpenedNewSketch": "已開啟新草稿",
@@ -261,7 +269,7 @@
     "Submit": "寄送重設密碼的電子郵件"
   },
   "ResetPasswordView": {
-    "Title": "p5.js Web Editor | 重設密碼",
+    "Title": "p5.js 網頁編輯器 | 重設密碼",
     "Reset": "重設密碼",
     "Submitted": "重設密碼郵件稍後寄到, 若沒收到\n            請檢查是否被丟到垃圾郵件資料夾",
     "Login": "登入",
@@ -281,7 +289,7 @@
     "errorValidUsername": "使用者名稱只能有數字、字母、英文句點、減號以及底線符號"
   },
   "NewPasswordView": {
-    "Title": "p5.js Web Editor | 新密碼",
+    "Title": "p5.js 網頁編輯器 | 新密碼",
     "Description": "設定新密碼",
     "TokenInvalidOrExpired": "重設新密碼的權杖錯誤或是已經過期",
     "EmptyPassword": "請輸入新的密碼",
@@ -304,8 +312,8 @@
   },
   "AccountView": {
     "SocialLogin": "以社群帳號登入",
-    "SocialLoginDescription": "使用你的 GitHub 或 Google 帳號登入 p5.js Web Editor.",
-    "Title": "p5.js Web Editor | 帳號設定",
+    "SocialLoginDescription": "使用你的 GitHub 或 Google 帳號登入 p5.js 網頁編輯器.",
+    "Title": "p5.js 網頁編輯器 | 帳號設定",
     "Settings": "帳號設定",
     "AccountTab": "帳號",
     "AccessTokensTab": "存取權杖"
@@ -349,14 +357,14 @@
     "SubmitSignup": "註冊"
   },
   "SignupView": {
-    "Title": "p5.js Web Editor | 註冊",
+    "Title": "p5.js 網頁編輯器 | 註冊",
     "Description": "註冊",
     "Or": "或是",
     "AlreadyHave": "已經有帳號？",
     "Login": "登入"
   },
   "EmailVerificationView": {
-    "Title": "p5.js Web Editor | 驗證電子郵件",
+    "Title": "p5.js 網頁編輯器 | 驗證電子郵件",
     "Verify": "驗證你的電子郵件",
     "InvalidTokenNull": "連結無效",
     "Checking": "驗證權杖中, 請稍後...",
@@ -364,7 +372,7 @@
     "InvalidState": "有地方出錯了"
   },
   "AssetList": {
-    "Title": "p5.js Web Editor | 我的資產",
+    "Title": "p5.js 網頁編輯器 | 我的資產",
     "ToggleOpenCloseARIA": "切換開啟/關閉資產選項",
     "Delete": "刪除",
     "OpenNewTab": "以新分頁開啟",
@@ -374,7 +382,7 @@
     "HeaderSketch": "草稿"
   },
   "Feedback": {
-    "Title": "p5.js Web Editor | 回饋",
+    "Title": "p5.js 網頁編輯器 | 回饋",
     "ViaGithubHeader": "透過 Github Issues",
     "ViaGithubDescription": "如果你熟悉 Github, 這是我們接受臭蟲報告與回饋的偏好方式",
     "GoToGithub": "前往 Github",
@@ -404,7 +412,7 @@
     "LogIn": "登入",
     "SavedDifferentWindow": "你想儲存的專案已經在另一個視窗儲存過, \n        請重新整理頁面載入最新的內容",
     "LinkTitle": "錯誤連結的帳號",
-    "LinkMessage": "連結你的 {{serviceauth}} 帳號到 p5.js Web Editor 帳號時發生問題, 你的 {{serviceauth}} 帳號已經連結到另一個 p5.js Web Editor 帳號了"
+    "LinkMessage": "連結你的 {{serviceauth}} 帳號到 p5.js 網頁編輯器 帳號時發生問題, 你的 {{serviceauth}} 帳號已經連結到另一個 p5.js 網頁編輯器 帳號了"
   },
   "ShareModal": {
     "Embed": "內嵌",
@@ -417,8 +425,8 @@
     "TitleDefault": "作品集"
   },
   "Collection": {
-    "Title": "p5.js Web Editor | 我的作品集",
-    "AnothersTitle": "p5.js Web Editor | {{anotheruser}} 的作品集",
+    "Title": "p5.js 網頁編輯器 | 我的作品集",
+    "AnothersTitle": "p5.js 網頁編輯器 | {{anotheruser}} 的作品集",
     "Share": "分享",
     "URLLink": "作品集連結",
     "AddSketch": "新增草稿",
@@ -441,12 +449,12 @@
     "ButtonLabelDescendingARIA": "以 {{displayName}} 降序排列"
   },
   "AddToCollectionList": {
-    "Title": "p5.js Web Editor | 我的作品集",
-    "AnothersTitle": "p5.js Web Editor | {{anotheruser}} 的作品集",
+    "Title": "p5.js 網頁編輯器 | 我的作品集",
+    "AnothersTitle": "p5.js 網頁編輯器 | {{anotheruser}} 的作品集",
     "Empty": "沒有作品集"
   },
   "CollectionCreate": {
-    "Title": "p5.js Web Editor | 建立作品集",
+    "Title": "p5.js 網頁編輯器 | 建立作品集",
     "FormError": "無法建立作品集",
     "FormLabel": "作品集名稱",
     "FormLabelARIA": "名稱",
@@ -467,8 +475,8 @@
     "Assets": "資產"
   },
   "CollectionList": {
-    "Title": "p5.js Web Editor | 我的作品集",
-    "AnothersTitle": "p5.js Web Editor | {{anotheruser}} 的作品集",
+    "Title": "p5.js 網頁編輯器 | 我的作品集",
+    "AnothersTitle": "p5.js 網頁編輯器 | {{anotheruser}} 的作品集",
     "NoCollections": "沒有作品集",
     "TableSummary": "作品集彙總表",
     "HeaderName": "名稱",
@@ -500,8 +508,8 @@
   },
   "SketchList": {
     "View": "檢視",
-    "Title": "p5.js Web Editor | 我的草稿",
-    "AnothersTitle": "p5.js Web Editor | {{anotheruser}} 的草稿",
+    "Title": "p5.js 網頁編輯器 | 我的草稿",
+    "AnothersTitle": "p5.js 網頁編輯器 | {{anotheruser}} 的草稿",
     "ToggleLabelARIA": "切換開啟/關閉草稿選項",
     "DropdownRename": "重新命名",
     "DropdownDownload": "下載",
@@ -522,8 +530,8 @@
     "NoSketches": "沒有草稿"
   },
   "AddToCollectionSketchList": {
-    "Title": "p5.js Web Editor | 我的草稿",
-    "AnothersTitle": "p5.js Web Editor | {{anotheruser}} 的草稿",
+    "Title": "p5.js 網頁編輯器 | 我的草稿",
+    "AnothersTitle": "p5.js 網頁編輯器 | {{anotheruser}} 的草稿",
     "NoCollections": "沒有作品集"
   },
   "Editor": {
@@ -545,10 +553,6 @@
     "25Seconds": "25 秒前",
     "35Seconds": "35 秒前",
     "Ago": "{{timeAgo}} 前"
-  },
-  "AddRemoveButton": {
-    "AltAddARIA": "加入作品集",
-    "AltRemoveARIA": "從作品集中移除"
   },
   "CopyableInput": {
     "CopiedARIA": "複製到剪貼簿",
@@ -584,14 +588,6 @@
   "PreferenceCreators": {
     "On": "啟用",
     "Off": "停用"
-  },
-  "MobileIDEView":{
-    "Preferences": "偏好設定",
-    "MyStuff": "我的資料",
-    "Examples": "範例",
-    "OriginalEditor": "原始的編輯器",
-    "Login": "登入",
-    "Logout": "登出"
   },
   "MobileDashboardView": {
     "Examples": "範例",

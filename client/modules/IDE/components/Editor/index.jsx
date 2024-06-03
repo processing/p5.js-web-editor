@@ -23,6 +23,7 @@ import 'codemirror/addon/fold/comment-fold';
 import 'codemirror/addon/fold/foldcode';
 import 'codemirror/addon/fold/foldgutter';
 import 'codemirror/addon/fold/indent-fold';
+import 'codemirror/addon/fold/xml-fold';
 import 'codemirror/addon/comment/comment';
 import 'codemirror/keymap/sublime';
 import 'codemirror/addon/search/searchcursor';
@@ -207,6 +208,10 @@ class Editor extends React.Component {
       if (/^[a-z]$/i.test(e.key) && (mode === 'css' || mode === 'javascript')) {
         this.showHint(_cm);
       }
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        this._cm.getInputField().blur();
+      }
     });
 
     this._cm.getWrapperElement().style[
@@ -337,7 +342,7 @@ class Editor extends React.Component {
       mode = 'application/json';
     } else if (fileName.match(/.+\.(frag|glsl)$/i)) {
       mode = 'x-shader/x-fragment';
-    } else if (fileName.match(/.+\.(vert|stl)$/i)) {
+    } else if (fileName.match(/.+\.(vert|stl|mtl)$/i)) {
       mode = 'x-shader/x-vertex';
     } else {
       mode = 'text/plain';
@@ -512,7 +517,7 @@ class Editor extends React.Component {
         {(matches) =>
           matches ? (
             <section className={editorSectionClass}>
-              <header className="editor__header">
+              <div className="editor__header">
                 <button
                   aria-label={this.props.t('Editor.OpenSketchARIA')}
                   className="sidebar__contract"
@@ -537,7 +542,7 @@ class Editor extends React.Component {
                   </span>
                   <Timer />
                 </div>
-              </header>
+              </div>
               <article
                 ref={(element) => {
                   this.codemirrorContainer = element;
@@ -554,7 +559,7 @@ class Editor extends React.Component {
             </section>
           ) : (
             <EditorContainer expanded={this.props.isExpanded}>
-              <header>
+              <>
                 <IconButton
                   onClick={this.props.expandSidebar}
                   icon={FolderIcon}
@@ -563,7 +568,7 @@ class Editor extends React.Component {
                   {this.props.file.name}
                   <UnsavedChangesIndicator />
                 </span>
-              </header>
+              </>
               <section>
                 <EditorHolder
                   ref={(element) => {
