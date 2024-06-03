@@ -39,6 +39,7 @@ function LoginForm() {
                   type="text"
                   id="email"
                   autoComplete="username"
+                  autoCapitalize="none"
                   {...field.input}
                 />
                 {field.meta.touched && field.meta.error && (

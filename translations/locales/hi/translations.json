@@ -109,7 +109,6 @@
       "PrivacyPolicy": "गोपनीयता नीति",
       "TermsOfUse": "उपयोग की शर्तें",
       "CodeOfConduct": "आचार संहिता"
-      "WebEditor": "वेब एडिटर"
     },
     "Toast": {
       "OpenedNewSketch": "नया स्केच खोला",
@@ -564,10 +563,6 @@
       "35Seconds": "३५ सेकंड पहले",
       "Ago": "{{timeAgo}} पहले"
     },
-    "AddRemoveButton": {
-      "AltAddARIA": "संग्रह में जोड़ें",
-      "AltRemoveARIA": "संग्रह से हटाएं"
-    },
     "CopyableInput": {
       "CopiedARIA": "क्लिपबोर्ड पर कॉपी किया!",
       "OpenViewTabARIA": "{{label}} व्यू नए टैब में खोलें"
@@ -602,14 +597,6 @@
     "PreferenceCreators": {
       "On": "ऑन",
       "Off": "औफ"
-    },
-    "MobileIDEView":{
-      "Preferences": "प्राथमिकता",
-      "MyStuff": "मेरे वस्तु",
-      "Examples": "उदाहरण",
-      "OriginalEditor": "ओरिजिनल एडिटर",
-      "Login": "लॉग इन",
-      "Logout": "लॉग आउट"
     },
     "MobileDashboardView": {
       "Examples": "उदाहरण",

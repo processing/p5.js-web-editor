@@ -358,7 +358,8 @@
       "Description": "ユーザー登録",
       "Or": "もしくは",
       "AlreadyHave": "既にアカウントをお持ちですか？",
-      "Login": "ログイン"
+      "Login": "ログイン",
+      "Warning": "アカウント作成をすると、p5.js エディターの <0>利用規約</0> と <1>プライバシー ポリシー</1> に同意したことになります。"
     },
     "EmailVerificationView": {
       "Title": "p5.js ウェブエディター | メールアドレス認証",
@@ -551,10 +552,6 @@
       "35Seconds": "35秒前",
       "Ago": "{{timeAgo}}前"
     },
-    "AddRemoveButton": {
-      "AltAddARIA": "コレクションへ追加",
-      "AltRemoveARIA": "コレクションから削除"
-    },
     "CopyableInput": {
       "CopiedARIA": "クリップボードへコピーしました！",
       "OpenViewTabARIA": "新しいタブで {{label}} ビューを開く"
@@ -588,14 +585,6 @@
     "PreferenceCreators": {
       "On": "オン",
       "Off": "オフ"
-    },
-    "MobileIDEView":{
-      "Preferences": "設定",
-      "MyStuff": "マイスタッフ",
-      "Examples": "サンプル",
-      "OriginalEditor": "オリジナルエディター",
-      "Login": "ログイン",
-      "Logout": "ログアウト"
     },
     "MobileDashboardView": {
       "Examples": "サンプル",
