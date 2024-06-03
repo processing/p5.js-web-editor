@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet';
 import SplitPane from 'react-split-pane';
-import MediaQuery from 'react-responsive';
 import IDEKeyHandlers from '../components/IDEKeyHandlers';
 import Sidebar from '../components/Sidebar';
 import PreviewFrame from '../components/PreviewFrame';
@@ -27,6 +26,7 @@ import {
   PreviewWrapper
 } from '../components/Editor/MobileEditor';
 import IDEOverlays from '../components/IDEOverlays';
+import useIsMobile from '../hooks/useIsMobile';
 
 function getTitle(project) {
   const { id } = project;
@@ -48,6 +48,26 @@ function WarnIfUnsavedChanges() {
 
   const currentLocation = useLocation();
 
+  // beforeunload handles closing or refreshing the window.
+  useEffect(() => {
+    const handleUnload = (e) => {
+      // See: https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeunload_event#browser_compatibility
+      e.preventDefault();
+      e.returnValue = t('Nav.WarningUnsavedChanges');
+    };
+
+    if (hasUnsavedChanges) {
+      window.addEventListener('beforeunload', handleUnload);
+    } else {
+      window.removeEventListener('beforeunload', handleUnload);
+    }
+
+    return () => {
+      window.removeEventListener('beforeunload', handleUnload);
+    };
+  }, [t, hasUnsavedChanges]);
+
+  // Prompt handles internal navigation between pages.
   return (
     <Prompt
       when={hasUnsavedChanges}
@@ -56,7 +76,8 @@ function WarnIfUnsavedChanges() {
           isAuth(nextLocation.pathname) ||
           isAuth(currentLocation.pathname) ||
           isOverlay(nextLocation.pathname) ||
-          isOverlay(currentLocation.pathname)
+          isOverlay(currentLocation.pathname) ||
+          nextLocation.state?.confirmed
         ) {
           return true; // allow navigation
         }
@@ -69,6 +90,7 @@ function WarnIfUnsavedChanges() {
 export const CmControllerContext = React.createContext({});
 
 const IDEView = () => {
+  const isMobile = useIsMobile();
   const ide = useSelector((state) => state.ide);
   const preferences = useSelector((state) => state.preferences);
   const project = useSelector((state) => state.project);
@@ -81,6 +103,7 @@ const IDEView = () => {
   const [consoleSize, setConsoleSize] = useState(150);
   const [sidebarSize, setSidebarSize] = useState(160);
   const [isOverlayVisible, setIsOverlayVisible] = useState(false);
+  const [MaxSize, setMaxSize] = useState(window.innerWidth);
 
   const cmRef = useRef({});
 
@@ -125,6 +148,22 @@ const IDEView = () => {
       }
     };
   }, [shouldAutosave, dispatch]);
+  useEffect(() => {
+    const updateInnerWidth = (e) => {
+      setMaxSize(e.target.innerWidth);
+    };
+
+    window.addEventListener('resize', updateInnerWidth);
+
+    return () => {
+      window.removeEventListener('resize', updateInnerWidth);
+    };
+  }, [setMaxSize]);
+
+  const consoleCollapsedSize = 29;
+  const currentConsoleSize = ide.consoleIsExpanded
+    ? consoleSize
+    : consoleCollapsedSize;
 
   return (
     <RootPage>
@@ -137,104 +176,111 @@ const IDEView = () => {
       <CmControllerContext.Provider value={cmRef}>
         <Header syncFileContent={syncFileContent} />
       </CmControllerContext.Provider>
-      <MediaQuery minWidth={770}>
-        {(matches) =>
-          matches ? (
-            <main className="editor-preview-container">
+      {isMobile ? (
+        <>
+          <FloatingActionButton
+            syncFileContent={syncFileContent}
+            offsetBottom={ide.isPlaying ? currentConsoleSize : 0}
+          />
+          <PreviewWrapper show={ide.isPlaying}>
+            <SplitPane
+              style={{ position: 'static' }}
+              split="horizontal"
+              primary="second"
+              size={currentConsoleSize}
+              minSize={consoleCollapsedSize}
+              onChange={(size) => {
+                setConsoleSize(size);
+                setIsOverlayVisible(true);
+              }}
+              onDragFinished={() => {
+                setIsOverlayVisible(false);
+              }}
+              allowResize={ide.consoleIsExpanded}
+              className="editor-preview-subpanel"
+            >
+              <PreviewFrame
+                fullView
+                hide={!ide.isPlaying}
+                cmController={cmRef.current}
+                isOverlayVisible={isOverlayVisible}
+              />
+              <Console />
+            </SplitPane>
+          </PreviewWrapper>
+          <EditorSidebarWrapper show={!ide.isPlaying}>
+            <Sidebar />
+            <Editor
+              provideController={(ctl) => {
+                cmRef.current = ctl;
+              }}
+            />
+          </EditorSidebarWrapper>
+        </>
+      ) : (
+        <main className="editor-preview-container">
+          <SplitPane
+            split="vertical"
+            size={ide.sidebarIsExpanded ? sidebarSize : 20}
+            onChange={(size) => {
+              setSidebarSize(size);
+            }}
+            allowResize={ide.sidebarIsExpanded}
+            minSize={150}
+          >
+            <Sidebar />
+            <SplitPane
+              split="vertical"
+              maxSize={MaxSize * 0.965}
+              defaultSize="50%"
+              onChange={() => {
+                setIsOverlayVisible(true);
+              }}
+              onDragFinished={() => {
+                setIsOverlayVisible(false);
+              }}
+              resizerStyle={{
+                borderLeftWidth: '2px',
+                borderRightWidth: '2px',
+                width: '2px',
+                margin: '0px 0px'
+              }}
+            >
               <SplitPane
-                split="vertical"
-                size={ide.sidebarIsExpanded ? sidebarSize : 20}
+                split="horizontal"
+                primary="second"
+                size={currentConsoleSize}
+                minSize={consoleCollapsedSize}
                 onChange={(size) => {
-                  setSidebarSize(size);
+                  setConsoleSize(size);
                 }}
-                allowResize={ide.sidebarIsExpanded}
-                minSize={125}
+                allowResize={ide.consoleIsExpanded}
+                className="editor-preview-subpanel"
               >
-                <Sidebar />
-                <SplitPane
-                  split="vertical"
-                  defaultSize="50%"
-                  onChange={() => {
-                    setIsOverlayVisible(true);
-                  }}
-                  onDragFinished={() => {
-                    setIsOverlayVisible(false);
-                  }}
-                  resizerStyle={{
-                    borderLeftWidth: '2px',
-                    borderRightWidth: '2px',
-                    width: '2px',
-                    margin: '0px 0px'
-                  }}
-                >
-                  <SplitPane
-                    split="horizontal"
-                    primary="second"
-                    size={ide.consoleIsExpanded ? consoleSize : 29}
-                    minSize={29}
-                    onChange={(size) => setConsoleSize(size)}
-                    allowResize={ide.consoleIsExpanded}
-                    className="editor-preview-subpanel"
-                  >
-                    <Editor
-                      provideController={(ctl) => {
-                        cmRef.current = ctl;
-                      }}
-                    />
-                    <Console />
-                  </SplitPane>
-                  <section className="preview-frame-holder">
-                    <header className="preview-frame__header">
-                      <h2 className="preview-frame__title">
-                        {t('Toolbar.Preview')}
-                      </h2>
-                    </header>
-                    <div className="preview-frame__content">
-                      <div
-                        className="preview-frame-overlay"
-                        style={{ display: isOverlayVisible ? 'block' : 'none' }}
-                      />
-                      <div>
-                        {((preferences.textOutput || preferences.gridOutput) &&
-                          ide.isPlaying) ||
-                          ide.isAccessibleOutputPlaying}
-                      </div>
-                      <PreviewFrame cmController={cmRef.current} />
-                    </div>
-                  </section>
-                </SplitPane>
-              </SplitPane>
-            </main>
-          ) : (
-            <>
-              <FloatingActionButton syncFileContent={syncFileContent} />
-              <PreviewWrapper show={ide.isPlaying}>
-                <SplitPane
-                  style={{ position: 'static' }}
-                  split="horizontal"
-                  primary="second"
-                  minSize={200}
-                >
-                  <PreviewFrame
-                    fullView
-                    hide={!ide.isPlaying}
-                    cmController={cmRef.current}
-                  />
-                  <Console />
-                </SplitPane>
-              </PreviewWrapper>
-              <EditorSidebarWrapper show={!ide.isPlaying}>
-                <Sidebar />
                 <Editor
                   provideController={(ctl) => {
                     cmRef.current = ctl;
                   }}
                 />
-              </EditorSidebarWrapper>
-            </>
-          )
-        }
-      </MediaQuery>
+                <Console />
+              </SplitPane>
+              <section className="preview-frame-holder">
+                <header className="preview-frame__header">
+                  <h2 className="preview-frame__title">
+                    {t('Toolbar.Preview')}
+                  </h2>
+                </header>
+                <div className="preview-frame__content">
+                  <PreviewFrame
+                    cmController={cmRef.current}
+                    isOverlayVisible={isOverlayVisible}
+                  />
+                </div>
+              </section>
+            </SplitPane>
+          </SplitPane>
+        </main>
+      )}
       <IDEOverlays />
     </RootPage>
   );
