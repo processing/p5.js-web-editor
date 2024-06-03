@@ -555,10 +555,6 @@
     "35Seconds": "35 saniye önce",
     "Ago": "{{timeAgo}} önce"
   },
-  "AddRemoveButton": {
-    "AltAddARIA": "Koleksiyona ekle",
-    "AltRemoveARIA": "Koleksiyondan çıkar"
-  },
   "CopyableInput": {
     "CopiedARIA": "Panoya kopyalandı!",
     "OpenViewTabARIA": "Yeni sekmede {{label}} görünümünü aç"
@@ -592,14 +588,6 @@
   "PreferenceCreators": {
     "On": "Açık",
     "Off": "Kapalı"
-  },
-  "MobileIDEView": {
-    "Preferences": "Tercihler",
-    "MyStuff": "Benim Şeylerim",
-    "Examples": "Örnekler",
-    "OriginalEditor": "Orijinal Editör",
-    "Login": "Giriş Yap",
-    "Logout": "Çıkış Yap"
   },
   "MobileDashboardView": {
     "Examples": "Örnekler",

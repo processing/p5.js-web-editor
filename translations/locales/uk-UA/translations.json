@@ -553,10 +553,6 @@
     "35Seconds": "35 секунд тому",
     "Ago": "{{timeAgo}} тому"
   },
-  "AddRemoveButton": {
-    "AltAddARIA": "Додати в колекцію",
-    "AltRemoveARIA": "Видалити з колекції"
-  },
   "CopyableInput": {
     "CopiedARIA": "Скопійовано в буфер обміну!",
     "OpenViewTabARIA": "Переглянути {{label}} у новій вкладці"
@@ -590,14 +586,6 @@
   "PreferenceCreators": {
     "On": "Так",
     "Off": "Ні"
-  },
-  "MobileIDEView":{
-    "Preferences": "Налаштування",
-    "MyStuff": "Мої матеріали",
-    "Examples": "Приклади",
-    "OriginalEditor": "Редактор",
-    "Login": "Увійти",
-    "Logout": "Вийти"
   },
   "MobileDashboardView": {
     "Examples": "Приклади",
