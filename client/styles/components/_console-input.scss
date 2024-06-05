@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .console__input {
   width: 100%;
   display: flex;
@@ -24,17 +26,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-left: #{10 / $base-font-size}rem;
+  margin-left: #{math.div(10, $base-font-size)}rem;
 }
 
 .console__editor {
-  margin-left: #{15 / $base-font-size}rem;
+  margin-left: #{math.div(15, $base-font-size)}rem;
   flex: 1;
   & .CodeMirror {
     height: auto;
   }
   & .CodeMirror-lines {
-    padding-top: #{2 / $base-font-size}rem;
+    padding-top: #{math.div(2, $base-font-size)}rem;
   }
 }
 
