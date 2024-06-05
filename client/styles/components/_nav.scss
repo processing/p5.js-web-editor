@@ -1,5 +1,7 @@
+@use "sass:math";
+
 .nav {
-  height: #{42 / $base-font-size}rem;
+  height: #{math.div(42, $base-font-size)}rem;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -23,15 +25,6 @@
   align-items: center;
 }
 
-.nav__fundraiser-btn {
-  font-weight: bold;
-  font-size: #{14 / $base-font-size}rem;
-  @include themify() {
-    color: getThemifyVariable('fundraiser-button-nav-color');
-  }
-}
-
-
 .preview-nav__editor-svg {
   @include icon();
 }
@@ -53,12 +46,12 @@
   height: 100%;
 
   & button {
-    padding: #{12 / $base-font-size}rem #{10 / $base-font-size}rem;
+    padding: #{math.div(12, $base-font-size)}rem #{math.div(10, $base-font-size)}rem;
   }
 }
 
 .nav__item--no-icon {
-  padding-left: #{15 / $base-font-size}rem;
+  padding-left: #{math.div(15, $base-font-size)}rem;
 }
 
 .nav__item-header-triangle polygon,
@@ -101,7 +94,7 @@
 }
 
 .nav__item-header-triangle {
-	margin-left: #{5 / $base-font-size}rem;
+	margin-left: #{math.div(5, $base-font-size)}rem;
 }
 
 .nav__dropdown {
@@ -111,29 +104,31 @@
 }
 
 .nav__item-header-triangle {
-	margin-left: #{5 / $base-font-size}rem;
+	margin-left: #{math.div(5, $base-font-size)}rem;
 }
 
 .nav__dropdown {
   @extend %dropdown-open-left;
   display: none;
+  max-height: 60vh;
+  overflow-y: auto;
   .nav__item--open & {
     display: flex;
   }
 }
 
 .nav__items-right {
-  padding-right: #{20 / $base-font-size}rem;
+  padding-right: #{math.div(20, $base-font-size)}rem;
 
   & .nav__dropdown {
-    width: #{125 / $base-font-size}rem;
+    width: #{math.div(125, $base-font-size)}rem;
   }
 }
 
 .nav__item-spacer {
   @include themify() {
     color: map-get($theme-map, 'inactive-text-color');
-    margin-left: #{8 / $base-font-size}rem;
+    margin-left: #{math.div(8, $base-font-size)}rem;
   }
 }
 
@@ -144,7 +139,7 @@
 }
 
 .nav__auth-button {
-  padding: #{10 / $base-font-size}rem;
+  padding: #{math.div(10, $base-font-size)}rem;
 }
 
 // .nav__dropdown button {
@@ -164,8 +159,8 @@
 
 .nav__item-logo {
   position: relative;
-  height: #{42 / $base-font-size}rem;
-  width: #{56 / $base-font-size}rem;
+  height: #{math.div(42, $base-font-size)}rem;
+  width: #{math.div(56, $base-font-size)}rem;
 
   & span {
     position: absolute;
@@ -192,7 +187,7 @@
 
 
 .nav__keyboard-shortcut {
-  font-size: #{12 / $base-font-size}rem;
+  font-size: #{math.div(12, $base-font-size)}rem;
   font-family: Inconsololata, monospace;
 
   @include themify() {
@@ -213,7 +208,7 @@
       fill: getThemifyVariable('inactive-text-color');
     }
   }
-  margin-right: #{5 / $base-font-size}rem;
+  margin-right: #{math.div(5, $base-font-size)}rem;
 }
 
 .nav__back-link {

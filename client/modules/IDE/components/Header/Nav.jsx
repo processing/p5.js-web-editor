@@ -4,7 +4,6 @@ import { sortBy } from 'lodash';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import MediaQuery from 'react-responsive';
 import NavDropdownMenu from '../../../../components/Nav/NavDropdownMenu';
 import NavMenuItem from '../../../../components/Nav/NavMenuItem';
 import { availableLanguages, languageKeyToLabel } from '../../../../i18n';
@@ -24,29 +23,26 @@ import {
   newFile,
   newFolder,
   showKeyboardShortcutModal,
-  showFundraiserModal,
   startSketch,
   stopSketch
 } from '../../actions/ide';
 import { logoutUser } from '../../../User/actions';
 import { CmControllerContext } from '../../pages/IDEView';
 import MobileNav from './MobileNav';
+import useIsMobile from '../../hooks/useIsMobile';
 
-const Nav = ({ layout }) => (
-  <MediaQuery minWidth={770}>
-    {(matches) =>
-      matches ? (
-        <NavBar>
-          <LeftLayout layout={layout} />
-          <FundraiserSection />
-          <UserMenu />
-        </NavBar>
-      ) : (
-        <MobileNav />
-      )
-    }
-  </MediaQuery>
-);
+const Nav = ({ layout }) => {
+  const isMobile = useIsMobile();
+
+  return isMobile ? (
+    <MobileNav />
+  ) : (
+    <NavBar>
+      <LeftLayout layout={layout} />
+      <UserMenu />
+    </NavBar>
+  );
+};
 
 Nav.propTypes = {
   layout: PropTypes.oneOf(['dashboard', 'project'])
@@ -87,24 +83,6 @@ const UserMenu = () => {
   return null;
 };
 
-const FundraiserSection = () => {
-  const { t } = useTranslation();
-  const dispatch = useDispatch();
-
-  return (
-    <>
-      <button
-        className="nav__fundraiser-btn"
-        onClick={() => dispatch(showFundraiserModal())}
-        aria-label="2023-fundraiser-button"
-        title="2023 Fundraiser Button"
-      >
-        {t('Nav.Fundraiser')}
-      </button>
-    </>
-  );
-};
-
 const DashboardMenu = () => {
   const { t } = useTranslation();
   const editorLink = useSelector(selectSketchPath);
@@ -136,7 +114,7 @@ const ProjectMenu = () => {
   const isUserOwner = useSelector(getIsUserOwner);
   const project = useSelector((state) => state.project);
   const user = useSelector((state) => state.user);
-
+  const userSketches = `/${user.username}/sketches`;
   const isUnsaved = !project?.id;
 
   const rootFile = useSelector(selectRootFile);
@@ -159,12 +137,25 @@ const ProjectMenu = () => {
   return (
     <ul className="nav__items-left">
       <li className="nav__item-logo">
-        <LogoIcon
-          role="img"
-          aria-label={t('Common.p5logoARIA')}
-          focusable="false"
-          className="svg__logo"
-        />
+        {user && user.username !== undefined ? (
+          <Link to={userSketches}>
+            <LogoIcon
+              role="img"
+              aria-label={t('Common.p5logoARIA')}
+              focusable="false"
+              className="svg__logo"
+            />
+          </Link>
+        ) : (
+          <a href="https://p5js.org">
+            <LogoIcon
+              role="img"
+              aria-label={t('Common.p5logoARIA')}
+              focusable="false"
+              className="svg__logo"
+            />
+          </a>
+        )}
       </li>
       <NavDropdownMenu id="file" title={t('Nav.File.Title')}>
         <NavMenuItem onClick={newSketch}>{t('Nav.File.New')}</NavMenuItem>
@@ -292,7 +283,7 @@ const UnauthenticatedUserMenu = () => {
           </span>
         </Link>
       </li>
-      <span className="nav__item-or">{t('Nav.LoginOr')}</span>
+      <li className="nav__item-or">{t('Nav.LoginOr')}</li>
       <li className="nav__item">
         <Link to="/signup" className="nav__auth-button">
           <span className="nav__item-header" title="SignUp">

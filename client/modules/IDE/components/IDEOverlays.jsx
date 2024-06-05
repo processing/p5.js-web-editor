@@ -5,7 +5,6 @@ import { useLocation, useParams } from 'react-router-dom';
 import Overlay from '../../App/components/Overlay';
 import {
   closeKeyboardShortcutModal,
-  closeFundraiserModal,
   closePreferences,
   closeShareModal,
   hideErrorModal
@@ -15,7 +14,6 @@ import AddToCollectionList from './AddToCollectionList';
 import ErrorModal from './ErrorModal';
 import Feedback from './Feedback';
 import KeyboardShortcutModal from './KeyboardShortcutModal';
-import FundraiserModal from './FundraiserModal';
 import NewFileModal from './NewFileModal';
 import NewFolderModal from './NewFolderModal';
 import Preferences from './Preferences';
@@ -35,11 +33,7 @@ export default function IDEOverlays() {
     uploadFileModalVisible,
     preferencesIsVisible,
     keyboardShortcutVisible,
-    fundraiserContentVisible,
     shareModalVisible,
-    shareModalProjectId,
-    shareModalProjectName,
-    shareModalProjectUsername,
     errorType,
     previousPath
   } = useSelector((state) => state.ide);
@@ -81,10 +75,7 @@ export default function IDEOverlays() {
           actions={<CollectionSearchbar />}
           isFixedHeight
         >
-          <AddToCollectionList
-            projectId={params.project_id}
-            username={params.username}
-          />
+          <AddToCollectionList projectId={params.project_id} />
         </Overlay>
       )}
       {shareModalVisible && (
@@ -93,11 +84,7 @@ export default function IDEOverlays() {
           ariaLabel={t('IDEView.ShareARIA')}
           closeOverlay={() => dispatch(closeShareModal())}
         >
-          <ShareModal
-            projectId={shareModalProjectId}
-            projectName={shareModalProjectName}
-            ownerUsername={shareModalProjectUsername}
-          />
+          <ShareModal />
         </Overlay>
       )}
       {keyboardShortcutVisible && (
@@ -107,15 +94,6 @@ export default function IDEOverlays() {
           closeOverlay={() => dispatch(closeKeyboardShortcutModal())}
         >
           <KeyboardShortcutModal />
-        </Overlay>
-      )}
-      {fundraiserContentVisible && (
-        <Overlay
-          title={t('Fundraiser.Title')}
-          ariaLabel={t('Fundraiser.Title')}
-          closeOverlay={() => dispatch(closeFundraiserModal())}
-        >
-          <FundraiserModal />
         </Overlay>
       )}
       {errorType && (

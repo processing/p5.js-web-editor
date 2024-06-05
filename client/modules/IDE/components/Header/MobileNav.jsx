@@ -23,8 +23,7 @@ import {
   newFile,
   newFolder,
   openPreferences,
-  showKeyboardShortcutModal,
-  showFundraiserModal
+  showKeyboardShortcutModal
 } from '../../actions/ide';
 import { logoutUser } from '../../../User/actions';
 import { useSketchActions, useWhatPage } from '../../hooks';
@@ -239,7 +238,9 @@ const MobileNav = () => {
       <Title>
         <h1>{title === project.name ? <ProjectName /> : title}</h1>
         {project?.owner && title === project.name && (
-          <h5>by {project?.owner?.username}</h5>
+          <Link to={`/${project.owner.username}/sketches`}>
+            by {project?.owner?.username}
+          </Link>
         )}
       </Title>
       {/* check if the user is in login page */}
@@ -438,9 +439,6 @@ const MoreMenu = () => {
             {t('Nav.Help.Reference')}
           </NavMenuItem>
           <NavMenuItem href="/about">{t('Nav.Help.About')}</NavMenuItem>
-          <NavMenuItem onClick={() => dispatch(showFundraiserModal())}>
-            {t('Nav.Fundraiser')}
-          </NavMenuItem>
         </ParentMenuContext.Provider>
       </ul>
     </div>
