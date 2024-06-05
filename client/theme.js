@@ -106,7 +106,7 @@ const baseThemes = {
           border: colors.p5jsPink
         },
         hover: {
-          foreground: colors.p5jsPink,
+          foreground: grays.lightest,
           background: colors.p5jsActivePink,
           border: colors.p5jsPink
         },
