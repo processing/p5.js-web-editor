@@ -551,10 +551,6 @@
     "35Seconds": "för 35 sekunder sen",
     "Ago": "{{timeAgo}} sen"
   },
-  "AddRemoveButton": {
-    "AltAddARIA": "Lägg till i samling",
-    "AltRemoveARIA": "Ta bort från samling"
-  },
   "CopyableInput": {
     "CopiedARIA": "Kopierat till urklipp!",
     "OpenViewTabARIA": "Öppna {{label}}-vy i ny flik"
@@ -588,14 +584,6 @@
   "PreferenceCreators": {
     "On": "På",
     "Off": "Av"
-  },
-  "MobileIDEView":{
-    "Preferences": "Preferenser",
-    "MyStuff": "Mina saker",
-    "Examples": "Exempel",
-    "OriginalEditor": "Originaleditor",
-    "Login": "Logga in",
-    "Logout": "Logga ut"
   },
   "MobileDashboardView": {
     "Examples": "Exempel",

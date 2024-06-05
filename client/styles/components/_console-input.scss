@@ -12,12 +12,13 @@
 .console__input .console-active__arrow {
   width: auto;
   height: 38%;
-  & path {
-    @include themify() {
-      fill: getThemifyVariable('console-active-arrow-color');
-      opacity: 1; 
-    }
-  }
+  @include themify() {
+		& g,
+		& polygon,
+		& path {
+			fill: getThemifyVariable('secondary-text-color');
+		}
+	}
 }
 
 .console-active__arrow-container {

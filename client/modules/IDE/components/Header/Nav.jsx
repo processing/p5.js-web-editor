@@ -114,7 +114,7 @@ const ProjectMenu = () => {
   const isUserOwner = useSelector(getIsUserOwner);
   const project = useSelector((state) => state.project);
   const user = useSelector((state) => state.user);
-
+  const userSketches = `${user.username}/sketches`;
   const isUnsaved = !project?.id;
 
   const rootFile = useSelector(selectRootFile);
@@ -137,12 +137,25 @@ const ProjectMenu = () => {
   return (
     <ul className="nav__items-left">
       <li className="nav__item-logo">
-        <LogoIcon
-          role="img"
-          aria-label={t('Common.p5logoARIA')}
-          focusable="false"
-          className="svg__logo"
-        />
+        {user && user.username !== undefined ? (
+          <Link to={userSketches}>
+            <LogoIcon
+              role="img"
+              aria-label={t('Common.p5logoARIA')}
+              focusable="false"
+              className="svg__logo"
+            />
+          </Link>
+        ) : (
+          <a href="https://p5js.org">
+            <LogoIcon
+              role="img"
+              aria-label={t('Common.p5logoARIA')}
+              focusable="false"
+              className="svg__logo"
+            />
+          </a>
+        )}
       </li>
       <NavDropdownMenu id="file" title={t('Nav.File.Title')}>
         <NavMenuItem onClick={newSketch}>{t('Nav.File.New')}</NavMenuItem>

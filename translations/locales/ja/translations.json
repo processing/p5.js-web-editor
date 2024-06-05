@@ -552,10 +552,6 @@
       "35Seconds": "35秒前",
       "Ago": "{{timeAgo}}前"
     },
-    "AddRemoveButton": {
-      "AltAddARIA": "コレクションへ追加",
-      "AltRemoveARIA": "コレクションから削除"
-    },
     "CopyableInput": {
       "CopiedARIA": "クリップボードへコピーしました！",
       "OpenViewTabARIA": "新しいタブで {{label}} ビューを開く"
@@ -589,14 +585,6 @@
     "PreferenceCreators": {
       "On": "オン",
       "Off": "オフ"
-    },
-    "MobileIDEView":{
-      "Preferences": "設定",
-      "MyStuff": "マイスタッフ",
-      "Examples": "サンプル",
-      "OriginalEditor": "オリジナルエディター",
-      "Login": "ログイン",
-      "Logout": "ログアウト"
     },
     "MobileDashboardView": {
       "Examples": "サンプル",

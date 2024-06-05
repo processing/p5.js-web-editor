@@ -2,7 +2,6 @@
 // multiple files
 export const UPDATE_FILE_CONTENT = 'UPDATE_FILE_CONTENT';
 export const TOGGLE_SKETCH = 'TOGGLE_SKETCH';
-
 export const START_SKETCH = 'START_SKETCH';
 export const STOP_SKETCH = 'STOP_SKETCH';
 
