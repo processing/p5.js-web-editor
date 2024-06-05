@@ -1,7 +1,9 @@
+@use "sass:math";
+
 .preview-nav__editor-svg {
   & svg {
-    width: #{22 / $base-font-size}rem;
-    height: #{22 / $base-font-size}rem;
+    width: #{math.div(22, $base-font-size)}rem;
+    height: #{math.div(22, $base-font-size)}rem;
     @include themify() {
         fill: getThemifyVariable('button-nav-inactive-color');
     }
@@ -15,6 +17,6 @@
 
 .preview-nav {
   .nav__item {
-    margin-left: #{5 / $base-font-size}rem;
+    margin-left: #{math.div(5, $base-font-size)}rem;
   }
 }

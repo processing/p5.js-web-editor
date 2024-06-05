@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .asset-table-container {
   overflow-y: auto;
   max-width: 100%;
@@ -11,13 +13,13 @@
   border-spacing: 0;
   position: relative;
   & .asset-table__dropdown-column {
-    width: #{60 / $base-font-size}rem;
+    width: #{math.div(60, $base-font-size)}rem;
     position: relative;
   }
 }
 
 .asset-table thead th {
-  height: #{32 / $base-font-size}rem;
+  height: #{math.div(32, $base-font-size)}rem;
   position: sticky;
   top: 0;
   @include themify() {
@@ -26,13 +28,13 @@
 }
 
 .asset-table thead th:nth-child(1){
-  padding-left: #{12 / $base-font-size}rem;
+  padding-left: #{math.div(12, $base-font-size)}rem;
 }
 
 .asset-table__row {
-  margin: #{10 / $base-font-size}rem;
-  height: #{72 / $base-font-size}rem;
-  font-size: #{16 / $base-font-size}rem;
+  margin: #{math.div(10, $base-font-size)}rem;
+  height: #{math.div(72, $base-font-size)}rem;
+  font-size: #{math.div(16, $base-font-size)}rem;
 }
 
 .asset-table__row:nth-child(odd) {
@@ -42,7 +44,7 @@
 }
 
 .asset-table__row > th:nth-child(1) {
-  padding-left: #{12 / $base-font-size}rem;
+  padding-left: #{math.div(12, $base-font-size)}rem;
 }
 
 .asset-table__row a {
@@ -52,7 +54,7 @@
 }
 
 .asset-table thead {
-  font-size: #{12 / $base-font-size}rem;
+  font-size: #{math.div(12, $base-font-size)}rem;
   @include themify() {
     color: getThemifyVariable('inactive-text-color')
   }
@@ -64,36 +66,15 @@
 
 .asset-table__empty {
   text-align: center;
-  font-size: #{16 / $base-font-size}rem;
-  padding: #{42 / $base-font-size}rem 0;
+  font-size: #{math.div(16, $base-font-size)}rem;
+  padding: #{math.div(42, $base-font-size)}rem 0;
 }
 
 .asset-table__total {
-  padding: 0 #{20 / $base-font-size}rem;
+  padding: 0 #{math.div(20, $base-font-size)}rem;
   position: sticky;
   top: 0; 
   @include themify() {
     background-color: getThemifyVariable('background-color');
   }
-}
-
-.asset-table__dropdown-button {
-  width:#{25 / $base-font-size}rem;
-  height:#{25 / $base-font-size}rem;
-
-  @include themify() {
-    & polygon, & path {
-      fill: getThemifyVariable('inactive-text-color');
-    }
-  }
-}
-
-.asset-table__action-dialogue {
-  @extend %dropdown-open-right;
-  top: 63%;
-  right: calc(100% - 26px);
-}
-
-.asset-table__action-option {
-  font-size: #{12 / $base-font-size}rem;
 }
