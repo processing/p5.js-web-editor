@@ -88,15 +88,23 @@
     },
     "About": {
       "Title": "ウェブエディタについて",
-      "TitleHelmet": "p5.js Web Editor | ウェブエディタについて",
+      "TitleHelmet": "p5.js ウェブエディター | ウェブエディタについて",
       "Contribute": "コントリビュート",
       "NewP5": "p5.jsは初めてですか?",
       "Report": "バグレポート",
       "Learn": "p5.jsを学ぶ",
+      "Twitter": "Twitter",
+      "Home": "ホーム",
+      "Instagram": "Instagram",
+      "Discord": "Discord",
+      "WebEditor": "ウェブエディタ",
       "Resources": "参考資料",
       "Libraries": "ライブラリ",
       "Forum": "フォーラム",
-      "Examples": "サンプルを開く"
+      "Examples": "サンプルを開く",
+      "PrivacyPolicy": "プライバシーポリシー",
+      "TermsOfUse": "利用規約",
+      "CodeOfConduct": "行動規範"
     },
     "Toast": {
       "OpenedNewSketch": "新しいスケッチを開きました",
@@ -216,6 +224,7 @@
       "Delete": "削除"
     },
     "Common": {
+      "SiteName": "p5.js Web Editor",
       "Error": "エラー",
       "ErrorARIA": "エラー",
       "Save": "保存",
@@ -234,7 +243,7 @@
       "Title": "ファイル作成",
       "CloseButtonARIA": "新規ファイルモーダルを閉じる",
       "EnterName": "ファイル名を入力してください",
-      "InvalidType": "ファイルタイプが無効です。有効な拡張子は、.js、.css、.json、.xml、.stl、.txt、.csv、.tsv、.frag、.vertです。"
+      "InvalidType": "ファイルタイプが無効です。有効な拡張子は、.js、.css、.json、.xml、.stl、.txt、.csv、.tsv、.mtl、.frag、.vertです。"
     },
     "NewFileForm": {
       "AddFileSubmit": "ファイルを追加",
@@ -257,7 +266,7 @@
       "Submit": "パスワードリセットのメールを送信する"
     },
     "ResetPasswordView": {
-      "Title": "p5.js Web Editor | パスワードリセット",
+      "Title": "p5.js ウェブエディター | パスワードリセット",
       "Reset": "パスワードをリセットする",
       "Submitted": "パスワードリセットのメールを送信しました。もし、見当たらない場合は\n            迷惑メールフォルダに入っている可能性がありますので、確認してください。",
       "Login": "ログイン",
@@ -277,7 +286,7 @@
       "errorValidUsername": "ユーザー名は、英数字、ピリオド(.)、ダッシュ(-)、アンダースコア(_)のみで構成されている必要があります。"
     },
     "NewPasswordView": {
-      "Title": "p5.js Web Editor | 新しいパスワード",
+      "Title": "p5.js ウェブエディター | 新しいパスワード",
       "Description": "新しいパスワードの設定",
       "TokenInvalidOrExpired": "パスワードリセットトークンが無効か、有効期限が切れています。",
       "EmptyPassword": "パスワードを入力してください",
@@ -300,8 +309,8 @@
     },
     "AccountView": {
       "SocialLogin": "ソーシャルログイン",
-      "SocialLoginDescription": "GitHubやGoogleアカウントを使って、p5.js Web Editorにログインできます。",
-      "Title": "p5.js Web Editor | アカウント設定",
+      "SocialLoginDescription": "GitHubやGoogleアカウントを使って、p5.js ウェブエディターにログインできます。",
+      "Title": "p5.js ウェブエディター | アカウント設定",
       "Settings": "アカウント設定",
       "AccountTab": "アカウント",
       "AccessTokensTab": "アクセストークン"
@@ -345,14 +354,15 @@
       "SubmitSignup": "アカウント作成"
     },
     "SignupView": {
-      "Title": "p5.js Web Editor | ユーザー登録",
+      "Title": "p5.js ウェブエディター | ユーザー登録",
       "Description": "ユーザー登録",
       "Or": "もしくは",
       "AlreadyHave": "既にアカウントをお持ちですか？",
-      "Login": "ログイン"
+      "Login": "ログイン",
+      "Warning": "アカウント作成をすると、p5.js エディターの <0>利用規約</0> と <1>プライバシー ポリシー</1> に同意したことになります。"
     },
     "EmailVerificationView": {
-      "Title": "p5.js Web Editor | メールアドレス認証",
+      "Title": "p5.js ウェブエディター | メールアドレス認証",
       "Verify": "メールアドレスを確認してください",
       "InvalidTokenNull": "そのリンクは無効です。",
       "Checking": "トークンを検証中です、お待ちください...",
@@ -360,7 +370,7 @@
       "InvalidState": "何か問題が発生しました。"
     },
     "AssetList": {
-      "Title": "p5.js Web Editor | マイアセット",
+      "Title": "p5.js ウェブエディター | マイアセット",
       "ToggleOpenCloseARIA": "アセットオプションの開閉を切り替え",
       "Delete": "削除",
       "OpenNewTab": "新しいタブで開く",
@@ -370,7 +380,7 @@
       "HeaderSketch": "スケッチ"
     },
     "Feedback": {
-      "Title": "p5.js Web Editor | フィードバック",
+      "Title": "p5.js ウェブエディター | フィードバック",
       "ViaGithubHeader": "Github Issuesを利用",
       "ViaGithubDescription": "Githubに詳しい方は、バグレポートやフィードバックのために、こちらからお願いします。",
       "GoToGithub": "Githubへアクセスする",
@@ -400,7 +410,7 @@
       "LogIn": "ログイン",
       "SavedDifferentWindow": "保存しようとしたプロジェクトが別のウィンドウから保存されました。\n        最新版をご覧になるにはページを更新してください。",
       "LinkTitle": "アカウント接続エラー",
-      "LinkMessage": "あなたの {{serviceauth}} アカウントとp5.js Web Editorアカウントの接続に問題がありました。 あなたの {{serviceauth}} アカウントは、すでに別のp5.js Web Editorアカウントに接続されています。"
+      "LinkMessage": "あなたの {{serviceauth}} アカウントとp5.js ウェブエディターアカウントの接続に問題がありました。 あなたの {{serviceauth}} アカウントは、すでに別のp5.js ウェブエディターアカウントに接続されています。"
     },
     "ShareModal": {
       "Embed": "埋め込み",
@@ -413,8 +423,8 @@
       "TitleDefault": "コレクション"
     },
     "Collection": {
-      "Title": "p5.js Web Editor | マイコレクション",
-      "AnothersTitle": "p5.js Web Editor | {{anotheruser}} のコレクション",
+      "Title": "p5.js ウェブエディター | マイコレクション",
+      "AnothersTitle": "p5.js ウェブエディター | {{anotheruser}} のコレクション",
       "Share": "共有",
       "URLLink": "コレクションのリンク",
       "AddSketch": "スケッチを追加する",
@@ -437,12 +447,12 @@
       "ButtonLabelDescendingARIA": "降順に{{displayName}}で並び替えます。"
     },
     "AddToCollectionList": {
-      "Title": "p5.js Web Editor | マイコレクション",
-      "AnothersTitle": "p5.js Web Editor | {{anotheruser}}のコレクション",
+      "Title": "p5.js ウェブエディター | マイコレクション",
+      "AnothersTitle": "p5.js ウェブエディター | {{anotheruser}}のコレクション",
       "Empty": "コレクションは空です"
     },
     "CollectionCreate": {
-      "Title": "p5.js Web Editor | コレクション作成",
+      "Title": "p5.js ウェブエディター | コレクション作成",
       "FormError": "コレクションを作成することが出来ませんでした",
       "FormLabel": "コレクション名",
       "FormLabelARIA": "名前",
@@ -463,8 +473,8 @@
       "Assets": "アセット"
     },
     "CollectionList": {
-      "Title": "p5.js Web Editor | マイコレクション",
-      "AnothersTitle": "p5.js Web Editor | {{anotheruser}}のコレクション",
+      "Title": "p5.js ウェブエディター | マイコレクション",
+      "AnothersTitle": "p5.js ウェブエディター | {{anotheruser}}のコレクション",
       "NoCollections": "コレクションがありません。",
       "TableSummary": "全コレクションのテーブル",
       "HeaderName": "名前",
@@ -496,8 +506,8 @@
     },
     "SketchList": {
       "View": "表示",
-      "Title": "p5.js Web Editor | マイスケッチ",
-      "AnothersTitle": "p5.js Web Editor | {{anotheruser}} のスケッチ",
+      "Title": "p5.js ウェブエディター | マイスケッチ",
+      "AnothersTitle": "p5.js ウェブエディター | {{anotheruser}} のスケッチ",
       "ToggleLabelARIA": "開く/閉じるスケッチ オプションの切り替え",
       "DropdownRename": "名前変更",
       "DropdownDownload": "ダウンロード",
@@ -518,8 +528,8 @@
       "NoSketches": "スケッチがありません"
     },
     "AddToCollectionSketchList": {
-      "Title": "p5.js Web Editor | マイスケッチ",
-      "AnothersTitle": "p5.js Web Editor | {{anotheruser}} のスケッチ",
+      "Title": "p5.js ウェブエディター | マイスケッチ",
+      "AnothersTitle": "p5.js ウェブエディター | {{anotheruser}} のスケッチ",
       "NoCollections": "コレクションがありません。"
     },
     "Editor": {
@@ -529,8 +539,8 @@
       "KeyUpLineNumber": "{{lineNumber}} 行"
     },
     "EditorAccessibility": {
-      "NoLintMessages": "リントメッセージはありません ",
-      "CurrentLine": " 現在の行"
+      "NoLintMessages": "リントメッセージはありません",
+      "CurrentLine": "現在の行"
     },
     "Timer": {
       "SavedAgo": "保存されました: {{timeAgo}}"
@@ -541,10 +551,6 @@
       "25Seconds": "25秒前",
       "35Seconds": "35秒前",
       "Ago": "{{timeAgo}}前"
-    },
-    "AddRemoveButton": {
-      "AltAddARIA": "コレクションへ追加",
-      "AltRemoveARIA": "コレクションから削除"
     },
     "CopyableInput": {
       "CopiedARIA": "クリップボードへコピーしました！",
@@ -579,14 +585,6 @@
     "PreferenceCreators": {
       "On": "オン",
       "Off": "オフ"
-    },
-    "MobileIDEView":{
-      "Preferences": "設定",
-      "MyStuff": "マイスタッフ",
-      "Examples": "サンプル",
-      "OriginalEditor": "オリジナルエディター",
-      "Login": "ログイン",
-      "Logout": "ログアウト"
     },
     "MobileDashboardView": {
       "Examples": "サンプル",

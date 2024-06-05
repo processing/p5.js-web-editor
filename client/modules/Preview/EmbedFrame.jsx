@@ -1,3 +1,4 @@
+import blobUtil from 'blob-util';
 import PropTypes from 'prop-types';
 import React, { useRef, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
@@ -224,27 +225,23 @@ function injectLocalFiles(files, htmlFile, options) {
   resolveScripts(sketchDoc, resolvedFiles);
   resolveStyles(sketchDoc, resolvedFiles);
 
-  const accessiblelib = sketchDoc.createElement('script');
-  accessiblelib.setAttribute(
-    'src',
-    'https://cdn.jsdelivr.net/gh/processing/p5.accessibility@0.1.1/dist/p5-accessibility.js'
-  );
-  const accessibleOutputs = sketchDoc.createElement('section');
-  accessibleOutputs.setAttribute('id', 'accessible-outputs');
-  accessibleOutputs.setAttribute('aria-label', 'accessible-output');
   if (textOutput || gridOutput) {
-    sketchDoc.body.appendChild(accessibleOutputs);
-    sketchDoc.body.appendChild(accessiblelib);
+    const scriptElement = sketchDoc.createElement('script');
+    let textCode = '';
     if (textOutput) {
-      const textSection = sketchDoc.createElement('section');
-      textSection.setAttribute('id', 'textOutput-content');
-      sketchDoc.getElementById('accessible-outputs').appendChild(textSection);
+      textCode = 'if (!this._accessibleOutputs.text) this.textOutput();';
     }
+    let gridCode = '';
     if (gridOutput) {
-      const gridSection = sketchDoc.createElement('section');
-      gridSection.setAttribute('id', 'tableOutput-content');
-      sketchDoc.getElementById('accessible-outputs').appendChild(gridSection);
+      gridCode = 'if (!this._accessibleOutputs.grid) this.gridOutput();';
     }
+    const fxn = `p5.prototype.ensureAccessibleCanvas = function _ensureAccessibleCanvas() {
+  ${textCode}
+  ${gridCode}
+};
+p5.prototype.registerMethod('afterSetup', p5.prototype.ensureAccessibleCanvas);`;
+    scriptElement.innerHTML = fxn;
+    sketchDoc.head.appendChild(scriptElement);
   }
 
   const previewScripts = sketchDoc.createElement('script');
@@ -252,7 +249,7 @@ function injectLocalFiles(files, htmlFile, options) {
     'PREVIEW_SCRIPTS_URL'
   )}`;
   previewScripts.setAttribute('crossorigin', '');
-  sketchDoc.body.appendChild(previewScripts);
+  sketchDoc.head.appendChild(previewScripts);
 
   const sketchDocString = `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
   scriptOffs = getAllScriptOffsets(sketchDocString);
@@ -276,6 +273,7 @@ function getHtmlFile(files) {
 function EmbedFrame({ files, isPlaying, basePath, gridOutput, textOutput }) {
   const iframe = useRef();
   const htmlFile = useMemo(() => getHtmlFile(files), [files]);
+  const srcRef = useRef();
 
   useEffect(() => {
     const unsubscribe = registerFrame(
@@ -300,9 +298,14 @@ function EmbedFrame({ files, isPlaying, basePath, gridOutput, textOutput }) {
         content: htmlDoc
       };
       const htmlUrl = createBlobUrl(generatedHtmlFile);
+      const toRevoke = srcRef.current;
+      srcRef.current = htmlUrl;
       // BRO FOR SOME REASON YOU HAVE TO DO THIS TO GET IT TO WORK ON SAFARI
       setTimeout(() => {
         doc.src = htmlUrl;
+        if (toRevoke) {
+          blobUtil.revokeObjectURL(toRevoke);
+        }
       }, 0);
     } else {
       doc.src = '';

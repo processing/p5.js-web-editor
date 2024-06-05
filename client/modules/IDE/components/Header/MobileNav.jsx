@@ -11,7 +11,7 @@ import { useMenuProps } from '../../../../components/Nav/NavDropdownMenu';
 import NavMenuItem from '../../../../components/Nav/NavMenuItem';
 import { prop, remSize } from '../../../../theme';
 import AsteriskIcon from '../../../../images/p5-asterisk.svg';
-import IconButton from '../../../../components/mobile/IconButton';
+import IconButton from '../../../../common/IconButton';
 import {
   AccountIcon,
   AddIcon,
@@ -93,6 +93,9 @@ export const Options = styled.div`
   ul.opened {
     transform: scale(1);
     opacity: 1;
+    max-width: 90vw;
+    max-height: 90vh;
+    overflow-y: auto;
   }
 
   > div {
@@ -235,7 +238,9 @@ const MobileNav = () => {
       <Title>
         <h1>{title === project.name ? <ProjectName /> : title}</h1>
         {project?.owner && title === project.name && (
-          <h5>by {project?.owner?.username}</h5>
+          <Link to={`/${project.owner.username}/sketches`}>
+            by {project?.owner?.username}
+          </Link>
         )}
       </Title>
       {/* check if the user is in login page */}

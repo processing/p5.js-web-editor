@@ -28,9 +28,17 @@ function EditableInput({
   const { t } = useTranslation();
   React.useEffect(() => {
     if (isEditing) {
-      inputRef.current?.focus();
+      const inputElement = inputRef.current;
+      inputElement.setSelectionRange(
+        inputElement.value.length,
+        inputElement.value.length
+      );
+      inputElement.focus();
     }
   }, [isEditing]);
+  React.useEffect(() => {
+    setCurrentValue(value);
+  }, [value]);
 
   function beginEditing() {
     setIsEditing(true);

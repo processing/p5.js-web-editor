@@ -94,10 +94,18 @@
       "NewP5": "Nouveau à p5.js?",
       "Report": "Signaler un bogue",
       "Learn": "Apprendre",
+      "Twitter": "Twitter",
+      "Home": "Accueil",
+      "Instagram": "Instagram",
+      "Discord": "Discord",
+      "WebEditor": "Éditeur web",
       "Resources": "Ressources",
       "Libraries": "Librairies",
       "Forum": "Forum",
-      "Examples": "Exemples"
+      "Examples": "Exemples",
+      "PrivacyPolicy": "Politique de confidentialité",
+      "TermsOfUse": "Conditions d'utilisation",
+      "CodeOfConduct": "Code de conduite"
     },
     "Toast": {
       "OpenedNewSketch": "Ouvrir un nouveau croquis.",
@@ -219,6 +227,7 @@
       "Delete": "Supprimer"
     },
     "Common": {
+      "SiteName": "Éditeur web p5.js",
       "Error": "Erreur",
       "ErrorARIA": "Erreur",
       "Save": "Sauvegarder",
@@ -532,8 +541,8 @@
       "KeyUpLineNumber": "ligne {{lineNumber}}"
     },
     "EditorAccessibility": {
-      "NoLintMessages": "Il n'y a pas de messages lint ",
-      "CurrentLine": " Ligne actuelle"
+      "NoLintMessages": "Il n'y a pas de messages lint",
+      "CurrentLine": "Ligne actuelle"
     },
     "Timer": {
       "SavedAgo": "Sauvegardé: {{timeAgo}}"
@@ -544,10 +553,6 @@
       "25Seconds": "Il y a 25 secondes",
       "35Seconds": "Il y a 35 secondes",
       "Ago": "Il y a {{timeAgo}}"
-    },
-    "AddRemoveButton": {
-      "AltAddARIA": "Ajouter à la collection",
-      "AltRemoveARIA": "Supprimer de la collection"
     },
     "CopyableInput": {
       "CopiedARIA": "Copié dans le presse-papiers!",
@@ -582,14 +587,6 @@
     "PreferenceCreators": {
       "On": "Activé",
       "Off": "Désactivé"
-    },
-    "MobileIDEView":{
-      "Preferences": "Préférences",
-      "MyStuff": "Mes trucs",
-      "Examples": "Exemples",
-      "OriginalEditor": "Éditeur original",
-      "Login": "Se connecter",
-      "Logout": "Se déconnecter"
     },
     "MobileDashboardView": {
       "Examples": "Exemples",

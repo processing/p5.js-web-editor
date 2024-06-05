@@ -1,4 +1,4 @@
-import mapKeys from 'lodash/mapKeys';
+import { mapKeys } from 'lodash';
 import PropTypes from 'prop-types';
 import { useCallback, useEffect, useRef } from 'react';
 
@@ -33,7 +33,11 @@ export default function useKeyDownHandlers(keyHandlers) {
     const isMac = navigator.userAgent.toLowerCase().indexOf('mac') !== -1;
     const isCtrl = isMac ? e.metaKey : e.ctrlKey;
     if (e.shiftKey && isCtrl) {
-      handlers.current[`ctrl-shift-${e.key.toLowerCase()}`]?.(e);
+      handlers.current[
+        `ctrl-shift-${
+          /^\d+$/.test(e.code.at(-1)) ? e.code.at(-1) : e.key.toLowerCase()
+        }`
+      ]?.(e);
     } else if (isCtrl) {
       handlers.current[`ctrl-${e.key.toLowerCase()}`]?.(e);
     }

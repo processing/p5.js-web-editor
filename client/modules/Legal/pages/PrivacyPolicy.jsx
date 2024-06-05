@@ -1,22 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import Helmet from 'react-helmet';
-import axios from 'axios';
-import PolicyContainer from '../components/PolicyContainer';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import Legal from './Legal';
 
 function PrivacyPolicy() {
-  const [privacyPolicy, setPrivacyPolicy] = useState('');
-  useEffect(() => {
-    axios.get('privacy-policy.md').then((response) => {
-      setPrivacyPolicy(response.data);
-    });
-  }, []);
+  const { t } = useTranslation();
+
   return (
-    <>
-      <Helmet>
-        <title>p5.js Web Editor | Privacy Policy</title>
-      </Helmet>
-      <PolicyContainer policy={privacyPolicy} />
-    </>
+    <Legal policyFile="privacy-policy.md" title={t('Legal.PrivacyPolicy')} />
   );
 }
 
