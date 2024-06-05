@@ -114,7 +114,7 @@ const ProjectMenu = () => {
   const isUserOwner = useSelector(getIsUserOwner);
   const project = useSelector((state) => state.project);
   const user = useSelector((state) => state.user);
-  const userSketches = `${user.username}/sketches`;
+  const userSketches = `/${user.username}/sketches`;
   const isUnsaved = !project?.id;
 
   const rootFile = useSelector(selectRootFile);
