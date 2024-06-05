@@ -93,10 +93,18 @@
     "NewP5": "Novo ao p5.js?",
     "Report": "Reportar um Erro",
     "Learn": "Aprender",
+    "Twitter": "Twitter",
+    "Home": "Página Inicial",
+    "Instagram": "Instagram",
+    "Discord": "Discord",
+    "WebEditor": "Editor Web",
     "Resources": "Recursos",
     "Libraries": "Bibliotecas",
     "Forum": "Fórum",
-    "Examples": "Exemplos"
+    "Examples": "Exemplos",
+    "PrivacyPolicy": "Política de Privacidade",
+    "TermsOfUse": "Termos de Uso",
+    "CodeOfConduct": "Código de Conduta"
   },
   "Toast": {
     "OpenedNewSketch": "Novo Esboço Aberto.",
@@ -543,10 +551,6 @@
     "35Seconds": "35 segundos atrás",
     "Ago": "{{timeAgo}} atrás"
   },
-  "AddRemoveButton": {
-    "AltAddARIA": "Adicionar à coleção",
-    "AltRemoveARIA": "Remover da coleção"
-  },
   "CopyableInput": {
     "CopiedARIA": "Copiado para a Área de Transferência!",
     "OpenViewTabARIA": "Abrir a vista {{label}} em nova aba"
@@ -580,14 +584,6 @@
   "PreferenceCreators": {
     "On": "Ligado",
     "Off": "Desligado"
-  },
-  "MobileIDEView":{
-    "Preferences": "Preferências",
-    "MyStuff": "Minhas Coisas",
-    "Examples": "Exemplos",
-    "OriginalEditor": "Editor Original",
-    "Login": "Entrar",
-    "Logout": "Sair"
   },
   "MobileDashboardView": {
     "Examples": "Exemplos",

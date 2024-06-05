@@ -24,10 +24,14 @@ export function createSession(req, res, next) {
 }
 
 export function getSession(req, res) {
-  if (req.user && !req.user.banned) {
-    return res.json(userResponse(req.user));
+  if (!req.user) {
+    return res.status(200).send({ user: null });
   }
-  return res.status(404).send({ message: 'Session does not exist' });
+  if (req.user.banned) {
+    return res.status(403).send({ message: 'Forbidden: User is banned.' });
+  }
+
+  return res.json(userResponse(req.user));
 }
 
 export function destroySession(req, res, next) {
@@ -36,6 +40,12 @@ export function destroySession(req, res, next) {
       next(err);
       return;
     }
-    res.json({ success: true });
+    req.session.destroy((error) => {
+      if (error) {
+        next(error);
+        return;
+      }
+      res.json({ success: true });
+    });
   });
 }
