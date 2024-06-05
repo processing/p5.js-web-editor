@@ -12,12 +12,14 @@ const PreviewNav = ({ owner, project }) => {
     <nav className="nav preview-nav">
       <div className="nav__items-left">
         <div className="nav__item-logo">
-          <LogoIcon
-            role="img"
-            aria-label={t('Common.p5logoARIA')}
-            focusable="false"
-            className="svg__logo"
-          />
+          <Link to={`/${owner.username}/sketches`}>
+            <LogoIcon
+              role="img"
+              aria-label={t('Common.p5logoARIA')}
+              focusable="false"
+              className="svg__logo"
+            />
+          </Link>
         </div>
         <Link
           className="nav__item"

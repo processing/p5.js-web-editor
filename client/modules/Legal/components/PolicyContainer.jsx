@@ -38,6 +38,11 @@ const PolicyContainerMain = styled.main`
   & a {
     color: ${prop('Policy.link')};
   }
+
+  @media (max-width: 770px) {
+    overflow: auto;
+    min-height: unset;
+  }
 `;
 
 function PolicyContainer({ policy }) {
