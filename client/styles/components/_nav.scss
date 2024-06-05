@@ -110,6 +110,8 @@
 .nav__dropdown {
   @extend %dropdown-open-left;
   display: none;
+  max-height: 60vh;
+  overflow-y: auto;
   .nav__item--open & {
     display: flex;
   }
