@@ -554,10 +554,6 @@
     "35Seconds": "35 秒前",
     "Ago": "{{timeAgo}} 前"
   },
-  "AddRemoveButton": {
-    "AltAddARIA": "加入作品集",
-    "AltRemoveARIA": "從作品集中移除"
-  },
   "CopyableInput": {
     "CopiedARIA": "複製到剪貼簿",
     "OpenViewTabARIA": "在新分頁中檢視 {{label}}"
@@ -592,14 +588,6 @@
   "PreferenceCreators": {
     "On": "啟用",
     "Off": "停用"
-  },
-  "MobileIDEView":{
-    "Preferences": "偏好設定",
-    "MyStuff": "我的資料",
-    "Examples": "範例",
-    "OriginalEditor": "原始的編輯器",
-    "Login": "登入",
-    "Logout": "登出"
   },
   "MobileDashboardView": {
     "Examples": "範例",

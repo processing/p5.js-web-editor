@@ -558,10 +558,6 @@
     "35Seconds": "35 সেকেন্ড আগে",
     "Ago": "{{timeAgo}} আগে"
   },
-  "AddRemoveButton": {
-    "AltAddARIA": "সংগ্রহে যোগ করুন",
-    "AltRemoveARIA": "সংগ্রহ থেকে সরান"
-  },
   "CopyableInput": {
     "CopiedARIA": "ক্লিপবোর্ডে কপি করা হয়েছে!",
     "OpenViewTabARIA": "{{label}} দেখুন নতুন ট্যাবে"
@@ -596,14 +592,6 @@
   "PreferenceCreators": {
     "On": "চালু",
     "Off": "বন্ধ"
-  },
-  "MobileIDEView": {
-    "Preferences": "পছন্দ",
-    "MyStuff": "আমার জিনিসপত্র",
-    "Examples": "উদাহরণ",
-    "OriginalEditor": "মৌলিক এডিটর",
-    "Login": "লগইন",
-    "Logout": "লগআউট"
   },
   "MobileDashboardView": {
     "Examples": "উদাহরণ",

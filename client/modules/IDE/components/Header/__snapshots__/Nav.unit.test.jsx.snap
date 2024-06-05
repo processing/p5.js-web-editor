@@ -473,12 +473,16 @@ exports[`Nav renders editor version for desktop 1`] = `
         <li
           class="nav__item-logo"
         >
-          <test-file-stub
-            aria-label="p5.js Logo"
-            classname="svg__logo"
-            focusable="false"
-            role="img"
-          />
+          <a
+            href="https://p5js.org"
+          >
+            <test-file-stub
+              aria-label="p5.js Logo"
+              classname="svg__logo"
+              focusable="false"
+              role="img"
+            />
+          </a>
         </li>
         <li
           class="nav__item"
