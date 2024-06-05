@@ -552,10 +552,6 @@
       "35Seconds": "35 سیکنڈ پہلے",
       "Ago": "{{timeAgo}} پہلے"
     },
-    "AddRemoveButton": {
-      "AltAddARIA": "مجموعہ میں شامل کریں۔",
-      "AltRemoveARIA": "مجموعہ سے ہٹا دیں۔"
-    },
     "CopyableInput": {
       "CopiedARIA": "کلپ بورڈ پر کاپی ہو گیا!",
       "OpenViewTabARIA": "کھولیں۔ {{label}} نئے ٹیب میں دیکھیں"
@@ -590,14 +586,6 @@
     "PreferenceCreators": {
       "On": "پر",
       "Off": "بند"
-    },
-    "MobileIDEView": {
-      "Preferences": "ترجیحات",
-      "MyStuff": "میرا سامان",
-      "Examples": "مثالیں",
-      "OriginalEditor": "اصل ایڈیٹر",
-      "Login": "لاگ ان کریں",
-      "Logout": "لاگ آوٹ"
     },
     "MobileDashboardView": {
       "Examples": "مثالیں",

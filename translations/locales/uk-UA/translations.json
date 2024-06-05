@@ -93,10 +93,18 @@
     "NewP5": "Початківець в p5.js?",
     "Report": "Повідомити про помилку",
     "Learn": "Посібники",
+    "Twitter": "Twitter",
+    "Home": "Головна",
+    "Instagram": "Instagram",
+    "Discord": "Discord",
+    "WebEditor": "Веб редактор",
     "Resources": "Ресурси",
     "Libraries": "Бібліотеки",
     "Forum": "Форум",
-    "Examples": "Приклади"
+    "Examples": "Приклади",
+    "PrivacyPolicy": "Політика конфіденційності",
+    "TermsOfUse": "Умови використання",
+    "CodeOfConduct": "Кодекс поведінки"
   },
   "Toast": {
     "OpenedNewSketch": "Відкрито новий скетч.",
@@ -545,10 +553,6 @@
     "35Seconds": "35 секунд тому",
     "Ago": "{{timeAgo}} тому"
   },
-  "AddRemoveButton": {
-    "AltAddARIA": "Додати в колекцію",
-    "AltRemoveARIA": "Видалити з колекції"
-  },
   "CopyableInput": {
     "CopiedARIA": "Скопійовано в буфер обміну!",
     "OpenViewTabARIA": "Переглянути {{label}} у новій вкладці"
@@ -582,14 +586,6 @@
   "PreferenceCreators": {
     "On": "Так",
     "Off": "Ні"
-  },
-  "MobileIDEView":{
-    "Preferences": "Налаштування",
-    "MyStuff": "Мої матеріали",
-    "Examples": "Приклади",
-    "OriginalEditor": "Редактор",
-    "Login": "Увійти",
-    "Logout": "Вийти"
   },
   "MobileDashboardView": {
     "Examples": "Приклади",

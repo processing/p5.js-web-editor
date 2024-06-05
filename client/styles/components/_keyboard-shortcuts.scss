@@ -4,7 +4,7 @@
   padding: #{math.div(20, $base-font-size)}rem;
   margin-right: #{math.div(20, $base-font-size)}rem;
   padding-bottom: #{math.div(40, $base-font-size)}rem;
-  width: #{math.div(450, $base-font-size)}rem;
+  max-width: 100%;
   overflow-y: auto;
 }
 
@@ -26,6 +26,7 @@
   text-align: right;
   margin-right: #{math.div(10, $base-font-size)}rem;
   padding: #{math.div(3, $base-font-size)}rem;
+  min-inline-size: max-content;
   @include themify {
     border: 1px solid getThemifyVariable("button-border-color");
     border-radius: 3px;
