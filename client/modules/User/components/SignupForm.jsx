@@ -145,9 +145,9 @@ function SignupForm() {
                   <button
                     className="form__eye__icon"
                     type="button"
-                    onClick={handleVisibility}
+                    onClick={handleConfirmVisibility}
                   >
-                    {showPassword ? (
+                    {showConfirmPassword ? (
                       <AiOutlineEyeInvisible />
                     ) : (
                       <AiOutlineEye />
