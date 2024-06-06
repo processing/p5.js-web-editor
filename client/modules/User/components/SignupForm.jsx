@@ -137,7 +137,7 @@ function SignupForm() {
           </Field>
           <Field name="confirmPassword">
             {(field) => (
-              <div style={{ position: 'relative' }}>
+              <div>
                 <p className="form__field">
                   <label htmlFor="confirmPassword" className="form__label">
                     {t('SignupForm.ConfirmPassword')}
