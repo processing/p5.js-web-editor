@@ -93,6 +93,11 @@
     "NewP5": "New to p5.js?",
     "Report": "Report a bug",
     "Learn": "Learn",
+    "Twitter": "Twitter",
+    "Home": "Home",
+    "Instagram": "Instagram",
+    "Discord": "Discord",
+    "WebEditor": "Web Editor",
     "Resources": "Resources",
     "Libraries": "Libraries",
     "Forum": "Forum",
@@ -249,7 +254,7 @@
     "Title": "Create File",
     "CloseButtonARIA": "Close New File Modal",
     "EnterName": "Please enter a name",
-    "InvalidType": "Invalid file type. Valid extensions are .js, .css, .json, .xml, .stl, .txt, .csv, .tsv, .frag, and .vert."
+    "InvalidType": "Invalid file type. Valid extensions are .js, .css, .json, .xml, .stl, .txt, .csv, .tsv, .mtl, .frag, and .vert."
   },
   "NewFileForm": {
     "AddFileSubmit": "Add File",
@@ -558,10 +563,6 @@
     "35Seconds": "35 seconds ago",
     "Ago": "{{timeAgo}} ago"
   },
-  "AddRemoveButton": {
-    "AltAddARIA": "Add to collection",
-    "AltRemoveARIA": "Remove from collection"
-  },
   "CopyableInput": {
     "CopiedARIA": "Copied to Clipboard!",
     "OpenViewTabARIA": "Open {{label}} view in new tab"
@@ -596,14 +597,6 @@
   "PreferenceCreators": {
     "On": "On",
     "Off": "Off"
-  },
-  "MobileIDEView":{
-    "Preferences": "Preferences",
-    "MyStuff": "My Stuff",
-    "Examples": "Examples",
-    "OriginalEditor": "Original Editor",
-    "Login": "Login",
-    "Logout": "Logout"
   },
   "MobileDashboardView": {
     "Examples": "Examples",

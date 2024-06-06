@@ -4,7 +4,6 @@ import { sortBy } from 'lodash';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import MediaQuery from 'react-responsive';
 import NavDropdownMenu from '../../../../components/Nav/NavDropdownMenu';
 import NavMenuItem from '../../../../components/Nav/NavMenuItem';
 import { availableLanguages, languageKeyToLabel } from '../../../../i18n';
@@ -30,21 +29,20 @@ import {
 import { logoutUser } from '../../../User/actions';
 import { CmControllerContext } from '../../pages/IDEView';
 import MobileNav from './MobileNav';
+import useIsMobile from '../../hooks/useIsMobile';
 
-const Nav = ({ layout }) => (
-  <MediaQuery minWidth={770}>
-    {(matches) =>
-      matches ? (
-        <NavBar>
-          <LeftLayout layout={layout} />
-          <UserMenu />
-        </NavBar>
-      ) : (
-        <MobileNav />
-      )
-    }
-  </MediaQuery>
-);
+const Nav = ({ layout }) => {
+  const isMobile = useIsMobile();
+
+  return isMobile ? (
+    <MobileNav />
+  ) : (
+    <NavBar>
+      <LeftLayout layout={layout} />
+      <UserMenu />
+    </NavBar>
+  );
+};
 
 Nav.propTypes = {
   layout: PropTypes.oneOf(['dashboard', 'project'])
@@ -116,7 +114,7 @@ const ProjectMenu = () => {
   const isUserOwner = useSelector(getIsUserOwner);
   const project = useSelector((state) => state.project);
   const user = useSelector((state) => state.user);
-
+  const userSketches = `/${user.username}/sketches`;
   const isUnsaved = !project?.id;
 
   const rootFile = useSelector(selectRootFile);
@@ -139,12 +137,25 @@ const ProjectMenu = () => {
   return (
     <ul className="nav__items-left">
       <li className="nav__item-logo">
-        <LogoIcon
-          role="img"
-          aria-label={t('Common.p5logoARIA')}
-          focusable="false"
-          className="svg__logo"
-        />
+        {user && user.username !== undefined ? (
+          <Link to={userSketches}>
+            <LogoIcon
+              role="img"
+              aria-label={t('Common.p5logoARIA')}
+              focusable="false"
+              className="svg__logo"
+            />
+          </Link>
+        ) : (
+          <a href="https://p5js.org">
+            <LogoIcon
+              role="img"
+              aria-label={t('Common.p5logoARIA')}
+              focusable="false"
+              className="svg__logo"
+            />
+          </a>
+        )}
       </li>
       <NavDropdownMenu id="file" title={t('Nav.File.Title')}>
         <NavMenuItem onClick={newSketch}>{t('Nav.File.New')}</NavMenuItem>
@@ -195,9 +206,7 @@ const ProjectMenu = () => {
       <NavDropdownMenu id="edit" title={t('Nav.Edit.Title')}>
         <NavMenuItem onClick={cmRef.current?.tidyCode}>
           {t('Nav.Edit.TidyCode')}
-          <span className="nav__keyboard-shortcut">
-            {metaKeyName}+{'\u21E7'}+F
-          </span>
+          <span className="nav__keyboard-shortcut">{metaKeyName}+Shift+F</span>
         </NavMenuItem>
         <NavMenuItem onClick={cmRef.current?.showFind}>
           {t('Nav.Edit.Find')}
@@ -222,7 +231,7 @@ const ProjectMenu = () => {
         <NavMenuItem onClick={() => dispatch(stopSketch())}>
           {t('Nav.Sketch.Stop')}
           <span className="nav__keyboard-shortcut">
-            {'\u21E7'}+{metaKeyName}+Enter
+            Shift+{metaKeyName}+Enter
           </span>
         </NavMenuItem>
       </NavDropdownMenu>
@@ -272,7 +281,7 @@ const UnauthenticatedUserMenu = () => {
           </span>
         </Link>
       </li>
-      <span className="nav__item-or">{t('Nav.LoginOr')}</span>
+      <li className="nav__item-or">{t('Nav.LoginOr')}</li>
       <li className="nav__item">
         <Link to="/signup" className="nav__auth-button">
           <span className="nav__item-header" title="SignUp">
