@@ -1,51 +1,78 @@
-import * as ActionTypes from '../../constants';
+import { createSlice } from '@reduxjs/toolkit';
 
-const user = (state = { authenticated: false }, action) => {
-  switch (action.type) {
-    case ActionTypes.AUTH_USER:
-      return {
-        ...action.user,
-        authenticated: true
-      };
-    case ActionTypes.UNAUTH_USER:
-      return {
-        authenticated: false
-      };
-    case ActionTypes.AUTH_ERROR:
-      return {
-        authenticated: false
-      };
-    case ActionTypes.RESET_PASSWORD_INITIATE:
-      return Object.assign({}, state, { resetPasswordInitiate: true });
-    case ActionTypes.RESET_PASSWORD_RESET:
-      return Object.assign({}, state, { resetPasswordInitiate: false });
-    case ActionTypes.INVALID_RESET_PASSWORD_TOKEN:
-      return Object.assign({}, state, { resetPasswordInvalid: true });
-    case ActionTypes.EMAIL_VERIFICATION_INITIATE:
-      return Object.assign({}, state, { emailVerificationInitiate: true });
-    case ActionTypes.EMAIL_VERIFICATION_VERIFY:
-      return Object.assign({}, state, {
-        emailVerificationTokenState: 'checking'
-      });
-    case ActionTypes.EMAIL_VERIFICATION_VERIFIED:
-      return Object.assign({}, state, {
-        emailVerificationTokenState: 'verified'
-      });
-    case ActionTypes.EMAIL_VERIFICATION_INVALID:
-      return Object.assign({}, state, {
-        emailVerificationTokenState: 'invalid'
-      });
-    case ActionTypes.SETTINGS_UPDATED:
-      return { ...state, ...action.user };
-    case ActionTypes.API_KEY_REMOVED:
-      return { ...state, ...action.user };
-    case ActionTypes.API_KEY_CREATED:
-      return { ...state, ...action.user };
-    case ActionTypes.SET_COOKIE_CONSENT:
-      return { ...state, cookieConsent: action.cookieConsent };
-    default:
-      return state;
-  }
+const initialState = {
+  authenticated: false,
+  resetPasswordInitiate: false,
+  resetPasswordInvalid: false,
+  emailVerificationInitiate: false,
+  emailVerificationTokenState: null,
+  cookieConsent: false
 };
 
-export default user;
+const userSlice = createSlice({
+  name: 'user',
+  initialState,
+  reducers: {
+    authUser: (state, action) => {
+      const { user } = action.payload;
+      return {
+        ...user,
+        authenticated: true
+      };
+    },
+    unauthUser: (state, action) => ({
+      authenticated: false
+    }),
+    authError: (state, action) => ({
+      authenticated: false
+    }),
+    resetPasswordInitiate: (state, action) => ({
+      ...state,
+      resetPasswordInitiate: true
+    }),
+    resetPasswordReset: (state, action) => ({
+      ...state,
+      resetPasswordInitiate: false
+    }),
+    invalidResetPasswordToken: (state, action) => ({
+      ...state,
+      resetPasswordInvalid: true
+    }),
+    emailVerificationInitiate: (state, action) => ({
+      ...state,
+      emailVerificationInitiate: true
+    }),
+    emailVerificationVerify: (state, action) => ({
+      ...state,
+      emailVerificationTokenState: 'checking'
+    }),
+    emailVerificationVerified: (state, action) => ({
+      ...state,
+      emailVerificationTokenState: 'verified'
+    }),
+    emailVerificationInvalid: (state, action) => ({
+      ...state,
+      emailVerificationTokenState: 'invalid'
+    }),
+    settingsUpdated: (state, action) => ({
+      ...state,
+      ...action.payload.user
+    }),
+    apiKeyRemoved: (state, action) => ({
+      ...state,
+      ...action.payload.user
+    }),
+    apiKeyCreated: (state, action) => ({
+      ...state,
+      ...action.payload.user
+    }),
+    setCookieConsent: (state, action) => ({
+      ...state,
+      cookieConsent: action.payload.cookieConsent
+    })
+  }
+});
+
+export const userActions = userSlice.actions;
+
+export default userSlice.reducer;
