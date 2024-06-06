@@ -8,13 +8,12 @@ const consoleSlice = createSlice({
   initialState,
   reducers: {
     dispatchConsoleEvent: (state, action) => {
-      const messages = [...action.event];
+      const messages = [...action.payload];
       return state.concat(messages).slice(-consoleMax);
     },
-    clearConsole: (state, action) => []
+    clearConsole: () => []
   }
 });
 
-export const consoleActions = consoleSlice.actions;
-
+export const { dispatchConsoleEvent, clearConsole } = consoleSlice.actions;
 export default consoleSlice.reducer;
