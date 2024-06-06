@@ -104,11 +104,22 @@ function SignupForm() {
           </Field>
           <Field name="password">
             {(field) => (
-              <div style={{ position: 'relative' }}>
+              <div>
                 <p className="form__field">
                   <label htmlFor="password" className="form__label">
                     {t('SignupForm.Password')}
                   </label>
+                  <button
+                    className="form__eye__icon"
+                    type="button"
+                    onClick={handleVisibility}
+                  >
+                    {showPassword ? (
+                      <AiOutlineEyeInvisible />
+                    ) : (
+                      <AiOutlineEye />
+                    )}
+                  </button>
                   <input
                     className="form__input"
                     aria-label={t('SignupForm.PasswordARIA')}
@@ -121,19 +132,6 @@ function SignupForm() {
                     <span className="form-error">{field.meta.error}</span>
                   )}
                 </p>
-                <button
-                  type="button"
-                  onClick={handleVisibility}
-                  style={{
-                    fontSize: '25px',
-                    position: 'absolute',
-                    top: '38%',
-                    right: '1.5px',
-                    paddingTop: '4.5px'
-                  }}
-                >
-                  {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
-                </button>
               </div>
             )}
           </Field>
@@ -144,6 +142,17 @@ function SignupForm() {
                   <label htmlFor="confirmPassword" className="form__label">
                     {t('SignupForm.ConfirmPassword')}
                   </label>
+                  <button
+                    className="form__eye__icon"
+                    type="button"
+                    onClick={handleVisibility}
+                  >
+                    {showPassword ? (
+                      <AiOutlineEyeInvisible />
+                    ) : (
+                      <AiOutlineEye />
+                    )}
+                  </button>
                   <input
                     className="form__input"
                     type={showConfirmPassword ? 'text' : 'password'}
@@ -156,23 +165,6 @@ function SignupForm() {
                     <span className="form-error">{field.meta.error}</span>
                   )}
                 </p>
-                <button
-                  type="button"
-                  onClick={handleConfirmVisibility}
-                  style={{
-                    fontSize: '25px',
-                    position: 'absolute',
-                    top: '38%',
-                    right: '1.5px',
-                    paddingTop: '4px'
-                  }}
-                >
-                  {showConfirmPassword ? (
-                    <AiOutlineEyeInvisible />
-                  ) : (
-                    <AiOutlineEye />
-                  )}
-                </button>
               </div>
             )}
           </Field>
