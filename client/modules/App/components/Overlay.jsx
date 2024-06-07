@@ -65,7 +65,7 @@ const Overlay = ({
               </button>
             </div>
           </header>
-          <MediaQuery maxWidth={650}>
+          <MediaQuery maxWidth={769}>
             {actions && (
               <div className="overlay__actions-mobile">{actions}</div>
             )}
