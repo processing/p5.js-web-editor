@@ -84,6 +84,10 @@ const INDENTATION_AMOUNT = 2;
 class Editor extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      currentLine: 1
+    };
+    this._cm = null;
     this.tidyCode = this.tidyCode.bind(this);
 
     this.updateLintingMessageAccessibility = debounce((annotations) => {
@@ -195,12 +199,9 @@ class Editor extends React.Component {
       }, 1000)
     );
 
-    this._cm.on('keyup', () => {
-      const temp = this.props.t('Editor.KeyUpLineNumber', {
-        lineNumber: parseInt(this._cm.getCursor().line + 1, 10)
-      });
-      document.getElementById('current-line').innerHTML = temp;
-    });
+    if (this._cm) {
+      this._cm.on('keyup', this.handleKeyUp);
+    }
 
     this._cm.on('keydown', (_cm, e) => {
       // Show hint
@@ -336,7 +337,9 @@ class Editor extends React.Component {
   }
 
   componentWillUnmount() {
-    this._cm = null;
+    if (this._cm) {
+      this._cm.off('keyup', this.handleKeyUp);
+    }
     this.props.provideController(null);
   }
 
@@ -365,6 +368,11 @@ class Editor extends React.Component {
     const updatedFile = Object.assign({}, this.props.file, { content });
     return updatedFile;
   }
+
+  handleKeyUp = () => {
+    const lineNumber = parseInt(this._cm.getCursor().line + 1, 10);
+    this.setState({ currentLine: lineNumber });
+  };
 
   showFind() {
     this._cm.execCommand('findPersistent');
@@ -522,6 +530,8 @@ class Editor extends React.Component {
         this.props.file.fileType === 'folder' || this.props.file.url
     });
 
+    const { currentLine } = this.state;
+
     return (
       <MediaQuery minWidth={770}>
         {(matches) =>
@@ -565,7 +575,10 @@ class Editor extends React.Component {
                   name={this.props.file.name}
                 />
               ) : null}
-              <EditorAccessibility lintMessages={this.props.lintMessages} />
+              <EditorAccessibility
+                lintMessages={this.props.lintMessages}
+                currentLine={currentLine}
+              />
             </section>
           ) : (
             <EditorContainer expanded={this.props.isExpanded}>
@@ -591,7 +604,10 @@ class Editor extends React.Component {
                     name={this.props.file.name}
                   />
                 ) : null}
-                <EditorAccessibility lintMessages={this.props.lintMessages} />
+                <EditorAccessibility
+                  lintMessages={this.props.lintMessages}
+                  currentLine={currentLine}
+                />
               </section>
             </EditorContainer>
           )
