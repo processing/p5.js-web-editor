@@ -146,7 +146,7 @@ export function deleteCollection(collectionId) {
     return apiClient
       .delete(url)
       .then((response) => {
-        dispatch(deleteCollection(response.data, collectionId));
+        dispatch(delCollection(response.data, collectionId));
         return response.data;
       })
       .catch((error) => {
