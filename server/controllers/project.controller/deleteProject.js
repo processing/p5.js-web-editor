@@ -34,6 +34,14 @@ export default async function deleteProject(req, res) {
     res.status(error.code).json({ message: error.message });
   };
 
+  function sendProjectNotFound() {
+    sendFailure(
+      new ProjectDeletionError('Project with that id does not exist', {
+        code: 404
+      })
+    );
+  }
+
   try {
     const project = await Project.findById(req.params.project_id);
 
@@ -60,6 +68,10 @@ export default async function deleteProject(req, res) {
     await project.remove();
     res.status(200).end();
   } catch (error) {
-    sendFailure(error);
+    if (error.name === 'CastError' && error.kind === 'ObjectId') {
+      sendProjectNotFound();
+    } else {
+      sendFailure(error);
+    }
   }
 }
