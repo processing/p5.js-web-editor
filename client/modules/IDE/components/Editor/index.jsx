@@ -211,6 +211,10 @@ class Editor extends React.Component {
       if (/^[a-z]$/i.test(e.key) && (mode === 'css' || mode === 'javascript')) {
         this.showHint(_cm);
       }
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        this._cm.getInputField().blur();
+      }
     });
 
     this._cm.getWrapperElement().style[
@@ -238,6 +242,16 @@ class Editor extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.file.id !== prevProps.file.id) {
+      const fileMode = this.getFileMode(this.props.file.name);
+      if (fileMode === 'javascript') {
+        // Define the new Emmet configuration based on the file mode
+        const emmetConfig = {
+          preview: ['html'],
+          markTagPairs: false,
+          autoRenameTags: true
+        };
+        this._cm.setOption('emmet', emmetConfig);
+      }
       const oldDoc = this._cm.swapDoc(this._docs[this.props.file.id]);
       this._docs[prevProps.file.id] = oldDoc;
       this._cm.focus();
@@ -341,7 +355,7 @@ class Editor extends React.Component {
       mode = 'application/json';
     } else if (fileName.match(/.+\.(frag|glsl)$/i)) {
       mode = 'x-shader/x-fragment';
-    } else if (fileName.match(/.+\.(vert|stl)$/i)) {
+    } else if (fileName.match(/.+\.(vert|stl|mtl)$/i)) {
       mode = 'x-shader/x-vertex';
     } else {
       mode = 'text/plain';
@@ -550,7 +564,7 @@ class Editor extends React.Component {
         {(matches) =>
           matches ? (
             <section className={editorSectionClass}>
-              <header className="editor__header">
+              <div className="editor__header">
                 <button
                   aria-label={this.props.t('Editor.OpenSketchARIA')}
                   className="sidebar__contract"
@@ -575,7 +589,7 @@ class Editor extends React.Component {
                   </span>
                   <Timer />
                 </div>
-              </header>
+              </div>
               <article
                 ref={(element) => {
                   this.codemirrorContainer = element;
@@ -592,7 +606,7 @@ class Editor extends React.Component {
             </section>
           ) : (
             <EditorContainer expanded={this.props.isExpanded}>
-              <header>
+              <>
                 <IconButton
                   onClick={this.props.expandSidebar}
                   icon={FolderIcon}
@@ -601,7 +615,7 @@ class Editor extends React.Component {
                   {this.props.file.name}
                   <UnsavedChangesIndicator />
                 </span>
-              </header>
+              </>
               <section>
                 <EditorHolder
                   ref={(element) => {
