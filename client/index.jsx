@@ -9,6 +9,7 @@ import Routing from './routes';
 import ThemeProvider from './modules/App/components/ThemeProvider';
 import Loader from './modules/App/components/loader';
 import './i18n';
+import SkipLink from './components/SkipLink';
 
 require('./styles/main.scss');
 
@@ -23,6 +24,7 @@ const App = () => (
   <Provider store={store}>
     <ThemeProvider>
       <Router history={browserHistory}>
+        <SkipLink targetId="play-sketch" text="PlaySketch" />
         <Routing />
       </Router>
     </ThemeProvider>

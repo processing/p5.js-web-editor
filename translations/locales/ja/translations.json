@@ -281,6 +281,7 @@
       "errorShortPassword": "パスワードは6文字以上にしてください",
       "errorConfirmPassword": "確認用のパスワードを入力してください",
       "errorNewPassword": "新しいパスワードを入力するか、現在のパスワードを空欄のままにしてください。",
+      "errorNewPasswordRepeat":"Your New Password must differ from the current one.",
       "errorEmptyUsername": "ユーザー名を入力してください。",
       "errorLongUsername": "ユーザー名は20文字以内にしてください。",
       "errorValidUsername": "ユーザー名は、英数字、ピリオド(.)、ダッシュ(-)、アンダースコア(_)のみで構成されている必要があります。"
