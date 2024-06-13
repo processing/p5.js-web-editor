@@ -284,6 +284,7 @@
     "errorShortPassword": "Şifre en az 6 karakter olmalıdır",
     "errorConfirmPassword": "Lütfen şifrenizi doğrulayın",
     "errorNewPassword": "Lütfen yeni bir şifre girin veya mevcut şifreyi boş bırakın.",
+    "errorNewPasswordRepeat":"Your New Password must differ from the current one.",
     "errorEmptyUsername": "Lütfen bir kullanıcı adı girin.",
     "errorLongUsername": "Kullanıcı adı 20 karakterden az olmalıdır.",
     "errorValidUsername": "Kullanıcı adı sadece sayılar, harfler, noktalar, tireler ve alt çizgilerden oluşmalıdır."
@@ -555,10 +556,6 @@
     "35Seconds": "35 saniye önce",
     "Ago": "{{timeAgo}} önce"
   },
-  "AddRemoveButton": {
-    "AltAddARIA": "Koleksiyona ekle",
-    "AltRemoveARIA": "Koleksiyondan çıkar"
-  },
   "CopyableInput": {
     "CopiedARIA": "Panoya kopyalandı!",
     "OpenViewTabARIA": "Yeni sekmede {{label}} görünümünü aç"
@@ -592,14 +589,6 @@
   "PreferenceCreators": {
     "On": "Açık",
     "Off": "Kapalı"
-  },
-  "MobileIDEView": {
-    "Preferences": "Tercihler",
-    "MyStuff": "Benim Şeylerim",
-    "Examples": "Örnekler",
-    "OriginalEditor": "Orijinal Editör",
-    "Login": "Giriş Yap",
-    "Logout": "Çıkış Yap"
   },
   "MobileDashboardView": {
     "Examples": "Örnekler",
