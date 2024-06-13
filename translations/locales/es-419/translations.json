@@ -281,6 +281,7 @@
     "errorShortPassword": "La contraseña debe tener al menos 6 caracteres",
     "errorConfirmPassword": "Por favor confirma una contraseña",
     "errorNewPassword": "Por favor introduce una nueva contraseña o deja la actual contraseña vacía",
+    "errorNewPasswordRepeat":"Your New Password must differ from the current one.",
     "errorEmptyUsername": "Por favor introduce tu identificación",
     "errorLongUsername": "La identificación debe ser menor a 20 caracteres.",
     "errorValidUsername": "La identificación debe consistir solamente de números, letras, puntos, guiones y guiones bajos."

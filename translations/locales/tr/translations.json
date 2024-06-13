@@ -284,6 +284,7 @@
     "errorShortPassword": "Şifre en az 6 karakter olmalıdır",
     "errorConfirmPassword": "Lütfen şifrenizi doğrulayın",
     "errorNewPassword": "Lütfen yeni bir şifre girin veya mevcut şifreyi boş bırakın.",
+    "errorNewPasswordRepeat":"Your New Password must differ from the current one.",
     "errorEmptyUsername": "Lütfen bir kullanıcı adı girin.",
     "errorLongUsername": "Kullanıcı adı 20 karakterden az olmalıdır.",
     "errorValidUsername": "Kullanıcı adı sadece sayılar, harfler, noktalar, tireler ve alt çizgilerden oluşmalıdır."

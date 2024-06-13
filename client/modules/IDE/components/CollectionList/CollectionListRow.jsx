@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { withTranslation } from 'react-i18next';
+import styled from 'styled-components';
 import MenuItem from '../../../../components/Dropdown/MenuItem';
 import TableDropdown from '../../../../components/Dropdown/TableDropdown';
 import * as ProjectActions from '../../actions/project';
@@ -11,7 +12,80 @@ import * as CollectionsActions from '../../actions/collections';
 import * as IdeActions from '../../actions/ide';
 import * as ToastActions from '../../actions/toast';
 import dates from '../../../../utils/formatDate';
+import { remSize, prop } from '../../../../theme';
 
+const SketchsTableRow = styled.tr`
+  &&& {
+    margin: ${remSize(10)};
+    height: ${remSize(72)};
+    font-size: ${remSize(16)};
+  }
+  &:nth-child(odd) {
+    background: ${prop('tableRowStripeColor')};
+  }
+
+  > th:nth-child(1) {
+    padding-left: ${remSize(12)};
+  }
+
+  > td {
+    padding-left: ${remSize(8)};
+  }
+
+  a {
+    color: ${prop('primaryTextColor')};
+  }
+
+  &.is-deleted > * {
+    font-style: italic;
+  }
+  @media (max-width: 770px) {
+    &&& {
+      margin: 0;
+      position: relative;
+      display: flex;
+      flex-wrap: wrap;
+      padding: ${remSize(15)};
+      height: fit-content;
+      gap: ${remSize(8)};
+      border: 1px solid ${prop('modalBorderColor')};
+      background-color: ${prop('searchBackgroundColor')};
+      > th {
+        padding-left: 0;
+        width: 100%;
+        font-weight: bold;
+        margin-bottom: ${remSize(6)};
+      }
+      > td {
+        padding-left: 0;
+        width: 30%;
+        font-size: ${remSize(14)};
+        color: ${prop('modalBorderColor')};
+      }
+    }
+  }
+`;
+const SketchesTableName = styled.span`
+  &&& {
+    display: flex;
+    align-items: center;
+  }
+`;
+const SketchlistDropdownColumn = styled.td`
+  &&& {
+    position: relative;
+    width: ${remSize(60)};
+  }
+  @media (max-width: 770px) {
+    &&& {
+      position: absolute;
+      top: 0;
+      right: ${remSize(4)};
+      width: auto !important;
+      margin: ${remSize(8)};
+    }
+  }
+`;
 const formatDateCell = (date, mobile = false) =>
   dates.format(date, { showTime: !mobile });
 
@@ -127,9 +201,9 @@ const CollectionListRowBase = (props) => {
   const { collection, mobile } = props;
 
   return (
-    <tr className="sketches-table__row" key={collection.id}>
+    <SketchsTableRow key={collection.id}>
       <th scope="row">
-        <span className="sketches-table__name">{renderCollectionName()}</span>
+        <SketchesTableName>{renderCollectionName()}</SketchesTableName>
       </th>
       <td>{formatDateCell(collection.createdAt, mobile)}</td>
       <td>{formatDateCell(collection.updatedAt, mobile)}</td>
@@ -137,8 +211,8 @@ const CollectionListRowBase = (props) => {
         {mobile && 'sketches: '}
         {(collection.items || []).length}
       </td>
-      <td className="sketch-list__dropdown-column">{renderActions()}</td>
-    </tr>
+      <SketchlistDropdownColumn>{renderActions()}</SketchlistDropdownColumn>
+    </SketchsTableRow>
   );
 };
 
