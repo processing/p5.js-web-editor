@@ -281,6 +281,7 @@
     "errorShortPassword": "Senha deve ter no mínimo 6 caracteres",
     "errorConfirmPassword": "Por favor coloque a senha de confirmação",
     "errorNewPassword": "Por favor, adicione uma senha nova ou deixe a atual em branco.",
+    "errorNewPasswordRepeat":"Your New Password must differ from the current one.",
     "errorEmptyUsername": "Por favor coloque um nome de usuário",
     "errorLongUsername": "Nome de usuário deve ter menos de 20 caracteres.",
     "errorValidUsername": "Nome de usuário pode apenas consistir de números, letras, pontos, Hífens e linha sublinhada."

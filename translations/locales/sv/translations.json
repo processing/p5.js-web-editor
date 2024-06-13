@@ -281,6 +281,7 @@
     "errorShortPassword": "Lösenordet måste vara minst 6 tecken",
     "errorConfirmPassword": "Ange en lösenordsbekräftelse",
     "errorNewPassword": "Ange ett nytt lösenord eller lämna det nuvarande lösenordet tomt.",
+    "errorNewPasswordRepeat":"Your New Password must differ from the current one.",
     "errorEmptyUsername": "Ange ett användarnamn.",
     "errorLongUsername": "Användarnamnet får innehålla högst 19 tecken.",
     "errorValidUsername": "Användarnamnet får bara innehålla siffror, bokstäver, punkter, bindestreck och understreck."
