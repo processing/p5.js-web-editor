@@ -287,9 +287,10 @@
     "errorShortPassword": "পাসওয়ার্ডটি কমপক্ষে 6 টি অক্ষর হতে হবে",
     "errorConfirmPassword": "আপনার পাসওয়ার্ড নিশ্চিত করুন",
     "errorNewPassword": "দয়া করে একটি নতুন পাসওয়ার্ড লিখুন বা বর্তমান পাসওয়ার্ডটি ফাঁকা রাখুন।",
+    "errorNewPasswordRepeat":"Your New Password must differ from the current one.",
     "errorEmptyUsername": "দয়া করে একটি ইউজারনেম লিখুন",
     "errorLongUsername": "ইউজারনেম সর্বাধিক 20 অক্ষর হতে হবে",
-    "errorValidUsername": "ইউজারনেম কেবলমাত্র সংখ্যা, অক্ষর, দোতলা, ড্যাশ, এবং আন্ডারস্কোর থাকতে পারে"
+    "errorValidUsername": "ইউজারনেম কেবলমাত্র সংখ্যা, অক্ষর, দোতলা, ড্যাশ, এবং আন্ডারস্কোর থাকতে পারে",
   },
   "NewPasswordView": {
     "Title": "p5.js ওয়েব এডিটর | নতুন পাসওয়ার্ড",

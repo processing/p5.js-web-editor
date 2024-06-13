@@ -52,7 +52,7 @@ export function validateSettings(formProps) {
     errors.newPassword = i18n.t('ReduxFormUtils.errorShortPassword');
   }
   if (formProps.currentPassword === formProps.newPassword) {
-    errors.newPassword = i18n.t('ReduxFormUtils.errorNewPasswordNotCorrect');
+    errors.newPassword = i18n.t('ReduxFormUtils.errorNewPasswordRepeat');
   }
   return errors;
 }
