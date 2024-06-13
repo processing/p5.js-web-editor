@@ -93,10 +93,18 @@
     "NewP5": "¿Empezando con p5.js?",
     "Report": "Reporta un error",
     "Learn": "Aprender",
+    "Twitter": "Twitter",
+    "Home": "Inicio",
+    "Instagram": "Instagram",
+    "Discord": "Discord",
+    "WebEditor": "Editor web",
     "Resources": "Recursos",
     "Libraries": "Bibliotecas",
     "Forum": "Foro",
-    "Examples": "Ejemplos"
+    "Examples": "Ejemplos",
+    "PrivacyPolicy": "Política de privacidad",
+    "TermsOfUse": "Términos de uso",
+    "CodeOfConduct": "Código de conducta"
   },
   "Toast": {
     "OpenedNewSketch": "Abriste un nuevo bosquejo.",
@@ -235,7 +243,7 @@
     "Title": "Crear Archivo",
     "CloseButtonARIA": "Cerrar diálogo de crear archivo",
     "EnterName": "Por favor introduce un nombre",
-    "InvalidType": "Tipo de archivo inválido. Las extensiones válidas son .js, .css, .json, .xml, .stl, .txt, .csv, .tsv, .frag y .vert."
+    "InvalidType": "Tipo de archivo inválido. Las extensiones válidas son .js, .css, .json, .xml, .stl, .txt, .csv, .tsv, .mtl, .frag y .vert."
   },
   "NewFileForm": {
     "AddFileSubmit": "Agregar Archivo",
@@ -543,10 +551,6 @@
     "35Seconds": "hace 35 segundos",
     "Ago": "hace {{timeAgo}}"
   },
-  "AddRemoveButton": {
-    "AltAddARIA": "Agregar a colección",
-    "AltRemoveARIA": "Remover de colección"
-  },
   "CopyableInput": {
     "CopiedARIA": "¡Copiado en el portapapeles!",
     "OpenViewTabARIA": "Abrir la vista {{label}} en nueva pestaña"
@@ -580,14 +584,6 @@
   "PreferenceCreators": {
     "On": "Activar",
     "Off": "Desactivar"
-  },
-  "MobileIDEView":{
-    "Preferences": "Preferencias",
-    "MyStuff": "Mis cosas",
-    "Examples": "Ejemplos",
-    "OriginalEditor": "Editor Original",
-    "Login": "Ingresa",
-    "Logout": "Cerrar sesión"
   },
   "MobileDashboardView": {
     "Examples": "Ejemplos",
