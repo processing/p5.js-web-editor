@@ -1,9 +1,11 @@
+@use "sass:math";
+
 .dashboard-content {
   display: flex;
   flex-direction: column;
   flex: 1;
   overflow: hidden;
-  max-width: #{1012 / $base-font-size}rem;
+  max-width: #{math.div(1012, $base-font-size)}rem;
   margin: 0 auto;
   width: 100%;
 

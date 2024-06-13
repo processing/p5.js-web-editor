@@ -2,7 +2,6 @@
 // multiple files
 export const UPDATE_FILE_CONTENT = 'UPDATE_FILE_CONTENT';
 export const TOGGLE_SKETCH = 'TOGGLE_SKETCH';
-
 export const START_SKETCH = 'START_SKETCH';
 export const STOP_SKETCH = 'STOP_SKETCH';
 
@@ -136,9 +135,6 @@ export const SET_SORTING = 'SET_SORTING';
 export const SET_SORT_PARAMS = 'SET_SORT_PARAMS';
 export const SET_SEARCH_TERM = 'SET_SEARCH_TERM';
 export const CLOSE_SKETCHLIST_MODAL = 'CLOSE_SKETCHLIST_MODAL';
-
-export const START_LOADING = 'START_LOADING';
-export const STOP_LOADING = 'STOP_LOADING';
 
 export const START_SAVING_PROJECT = 'START_SAVING_PROJECT';
 export const END_SAVING_PROJECT = 'END_SAVING_PROJECT';
