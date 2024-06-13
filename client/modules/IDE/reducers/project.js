@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { generateProjectName } from '../../../utils/generateRandomName';
 
-const initialState = () => {
+const generateInitialState = () => {
   const generatedString = generateProjectName();
   const generatedName =
     generatedString.charAt(0).toUpperCase() + generatedString.slice(1);
@@ -11,6 +11,8 @@ const initialState = () => {
     isSaving: false
   };
 };
+
+const initialState = generateInitialState();
 
 const projectSlice = createSlice({
   name: 'project',
