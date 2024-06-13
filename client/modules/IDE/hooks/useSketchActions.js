@@ -16,6 +16,7 @@ const useSketchActions = () => {
   const unsavedChanges = useSelector((state) => state.ide.unsavedChanges);
   const authenticated = useSelector((state) => state.user.authenticated);
   const project = useSelector((state) => state.project);
+  const user = useSelector((state) => state.user);
   const canEditProjectName = useSelector(selectCanEditSketch);
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -40,8 +41,10 @@ const useSketchActions = () => {
   }
 
   function downloadSketch() {
-    dispatch(autosaveProject());
-    exportProjectAsZip(project.id);
+    if (authenticated && user.id === project.owner.id) {
+      dispatch(autosaveProject());
+      exportProjectAsZip(project.id);
+    }
   }
 
   function shareSketch() {

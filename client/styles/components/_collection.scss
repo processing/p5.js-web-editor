@@ -1,5 +1,7 @@
+@use "sass:math";
+
 .collection-container {
-  padding: #{24 / $base-font-size}rem #{66 / $base-font-size}rem;
+  padding: #{math.div(24, $base-font-size)}rem #{math.div(66, $base-font-size)}rem;
   position: relative;
   flex: 1;
   overflow: hidden;
@@ -18,10 +20,10 @@
 }
 
 .collection-metadata {
-  max-width: #{1012 / $base-font-size}rem;
+  max-width: #{math.div(1012, $base-font-size)}rem;
   width: 100%;
   margin: 0 auto;
-  margin-bottom: #{24 / $base-font-size}rem;
+  margin-bottom: #{math.div(24, $base-font-size)}rem;
 }
 
 .collection-metadata__columns {
@@ -45,7 +47,7 @@
 }
 
 .collection-metadata__column--right > * {
-  margin-left: #{10 / $base-font-size}rem;
+  margin-left: #{math.div(10, $base-font-size)}rem;
 }
 
 .collection-metadata__name {
@@ -53,7 +55,7 @@
 }
 
 .collection-metadata__name .editable-input__label {
-  padding: 0.83333rem #{7 / $base-font-size}rem;
+  padding: 0.83333rem #{math.div(7, $base-font-size)}rem;
 }
 
 .collection-metadata__name,
@@ -63,18 +65,18 @@
 }
 
 .collection-metadata__user {
-  padding-top: #{8 / $base-font-size}rem;
+  padding-top: #{math.div(8, $base-font-size)}rem;
   font-size: 14px;
 }
 
 .collection-metadata--is-owner .collection-metadata__user {
-  padding-left: #{8 / $base-font-size}rem;
+  padding-left: #{math.div(8, $base-font-size)}rem;
 }
 
 .collection-metadata__description {
-  padding-top: #{8 / $base-font-size}rem;
+  padding-top: #{math.div(8, $base-font-size)}rem;
   text-align: left;
-  font-size: #{14 / $base-font-size}rem;
+  font-size: #{math.div(14, $base-font-size)}rem;
 }
 
 .collection-metadata__description .editable-input__label {
@@ -102,8 +104,12 @@
 
 .collection__share-dropdown {
   @extend %dropdown-open-right;
-  padding: #{20 / $base-font-size}rem;
-  width: #{350 / $base-font-size}rem;
+  padding: #{math.div(20, $base-font-size)}rem;
+  width: #{math.div(350, $base-font-size)}rem;
+  @media only screen and (max-width: 520px) {
+    max-width: 90vw;
+    right: -#{120 / $base-font-size}rem;
+  }
 }
 
 .collection-content {
@@ -111,7 +117,7 @@
   flex-direction: column;
   flex: 1;
   overflow: hidden;
-  max-width: #{1012 / $base-font-size}rem;
+  max-width: #{math.div(1012, $base-font-size)}rem;
   margin: 0 auto;
   width: 100%;
 
@@ -136,18 +142,18 @@
 
 .collection-empty-message {
   text-align: center;
-  font-size: #{16 / $base-font-size}rem;
+  font-size: #{math.div(16, $base-font-size)}rem;
 }
 
 .collection-row__action-column {
-  width: #{60 / $base-font-size}rem;
+  width: #{math.div(60, $base-font-size)}rem;
   position: relative;
 }
 
 .collection-row__remove-button {
   display: inline-block;
-  width:#{35 / $base-font-size}rem;
-  height:#{35 / $base-font-size}rem;
+  width:#{math.div(35, $base-font-size)}rem;
+  height:#{math.div(35, $base-font-size)}rem;
   @include icon();
   @include themify() {
     // icon graphic
@@ -161,8 +167,8 @@
     }
 
     & svg {
-      width:#{35 / $base-font-size}rem;
-      height:#{35 / $base-font-size}rem;
+      width:#{math.div(35, $base-font-size)}rem;
+      height:#{math.div(35, $base-font-size)}rem;
     }
 
     &:hover,

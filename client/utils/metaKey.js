@@ -6,6 +6,6 @@ const metaKey = (() => {
   return 'Ctrl';
 })();
 
-const metaKeyName = metaKey === 'Cmd' ? '⌘' : '⌃';
+const metaKeyName = metaKey === 'Cmd' ? '⌘' : 'Ctrl';
 
 export { metaKey, metaKeyName };
