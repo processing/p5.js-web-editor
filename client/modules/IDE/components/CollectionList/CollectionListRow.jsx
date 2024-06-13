@@ -140,6 +140,7 @@ const CollectionListRowBase = (props) => {
 
   const handleRenameEnter = (e) => {
     if (e.key === 'Enter') {
+      e.preventDefault();
       updateName();
       closeAll();
     }
@@ -187,7 +188,7 @@ const CollectionListRowBase = (props) => {
           <input
             value={renameValue}
             onChange={handleRenameChange}
-            onKeyUp={handleRenameEnter}
+            onKeyDown={handleRenameEnter}
             onBlur={handleRenameBlur}
             onClick={(e) => e.stopPropagation()}
             ref={renameInput}
