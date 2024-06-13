@@ -284,6 +284,7 @@
     "errorShortPassword": "密碼至少要有 6 個字元",
     "errorConfirmPassword": "請再輸入一次密碼確認正確性",
     "errorNewPassword": "請輸入新密碼或讓目前密碼欄位留空",
+    "errorNewPasswordRepeat":"Your New Password must differ from the current one.",
     "errorEmptyUsername": "請輸入使用者名稱",
     "errorLongUsername": "使用者名稱最多只能 20 個字元",
     "errorValidUsername": "使用者名稱只能有數字、字母、英文句點、減號以及底線符號"
