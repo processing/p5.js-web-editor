@@ -269,6 +269,7 @@
     "errorShortPassword": "Password must be at least 6 characters",
     "errorConfirmPassword": "Please confirm your password",
     "errorNewPassword": "Please enter a new password or leave the current password empty.",
+    "errorNewPasswordRepeat":"Your New Password must differ from the current one.",
     "errorEmptyUsername": "Please enter a username.",
     "errorLongUsername": "Username must be less than 20 characters.",
     "errorValidUsername": "Username must only consist of numbers, letters, periods, dashes, and underscores."
@@ -539,10 +540,6 @@
     "35Seconds": "35 seconds ago",
     "Ago": "{{timeAgo}} ago"
   },
-  "AddRemoveButton": {
-    "AltAddARIA": "Add to collection",
-    "AltRemoveARIA": "Remove from collection"
-  },
   "CopyableInput": {
     "CopiedARIA": "Copied to Clipboard!",
     "OpenViewTabARIA": "Open {{label}} view in new tab"
@@ -576,14 +573,6 @@
   "PreferenceCreators": {
     "On": "On",
     "Off": "Off"
-  },
-  "MobileIDEView":{
-    "Preferences": "Preferences",
-    "MyStuff": "My Stuff",
-    "Examples": "Examples",
-    "OriginalEditor": "Original Editor",
-    "Login": "Login",
-    "Logout": "Logout"
   },
   "MobileDashboardView": {
     "Examples": "Examples",

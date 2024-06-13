@@ -66,15 +66,29 @@
     color: getThemifyVariable("form-input-text-color");
     background-color: getThemifyVariable("input-background-color");
   }
-
+  
   @media (max-width: 770px) {
     max-width: 100%;
-    width:100%;
+    width: 100%;
   }
+}
+
+.form__eye__icon {
+  font-size: 28px;
+  position: relative;
+  top: 7px;
+  right: -355px;
+  margin-left: -40px;
+}
+
+
+.form__input[type='password']::-ms-reveal {
+  display: none;
 }
 
 .form__input-flexible-height {
   height: auto;
+  resize: none;
 }
 
 .form__input::placeholder {

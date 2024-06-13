@@ -284,6 +284,7 @@
     "errorShortPassword": "密码至少六位",
     "errorConfirmPassword": "请再次输入密码以确认",
     "errorNewPassword": "请输入一个新密码或保持当前密码为空",
+    "errorNewPasswordRepeat":"Your New Password must differ from the current one.",
     "errorEmptyUsername": "请输入一个用户名",
     "errorLongUsername": "用户名至多20位",
     "errorValidUsername": "用户名只能含有数字，字母，和某些标点符号（. - _）。"
@@ -554,10 +555,6 @@
     "35Seconds": "35秒 以前",
     "Ago": "{{timeAgo}} 以前"
   },
-  "AddRemoveButton": {
-    "AltAddARIA": "添加到集合",
-    "AltRemoveARIA": "从集合中移除"
-  },
   "CopyableInput": {
     "CopiedARIA": "已复制到剪贴板！",
     "OpenViewTabARIA": "在新标签页中打开 {{label}} 视图"
@@ -592,14 +589,6 @@
   "PreferenceCreators": {
     "On": "打开",
     "Off": "关闭"
-  },
-  "MobileIDEView":{
-    "Preferences": "设置",
-    "MyStuff": "我的",
-    "Examples": "范例",
-    "OriginalEditor": "原编辑器",
-    "Login": "登陆",
-    "Logout": "登出"
   },
   "MobileDashboardView": {
     "Examples": "范例",

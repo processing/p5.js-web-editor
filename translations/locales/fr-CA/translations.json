@@ -283,6 +283,7 @@
       "errorEmptyPassword": "Veuillez saisir un mot de passe",
       "errorShortPassword": "Le mot de passe doit comporter au moins 6 caractères",
       "errorConfirmPassword": "Veuillez saisir une confirmation de mot de passe",
+      "errorNewPasswordRepeat":"Your New Password must differ from the current one.",
       "errorNewPassword": "Veuillez saisir un nouveau mot de passe ou laisser le mot de passe actuel vide.",
       "errorEmptyUsername": "Veuillez saisir un nom d'utilisateur.",
       "errorLongUsername": "Le nom d'utilisateur doit comporter moins de 20 caractères.",
@@ -554,10 +555,6 @@
       "35Seconds": "Il y a 35 secondes",
       "Ago": "Il y a {{timeAgo}}"
     },
-    "AddRemoveButton": {
-      "AltAddARIA": "Ajouter à la collection",
-      "AltRemoveARIA": "Supprimer de la collection"
-    },
     "CopyableInput": {
       "CopiedARIA": "Copié dans le presse-papiers!",
       "OpenViewTabARIA": "Ouvrir la fenêtre {{label}} dans un nouvel onglet"
@@ -591,14 +588,6 @@
     "PreferenceCreators": {
       "On": "Activé",
       "Off": "Désactivé"
-    },
-    "MobileIDEView":{
-      "Preferences": "Préférences",
-      "MyStuff": "Mes trucs",
-      "Examples": "Exemples",
-      "OriginalEditor": "Éditeur original",
-      "Login": "Se connecter",
-      "Logout": "Se déconnecter"
     },
     "MobileDashboardView": {
       "Examples": "Exemples",
