@@ -283,6 +283,7 @@
       "errorEmptyPassword": "Veuillez saisir un mot de passe",
       "errorShortPassword": "Le mot de passe doit comporter au moins 6 caractères",
       "errorConfirmPassword": "Veuillez saisir une confirmation de mot de passe",
+      "errorNewPasswordRepeat":"Your New Password must differ from the current one.",
       "errorNewPassword": "Veuillez saisir un nouveau mot de passe ou laisser le mot de passe actuel vide.",
       "errorEmptyUsername": "Veuillez saisir un nom d'utilisateur.",
       "errorLongUsername": "Le nom d'utilisateur doit comporter moins de 20 caractères.",
