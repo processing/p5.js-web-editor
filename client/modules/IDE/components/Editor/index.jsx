@@ -582,7 +582,7 @@ class Editor extends React.Component {
             </section>
           ) : (
             <EditorContainer expanded={this.props.isExpanded}>
-              <>
+              <div>
                 <IconButton
                   onClick={this.props.expandSidebar}
                   icon={FolderIcon}
@@ -591,7 +591,7 @@ class Editor extends React.Component {
                   {this.props.file.name}
                   <UnsavedChangesIndicator />
                 </span>
-              </>
+              </div>
               <section>
                 <EditorHolder
                   ref={(element) => {

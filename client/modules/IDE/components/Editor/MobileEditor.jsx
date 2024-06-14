@@ -19,6 +19,7 @@ export const EditorContainer = styled.div`
       padding: ${remSize(10)};
       font-weight: bold;
       ${prop('MobilePanel.default')}
+      background-color: ${prop('backgroundColor')}
     }
   }
 
