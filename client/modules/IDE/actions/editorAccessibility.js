@@ -1,7 +1,5 @@
-import { editorAccessibilityActions } from '../reducers/editorAccessibility';
-
-export const {
+export {
   updateLintMessage,
-  clearLintMessages,
+  clearLintMessage,
   toggleForceDesktop
-} = editorAccessibilityActions;
+} from '../reducers/editorAccessibility';

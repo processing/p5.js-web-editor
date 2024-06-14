@@ -20,7 +20,7 @@ const editorAccessibilitySlice = createSlice({
         id: messageId
       });
     },
-    clearLintMessages: (state) => {
+    clearLintMessage: (state) => {
       state.lintMessages = [];
     },
     toggleForceDesktop: (state) => {
@@ -29,6 +29,10 @@ const editorAccessibilitySlice = createSlice({
   }
 });
 
-export const editorAccessibilityActions = editorAccessibilitySlice.actions;
+export const {
+  updateLintMessage,
+  clearLintMessage,
+  toggleForceDesktop
+} = editorAccessibilitySlice.actions;
 
 export default editorAccessibilitySlice.reducer;
