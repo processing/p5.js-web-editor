@@ -45,8 +45,7 @@
       "Asset": "Asset",
       "MyAssets": "My Assets",
       "LogOut": "Log Out"
-    },
-    "Fundraiser": "Support p5.js and the Processing Foundation!"
+    }
   },
   "CodemirrorFindAndReplace": {
     "ToggleReplace": "Toggle Replace",
@@ -94,13 +93,23 @@
     "NewP5": "New to p5.js?",
     "Report": "Report a bug",
     "Learn": "Learn",
+    "Twitter": "Twitter",
+    "Home": "Home",
+    "Instagram": "Instagram",
+    "Discord": "Discord",
+    "WebEditor": "Web Editor",
     "Resources": "Resources",
     "Libraries": "Libraries",
     "Forum": "Forum",
     "Examples": "Examples",
+    "Home": "Home",
+    "Twitter": "Twitter",
+    "Instagram": "Instagram",
+    "Discord": "Discord",
     "PrivacyPolicy": "Privacy Policy",
     "TermsOfUse": "Terms of Use",
-    "CodeOfConduct": "Code of Conduct"
+    "CodeOfConduct": "Code of Conduct",
+    "WebEditor": "Web Editor"
   },
   "Toast": {
     "OpenedNewSketch": "Opened new sketch.",
@@ -202,11 +211,6 @@
       "TurnOffAccessibleOutput": "Turn Off Accessible Output"
     }
   },
-  "Fundraiser": {
-    "Title": "Support Our Software and Team",
-    "Description": "🎉 Join us in celebrating a Decade of Code! 🎉 Support p5.js and the Processing Foundation and earn unique rewards. 🙂", 
-    "CallToAction": "Contribute and learn more!"
-  },
   "Sidebar": {
     "Title": "Sketch Files",
     "ToggleARIA": "Toggle open/close sketch file options",
@@ -236,7 +240,6 @@
     "ErrorARIA": "Error",
     "Save": "Save",
     "p5logoARIA": "p5.js Logo",
-    "PFlogoARIA": "Processing Foundation Logo",
     "DeleteConfirmation": "Are you sure you want to delete {{name}}?"
   },
   "IDEView": {
@@ -251,7 +254,7 @@
     "Title": "Create File",
     "CloseButtonARIA": "Close New File Modal",
     "EnterName": "Please enter a name",
-    "InvalidType": "Invalid file type. Valid extensions are .js, .css, .json, .xml, .stl, .txt, .csv, .tsv, .frag, and .vert."
+    "InvalidType": "Invalid file type. Valid extensions are .js, .css, .json, .xml, .stl, .txt, .csv, .tsv, .mtl, .frag, and .vert."
   },
   "NewFileForm": {
     "AddFileSubmit": "Add File",
@@ -289,6 +292,7 @@
     "errorShortPassword": "Password must be at least 6 characters",
     "errorConfirmPassword": "Please confirm your password",
     "errorNewPassword": "Please enter a new password or leave the current password empty.",
+    "errorNewPasswordRepeat":"Your New Password must differ from the current one.",
     "errorEmptyUsername": "Please enter a username.",
     "errorLongUsername": "Username must be less than 20 characters.",
     "errorValidUsername": "Username must only consist of numbers, letters, periods, dashes, and underscores."
@@ -366,7 +370,8 @@
     "Description": "Sign Up",
     "Or": "Or",
     "AlreadyHave": "Already have an account?",
-    "Login": "Log In"
+    "Login": "Log In",
+    "Warning": "By signing up, you agree to the p5.js Editor's <0>Terms of Use</0> and <1>Privacy Policy.</1>"
   },
   "EmailVerificationView": {
     "Title": "p5.js Web Editor | Email Verification",
@@ -559,10 +564,6 @@
     "35Seconds": "35 seconds ago",
     "Ago": "{{timeAgo}} ago"
   },
-  "AddRemoveButton": {
-    "AltAddARIA": "Add to collection",
-    "AltRemoveARIA": "Remove from collection"
-  },
   "CopyableInput": {
     "CopiedARIA": "Copied to Clipboard!",
     "OpenViewTabARIA": "Open {{label}} view in new tab"
@@ -598,14 +599,6 @@
     "On": "On",
     "Off": "Off"
   },
-  "MobileIDEView":{
-    "Preferences": "Preferences",
-    "MyStuff": "My Stuff",
-    "Examples": "Examples",
-    "OriginalEditor": "Original Editor",
-    "Login": "Login",
-    "Logout": "Logout"
-  },
   "MobileDashboardView": {
     "Examples": "Examples",
     "Sketches": "Sketches",
@@ -628,5 +621,8 @@
     "PrivacyPolicy": "Privacy Policy",
     "TermsOfUse": "Terms of Use",
     "CodeOfConduct": "Code of Conduct"
+  },
+  "SkipLink": {
+    "PlaySketch": "Skip to Play Sketch"
   }
 }

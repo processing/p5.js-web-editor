@@ -6,11 +6,11 @@
 @import 'base/reset';
 @import 'base/base';
 
-@import 'node_modules/codemirror/lib/codemirror';
-@import 'node_modules/codemirror/addon/lint/lint';
-@import 'node_modules/codemirror-colorpicker/addon/codemirror-colorpicker';
-@import 'node_modules/dropzone/dist/dropzone';
-@import 'node_modules/primer-tooltips/build/build';
+@import '../../node_modules/codemirror/lib/codemirror';
+@import '../../node_modules/codemirror/addon/lint/lint';
+@import '../../node_modules/codemirror-colorpicker/addon/codemirror-colorpicker';
+@import '../../node_modules/dropzone/dist/dropzone';
+@import '../../node_modules/primer-tooltips/build/build';
 
 @import 'components/p5-light-codemirror-theme';
 @import 'components/p5-dark-codemirror-theme';
@@ -43,7 +43,6 @@
 @import 'components/asset-list';
 @import 'components/asset-size';
 @import 'components/keyboard-shortcuts';
-@import 'components/fundraiser';
 @import 'components/copyable-input';
 @import 'components/feedback';
 @import 'components/console-input';
@@ -55,6 +54,7 @@
 @import 'components/collection';
 @import 'components/collection-create';
 @import 'components/quick-add';
+@import 'components/skip-link';
 
 @import 'layout/dashboard';
 @import 'layout/ide';

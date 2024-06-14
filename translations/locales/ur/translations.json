@@ -1,0 +1,615 @@
+{
+    "Nav": {
+      "File": {
+        "Title": "فائل",
+        "New": "نئی",
+        "Share": "بانٹیں",
+        "Duplicate": "نقل",
+        "Open": "کھولیں۔",
+        "Download": "ڈاؤن لوڈ کریں",
+        "AddToCollection": "مجموعہ میں شامل کریں۔",
+        "Examples": "مثالیں"
+      },
+      "Edit": {
+        "Title": "ترمیم",
+        "TidyCode": "کوڈ کو صاف و ستھرا کریں",
+        "Find": "تلاش کریں",
+        "Replace": "بدل دیں"
+      },      
+      "Sketch": {
+        "Title": "خاکہ",
+        "AddFile": "فائل شامل کریں",
+        "AddFolder": "فولڈر بنائیں",
+        "Run": "رن",
+        "Stop": "رک جائیں"
+      },          
+      "Help": {
+        "Title": "مدد",
+        "KeyboardShortcuts": "کی بورڈ شارٹ کٹس",
+        "Reference": "حوالہ",
+        "About": "کے بارے میں"
+      },
+      "Lang": "زبان",
+      "BackEditor": "واپس ایڈیٹر پر",
+      "WarningUnsavedChanges": "کیا آپ واقعی یہ صفحہ چھوڑنا چاہتے ہیں؟ ",
+      "Login": "لاگ ان کریں",
+      "LoginOr": "یا",
+      "SignUp": "سائن اپ",
+      "Auth": {
+        "Welcome": "خوش آمدید",
+        "Hello": "ہیلو",
+        "MyAccount": "میرا اکاونٹ",
+        "My": "میرا",
+        "MySketches": "میرے خاکے",
+        "MyCollections": "میرے مجموعے",
+        "Asset": "اثاثہ",
+        "MyAssets": "میرے اثاثے",
+        "LogOut": "لاگ آوٹ"
+      }
+    },
+    "CodemirrorFindAndReplace": {
+      "ToggleReplace": "تبدیل کرنے کو ٹوگل کریں۔",
+      "Find": "تلاش کریں",
+      "FindPlaceholder": "فائلوں میں تلاش کریں۔",
+      "Replace": "بدل دیں۔",
+      "ReplaceAll": "سبھی کو تبدیل کریں۔",
+      "ReplacePlaceholder": "تبدیل کرنے کے لیے متن",
+      "Regex": "باقاعدہ اظہار",
+      "CaseSensitive": "حساس کیس",
+      "WholeWords": "پورے الفاظ",
+      "Previous": "پچھلا",
+      "Next": "اگلے",
+      "NoResults": "کوئی نتیجہ نہیں نکلا۔",
+      "Close": "بند کریں"
+    },
+    "LoginForm": {
+      "UsernameOrEmail": "ای میل یا اسم صارف",
+      "UsernameOrEmailARIA": "ای میل یا اسم صارف",
+      "Password": "پاس ورڈ",
+      "PasswordARIA": "پاس ورڈ",
+      "Submit": "لاگ ان کریں"
+    },
+    "LoginView": {
+      "Title": "p5.js ویب ایڈیٹر | ",
+      "Login": "لاگ ان کریں",
+      "LoginOr": "یا",
+      "SignUp": "سائن اپ",
+      "Email": "ای میل",
+      "Username": "صارف نام",
+      "DontHaveAccount": "اکاؤنٹ نہیں ہے؟ ",
+      "ForgotPassword": "اپنا پاس ورڈ بھول گئے؟ ",
+      "ResetPassword": "آپ کا پاس ورڈ دوبارہ ترتیب دیں"
+    },
+    "SocialAuthButton": {
+      "Connect": "جڑیں۔ {{serviceauth}} کھاتہ",
+      "Unlink": "لنک ختم کریں۔ {{serviceauth}} کھاتہ",
+      "Login": "کے ساتھ لاگ ان {{serviceauth}}",
+      "LogoARIA": "{{serviceauth}} لوگو"
+    },
+    "About": {
+      "Title": "کے بارے میں",
+      "TitleHelmet": "p5.js ویب ایڈیٹر | ",
+      "Contribute": "تعاون کریں۔",
+      "NewP5": "p5.js میں نئے ہیں؟",
+      "Report": "ایک بگ کی اطلاع دیں۔",
+      "Learn": "سیکھیں۔",
+      "Resources": "حوالہ جات",
+      "Libraries": "لائبریریاں",
+      "Forum": "فورم",
+      "Examples": "مثالیں",
+      "PrivacyPolicy": "رازداری کی پالیسی",
+      "TermsOfUse": "استعمال کرنے کی شرائط",
+      "CodeOfConduct": "ضابطہ اخلاق"
+    },
+    "Toast": {
+      "OpenedNewSketch": "نیا خاکہ کھولا۔",
+      "SketchSaved": "خاکہ محفوظ ہو گیا۔",
+      "SketchFailedSave": "خاکہ محفوظ کرنے میں ناکام۔",
+      "AutosaveEnabled": "خودکار محفوظ کرنا فعال ہے۔",
+      "LangChange": "زبان بدل گئی۔",
+      "SettingsSaved": "ترتیبات محفوظ ہو گئیں۔"
+    },
+    "Toolbar": {
+        "Preview": "پیش نظارہ",
+        "Auto-refresh": "آٹو ریفریش",
+        "OpenPreferencesARIA": "ترجیحات کھولیں۔",
+        "PlaySketchARIA": "خاکہ چلائیں۔",
+        "PlayOnlyVisualSketchARIA": "صرف بصری خاکہ چلائیں۔",
+        "StopSketchARIA": "خاکہ بنانا بند کریں",
+        "EditSketchARIA": "خاکے کے نام میں ترمیم کریں۔",
+        "NewSketchNameARIA": "خاکے کا نیا نام",
+        "By": " کی طرف سے "
+      },      
+    "Console": {
+      "Title": "تسلی",
+      "Clear": "صاف",
+      "ClearARIA": "کنسول صاف کریں۔",
+      "Close": "بند کریں",
+      "CloseARIA": "کنسول بند کریں۔",
+      "Open": "کھولیں۔",
+      "OpenARIA": "کنسول کھولیں۔"
+    },
+    "Preferences": {
+      "Settings": "ترتیبات",
+      "GeneralSettings": "عام ترتیبات",
+      "Accessibility": "رسائی",
+      "Theme": "خیالیہ",
+      "LightTheme": "روشنی",
+      "LightThemeARIA": "ہلکی تھیم آن",
+      "DarkTheme": "اندھیرا",
+      "DarkThemeARIA": "سیاہ تھیم آن",
+      "HighContrastTheme": "ہائی کنٹراسٹ",
+      "HighContrastThemeARIA": "ہائی کنٹراسٹ تھیم آن",
+      "TextSize": "متن کا سائز",
+      "DecreaseFont": "کمی",
+      "DecreaseFontARIA": "فونٹ کا سائز کم کریں۔",
+      "IncreaseFont": "اضافہ",
+      "IncreaseFontARIA": "فونٹ سائز میں اضافہ کریں",
+      "FontSize": "حرف کا سائز",
+      "SetFontSize": "فونٹ کا سائز مقرر کریں",
+      "Autosave": "خودبخود محفوظ کریں۔",
+      "On": "پر",
+      "AutosaveOnARIA": "خودبخود محفوظ کریں",
+      "Off": "بند",
+      "AutosaveOffARIA": "خود کار طریقے سے محفوظ کریں",
+      "AutocloseBracketsQuotes": "خودکار بند بریکٹ اور اقتباسات",
+      "AutocloseBracketsQuotesOnARIA": "خودکار بند بریکٹ اور کوٹس آن",
+      "AutocloseBracketsQuotesOffARIA": "خودکار بند بریکٹ اور کوٹس آف",
+      "AutocompleteHinter": "خودکار تکمیل اشارہ",
+      "AutocompleteHinterOnARIA": "خودکار تکمیل اشارہ آن",
+      "AutocompleteHinterOffARIA": "خود کار طریقے سے اشارہ بند",
+      "WordWrap": "لفظ لفاف",
+      "LineWrapOnARIA": "لائن لپیٹنا",
+      "LineWrapOffARIA": "لائن لپیٹنا",
+      "LineNumbers": "لائن نمبرز",
+      "LineNumbersOnARIA": "لائن نمبر آن",
+      "LineNumbersOffARIA": "لائن نمبر بند",
+      "LintWarningSound": "لنٹ وارننگ کی آواز",
+      "LintWarningOnARIA": "لنٹ وارننگ آن",
+      "LintWarningOffARIA": "لنٹ انتباہ بند",
+      "PreviewSound": "پیش نظارہ آواز",
+      "PreviewSoundARIA": "پیش نظارہ آواز",
+      "AccessibleTextBasedCanvas": "قابل رسائی متن پر مبنی کینوس",
+      "UsedScreenReader": "اسکرین ریڈر کے ساتھ استعمال کیا جاتا ہے۔",
+      "PlainText": "سادہ متن",
+      "TextOutputARIA": "ٹیکسٹ آؤٹ پٹ آن",
+      "TableText": "ٹیبل ٹیکسٹ",
+      "TableOutputARIA": "ٹیبل آؤٹ پٹ آن"
+    },
+    "KeyboardShortcuts": {
+      "Title": " کی بورڈ شارٹ کٹس",
+      "ShortcutsFollow": "کوڈ ایڈیٹنگ کی بورڈ شارٹ کٹس فالو کرتے ہیں۔",
+      "SublimeText": "شاندار ٹیکسٹ شارٹ کٹس",
+      "CodeEditing": {
+        "Tidy": "صاف ستھرا",
+        "FindText": "متن تلاش کریں۔",
+        "FindNextMatch": "اگلا میچ تلاش کریں۔",
+        "FindPrevMatch": "پچھلا میچ تلاش کریں۔",
+        "ReplaceTextMatch": "ٹیکسٹ میچ کو تبدیل کریں۔",
+        "IndentCodeLeft": "انڈینٹ کوڈ بائیں",
+        "IndentCodeRight": "انڈینٹ کوڈ دائیں",
+        "CommentLine": "تبصرہ لائن",
+        "FindNextTextMatch": "اگلا ٹیکسٹ میچ تلاش کریں۔",
+        "FindPreviousTextMatch": "پچھلا ٹیکسٹ میچ تلاش کریں۔",
+        "CodeEditing": "کوڈ ایڈیٹنگ",
+        "ColorPicker": "ان لائن رنگ چنندہ دکھائیں۔"
+      },
+      "General": {
+        "StartSketch": "خاکہ شروع کریں۔",
+        "StopSketch": "خاکہ بند کریں",
+        "TurnOnAccessibleOutput": "قابل رسائی آؤٹ پٹ کو آن کریں۔",
+        "TurnOffAccessibleOutput": "قابل رسائی آؤٹ پٹ کو آف کریں۔"
+      }
+    },
+    "Sidebar": {
+      "Title": "اسکیچ فائلز",
+      "ToggleARIA": "اسکیچ فائل کے اختیارات کھولیں/بند کریں۔",
+      "AddFolder": "فولڈر بنائیں",
+      "AddFolderARIA": "فولڈر بناؤ",
+      "AddFile": "فائل بنائیں",
+      "AddFileARIA": "فائل شامل کریں",
+      "UploadFile": "اپ لوڈ فائل",
+      "UploadFileARIA": "اپ لوڈ فائل"
+    },
+    "FileNode": {
+      "OpenFolderARIA": "فولڈر کے مواد کو کھولیں۔",
+      "CloseFolderARIA": "فولڈر کے مواد کو بند کریں۔",
+      "ToggleFileOptionsARIA": "اوپن/کلز فائل آپشنز کو ٹوگل کریں۔",
+      "AddFolder": "فولڈر بنائیں",
+      "AddFolderARIA": "فولڈر بناؤ",
+      "AddFile": "فائل بنائیں",
+      "AddFileARIA": "فائل شامل کریں",
+      "UploadFile": "اپ لوڈ فائل",
+      "UploadFileARIA": "اپ لوڈ فائل",
+      "Rename": "نام تبدیل کریں۔",
+      "Delete": "حذف کریں۔"
+    },
+    "Common": {
+      "SiteName": "p5.js ویب ایڈیٹر",
+      "Error": "خرابی",
+      "ErrorARIA": "خرابی",
+      "Save": "محفوظ کریں۔",
+      "p5logoARIA": "p5.js لوگو",
+      "DeleteConfirmation": "کیا آپ واقعی حذف کرنا چاہتے ہیں۔ {{name}}?"
+    },
+    "IDEView": {
+      "SubmitFeedback": "تاثرات جمع کروائیں۔",
+      "SubmitFeedbackARIA": "رائے جمع کروائیں",
+      "AddCollectionTitle": "مجموعہ میں شامل کریں۔",
+      "AddCollectionARIA": "مجموعہ میں شامل کریں",
+      "ShareTitle": "بانٹیں",
+      "ShareARIA": "بانٹیں"
+    },
+    "NewFileModal": {
+      "Title": "فائل بنائیں",
+      "CloseButtonARIA": "نیا فائل موڈل بند کریں۔",
+      "EnterName": "براہ کرم ایک نام درج کریں۔",
+      "InvalidType": "غلط فائل کی قسم۔ "
+    },
+    "NewFileForm": {
+      "AddFileSubmit": "فائل شامل کریں",
+      "Placeholder": "نام"
+    },
+    "NewFolderModal": {
+      "Title": "فولڈر بنائیں",
+      "CloseButtonARIA": "نیا فولڈر موڈل بند کریں۔",
+      "EnterName": "براہ کرم ایک نام درج کریں۔",
+      "EmptyName": "فولڈر کا نام صرف خالی جگہوں پر مشتمل نہیں ہو سکتا",
+      "InvalidExtension": "فولڈر کے نام میں توسیع نہیں ہو سکتی"
+    },
+    "NewFolderForm": {
+      "AddFolderSubmit": "فولڈر بناؤ",
+      "Placeholder": "نام"
+    },
+    "ResetPasswordForm": {
+      "Email": "رجسٹریشن کے لیے استعمال ہونے والی ای میل",
+      "EmailARIA": "ای میل",
+      "Submit": "پاس ورڈ ری سیٹ ای میل بھیجیں۔"
+    },
+    "ResetPasswordView": {
+      "Title": "p5.js ویب ایڈیٹر | ",
+      "Reset": "آپ کا پاس ورڈ دوبارہ ترتیب دیں",
+      "Submitted": "آپ کا پاس ورڈ دوبارہ ترتیب دینے والی ای میل جلد ہی پہنچ جائے گی۔ ",
+      "Login": "لاگ ان کریں",
+      "LoginOr": "یا",
+      "SignUp": "سائن اپ"
+    },
+    "ReduxFormUtils": {
+      "errorInvalidEmail": "برائے مہربانی قابل قبول ای میل ایڈریس لکھیں",
+      "errorEmptyEmail": "براہ کرم ایک ای میل درج کریں۔",
+      "errorPasswordMismatch": "پاس ورڈز مماثل ہونا چاہیے",
+      "errorEmptyPassword": "براہ کرم پاس ورڈ درج کریں۔",
+      "errorShortPassword": "پاس ورڈ کم از کم 6 حروف کا ہونا چاہیے۔",
+      "errorConfirmPassword": "براہ کرم اپنے پاس ورڈ کی تصدیق کریں۔",
+      "errorNewPassword": "براہ کرم نیا پاس ورڈ درج کریں یا موجودہ پاس ورڈ کو خالی چھوڑ دیں۔",
+      "errorNewPasswordRepeat":"Your New Password must differ from the current one.",
+      "errorEmptyUsername": "براہ کرم ایک صارف نام درج کریں۔",
+      "errorLongUsername": "صارف کا نام 20 حروف سے کم ہونا چاہیے۔",
+      "errorValidUsername": "صارف کا نام صرف نمبرز، حروف، پیریڈز، ڈیشز اور انڈر سکور پر مشتمل ہونا چاہیے۔"
+    },
+    "NewPasswordView": {
+      "Title": "p5.js ویب ایڈیٹر | ",
+      "Description": "نیا پاس ورڈ سیٹ کریں۔",
+      "TokenInvalidOrExpired": "پاس ورڈ ری سیٹ ٹوکن غلط ہے یا ختم ہو گیا ہے۔",
+      "EmptyPassword": "براہ کرم پاس ورڈ درج کریں۔",
+      "PasswordConfirmation": "براہ کرم اپنے پاس ورڈ کی تصدیق کریں۔",
+      "PasswordMismatch": "پاس ورڈز مماثل ہونا چاہیے"
+    },
+    "AccountForm": {
+      "Email": "ای میل",
+      "EmailARIA": "ای میل",
+      "Unconfirmed": "غیر تصدیق شدہ۔",
+      "EmailSent": "تصدیق بھیجی گئی، اپنا ای میل چیک کریں۔",
+      "Resend": "دوبارہ تصدیقی میل بھیجیں",
+      "UserName": "صارف کا نام",
+      "UserNameARIA": "صارف نام",
+      "CurrentPassword": "موجودہ خفیہ لفظ",
+      "CurrentPasswordARIA": "موجودہ خفیہ لفظ",
+      "NewPassword": "نیا پاس ورڈ",
+      "NewPasswordARIA": "نیا پاس ورڈ",
+      "SubmitSaveAllSettings": "تمام ترتیبات کو محفوظ کریں۔"
+    },
+    "AccountView": {
+      "SocialLogin": "سماجی لاگ ان",
+      "SocialLoginDescription": "p5.js ویب ایڈیٹر میں لاگ ان کرنے کے لیے اپنا GitHub یا Google اکاؤنٹ استعمال کریں۔",
+      "Title": "p5.js ویب ایڈیٹر | ",
+      "Settings": "اکاؤنٹ کی ترتیبات",
+      "AccountTab": "کھاتہ",
+      "AccessTokensTab": "ٹوکنز تک رسائی حاصل کریں۔"
+    },
+    "APIKeyForm": {
+      "ConfirmDelete": "کیا آپ واقعی حذف کرنا چاہتے ہیں۔ {{key_label}}?",
+      "Summary": "ذاتی رسائی کے ٹوکنز خودکار اجازت دینے کے لیے آپ کے پاس ورڈ کی طرح کام کرتے ہیں۔\n          ",
+      "CreateToken": "نیا ٹوکن بنائیں",
+      "TokenLabel": "یہ نشان کس لیے ہے؟",
+      "TokenPlaceholder": "یہ نشان کس لیے ہے؟ ",
+      "CreateTokenSubmit": "بنانا",
+      "NoTokens": "آپ کے پاس کوئی موجودہ ٹوکن نہیں ہے۔",
+      "NewTokenTitle": "آپ کا نیا رسائی ٹوکن",
+      "NewTokenInfo": "اپنا نیا ذاتی رسائی ٹوکن ابھی کاپی کرنا یقینی بنائیں۔\n                  ",
+      "ExistingTokensTitle": "موجودہ ٹوکنز"
+    },
+    "APIKeyList": {
+      "Name": "نام",
+      "Created": "پر بنایا",
+      "LastUsed": "آخری بار استعمال کیا گیا۔",
+      "Actions": "اعمال",
+      "Never": "کبھی نہیں",
+      "DeleteARIA": "API کلید کو حذف کریں۔"
+    },
+    "NewPasswordForm": {
+      "Title": "پاس ورڈ",
+      "TitleARIA": "پاس ورڈ",
+      "ConfirmPassword": "پاس ورڈ کی تصدیق کریں۔",
+      "ConfirmPasswordARIA": "پاس ورڈ کی تصدیق کریں۔",
+      "SubmitSetNewPassword": "نیا پاس ورڈ سیٹ کریں۔"
+    },
+    "SignupForm": {
+      "Title": "صارف کا نام",
+      "TitleARIA": "صارف نام",
+      "Email": "ای میل",
+      "EmailARIA": "ای میل",
+      "Password": "پاس ورڈ",
+      "PasswordARIA": "پاس ورڈ",
+      "ConfirmPassword": "پاس ورڈ کی تصدیق کریں۔",
+      "ConfirmPasswordARIA": "پاس ورڈ کی تصدیق کریں۔",
+      "SubmitSignup": "سائن اپ"
+    },
+    "SignupView": {
+      "Title": "p5.js ویب ایڈیٹر | ",
+      "Description": "سائن اپ",
+      "Or": "یا",
+      "AlreadyHave": "پہلے سے ہی اکاؤنٹ ہے؟",
+      "Login": "لاگ ان کریں"
+    },
+    "EmailVerificationView": {
+      "Title": "p5.js ویب ایڈیٹر | ",
+      "Verify": "اپنے ای میل کی تصدیق کریں۔",
+      "InvalidTokenNull": "وہ لنک غلط ہے۔",
+      "Checking": "ٹوکن کی توثیق ہو رہی ہے، براہ کرم انتظار کریں...",
+      "Verified": "سب ہو گیا، آپ کے ای میل ایڈریس کی تصدیق ہو گئی ہے۔",
+      "InvalidState": "کچھ غلط ہو گیا."
+    },
+    "AssetList": {
+      "Title": "p5.js ویب ایڈیٹر | ",
+      "ToggleOpenCloseARIA": "اثاثہ جات کے اختیارات کھولیں / بند کریں۔",
+      "Delete": "حذف کریں۔",
+      "OpenNewTab": "نئے ٹیب میں کھولیں۔",
+      "NoUploadedAssets": "کوئی اپ لوڈ کردہ اثاثے نہیں ہیں۔",
+      "HeaderName": "نام",
+      "HeaderSize": "سائز",
+      "HeaderSketch": "خاکہ"
+    },
+    "Feedback": {
+      "Title": "p5.js ویب ایڈیٹر | ",
+      "ViaGithubHeader": "گیتھب ایشوز کے ذریعے",
+      "ViaGithubDescription": "اگر آپ Github سے واقف ہیں، تو یہ بگ رپورٹس اور تاثرات حاصل کرنے کا ہمارا ترجیحی طریقہ ہے۔",
+      "GoToGithub": "گیتھب پر جائیں۔",
+      "ViaGoogleHeader": "گوگل فارم کے ذریعے",
+      "ViaGoogleDescription": "آپ یہ فوری فارم بھی جمع کرا سکتے ہیں۔",
+      "GoToForm": "فارم پر جائیں۔"
+    },
+    "Searchbar": {
+      "SearchSketch": "خاکے تلاش کریں...",
+      "SearchCollection": "مجموعے تلاش کریں...",
+      "ClearTerm": "صاف"
+    },
+    "UploadFileModal": {
+      "Title": "اپ لوڈ فائل",
+      "CloseButtonARIA": "اپ لوڈ فائل موڈل بند کریں۔",
+      "SizeLimitError": "خرابی: آپ مزید فائلیں اپ لوڈ نہیں کر سکتے۔  {{sizeLimit}}.\n                 "
+    },
+    "FileUploader": {
+      "DictDefaultMessage": "فائلیں یہاں ڈراپ کریں یا فائل براؤزر استعمال کرنے کے لیے کلک کریں۔"
+    },
+    "ErrorModal": {
+      "MessageLogin": "خاکے محفوظ کرنے کے لیے، آپ کو لاگ اِن ہونا چاہیے۔ براہِ کرم ",
+      "Login": "لاگ ان کریں",
+      "LoginOr": " یا ",
+      "SignUp": "سائن اپ",
+      "MessageLoggedOut": "ایسا لگتا ہے کہ آپ لاگ آؤٹ ہو گئے ہیں۔  ",
+      "LogIn": "لاگ ان کریں",
+      "SavedDifferentWindow": "آپ نے جس پروجیکٹ کو محفوظ کرنے کی کوشش کی ہے اسے دوسری ونڈو سے محفوظ کر لیا گیا ہے۔\n        ",
+      "LinkTitle": "اکاؤنٹ لنک کرنے میں خرابی۔",
+      "LinkMessage": "آپ کے لنک کرنے میں ایک مسئلہ تھا۔ {{serviceauth}} اپنے p5.js ویب ایڈیٹر اکاؤنٹ میں اکاؤنٹ۔  {{serviceauth}} اکاؤنٹ پہلے ہی دوسرے p5.js ویب ایڈیٹر اکاؤنٹ سے منسلک ہے۔"
+    },
+    "ShareModal": {
+      "Embed": "ایمبیڈ",
+      "Present": "موجودہ",
+      "Fullscreen": "مکمل اسکرین یا بڑی اسکرین",
+      "Edit": "ترمیم"
+    },
+    "CollectionView": {
+      "TitleCreate": "مجموعہ بنائیں",
+      "TitleDefault": "مجموعہ"
+    },
+    "Collection": {
+      "Title": "p5.js ویب ایڈیٹر | ",
+      "AnothersTitle": "p5.js ویب ایڈیٹر | {{anotheruser}}کے مجموعے",
+      "Share": "بانٹیں",
+      "URLLink": "مجموعہ سے لنک",
+      "AddSketch": "خاکہ شامل کریں۔",
+      "DeleteFromCollection": "کیا آپ واقعی ہٹانا چاہتے ہیں {{name_sketch}} اس مجموعہ سے؟",
+      "SketchDeleted": "خاکہ حذف کر دیا گیا۔",
+      "SketchRemoveARIA": "مجموعہ سے خاکہ کو ہٹا دیں۔",
+      "DescriptionPlaceholder": "تفصیل شامل کریں۔",
+      "Description": "تفصیل",
+      "NumSketches": "{{count}} خاکہ",
+      "NumSketches_plural": "{{count}} خاکے",
+      "By": "کی طرف سے مجموعہ ",
+      "NoSketches": "مجموعہ میں کوئی خاکہ نہیں۔",
+      "TableSummary": "تمام مجموعوں پر مشتمل میز",
+      "HeaderName": "نام",
+      "HeaderCreatedAt": "شامل کرنے کی تاریخ",
+      "HeaderUser": "مالک",
+      "DirectionAscendingARIA": "صعودی",
+      "DirectionDescendingARIA": "نزول",
+      "ButtonLabelAscendingARIA": "ترتیب دیں {{displayName}} چڑھتے ہوئے",
+      "ButtonLabelDescendingARIA": "ترتیب دیں {{displayName}} نزول"
+    },
+    "AddToCollectionList": {
+      "Title": "p5.js ویب ایڈیٹر | ",
+      "AnothersTitle": "p5.js ویب ایڈیٹر | {{anotheruser}}کے مجموعے",
+      "Empty": "کوئی مجموعہ نہیں۔"
+    },
+    "CollectionCreate": {
+      "Title": "p5.js ویب ایڈیٹر | ",
+      "FormError": "مجموعہ نہیں بنایا جا سکا",
+      "FormLabel": "مجموعہ کا نام",
+      "FormLabelARIA": "نام",
+      "NameRequired": "مجموعہ کا نام درکار ہے۔",
+      "Description": "تفصیل (اختیاری)",
+      "DescriptionARIA": "تفصیل",
+      "DescriptionPlaceholder": "میرے پسندیدہ خاکے",
+      "SubmitCollectionCreate": "مجموعہ بنائیں"
+    },
+    "DashboardView": {
+      "CreateCollection": "مجموعہ بنائیں",
+      "NewSketch": "نیا خاکہ",
+      "CreateCollectionOverlay": "مجموعہ بنائیں"
+    },
+    "DashboardTabSwitcher": {
+      "Sketches": "خاکے",
+      "Collections": "مجموعے",
+      "Assets": "اثاثے"
+    },
+    "CollectionList": {
+      "Title": "p5.js ویب ایڈیٹر | ",
+      "AnothersTitle": "p5.js ویب ایڈیٹر | {{anotheruser}}کے مجموعے",
+      "NoCollections": "کوئی مجموعہ نہیں۔",
+      "TableSummary": "تمام مجموعوں پر مشتمل میز",
+      "HeaderName": "نام",
+      "HeaderCreatedAt": "تاریخ تخلیق",
+      "HeaderCreatedAt_mobile": "بنایا",
+      "HeaderUpdatedAt": "تاریخ کی تازہ کاری",
+      "HeaderUpdatedAt_mobile": "تازہ کاری",
+      "HeaderNumItems": "",
+      "HeaderNumItems_mobile": "",
+      "DirectionAscendingARIA": "صعودی",
+      "DirectionDescendingARIA": "نزول",
+      "ButtonLabelAscendingARIA": "ترتیب دیں {{displayName}} چڑھتے ہوئے",
+      "ButtonLabelDescendingARIA": "ترتیب دیں {{displayName}} نزول",
+      "AddSketch": "خاکہ شامل کریں۔"
+    },
+    "CollectionListRow": {
+      "ToggleCollectionOptionsARIA": "اوپن/کلوز کلیکشن آپشنز کو ٹوگل کریں۔",
+      "AddSketch": "خاکہ شامل کریں۔",
+      "Delete": "حذف کریں۔",
+      "Rename": "نام تبدیل کریں۔"
+    },
+    "Overlay": {
+      "AriaLabel": "بند کریں {{title}} اوورلے"
+    },
+    "QuickAddList": {
+      "ButtonRemoveARIA": "مجموعہ سے ہٹا دیں۔",
+      "ButtonAddToCollectionARIA": "مجموعہ میں شامل کریں۔",
+      "View": "دیکھیں"
+    },
+    "SketchList": {
+      "View": "دیکھیں",
+      "Title": "p5.js ویب ایڈیٹر | ",
+      "AnothersTitle": "p5.js ویب ایڈیٹر | {{anotheruser}}کے خاکے",
+      "ToggleLabelARIA": "اوپن/کلوز اسکیچ آپشنز کو ٹوگل کریں۔",
+      "DropdownRename": "نام تبدیل کریں۔",
+      "DropdownDownload": "ڈاؤن لوڈ کریں",
+      "DropdownDuplicate": "نقل",
+      "DropdownAddToCollection": "مجموعہ میں شامل کریں۔",
+      "DropdownDelete": "حذف کریں۔",
+      "DirectionAscendingARIA": "صعودی",
+      "DirectionDescendingARIA": "نزول",
+      "ButtonLabelAscendingARIA": "ترتیب دیں {{displayName}} چڑھتے ہوئے",
+      "ButtonLabelDescendingARIA": "ترتیب دیں {{displayName}} نزول",
+      "AddToCollectionOverlayTitle": "مجموعہ میں شامل کریں۔",
+      "TableSummary": "تمام محفوظ شدہ منصوبوں پر مشتمل ٹیبل",
+      "HeaderName": "خاکہ",
+      "HeaderCreatedAt": "تاریخ تخلیق",
+      "HeaderCreatedAt_mobile": "بنایا",
+      "HeaderUpdatedAt": "تاریخ کی تازہ کاری",
+      "HeaderUpdatedAt_mobile": "تازہ کاری",
+      "NoSketches": "کوئی خاکے نہیں۔"
+    },
+    "AddToCollectionSketchList": {
+      "Title": "p5.js ویب ایڈیٹر | ",
+      "AnothersTitle": "p5.js ویب ایڈیٹر | {{anotheruser}}کے خاکے",
+      "NoCollections": "کوئی مجموعہ نہیں۔"
+    },
+    "Editor": {
+      "OpenSketchARIA": "اسکیچ فائلز نیویگیشن کھولیں۔",
+      "CloseSketchARIA": "اسکیچ فائلز نیویگیشن بند کریں۔",
+      "UnsavedChangesARIA": "اسکیچ میں غیر محفوظ شدہ تبدیلیاں ہیں۔",
+      "KeyUpLineNumber": "لائن {{lineNumber}}"
+    },
+    "EditorAccessibility": {
+      "NoLintMessages": "کوئی لنٹ پیغامات نہیں ہیں۔",
+      "CurrentLine": "موجودہ لائن"
+    },
+    "Timer": {
+      "SavedAgo": "محفوظ کیا گیا: {{timeAgo}}"
+    },
+    "formatDate": {
+      "JustNow": "ابھی ابھی",
+      "15Seconds": "15 سیکنڈ پہلے",
+      "25Seconds": "25 سیکنڈ پہلے",
+      "35Seconds": "35 سیکنڈ پہلے",
+      "Ago": "{{timeAgo}} پہلے"
+    },
+    "CopyableInput": {
+      "CopiedARIA": "کلپ بورڈ پر کاپی ہو گیا!",
+      "OpenViewTabARIA": "کھولیں۔ {{label}} نئے ٹیب میں دیکھیں"
+    },
+    "EditableInput": {
+      "EditValue": "ترمیم {{display}} قدر",
+      "EmptyPlaceholder": "کوئی قدر نہیں"
+    },
+    "PreviewNav": {
+      "EditSketchARIA": "خاکہ میں ترمیم کریں۔",
+      "ByUser": "کی طرف سے"
+    },
+    "MobilePreferences": {
+      "Settings": "ترتیبات",
+      "GeneralSettings": "عام ترتیبات",
+      "Accessibility": "رسائی",
+      "AccessibleOutput": "قابل رسائی آؤٹ پٹ",
+      "Theme": "خیالیہ",
+      "LightTheme": "روشنی",
+      "DarkTheme": "اندھیرا",
+      "HighContrastTheme": "ہائی کنٹراسٹ",
+      "Autosave": "خودبخود محفوظ کریں۔",
+      "AutocompleteHinter": "خودکار تکمیل اشارہ",
+      "WordWrap": "لفظ لفاف",
+      "LineNumbers": "لائن نمبرز",
+      "LintWarningSound": "لنٹ وارننگ کی آواز",
+      "UsedScreenReader": "اسکرین ریڈر کے ساتھ استعمال کیا جاتا ہے۔",
+      "PlainText": "سادہ متن",
+      "TableText": "ٹیبل ٹیکسٹ",
+      "Sound": "آواز"
+    },
+    "PreferenceCreators": {
+      "On": "پر",
+      "Off": "بند"
+    },
+    "MobileDashboardView": {
+      "Examples": "مثالیں",
+      "Sketches": "خاکے",
+      "Collections": "مجموعے",
+      "Assets": "اثاثے",
+      "MyStuff": "میرا سامان",
+      "CreateSketch": "خاکہ بنائیں",
+      "CreateCollection": "مجموعہ بنائیں"
+    },
+    "Explorer": {
+      "Files": "فائلوں"
+    },
+    "Cookies": {
+      "Header": "کوکیز",
+      "Body": "p5.js ایڈیٹر کوکیز استعمال کرتا ہے۔  <strong> ہم اس ڈیٹا کو کبھی فروخت نہیں کرتے اور نہ ہی اسے اشتہارات کے لیے استعمال کرتے ہیں۔ </strong> آپ فیصلہ کر سکتے ہیں کہ آپ کن کوکیز کی اجازت دینا چاہیں گے، اور ہماری میں مزید جانیں۔ <0>رازداری کی پالیسی<0>.",
+      "AllowAll": "سب کو اجازت دیں۔",
+      "AllowEssential": "ضروری کی اجازت دیں۔"
+    },
+    "Legal": {
+      "PrivacyPolicy": "رازداری کی پالیسی",
+      "TermsOfUse": "استعمال کرنے کی شرائط",
+      "CodeOfConduct": "ضابطہ اخلاق"
+    }
+  }
+  

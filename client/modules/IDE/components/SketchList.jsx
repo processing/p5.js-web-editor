@@ -64,6 +64,7 @@ class SketchListRowBase extends React.Component {
 
   handleRenameEnter = (e) => {
     if (e.key === 'Enter') {
+      e.preventDefault();
       this.updateName();
       this.closeRename();
     }
@@ -173,7 +174,7 @@ class SketchListRowBase extends React.Component {
           <input
             value={renameValue}
             onChange={this.handleRenameChange}
-            onKeyUp={this.handleRenameEnter}
+            onKeyDown={this.handleRenameEnter}
             onBlur={this.handleRenameBlur}
             onClick={(e) => e.stopPropagation()}
             ref={this.renameInput}
@@ -418,9 +419,7 @@ class SketchList extends React.Component {
             }
           >
             <AddToCollectionList
-              project={this.state.sketchToAddToCollection}
-              username={this.props.username}
-              user={this.props.user}
+              projectId={this.state.sketchToAddToCollection.id}
             />
           </Overlay>
         )}
