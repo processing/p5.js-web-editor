@@ -1,5 +1,16 @@
 import * as ActionTypes from '../../../constants';
 
+const getSystemTheme = () => {
+  if (typeof window !== 'undefined' && window.matchMedia) {
+    const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)')
+      .matches;
+    return prefersDarkMode ? 'dark' : 'light';
+  }
+  return 'light';
+};
+
+const systemTheme = getSystemTheme();
+
 export const initialState = {
   fontSize: 18,
   autosave: true,
@@ -8,7 +19,7 @@ export const initialState = {
   lintWarning: false,
   textOutput: false,
   gridOutput: false,
-  theme: 'light',
+  theme: systemTheme,
   autorefresh: false,
   language: 'en-US',
   autocloseBracketsQuotes: true,
