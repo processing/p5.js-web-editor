@@ -68,7 +68,6 @@ const routes = (
       path="/:username/collections/:collection_id"
       component={CollectionView}
     />
-
     <Route path="/:username/collections" component={DashboardView} />
     <Route path="/sketches" />
     <Route path="/assets" />

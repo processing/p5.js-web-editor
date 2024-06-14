@@ -2,7 +2,7 @@ import { React, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form, Field } from 'react-final-form';
 import { useDispatch } from 'react-redux';
-import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai.js';
+import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import { validateSignup } from '../../../utils/reduxFormUtils';
 import { validateAndSignUpUser } from '../actions';
 import Button from '../../../common/Button';
