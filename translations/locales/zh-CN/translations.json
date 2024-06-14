@@ -284,6 +284,7 @@
     "errorShortPassword": "密码至少六位",
     "errorConfirmPassword": "请再次输入密码以确认",
     "errorNewPassword": "请输入一个新密码或保持当前密码为空",
+    "errorNewPasswordRepeat":"Your New Password must differ from the current one.",
     "errorEmptyUsername": "请输入一个用户名",
     "errorLongUsername": "用户名至多20位",
     "errorValidUsername": "用户名只能含有数字，字母，和某些标点符号（. - _）。"
