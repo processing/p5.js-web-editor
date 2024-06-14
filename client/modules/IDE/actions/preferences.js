@@ -1,23 +1,21 @@
 import i18next from 'i18next';
 import apiClient from '../../../utils/apiClient';
 import * as ActionTypes from '../../../constants';
-import { preferencesActions } from '../reducers/preferences';
 
-const {
+import {
   setFontSizeActions,
-  setAutosaveActions,
-  setLinewrapActions,
+  setAutoSaveActions,
+  setLineWrapActions,
   setLintWarningActions,
   setTextOutputActions,
   setGridOutputActions,
-  setPreferencesActions,
   setThemeActions,
-  setAutorefreshActions,
+  setAutoRefreshActions,
   setLineNumbersActions,
   setAutocloseBracketsQuotesActions,
   setAutocompleteHinterActions,
   setLanguageActions
-} = preferencesActions;
+} from '../reducers/preferences';
 
 function updatePreferences(formParams, dispatch) {
   apiClient
@@ -94,7 +92,7 @@ export function setAutocompleteHinter(value) {
 
 export function setAutosave(value) {
   return (dispatch, getState) => {
-    dispatch(setAutosaveActions(value));
+    dispatch(setAutoSaveActions(value));
     const state = getState();
     if (state.user.authenticated) {
       const formParams = {
@@ -109,7 +107,7 @@ export function setAutosave(value) {
 
 export function setLinewrap(value) {
   return (dispatch, getState) => {
-    dispatch(setLinewrapActions(value));
+    dispatch(setLineWrapActions(value));
     const state = getState();
     if (state.user.authenticated) {
       const formParams = {
@@ -187,12 +185,8 @@ export function setTheme(value) {
 }
 
 export function setAutorefresh(value) {
-  // return {
-  //   type: ActionTypes.SET_AUTOREFRESH,
-  //   value
-  // };
   return (dispatch, getState) => {
-    dispatch(setAutorefreshActions(value));
+    dispatch(setAutoRefreshActions(value));
     const state = getState();
     if (state.user.authenticated) {
       const formParams = {

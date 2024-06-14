@@ -61,6 +61,20 @@ const preferencesSlice = createSlice({
   }
 });
 
-export const preferencesActions = preferencesSlice.actions;
+export const {
+  setFontSizeActions,
+  setAutoSaveActions,
+  setLineWrapActions,
+  setLintWarningActions,
+  setTextOutputActions,
+  setGridOutputActions,
+  setPreferencesActions,
+  setThemeActions,
+  setAutoRefreshActions,
+  setLineNumbersActions,
+  setAutocloseBracketsQuotesActions,
+  setAutocompleteHinterActions,
+  setLanguageActions
+} = preferencesSlice.actions;
 
 export default preferencesSlice.reducer;
