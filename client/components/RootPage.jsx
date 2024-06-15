@@ -14,6 +14,11 @@ const RootPage = styled.div`
     height: 100%;
     overflow: hidden;
   }
+  @media print {
+    @page {
+      size: landscape;
+    }
+  }
 `;
 
 export default RootPage;
