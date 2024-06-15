@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { DIRECTION } from '../actions/sorting';
-import * as ActionTypes from '../../../constants';
 
 const initialState = {
   field: 'createdAt',
@@ -11,7 +10,7 @@ const sortingSlice = createSlice({
   name: 'sorting',
   initialState,
   reducers: {
-    toggleDirection: (state, action) => {
+    toggleDirectionForField: (state, action) => {
       const { field } = action.payload;
       if (field && field !== state.field) {
         const direction = field === 'name' ? DIRECTION.ASC : DIRECTION.DESC;
@@ -28,6 +27,6 @@ const sortingSlice = createSlice({
   }
 });
 
-export const sortingActions = sortingSlice.actions;
+export const { toggleDirectionForField, setSorting } = sortingSlice.actions;
 
 export default sortingSlice.reducer;

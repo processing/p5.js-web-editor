@@ -1,7 +1,7 @@
 import * as ActionTypes from '../../../constants';
-import { sortingActions } from '../reducers/sorting';
+import { setSorting } from '../reducers/sorting';
 
-export const { toggleDirection, setSorting } = sortingActions;
+export { toggleDirectionForField } from '../reducers/sorting';
 
 export const DIRECTION = {
   ASC: 'ASCENDING',
