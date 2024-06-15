@@ -119,7 +119,6 @@ class CollectionList extends React.Component {
 
   _renderFieldHeader = (fieldName, displayName) => {
     const { field, direction } = this.props.sorting;
-    console.log(field);
     const headerClass = classNames({
       'sketches-table__header': true,
       'sketches-table__header--selected': field === fieldName

@@ -22,6 +22,7 @@ const sortingSlice = createSlice({
     },
     setSorting: (state, action) => {
       const { field, direction } = action.payload;
+      console.log(field);
       return { ...state, field, direction };
     }
   }

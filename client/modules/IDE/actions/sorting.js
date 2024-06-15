@@ -1,6 +1,7 @@
 import { setSorting } from '../reducers/sorting';
 import { setSearchTerm } from '../reducers/search';
 
+export { setSearchTerm } from '../reducers/search';
 export { toggleDirectionForField } from '../reducers/sorting';
 
 export const DIRECTION = {
