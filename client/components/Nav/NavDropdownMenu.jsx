@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, { useContext, useMemo } from 'react';
-import { useFloating, autoUpdate, shift } from '@floating-ui/react';
+import { useFloating, autoUpdate, shift, limitShift } from '@floating-ui/react';
 import TriangleIcon from '../../images/down-filled-triangle.svg';
 import { MenuOpenContext, NavBarContext, ParentMenuContext } from './contexts';
 
@@ -20,13 +20,24 @@ export function useMenuProps(id) {
   return { isOpen, handlers };
 }
 
+const isSafari = () =>
+  /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+
 function NavDropdownMenu({ id, title, children }) {
   const { isOpen, handlers } = useMenuProps(id);
+
+  const middleware = isSafari()
+    ? [
+        shift({
+          mainAxis: false
+        })
+      ]
+    : [shift()];
 
   const { refs, floatingStyles } = useFloating({
     whileElementsMounted: autoUpdate,
     placement: 'bottom-start',
-    middleware: [shift()]
+    middleware
   });
 
   return (
