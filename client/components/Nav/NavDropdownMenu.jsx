@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, { useContext, useMemo } from 'react';
-import { useFloating, autoUpdate, shift, limitShift } from '@floating-ui/react';
+import { useFloating, autoUpdate, shift } from '@floating-ui/react';
 import TriangleIcon from '../../images/down-filled-triangle.svg';
 import { MenuOpenContext, NavBarContext, ParentMenuContext } from './contexts';
 
