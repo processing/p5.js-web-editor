@@ -9,12 +9,12 @@ const searchSlice = createSlice({
   name: 'search',
   initialState,
   reducers: {
-    setSearchTerm: (state, action) => {
-      const { scope, query } = action.payload;
-      return {
-        ...state,
-        [`${scope}SearchTerm`]: query
-      };
+    setSearchTerm: {
+      reducer: (state, action) => {
+        const { scope, query } = action.payload;
+        state[`${scope}SearchTerm`] = query;
+      },
+      prepare: (scope, query) => ({ payload: { scope, query } })
     }
   }
 });

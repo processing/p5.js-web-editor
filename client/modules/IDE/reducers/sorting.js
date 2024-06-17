@@ -20,10 +20,12 @@ const sortingSlice = createSlice({
         state.direction === DIRECTION.ASC ? DIRECTION.DESC : DIRECTION.ASC;
       return { ...state, direction };
     },
-    setSorting: (state, action) => {
-      const { field, direction } = action.payload;
-      console.log(field);
-      return { ...state, field, direction };
+    setSorting: {
+      reducer: (state, action) => {
+        const { field, direction } = action.payload;
+        return { ...state, field, direction };
+      },
+      prepare: (field, direction) => ({ payload: { field, direction } })
     }
   }
 });
