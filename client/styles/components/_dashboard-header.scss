@@ -24,6 +24,7 @@
       .dashboard-header__tab__title {
         font-weight: bold;
         font-size: #{math.div(15, $base-font-size)}rem;
+        pointer-events: none;
 
         @include themify() {
           color: getThemifyVariable("inactive-text-color");
