@@ -2,8 +2,10 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-const EditorAccessibility = ({ lintMessages = [] }) => {
+const EditorAccessibility = React.memo(({ lintMessages = [], currentLine }) => {
   const { t } = useTranslation();
+  const lineText = t('Editor.KeyUpLineNumber', { lineNumber: currentLine });
+
   return (
     <div className="editor-accessibility">
       <ul className="editor-lintmessages" title="lint messages">
@@ -27,12 +29,12 @@ const EditorAccessibility = ({ lintMessages = [] }) => {
           aria-atomic="true"
           id="current-line"
         >
-          {' '}
+          {lineText}
         </span>
       </p>
     </div>
   );
-};
+});
 
 EditorAccessibility.propTypes = {
   lintMessages: PropTypes.arrayOf(
@@ -43,7 +45,8 @@ EditorAccessibility.propTypes = {
       message: PropTypes.string.isRequired,
       id: PropTypes.number.isRequired
     })
-  ).isRequired
+  ).isRequired,
+  currentLine: PropTypes.number.isRequired
 };
 
 export default EditorAccessibility;

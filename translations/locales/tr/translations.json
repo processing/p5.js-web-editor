@@ -93,6 +93,11 @@
     "NewP5": "p5.js'e yeni misiniz?",
     "Report": "Bir hata bildir",
     "Learn": "Öğren",
+    "Twitter": "Twitter",
+    "Home": "Ana Sayfa",
+    "Instagram": "Instagram",
+    "Discord": "Discord",
+    "WebEditor": "Web Editörü",
     "Resources": "Kaynaklar",
     "Libraries": "Kütüphaneler",
     "Forum": "Forum",
@@ -279,6 +284,7 @@
     "errorShortPassword": "Şifre en az 6 karakter olmalıdır",
     "errorConfirmPassword": "Lütfen şifrenizi doğrulayın",
     "errorNewPassword": "Lütfen yeni bir şifre girin veya mevcut şifreyi boş bırakın.",
+    "errorNewPasswordRepeat":"Your New Password must differ from the current one.",
     "errorEmptyUsername": "Lütfen bir kullanıcı adı girin.",
     "errorLongUsername": "Kullanıcı adı 20 karakterden az olmalıdır.",
     "errorValidUsername": "Kullanıcı adı sadece sayılar, harfler, noktalar, tireler ve alt çizgilerden oluşmalıdır."
@@ -356,7 +362,8 @@
     "Description": "Kaydol",
     "Or": "Veya",
     "AlreadyHave": "Zaten bir hesabın var mı?",
-    "Login": "Giriş yap"
+    "Login": "Giriş yap",
+    "Warning":"Kaydolarak p5.js Editörün Kullanım <0>Koşullarını</0> ve <1>Gizlilik Politikasını</1> kabul etmiş olursunuz."
   },
   "EmailVerificationView": {
     "Title": "p5.js Web Düzenleyicisi | E-posta Doğrulama",
@@ -549,10 +556,6 @@
     "35Seconds": "35 saniye önce",
     "Ago": "{{timeAgo}} önce"
   },
-  "AddRemoveButton": {
-    "AltAddARIA": "Koleksiyona ekle",
-    "AltRemoveARIA": "Koleksiyondan çıkar"
-  },
   "CopyableInput": {
     "CopiedARIA": "Panoya kopyalandı!",
     "OpenViewTabARIA": "Yeni sekmede {{label}} görünümünü aç"
@@ -586,14 +589,6 @@
   "PreferenceCreators": {
     "On": "Açık",
     "Off": "Kapalı"
-  },
-  "MobileIDEView": {
-    "Preferences": "Tercihler",
-    "MyStuff": "Benim Şeylerim",
-    "Examples": "Örnekler",
-    "OriginalEditor": "Orijinal Editör",
-    "Login": "Giriş Yap",
-    "Logout": "Çıkış Yap"
   },
   "MobileDashboardView": {
     "Examples": "Örnekler",

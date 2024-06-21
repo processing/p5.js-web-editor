@@ -473,12 +473,16 @@ exports[`Nav renders editor version for desktop 1`] = `
         <li
           class="nav__item-logo"
         >
-          <test-file-stub
-            aria-label="p5.js Logo"
-            classname="svg__logo"
-            focusable="false"
-            role="img"
-          />
+          <a
+            href="https://p5js.org"
+          >
+            <test-file-stub
+              aria-label="p5.js Logo"
+              classname="svg__logo"
+              focusable="false"
+              role="img"
+            />
+          </a>
         </li>
         <li
           class="nav__item"
@@ -533,7 +537,7 @@ exports[`Nav renders editor version for desktop 1`] = `
                 <span
                   class="nav__keyboard-shortcut"
                 >
-                  ⌃+⇧+F
+                  Ctrl+Shift+F
                 </span>
               </button>
             </li>
@@ -545,7 +549,7 @@ exports[`Nav renders editor version for desktop 1`] = `
                 <span
                   class="nav__keyboard-shortcut"
                 >
-                  ⌃+F
+                  Ctrl+F
                 </span>
               </button>
             </li>
@@ -557,7 +561,7 @@ exports[`Nav renders editor version for desktop 1`] = `
                 <span
                   class="nav__keyboard-shortcut"
                 >
-                  ⌃+H
+                  Ctrl+H
                 </span>
               </button>
             </li>
@@ -603,7 +607,7 @@ exports[`Nav renders editor version for desktop 1`] = `
                 <span
                   class="nav__keyboard-shortcut"
                 >
-                  ⌃+Enter
+                  Ctrl+Enter
                 </span>
               </button>
             </li>
@@ -615,7 +619,7 @@ exports[`Nav renders editor version for desktop 1`] = `
                 <span
                   class="nav__keyboard-shortcut"
                 >
-                  ⇧+⌃+Enter
+                  Shift+Ctrl+Enter
                 </span>
               </button>
             </li>

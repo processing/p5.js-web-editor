@@ -1,29 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import MediaQuery from 'react-responsive';
+import useIsMobile from '../../hooks/useIsMobile';
+
 import Nav from './Nav';
 import Toolbar from './Toolbar';
 
 const Header = (props) => {
   const project = useSelector((state) => state.project);
 
+  const isMobile = useIsMobile();
+
   return (
-    <header>
+    <>
       <Nav />
-      <MediaQuery minWidth={770}>
-        {(matches) => {
-          if (matches)
-            return (
-              <Toolbar
-                syncFileContent={props.syncFileContent}
-                key={project.id}
-              />
-            );
-          return null;
-        }}
-      </MediaQuery>
-    </header>
+      {!isMobile && (
+        <Toolbar syncFileContent={props.syncFileContent} key={project.id} />
+      )}
+    </>
   );
 };
 

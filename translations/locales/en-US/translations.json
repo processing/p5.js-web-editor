@@ -93,13 +93,23 @@
     "NewP5": "New to p5.js?",
     "Report": "Report a bug",
     "Learn": "Learn",
+    "Twitter": "Twitter",
+    "Home": "Home",
+    "Instagram": "Instagram",
+    "Discord": "Discord",
+    "WebEditor": "Web Editor",
     "Resources": "Resources",
     "Libraries": "Libraries",
     "Forum": "Forum",
     "Examples": "Examples",
+    "Home": "Home",
+    "Twitter": "Twitter",
+    "Instagram": "Instagram",
+    "Discord": "Discord",
     "PrivacyPolicy": "Privacy Policy",
     "TermsOfUse": "Terms of Use",
-    "CodeOfConduct": "Code of Conduct"
+    "CodeOfConduct": "Code of Conduct",
+    "WebEditor": "Web Editor"
   },
   "Toast": {
     "OpenedNewSketch": "Opened new sketch.",
@@ -244,7 +254,7 @@
     "Title": "Create File",
     "CloseButtonARIA": "Close New File Modal",
     "EnterName": "Please enter a name",
-    "InvalidType": "Invalid file type. Valid extensions are .js, .css, .json, .xml, .stl, .txt, .csv, .tsv, .frag, and .vert."
+    "InvalidType": "Invalid file type. Valid extensions are .js, .css, .json, .xml, .stl, .txt, .csv, .tsv, .mtl, .frag, and .vert."
   },
   "NewFileForm": {
     "AddFileSubmit": "Add File",
@@ -282,6 +292,7 @@
     "errorShortPassword": "Password must be at least 6 characters",
     "errorConfirmPassword": "Please confirm your password",
     "errorNewPassword": "Please enter a new password or leave the current password empty.",
+    "errorNewPasswordRepeat":"Your New Password must differ from the current one.",
     "errorEmptyUsername": "Please enter a username.",
     "errorLongUsername": "Username must be less than 20 characters.",
     "errorValidUsername": "Username must only consist of numbers, letters, periods, dashes, and underscores."
@@ -553,10 +564,6 @@
     "35Seconds": "35 seconds ago",
     "Ago": "{{timeAgo}} ago"
   },
-  "AddRemoveButton": {
-    "AltAddARIA": "Add to collection",
-    "AltRemoveARIA": "Remove from collection"
-  },
   "CopyableInput": {
     "CopiedARIA": "Copied to Clipboard!",
     "OpenViewTabARIA": "Open {{label}} view in new tab"
@@ -592,14 +599,6 @@
     "On": "On",
     "Off": "Off"
   },
-  "MobileIDEView":{
-    "Preferences": "Preferences",
-    "MyStuff": "My Stuff",
-    "Examples": "Examples",
-    "OriginalEditor": "Original Editor",
-    "Login": "Login",
-    "Logout": "Logout"
-  },
   "MobileDashboardView": {
     "Examples": "Examples",
     "Sketches": "Sketches",
@@ -622,5 +621,8 @@
     "PrivacyPolicy": "Privacy Policy",
     "TermsOfUse": "Terms of Use",
     "CodeOfConduct": "Code of Conduct"
+  },
+  "SkipLink": {
+    "PlaySketch": "Skip to Play Sketch"
   }
 }

@@ -1,6 +1,5 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import prettyBytes from 'pretty-bytes';
 
 import getConfig from '../../../utils/getConfig';
@@ -18,7 +17,11 @@ const formatPercent = (percent) => {
 };
 
 /* Eventually, this copy should be Total / 250 MB Used */
-const AssetSize = ({ totalSize }) => {
+const AssetSize = () => {
+  const totalSize = useSelector(
+    (state) => state.user.totalSize || state.assets.totalSize
+  );
+
   if (totalSize === undefined) {
     return null;
   }
@@ -40,15 +43,4 @@ const AssetSize = ({ totalSize }) => {
   );
 };
 
-AssetSize.propTypes = {
-  totalSize: PropTypes.number.isRequired
-};
-
-function mapStateToProps(state) {
-  return {
-    user: state.user,
-    totalSize: state.user.totalSize || state.assets.totalSize
-  };
-}
-
-export default connect(mapStateToProps)(AssetSize);
+export default AssetSize;
