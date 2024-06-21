@@ -114,7 +114,7 @@ const ProjectMenu = () => {
   const isUserOwner = useSelector(getIsUserOwner);
   const project = useSelector((state) => state.project);
   const user = useSelector((state) => state.user);
-  const userSketches = `${user.username}/sketches`;
+  const userSketches = `/${user.username}/sketches`;
   const isUnsaved = !project?.id;
 
   const rootFile = useSelector(selectRootFile);
@@ -206,9 +206,7 @@ const ProjectMenu = () => {
       <NavDropdownMenu id="edit" title={t('Nav.Edit.Title')}>
         <NavMenuItem onClick={cmRef.current?.tidyCode}>
           {t('Nav.Edit.TidyCode')}
-          <span className="nav__keyboard-shortcut">
-            {metaKeyName}+{'\u21E7'}+F
-          </span>
+          <span className="nav__keyboard-shortcut">{metaKeyName}+Shift+F</span>
         </NavMenuItem>
         <NavMenuItem onClick={cmRef.current?.showFind}>
           {t('Nav.Edit.Find')}
@@ -233,7 +231,7 @@ const ProjectMenu = () => {
         <NavMenuItem onClick={() => dispatch(stopSketch())}>
           {t('Nav.Sketch.Stop')}
           <span className="nav__keyboard-shortcut">
-            {'\u21E7'}+{metaKeyName}+Enter
+            Shift+{metaKeyName}+Enter
           </span>
         </NavMenuItem>
       </NavDropdownMenu>
