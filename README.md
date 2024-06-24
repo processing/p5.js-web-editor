@@ -22,8 +22,6 @@ Make your first sketch in the [p5.js Editor](https://editor.p5js.org/)! Learn mo
 If you have found a bug in the p5.js Web Editor, you can file it under the ["issues" tab](https://github.com/processing/p5.js-web-editor/issues). You can also request new features here. A set of templates for reporting issues and requesting features are provided to assist you (and us!). The p5.js Editor is maintained mostly by volunteers, so we thank you for your patience as we try to address your issues as soon as we can. Please post bugs and feature requests in the correct repository if you can:
 
 * p5.js library: [https://github.com/processing/p5.js/issues](https://github.com/processing/p5.js/issues)
-* p5.accessibility: [https://github.com/processing/p5.accessibility/issues](https://github.com/processing/p5.accessibility/issues)
-* p5.sound: [https://github.com/processing/p5.js-sound/issues](https://github.com/processing/p5.js-sound/issues)
 * p5.js website: [https://github.com/processing/p5.js-website/issues](https://github.com/processing/p5.js-website/issues)
 
 
