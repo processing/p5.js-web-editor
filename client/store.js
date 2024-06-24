@@ -24,7 +24,7 @@ export default function setupStore(initialState) {
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({
         thunk: true,
-        serializableCheck: true,
+        serializableCheck: false,
         // TODO: enable immutableCheck once the mutations are fixed.
         immutableCheck: false
       }).concat(listenerMiddleware.middleware),

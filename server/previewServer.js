@@ -15,12 +15,24 @@ const app = new Express();
 // This also works if you take out the mongoose connection
 // but i have no idea why
 const mongoConnectionString = process.env.MONGO_URL;
+
 // Connect to MongoDB
-mongoose.Promise = global.Promise;
-mongoose.connect(mongoConnectionString, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
+const connectToMongoDB = async () => {
+  try {
+    await mongoose.connect(mongoConnectionString, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useCreateIndex: true,
+      useFindAndModify: false
+    });
+  } catch (error) {
+    console.error('Failed to connect to MongoDB: ', error);
+    process.exit(1);
+  }
+};
+
+connectToMongoDB();
+
 mongoose.set('useCreateIndex', true);
 mongoose.connection.on('error', () => {
   console.error(

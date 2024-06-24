@@ -87,16 +87,24 @@
     "LogoARIA": "{{serviceauth}} logo"
   },
   "About": {
-    "Title": "Über",
+    "Title": "Über",  
     "TitleHelmet": "p5.js Web Editor | Über",
     "Contribute": "Mitwirken",
     "NewP5": "Neu bei p5.js?",
     "Report": "Einen Fehler melden",
     "Learn": "Lernen",
+    "Twitter": "Twitter",
+    "Home": "Startseite",
+    "Instagram": "Instagram",
+    "Discord": "Discord",
+    "WebEditor": "Web Editor",
     "Resources": "Ressourcen",
     "Libraries": "Bibliotheken",
     "Forum": "Forum",
-    "Examples": "Beispiele"
+    "Examples": "Beispiele",
+    "PrivacyPolicy": "Datenschutzbestimmungen",
+    "TermsOfUse": "Nutzungsbedingungen",
+    "CodeOfConduct": "Verhaltenskodex"
   },
   "Toast": {
     "OpenedNewSketch": "Neuer Sketch geöffnet.",
@@ -272,6 +280,7 @@
     "errorEmptyPassword": "Gib bitte ein Passwort ein",
     "errorShortPassword": "Das Passwort muss mindestens aus 6 Zeichen bestehen",
     "errorConfirmPassword": "Gib bitte das Passwort erneut ein",
+    "errorNewPasswordRepeat":"Your New Password must differ from the current one.",
     "errorNewPassword": "Gib bitte ein neues Passwort ein oder lass dieses Feld frei.",
     "errorEmptyUsername": "Gib bitte einen Nutzernamen ein.",
     "errorLongUsername": "Der Nutzername muss weniger als 20 Zeichen haben.",
@@ -544,10 +553,6 @@
     "35Seconds": "vor 35 Sekunden",
     "Ago": "vor {{timeAgo}}"
   },
-  "AddRemoveButton": {
-    "AltAddARIA": "Zur Sammlung hinzufügen",
-    "AltRemoveARIA": "Aus Sammlung entfernen"
-  },
   "CopyableInput": {
     "CopiedARIA": "In die Zwischenablage kopiert",
     "OpenViewTabARIA": "Öffne {{label}} in neuem Tab"
@@ -581,14 +586,6 @@
   "PreferenceCreators": {
     "On": "An",
     "Off": "Aus"
-  },
-  "MobileIDEView": {
-    "Preferences": "Einstellungen",
-    "MyStuff": "Mein Zeug",
-    "Examples": "Beispiele",
-    "OriginalEditor": "Original-Editor",
-    "Login": "Anmelden",
-    "Logout": "Abmelden"
   },
   "MobileDashboardView": {
     "Examples":  "Beispiele",

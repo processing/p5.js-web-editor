@@ -22,25 +22,12 @@ Make your first sketch in the [p5.js Editor](https://editor.p5js.org/)! Learn mo
 If you have found a bug in the p5.js Web Editor, you can file it under the ["issues" tab](https://github.com/processing/p5.js-web-editor/issues). You can also request new features here. A set of templates for reporting issues and requesting features are provided to assist you (and us!). The p5.js Editor is maintained mostly by volunteers, so we thank you for your patience as we try to address your issues as soon as we can. Please post bugs and feature requests in the correct repository if you can:
 
 * p5.js library: [https://github.com/processing/p5.js/issues](https://github.com/processing/p5.js/issues)
-* p5.accessibility: [https://github.com/processing/p5.accessibility/issues](https://github.com/processing/p5.accessibility/issues)
-* p5.sound: [https://github.com/processing/p5.js-sound/issues](https://github.com/processing/p5.js-sound/issues)
 * p5.js website: [https://github.com/processing/p5.js-website/issues](https://github.com/processing/p5.js-website/issues)
 
 
 ### How Do I Know My Issue or Pull Request is Getting Reviewed?
 
 To see which pull requests and issues are currently being reviewed, check the [PR Review Board](https://github.com/processing/p5.js-web-editor/projects/9) or the following Milestones: [MINOR Release](https://github.com/processing/p5.js-web-editor/milestone/8). 
-
-Issues and Pull Requests categorized under the PATCH or MINOR Release Milestones will be prioritized since they are planned to be merged for the next release to Production. Please feel free to [comment on this pinned issue](https://github.com/processing/p5.js-web-editor/issues/2534) if you would like your issue to be considered for the next release!
-
-
-### When Will the Next Production Release Be?
-
-We will aim to deploy on a 1-2 month basis. Here are some dates we’re working towards: 
-
-2.12.0 MINOR Release: By February 27, 2024
-
-[You can read more about Semantic Versioning and the differences between a MINOR and PATCH release](https://semver.org/). 
 
 
 ## References for Contributing to the p5.js Web Editor

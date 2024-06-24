@@ -93,6 +93,11 @@
     "NewP5": "Sei nuovo su p5.js?",
     "Report": "Riporta un bug",
     "Learn": "Impara",
+    "Twitter": "Twitter",
+    "Home": "Home",
+    "Instagram": "Instagram",
+    "Discord": "Discord",
+    "WebEditor": "Editor Web",
     "Resources": "Risorse",
     "Libraries": "Librerie",
     "Forum": "Forum",
@@ -279,6 +284,7 @@
     "errorShortPassword": "La password dev'essere di almeno 6 caratteri",
     "errorConfirmPassword": "Per favore inserisci la password di conferma",
     "errorNewPassword": "Per favore inserisci una nuova password o lascia la password corrente vuota.",
+    "errorNewPasswordRepeat":"Your New Password must differ from the current one.",
     "errorEmptyUsername": "Per favore inserisci un nome utente.",
     "errorLongUsername": "Il nome utente deve avere meno di 20 caratteri.",
     "errorValidUsername": "Il nome utente dev'essere composto solo da numeri, lettere, must only consist of numbers, letters, punti, trattini e trattini bassi."
@@ -549,10 +555,6 @@
     "35Seconds": "35 secondi fa",
     "Ago": "{{timeAgo}} fa"
   },
-  "AddRemoveButton": {
-    "AltAddARIA": "Aggiungi alla collezione",
-    "AltRemoveARIA": "Remove from collezione"
-  },
   "CopyableInput": {
     "CopiedARIA": "Copiato negli appunti!",
     "OpenViewTabARIA": "Apri {{label}} vista in nuova pagina"
@@ -586,14 +588,6 @@
   "PreferenceCreators": {
     "On": "On",
     "Off": "Off"
-  },
-  "MobileIDEView":{
-    "Preferences": "Preferenze",
-    "MyStuff": "Le mie cose",
-    "Examples": "Esempi",
-    "OriginalEditor": "Editor originale",
-    "Login": "Accedi",
-    "Logout": "Disconnetti"
   },
   "MobileDashboardView": {
     "Examples": "Esempi",
