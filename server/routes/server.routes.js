@@ -76,11 +76,17 @@ router.get('/login', (req, res) => {
 });
 
 router.get('/reset-password', (req, res) => {
-  res.send(renderIndex());
+  if (req.user) {
+    return res.redirect('/account');
+  }
+  return res.send(renderIndex());
 });
 
 router.get('/reset-password/:reset_password_token', (req, res) => {
-  res.send(renderIndex());
+  if (req.user) {
+    return res.redirect('/account');
+  }
+  return res.send(renderIndex());
 });
 
 router.get('/verify', (req, res) => {
@@ -89,18 +95,18 @@ router.get('/verify', (req, res) => {
 
 router.get('/sketches', (req, res) => {
   if (req.user) {
-    res.send(renderIndex());
-  } else {
-    res.redirect('/login');
+    const { username } = req.user;
+    return res.redirect(`/${username}/sketches`);
   }
+  return res.redirect('/login');
 });
 
 router.get('/assets', (req, res) => {
   if (req.user) {
-    res.send(renderIndex());
-  } else {
-    res.redirect('/login');
+    const { username } = req.user;
+    return res.redirect(`/${username}/assets`);
   }
+  return res.redirect('/login');
 });
 
 router.get('/:username/assets', async (req, res) => {
