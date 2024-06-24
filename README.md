@@ -25,11 +25,6 @@ If you have found a bug in the p5.js Web Editor, you can file it under the ["iss
 * p5.js website: [https://github.com/processing/p5.js-website/issues](https://github.com/processing/p5.js-website/issues)
 
 
-### How Do I Know My Issue or Pull Request is Getting Reviewed?
-
-To see which pull requests and issues are currently being reviewed, check the [PR Review Board](https://github.com/processing/p5.js-web-editor/projects/9) or the following Milestones: [MINOR Release](https://github.com/processing/p5.js-web-editor/milestone/8). 
-
-
 ## References for Contributing to the p5.js Web Editor
 
 [Code of Conduct](https://editor.p5js.org/code-of-conduct)
