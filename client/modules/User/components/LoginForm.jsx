@@ -55,25 +55,27 @@ function LoginForm() {
                   <label htmlFor="password" className="form__label">
                     {t('LoginForm.Password')}
                   </label>
-                  <button
-                    className="form__eye__icon"
-                    type="button"
-                    onClick={handleVisibility}
-                  >
-                    {showPassword ? (
-                      <AiOutlineEyeInvisible />
-                    ) : (
-                      <AiOutlineEye />
-                    )}
-                  </button>
-                  <input
-                    className="form__input"
-                    aria-label={t('LoginForm.PasswordARIA')}
-                    type={showPassword ? 'text' : 'password'}
-                    id="password"
-                    autoComplete="current-password"
-                    {...field.input}
-                  />
+                  <div className="form__field__password">
+                    <button
+                      className="form__eye__icon"
+                      type="button"
+                      onClick={handleVisibility}
+                    >
+                      {showPassword ? (
+                        <AiOutlineEyeInvisible />
+                      ) : (
+                        <AiOutlineEye />
+                      )}
+                    </button>
+                    <input
+                      className="form__input"
+                      aria-label={t('LoginForm.PasswordARIA')}
+                      type={showPassword ? 'text' : 'password'}
+                      id="password"
+                      autoComplete="current-password"
+                      {...field.input}
+                    />
+                  </div>
                   {field.meta.touched && field.meta.error && (
                     <span className="form-error">{field.meta.error}</span>
                   )}
