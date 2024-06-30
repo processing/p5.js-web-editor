@@ -1,6 +1,6 @@
 import get404Sketch from './404Page';
 
-export function renderIndex() {
+export function renderIndex(username , projectName) {
   const assetsManifest = process.env.webpackAssets && JSON.parse(process.env.webpackAssets);
   return `
   <!DOCTYPE html>
@@ -10,7 +10,7 @@ export function renderIndex() {
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name="keywords" content="p5.js, p5.js web editor, web editor, processing, code editor" />
       <meta name="description" content="A web editor for p5.js, a JavaScript library with the goal of making coding accessible to artists, designers, educators, and beginners." />
-      <title>p5.js Web Editor</title>
+      <title>${`${username ? `${projectName} by ${username} -`: ""}`}p5.js Web Editor</title>
       ${process.env.NODE_ENV === 'production' ? `<link rel='stylesheet' href='${assetsManifest['/app.css']}' />` : ''}
       <link href='https://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>
       <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
@@ -54,11 +54,11 @@ export function renderIndex() {
  * @param {import('express').e.Response} res
  * @param {boolean} [exists]
  */
-export default function sendHtml(req, res, exists = true) {
-  if (!exists) {
+export default function sendHtml(req, res, exists = {success:true}) {
+  if (!exists.success) {
     res.status(404);
     get404Sketch((html) => res.send(html));
   } else {
-    res.send(renderIndex());
+    res.send(renderIndex(req.params.username, exists.projectName));
   }
 };
