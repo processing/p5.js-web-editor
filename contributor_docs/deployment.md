@@ -2,8 +2,7 @@
 
 This document contains information about how to deploy to production, all of the different platforms and tools, and how to configure them.
 
-WIP.
-* Production Setup/Installation
+WIP:
 * Travis
 * Docker Hub
 * Kubernetes
