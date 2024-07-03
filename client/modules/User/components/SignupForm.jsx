@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form, Field } from 'react-final-form';
 import { useDispatch } from 'react-redux';
@@ -109,25 +109,27 @@ function SignupForm() {
                   <label htmlFor="password" className="form__label">
                     {t('SignupForm.Password')}
                   </label>
-                  <button
-                    className="form__eye__icon"
-                    type="button"
-                    onClick={handleVisibility}
-                  >
-                    {showPassword ? (
-                      <AiOutlineEyeInvisible />
-                    ) : (
-                      <AiOutlineEye />
-                    )}
-                  </button>
-                  <input
-                    className="form__input"
-                    aria-label={t('SignupForm.PasswordARIA')}
-                    type={showPassword ? 'text' : 'password'}
-                    id="password"
-                    autoComplete="new-password"
-                    {...field.input}
-                  />
+                  <div className="form__field__password">
+                    <button
+                      className="form__eye__icon"
+                      type="button"
+                      onClick={handleVisibility}
+                    >
+                      {showPassword ? (
+                        <AiOutlineEyeInvisible />
+                      ) : (
+                        <AiOutlineEye />
+                      )}
+                    </button>
+                    <input
+                      className="form__input"
+                      aria-label={t('SignupForm.PasswordARIA')}
+                      type={showPassword ? 'text' : 'password'}
+                      id="password"
+                      autoComplete="new-password"
+                      {...field.input}
+                    />
+                  </div>
                   {field.meta.touched && field.meta.error && (
                     <span className="form-error">{field.meta.error}</span>
                   )}
@@ -142,25 +144,27 @@ function SignupForm() {
                   <label htmlFor="confirmPassword" className="form__label">
                     {t('SignupForm.ConfirmPassword')}
                   </label>
-                  <button
-                    className="form__eye__icon"
-                    type="button"
-                    onClick={handleConfirmVisibility}
-                  >
-                    {showConfirmPassword ? (
-                      <AiOutlineEyeInvisible />
-                    ) : (
-                      <AiOutlineEye />
-                    )}
-                  </button>
-                  <input
-                    className="form__input"
-                    type={showConfirmPassword ? 'text' : 'password'}
-                    aria-label={t('SignupForm.ConfirmPasswordARIA')}
-                    id="confirmPassword" // Match the id with htmlFor
-                    autoComplete="new-password"
-                    {...field.input}
-                  />
+                  <div className="form__field__password">
+                    <button
+                      className="form__eye__icon"
+                      type="button"
+                      onClick={handleConfirmVisibility}
+                    >
+                      {showConfirmPassword ? (
+                        <AiOutlineEyeInvisible />
+                      ) : (
+                        <AiOutlineEye />
+                      )}
+                    </button>
+                    <input
+                      className="form__input"
+                      type={showConfirmPassword ? 'text' : 'password'}
+                      aria-label={t('SignupForm.ConfirmPasswordARIA')}
+                      id="confirmPassword" // Match the id with htmlFor
+                      autoComplete="new-password"
+                      {...field.input}
+                    />
+                  </div>
                   {field.meta.touched && field.meta.error && (
                     <span className="form-error">{field.meta.error}</span>
                   )}

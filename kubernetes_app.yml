@@ -65,7 +65,7 @@ spec:
   selector:
     matchLabels:
       app: web-editor
-  replicas: 4
+  replicas: 7
   template:
     metadata:
       labels:
@@ -99,8 +99,8 @@ metadata:
   name: web-editor-node
   namespace: production
 spec:
-  maxReplicas: 9
-  minReplicas: 3
+  maxReplicas: 18
+  minReplicas: 6
   scaleTargetRef:
     apiVersion: extensions/v1beta1
     kind: Deployment
