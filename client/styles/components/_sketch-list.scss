@@ -42,6 +42,7 @@
 
           > th {
             padding-left: 0;
+            width: 100%;
             font-weight: bold;
             margin-bottom: #{math.div(6, $base-font-size)}rem;
           }
@@ -163,8 +164,6 @@
 
 .sketches-table th {
   font-weight: normal;
-  max-width:8rem;
-  padding-right:1rem;
   overflow-wrap: break-word;
 }
 
