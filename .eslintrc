@@ -1,4 +1,5 @@
 {
+  
 	"extends": ["airbnb", "prettier", "plugin:storybook/recommended"],
 	"parser": "@babel/eslint-parser",
 	"env": {
@@ -7,6 +8,8 @@
     "jest": true
   },
   "rules": {
+    "no-shadow": "off",
+    "react/no-unused-prop-types": 0,
     "linebreak-style": 0,
     "react/no-multi-comp": 0,
     "import/default": 0,
