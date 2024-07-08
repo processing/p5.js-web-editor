@@ -63,7 +63,7 @@ function SignupForm() {
             validateFields={[]}
           >
             {(field) => (
-              <p className="form__field">
+              <div className="form__field">
                 <label htmlFor="username" className="form__label">
                   {t('SignupForm.Title')}
                 </label>
@@ -77,14 +77,16 @@ function SignupForm() {
                   {...field.input}
                 />
                 {field.meta.touched && field.meta.error && (
-                  <span className="form-error">{field.meta.error}</span>
+                  <span className="form-error" aria-live="polite">
+                    {field.meta.error}
+                  </span>
                 )}
-              </p>
+              </div>
             )}
           </Field>
           <Field name="email" validate={validateEmail} validateFields={[]}>
             {(field) => (
-              <p className="form__field">
+              <div className="form__field">
                 <label htmlFor="email" className="form__label">
                   {t('SignupForm.Email')}
                 </label>
@@ -97,78 +99,82 @@ function SignupForm() {
                   {...field.input}
                 />
                 {field.meta.touched && field.meta.error && (
-                  <span className="form-error">{field.meta.error}</span>
+                  <span className="form-error" aria-live="polite">
+                    {field.meta.error}
+                  </span>
                 )}
-              </p>
+              </div>
             )}
           </Field>
           <Field name="password">
             {(field) => (
-              <div>
-                <p className="form__field">
-                  <label htmlFor="password" className="form__label">
-                    {t('SignupForm.Password')}
-                  </label>
-                  <div className="form__field__password">
-                    <button
-                      className="form__eye__icon"
-                      type="button"
-                      onClick={handleVisibility}
-                    >
-                      {showPassword ? (
-                        <AiOutlineEyeInvisible />
-                      ) : (
-                        <AiOutlineEye />
-                      )}
-                    </button>
-                    <input
-                      className="form__input"
-                      aria-label={t('SignupForm.PasswordARIA')}
-                      type={showPassword ? 'text' : 'password'}
-                      id="password"
-                      autoComplete="new-password"
-                      {...field.input}
-                    />
-                  </div>
-                  {field.meta.touched && field.meta.error && (
-                    <span className="form-error">{field.meta.error}</span>
-                  )}
-                </p>
+              <div className="form__field">
+                <label htmlFor="password" className="form__label">
+                  {t('SignupForm.Password')}
+                </label>
+                <div className="form__field__password">
+                  <button
+                    className="form__eye__icon"
+                    type="button"
+                    onClick={handleVisibility}
+                    aria-hidden="true"
+                  >
+                    {showPassword ? (
+                      <AiOutlineEyeInvisible />
+                    ) : (
+                      <AiOutlineEye />
+                    )}
+                  </button>
+                  <input
+                    className="form__input"
+                    aria-label={t('SignupForm.PasswordARIA')}
+                    type={showPassword ? 'text' : 'password'}
+                    id="password"
+                    autoComplete="new-password"
+                    {...field.input}
+                  />
+                </div>
+                {field.meta.touched && field.meta.error && (
+                  <span className="form-error" aria-live="polite">
+                    {field.meta.error}
+                  </span>
+                )}
               </div>
             )}
           </Field>
           <Field name="confirmPassword">
             {(field) => (
-              <div>
-                <p className="form__field">
-                  <label htmlFor="confirmPassword" className="form__label">
-                    {t('SignupForm.ConfirmPassword')}
-                  </label>
-                  <div className="form__field__password">
-                    <button
-                      className="form__eye__icon"
-                      type="button"
-                      onClick={handleConfirmVisibility}
-                    >
-                      {showConfirmPassword ? (
-                        <AiOutlineEyeInvisible />
-                      ) : (
-                        <AiOutlineEye />
-                      )}
-                    </button>
-                    <input
-                      className="form__input"
-                      type={showConfirmPassword ? 'text' : 'password'}
-                      aria-label={t('SignupForm.ConfirmPasswordARIA')}
-                      id="confirmPassword" // Match the id with htmlFor
-                      autoComplete="new-password"
-                      {...field.input}
-                    />
-                  </div>
-                  {field.meta.touched && field.meta.error && (
-                    <span className="form-error">{field.meta.error}</span>
-                  )}
-                </p>
+              <div className="form__field">
+                <label htmlFor="confirmPassword" className="form__label">
+                  {t('SignupForm.ConfirmPassword')}
+                </label>
+                <div className="form__field__password">
+                  <button
+                    className="form__eye__icon"
+                    type="button"
+                    onClick={handleConfirmVisibility}
+                    aria-hidden="true"
+                  >
+                    {showConfirmPassword ? (
+                      <AiOutlineEyeInvisible />
+                    ) : (
+                      <AiOutlineEye />
+                    )}
+                  </button>
+                  <input
+                    className="form__input"
+                    type={showConfirmPassword ? 'text' : 'password'}
+                    aria-label={t('SignupForm.ConfirmPasswordARIA')}
+                    id="confirmPassword" // Match the id with htmlFor
+                    autoComplete="new-password"
+                    {...field.input}
+                  />
+                </div>
+                {field.meta.touched && field.meta.error && (
+                  <span className="form-error" aria-live="polite">
+                    {field.meta.error}
+                  </span>
+                )}
               </div>
             )}
           </Field>
