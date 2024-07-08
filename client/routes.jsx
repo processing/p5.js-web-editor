@@ -69,8 +69,8 @@ const routes = (
       component={CollectionView}
     />
     <Route path="/:username/collections" component={DashboardView} />
-    <Route path="/sketches" />
-    <Route path="/assets" />
+    <Route path="/sketches" component={DashboardView} />
+    <Route path="/assets" component={DashboardView} />
     <Route path="/account" component={AccountView} />
     <Route path="/about" component={IDEView} />
     <Route path="/privacy-policy" component={PrivacyPolicy} />
