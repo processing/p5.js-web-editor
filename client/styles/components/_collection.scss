@@ -108,7 +108,7 @@
   width: #{math.div(350, $base-font-size)}rem;
   @media only screen and (max-width: 520px) {
     max-width: 90vw;
-    right: -#{120 / $base-font-size}rem;
+    right: -#{math.div(120, $base-font-size)}rem;
   }
 }
 
