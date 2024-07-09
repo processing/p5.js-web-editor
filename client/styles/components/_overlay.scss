@@ -52,7 +52,7 @@
 }
 
 .overlay__actions-mobile {
-  padding-left: #{24/ $base-font-size}rem;
+  padding-left: #{math.div(24, $base-font-size)}rem;
 }
 
 .overlay__title {
