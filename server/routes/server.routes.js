@@ -50,7 +50,7 @@ router.get('/:username/sketches/:project_id', async (req, res) => {
   );
 
   if (userProject.exists) {
-    res.send(renderProjectIndex(req.params.username, userProject.projectName));
+    res.send(renderProjectIndex(req.params.username, userProject.project.name));
   } else {
     sendHtml(req, res, userProject.exists);
   }
