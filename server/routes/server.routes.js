@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import sendHtml, { renderIndex } from '../views/index';
+import sendHtml, { renderIndex, renderProjectIndex } from '../views/index';
 import { userExists } from '../controllers/user.controller';
 import {
   projectExists,
@@ -47,7 +47,12 @@ router.get('/:username/sketches/:project_id', async (req, res) => {
     req.params.username,
     req.params.project_id
   );
-  sendHtml(req, res, exists);
+
+  if (exists.success && exists.projectName) {
+    res.send(renderProjectIndex(req.params.username, exists.projectName));
+  } else {
+    sendHtml(req, res, exists);
+  }
 });
 
 router.get('/:username/sketches', async (req, res) => {

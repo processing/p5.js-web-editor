@@ -48,7 +48,7 @@ export function renderIndex() {
   `;
 }
 
-export function renderProjectIndex(username , projectName) {
+export function renderProjectIndex(username, projectName) {
   const assetsManifest = process.env.webpackAssets && JSON.parse(process.env.webpackAssets);
   return `
   <!DOCTYPE html>
@@ -107,6 +107,6 @@ export default function sendHtml(req, res, exists = {success:true}) {
     res.status(404);
     get404Sketch((html) => res.send(html));
   } else {
-    res.send(renderProjectIndex(req.params.username, exists.projectName));
+    res.send(renderIndex());
   }
 };
