@@ -165,14 +165,29 @@ export async function projectExists(projectId) {
  */
 export async function projectForUserExists(username, projectId) {
   const user = await User.findByUsername(username);
-  if (!user) return { success: false };
+  if (!user) return false;
+  const project = await Project.findOne({
+    user: user._id,
+    $or: [{ _id: projectId }, { slug: projectId }]
+  });
+  return project != null;
+}
+
+/**
+ * @param {string} username
+ * @param {string} projectId - the database id or the slug or the project
+ * @return {Promise<object>}
+ */
+export async function getProjectForUser(username, projectId) {
+  const user = await User.findByUsername(username);
+  if (!user) return { exists: false };
   const project = await Project.findOne({
     user: user._id,
     $or: [{ _id: projectId }, { slug: projectId }]
   });
   return project != null
-    ? { success: true, projectName: project.name }
-    : { success: false };
+    ? { exists: true, userProject: project }
+    : { exists: false };
 }
 
 /**

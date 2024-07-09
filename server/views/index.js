@@ -102,8 +102,8 @@ export function renderProjectIndex(username, projectName) {
  * @param {import('express').e.Response} res
  * @param {boolean} [exists]
  */
-export default function sendHtml(req, res, exists = {success:true}) {
-  if (!exists.success) {
+export default function sendHtml(req, res, exists = true) {
+  if (!exists) {
     res.status(404);
     get404Sketch((html) => res.send(html));
   } else {

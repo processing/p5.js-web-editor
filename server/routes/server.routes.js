@@ -3,7 +3,8 @@ import sendHtml, { renderIndex, renderProjectIndex } from '../views/index';
 import { userExists } from '../controllers/user.controller';
 import {
   projectExists,
-  projectForUserExists
+  projectForUserExists,
+  getProjectForUser
 } from '../controllers/project.controller';
 import { collectionForUserExists } from '../controllers/collection.controller';
 
@@ -43,15 +44,15 @@ router.get(
 );
 
 router.get('/:username/sketches/:project_id', async (req, res) => {
-  const exists = await projectForUserExists(
+  const userProject = await getProjectForUser(
     req.params.username,
     req.params.project_id
   );
 
-  if (exists.success && exists.projectName) {
-    res.send(renderProjectIndex(req.params.username, exists.projectName));
+  if (userProject.exists) {
+    res.send(renderProjectIndex(req.params.username, userProject.projectName));
   } else {
-    sendHtml(req, res, exists);
+    sendHtml(req, res, userProject.exists);
   }
 });
 
