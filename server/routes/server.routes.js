@@ -1,9 +1,10 @@
 import { Router } from 'express';
-import sendHtml, { renderIndex } from '../views/index';
+import sendHtml, { renderIndex, renderProjectIndex } from '../views/index';
 import { userExists } from '../controllers/user.controller';
 import {
   projectExists,
-  projectForUserExists
+  projectForUserExists,
+  getProjectForUser
 } from '../controllers/project.controller';
 import { collectionForUserExists } from '../controllers/collection.controller';
 
@@ -43,11 +44,16 @@ router.get(
 );
 
 router.get('/:username/sketches/:project_id', async (req, res) => {
-  const exists = await projectForUserExists(
+  const project = await getProjectForUser(
     req.params.username,
     req.params.project_id
   );
-  sendHtml(req, res, exists);
+
+  if (project.exists) {
+    res.send(renderProjectIndex(req.params.username, project.userProject.name));
+  } else {
+    sendHtml(req, res, project.exists);
+  }
 });
 
 router.get('/:username/sketches', async (req, res) => {
