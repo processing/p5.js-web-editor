@@ -44,15 +44,15 @@ router.get(
 );
 
 router.get('/:username/sketches/:project_id', async (req, res) => {
-  const userProject = await getProjectForUser(
+  const project = await getProjectForUser(
     req.params.username,
     req.params.project_id
   );
 
-  if (userProject.exists) {
-    res.send(renderProjectIndex(req.params.username, userProject.project.name));
+  if (project.exists) {
+    res.send(renderProjectIndex(req.params.username, project.userProject.name));
   } else {
-    sendHtml(req, res, userProject.exists);
+    sendHtml(req, res, project.exists);
   }
 });
 
