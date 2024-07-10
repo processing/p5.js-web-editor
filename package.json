@@ -209,7 +209,6 @@
     "loop-protect": "github:catarak/loop-protect",
     "mime": "^3.0.0",
     "mjml": "^4.14.1",
-    "mockingoose": "^2.15.2",
     "mongoose": "^6.13.0",
     "nodemailer": "^6.7.3",
     "nodemailer-mailgun-transport": "^2.1.3",
