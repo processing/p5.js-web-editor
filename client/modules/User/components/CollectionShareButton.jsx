@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import Button from '../../../common/Button';
 import { DropdownArrowIcon } from '../../../common/icons';
+import { CopyIcon } from '../../../common/icons';
 import useModalClose from '../../../common/useModalClose';
 import CopyableInput from '../../IDE/components/CopyableInput';
 
@@ -24,6 +25,13 @@ const ShareURL = ({ value }) => {
       {showURL && (
         <div className="collection__share-dropdown">
           <CopyableInput value={value} label={t('Collection.URLLink')} />
+          <Button
+            onClick={handleCopy}
+            iconAfter={<CopyIcon />}
+            className="copy-button"
+          >
+            {t('Collection.CopyURL')}
+          </Button>
         </div>
       )}
     </div>
