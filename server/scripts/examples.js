@@ -18,7 +18,7 @@ mongoose.connect(mongoConnectionString, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
-mongoose.set('useCreateIndex', true);
+mongoose.set('strictQuery', true);
 mongoose.connection.on('error', () => {
   console.error(
     'MongoDB Connection Error. Please make sure that MongoDB is running.'

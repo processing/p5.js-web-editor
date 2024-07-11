@@ -1,82 +1,58 @@
 /**
  * @jest-environment node
  */
-import { Response } from 'jest-express';
-
-import Project, {
-  createMock,
-  createInstanceMock
-} from '../../../models/project';
+import { Request, Response } from 'jest-express';
+import Project from '../../../models/project';
 import createProject, { apiCreateProject } from '../createProject';
 
 jest.mock('../../../models/project');
 
 describe('project.controller', () => {
   describe('createProject()', () => {
-    let ProjectMock;
+    let request;
+    let response;
 
     beforeEach(() => {
-      ProjectMock = createMock();
+      request = new Request();
+      response = new Response();
+      Project.create = jest.fn();
+      Project.populate = jest.fn();
+      jest.clearAllMocks();
     });
 
     afterEach(() => {
-      ProjectMock.restore();
+      request.resetMocked();
+      response.resetMocked();
     });
 
-    it('fails if create fails', (done) => {
+    it('fails if create fails', async () => {
       const error = new Error('An error');
 
-      ProjectMock.expects('create').rejects(error);
+      Project.create.mockRejectedValue(error);
 
-      const request = { user: {} };
-      const response = new Response();
+      request.user = {};
 
-      const promise = createProject(request, response);
+      await createProject(request, response);
 
-      function expectations() {
-        expect(response.json).toHaveBeenCalledWith({ success: false });
-
-        done();
-      }
-
-      promise.then(expectations, expectations).catch(expectations);
+      expect(response.json).toHaveBeenCalledWith({ success: false });
     });
 
-    it('extracts parameters from request body', (done) => {
-      const request = {
-        user: { _id: 'abc123' },
-        body: {
-          name: 'Wriggly worm',
-          files: [{ name: 'file.js', content: 'var hello = true;' }]
-        }
+    it('extracts parameters from request body', async () => {
+      request.user = { _id: 'abc123' };
+      request.body = {
+        name: 'Wriggly worm',
+        files: [{ name: 'file.js', content: 'var hello = true;' }]
       };
-      const response = new Response();
 
-      ProjectMock.expects('create')
-        .withArgs({
-          user: 'abc123',
-          name: 'Wriggly worm',
-          files: [{ name: 'file.js', content: 'var hello = true;' }]
-        })
-        .resolves();
+      Project.create.mockResolvedValue({});
 
-      const promise = createProject(request, response);
+      await createProject(request, response);
 
-      function expectations() {
-        expect(response.json).toHaveBeenCalled();
-
-        done();
-      }
-
-      promise.then(expectations, expectations).catch(expectations);
+      expect(response.json).toHaveBeenCalled();
     });
 
-    // TODO: This should be extracted to a new model object
-    //       so the controllers just have to call a single
-    //       method for this operation
-    it('populates referenced user on project creation', (done) => {
-      const request = { user: { _id: 'abc123' } };
-      const response = new Response();
+    it('populates referenced user on project creation', async () => {
+      request.user = { _id: 'abc123' };
 
       const result = {
         _id: 'abc123',
@@ -91,30 +67,19 @@ describe('project.controller', () => {
         user: {}
       };
 
-      ProjectMock.expects('create')
-        .withArgs({ user: 'abc123' })
-        .resolves(result);
+      Project.create.mockResolvedValue(result);
+      Project.populate.mockResolvedValue(resultWithUser);
 
-      ProjectMock.expects('populate').withArgs(result).resolves(resultWithUser);
+      await createProject(request, response);
 
-      const promise = createProject(request, response);
+      const doc = response.json.mock.calls[0][0];
 
-      function expectations() {
-        const doc = response.json.mock.calls[0][0];
-
-        expect(response.json).toHaveBeenCalled();
-
-        expect(JSON.parse(JSON.stringify(doc))).toMatchObject(resultWithUser);
-
-        done();
-      }
-
-      promise.then(expectations, expectations).catch(expectations);
+      expect(response.json).toHaveBeenCalled();
+      expect(JSON.parse(JSON.stringify(doc))).toMatchObject(resultWithUser);
     });
 
-    it('fails if referenced user population fails', (done) => {
-      const request = { user: { _id: 'abc123' } };
-      const response = new Response();
+    it('fails if referenced user population fails', async () => {
+      request.user = { _id: 'abc123' };
 
       const result = {
         _id: 'abc123',
@@ -126,46 +91,39 @@ describe('project.controller', () => {
 
       const error = new Error('An error');
 
-      ProjectMock.expects('create').resolves(result);
+      Project.create.mockResolvedValue(result);
+      Project.populate.mockRejectedValue(error);
 
-      ProjectMock.expects('populate').yields(error).resolves(error);
+      await createProject(request, response);
 
-      const promise = createProject(request, response);
-
-      function expectations() {
-        expect(response.json).toHaveBeenCalledWith({ success: false });
-
-        done();
-      }
-
-      promise.then(expectations, expectations).catch(expectations);
+      expect(response.json).toHaveBeenCalledWith({ success: false });
     });
   });
 
   describe('apiCreateProject()', () => {
-    let ProjectMock;
-    let ProjectInstanceMock;
+    let request;
+    let response;
 
     beforeEach(() => {
-      ProjectMock = createMock();
-      ProjectInstanceMock = createInstanceMock();
+      request = new Request();
+      response = new Response();
+      Project.prototype.isSlugUnique = jest.fn();
+      Project.prototype.save = jest.fn();
+      jest.clearAllMocks();
     });
 
     afterEach(() => {
-      ProjectMock.restore();
-      ProjectInstanceMock.restore();
+      request.resetMocked();
+      response.resetMocked();
     });
 
-    it('returns 201 with id of created sketch', (done) => {
-      const request = {
-        user: { _id: 'abc123', username: 'alice' },
-        params: { username: 'alice' },
-        body: {
-          name: 'My sketch',
-          files: {}
-        }
+    it('returns 201 with id of created sketch', async () => {
+      request.user = { _id: 'abc123', username: 'alice' };
+      request.params = { username: 'alice' };
+      request.body = {
+        name: 'My sketch',
+        files: {}
       };
-      const response = new Response();
 
       const result = {
         _id: 'abc123',
@@ -175,209 +133,141 @@ describe('project.controller', () => {
         files: []
       };
 
-      ProjectInstanceMock.expects('isSlugUnique').resolves({
+      Project.prototype.isSlugUnique.mockResolvedValue({
         isUnique: true,
         conflictingIds: []
       });
 
-      ProjectInstanceMock.expects('save').resolves(new Project(result));
+      Project.prototype.save.mockResolvedValue(result);
 
-      const promise = apiCreateProject(request, response);
+      await apiCreateProject(request, response);
 
-      function expectations() {
-        const doc = response.json.mock.calls[0][0];
+      const doc = response.json.mock.calls[0][0];
 
-        expect(response.status).toHaveBeenCalledWith(201);
-        expect(response.json).toHaveBeenCalled();
+      expect(response.status).toHaveBeenCalledWith(201);
+      expect(response.json).toHaveBeenCalled();
 
-        expect(JSON.parse(JSON.stringify(doc))).toMatchObject({
-          id: 'abc123'
-        });
-
-        done();
-      }
-
-      promise.then(expectations, expectations).catch(expectations);
+      expect(JSON.parse(JSON.stringify(doc))).toMatchObject({
+        id: 'abc123'
+      });
     });
 
-    it('fails if slug is not unique', (done) => {
-      const request = {
-        user: { _id: 'abc123', username: 'alice' },
-        params: { username: 'alice' },
-        body: {
-          name: 'My sketch',
-          slug: 'a-slug',
-          files: {}
-        }
-      };
-      const response = new Response();
-
-      const result = {
-        _id: 'abc123',
-        id: 'abc123',
-        name: 'Project name',
-        // slug: 'a-slug',
-        serveSecure: false,
-        files: []
+    it('fails if slug is not unique', async () => {
+      request.user = { _id: 'abc123', username: 'alice' };
+      request.params = { username: 'alice' };
+      request.body = {
+        name: 'My sketch',
+        slug: 'a-slug',
+        files: {}
       };
 
-      ProjectInstanceMock.expects('isSlugUnique').resolves({
+      Project.prototype.isSlugUnique.mockResolvedValue({
         isUnique: false,
         conflictingIds: ['cde123']
       });
 
-      ProjectInstanceMock.expects('save').resolves(new Project(result));
+      await apiCreateProject(request, response);
+      const doc = response.json.mock.calls[0][0];
 
-      const promise = apiCreateProject(request, response);
+      expect(response.status).toHaveBeenCalledWith(409);
+      expect(response.json).toHaveBeenCalled();
 
-      function expectations() {
-        const doc = response.json.mock.calls[0][0];
-
-        expect(response.status).toHaveBeenCalledWith(409);
-        expect(response.json).toHaveBeenCalled();
-
-        expect(JSON.parse(JSON.stringify(doc))).toMatchObject({
-          message: 'Sketch Validation Failed',
-          detail: 'Slug "a-slug" is not unique. Check cde123'
-        });
-
-        done();
-      }
-
-      promise.then(expectations, expectations).catch(expectations);
+      expect(JSON.parse(JSON.stringify(doc))).toMatchObject({
+        message: 'Sketch Validation Failed',
+        detail: 'Slug "a-slug" is not unique. Check cde123'
+      });
     });
 
-    it('fails if user does not have permission', (done) => {
-      const request = {
-        user: { _id: 'abc123', username: 'alice' },
-        params: {
-          username: 'dana'
-        },
-        body: {
-          name: 'My sketch',
-          slug: 'a-slug',
-          files: {}
-        }
+    it('fails if user does not have permission', async () => {
+      request.user = { _id: 'abc123', username: 'alice' };
+      request.params = {
+        username: 'dana'
       };
-      const response = new Response();
-
-      const result = {
-        _id: 'abc123',
-        id: 'abc123',
-        name: 'Project name',
-        serveSecure: false,
-        files: []
+      request.body = {
+        name: 'My sketch',
+        slug: 'a-slug',
+        files: {}
       };
 
-      ProjectInstanceMock.expects('isSlugUnique').resolves({
+      Project.prototype.isSlugUnique.mockResolvedValue({
         isUnique: true,
         conflictingIds: []
       });
 
-      ProjectInstanceMock.expects('save').resolves(new Project(result));
+      await apiCreateProject(request, response);
+      const doc = response.json.mock.calls[0][0];
 
-      const promise = apiCreateProject(request, response);
+      expect(response.status).toHaveBeenCalledWith(401);
+      expect(response.json).toHaveBeenCalled();
 
-      function expectations() {
-        expect(response.status).toHaveBeenCalledWith(401);
-        expect(response.json).toHaveBeenCalled();
-
-        done();
-      }
-
-      promise.then(expectations, expectations).catch(expectations);
+      expect(JSON.parse(JSON.stringify(doc))).toMatchObject({
+        message: 'Sketch Validation Failed',
+        detail: "'alice' does not have permission to create for 'dana'"
+      });
     });
 
-    it('returns validation errors on files input', (done) => {
-      const request = {
-        user: { username: 'alice' },
-        params: { username: 'alice' },
-        body: {
-          name: 'My sketch',
-          files: {
-            'index.html': {
-              // missing content or url
-            }
+    it('returns validation errors on files input', async () => {
+      request.user = { username: 'alice' };
+      request.params = { username: 'alice' };
+      request.body = {
+        name: 'My sketch',
+        files: {
+          'index.html': {
+            // missing content or url
           }
         }
       };
-      const response = new Response();
 
-      const promise = apiCreateProject(request, response);
+      await apiCreateProject(request, response);
 
-      function expectations() {
-        const doc = response.json.mock.calls[0][0];
+      const doc = response.json.mock.calls[0][0];
 
-        const responseBody = JSON.parse(JSON.stringify(doc));
+      const responseBody = JSON.parse(JSON.stringify(doc));
 
-        expect(response.status).toHaveBeenCalledWith(422);
-        expect(responseBody.message).toBe('File Validation Failed');
-        expect(responseBody.detail).not.toBeNull();
-        expect(responseBody.errors.length).toBe(1);
-        expect(responseBody.errors).toEqual([
-          { name: 'index.html', message: "missing 'url' or 'content'" }
-        ]);
-
-        done();
-      }
-
-      promise.then(expectations, expectations).catch(expectations);
+      expect(response.status).toHaveBeenCalledWith(422);
+      expect(responseBody.message).toBe('File Validation Failed');
+      expect(responseBody.detail).not.toBeNull();
+      expect(responseBody.errors.length).toBe(1);
+      expect(responseBody.errors).toEqual([
+        { name: 'index.html', message: "missing 'url' or 'content'" }
+      ]);
     });
 
-    it('rejects file parameters not in object format', (done) => {
-      const request = {
-        user: { _id: 'abc123', username: 'alice' },
-        params: { username: 'alice' },
-        body: {
-          name: 'Wriggly worm',
-          files: [{ name: 'file.js', content: 'var hello = true;' }]
-        }
+    it('rejects file parameters not in object format', async () => {
+      request.user = { _id: 'abc123', username: 'alice' };
+      request.params = { username: 'alice' };
+      request.body = {
+        name: 'Wriggly worm',
+        files: [{ name: 'file.js', content: 'var hello = true;' }]
       };
-      const response = new Response();
 
-      const promise = apiCreateProject(request, response);
+      await apiCreateProject(request, response);
 
-      function expectations() {
-        const doc = response.json.mock.calls[0][0];
+      const doc = response.json.mock.calls[0][0];
 
-        const responseBody = JSON.parse(JSON.stringify(doc));
+      const responseBody = JSON.parse(JSON.stringify(doc));
 
-        expect(response.status).toHaveBeenCalledWith(422);
-        expect(responseBody.message).toBe('File Validation Failed');
-        expect(responseBody.detail).toBe("'files' must be an object");
-
-        done();
-      }
-
-      promise.then(expectations, expectations).catch(expectations);
+      expect(response.status).toHaveBeenCalledWith(422);
+      expect(responseBody.message).toBe('File Validation Failed');
+      expect(responseBody.detail).toBe("'files' must be an object");
     });
 
-    it('rejects if files object in not provided', (done) => {
-      const request = {
-        user: { _id: 'abc123', username: 'alice' },
-        params: { username: 'alice' },
-        body: {
-          name: 'Wriggly worm'
-          // files: {} is missing
-        }
+    it('rejects if files object in not provided', async () => {
+      request.user = { _id: 'abc123', username: 'alice' };
+      request.params = { username: 'alice' };
+      request.body = {
+        name: 'Wriggly worm'
+        // files: {} is missing
       };
-      const response = new Response();
 
-      const promise = apiCreateProject(request, response);
+      await apiCreateProject(request, response);
 
-      function expectations() {
-        const doc = response.json.mock.calls[0][0];
+      const doc = response.json.mock.calls[0][0];
+      const responseBody = JSON.parse(JSON.stringify(doc));
 
-        const responseBody = JSON.parse(JSON.stringify(doc));
-
-        expect(response.status).toHaveBeenCalledWith(422);
-        expect(responseBody.message).toBe('File Validation Failed');
-        expect(responseBody.detail).toBe("'files' must be an object");
-
-        done();
-      }
-
-      promise.then(expectations, expectations).catch(expectations);
+      expect(response.status).toHaveBeenCalledWith(422);
+      expect(responseBody.message).toBe('File Validation Failed');
+      expect(responseBody.detail).toBe("'files' must be an object");
     });
   });
 });

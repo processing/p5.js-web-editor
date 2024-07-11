@@ -156,9 +156,7 @@ const connectToMongoDB = async () => {
   try {
     await mongoose.connect(mongoConnectionString, {
       useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useCreateIndex: true,
-      useFindAndModify: false
+      useUnifiedTopology: true
     });
   } catch (error) {
     console.error('Failed to connect to MongoDB: ', error);
@@ -168,7 +166,7 @@ const connectToMongoDB = async () => {
 
 connectToMongoDB();
 
-mongoose.set('useCreateIndex', true);
+mongoose.set('strictQuery', true);
 mongoose.connection.on('error', () => {
   console.error(
     'MongoDB Connection Error. Please make sure that MongoDB is running.'
