@@ -14,7 +14,7 @@ const fileSchema = new Schema(
     url: { type: String },
     children: { type: [String], default: [] },
     fileType: { type: String, default: 'file' },
-    isSelectedFile: { type: Boolean, default: false }
+    isSelectedFile: { type: Boolean }
   },
   { timestamps: true }
 );
@@ -36,7 +36,7 @@ const projectSchema = new Schema(
     },
     user: { type: Schema.Types.ObjectId, ref: 'User' },
     serveSecure: { type: Boolean, default: false },
-    files: { type: [fileSchema], default: [] },
+    files: { type: [fileSchema] },
     _id: { type: String, default: shortid.generate },
     slug: { type: String }
   },
