@@ -14,21 +14,23 @@ async function getOwnerUserId(req) {
   return null;
 }
 
-export default function listCollections(req, res) {
-  function sendFailure({ code = 500, message = 'Something went wrong' }) {
+export default async function listCollections(req, res) {
+  const sendFailure = ({ code = 500, message = 'Something went wrong' }) => {
     res.status(code).json({ success: false, message });
-  }
+  };
 
-  function sendSuccess(collections) {
+  const sendSuccess = (collections) => {
     res.status(200).json(collections);
-  }
+  };
 
-  function findCollections(owner) {
-    if (owner == null) {
-      sendFailure({ code: 404, message: 'User not found' });
+  try {
+    const owner = await getOwnerUserId(req);
+
+    if (!owner) {
+      sendFailure('404', 'User not found');
     }
 
-    return Collection.find({ owner }).populate([
+    const collections = await Collection.find({ owner }).populate([
       { path: 'owner', select: ['id', 'username'] },
       {
         path: 'items.project',
@@ -39,10 +41,9 @@ export default function listCollections(req, res) {
         }
       }
     ]);
-  }
 
-  return getOwnerUserId(req)
-    .then(findCollections)
-    .then(sendSuccess)
-    .catch(sendFailure);
+    sendSuccess(collections);
+  } catch (error) {
+    sendFailure(error.code || 500, error.message || 'Something went wrong');
+  }
 }
