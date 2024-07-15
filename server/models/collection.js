@@ -48,7 +48,7 @@ collectionSchema.set('toJSON', {
 });
 
 collectionSchema.pre('save', function generateSlug(next) {
-  this.slug = slugify(this.name, { lower: true, strict: true });
+  this.slug = slugify(this.name, '_');
   next();
 });
 
