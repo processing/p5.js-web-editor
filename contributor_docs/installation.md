@@ -50,6 +50,7 @@ Note that this takes up a significant amount of space on your machine. Make sure
 2. Install [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 3. Clone this repository and cd into it
 4. `$ docker-compose -f docker-compose-development.yml build`
+   * Note: Depending on which version of Docker Compose you are using, the base command will be either `docker-compose` or `docker compose`. More information about it can be found in Docker Compose's documentation for their [V1 to V2 transition](https://github.com/docker/compose/tree/v1?tab=readme-ov-file#v1-vs-v2-transition-hourglass_flowing_sand). 
 5. `$ cp .env.example .env`
 6. (Optional) Update `.env` with necessary keys to enable certain app behaviors, i.e. add Github ID and Github Secret if you want to be able to log in with Github.
    * See the [GitHub API Configuration](#github-api-configuration) section for information on how to authenticate with Github.
