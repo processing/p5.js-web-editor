@@ -135,7 +135,7 @@ const ProjectMenu = () => {
     metaKey === 'Ctrl' ? `${metaKeyName}+H` : `${metaKeyName}+⌥+F`;
 
   return (
-    <ul className="nav__items-left">
+    <ul className="nav__items-left" role="menubar">
       <li className="nav__item-logo">
         {user && user.username !== undefined ? (
           <Link to={userSketches}>
