@@ -19,6 +19,10 @@ resource "google_container_cluster" "primary" {
   # node pool and immediately delete it.
   remove_default_node_pool = true
   initial_node_count       = 1
+
+  network_policy {
+    enabled = true
+  }
 }
 
 resource "google_container_node_pool" "primary" {
@@ -31,6 +35,10 @@ resource "google_container_node_pool" "primary" {
   node_config {
     disk_size_gb = 100
     machine_type = "n1-standard-1"
+
+    metadata = {
+      disable-legacy-endpoints = "true"
+    }
   }
 
   autoscaling {
