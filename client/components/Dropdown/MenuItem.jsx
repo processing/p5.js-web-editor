@@ -10,7 +10,7 @@ function MenuItem({ hideIf, ...rest }) {
   }
 
   return (
-    <li>
+    <li role="menuitem">
       <ButtonOrLink {...rest} />
     </li>
   );
