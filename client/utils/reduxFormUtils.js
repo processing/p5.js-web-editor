@@ -51,7 +51,10 @@ export function validateSettings(formProps) {
   if (formProps.newPassword && formProps.newPassword.length < 6) {
     errors.newPassword = i18n.t('ReduxFormUtils.errorShortPassword');
   }
-  if (formProps.currentPassword === formProps.newPassword) {
+  if (
+    formProps.newPassword &&
+    formProps.currentPassword === formProps.newPassword
+  ) {
     errors.newPassword = i18n.t('ReduxFormUtils.errorNewPasswordRepeat');
   }
   return errors;
