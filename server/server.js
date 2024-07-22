@@ -189,10 +189,16 @@ app.use('/api', (error, req, res, next) => {
 });
 
 // Handle missing routes.
-app.get('*', (req, res) => {
+app.get('*', async (req, res) => {
   res.status(404);
   if (req.accepts('html')) {
-    get404Sketch((html) => res.send(html));
+    try {
+      const html = await get404Sketch();
+      res.send(html);
+    } catch (err) {
+      console.error('Error generating 404 sketch:', err);
+      res.send('Error generating 404 page.');
+    }
     return;
   }
   if (req.accepts('json')) {

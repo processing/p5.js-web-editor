@@ -29,7 +29,7 @@ router.get('/signup', (req, res) => {
 
 router.get('/projects/:project_id', async (req, res) => {
   const exists = await projectExists(req.params.project_id);
-  sendHtml(req, res, exists);
+  await sendHtml(req, res, exists);
 });
 
 router.get(
@@ -39,7 +39,7 @@ router.get(
       req.params.username,
       req.params.project_id
     );
-    sendHtml(req, res, exists);
+    await sendHtml(req, res, exists);
   }
 );
 
@@ -52,13 +52,13 @@ router.get('/:username/sketches/:project_id', async (req, res) => {
   if (project.exists) {
     res.send(renderProjectIndex(req.params.username, project.userProject.name));
   } else {
-    sendHtml(req, res, project.exists);
+    await sendHtml(req, res, project.exists);
   }
 });
 
 router.get('/:username/sketches', async (req, res) => {
   const exists = await userExists(req.params.username);
-  sendHtml(req, res, exists);
+  await sendHtml(req, res, exists);
 });
 
 router.get('/:username/full/:project_id', async (req, res) => {
@@ -66,12 +66,12 @@ router.get('/:username/full/:project_id', async (req, res) => {
     req.params.username,
     req.params.project_id
   );
-  sendHtml(req, res, exists);
+  await sendHtml(req, res, exists);
 });
 
 router.get('/full/:project_id', async (req, res) => {
   const exists = await projectExists(req.params.project_id);
-  sendHtml(req, res, exists);
+  await sendHtml(req, res, exists);
 });
 
 router.get('/login', (req, res) => {
@@ -119,7 +119,7 @@ router.get('/:username/assets', async (req, res) => {
   const exists = await userExists(req.params.username);
   const isLoggedInUser = req.user && req.user.username === req.params.username;
   const canAccess = exists && isLoggedInUser;
-  sendHtml(req, res, canAccess);
+  await sendHtml(req, res, canAccess);
 });
 
 router.get('/account', (req, res) => {
@@ -139,12 +139,12 @@ router.get('/:username/collections/:id', async (req, res) => {
     req.params.username,
     req.params.id
   );
-  sendHtml(req, res, exists);
+  await sendHtml(req, res, exists);
 });
 
 router.get('/:username/collections', async (req, res) => {
   const exists = await userExists(req.params.username);
-  sendHtml(req, res, exists);
+  await sendHtml(req, res, exists);
 });
 
 router.get('/privacy-policy', (req, res) => {
