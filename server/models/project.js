@@ -16,7 +16,7 @@ const fileSchema = new Schema(
     fileType: { type: String, default: 'file' },
     isSelectedFile: { type: Boolean }
   },
-  { timestamps: true, _id: true, usePushEach: true }
+  { timestamps: true }
 );
 
 fileSchema.virtual('id').get(function getFileId() {
@@ -40,7 +40,7 @@ const projectSchema = new Schema(
     _id: { type: String, default: shortid.generate },
     slug: { type: String }
   },
-  { timestamps: true, usePushEach: true }
+  { timestamps: true }
 );
 
 projectSchema.virtual('id').get(function getProjectId() {
@@ -52,45 +52,28 @@ projectSchema.set('toJSON', {
 });
 
 projectSchema.pre('save', function generateSlug(next) {
-  const project = this;
-
-  if (!project.slug) {
-    project.slug = slugify(project.name, '_');
+  if (!this.slug) {
+    this.slug = slugify(this.name, '_');
   }
-
-  return next();
+  next();
 });
 
 /**
  * Check if slug is unique for this user's projects
+ * @return {Promise<{ isUnique: boolean; conflictingIds: string[] }>}
  */
-projectSchema.methods.isSlugUnique = async function isSlugUnique(cb) {
+projectSchema.methods.isSlugUnique = async function isSlugUnique() {
   const project = this;
-  const hasCallback = typeof cb === 'function';
 
-  try {
-    const docsWithSlug = await project
-      .model('Project')
-      .find({ user: project.user, slug: project.slug }, '_id')
-      .exec();
+  const docsWithSlug = await project
+    .model('Project')
+    .find({ user: project.user, slug: project.slug }, '_id')
+    .exec();
 
-    const result = {
-      isUnique: docsWithSlug.length === 0,
-      conflictingIds: docsWithSlug.map((d) => d._id) || []
-    };
-
-    if (hasCallback) {
-      cb(null, result);
-    }
-
-    return result;
-  } catch (err) {
-    if (hasCallback) {
-      cb(err, null);
-    }
-
-    throw err;
-  }
+  return {
+    isUnique: docsWithSlug.length === 0,
+    conflictingIds: docsWithSlug.map((d) => d._id) || []
+  };
 };
 
 export default mongoose.models.Project ||

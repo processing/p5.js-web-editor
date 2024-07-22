@@ -65,7 +65,7 @@ spec:
   selector:
     matchLabels:
       app: web-editor
-  replicas: 3
+  replicas: 7
   template:
     metadata:
       labels:
@@ -84,8 +84,8 @@ spec:
         imagePullPolicy: Always
         resources:
           requests:
-            cpu: 100m
-            memory: 100Mi
+            cpu: 500m
+            memory: 1100Mi
         ports:
         - containerPort: 8000
         readinessProbe:
@@ -99,8 +99,8 @@ metadata:
   name: web-editor-node
   namespace: production
 spec:
-  maxReplicas: 6
-  minReplicas: 2
+  maxReplicas: 18
+  minReplicas: 6
   scaleTargetRef:
     apiVersion: extensions/v1beta1
     kind: Deployment
@@ -234,8 +234,8 @@ spec:
         imagePullPolicy: Always
         resources:
           requests:
-            cpu: 100m
-            memory: 100Mi
+            cpu: 500m
+            memory: 1100Mi
         ports:
         - containerPort: 8000
         readinessProbe:

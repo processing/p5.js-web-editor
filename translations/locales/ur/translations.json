@@ -282,6 +282,7 @@
       "errorShortPassword": "پاس ورڈ کم از کم 6 حروف کا ہونا چاہیے۔",
       "errorConfirmPassword": "براہ کرم اپنے پاس ورڈ کی تصدیق کریں۔",
       "errorNewPassword": "براہ کرم نیا پاس ورڈ درج کریں یا موجودہ پاس ورڈ کو خالی چھوڑ دیں۔",
+      "errorNewPasswordRepeat":"Your New Password must differ from the current one.",
       "errorEmptyUsername": "براہ کرم ایک صارف نام درج کریں۔",
       "errorLongUsername": "صارف کا نام 20 حروف سے کم ہونا چاہیے۔",
       "errorValidUsername": "صارف کا نام صرف نمبرز، حروف، پیریڈز، ڈیشز اور انڈر سکور پر مشتمل ہونا چاہیے۔"
@@ -552,10 +553,6 @@
       "35Seconds": "35 سیکنڈ پہلے",
       "Ago": "{{timeAgo}} پہلے"
     },
-    "AddRemoveButton": {
-      "AltAddARIA": "مجموعہ میں شامل کریں۔",
-      "AltRemoveARIA": "مجموعہ سے ہٹا دیں۔"
-    },
     "CopyableInput": {
       "CopiedARIA": "کلپ بورڈ پر کاپی ہو گیا!",
       "OpenViewTabARIA": "کھولیں۔ {{label}} نئے ٹیب میں دیکھیں"
@@ -590,14 +587,6 @@
     "PreferenceCreators": {
       "On": "پر",
       "Off": "بند"
-    },
-    "MobileIDEView": {
-      "Preferences": "ترجیحات",
-      "MyStuff": "میرا سامان",
-      "Examples": "مثالیں",
-      "OriginalEditor": "اصل ایڈیٹر",
-      "Login": "لاگ ان کریں",
-      "Logout": "لاگ آوٹ"
     },
     "MobileDashboardView": {
       "Examples": "مثالیں",
