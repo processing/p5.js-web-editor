@@ -51,6 +51,10 @@
   display: flex;
 }
 
+.overlay__actions-mobile {
+  padding-left: #{math.div(24, $base-font-size)}rem;
+}
+
 .overlay__title {
   font-size: #{math.div(21, $base-font-size)}rem;
 }
