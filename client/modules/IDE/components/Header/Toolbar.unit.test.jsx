@@ -44,7 +44,8 @@ const renderComponent = (extraState = {}) => {
   );
 
   const props = {
-    syncFileContent: jest.fn()
+    syncFileContent: jest.fn(),
+    onClick: jest.fn()
   };
 
   return {

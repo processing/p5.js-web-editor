@@ -15,14 +15,19 @@ const Header = (props) => {
     <>
       <Nav />
       {!isMobile && (
-        <Toolbar syncFileContent={props.syncFileContent} key={project.id} />
+        <Toolbar
+          syncFileContent={props.syncFileContent}
+          key={project.id}
+          onClick={props.onClick}
+        />
       )}
     </>
   );
 };
 
 Header.propTypes = {
-  syncFileContent: PropTypes.func.isRequired
+  syncFileContent: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired
 };
 
 export default Header;
