@@ -16,7 +16,7 @@ const fileSchema = new Schema(
     fileType: { type: String, default: 'file' },
     isSelectedFile: { type: Boolean }
   },
-  { timestamps: true, _id: true, usePushEach: true }
+  { timestamps: true }
 );
 
 fileSchema.virtual('id').get(function getFileId() {
@@ -40,7 +40,7 @@ const projectSchema = new Schema(
     _id: { type: String, default: shortid.generate },
     slug: { type: String }
   },
-  { timestamps: true, usePushEach: true }
+  { timestamps: true }
 );
 
 projectSchema.virtual('id').get(function getProjectId() {
@@ -52,13 +52,10 @@ projectSchema.set('toJSON', {
 });
 
 projectSchema.pre('save', function generateSlug(next) {
-  const project = this;
-
-  if (!project.slug) {
-    project.slug = slugify(project.name, '_');
+  if (!this.slug) {
+    this.slug = slugify(this.name, '_');
   }
-
-  return next();
+  next();
 });
 
 /**

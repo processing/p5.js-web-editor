@@ -102,10 +102,11 @@ export function renderProjectIndex(username, projectName) {
  * @param {import('express').e.Response} res
  * @param {boolean} [exists]
  */
-export default function sendHtml(req, res, exists = true) {
+export default async function sendHtml(req, res, exists = true) {
   if (!exists) {
     res.status(404);
-    get404Sketch((html) => res.send(html));
+    const html = await get404Sketch();
+    res.send(html);
   } else {
     res.send(renderIndex());
   }

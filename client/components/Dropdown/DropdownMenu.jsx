@@ -38,7 +38,7 @@ const DropdownMenu = forwardRef(
     };
 
     return (
-      <div ref={anchorRef} className={className}>
+      <div ref={anchorRef} className={className} aria-haspopup="menu">
         <button
           className={classes.button}
           aria-label={ariaLabel}
@@ -51,6 +51,7 @@ const DropdownMenu = forwardRef(
         </button>
         {isOpen && (
           <DropdownWrapper
+            role="menu"
             className={classes.list}
             align={align}
             onMouseUp={() => {

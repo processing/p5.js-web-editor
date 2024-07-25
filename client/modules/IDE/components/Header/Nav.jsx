@@ -135,7 +135,7 @@ const ProjectMenu = () => {
     metaKey === 'Ctrl' ? `${metaKeyName}+H` : `${metaKeyName}+⌥+F`;
 
   return (
-    <ul className="nav__items-left">
+    <ul className="nav__items-left" role="menubar">
       <li className="nav__item-logo">
         {user && user.username !== undefined ? (
           <Link to={userSketches}>
@@ -272,10 +272,10 @@ const LanguageMenu = () => {
 const UnauthenticatedUserMenu = () => {
   const { t } = useTranslation();
   return (
-    <ul className="nav__items-right" title="user-menu">
+    <ul className="nav__items-right" title="user-menu" role="navigation">
       {getConfig('TRANSLATIONS_ENABLED') && <LanguageMenu />}
       <li className="nav__item">
-        <Link to="/login" className="nav__auth-button">
+        <Link to="/login" className="nav__auth-button" role="menuitem">
           <span className="nav__item-header" title="Login">
             {t('Nav.Login')}
           </span>
@@ -283,7 +283,7 @@ const UnauthenticatedUserMenu = () => {
       </li>
       <li className="nav__item-or">{t('Nav.LoginOr')}</li>
       <li className="nav__item">
-        <Link to="/signup" className="nav__auth-button">
+        <Link to="/signup" className="nav__auth-button" role="menuitem">
           <span className="nav__item-header" title="SignUp">
             {t('Nav.SignUp')}
           </span>
@@ -300,7 +300,7 @@ const AuthenticatedUserMenu = () => {
   const dispatch = useDispatch();
 
   return (
-    <ul className="nav__items-right" title="user-menu">
+    <ul className="nav__items-right" title="user-menu" role="navigation">
       {getConfig('TRANSLATIONS_ENABLED') && <LanguageMenu />}
       <NavDropdownMenu
         id="account"

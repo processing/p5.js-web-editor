@@ -73,15 +73,15 @@ describe('index.jsx integration', () => {
   });
 
   it('navbar items and the dropdowns in the navbar exist', () => {
-    const navigation = screen.getByRole('navigation');
+    const navigation = screen.getByRole('menubar');
     expect(navigation).toBeInTheDocument();
 
-    const fileButton = within(navigation).getByRole('button', {
+    const fileButton = within(navigation).getByRole('menuitem', {
       name: /^file$/i
     });
     expect(fileButton).toBeInTheDocument();
 
-    const newFileButton = within(navigation).getByRole('button', {
+    const newFileButton = within(navigation).getByRole('menuitem', {
       name: /^new$/i
     });
     expect(newFileButton).toBeInTheDocument();
@@ -91,17 +91,17 @@ describe('index.jsx integration', () => {
     // const exampleFileButton = within(navigation).getByRole('link', {name: /^examples$/i});
     // expect(exampleFileButton).toBeInTheDocument();
 
-    const editButton = within(navigation).getByRole('button', {
+    const editButton = within(navigation).getByRole('menuitem', {
       name: /^edit$/i
     });
     expect(editButton).toBeInTheDocument();
 
-    const sketchButton = within(navigation).getByRole('button', {
+    const sketchButton = within(navigation).getByRole('menuitem', {
       name: /^sketch$/i
     });
     expect(sketchButton).toBeInTheDocument();
 
-    const helpButton = within(navigation).getByRole('button', {
+    const helpButton = within(navigation).getByRole('menuitem', {
       name: /^help$/i
     });
     expect(helpButton).toBeInTheDocument();

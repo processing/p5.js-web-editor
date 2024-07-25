@@ -84,8 +84,8 @@ spec:
         imagePullPolicy: Always
         resources:
           requests:
-            cpu: 100m
-            memory: 100Mi
+            cpu: 500m
+            memory: 1100Mi
         ports:
         - containerPort: 8000
         readinessProbe:
@@ -234,8 +234,8 @@ spec:
         imagePullPolicy: Always
         resources:
           requests:
-            cpu: 100m
-            memory: 100Mi
+            cpu: 500m
+            memory: 1100Mi
         ports:
         - containerPort: 8000
         readinessProbe:
