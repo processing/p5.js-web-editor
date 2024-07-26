@@ -1,7 +1,7 @@
 import User from '../models/user';
 import Project from '../models/project';
 
-function insertErrorMessage(htmlFile) {
+const insertErrorMessage = (htmlFile) => {
   const html = htmlFile.split('</head>');
   const metaDescription = 'A web editor for p5.js, a JavaScript library with the goal of making coding accessible to artists, designers, educators, and beginners.'; // eslint-disable-line
   html[0] = `
@@ -65,94 +65,93 @@ function insertErrorMessage(htmlFile) {
     ${body[1]}
   `;
   return html.join('</head>');
-}
+};
 
-export function get404Sketch(callback) {
-  User.findOne({ username: 'p5' }, (userErr, user) => {
-    // Find p5 user
-    if (userErr) {
-      throw userErr;
-    } else if (user) {
-      Project.find({ user: user._id }, (projErr, projects) => {
-        // Find example projects
-        // Choose a random sketch
-        const randomIndex = Math.floor(Math.random() * projects.length);
-        const sketch = projects[randomIndex];
-        let instanceMode = false;
+export const get404Sketch = async () => {
+  const errorMessage = insertErrorMessage(`<!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="utf-8" />
+      </head>
+      <body>
+      </body>
+    </html>`);
 
-        // Get sketch files
-        let htmlFile = sketch.files.filter((file) =>
-          file.name.match(/.*\.html$/i)
-        )[0].content;
-        const jsFiles = sketch.files.filter((file) =>
-          file.name.match(/.*\.js$/i)
-        );
-        const cssFiles = sketch.files.filter((file) =>
-          file.name.match(/.*\.css$/i)
-        );
-        const linkedFiles = sketch.files.filter((file) => file.url);
+  try {
+    const p5User = await User.findOne({ username: 'p5' }).exec();
 
-        instanceMode = jsFiles
-          .find((file) => file.name === 'sketch.js')
-          .content.includes('Instance Mode');
-
-        jsFiles.forEach((file) => {
-          // Add js files as script tags
-          const html = htmlFile.split('</body>');
-          html[0] = `${html[0]}<script>${file.content}</script>`;
-          htmlFile = html.join('</body>');
-        });
-
-        cssFiles.forEach((file) => {
-          // Add css files as style tags
-          const html = htmlFile.split('</head>');
-          html[0] = `${html[0]}<style>${file.content}</style>`;
-          htmlFile = html.join('</head>');
-        });
-
-        linkedFiles.forEach((file) => {
-          // Add linked files as link tags
-          const html = htmlFile.split('<head>');
-          html[1] = `<link href=${file.url}>${html[1]}`;
-          htmlFile = html.join('<head>');
-        });
-
-        // Add 404 html and position canvas
-        htmlFile = insertErrorMessage(htmlFile);
-
-        // Fix links to assets
-        htmlFile = htmlFile.replace(
-          /'assets/g,
-          "'https://rawgit.com/processing/p5.js-website/main/dist/assets/examples/assets/"
-        );
-        htmlFile = htmlFile.replace(
-          /"assets/g,
-          '"https://rawgit.com/processing/p5.js-website/main/dist/assets/examples/assets/'
-        );
-
-        // Change canvas size
-        htmlFile = htmlFile.replace(
-          /createCanvas\(\d+, ?\d+/g,
-          instanceMode
-            ? 'createCanvas(p.windowWidth, p.windowHeight'
-            : 'createCanvas(windowWidth, windowHeight'
-        );
-
-        callback(htmlFile);
-      });
-    } else {
-      callback(
-        insertErrorMessage(`<!DOCTYPE html>
-        <html lang="en">
-          <head>
-            <meta charset="utf-8" />
-          </head>
-          <body>
-          </body>
-        </html>`)
-      );
+    if (!p5User) {
+      return errorMessage;
     }
-  });
-}
+
+    const projects = await Project.find({ user: p5User._id }).exec();
+
+    if (!projects.length) {
+      return errorMessage;
+    }
+
+    const randomIndex = Math.floor(Math.random() * projects.length);
+    const sketch = projects[randomIndex];
+
+    // Get sketch files
+    let htmlFile = sketch.files.find((file) => file.name.match(/.*\.html$/i))
+      .content;
+    const jsFiles = sketch.files.filter((file) => file.name.match(/.*\.js$/i));
+    const cssFiles = sketch.files.filter((file) =>
+      file.name.match(/.*\.css$/i)
+    );
+    const linkedFiles = sketch.files.filter((file) => file.url);
+
+    const instanceMode = jsFiles
+      .find((file) => file.name === 'sketch.js')
+      .content.includes('Instance Mode');
+
+    jsFiles.forEach((file) => {
+      // Add js files as script tags
+      const html = htmlFile.split('</body>');
+      html[0] = `${html[0]}<script>${file.content}</script>`;
+      htmlFile = html.join('</body>');
+    });
+
+    cssFiles.forEach((file) => {
+      // Add css files as style tags
+      const html = htmlFile.split('</head>');
+      html[0] = `${html[0]}<style>${file.content}</style>`;
+      htmlFile = html.join('</head>');
+    });
+
+    linkedFiles.forEach((file) => {
+      // Add linked files as link tags
+      const html = htmlFile.split('<head>');
+      html[1] = `<link href=${file.url}>${html[1]}`;
+      htmlFile = html.join('<head>');
+    });
+
+    // Add 404 html and position canvas
+    htmlFile = insertErrorMessage(htmlFile);
+
+    // Fix links to assets
+    htmlFile = htmlFile.replace(
+      /'assets/g,
+      "'https://rawgit.com/processing/p5.js-website/main/dist/assets/examples/assets/"
+    );
+    htmlFile = htmlFile.replace(
+      /"assets/g,
+      '"https://rawgit.com/processing/p5.js-website/main/dist/assets/examples/assets/'
+    );
+
+    // Change canvas size
+    htmlFile = htmlFile.replace(
+      /createCanvas\(\d+, ?\d+/g,
+      instanceMode
+        ? 'createCanvas(p.windowWidth, p.windowHeight'
+        : 'createCanvas(windowWidth, windowHeight'
+    );
+    return htmlFile;
+  } catch (err) {
+    console.error('Error retrieving 404 sketch:', err);
+    throw err;
+  }
+};
 
 export default get404Sketch;

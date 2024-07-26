@@ -152,12 +152,21 @@ app.use('/', passportRoutes);
 require('./config/passport');
 
 // Connect to MongoDB
-mongoose.Promise = global.Promise;
-mongoose.connect(mongoConnectionString, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
-mongoose.set('useCreateIndex', true);
+const connectToMongoDB = async () => {
+  try {
+    await mongoose.connect(mongoConnectionString, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    });
+  } catch (error) {
+    console.error('Failed to connect to MongoDB: ', error);
+    process.exit(1);
+  }
+};
+
+connectToMongoDB();
+
+mongoose.set('strictQuery', true);
 mongoose.connection.on('error', () => {
   console.error(
     'MongoDB Connection Error. Please make sure that MongoDB is running.'
@@ -180,10 +189,16 @@ app.use('/api', (error, req, res, next) => {
 });
 
 // Handle missing routes.
-app.get('*', (req, res) => {
+app.get('*', async (req, res) => {
   res.status(404);
   if (req.accepts('html')) {
-    get404Sketch((html) => res.send(html));
+    try {
+      const html = await get404Sketch();
+      res.send(html);
+    } catch (err) {
+      console.error('Error generating 404 sketch:', err);
+      res.send('Error generating 404 page.');
+    }
     return;
   }
   if (req.accepts('json')) {
