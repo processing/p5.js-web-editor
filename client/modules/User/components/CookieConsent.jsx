@@ -25,6 +25,9 @@ const CookieConsentContainer = styled.div`
   left: 0;
   right: 0;
   z-index: 9999;
+  @media print {
+    display: none;
+  }
 `;
 
 const CookieConsentDialog = styled.div`
