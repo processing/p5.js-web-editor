@@ -16,7 +16,7 @@ const RootPage = styled.div`
   }
   @media print {
     @page {
-      size: landscape;
+      page-orientation: landscape;
     }
   }
 `;
