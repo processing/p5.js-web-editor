@@ -5,6 +5,7 @@ import { MenuOpenContext, NavBarContext } from './contexts';
 
 function NavBar({ children, className }) {
   const [dropdownOpen, setDropdownOpen] = useState('none');
+  const menuItems = useRef(new Set()).current;
 
   const timerRef = useRef(null);
 
@@ -61,9 +62,16 @@ function NavBar({ children, className }) {
           setDropdownOpen(dropdown);
         }
       }),
-      toggleDropdownOpen
+      toggleDropdownOpen,
+      menuItems
     }),
-    [setDropdownOpen, toggleDropdownOpen, clearHideTimeout, handleBlur]
+    [
+      setDropdownOpen,
+      toggleDropdownOpen,
+      clearHideTimeout,
+      handleBlur,
+      menuItems
+    ]
   );
 
   return (
