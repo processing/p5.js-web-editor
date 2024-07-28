@@ -112,7 +112,12 @@
     "SketchFailedSave": "项目保存失败。",
     "AutosaveEnabled": "自动保存已打开。",
     "LangChange": "语言已更改",
-    "SettingsSaved": "设置保存成功。"
+    "SettingsSaved": "设置保存成功。",
+  "EmptyCurrentPass": "当前密码字段为空。",
+  "IncorrectCurrentPass": "当前密码不正确。",
+  "DefaultError": "发生了默认错误。",
+  "UserNotFound": "未找到用户。",
+  "NetworkError": "网络错误。"
   },
   "Toolbar": {
     "Preview": "预览",

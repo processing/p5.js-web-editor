@@ -117,7 +117,13 @@
     "SketchFailedSave": "Failed to save sketch.",
     "AutosaveEnabled": "Autosave enabled.",
     "LangChange": "Language changed",
-    "SettingsSaved": "Settings saved."
+    "SettingsSaved": "Settings saved.",
+    "EmptyCurrentPass": "Current password field is empty",
+    "IncorrectCurrentPass": "Current password is incorrect",
+    "DefaultError":"Something went wrong",
+    "UserNotFound": "User not found",
+    "NetworkError": "Network error"
+
   },
   "Toolbar": {
     "Preview": "Preview",

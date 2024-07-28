@@ -113,7 +113,12 @@
     "SketchFailedSave": "স্কেচ সংরক্ষণে ব্যর্থ হয়েছে।",
     "AutosaveEnabled": "অটোসেভ সক্রিয় হয়েছে।",
     "LangChange": "ভাষা পরিবর্তন হয়েছে",
-    "SettingsSaved": "সেটিংস সংরক্ষিত হয়েছে।"
+    "SettingsSaved": "সেটিংস সংরক্ষিত হয়েছে।",
+      "EmptyCurrentPass": "বর্তমান পাসওয়ার্ড ফিল্ড খালি",
+      "IncorrectCurrentPass": "বর্তমান পাসওয়ার্ড ভুল",
+      "DefaultError":"কিছু ভুল হয়েছে",
+      "UserNotFound": "ব্যবহারকারী পাওয়া যায়নি",
+      "NetworkError": "নেটওয়ার্ক ত্রুটি"
   },
   "Toolbar": {
     "Preview": "পূর্বরূপ",

@@ -107,7 +107,12 @@
       "SketchFailedSave": "خاکہ محفوظ کرنے میں ناکام۔",
       "AutosaveEnabled": "خودکار محفوظ کرنا فعال ہے۔",
       "LangChange": "زبان بدل گئی۔",
-      "SettingsSaved": "ترتیبات محفوظ ہو گئیں۔"
+       "SettingsSaved": "ترتیبات محفوظ ہو گئیں۔",
+  "EmptyCurrentPass": "موجودہ پاس ورڈ کا خانہ خالی ہے۔",
+  "IncorrectCurrentPass": "موجودہ پاس ورڈ غلط ہے۔",
+  "DefaultError": "کچھ غلط ہو گیا۔",
+  "UserNotFound": "صارف نہیں ملا۔",
+  "NetworkError": "نیٹ ورک میں خرابی۔"
     },
     "Toolbar": {
         "Preview": "پیش نظارہ",

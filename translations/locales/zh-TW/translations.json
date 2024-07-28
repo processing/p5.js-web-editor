@@ -112,7 +112,12 @@
     "SketchFailedSave": "草稿儲存失敗",
     "AutosaveEnabled": "已啟用自動儲存",
     "LangChange": "已變更語系",
-    "SettingsSaved": "已儲存設定"
+     "SettingsSaved": "已儲存設定",
+  "EmptyCurrentPass": "目前密碼欄位為空",
+  "IncorrectCurrentPass": "目前密碼不正確",
+  "DefaultError": "發生了預設錯誤",
+  "UserNotFound": "找不到使用者",
+  "NetworkError": "網路錯誤"
   },
   "Toolbar": {
     "Preview": "預覽",

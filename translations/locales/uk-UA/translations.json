@@ -112,7 +112,12 @@
     "SketchFailedSave": "Не вдалося зберегти скетч.",
     "AutosaveEnabled": "Автозбереження увімкнено.",
     "LangChange": "Мова змінена",
-    "SettingsSaved": "Налаштування збережено."
+   "SettingsSaved": "Налаштування збережено.",
+  "EmptyCurrentPass": "Поле поточного пароля порожнє.",
+  "IncorrectCurrentPass": "Поточний пароль невірний.",
+  "DefaultError": "Сталася помилка за замовчуванням.",
+  "UserNotFound": "Користувача не знайдено.",
+  "NetworkError": "Помилка мережі."
   },
   "Toolbar": {
     "Preview": "Перегляд",

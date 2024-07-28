@@ -112,7 +112,12 @@
     "SketchFailedSave": "Falha ao salvar esboço.",
     "AutosaveEnabled": "Salvar automático ativado.",
     "LangChange": "Idioma alterado",
-    "SettingsSaved": "Configurações salvas."
+   "SettingsSaved": "Configurações salvas.",
+  "EmptyCurrentPass": "O campo de senha atual está vazio.",
+  "IncorrectCurrentPass": "A senha atual está incorreta.",
+  "DefaultError": "Ocorreu um erro padrão.",
+  "UserNotFound": "Usuário não encontrado.",
+  "NetworkError": "Erro de rede."
   },
   "Toolbar": {
     "Preview": "Prévia",

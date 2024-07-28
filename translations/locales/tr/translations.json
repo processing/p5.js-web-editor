@@ -112,7 +112,12 @@
     "SketchFailedSave": "Eskiz kaydedilemedi.",
     "AutosaveEnabled": "Otomatik kaydetme etkin.",
     "LangChange": "Dil değiştirildi",
-    "SettingsSaved": "Ayarlar kaydedildi."
+    "SettingsSaved": "Ayarlar kaydedildi.",
+  "EmptyCurrentPass": "Geçerli şifre alanı boş.",
+  "IncorrectCurrentPass": "Geçerli şifre yanlış.",
+  "DefaultError": "Bir hata oluştu.",
+  "UserNotFound": "Kullanıcı bulunamadı.",
+  "NetworkError": "Ağ hatası."
   },
   "Toolbar": {
     "Preview": "Önizleme",

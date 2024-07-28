@@ -112,7 +112,12 @@
     "SketchFailedSave": "Misslyckades spara sketch.",
     "AutosaveEnabled": "Autospara aktiverat.",
     "LangChange": "Språk bytt.",
-    "SettingsSaved": "Sparat inställningar."
+    "SettingsSaved": "Sparat inställningar.",
+  "EmptyCurrentPass": "Det aktuella lösenordsfältet är tomt.",
+  "IncorrectCurrentPass": "Det aktuella lösenordet är felaktigt.",
+  "DefaultError": "Ett standardfel har inträffat.",
+  "UserNotFound": "Användaren hittades inte.",
+  "NetworkError": "Nätverksfel."
   },
   "Toolbar": {
     "Preview": "Förhandsvisning",

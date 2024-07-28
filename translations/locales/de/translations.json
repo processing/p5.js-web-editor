@@ -112,7 +112,12 @@
     "SketchFailedSave": "Fehler beim Sichern Deines Sketches.",
     "AutosaveEnabled": "Automatisches Sichern aktiviert.",
     "LangChange": "Sprache geändert",
-    "SettingsSaved": "Einstellungen gespeichert."
+    "SettingsSaved": "Einstellungen gespeichert",
+      "EmptyCurrentPass": "Aktuelles Passwortfeld ist leer",
+      "IncorrectCurrentPass": "Aktuelles Passwort ist falsch",
+      "DefaultError":"Ein Fehler ist aufgetreten",
+      "UserNotFound": "Benutzer nicht gefunden",
+      "NetworkError": "Netzwerkfehler"
   },
   "Toolbar": {
     "Preview": "Vorschau",

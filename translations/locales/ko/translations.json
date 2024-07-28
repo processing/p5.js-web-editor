@@ -98,7 +98,12 @@
     "SketchFailedSave": "스케치 저장 실패.",
     "AutosaveEnabled": "자동 저장 활성화.",
     "LangChange": "언어 변경",
-    "SettingsSaved": "설정 저장 완료."
+    "SettingsSaved": "설정 저장 완료.",
+      "EmptyCurrentPass": "현재 비밀번호 필드가 비어 있습니다.",
+      "IncorrectCurrentPass": "현재 비밀번호가 잘못되었습니다.",
+      "DefaultError":"기본 오류가 발생했습니다.",
+      "UserNotFound": "사용자를 찾을 수 없습니다.",
+      "NetworkError": "네트워크 오류"
   },
   "Toolbar": {
     "Preview": "미리보기",

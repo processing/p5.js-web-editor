@@ -113,7 +113,12 @@
       "SketchFailedSave": "Echec de la sauvegarde du croquis.",
       "AutosaveEnabled": "Sauvegarde automatique activée.",
       "LangChange": "Langue changée.",
-      "SettingsSaved": "Paramètres sauvegardés."
+      "SettingsSaved": "Paramètres sauvegardés.",
+      "EmptyCurrentPass": "Le champ du mot de passe actuel est vide",
+      "IncorrectCurrentPass": "Le mot de passe actuel est incorrect.",
+      "DefaultError":"Une erreur par défaut s’est produite.",
+      "UserNotFound": "Utilisateur introuvable.",
+      "NetworkError": "Erreur réseau"
     },
     "Toolbar": {
       "Preview": "Aperçu",

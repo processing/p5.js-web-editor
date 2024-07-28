@@ -112,7 +112,12 @@
       "SketchFailedSave": "スケッチの保存に失敗しました",
       "AutosaveEnabled": "自動保存を有効にしました",
       "LangChange": "言語を変更しました",
-      "SettingsSaved": "設定を保存しました"
+     "SettingsSaved": "設定を保存しました",
+      "EmptyCurrentPass": "現在のパスワードフィールドは空です",
+      "IncorrectCurrentPass": "現在のパスワードが正しくありません",
+      "DefaultError":"エラーが発生しました",
+      "UserNotFound": "ユーザーが見つかりません",
+      "NetworkError": "ネットワークエラー"
     },
     "Toolbar": {
       "Preview": "プレビュー",

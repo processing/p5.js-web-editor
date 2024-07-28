@@ -112,7 +112,12 @@
     "SketchFailedSave": "Fallo al guardar el bosquejo.",
     "AutosaveEnabled": "Grabado automático activado.",
     "LangChange": "Lenguaje cambiado",
-    "SettingsSaved": "Configuración guardada."
+     "SettingsSaved": "Configuración guardada",
+      "EmptyCurrentPass": "El campo de contraseña actual está vacío",
+      "IncorrectCurrentPass": "La contraseña actual es incorrecta",
+      "DefaultError":"Ha ocurrido un error",
+      "UserNotFound": "Usuario no encontrado",
+      "NetworkError": "Error de red"
   },
   "Toolbar": {
     "Preview": "Vista previa",
