@@ -46,26 +46,21 @@ export function validateAndLoginUser(formProps) {
   return (dispatch, getState) => {
     const state = getState();
     const { previousPath } = state.ide;
-    return new Promise((resolve) => {
-      loginUser(formProps)
-        .then((response) => {
-          dispatch(authenticateUser(response.data));
-          dispatch(setPreferences(response.data.preferences));
-          dispatch(
-            setLanguage(response.data.preferences.language, {
-              persistPreference: false
-            })
-          );
-          dispatch(justOpenedProject());
-          browserHistory.push(previousPath);
-          resolve();
-        })
-        .catch((error) =>
-          resolve({
-            [FORM_ERROR]: error.response.data.message
+    return loginUser(formProps)
+      .then((response) => {
+        dispatch(authenticateUser(response.data));
+        dispatch(setPreferences(response.data.preferences));
+        dispatch(
+          setLanguage(response.data.preferences.language, {
+            persistPreference: false
           })
         );
-    });
+        dispatch(justOpenedProject());
+        browserHistory.push(previousPath);
+      })
+      .catch((error) => ({
+        [FORM_ERROR]: error.response.data.message
+      }));
   };
 }
 
@@ -73,20 +68,17 @@ export function validateAndSignUpUser(formValues) {
   return (dispatch, getState) => {
     const state = getState();
     const { previousPath } = state.ide;
-    return new Promise((resolve) => {
-      signUpUser(formValues)
-        .then((response) => {
-          dispatch(authenticateUser(response.data));
-          dispatch(justOpenedProject());
-          browserHistory.push(previousPath);
-          resolve();
-        })
-        .catch((error) => {
-          const { response } = error;
-          dispatch(authError(response.data.error));
-          resolve({ error });
-        });
-    });
+    return signUpUser(formValues)
+      .then((response) => {
+        dispatch(authenticateUser(response.data));
+        dispatch(justOpenedProject());
+        browserHistory.push(previousPath);
+      })
+      .catch((error) => {
+        const { response } = error;
+        dispatch(authError(response.data.error));
+        return { error };
+      });
   };
 }
 
@@ -160,23 +152,19 @@ export function logoutUser() {
 }
 
 export function initiateResetPassword(formValues) {
-  return (dispatch) =>
-    new Promise((resolve) => {
-      dispatch({
-        type: ActionTypes.RESET_PASSWORD_INITIATE
-      });
-      return apiClient
-        .post('/reset-password', formValues)
-        .then(() => resolve())
-        .catch((error) => {
-          const { response } = error;
-          dispatch({
-            type: ActionTypes.ERROR,
-            message: response.data
-          });
-          resolve({ error });
-        });
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.RESET_PASSWORD_INITIATE
     });
+    return apiClient.post('/reset-password', formValues).catch((error) => {
+      const { response } = error;
+      dispatch({
+        type: ActionTypes.ERROR,
+        message: response.data
+      });
+      return { error };
+    });
+  };
 }
 
 export function initiateVerification() {
@@ -184,7 +172,7 @@ export function initiateVerification() {
     dispatch({
       type: ActionTypes.EMAIL_VERIFICATION_INITIATE
     });
-    apiClient
+    return apiClient
       .post('/verify/send', {})
       .then(() => {
         // do nothing
@@ -246,21 +234,18 @@ export function validateResetPasswordToken(token) {
 
 export function updatePassword(formValues, token) {
   return (dispatch) =>
-    new Promise((resolve) =>
-      apiClient
-        .post(`/reset-password/${token}`, formValues)
-        .then((response) => {
-          dispatch(authenticateUser(response.data));
-          browserHistory.push('/');
-          resolve();
-        })
-        .catch((error) => {
-          dispatch({
-            type: ActionTypes.INVALID_RESET_PASSWORD_TOKEN
-          });
-          resolve({ error });
-        })
-    );
+    apiClient
+      .post(`/reset-password/${token}`, formValues)
+      .then((response) => {
+        dispatch(authenticateUser(response.data));
+        browserHistory.push('/');
+      })
+      .catch((error) => {
+        dispatch({
+          type: ActionTypes.INVALID_RESET_PASSWORD_TOKEN
+        });
+        return { error };
+      });
 }
 
 export function updateSettingsSuccess(user) {
@@ -276,16 +261,13 @@ export function submitSettings(formValues) {
 
 export function updateSettings(formValues) {
   return (dispatch) =>
-    new Promise((resolve) =>
-      submitSettings(formValues)
-        .then((response) => {
-          dispatch(updateSettingsSuccess(response.data));
-          dispatch(showToast(5500));
-          dispatch(setToastText('Toast.SettingsSaved'));
-          resolve();
-        })
-        .catch((error) => resolve({ error }))
-    );
+    submitSettings(formValues)
+      .then((response) => {
+        dispatch(updateSettingsSuccess(response.data));
+        dispatch(showToast(5500));
+        dispatch(setToastText('Toast.SettingsSaved'));
+      })
+      .catch((error) => ({ error }));
 }
 
 export function createApiKeySuccess(user) {
@@ -304,7 +286,7 @@ export function createApiKey(label) {
       })
       .catch((error) => {
         const { response } = error;
-        Promise.reject(new Error(response.data.error));
+        return new Error(response.data.error);
       });
 }
 
@@ -320,7 +302,7 @@ export function removeApiKey(keyId) {
       })
       .catch((error) => {
         const { response } = error;
-        Promise.reject(new Error(response.data.error));
+        return new Error(response.data.error);
       });
 }
 
