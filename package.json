@@ -159,6 +159,7 @@
     "@babel/core": "^7.14.6",
     "@babel/register": "^7.14.5",
     "@emmetio/codemirror-plugin": "^1.2.4",
+    "@floating-ui/react": "^0.26.3",
     "@gatsbyjs/webpack-hot-middleware": "^2.25.3",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.11",
     "@redux-devtools/core": "^3.11.0",
