@@ -73,14 +73,14 @@ export const useIDEKeyHandlers = ({ getContent }) => {
         sidebarIsExpanded ? collapseSidebar() : expandSidebar()
       );
     },
-    'ctrl-`': (e) => {
-      e.preventDefault();
-      dispatch(consoleIsExpanded ? collapseConsole() : expandConsole());
-    },
-    'alt-n': (e) => {
+    'ctrl-alt-n': (e) => {
       e.preventDefault();
       e.stopPropagation();
       dispatch(newFile());
+    },
+    'ctrl-`': (e) => {
+      e.preventDefault();
+      dispatch(consoleIsExpanded ? collapseConsole() : expandConsole());
     }
   });
 };
