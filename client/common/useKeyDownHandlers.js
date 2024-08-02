@@ -38,6 +38,9 @@ export default function useKeyDownHandlers(keyHandlers) {
           /^\d+$/.test(e.code.at(-1)) ? e.code.at(-1) : e.key.toLowerCase()
         }`
       ]?.(e);
+    } else if (isCtrl && e.altKey && e.code === 'KeyN') {
+      // specifically for creating a new file
+      handlers.current[`ctrl-alt-n`]?.(e);
     } else if (isCtrl) {
       handlers.current[`ctrl-${e.key.toLowerCase()}`]?.(e);
     }
