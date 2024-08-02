@@ -12,6 +12,6 @@ This folder contains documents intended for developers of the p5.js Web Editor.
 * [Release](./release.md) - A guide to creating a production release.
 
 ## Documents to Create
-* Design Principles - reference [p5.js design principles](https://github.com/processing/p5.js/blob/main/contributor_docs/design_principles.md)
-* Issue Labels - reference [p5.js issue labels](https://github.com/processing/p5.js/blob/main/contributor_docs/issue_labels.md)
+* Software Design Principles - reference [p5.js software design principles](https://github.com/processing/p5.js/blob/eb61f7a260531d17930de3c987949558ce242d35/contributor_docs/contributor_guidelines.md#software-design-principles)
+* Issue Templates - reference [p5.js issue templates](https://github.com/processing/p5.js/blob/main/contributor_docs/contributor_guidelines.md#issue-templates)
 * File Structure - An explanation of the file structure of this application.

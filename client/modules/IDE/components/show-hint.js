@@ -283,7 +283,7 @@
 <span class="hint-hidden">, </span>\
 ${
   p5
-    ? `<a href="https://p5js.org/reference/#/p5/${
+    ? `<a href="https://p5js.org/reference/p5/${
         typeof p5 === 'string' ? p5 : name
       }" role="link" onclick="event.stopPropagation()" target="_blank">\
 <span class="hint-hidden">open ${name} reference</span>\

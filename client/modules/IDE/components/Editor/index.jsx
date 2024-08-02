@@ -84,6 +84,10 @@ const INDENTATION_AMOUNT = 2;
 class Editor extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      currentLine: 1
+    };
+    this._cm = null;
     this.tidyCode = this.tidyCode.bind(this);
 
     this.updateLintingMessageAccessibility = debounce((annotations) => {
@@ -133,7 +137,7 @@ class Editor extends React.Component {
           asi: true,
           eqeqeq: false,
           '-W041': false,
-          esversion: 7
+          esversion: 11
         }
       },
       colorpicker: {
@@ -195,18 +199,19 @@ class Editor extends React.Component {
       }, 1000)
     );
 
-    this._cm.on('keyup', () => {
-      const temp = this.props.t('Editor.KeyUpLineNumber', {
-        lineNumber: parseInt(this._cm.getCursor().line + 1, 10)
-      });
-      document.getElementById('current-line').innerHTML = temp;
-    });
+    if (this._cm) {
+      this._cm.on('keyup', this.handleKeyUp);
+    }
 
     this._cm.on('keydown', (_cm, e) => {
       // Show hint
       const mode = this._cm.getOption('mode');
       if (/^[a-z]$/i.test(e.key) && (mode === 'css' || mode === 'javascript')) {
         this.showHint(_cm);
+      }
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        this._cm.getInputField().blur();
       }
     });
 
@@ -235,6 +240,16 @@ class Editor extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.file.id !== prevProps.file.id) {
+      const fileMode = this.getFileMode(this.props.file.name);
+      if (fileMode === 'javascript') {
+        // Define the new Emmet configuration based on the file mode
+        const emmetConfig = {
+          preview: ['html'],
+          markTagPairs: false,
+          autoRenameTags: true
+        };
+        this._cm.setOption('emmet', emmetConfig);
+      }
       const oldDoc = this._cm.swapDoc(this._docs[this.props.file.id]);
       this._docs[prevProps.file.id] = oldDoc;
       this._cm.focus();
@@ -322,7 +337,9 @@ class Editor extends React.Component {
   }
 
   componentWillUnmount() {
-    this._cm = null;
+    if (this._cm) {
+      this._cm.off('keyup', this.handleKeyUp);
+    }
     this.props.provideController(null);
   }
 
@@ -338,7 +355,7 @@ class Editor extends React.Component {
       mode = 'application/json';
     } else if (fileName.match(/.+\.(frag|glsl)$/i)) {
       mode = 'x-shader/x-fragment';
-    } else if (fileName.match(/.+\.(vert|stl)$/i)) {
+    } else if (fileName.match(/.+\.(vert|stl|mtl)$/i)) {
       mode = 'x-shader/x-vertex';
     } else {
       mode = 'text/plain';
@@ -351,6 +368,11 @@ class Editor extends React.Component {
     const updatedFile = Object.assign({}, this.props.file, { content });
     return updatedFile;
   }
+
+  handleKeyUp = () => {
+    const lineNumber = parseInt(this._cm.getCursor().line + 1, 10);
+    this.setState({ currentLine: lineNumber });
+  };
 
   showFind() {
     this._cm.execCommand('findPersistent');
@@ -508,12 +530,14 @@ class Editor extends React.Component {
         this.props.file.fileType === 'folder' || this.props.file.url
     });
 
+    const { currentLine } = this.state;
+
     return (
       <MediaQuery minWidth={770}>
         {(matches) =>
           matches ? (
             <section className={editorSectionClass}>
-              <header className="editor__header">
+              <div className="editor__header">
                 <button
                   aria-label={this.props.t('Editor.OpenSketchARIA')}
                   className="sidebar__contract"
@@ -538,7 +562,7 @@ class Editor extends React.Component {
                   </span>
                   <Timer />
                 </div>
-              </header>
+              </div>
               <article
                 ref={(element) => {
                   this.codemirrorContainer = element;
@@ -551,11 +575,14 @@ class Editor extends React.Component {
                   name={this.props.file.name}
                 />
               ) : null}
-              <EditorAccessibility lintMessages={this.props.lintMessages} />
+              <EditorAccessibility
+                lintMessages={this.props.lintMessages}
+                currentLine={currentLine}
+              />
             </section>
           ) : (
             <EditorContainer expanded={this.props.isExpanded}>
-              <header>
+              <div>
                 <IconButton
                   onClick={this.props.expandSidebar}
                   icon={FolderIcon}
@@ -564,7 +591,7 @@ class Editor extends React.Component {
                   {this.props.file.name}
                   <UnsavedChangesIndicator />
                 </span>
-              </header>
+              </div>
               <section>
                 <EditorHolder
                   ref={(element) => {
@@ -577,7 +604,10 @@ class Editor extends React.Component {
                     name={this.props.file.name}
                   />
                 ) : null}
-                <EditorAccessibility lintMessages={this.props.lintMessages} />
+                <EditorAccessibility
+                  lintMessages={this.props.lintMessages}
+                  currentLine={currentLine}
+                />
               </section>
             </EditorContainer>
           )

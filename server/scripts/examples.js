@@ -18,7 +18,7 @@ mongoose.connect(mongoConnectionString, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
-mongoose.set('useCreateIndex', true);
+mongoose.set('strictQuery', true);
 mongoose.connection.on('error', () => {
   console.error(
     'MongoDB Connection Error. Please make sure that MongoDB is running.'
@@ -30,7 +30,7 @@ async function getCategories() {
   const categories = [];
   const options = {
     url:
-      'https://api.github.com/repos/processing/p5.js-website/contents/src/data/examples/en',
+      'https://api.github.com/repos/processing/p5.js-website-legacy/contents/src/data/examples/en',
     method: 'GET',
     headers: {
       ...headers,
@@ -205,7 +205,7 @@ async function addAssetsToProject(assets, response, project) {
         // for assets files that are not .vert or .frag extension
         project.files.push({
           name: assetName,
-          url: `https://cdn.jsdelivr.net/gh/processing/p5.js-website@main/src/data/examples/assets/${assetName}`,
+          url: `https://cdn.jsdelivr.net/gh/processing/p5.js-website-legacy@main/src/data/examples/assets/${assetName}`,
           id: fileID,
           _id: fileID,
           children: [],
@@ -223,7 +223,7 @@ async function addAssetsToProject(assets, response, project) {
 async function createProjectsInP5user(projectsInAllCategories) {
   const options = {
     url:
-      'https://api.github.com/repos/processing/p5.js-website/contents/src/data/examples/assets',
+      'https://api.github.com/repos/processing/p5.js-website-legacy/contents/src/data/examples/assets',
     method: 'GET',
     headers: {
       ...headers,
@@ -364,7 +364,7 @@ async function getp5User() {
   const categories = await getCategories();
   const sketchesInCategories = await getSketchesInCategories(categories);
   const sketchContent = await getSketchContent(sketchesInCategories);
-  const projectsInUser = createProjectsInP5user(sketchContent);
+  const projectsInUser = await createProjectsInP5user(sketchContent);
   return projectsInUser;
 }
 

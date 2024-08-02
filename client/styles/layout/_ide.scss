@@ -20,3 +20,27 @@
   width: 100%;
   height: 100%;
 }
+
+@media print {
+  .sidebar {
+    display: none;
+    width: 0;
+  }
+  .preview-console {
+    display: none;
+  }
+  .CodeMirror {
+    height: auto;
+    overflow: visible;
+    position: relative;
+  }
+  .CodeMirror-scroll {
+    height: auto;
+    overflow-y: hidden;
+  }
+  .CodeMirror-vscrollbar,
+  .CodeMirror-hscrollbar,
+  .CodeMirror-gutters {
+    display: none;
+  }
+}
