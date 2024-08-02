@@ -14,7 +14,8 @@
     "import/named": 0,
     "import/namespace": 0,
     "import/no-unresolved": 0,
-    "import/no-named-as-default": 2,
+    "import/no-named-as-default": 0,
+    "import/no-named-as-default-member": 0,
     "comma-dangle": 0,  // not sure why airbnb turned this on. gross!
     "indent": 0,
     "no-console": 0,
