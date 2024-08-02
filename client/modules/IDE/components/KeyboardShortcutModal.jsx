@@ -6,6 +6,8 @@ function KeyboardShortcutModal() {
   const { t } = useTranslation();
   const replaceCommand =
     metaKey === 'Ctrl' ? `${metaKeyName} + H` : `${metaKeyName} + ⌥ + F`;
+  const newFileCommand =
+    metaKey === 'Ctrl' ? `${metaKeyName} + Alt + N` : `${metaKeyName} + ⌥ + N`;
   return (
     <div className="keyboard-shortcuts">
       <h3 className="keyboard-shortcuts__title">
@@ -68,6 +70,10 @@ function KeyboardShortcutModal() {
         <li className="keyboard-shortcut-item">
           <span className="keyboard-shortcut__command">{metaKeyName} + K</span>
           <span>{t('KeyboardShortcuts.CodeEditing.ColorPicker')}</span>
+        </li>
+        <li className="keyboard-shortcut-item">
+          <span className="keyboard-shortcut__command">{newFileCommand}</span>
+          <span>{t('KeyboardShortcuts.CodeEditing.CreateNewFile')}</span>
         </li>
       </ul>
       <h3 className="keyboard-shortcuts__title">General</h3>
