@@ -24,7 +24,4 @@ export function createInstanceMock() {
   return sinon.mock(User.prototype);
 }
 
-// Re-export the model, it will be
-// altered by mockingoose whenever
-// we call methods on the MockConfig
 export default User;

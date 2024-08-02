@@ -9,6 +9,7 @@ import Routing from './routes';
 import ThemeProvider from './modules/App/components/ThemeProvider';
 import Loader from './modules/App/components/loader';
 import './i18n';
+import SkipLink from './components/SkipLink';
 
 require('./styles/main.scss');
 
@@ -20,18 +21,21 @@ const initialState = window.__INITIAL_STATE__;
 const store = configureStore(initialState);
 
 const App = () => (
-  <Provider store={store}>
-    <ThemeProvider>
-      <Router history={browserHistory}>
-        <Routing />
-      </Router>
-    </ThemeProvider>
-  </Provider>
+  <>
+    <Router history={browserHistory}>
+      <SkipLink targetId="play-sketch" text="PlaySketch" />
+      <Routing />
+    </Router>
+  </>
 );
 
 render(
-  <Suspense fallback={<Loader />}>
-    <App />
-  </Suspense>,
+  <Provider store={store}>
+    <ThemeProvider>
+      <Suspense fallback={<Loader />}>
+        <App />
+      </Suspense>
+    </ThemeProvider>
+  </Provider>,
   document.getElementById('root')
 );
