@@ -52,11 +52,15 @@ function NewFolderForm() {
                 </React.Fragment>
               )}
             </Field>
-            <Button type="submit" disabled={invalid || submitting}>
-              {t('NewFolderForm.AddFolderSubmit')}
-            </Button>
+            <Field name="submitButton">
+              {() => (
+                <Button type="submit" disabled={submitting}>
+                  {t('NewFolderForm.AddFolderSubmit')}
+                </Button>
+              )}
+            </Field>
           </div>
-          {touched.name && errors.name && (
+          {touched.submitButton && errors.name && (
             <span className="form-error">{errors.name}</span>
           )}
         </form>

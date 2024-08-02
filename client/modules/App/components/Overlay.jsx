@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useCallback, useRef } from 'react';
+import MediaQuery from 'react-responsive';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -54,7 +55,7 @@ const Overlay = ({
           <header className="overlay__header">
             <h2 className="overlay__title">{title}</h2>
             <div className="overlay__actions">
-              {actions}
+              <MediaQuery minWidth={770}>{actions}</MediaQuery>
               <button
                 className="overlay__close-button"
                 onClick={close}
@@ -64,6 +65,11 @@ const Overlay = ({
               </button>
             </div>
           </header>
+          <MediaQuery maxWidth={769}>
+            {actions && (
+              <div className="overlay__actions-mobile">{actions}</div>
+            )}
+          </MediaQuery>
           {children}
         </section>
       </div>

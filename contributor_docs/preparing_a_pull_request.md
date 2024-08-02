@@ -46,4 +46,4 @@ You may have some conflicts! It's okay. Feel free to ask for help. If merging wi
 ## And finally, for the great glory
     git push --set-upstream origin your-branch-name-backup
 
-Here's a good reference on rebasing, in case you're intensely curious about the technical details. https://www.atlassian.com/git/tutorials/merging-vs-rebasing
+Here's a [good tutorial reference on rebasing](https://www.atlassian.com/git/tutorials/merging-vs-rebasing), in case you're intensely curious about the technical details. 
