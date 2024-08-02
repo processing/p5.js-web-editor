@@ -6,9 +6,9 @@ const { Schema } = mongoose;
 
 const collectedProjectSchema = new Schema(
   {
-    project: { type: Schema.Types.ObjectId, ref: 'Project' }
+    project: { type: Schema.Types.String, ref: 'Project' }
   },
-  { timestamps: true, _id: true, usePushEach: true }
+  { timestamps: true }
 );
 
 collectedProjectSchema.virtual('id').get(function getId() {
@@ -36,7 +36,7 @@ const collectionSchema = new Schema(
     owner: { type: Schema.Types.ObjectId, ref: 'User' },
     items: { type: [collectedProjectSchema] }
   },
-  { timestamps: true, usePushEach: true }
+  { timestamps: true }
 );
 
 collectionSchema.virtual('id').get(function getId() {
@@ -48,9 +48,8 @@ collectionSchema.set('toJSON', {
 });
 
 collectionSchema.pre('save', function generateSlug(next) {
-  const collection = this;
-  collection.slug = slugify(collection.name, '_');
-  return next();
+  this.slug = slugify(this.name, '_');
+  next();
 });
 
 export default mongoose.models.Collection ||

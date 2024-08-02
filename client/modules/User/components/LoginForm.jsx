@@ -29,7 +29,7 @@ function LoginForm() {
         <form className="form" onSubmit={handleSubmit}>
           <Field name="email">
             {(field) => (
-              <p className="form__field">
+              <div className="form__field">
                 <label htmlFor="email" className="form__label">
                   {t('LoginForm.UsernameOrEmail')}
                 </label>
@@ -43,22 +43,25 @@ function LoginForm() {
                   {...field.input}
                 />
                 {field.meta.touched && field.meta.error && (
-                  <span className="form-error">{field.meta.error}</span>
+                  <span className="form-error" aria-live="polite">
+                    {field.meta.error}
+                  </span>
                 )}
-              </p>
+              </div>
             )}
           </Field>
           <Field name="password">
             {(field) => (
-              <div>
-                <p className="form__field">
-                  <label htmlFor="password" className="form__label">
-                    {t('LoginForm.Password')}
-                  </label>
+              <div className="form__field">
+                <label htmlFor="password" className="form__label">
+                  {t('LoginForm.Password')}
+                </label>
+                <div className="form__field__password">
                   <button
                     className="form__eye__icon"
                     type="button"
                     onClick={handleVisibility}
+                    aria-hidden="true"
                   >
                     {showPassword ? (
                       <AiOutlineEyeInvisible />
@@ -74,10 +77,12 @@ function LoginForm() {
                     autoComplete="current-password"
                     {...field.input}
                   />
-                  {field.meta.touched && field.meta.error && (
-                    <span className="form-error">{field.meta.error}</span>
-                  )}
-                </p>
+                </div>
+                {field.meta.touched && field.meta.error && (
+                  <span className="form-error" aria-live="polite">
+                    {field.meta.error}
+                  </span>
+                )}
               </div>
             )}
           </Field>

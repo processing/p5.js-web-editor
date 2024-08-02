@@ -17,13 +17,7 @@ import NewPasswordView from './modules/User/pages/NewPasswordView';
 import AccountView from './modules/User/pages/AccountView';
 import CollectionView from './modules/User/pages/CollectionView';
 import DashboardView from './modules/User/pages/DashboardView';
-import createRedirectWithUsername from './components/createRedirectWithUsername';
 import { getUser } from './modules/User/actions';
-import {
-  userIsAuthenticated,
-  userIsNotAuthenticated,
-  userIsAuthorized
-} from './utils/auth';
 
 /**
  *  `params` is no longer a top-level route component prop in v4.
@@ -51,25 +45,19 @@ Route.propTypes = {
 const routes = (
   <Switch>
     <Route exact path="/" component={IDEView} />
-    <Route path="/login" component={userIsNotAuthenticated(LoginView)} />
-    <Route path="/signup" component={userIsNotAuthenticated(SignupView)} />
+    <Route path="/login" component={LoginView} />
+    <Route path="/signup" component={SignupView} />
     <Route
       path="/reset-password/:reset_password_token"
       component={NewPasswordView}
     />
-    <Route
-      path="/reset-password"
-      component={userIsNotAuthenticated(ResetPasswordView)}
-    />
+    <Route path="/reset-password" component={ResetPasswordView} />
     <Route path="/verify" component={EmailVerificationView} />
     <Route path="/projects/:project_id" component={IDEView} />
     <Route path="/:username/full/:project_id" component={FullView} />
     <Route path="/full/:project_id" component={FullView} />
 
-    <Route
-      path="/:username/assets"
-      component={userIsAuthenticated(userIsAuthorized(DashboardView))}
-    />
+    <Route path="/:username/assets" component={DashboardView} />
     <Route
       path="/:username/sketches/:project_id/add-to-collection"
       component={IDEView}
@@ -81,18 +69,10 @@ const routes = (
       component={CollectionView}
     />
     <Route path="/:username/collections" component={DashboardView} />
-
-    <Route
-      path="/sketches"
-      component={createRedirectWithUsername('/:username/sketches')}
-    />
-    <Route
-      path="/assets"
-      component={createRedirectWithUsername('/:username/assets')}
-    />
-    <Route path="/account" component={userIsAuthenticated(AccountView)} />
+    <Route path="/sketches" component={DashboardView} />
+    <Route path="/assets" component={DashboardView} />
+    <Route path="/account" component={AccountView} />
     <Route path="/about" component={IDEView} />
-
     <Route path="/privacy-policy" component={PrivacyPolicy} />
     <Route path="/terms-of-use" component={TermsOfUse} />
     <Route path="/code-of-conduct" component={CodeOfConduct} />

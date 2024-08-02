@@ -130,7 +130,7 @@ passport.use(
     },
     async (req, accessToken, refreshToken, profile, done) => {
       try {
-        const existingUser = await User.findOne({ github: profile.id });
+        const existingUser = await User.findOne({ github: profile.id }).exec();
 
         if (existingUser) {
           if (req.user && req.user.email !== existingUser.email) {
@@ -229,7 +229,7 @@ passport.use(
       try {
         const existingUser = await User.findOne({
           google: profile._json.emails[0].value
-        });
+        }).exec();
 
         if (existingUser) {
           if (req.user && req.user.email !== existingUser.email) {

@@ -282,6 +282,7 @@
       "errorShortPassword": "پاس ورڈ کم از کم 6 حروف کا ہونا چاہیے۔",
       "errorConfirmPassword": "براہ کرم اپنے پاس ورڈ کی تصدیق کریں۔",
       "errorNewPassword": "براہ کرم نیا پاس ورڈ درج کریں یا موجودہ پاس ورڈ کو خالی چھوڑ دیں۔",
+      "errorNewPasswordRepeat":"Your New Password must differ from the current one.",
       "errorEmptyUsername": "براہ کرم ایک صارف نام درج کریں۔",
       "errorLongUsername": "صارف کا نام 20 حروف سے کم ہونا چاہیے۔",
       "errorValidUsername": "صارف کا نام صرف نمبرز، حروف، پیریڈز، ڈیشز اور انڈر سکور پر مشتمل ہونا چاہیے۔"
