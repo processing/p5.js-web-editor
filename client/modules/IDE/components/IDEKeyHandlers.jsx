@@ -26,6 +26,10 @@ export const useIDEKeyHandlers = ({ getContent }) => {
   const sidebarIsExpanded = useSelector((state) => state.ide.sidebarIsExpanded);
   const consoleIsExpanded = useSelector((state) => state.ide.consoleIsExpanded);
 
+  const rootFile = useSelector(
+    (state) => state.files.filter((file) => file.name === 'root')[0]
+  );
+
   const isUserOwner = useSelector(getIsUserOwner);
   const isAuthenticated = useSelector(getAuthenticated);
   const sketchOwner = useSelector(getSketchOwner);
@@ -76,7 +80,7 @@ export const useIDEKeyHandlers = ({ getContent }) => {
     'ctrl-alt-n': (e) => {
       e.preventDefault();
       e.stopPropagation();
-      dispatch(newFile());
+      dispatch(newFile(rootFile.id));
     },
     'ctrl-`': (e) => {
       e.preventDefault();
