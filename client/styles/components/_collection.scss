@@ -106,6 +106,10 @@
   @extend %dropdown-open-right;
   padding: #{math.div(20, $base-font-size)}rem;
   width: #{math.div(350, $base-font-size)}rem;
+  @media only screen and (max-width: 520px) {
+    max-width: 90vw;
+    right: -#{math.div(120, $base-font-size)}rem;
+  }
 }
 
 .collection-content {

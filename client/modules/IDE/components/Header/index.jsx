@@ -12,12 +12,12 @@ const Header = (props) => {
   const isMobile = useIsMobile();
 
   return (
-    <header>
+    <>
       <Nav />
       {!isMobile && (
         <Toolbar syncFileContent={props.syncFileContent} key={project.id} />
       )}
-    </header>
+    </>
   );
 };
 

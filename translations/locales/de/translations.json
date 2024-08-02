@@ -280,6 +280,7 @@
     "errorEmptyPassword": "Gib bitte ein Passwort ein",
     "errorShortPassword": "Das Passwort muss mindestens aus 6 Zeichen bestehen",
     "errorConfirmPassword": "Gib bitte das Passwort erneut ein",
+    "errorNewPasswordRepeat":"Your New Password must differ from the current one.",
     "errorNewPassword": "Gib bitte ein neues Passwort ein oder lass dieses Feld frei.",
     "errorEmptyUsername": "Gib bitte einen Nutzernamen ein.",
     "errorLongUsername": "Der Nutzername muss weniger als 20 Zeichen haben.",
@@ -552,10 +553,6 @@
     "35Seconds": "vor 35 Sekunden",
     "Ago": "vor {{timeAgo}}"
   },
-  "AddRemoveButton": {
-    "AltAddARIA": "Zur Sammlung hinzufügen",
-    "AltRemoveARIA": "Aus Sammlung entfernen"
-  },
   "CopyableInput": {
     "CopiedARIA": "In die Zwischenablage kopiert",
     "OpenViewTabARIA": "Öffne {{label}} in neuem Tab"
@@ -589,14 +586,6 @@
   "PreferenceCreators": {
     "On": "An",
     "Off": "Aus"
-  },
-  "MobileIDEView": {
-    "Preferences": "Einstellungen",
-    "MyStuff": "Mein Zeug",
-    "Examples": "Beispiele",
-    "OriginalEditor": "Original-Editor",
-    "Login": "Anmelden",
-    "Logout": "Abmelden"
   },
   "MobileDashboardView": {
     "Examples":  "Beispiele",

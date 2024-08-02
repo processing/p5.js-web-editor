@@ -283,6 +283,7 @@
     "errorShortPassword": "Пароль повинен містити щонайменше 6 символів",
     "errorConfirmPassword": "Введіть підтвердження пароля",
     "errorNewPassword": "Введіть новий пароль або залиште поточний пароль порожнім.",
+    "errorNewPasswordRepeat":"Your New Password must differ from the current one.",
     "errorEmptyUsername": "Введіть ім'я користувача.",
     "errorLongUsername": "Ім'я користувача має містити менше 20 символів.",
     "errorValidUsername": "Ім'я користувача має складатися лише з цифр, літер, крапок, тире та символа підкреслення."
@@ -553,10 +554,6 @@
     "35Seconds": "35 секунд тому",
     "Ago": "{{timeAgo}} тому"
   },
-  "AddRemoveButton": {
-    "AltAddARIA": "Додати в колекцію",
-    "AltRemoveARIA": "Видалити з колекції"
-  },
   "CopyableInput": {
     "CopiedARIA": "Скопійовано в буфер обміну!",
     "OpenViewTabARIA": "Переглянути {{label}} у новій вкладці"
@@ -590,14 +587,6 @@
   "PreferenceCreators": {
     "On": "Так",
     "Off": "Ні"
-  },
-  "MobileIDEView":{
-    "Preferences": "Налаштування",
-    "MyStuff": "Мої матеріали",
-    "Examples": "Приклади",
-    "OriginalEditor": "Редактор",
-    "Login": "Увійти",
-    "Logout": "Вийти"
   },
   "MobileDashboardView": {
     "Examples": "Приклади",

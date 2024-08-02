@@ -58,7 +58,7 @@
 }
 
 .form__input {
-  min-width: #{math.div(355, $base-font-size)}rem;
+  min-width: #{math.div(312, $base-font-size)}rem;
   width: 100%;
   height: #{math.div(40, $base-font-size)}rem;
   font-size: #{math.div(16, $base-font-size)}rem;
@@ -66,15 +66,33 @@
     color: getThemifyVariable("form-input-text-color");
     background-color: getThemifyVariable("input-background-color");
   }
-
+  
   @media (max-width: 770px) {
     max-width: 100%;
-    width:100%;
+    width: 100%;
   }
+}
+
+.form__field__password {
+  position: relative;
+}
+
+.form__eye__icon {
+  font-size: 28px;
+  position: absolute;
+  right: 0px;
+  top: 4px;
+  vertical-align: middle;
+}
+
+
+.form__input[type='password']::-ms-reveal {
+  display: none;
 }
 
 .form__input-flexible-height {
   height: auto;
+  resize: none;
 }
 
 .form__input::placeholder {

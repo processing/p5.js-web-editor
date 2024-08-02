@@ -284,6 +284,7 @@
     "errorShortPassword": "密碼至少要有 6 個字元",
     "errorConfirmPassword": "請再輸入一次密碼確認正確性",
     "errorNewPassword": "請輸入新密碼或讓目前密碼欄位留空",
+    "errorNewPasswordRepeat":"Your New Password must differ from the current one.",
     "errorEmptyUsername": "請輸入使用者名稱",
     "errorLongUsername": "使用者名稱最多只能 20 個字元",
     "errorValidUsername": "使用者名稱只能有數字、字母、英文句點、減號以及底線符號"
@@ -554,10 +555,6 @@
     "35Seconds": "35 秒前",
     "Ago": "{{timeAgo}} 前"
   },
-  "AddRemoveButton": {
-    "AltAddARIA": "加入作品集",
-    "AltRemoveARIA": "從作品集中移除"
-  },
   "CopyableInput": {
     "CopiedARIA": "複製到剪貼簿",
     "OpenViewTabARIA": "在新分頁中檢視 {{label}}"
@@ -592,14 +589,6 @@
   "PreferenceCreators": {
     "On": "啟用",
     "Off": "停用"
-  },
-  "MobileIDEView":{
-    "Preferences": "偏好設定",
-    "MyStuff": "我的資料",
-    "Examples": "範例",
-    "OriginalEditor": "原始的編輯器",
-    "Login": "登入",
-    "Logout": "登出"
   },
   "MobileDashboardView": {
     "Examples": "範例",
