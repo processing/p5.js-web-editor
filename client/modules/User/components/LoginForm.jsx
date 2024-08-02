@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form, Field } from 'react-final-form';
 import { useDispatch } from 'react-redux';
@@ -8,13 +8,26 @@ import { validateLogin } from '../../../utils/reduxFormUtils';
 import { validateAndLoginUser } from '../actions';
 
 function LoginForm() {
-  const { t } = useTranslation();
-
+  const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
+  const [showPassword, setShowPassword] = useState(false);
+
+  useEffect(() => {
+    // This effect will run when the language changes
+    const handleLanguageChange = () => {
+      // Force re-render of the component
+      // We can add any additional logic here if needed
+    };
+    i18n.on('languageChanged', handleLanguageChange);
+    return () => {
+      i18n.off('languageChanged', handleLanguageChange);
+    };
+  }, [i18n]);
+
   function onSubmit(formProps) {
     return dispatch(validateAndLoginUser(formProps));
   }
-  const [showPassword, setShowPassword] = useState(false);
+
   const handleVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -22,7 +35,7 @@ function LoginForm() {
   return (
     <Form
       fields={['email', 'password']}
-      validate={validateLogin}
+      validate={(formProps) => validateLogin(formProps, t)}
       onSubmit={onSubmit}
     >
       {({ handleSubmit, submitError, submitting, modifiedSinceLastSubmit }) => (
