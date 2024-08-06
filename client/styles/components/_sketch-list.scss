@@ -181,3 +181,8 @@
   font-size: #{math.div(16, $base-font-size)}rem;
   padding: #{math.div(42, $base-font-size)}rem 0;
 }
+.sketches-table__row a:hover{
+  @include themify() {
+    color: getThemifyVariable("logo-color");
+  }
+}
