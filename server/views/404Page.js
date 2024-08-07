@@ -78,13 +78,13 @@ export const get404Sketch = async () => {
     </html>`);
 
   try {
-    const p5User = await User.findOne({ username: 'p5' }).exec();
+    const p5User = await User.findOne({ username: 'p5' }).lean().exec();
 
     if (!p5User) {
       return errorMessage;
     }
 
-    const projects = await Project.find({ user: p5User._id }).exec();
+    const projects = await Project.find({ user: p5User._id }).lean().exec();
 
     if (!projects.length) {
       return errorMessage;
