@@ -1,13 +1,68 @@
 import PropTypes from 'prop-types';
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react';
 import useModalClose from '../../common/useModalClose';
 import { MenuOpenContext, NavBarContext } from './contexts';
+import usePrevious from '../../modules/IDE/hooks/usePrevious';
 
 function NavBar({ children, className }) {
   const [dropdownOpen, setDropdownOpen] = useState('none');
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const prevIndex = usePrevious(currentIndex) ?? null;
   const menuItems = useRef(new Set()).current;
 
   const timerRef = useRef(null);
+
+  const first = () => setCurrentIndex(0);
+  const last = () => setCurrentIndex(menuItems.size - 1);
+  const next = () => {
+    const index = currentIndex === menuItems.size - 1 ? 0 : currentIndex + 1;
+    setCurrentIndex(index);
+  };
+  const prev = () => {
+    const index = currentIndex === 0 ? menuItems.size - 1 : currentIndex - 1;
+    setCurrentIndex(index);
+  };
+  const match = (e) => {
+    const items = Array.from(menuItems);
+
+    const reorderedItems = [
+      ...items.slice(currentIndex),
+      ...items.slice(0, currentIndex)
+    ];
+
+    const matches = reorderedItems.filter((menuItem) => {
+      const { textContent } = menuItem.firstChild;
+      const firstChar = textContent[0].toLowerCase();
+      return e.key === firstChar;
+    });
+
+    if (!matches.length) {
+      return;
+    }
+
+    const currentNode = items[currentIndex];
+    const nextMatch = matches.includes(currentNode) ? matches[1] : matches[0];
+    const index = items.findIndex((item) => item === nextMatch);
+    setCurrentIndex(index);
+  };
+
+  useEffect(() => {
+    if (currentIndex !== prevIndex) {
+      const items = Array.from(menuItems);
+      const currentNode = items[currentIndex]?.firstChild;
+      const prevNode = items[prevIndex]?.firstChild;
+
+      prevNode?.setAttribute('tabindex', '-1');
+      currentNode?.setAttribute('tabindex', '0');
+      currentNode?.focus();
+    }
+  }, [currentIndex, prevIndex, menuItems]);
 
   const handleClose = useCallback(() => {
     setDropdownOpen('none');

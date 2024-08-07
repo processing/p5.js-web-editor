@@ -21,12 +21,9 @@ export function useMenuProps(id) {
 }
 
 export function useRovingFocusProps() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const prevIndex = usePrevious(currentIndex) ?? null;
-
   const [isFirstChild, setIsFirstChild] = useState(false);
-  const { menuItems } = useContext(NavBarContext);
   const menuItemRef = useRef();
+  const { menuItems } = useContext(NavBarContext);
 
   useEffect(() => {
     const menuItemNode = menuItemRef.current;
@@ -43,18 +40,6 @@ export function useRovingFocusProps() {
       menuItems.delete(menuItemNode);
     };
   }, [menuItems]);
-
-  useEffect(() => {
-    if (currentIndex !== prevIndex) {
-      const items = Array.from(menuItems);
-      const currentNode = items[currentIndex]?.firstChild;
-      const prevNode = items[prevIndex]?.firstChild;
-
-      prevNode?.setAttribute('tabindex', '-1');
-      currentNode?.setAttribute('tabindex', '0');
-      currentNode?.focus();
-    }
-  }, [currentIndex, prevIndex, menuItems]);
 
   return { menuItemRef, isFirstChild };
 }
