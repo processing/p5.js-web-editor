@@ -171,7 +171,9 @@ export async function validateResetPasswordToken(req, res) {
   const user = await User.findOne({
     resetPasswordToken: req.params.token,
     resetPasswordExpires: { $gt: Date.now() }
-  }).exec();
+  })
+    .lean()
+    .exec();
   if (!user) {
     res.status(401).json({
       success: false,

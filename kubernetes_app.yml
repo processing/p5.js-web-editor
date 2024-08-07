@@ -83,6 +83,9 @@ spec:
             name: web-editor-credentials 
         imagePullPolicy: Always
         resources:
+          limits: 
+            cpu: 1000m
+            memory: 2048Mi
           requests:
             cpu: 500m
             memory: 1100Mi
@@ -233,6 +236,9 @@ spec:
             name: web-editor-credentials 
         imagePullPolicy: Always
         resources:
+          limits: 
+            cpu: 1000m
+            memory: 2048Mi
           requests:
             cpu: 500m
             memory: 1100Mi

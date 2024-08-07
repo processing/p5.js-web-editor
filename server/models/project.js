@@ -76,5 +76,7 @@ projectSchema.methods.isSlugUnique = async function isSlugUnique() {
   };
 };
 
+projectSchema.index({ user: 1 }, { collation: { locale: 'en', strength: 2 } });
+
 export default mongoose.models.Project ||
   mongoose.model('Project', projectSchema);
