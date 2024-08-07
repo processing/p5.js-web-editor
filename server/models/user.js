@@ -310,7 +310,6 @@ userSchema.statics.findByEmailOrUsername = async function findByEmailOrUsername(
     const foundUser = await user
       .findOne(query)
       .collation({ locale: 'en', strength: 2 })
-      .lean()
       .exec();
 
     return foundUser;
@@ -344,7 +343,6 @@ userSchema.statics.findByEmailAndUsername = async function findByEmailAndUsernam
   const foundUser = await user
     .findOne(query)
     .collation({ locale: 'en', strength: 2 })
-    .lean()
     .exec();
 
   return foundUser;
