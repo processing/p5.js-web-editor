@@ -244,6 +244,7 @@ const ProjectMenu = () => {
         </NavMenuItem>
         <NavMenuItem href="/about">{t('Nav.Help.About')}</NavMenuItem>
       </NavDropdownMenu>
+      {getConfig('TRANSLATIONS_ENABLED') && <LanguageMenu />}
     </ul>
   );
 };
@@ -273,9 +274,8 @@ const UnauthenticatedUserMenu = () => {
   const { t } = useTranslation();
   return (
     <ul className="nav__items-right" title="user-menu" role="navigation">
-      {getConfig('TRANSLATIONS_ENABLED') && <LanguageMenu />}
       <li className="nav__item">
-        <Link to="/login" className="nav__auth-button" role="menuitem">
+        <Link to="/login" className="nav__auth-button">
           <span className="nav__item-header" title="Login">
             {t('Nav.Login')}
           </span>
@@ -283,7 +283,7 @@ const UnauthenticatedUserMenu = () => {
       </li>
       <li className="nav__item-or">{t('Nav.LoginOr')}</li>
       <li className="nav__item">
-        <Link to="/signup" className="nav__auth-button" role="menuitem">
+        <Link to="/signup" className="nav__auth-button">
           <span className="nav__item-header" title="SignUp">
             {t('Nav.SignUp')}
           </span>
