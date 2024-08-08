@@ -79,32 +79,29 @@ module.exports = {
       },
       {
         test: /\.(mp3)$/,
-        use: 'file-loader'
+        type: 'asset/resource'
       },
       {
         test: /\.(png)$/,
-        use: {
-          loader: 'file-loader',
-          options: {
-            name: '[name].[ext]',
-            outputPath: 'images/'
-          }
+        type: 'asset/resource',
+        generator: {
+          filename: 'images/[name].[ext]'
         }
       },
       {
         test: /fonts\/.*\.(eot|ttf|woff|woff2)$/,
-        use: 'file-loader'
+        type: 'asset/resource'
       },
       {
         test: /\.svg$/,
         oneOf: [
           {
             resourceQuery: /byContent/,
-            use: 'raw-loader'
+            type: 'asset/source',
           },
           {
             resourceQuery: /byUrl/,
-            use: 'file-loader'
+            type: 'asset/resource',
           },
           {
             use: {

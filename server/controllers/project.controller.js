@@ -174,6 +174,23 @@ export async function projectForUserExists(username, projectId) {
 }
 
 /**
+ * @param {string} username
+ * @param {string} projectId - the database id or the slug or the project
+ * @return {Promise<object>}
+ */
+export async function getProjectForUser(username, projectId) {
+  const user = await User.findByUsername(username);
+  if (!user) return { exists: false };
+  const project = await Project.findOne({
+    user: user._id,
+    $or: [{ _id: projectId }, { slug: projectId }]
+  });
+  return project != null
+    ? { exists: true, userProject: project }
+    : { exists: false };
+}
+
+/**
  * Adds URLs referenced in <script> tags to the `files` array of the project
  * so that they can be downloaded along with other remote files from S3.
  * @param {object} project

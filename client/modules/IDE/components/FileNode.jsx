@@ -10,7 +10,7 @@ import * as FileActions from '../actions/files';
 import DownArrowIcon from '../../../images/down-filled-triangle.svg';
 import FolderRightIcon from '../../../images/triangle-arrow-right.svg';
 import FolderDownIcon from '../../../images/triangle-arrow-down.svg';
-import FileIcon from '../../../images/file.svg';
+import FileTypeIcon from './FileTypeIcon';
 
 function parseFileName(name) {
   const nameArray = name.split('.');
@@ -187,11 +187,19 @@ class FileNode extends React.Component {
     if (
       hasEmptyFilename ||
       hasNoExtension ||
-      notSameExtension ||
       hasOnlyExtension ||
       hasExtensionIfFolder
     ) {
       this.setUpdatedName(currentName);
+    } else if (notSameExtension) {
+      const userResponse = window.confirm(
+        'Are you sure you want to change the file extension?'
+      );
+      if (userResponse) {
+        this.saveUpdatedFileName();
+      } else {
+        this.setUpdatedName(currentName);
+      }
     } else {
       this.saveUpdatedFileName();
     }
@@ -256,6 +264,7 @@ class FileNode extends React.Component {
     const isRoot = this.props.name === 'root';
 
     const { t } = this.props;
+    const { extension } = parseFileName(this.props.name);
 
     return (
       <div className={itemClass}>
@@ -267,7 +276,11 @@ class FileNode extends React.Component {
             <span className="file-item__spacer"></span>
             {isFile && (
               <span className="sidebar__file-item-icon">
-                <FileIcon focusable="false" aria-hidden="true" />
+                <FileTypeIcon
+                  fileExtension={extension}
+                  focusable="false"
+                  aria-hidden="true"
+                />
               </span>
             )}
             {isFolder && (

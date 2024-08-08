@@ -3,7 +3,7 @@
 exports[`Nav renders dashboard version for desktop 1`] = `
 <DocumentFragment>
   <header>
-    <nav
+    <div
       class="nav"
     >
       <ul
@@ -39,7 +39,7 @@ exports[`Nav renders dashboard version for desktop 1`] = `
           </a>
         </li>
       </ul>
-    </nav>
+    </div>
   </header>
 </DocumentFragment>
 `;
@@ -266,7 +266,7 @@ exports[`Nav renders dashboard version for mobile 1`] = `
 }
 
 <header>
-    <nav
+    <div
       class="c0"
     >
       <div
@@ -352,14 +352,18 @@ exports[`Nav renders dashboard version for mobile 1`] = `
             <li
               class="nav__dropdown-item"
             >
-              <button>
+              <button
+                role="menuitem"
+              >
                 New
               </button>
             </li>
             <li
               class="nav__dropdown-item"
             >
-              <button>
+              <button
+                role="menuitem"
+              >
                 Save
               </button>
             </li>
@@ -368,6 +372,7 @@ exports[`Nav renders dashboard version for mobile 1`] = `
             >
               <a
                 href="/p5/sketches"
+                role="menuitem"
               >
                 Examples
               </a>
@@ -378,14 +383,18 @@ exports[`Nav renders dashboard version for mobile 1`] = `
             <li
               class="nav__dropdown-item"
             >
-              <button>
+              <button
+                role="menuitem"
+              >
                 Tidy Code
               </button>
             </li>
             <li
               class="nav__dropdown-item"
             >
-              <button>
+              <button
+                role="menuitem"
+              >
                 Find
               </button>
             </li>
@@ -395,14 +404,18 @@ exports[`Nav renders dashboard version for mobile 1`] = `
             <li
               class="nav__dropdown-item"
             >
-              <button>
+              <button
+                role="menuitem"
+              >
                 Add File
               </button>
             </li>
             <li
               class="nav__dropdown-item"
             >
-              <button>
+              <button
+                role="menuitem"
+              >
                 Add Folder
               </button>
             </li>
@@ -412,14 +425,18 @@ exports[`Nav renders dashboard version for mobile 1`] = `
             <li
               class="nav__dropdown-item"
             >
-              <button>
+              <button
+                role="menuitem"
+              >
                 Preferences
               </button>
             </li>
             <li
               class="nav__dropdown-item"
             >
-              <button>
+              <button
+                role="menuitem"
+              >
                 Language
               </button>
             </li>
@@ -429,7 +446,9 @@ exports[`Nav renders dashboard version for mobile 1`] = `
             <li
               class="nav__dropdown-item"
             >
-              <button>
+              <button
+                role="menuitem"
+              >
                 Keyboard Shortcuts
               </button>
             </li>
@@ -439,6 +458,7 @@ exports[`Nav renders dashboard version for mobile 1`] = `
               <a
                 href="https://p5js.org/reference/"
                 rel="noopener noreferrer"
+                role="menuitem"
                 target="_blank"
               >
                 Reference
@@ -449,6 +469,7 @@ exports[`Nav renders dashboard version for mobile 1`] = `
             >
               <a
                 href="/about"
+                role="menuitem"
               >
                 About
               </a>
@@ -456,7 +477,7 @@ exports[`Nav renders dashboard version for mobile 1`] = `
           </ul>
         </div>
       </div>
-    </nav>
+    </div>
   </header>
 </DocumentFragment>
 `;
@@ -464,26 +485,35 @@ exports[`Nav renders dashboard version for mobile 1`] = `
 exports[`Nav renders editor version for desktop 1`] = `
 <DocumentFragment>
   <header>
-    <nav
+    <div
       class="nav"
     >
       <ul
         class="nav__items-left"
+        role="menubar"
       >
         <li
           class="nav__item-logo"
         >
-          <test-file-stub
-            aria-label="p5.js Logo"
-            classname="svg__logo"
-            focusable="false"
-            role="img"
-          />
+          <a
+            href="https://p5js.org"
+          >
+            <test-file-stub
+              aria-label="p5.js Logo"
+              classname="svg__logo"
+              focusable="false"
+              role="img"
+            />
+          </a>
         </li>
         <li
           class="nav__item"
         >
-          <button>
+          <button
+            aria-expanded="false"
+            aria-haspopup="menu"
+            role="menuitem"
+          >
             <span
               class="nav__item-header"
             >
@@ -497,11 +527,14 @@ exports[`Nav renders editor version for desktop 1`] = `
           </button>
           <ul
             class="nav__dropdown"
+            role="menu"
           >
             <li
               class="nav__dropdown-item"
             >
-              <button>
+              <button
+                role="menuitem"
+              >
                 New
               </button>
             </li>
@@ -510,7 +543,11 @@ exports[`Nav renders editor version for desktop 1`] = `
         <li
           class="nav__item"
         >
-          <button>
+          <button
+            aria-expanded="false"
+            aria-haspopup="menu"
+            role="menuitem"
+          >
             <span
               class="nav__item-header"
             >
@@ -524,40 +561,47 @@ exports[`Nav renders editor version for desktop 1`] = `
           </button>
           <ul
             class="nav__dropdown"
+            role="menu"
           >
             <li
               class="nav__dropdown-item"
             >
-              <button>
+              <button
+                role="menuitem"
+              >
                 Tidy Code
                 <span
                   class="nav__keyboard-shortcut"
                 >
-                  ⌃+⇧+F
+                  Ctrl+Shift+F
                 </span>
               </button>
             </li>
             <li
               class="nav__dropdown-item"
             >
-              <button>
+              <button
+                role="menuitem"
+              >
                 Find
                 <span
                   class="nav__keyboard-shortcut"
                 >
-                  ⌃+F
+                  Ctrl+F
                 </span>
               </button>
             </li>
             <li
               class="nav__dropdown-item"
             >
-              <button>
+              <button
+                role="menuitem"
+              >
                 Replace
                 <span
                   class="nav__keyboard-shortcut"
                 >
-                  ⌃+H
+                  Ctrl+H
                 </span>
               </button>
             </li>
@@ -566,7 +610,11 @@ exports[`Nav renders editor version for desktop 1`] = `
         <li
           class="nav__item"
         >
-          <button>
+          <button
+            aria-expanded="false"
+            aria-haspopup="menu"
+            role="menuitem"
+          >
             <span
               class="nav__item-header"
             >
@@ -580,42 +628,56 @@ exports[`Nav renders editor version for desktop 1`] = `
           </button>
           <ul
             class="nav__dropdown"
+            role="menu"
           >
             <li
               class="nav__dropdown-item"
             >
-              <button>
+              <button
+                role="menuitem"
+              >
                 Add File
-              </button>
-            </li>
-            <li
-              class="nav__dropdown-item"
-            >
-              <button>
-                Add Folder
-              </button>
-            </li>
-            <li
-              class="nav__dropdown-item"
-            >
-              <button>
-                Run
                 <span
                   class="nav__keyboard-shortcut"
                 >
-                  ⌃+Enter
+                  Ctrl+Alt+N
                 </span>
               </button>
             </li>
             <li
               class="nav__dropdown-item"
             >
-              <button>
+              <button
+                role="menuitem"
+              >
+                Add Folder
+              </button>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button
+                role="menuitem"
+              >
+                Run
+                <span
+                  class="nav__keyboard-shortcut"
+                >
+                  Ctrl+Enter
+                </span>
+              </button>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button
+                role="menuitem"
+              >
                 Stop
                 <span
                   class="nav__keyboard-shortcut"
                 >
-                  ⇧+⌃+Enter
+                  Shift+Ctrl+Enter
                 </span>
               </button>
             </li>
@@ -624,7 +686,11 @@ exports[`Nav renders editor version for desktop 1`] = `
         <li
           class="nav__item"
         >
-          <button>
+          <button
+            aria-expanded="false"
+            aria-haspopup="menu"
+            role="menuitem"
+          >
             <span
               class="nav__item-header"
             >
@@ -638,11 +704,14 @@ exports[`Nav renders editor version for desktop 1`] = `
           </button>
           <ul
             class="nav__dropdown"
+            role="menu"
           >
             <li
               class="nav__dropdown-item"
             >
-              <button>
+              <button
+                role="menuitem"
+              >
                 Keyboard Shortcuts
               </button>
             </li>
@@ -652,6 +721,7 @@ exports[`Nav renders editor version for desktop 1`] = `
               <a
                 href="https://p5js.org/reference/"
                 rel="noopener noreferrer"
+                role="menuitem"
                 target="_blank"
               >
                 Reference
@@ -662,6 +732,7 @@ exports[`Nav renders editor version for desktop 1`] = `
             >
               <a
                 href="/about"
+                role="menuitem"
               >
                 About
               </a>
@@ -669,7 +740,7 @@ exports[`Nav renders editor version for desktop 1`] = `
           </ul>
         </li>
       </ul>
-    </nav>
+    </div>
   </header>
 </DocumentFragment>
 `;
@@ -896,7 +967,7 @@ exports[`Nav renders editor version for mobile 1`] = `
 }
 
 <header>
-    <nav
+    <div
       class="c0"
     >
       <div
@@ -982,14 +1053,18 @@ exports[`Nav renders editor version for mobile 1`] = `
             <li
               class="nav__dropdown-item"
             >
-              <button>
+              <button
+                role="menuitem"
+              >
                 New
               </button>
             </li>
             <li
               class="nav__dropdown-item"
             >
-              <button>
+              <button
+                role="menuitem"
+              >
                 Save
               </button>
             </li>
@@ -998,6 +1073,7 @@ exports[`Nav renders editor version for mobile 1`] = `
             >
               <a
                 href="/p5/sketches"
+                role="menuitem"
               >
                 Examples
               </a>
@@ -1008,14 +1084,18 @@ exports[`Nav renders editor version for mobile 1`] = `
             <li
               class="nav__dropdown-item"
             >
-              <button>
+              <button
+                role="menuitem"
+              >
                 Tidy Code
               </button>
             </li>
             <li
               class="nav__dropdown-item"
             >
-              <button>
+              <button
+                role="menuitem"
+              >
                 Find
               </button>
             </li>
@@ -1025,14 +1105,18 @@ exports[`Nav renders editor version for mobile 1`] = `
             <li
               class="nav__dropdown-item"
             >
-              <button>
+              <button
+                role="menuitem"
+              >
                 Add File
               </button>
             </li>
             <li
               class="nav__dropdown-item"
             >
-              <button>
+              <button
+                role="menuitem"
+              >
                 Add Folder
               </button>
             </li>
@@ -1042,14 +1126,18 @@ exports[`Nav renders editor version for mobile 1`] = `
             <li
               class="nav__dropdown-item"
             >
-              <button>
+              <button
+                role="menuitem"
+              >
                 Preferences
               </button>
             </li>
             <li
               class="nav__dropdown-item"
             >
-              <button>
+              <button
+                role="menuitem"
+              >
                 Language
               </button>
             </li>
@@ -1059,7 +1147,9 @@ exports[`Nav renders editor version for mobile 1`] = `
             <li
               class="nav__dropdown-item"
             >
-              <button>
+              <button
+                role="menuitem"
+              >
                 Keyboard Shortcuts
               </button>
             </li>
@@ -1069,6 +1159,7 @@ exports[`Nav renders editor version for mobile 1`] = `
               <a
                 href="https://p5js.org/reference/"
                 rel="noopener noreferrer"
+                role="menuitem"
                 target="_blank"
               >
                 Reference
@@ -1079,6 +1170,7 @@ exports[`Nav renders editor version for mobile 1`] = `
             >
               <a
                 href="/about"
+                role="menuitem"
               >
                 About
               </a>
@@ -1086,7 +1178,7 @@ exports[`Nav renders editor version for mobile 1`] = `
           </ul>
         </div>
       </div>
-    </nav>
+    </div>
   </header>
 </DocumentFragment>
 `;

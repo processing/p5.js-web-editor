@@ -6,6 +6,8 @@ function KeyboardShortcutModal() {
   const { t } = useTranslation();
   const replaceCommand =
     metaKey === 'Ctrl' ? `${metaKeyName} + H` : `${metaKeyName} + ⌥ + F`;
+  const newFileCommand =
+    metaKey === 'Ctrl' ? `${metaKeyName} + Alt + N` : `${metaKeyName} + ⌥ + N`;
   return (
     <div className="keyboard-shortcuts">
       <h3 className="keyboard-shortcuts__title">
@@ -25,7 +27,7 @@ function KeyboardShortcutModal() {
       <ul className="keyboard-shortcuts__list">
         <li className="keyboard-shortcut-item">
           <span className="keyboard-shortcut__command">
-            {metaKeyName} + {'\u21E7'} + F
+            {metaKeyName} + Shift + F
           </span>
           <span>{t('KeyboardShortcuts.CodeEditing.Tidy')}</span>
         </li>
@@ -39,7 +41,7 @@ function KeyboardShortcutModal() {
         </li>
         <li className="keyboard-shortcut-item">
           <span className="keyboard-shortcut__command">
-            {metaKeyName} + {'\u21E7'} + G
+            {metaKeyName} + Shift + G
           </span>
           <span>
             {t('KeyboardShortcuts.CodeEditing.FindPreviousTextMatch')}
@@ -69,6 +71,10 @@ function KeyboardShortcutModal() {
           <span className="keyboard-shortcut__command">{metaKeyName} + K</span>
           <span>{t('KeyboardShortcuts.CodeEditing.ColorPicker')}</span>
         </li>
+        <li className="keyboard-shortcut-item">
+          <span className="keyboard-shortcut__command">{newFileCommand}</span>
+          <span>{t('KeyboardShortcuts.CodeEditing.CreateNewFile')}</span>
+        </li>
       </ul>
       <h3 className="keyboard-shortcuts__title">General</h3>
       <ul className="keyboard-shortcuts__list">
@@ -84,24 +90,24 @@ function KeyboardShortcutModal() {
         </li>
         <li className="keyboard-shortcut-item">
           <span className="keyboard-shortcut__command">
-            {metaKeyName} + {'\u21E7'} + Enter
+            {metaKeyName} + Shift + Enter
           </span>
           <span>{t('KeyboardShortcuts.General.StopSketch')}</span>
         </li>
         <li className="keyboard-shortcut-item">
           <span className="keyboard-shortcut__command">
-            {metaKeyName} + {'\u21E7'} + 1
+            {metaKeyName} + Shift + 1
           </span>
           <span>{t('KeyboardShortcuts.General.TurnOnAccessibleOutput')}</span>
         </li>
         <li className="keyboard-shortcut-item">
           <span className="keyboard-shortcut__command">
-            {metaKeyName} + {'\u21E7'} + 2
+            {metaKeyName} + Shift + 2
           </span>
           <span>{t('KeyboardShortcuts.General.TurnOffAccessibleOutput')}</span>
         </li>
         <li className="keyboard-shortcut-item">
-          <span className="keyboard-shortcut__command">{'\u21E7'} + Right</span>
+          <span className="keyboard-shortcut__command">Shift + Right</span>
           <span>Go to Reference for Selected Item in Hinter</span>
         </li>
       </ul>

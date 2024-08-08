@@ -61,6 +61,7 @@ const Toolbar = (props) => {
       </button>
       <button
         className={playButtonClass}
+        id="play-sketch"
         onClick={() => {
           props.syncFileContent();
           dispatch(startSketch());

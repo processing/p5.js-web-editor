@@ -91,43 +91,44 @@ export function validateAndSignUpUser(formValues) {
 }
 
 export function getUser() {
-  return (dispatch) => {
-    apiClient
-      .get('/session')
-      .then((response) => {
-        dispatch(authenticateUser(response.data));
-        dispatch({
-          type: ActionTypes.SET_PREFERENCES,
-          preferences: response.data.preferences
-        });
-        setLanguage(response.data.preferences.language, {
-          persistPreference: false
-        });
-      })
-      .catch((error) => {
-        const { response } = error;
-        const message = response.message || response.data.error;
-        dispatch(authError(message));
+  return async (dispatch) => {
+    try {
+      const response = await apiClient.get('/session');
+      const { data } = response;
+
+      if (data?.user === null) {
+        return;
+      }
+
+      dispatch(authenticateUser(data));
+      dispatch({
+        type: ActionTypes.SET_PREFERENCES,
+        preferences: data.preferences
       });
+      setLanguage(data.preferences.language, { persistPreference: false });
+    } catch (error) {
+      const message = error.response
+        ? error.response.data.error || error.response.message
+        : 'Unknown error.';
+      dispatch(authError(message));
+    }
   };
 }
 
 export function validateSession() {
-  return (dispatch, getState) => {
-    apiClient
-      .get('/session')
-      .then((response) => {
-        const state = getState();
-        if (state.user.username !== response.data.username) {
-          dispatch(showErrorModal('staleSession'));
-        }
-      })
-      .catch((error) => {
-        const { response } = error;
-        if (response.status === 404) {
-          dispatch(showErrorModal('staleSession'));
-        }
-      });
+  return async (dispatch, getState) => {
+    try {
+      const response = await apiClient.get('/session');
+      const state = getState();
+
+      if (state.user.username !== response.data.username) {
+        dispatch(showErrorModal('staleSession'));
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 404) {
+        dispatch(showErrorModal('staleSession'));
+      }
+    }
   };
 }
 
@@ -275,7 +276,13 @@ export function submitSettings(formValues) {
 
 export function updateSettings(formValues) {
   return (dispatch) =>
-    new Promise((resolve) =>
+    new Promise((resolve) => {
+      if (!formValues.currentPassword && formValues.newPassword) {
+        dispatch(showToast(5500));
+        dispatch(setToastText('Toast.EmptyCurrentPass'));
+        resolve();
+        return;
+      }
       submitSettings(formValues)
         .then((response) => {
           dispatch(updateSettingsSuccess(response.data));
@@ -283,8 +290,27 @@ export function updateSettings(formValues) {
           dispatch(setToastText('Toast.SettingsSaved'));
           resolve();
         })
-        .catch((error) => resolve({ error }))
-    );
+        .catch((error) => {
+          if (error.response) {
+            switch (error.response.status) {
+              case 401:
+                dispatch(showToast(5500));
+                dispatch(setToastText('Toast.IncorrectCurrentPass'));
+                break;
+              case 404:
+                dispatch(showToast(5500));
+                dispatch(setToastText('Toast.UserNotFound'));
+                break;
+              default:
+                dispatch(showToast(5500));
+                dispatch(setToastText('Toast.DefaultError'));
+            }
+          } else {
+            dispatch(showToast(5500));
+            dispatch(setToastText('Toast.NetworkError'));
+          }
+        });
+    });
 }
 
 export function createApiKeySuccess(user) {
