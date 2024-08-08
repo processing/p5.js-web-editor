@@ -17,7 +17,6 @@ function NavBar({ children, className }) {
   const prevIndex = usePrevious(currentIndex) ?? null;
   const menuItems = useRef(new Set()).current;
   const timerRef = useRef(null);
-  const letter = new RegExp('/[a-zA-Z]/i');
 
   useEffect(() => {
     if (currentIndex !== prevIndex) {
@@ -58,11 +57,9 @@ function NavBar({ children, className }) {
   );
 
   const first = () => {
-    console.log('first');
     setCurrentIndex(0);
   };
   const last = () => {
-    console.log('last');
     setCurrentIndex(menuItems.size - 1);
   };
   const next = () => {
