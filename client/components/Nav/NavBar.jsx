@@ -9,6 +9,7 @@ import React, {
 import useModalClose from '../../common/useModalClose';
 import { MenuOpenContext, NavBarContext } from './contexts';
 import usePrevious from '../../modules/IDE/hooks/usePrevious';
+import useKeyDownHandlers from '../../common/useKeyDownHandlers';
 
 function NavBar({ children, className }) {
   const [dropdownOpen, setDropdownOpen] = useState('none');
@@ -18,8 +19,52 @@ function NavBar({ children, className }) {
 
   const timerRef = useRef(null);
 
-  const first = () => setCurrentIndex(0);
-  const last = () => setCurrentIndex(menuItems.size - 1);
+  useEffect(() => {
+    if (currentIndex !== prevIndex) {
+      const items = Array.from(menuItems);
+      const currentNode = items[currentIndex]?.firstChild;
+      const prevNode = items[prevIndex]?.firstChild;
+
+      prevNode?.setAttribute('tabindex', -1);
+      currentNode?.setAttribute('tabindex', 0);
+      currentNode?.focus();
+    }
+  }, [currentIndex, prevIndex, menuItems]);
+
+  const handleClose = useCallback(() => {
+    setDropdownOpen('none');
+  }, [setDropdownOpen]);
+
+  const nodeRef = useModalClose(handleClose);
+
+  const clearHideTimeout = useCallback(() => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+      timerRef.current = null;
+    }
+  }, [timerRef]);
+
+  const handleBlur = useCallback(() => {
+    timerRef.current = setTimeout(() => setDropdownOpen('none'), 10);
+  }, [timerRef, setDropdownOpen]);
+
+  const toggleDropdownOpen = useCallback(
+    (dropdown) => {
+      setDropdownOpen((prevState) =>
+        prevState === dropdown ? 'none' : dropdown
+      );
+    },
+    [setDropdownOpen]
+  );
+
+  const first = () => {
+    console.log('first');
+    setCurrentIndex(0);
+  };
+  const last = () => {
+    console.log('last');
+    setCurrentIndex(menuItems.size - 1);
+  };
   const next = () => {
     const index = currentIndex === menuItems.size - 1 ? 0 : currentIndex + 1;
     setCurrentIndex(index);
@@ -52,43 +97,28 @@ function NavBar({ children, className }) {
     setCurrentIndex(index);
   };
 
-  useEffect(() => {
-    if (currentIndex !== prevIndex) {
-      const items = Array.from(menuItems);
-      const currentNode = items[currentIndex]?.firstChild;
-      const prevNode = items[prevIndex]?.firstChild;
-
-      prevNode?.setAttribute('tabindex', '-1');
-      currentNode?.setAttribute('tabindex', '0');
-      currentNode?.focus();
-    }
-  }, [currentIndex, prevIndex, menuItems]);
-
-  const handleClose = useCallback(() => {
-    setDropdownOpen('none');
-  }, [setDropdownOpen]);
-
-  const nodeRef = useModalClose(handleClose);
-
-  const clearHideTimeout = useCallback(() => {
-    if (timerRef.current) {
-      clearTimeout(timerRef.current);
-      timerRef.current = null;
-    }
-  }, [timerRef]);
-
-  const handleBlur = useCallback(() => {
-    timerRef.current = setTimeout(() => setDropdownOpen('none'), 10);
-  }, [timerRef, setDropdownOpen]);
-
-  const toggleDropdownOpen = useCallback(
-    (dropdown) => {
-      setDropdownOpen((prevState) =>
-        prevState === dropdown ? 'none' : dropdown
-      );
+  useKeyDownHandlers({
+    ArrowLeft: (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      prev();
     },
-    [setDropdownOpen]
-  );
+    ArrowRight: (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      next();
+    },
+    Home: (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      first();
+    },
+    End: (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      last();
+    }
+  });
 
   const contextValue = useMemo(
     () => ({
