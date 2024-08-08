@@ -16,8 +16,8 @@ function NavBar({ children, className }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const prevIndex = usePrevious(currentIndex) ?? null;
   const menuItems = useRef(new Set()).current;
-
   const timerRef = useRef(null);
+  const letter = new RegExp('/[a-zA-Z]/i');
 
   useEffect(() => {
     if (currentIndex !== prevIndex) {
@@ -74,6 +74,7 @@ function NavBar({ children, className }) {
     setCurrentIndex(index);
   };
   const match = (e) => {
+    console.log(e.key);
     const items = Array.from(menuItems);
 
     const reorderedItems = [
@@ -118,6 +119,7 @@ function NavBar({ children, className }) {
       e.stopPropagation();
       last();
     }
+    // keydown event listener for letter keys
   });
 
   const contextValue = useMemo(
