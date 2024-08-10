@@ -9,6 +9,8 @@ export function useSelectors(state, mapStateToSelectors) {
   return selectors;
 }
 
+mime.define({ 'application/typescript': ['ts'] }, true);
+
 export function getFileSelectors(state) {
   return {
     getHTMLFile: () => state.filter((file) => file.name.match(/.*\.html$/i))[0],

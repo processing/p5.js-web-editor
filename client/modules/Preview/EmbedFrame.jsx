@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import loopProtect from 'loop-protect';
 import { JSHINT } from 'jshint';
 import decomment from 'decomment';
+import ts from 'typescript';
 import { resolvePathToFile } from '../../../server/utils/filePath';
 import getConfig from '../../utils/getConfig';
 import {
@@ -33,6 +34,16 @@ const Frame = styled.iframe`
     position: relative;
   `}
 `;
+
+function transpileCode(tsCode) {
+  if (ts) {
+    const result = ts.transpileModule(tsCode, {
+      compilerOptions: { module: ts.ModuleKind.ES2015 }
+    });
+    return result.outputText;
+  }
+  return null;
+}
 
 function resolvePathsForElementsWithAttribute(attr, sketchDoc, files) {
   const elements = sketchDoc.querySelectorAll(`[${attr}]`);
@@ -183,12 +194,15 @@ function resolveStyles(sketchDoc, files) {
   });
 }
 
-function resolveJSAndCSSLinks(files) {
+function resolveJSAndTSAndCSSLinks(files) {
   const newFiles = [];
   files.forEach((file) => {
     const newFile = { ...file };
     if (file.name.match(/.*\.js$/i)) {
       newFile.content = resolveJSLinksInString(newFile.content, files);
+    } else if (file.name.match(/.*\.(ts)$/i)) {
+      const newContent = transpileCode(newFile.content);
+      newFile.content = resolveJSLinksInString(newContent, files);
     } else if (file.name.match(/.*\.css$/i)) {
       newFile.content = resolveCSSLinksInString(newFile.content, files);
     }
@@ -210,7 +224,7 @@ function injectLocalFiles(files, htmlFile, options) {
   let scriptOffs = [];
   objectUrls = {};
   objectPaths = {};
-  const resolvedFiles = resolveJSAndCSSLinks(files);
+  const resolvedFiles = resolveJSAndTSAndCSSLinks(files);
   const parser = new DOMParser();
   const sketchDoc = parser.parseFromString(htmlFile.content, 'text/html');
 

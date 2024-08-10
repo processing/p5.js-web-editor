@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { IoLogoHtml5, IoLogoCss3, IoLogoJavascript } from 'react-icons/io';
 import { TbFileTypeXml, TbTxt, TbCsv } from 'react-icons/tb';
+import { SiTypescript } from 'react-icons/si';
 import { VscJson } from 'react-icons/vsc';
 import FileIcon from '../../../images/file.svg';
 
@@ -23,6 +24,12 @@ export default function FileTypeIcon({ fileExtension }) {
       return (
         <span>
           <IoLogoJavascript />
+        </span>
+      );
+    case '.ts':
+      return (
+        <span>
+          <SiTypescript />
         </span>
       );
     case '.json':
