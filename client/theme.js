@@ -75,6 +75,7 @@ const baseThemes = {
     inactiveTextColor: grays.middleDark,
     backgroundColor: grays.lighter,
     accentColor: colors.p5jsPink,
+    logoColor: colors.p5jsPink,
     modalBorderColor: grays.middleLight,
     searchBackgroundColor: grays.lightest,
     tableRowStripeColor: grays.mediumLight,
@@ -165,6 +166,7 @@ const baseThemes = {
     inactiveTextColor: grays.middleLight,
     backgroundColor: grays.darker,
     accentColor: colors.p5jsPink,
+    logoColor: colors.p5jsPink,
     modalBorderColor: grays.middleDark,
     searchBackgroundColor: grays.darker,
     tableRowStripeColor: grays.dark,
@@ -254,6 +256,7 @@ export default {
   ...baseThemes,
   [Theme.contrast]: extend(baseThemes[Theme.dark], {
     inactiveTextColor: grays.light,
+    logoColor: colors.yellow,
 
     Button: {
       primary: {

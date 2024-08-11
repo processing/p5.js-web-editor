@@ -117,7 +117,12 @@
     "SketchFailedSave": "Failed to save sketch.",
     "AutosaveEnabled": "Autosave enabled.",
     "LangChange": "Language changed",
-    "SettingsSaved": "Settings saved."
+    "SettingsSaved": "Settings saved.",
+    "EmptyCurrentPass": "Current password field is empty",
+    "IncorrectCurrentPass": "Current password is incorrect",
+    "DefaultError":"Something went wrong",
+    "UserNotFound": "User not found",
+    "NetworkError": "Network error"
   },
   "Toolbar": {
     "Preview": "Preview",
@@ -202,7 +207,8 @@
       "FindNextTextMatch": "Find Next Text Match",
       "FindPreviousTextMatch": "Find Previous Text Match",
       "CodeEditing": "Code Editing",
-      "ColorPicker": "Show Inline Color Picker"
+      "ColorPicker": "Show Inline Color Picker",
+      "CreateNewFile": "Create New File"
     },
     "General": {
       "StartSketch": "Start Sketch",

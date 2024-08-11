@@ -8,7 +8,8 @@ import {
   expandSidebar,
   showErrorModal,
   startSketch,
-  stopSketch
+  stopSketch,
+  newFile
 } from '../actions/ide';
 import { setAllAccessibleOutput } from '../actions/preferences';
 import { cloneProject, saveProject } from '../actions/project';
@@ -24,6 +25,10 @@ export const useIDEKeyHandlers = ({ getContent }) => {
 
   const sidebarIsExpanded = useSelector((state) => state.ide.sidebarIsExpanded);
   const consoleIsExpanded = useSelector((state) => state.ide.consoleIsExpanded);
+
+  const rootFile = useSelector(
+    (state) => state.files.filter((file) => file.name === 'root')[0]
+  );
 
   const isUserOwner = useSelector(getIsUserOwner);
   const isAuthenticated = useSelector(getAuthenticated);
@@ -71,6 +76,11 @@ export const useIDEKeyHandlers = ({ getContent }) => {
         // TODO: create actions 'toggleConsole', 'toggleSidebar', etc.
         sidebarIsExpanded ? collapseSidebar() : expandSidebar()
       );
+    },
+    'ctrl-alt-n': (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      dispatch(newFile(rootFile.id));
     },
     'ctrl-`': (e) => {
       e.preventDefault();
