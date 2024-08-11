@@ -18,28 +18,19 @@ import AccountView from './modules/User/pages/AccountView';
 import CollectionView from './modules/User/pages/CollectionView';
 import DashboardView from './modules/User/pages/DashboardView';
 import { getUser } from './modules/User/actions';
+import LanguageSelector from './components/LanguageSelector'; // Import LanguageSelector
 
-/**
- *  `params` is no longer a top-level route component prop in v4.
- *  It is a nested property of `match`.
- *  Use an HOC to lift it up to top-level.
- */
 const withParams = (Component) => (props) => (
-  // eslint-disable-next-line react/prop-types
   <Component {...props} params={props.match.params} />
 );
-/**
- * Instead of updating all individual components, use this plug-in Route replacement.
- * It passes the `params` as a top-level property
- * and fixes prop-types errors in react-router package
- * (Warning: Failed prop type: Invalid prop `component` of type `object` supplied to `Route`, expected `function`.)
- */
+
 const Route = ({ component, ...props }) => (
   <RouterRoute component={withParams(component)} {...props} />
 );
+
 Route.propTypes = {
   ...RouterRoute.propTypes,
-  component: PropTypes.elementType.isRequired
+  component: PropTypes.elementType.isRequired,
 };
 
 const routes = (
@@ -47,27 +38,17 @@ const routes = (
     <Route exact path="/" component={IDEView} />
     <Route path="/login" component={LoginView} />
     <Route path="/signup" component={SignupView} />
-    <Route
-      path="/reset-password/:reset_password_token"
-      component={NewPasswordView}
-    />
+    <Route path="/reset-password/:reset_password_token" component={NewPasswordView} />
     <Route path="/reset-password" component={ResetPasswordView} />
     <Route path="/verify" component={EmailVerificationView} />
     <Route path="/projects/:project_id" component={IDEView} />
     <Route path="/:username/full/:project_id" component={FullView} />
     <Route path="/full/:project_id" component={FullView} />
-
     <Route path="/:username/assets" component={DashboardView} />
-    <Route
-      path="/:username/sketches/:project_id/add-to-collection"
-      component={IDEView}
-    />
+    <Route path="/:username/sketches/:project_id/add-to-collection" component={IDEView} />
     <Route path="/:username/sketches/:project_id" component={IDEView} />
     <Route path="/:username/sketches" component={DashboardView} />
-    <Route
-      path="/:username/collections/:collection_id"
-      component={CollectionView}
-    />
+    <Route path="/:username/collections/:collection_id" component={CollectionView} />
     <Route path="/:username/collections" component={DashboardView} />
     <Route path="/sketches" component={DashboardView} />
     <Route path="/assets" component={DashboardView} />
@@ -84,9 +65,17 @@ function Routing() {
 
   useEffect(() => {
     dispatch(getUser());
-  }, []);
+  }, [dispatch]);
 
-  return <App>{routes}</App>;
+  return (
+    <App>
+      <header>
+        {/* Include the LanguageSelector in the header */}
+        <LanguageSelector />
+      </header>
+      {routes}
+    </App>
+  );
 }
 
 export default Routing;
