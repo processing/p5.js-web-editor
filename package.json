@@ -110,6 +110,7 @@
     "@svgr/webpack": "^6.2.1",
     "@testing-library/jest-dom": "^5.15.0",
     "@testing-library/react": "^12.1.2",
+    "@typescript-eslint/utils": "^8.0.1",
     "babel-core": "^7.0.0-bridge.0",
     "babel-loader": "^8.2.5",
     "babel-plugin-transform-react-remove-prop-types": "^0.2.12",
