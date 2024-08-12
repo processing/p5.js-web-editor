@@ -17,6 +17,8 @@ const formatPercent = (percent) => {
 };
 
 /* Eventually, this copy should be Total / 250 MB Used */
+export const getCurrentSize = (totalSize) => prettyBytes(totalSize);
+export const getSizeLimit = () => prettyBytes(MAX_SIZE_B);
 const AssetSize = () => {
   const totalSize = useSelector(
     (state) => state.user.totalSize || state.assets.totalSize

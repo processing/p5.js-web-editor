@@ -11,6 +11,7 @@ import DownArrowIcon from '../../../images/down-filled-triangle.svg';
 import FolderRightIcon from '../../../images/triangle-arrow-right.svg';
 import FolderDownIcon from '../../../images/triangle-arrow-down.svg';
 import FileTypeIcon from './FileTypeIcon';
+import { sizeLimit, currentSize } from './AssetSize';
 
 function parseFileName(name) {
   const nameArray = name.split('.');
@@ -146,6 +147,11 @@ class FileNode extends React.Component {
   handleClickUploadFile = () => {
     this.props.openUploadFileModal(this.props.id);
     setTimeout(this.hideFileOptions, 0);
+  };
+  notifyStorageLimitReached = () => {
+    alert(
+      'Your storage reached 250MB, please delete some files to add new ones.'
+    );
   };
 
   handleClickDelete = () => {
@@ -373,14 +379,24 @@ class FileNode extends React.Component {
                     </li>
                     {this.props.authenticated && (
                       <li>
-                        <button
-                          aria-label={t('FileNode.UploadFileARIA')}
-                          onClick={this.handleClickUploadFile}
-                          onBlur={this.onBlurComponent}
-                          onFocus={this.onFocusComponent}
-                        >
-                          {t('FileNode.UploadFile')}
-                        </button>
+                        {currentSize < sizeLimit ? (
+                          <button
+                            className="sidebar__file-item-option"
+                            aria-label="FileNode.UploadFileARIA"
+                            onClick={this.handleClickUploadFile}
+                            onBlur={this.onBlurComponent}
+                            onFocus={this.onFocusComponent}
+                          >
+                            {t('FileNode.UploadFile')}
+                          </button>
+                        ) : (
+                          <button
+                            className="sidebar__file-item-option"
+                            onClick={this.notifyStorageLimitReached}
+                          >
+                            {t('FileNode.UploadFile')}
+                          </button>
+                        )}
                       </li>
                     )}
                   </React.Fragment>
