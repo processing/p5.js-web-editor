@@ -56,9 +56,9 @@ const corsMiddleware = cors({
   origin: allowedCorsOrigins
 });
 app.use(corsMiddleware);
-
 // Enable pre-flight OPTIONS route for all end-points
 app.options('*', corsMiddleware);
+
 // Run Webpack dev server in development mode
 if (process.env.NODE_ENV === 'development') {
   const compiler = webpack(config);
