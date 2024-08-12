@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -33,21 +33,10 @@ export default function SideBar() {
 
   const sidebarOptionsRef = useRef(null);
 
-  const [isFocused, setIsFocused] = useState(false);
-
   const isAuthenticated = useSelector(getAuthenticated);
 
   const onBlurComponent = () => {
-    setIsFocused(false);
-    setTimeout(() => {
-      if (!isFocused) {
-        dispatch(closeProjectOptions());
-      }
-    }, 200);
-  };
-
-  const onFocusComponent = () => {
-    setIsFocused(true);
+    setTimeout(() => dispatch(closeProjectOptions()), 200);
   };
 
   const toggleProjectOptions = (e) => {
@@ -96,7 +85,6 @@ export default function SideBar() {
               ref={sidebarOptionsRef}
               onClick={toggleProjectOptions}
               onBlur={onBlurComponent}
-              onFocus={onFocusComponent}
             >
               <PlusIcon focusable="false" aria-hidden="true" />
             </button>
@@ -109,7 +97,6 @@ export default function SideBar() {
                     setTimeout(() => dispatch(closeProjectOptions()), 0);
                   }}
                   onBlur={onBlurComponent}
-                  onFocus={onFocusComponent}
                 >
                   {t('Sidebar.AddFolder')}
                 </button>
@@ -122,7 +109,6 @@ export default function SideBar() {
                     setTimeout(() => dispatch(closeProjectOptions()), 0);
                   }}
                   onBlur={onBlurComponent}
-                  onFocus={onFocusComponent}
                 >
                   {t('Sidebar.AddFile')}
                 </button>
@@ -136,7 +122,6 @@ export default function SideBar() {
                       setTimeout(() => dispatch(closeProjectOptions()), 0);
                     }}
                     onBlur={onBlurComponent}
-                    onFocus={onFocusComponent}
                   >
                     {t('Sidebar.UploadFile')}
                   </button>
