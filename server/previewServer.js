@@ -55,12 +55,7 @@ const corsMiddleware = cors({
   credentials: true,
   origin: allowedCorsOrigins
 });
-// app.use(corsMiddleware);
-app.use((req, res, next) => {
-  res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
-  res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
-  corsMiddleware(req, res, next);
-});
+app.use(corsMiddleware);
 // Enable pre-flight OPTIONS route for all end-points
 app.options('*', corsMiddleware);
 
