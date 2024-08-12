@@ -57,6 +57,14 @@ function LoginForm() {
                   {t('LoginForm.Password')}
                 </label>
                 <div className="form__field__password">
+                  <input
+                    className="form__input"
+                    aria-label={t('LoginForm.PasswordARIA')}
+                    type={showPassword ? 'text' : 'password'}
+                    id="password"
+                    autoComplete="current-password"
+                    {...field.input}
+                  />
                   <button
                     className="form__eye__icon"
                     type="button"
@@ -69,14 +77,6 @@ function LoginForm() {
                       <AiOutlineEye />
                     )}
                   </button>
-                  <input
-                    className="form__input"
-                    aria-label={t('LoginForm.PasswordARIA')}
-                    type={showPassword ? 'text' : 'password'}
-                    id="password"
-                    autoComplete="current-password"
-                    {...field.input}
-                  />
                 </div>
                 {field.meta.touched && field.meta.error && (
                   <span className="form-error" aria-live="polite">

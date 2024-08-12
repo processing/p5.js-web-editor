@@ -113,6 +113,14 @@ function SignupForm() {
                   {t('SignupForm.Password')}
                 </label>
                 <div className="form__field__password">
+                  <input
+                    className="form__input"
+                    aria-label={t('SignupForm.PasswordARIA')}
+                    type={showPassword ? 'text' : 'password'}
+                    id="password"
+                    autoComplete="new-password"
+                    {...field.input}
+                  />
                   <button
                     className="form__eye__icon"
                     type="button"
@@ -125,14 +133,6 @@ function SignupForm() {
                       <AiOutlineEye />
                     )}
                   </button>
-                  <input
-                    className="form__input"
-                    aria-label={t('SignupForm.PasswordARIA')}
-                    type={showPassword ? 'text' : 'password'}
-                    id="password"
-                    autoComplete="new-password"
-                    {...field.input}
-                  />
                 </div>
                 {field.meta.touched && field.meta.error && (
                   <span className="form-error" aria-live="polite">
@@ -149,6 +149,14 @@ function SignupForm() {
                   {t('SignupForm.ConfirmPassword')}
                 </label>
                 <div className="form__field__password">
+                  <input
+                    className="form__input"
+                    type={showConfirmPassword ? 'text' : 'password'}
+                    aria-label={t('SignupForm.ConfirmPasswordARIA')}
+                    id="confirmPassword" // Match the id with htmlFor
+                    autoComplete="new-password"
+                    {...field.input}
+                  />
                   <button
                     className="form__eye__icon"
                     type="button"
@@ -161,14 +169,6 @@ function SignupForm() {
                       <AiOutlineEye />
                     )}
                   </button>
-                  <input
-                    className="form__input"
-                    type={showConfirmPassword ? 'text' : 'password'}
-                    aria-label={t('SignupForm.ConfirmPasswordARIA')}
-                    id="confirmPassword" // Match the id with htmlFor
-                    autoComplete="new-password"
-                    {...field.input}
-                  />
                 </div>
                 {field.meta.touched && field.meta.error && (
                   <span className="form-error" aria-live="polite">
