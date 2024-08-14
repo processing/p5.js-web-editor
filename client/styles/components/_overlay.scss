@@ -27,7 +27,7 @@
   max-height: 80%;
   max-width: 80%;
   position: relative;
-  padding-bottom: #{math.div(25, $base-font-size)}rem;
+  padding-bottom: #{math.div(12, $base-font-size)}rem;
 
   @media (max-width: 650px) {
     max-width: 100%;
@@ -35,6 +35,10 @@
     height: 100vh;
     width: 100vw;
   }
+}
+
+.overlay__body:has(.collection-create){
+  max-height: none;
 }
 
 .overlay__header {
@@ -45,6 +49,10 @@
 
 .overlay__actions {
   display: flex;
+}
+
+.overlay__actions-mobile {
+  padding-left: #{math.div(24, $base-font-size)}rem;
 }
 
 .overlay__title {

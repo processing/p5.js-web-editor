@@ -164,6 +164,7 @@
 
 .sketches-table th {
   font-weight: normal;
+  overflow-wrap: break-word;
 }
 
 .sketches-table__name {
@@ -179,4 +180,9 @@
   text-align: center;
   font-size: #{math.div(16, $base-font-size)}rem;
   padding: #{math.div(42, $base-font-size)}rem 0;
+}
+.sketches-table__row a:hover{
+  @include themify() {
+    color: getThemifyVariable("logo-color");
+  }
 }

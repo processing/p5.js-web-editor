@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form, Field } from 'react-final-form';
 import { useDispatch } from 'react-redux';
+import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import Button from '../../../common/Button';
 import { validateLogin } from '../../../utils/reduxFormUtils';
 import { validateAndLoginUser } from '../actions';
@@ -13,6 +14,10 @@ function LoginForm() {
   function onSubmit(formProps) {
     return dispatch(validateAndLoginUser(formProps));
   }
+  const [showPassword, setShowPassword] = useState(false);
+  const handleVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   return (
     <Form
@@ -24,7 +29,7 @@ function LoginForm() {
         <form className="form" onSubmit={handleSubmit}>
           <Field name="email">
             {(field) => (
-              <p className="form__field">
+              <div className="form__field">
                 <label htmlFor="email" className="form__label">
                   {t('LoginForm.UsernameOrEmail')}
                 </label>
@@ -38,29 +43,47 @@ function LoginForm() {
                   {...field.input}
                 />
                 {field.meta.touched && field.meta.error && (
-                  <span className="form-error">{field.meta.error}</span>
+                  <span className="form-error" aria-live="polite">
+                    {field.meta.error}
+                  </span>
                 )}
-              </p>
+              </div>
             )}
           </Field>
           <Field name="password">
             {(field) => (
-              <p className="form__field">
+              <div className="form__field">
                 <label htmlFor="password" className="form__label">
                   {t('LoginForm.Password')}
                 </label>
-                <input
-                  className="form__input"
-                  aria-label={t('LoginForm.PasswordARIA')}
-                  type="password"
-                  id="password"
-                  autoComplete="current-password"
-                  {...field.input}
-                />
+                <div className="form__field__password">
+                  <input
+                    className="form__input"
+                    aria-label={t('LoginForm.PasswordARIA')}
+                    type={showPassword ? 'text' : 'password'}
+                    id="password"
+                    autoComplete="current-password"
+                    {...field.input}
+                  />
+                  <button
+                    className="form__eye__icon"
+                    type="button"
+                    onClick={handleVisibility}
+                    aria-hidden="true"
+                  >
+                    {showPassword ? (
+                      <AiOutlineEyeInvisible />
+                    ) : (
+                      <AiOutlineEye />
+                    )}
+                  </button>
+                </div>
                 {field.meta.touched && field.meta.error && (
-                  <span className="form-error">{field.meta.error}</span>
+                  <span className="form-error" aria-live="polite">
+                    {field.meta.error}
+                  </span>
                 )}
-              </p>
+              </div>
             )}
           </Field>
           {submitError && !modifiedSinceLastSubmit && (

@@ -20,7 +20,7 @@ export const colors = {
   lightsteelblue: '#B0C4DE',
   dodgerblue: '#1E90FF',
   p5ContrastPink: ' #FFA9D9',
-
+  p5ContrastYellow: '#fff001',
   borderColor: ' #B5B5B5',
   outlineColor: '#0F9DD7'
 };
@@ -75,6 +75,10 @@ const baseThemes = {
     inactiveTextColor: grays.middleDark,
     backgroundColor: grays.lighter,
     accentColor: colors.p5jsPink,
+    logoColor: colors.p5jsPink,
+    modalBorderColor: grays.middleLight,
+    searchBackgroundColor: grays.lightest,
+    tableRowStripeColor: grays.mediumLight,
 
     Button: {
       primary: {
@@ -107,7 +111,7 @@ const baseThemes = {
         },
         hover: {
           foreground: grays.lightest,
-          background: colors.p5jsPink,
+          background: colors.p5jsActivePink,
           border: colors.p5jsPink
         },
         active: {
@@ -162,6 +166,10 @@ const baseThemes = {
     inactiveTextColor: grays.middleLight,
     backgroundColor: grays.darker,
     accentColor: colors.p5jsPink,
+    logoColor: colors.p5jsPink,
+    modalBorderColor: grays.middleDark,
+    searchBackgroundColor: grays.darker,
+    tableRowStripeColor: grays.dark,
 
     Button: {
       primary: {
@@ -194,8 +202,8 @@ const baseThemes = {
         },
         hover: {
           foreground: grays.lightest,
-          background: colors.p5jsPink,
-          border: colors.p5jsPink
+          background: colors.p5jsActivePink,
+          border: colors.p5jsActivePink
         },
         active: {
           foreground: grays.lightest,
@@ -248,13 +256,14 @@ export default {
   ...baseThemes,
   [Theme.contrast]: extend(baseThemes[Theme.dark], {
     inactiveTextColor: grays.light,
+    logoColor: colors.yellow,
 
     Button: {
       primary: {
         hover: {
           foreground: grays.dark,
-          background: colors.yellow,
-          border: colors.yellow
+          background: colors.p5ContrastYellow,
+          border: colors.p5ContrastYellow
         },
         active: {
           foreground: grays.dark
@@ -268,8 +277,8 @@ export default {
         },
         hover: {
           foreground: grays.dark,
-          background: colors.yellow,
-          border: colors.yellow
+          background: colors.p5ContrastYellow,
+          border: colors.p5ContrastYellow
         },
         active: {
           foreground: grays.dark

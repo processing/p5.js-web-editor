@@ -283,6 +283,7 @@
     "errorShortPassword": "Пароль повинен містити щонайменше 6 символів",
     "errorConfirmPassword": "Введіть підтвердження пароля",
     "errorNewPassword": "Введіть новий пароль або залиште поточний пароль порожнім.",
+    "errorNewPasswordRepeat":"Your New Password must differ from the current one.",
     "errorEmptyUsername": "Введіть ім'я користувача.",
     "errorLongUsername": "Ім'я користувача має містити менше 20 символів.",
     "errorValidUsername": "Ім'я користувача має складатися лише з цифр, літер, крапок, тире та символа підкреслення."

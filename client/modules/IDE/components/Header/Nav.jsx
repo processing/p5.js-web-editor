@@ -114,7 +114,7 @@ const ProjectMenu = () => {
   const isUserOwner = useSelector(getIsUserOwner);
   const project = useSelector((state) => state.project);
   const user = useSelector((state) => state.user);
-
+  const userSketches = `/${user.username}/sketches`;
   const isUnsaved = !project?.id;
 
   const rootFile = useSelector(selectRootFile);
@@ -133,16 +133,31 @@ const ProjectMenu = () => {
 
   const replaceCommand =
     metaKey === 'Ctrl' ? `${metaKeyName}+H` : `${metaKeyName}+⌥+F`;
+  const newFileCommand =
+    metaKey === 'Ctrl' ? `${metaKeyName}+Alt+N` : `${metaKeyName}+⌥+N`;
 
   return (
-    <ul className="nav__items-left">
+    <ul className="nav__items-left" role="menubar">
       <li className="nav__item-logo">
-        <LogoIcon
-          role="img"
-          aria-label={t('Common.p5logoARIA')}
-          focusable="false"
-          className="svg__logo"
-        />
+        {user && user.username !== undefined ? (
+          <Link to={userSketches}>
+            <LogoIcon
+              role="img"
+              aria-label={t('Common.p5logoARIA')}
+              focusable="false"
+              className="svg__logo"
+            />
+          </Link>
+        ) : (
+          <a href="https://p5js.org">
+            <LogoIcon
+              role="img"
+              aria-label={t('Common.p5logoARIA')}
+              focusable="false"
+              className="svg__logo"
+            />
+          </a>
+        )}
       </li>
       <NavDropdownMenu id="file" title={t('Nav.File.Title')}>
         <NavMenuItem onClick={newSketch}>{t('Nav.File.New')}</NavMenuItem>
@@ -193,9 +208,7 @@ const ProjectMenu = () => {
       <NavDropdownMenu id="edit" title={t('Nav.Edit.Title')}>
         <NavMenuItem onClick={cmRef.current?.tidyCode}>
           {t('Nav.Edit.TidyCode')}
-          <span className="nav__keyboard-shortcut">
-            {metaKeyName}+{'\u21E7'}+F
-          </span>
+          <span className="nav__keyboard-shortcut">{metaKeyName}+Shift+F</span>
         </NavMenuItem>
         <NavMenuItem onClick={cmRef.current?.showFind}>
           {t('Nav.Edit.Find')}
@@ -209,6 +222,7 @@ const ProjectMenu = () => {
       <NavDropdownMenu id="sketch" title={t('Nav.Sketch.Title')}>
         <NavMenuItem onClick={() => dispatch(newFile(rootFile.id))}>
           {t('Nav.Sketch.AddFile')}
+          <span className="nav__keyboard-shortcut">{newFileCommand}</span>
         </NavMenuItem>
         <NavMenuItem onClick={() => dispatch(newFolder(rootFile.id))}>
           {t('Nav.Sketch.AddFolder')}
@@ -220,7 +234,7 @@ const ProjectMenu = () => {
         <NavMenuItem onClick={() => dispatch(stopSketch())}>
           {t('Nav.Sketch.Stop')}
           <span className="nav__keyboard-shortcut">
-            {'\u21E7'}+{metaKeyName}+Enter
+            Shift+{metaKeyName}+Enter
           </span>
         </NavMenuItem>
       </NavDropdownMenu>
@@ -261,10 +275,10 @@ const LanguageMenu = () => {
 const UnauthenticatedUserMenu = () => {
   const { t } = useTranslation();
   return (
-    <ul className="nav__items-right" title="user-menu">
+    <ul className="nav__items-right" title="user-menu" role="navigation">
       {getConfig('TRANSLATIONS_ENABLED') && <LanguageMenu />}
       <li className="nav__item">
-        <Link to="/login" className="nav__auth-button">
+        <Link to="/login" className="nav__auth-button" role="menuitem">
           <span className="nav__item-header" title="Login">
             {t('Nav.Login')}
           </span>
@@ -272,7 +286,7 @@ const UnauthenticatedUserMenu = () => {
       </li>
       <li className="nav__item-or">{t('Nav.LoginOr')}</li>
       <li className="nav__item">
-        <Link to="/signup" className="nav__auth-button">
+        <Link to="/signup" className="nav__auth-button" role="menuitem">
           <span className="nav__item-header" title="SignUp">
             {t('Nav.SignUp')}
           </span>
@@ -289,7 +303,7 @@ const AuthenticatedUserMenu = () => {
   const dispatch = useDispatch();
 
   return (
-    <ul className="nav__items-right" title="user-menu">
+    <ul className="nav__items-right" title="user-menu" role="navigation">
       {getConfig('TRANSLATIONS_ENABLED') && <LanguageMenu />}
       <NavDropdownMenu
         id="account"

@@ -2,4 +2,10 @@
 
 .collection-create {
   padding: #{math.div(24, $base-font-size)}rem;
+
+  @media (max-width: 650px) {
+    .form__input {
+      min-width: unset;
+    }
+  }
 }
