@@ -133,6 +133,8 @@ const ProjectMenu = () => {
 
   const replaceCommand =
     metaKey === 'Ctrl' ? `${metaKeyName}+H` : `${metaKeyName}+⌥+F`;
+  const newFileCommand =
+    metaKey === 'Ctrl' ? `${metaKeyName}+Alt+N` : `${metaKeyName}+⌥+N`;
 
   return (
     <ul className="nav__items-left" role="menubar">
@@ -220,6 +222,7 @@ const ProjectMenu = () => {
       <NavDropdownMenu id="sketch" title={t('Nav.Sketch.Title')}>
         <NavMenuItem onClick={() => dispatch(newFile(rootFile.id))}>
           {t('Nav.Sketch.AddFile')}
+          <span className="nav__keyboard-shortcut">{newFileCommand}</span>
         </NavMenuItem>
         <NavMenuItem onClick={() => dispatch(newFolder(rootFile.id))}>
           {t('Nav.Sketch.AddFolder')}

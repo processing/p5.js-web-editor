@@ -1,25 +1,32 @@
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import i18next from 'i18next';
 import * as SortingActions from '../../actions/sorting';
-
 import Searchbar from './Searchbar';
 
 const scope = 'sketch';
 
-function mapStateToProps(state) {
-  return {
-    searchLabel: i18next.t('Searchbar.SearchSketch'),
-    searchTerm: state.search[`${scope}SearchTerm`]
-  };
-}
+const SearchbarContainer = () => {
+  const dispatch = useDispatch();
+  const searchLabel = i18next.t('Searchbar.SearchSketch');
+  const searchTerm = useSelector((state) => state.search[`${scope}SearchTerm`]);
 
-function mapDispatchToProps(dispatch) {
-  const actions = {
-    setSearchTerm: (term) => SortingActions.setSearchTerm(scope, term),
-    resetSearchTerm: () => SortingActions.resetSearchTerm(scope)
+  const setSearchTerm = (term) => {
+    dispatch(SortingActions.setSearchTerm(scope, term));
   };
-  return bindActionCreators(Object.assign({}, actions), dispatch);
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(Searchbar);
+  const resetSearchTerm = () => {
+    dispatch(SortingActions.resetSearchTerm(scope));
+  };
+
+  return (
+    <Searchbar
+      searchLabel={searchLabel}
+      searchTerm={searchTerm}
+      setSearchTerm={setSearchTerm}
+      resetSearchTerm={resetSearchTerm}
+    />
+  );
+};
+
+export default SearchbarContainer;

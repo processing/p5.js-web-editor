@@ -10,8 +10,21 @@ const Item = ({ isAdded, onSelect, name, url }) => {
   const buttonLabel = isAdded
     ? t('QuickAddList.ButtonRemoveARIA')
     : t('QuickAddList.ButtonAddToCollectionARIA');
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      onSelect(event);
+    }
+  };
+
   return (
-    <li className="quick-add__item" onClick={onSelect}> { /* eslint-disable-line */ }
+    <div
+      role="button"
+      className="quick-add__item"
+      onClick={onSelect}
+      onKeyDown={handleKeyDown}
+      tabIndex={0}
+    >
       <button
         className="quick-add__item-toggle"
         onClick={onSelect}
@@ -28,7 +41,7 @@ const Item = ({ isAdded, onSelect, name, url }) => {
       >
         {t('QuickAddList.View')}
       </Link>
-    </li>
+    </div>
   );
 };
 
