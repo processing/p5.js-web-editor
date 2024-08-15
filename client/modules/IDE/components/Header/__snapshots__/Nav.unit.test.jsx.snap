@@ -513,6 +513,7 @@ exports[`Nav renders editor version for desktop 1`] = `
             aria-expanded="false"
             aria-haspopup="menu"
             role="menuitem"
+            tabindex="0"
           >
             <span
               class="nav__item-header"
@@ -547,6 +548,7 @@ exports[`Nav renders editor version for desktop 1`] = `
             aria-expanded="false"
             aria-haspopup="menu"
             role="menuitem"
+            tabindex="-1"
           >
             <span
               class="nav__item-header"
@@ -614,6 +616,7 @@ exports[`Nav renders editor version for desktop 1`] = `
             aria-expanded="false"
             aria-haspopup="menu"
             role="menuitem"
+            tabindex="-1"
           >
             <span
               class="nav__item-header"
@@ -685,6 +688,7 @@ exports[`Nav renders editor version for desktop 1`] = `
             aria-expanded="false"
             aria-haspopup="menu"
             role="menuitem"
+            tabindex="-1"
           >
             <span
               class="nav__item-header"
