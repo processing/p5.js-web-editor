@@ -83,12 +83,16 @@ describe('<FileNode />', () => {
     });
 
     it('can change to a different extension', async () => {
+      let mockConfirm = jest.fn(() => true);
+      window.confirm = mockConfirm;  
+
       const newName = 'newname.gif';
       const props = renderFileNode('file');
 
       changeName(newName);
 
-      await waitFor(() => expect(props.updateFileName).not.toHaveBeenCalled());
+      expect(mockConfirm).toHaveBeenCalled();
+      await waitFor(() => expect(props.updateFileName).toHaveBeenCalledWith(props.id, newName));
       await expectFileNameToBe(props.name);
     });
 

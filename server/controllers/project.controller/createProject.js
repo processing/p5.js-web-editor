@@ -59,7 +59,7 @@ export async function apiCreateProject(req, res) {
 
   const checkUserHasPermission = () => {
     if (req.user.username !== req.params.username) {
-      console.log('no permission');
+      console.warn('no permission');
       const error = new ProjectValidationError(
         `'${req.user.username}' does not have permission to create for '${req.params.username}'`
       );
