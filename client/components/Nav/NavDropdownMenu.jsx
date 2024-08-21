@@ -19,6 +19,44 @@ export function useMenuProps(id) {
   return { isOpen, handlers };
 }
 
+function NavTrigger({ id, title, ...props }) {
+  const { isOpen, handlers } = useMenuProps(id);
+  const menubarContext = useContext(NavBarContext);
+
+  const keyDown = (e) => {
+    switch (e.key) {
+      case 'Enter':
+      case 'Space':
+        e.stopPropagation();
+        // first();
+        console.log('space');
+        break;
+      default:
+        break;
+    }
+  };
+
+  const triggerProps = {
+    ...handlers,
+    role: 'menuitem',
+    'aria-haspopup': 'menu',
+    'aria-expanded': isOpen,
+    tabIndex: 0,
+    onKeyDown: keyDown
+  };
+
+  return (
+    <button {...triggerProps}>
+      <span className="nav__item-header">{title}</span>
+      <TriangleIcon
+        className="nav__item-header-triangle"
+        focusable="false"
+        aria-hidden="true"
+      />
+    </button>
+  );
+}
+
 function NavDropdownMenu({ id, title, children }) {
   const { isOpen, handlers } = useMenuProps(id);
   const [isFirstChild, setIsFirstChild] = useState(false);
@@ -44,20 +82,7 @@ function NavDropdownMenu({ id, title, children }) {
       className={classNames('nav__item', isOpen && 'nav__item--open')}
       ref={menuItemRef}
     >
-      <button
-        {...handlers}
-        role="menuitem"
-        aria-haspopup="menu"
-        aria-expanded={isOpen}
-        tabIndex={isFirstChild ? 0 : -1}
-      >
-        <span className="nav__item-header">{title}</span>
-        <TriangleIcon
-          className="nav__item-header-triangle"
-          focusable="false"
-          aria-hidden="true"
-        />
-      </button>
+      <NavTrigger id={id} title={title} />
       <ul className="nav__dropdown" role="menu">
         <ParentMenuContext.Provider value={id}>
           {children}
@@ -75,6 +100,11 @@ NavDropdownMenu.propTypes = {
 
 NavDropdownMenu.defaultProps = {
   children: null
+};
+
+NavTrigger.propTypes = {
+  id: PropTypes.string.isRequired,
+  title: PropTypes.node.isRequired
 };
 
 export default NavDropdownMenu;
