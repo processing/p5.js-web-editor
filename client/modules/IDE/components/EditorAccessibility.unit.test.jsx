@@ -6,7 +6,7 @@ import EditorAccessibility from './EditorAccessibility';
 
 describe('<EditorAccessibility />', () => {
   it('renders empty message with no lines', () => {
-    render(<EditorAccessibility lintMessages={[]} />);
+    render(<EditorAccessibility lintMessages={[]} currentLine={0} />);
 
     expect(
       screen.getByRole('listitem', {
@@ -21,11 +21,12 @@ describe('<EditorAccessibility />', () => {
         lintMessages={[
           {
             severity: 'info',
-            line: '1',
+            line: 1,
             message: 'foo',
-            id: '1a2b3c'
+            id: 123
           }
         ]}
+        currentLine={0}
       />
     );
 
