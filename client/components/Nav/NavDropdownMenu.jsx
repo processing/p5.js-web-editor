@@ -38,11 +38,14 @@ function NavTrigger({ id, title, ...props }) {
 
   const triggerProps = {
     ...handlers,
+    ...props,
     role: 'menuitem',
     'aria-haspopup': 'menu',
     'aria-expanded': isOpen,
     tabIndex: 0,
-    onKeyDown: keyDown
+    onKeyDown: (e) => {
+      keyDown(e);
+    }
   };
 
   return (
@@ -56,6 +59,30 @@ function NavTrigger({ id, title, ...props }) {
     </button>
   );
 }
+
+NavTrigger.propTypes = {
+  id: PropTypes.string.isRequired,
+  title: PropTypes.node.isRequired
+};
+
+function NavList({ children, id }) {
+  return (
+    <ul className="nav__dropdown" role="menu">
+      <ParentMenuContext.Provider value={id}>
+        {children}
+      </ParentMenuContext.Provider>
+    </ul>
+  );
+}
+
+NavList.propTypes = {
+  id: PropTypes.string.isRequired,
+  children: PropTypes.node
+};
+
+NavList.defaultProps = {
+  children: null
+};
 
 function NavDropdownMenu({ id, title, children }) {
   const { isOpen, handlers } = useMenuProps(id);
@@ -83,11 +110,7 @@ function NavDropdownMenu({ id, title, children }) {
       ref={menuItemRef}
     >
       <NavTrigger id={id} title={title} />
-      <ul className="nav__dropdown" role="menu">
-        <ParentMenuContext.Provider value={id}>
-          {children}
-        </ParentMenuContext.Provider>
-      </ul>
+      <NavList id={id}>{children}</NavList>
     </li>
   );
 }
@@ -100,11 +123,6 @@ NavDropdownMenu.propTypes = {
 
 NavDropdownMenu.defaultProps = {
   children: null
-};
-
-NavTrigger.propTypes = {
-  id: PropTypes.string.isRequired,
-  title: PropTypes.node.isRequired
 };
 
 export default NavDropdownMenu;
