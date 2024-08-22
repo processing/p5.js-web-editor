@@ -8,20 +8,30 @@ jest.mock('../../../i18n');
 
 describe('<ErrorModal />', () => {
   it('renders type forceAuthentication', () => {
-    render(<ErrorModal type="forceAuthentication" closeModal={jest.fn()} />);
+    render(
+      <ErrorModal
+        type="forceAuthentication"
+        closeModal={jest.fn()}
+        service="google"
+      />
+    );
 
     expect(screen.getByText('Login')).toBeVisible();
     expect(screen.getByText('Sign Up')).toBeVisible();
   });
 
   it('renders type staleSession', () => {
-    render(<ErrorModal type="staleSession" closeModal={jest.fn()} />);
+    render(
+      <ErrorModal type="staleSession" closeModal={jest.fn()} service="google" />
+    );
 
     expect(screen.getByText('log in')).toBeVisible();
   });
 
   it('renders type staleProject', () => {
-    render(<ErrorModal type="staleProject" closeModal={jest.fn()} />);
+    render(
+      <ErrorModal type="staleProject" closeModal={jest.fn()} service="google" />
+    );
 
     expect(
       screen.getByText(
