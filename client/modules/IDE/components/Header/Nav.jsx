@@ -37,10 +37,12 @@ const Nav = ({ layout }) => {
   return isMobile ? (
     <MobileNav />
   ) : (
-    <NavBar>
-      <LeftLayout layout={layout} />
+    <>
+      <NavBar>
+        <LeftLayout layout={layout} />
+      </NavBar>
       <UserMenu />
-    </NavBar>
+    </>
   );
 };
 
@@ -137,7 +139,7 @@ const ProjectMenu = () => {
     metaKey === 'Ctrl' ? `${metaKeyName}+Alt+N` : `${metaKeyName}+⌥+N`;
 
   return (
-    <ul className="nav__items-left" role="menubar">
+    <>
       <li className="nav__item-logo">
         {user && user.username !== undefined ? (
           <Link to={userSketches}>
@@ -248,7 +250,7 @@ const ProjectMenu = () => {
         <NavMenuItem href="/about">{t('Nav.Help.About')}</NavMenuItem>
       </NavDropdownMenu>
       {getConfig('TRANSLATIONS_ENABLED') && <LanguageMenu />}
-    </ul>
+    </>
   );
 };
 
