@@ -19,9 +19,13 @@ const mongoConnectionString = process.env.MONGO_URL;
 // Connect to MongoDB
 const connectToMongoDB = async () => {
   try {
+    mongoose.set('strictQuery', true);
+
     await mongoose.connect(mongoConnectionString, {
       useNewUrlParser: true,
-      useUnifiedTopology: true
+      useUnifiedTopology: true,
+      serverSelectionTimeoutMS: 30000, // 30 seconds timeout
+      socketTimeoutMS: 45000 // 45 seconds timeout
     });
   } catch (error) {
     console.error('Failed to connect to MongoDB: ', error);
@@ -31,7 +35,6 @@ const connectToMongoDB = async () => {
 
 connectToMongoDB();
 
-mongoose.set('strictQuery', true);
 mongoose.connection.on('error', () => {
   console.error(
     'MongoDB Connection Error. Please make sure that MongoDB is running.'
