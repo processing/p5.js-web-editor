@@ -73,6 +73,18 @@ app.options('*', corsMiddleware);
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(cookieParser());
+
+mongoose.set('strictQuery', true);
+
+const clientPromise = mongoose
+  .connect(mongoConnectionString, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 30000, // 30 seconds timeout
+    socketTimeoutMS: 45000 // 45 seconds timeout
+  })
+  .then((m) => m.connection.getClient());
+
 app.use(
   session({
     resave: true,
@@ -85,7 +97,7 @@ app.use(
       secure: false
     },
     store: new MongoStore({
-      mongooseConnection: mongoose.connection,
+      clientPromise,
       autoReconnect: true
     })
   })
@@ -150,29 +162,6 @@ app.use('/', passportRoutes);
 
 // configure passport
 require('./config/passport');
-
-// Connect to MongoDB
-const connectToMongoDB = async () => {
-  try {
-    await mongoose.connect(mongoConnectionString, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    });
-  } catch (error) {
-    console.error('Failed to connect to MongoDB: ', error);
-    process.exit(1);
-  }
-};
-
-connectToMongoDB();
-
-mongoose.set('strictQuery', true);
-mongoose.connection.on('error', () => {
-  console.error(
-    'MongoDB Connection Error. Please make sure that MongoDB is running.'
-  );
-  process.exit(1);
-});
 
 app.get('/', (req, res) => {
   res.sendFile(renderIndex());
