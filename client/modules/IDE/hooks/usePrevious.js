@@ -1,5 +1,5 @@
 /* https://usehooks.com/usePrevious/ */
-import React, { useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 
 export default function usePrevious(value) {
   const ref = useRef();

@@ -51,7 +51,7 @@ function NavTrigger({ id, title, ...props }) {
   const submenuContext = useContext(SubmenuContext);
   const { isOpen, handlers } = useMenuProps(id);
 
-  const { isFirstChild, first, last } = submenuContext;
+  const { isFirstChild, first } = submenuContext;
 
   useKeyDownHandlers({
     Space: (e) => {
@@ -94,7 +94,7 @@ NavTrigger.propTypes = {
 function NavList({ children, id }) {
   const submenuContext = useContext(SubmenuContext);
 
-  const { submenuItems, currentIndex, dispatch, first, last } = submenuContext;
+  const { submenuItems, currentIndex, dispatch } = submenuContext;
 
   const prev = () => {
     const index = currentIndex === 0 ? submenuItems.size - 1 : currentIndex - 1;
@@ -143,7 +143,7 @@ NavList.defaultProps = {
 };
 
 function NavDropdownMenu({ id, title, children }) {
-  const { isOpen, handlers } = useMenuProps(id);
+  const { isOpen } = useMenuProps(id);
   const [isFirstChild, setIsFirstChild] = useState(false);
   const menuItemRef = useRef();
   const { menuItems } = useContext(NavBarContext);

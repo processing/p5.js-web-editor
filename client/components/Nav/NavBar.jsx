@@ -32,30 +32,8 @@ function NavBar({ children, className }) {
     const index = currentIndex === 0 ? menuItems.size - 1 : currentIndex - 1;
     setCurrentIndex(index);
   };
-  const match = (e) => {
-    console.log(e.key);
-    const items = Array.from(menuItems);
 
-    const reorderedItems = [
-      ...items.slice(currentIndex),
-      ...items.slice(0, currentIndex)
-    ];
-
-    const matches = reorderedItems.filter((menuItem) => {
-      const { textContent } = menuItem.firstChild;
-      const firstChar = textContent[0].toLowerCase();
-      return e.key === firstChar;
-    });
-
-    if (!matches.length) {
-      return;
-    }
-
-    const currentNode = items[currentIndex];
-    const nextMatch = matches.includes(currentNode) ? matches[1] : matches[0];
-    const index = items.findIndex((item) => item === nextMatch);
-    setCurrentIndex(index);
-  };
+  // match focused item to typed character; if no match, focus is not moved
 
   useEffect(() => {
     if (currentIndex !== prevIndex) {
