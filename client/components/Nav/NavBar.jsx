@@ -18,44 +18,6 @@ function NavBar({ children, className }) {
   const menuItems = useRef(new Set()).current;
   const timerRef = useRef(null);
 
-  useEffect(() => {
-    if (currentIndex !== prevIndex) {
-      const items = Array.from(menuItems);
-      const currentNode = items[currentIndex]?.firstChild;
-      const prevNode = items[prevIndex]?.firstChild;
-
-      prevNode?.setAttribute('tabindex', -1);
-      currentNode?.setAttribute('tabindex', 0);
-      currentNode?.focus();
-    }
-  }, [currentIndex, prevIndex, menuItems]);
-
-  const handleClose = useCallback(() => {
-    setDropdownOpen('none');
-  }, [setDropdownOpen]);
-
-  const nodeRef = useModalClose(handleClose);
-
-  const clearHideTimeout = useCallback(() => {
-    if (timerRef.current) {
-      clearTimeout(timerRef.current);
-      timerRef.current = null;
-    }
-  }, [timerRef]);
-
-  const handleBlur = useCallback(() => {
-    timerRef.current = setTimeout(() => setDropdownOpen('none'), 10);
-  }, [timerRef, setDropdownOpen]);
-
-  const toggleDropdownOpen = useCallback(
-    (dropdown) => {
-      setDropdownOpen((prevState) =>
-        prevState === dropdown ? 'none' : dropdown
-      );
-    },
-    [setDropdownOpen]
-  );
-
   const first = () => {
     setCurrentIndex(0);
   };
@@ -94,6 +56,44 @@ function NavBar({ children, className }) {
     const index = items.findIndex((item) => item === nextMatch);
     setCurrentIndex(index);
   };
+
+  useEffect(() => {
+    if (currentIndex !== prevIndex) {
+      const items = Array.from(menuItems);
+      const currentNode = items[currentIndex]?.firstChild;
+      const prevNode = items[prevIndex]?.firstChild;
+
+      prevNode?.setAttribute('tabindex', -1);
+      currentNode?.setAttribute('tabindex', 0);
+      currentNode?.focus();
+    }
+  }, [currentIndex, prevIndex, menuItems]);
+
+  const handleClose = useCallback(() => {
+    setDropdownOpen('none');
+  }, [setDropdownOpen]);
+
+  const nodeRef = useModalClose(handleClose);
+
+  const clearHideTimeout = useCallback(() => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+      timerRef.current = null;
+    }
+  }, [timerRef]);
+
+  const handleBlur = useCallback(() => {
+    timerRef.current = setTimeout(() => setDropdownOpen('none'), 10);
+  }, [timerRef, setDropdownOpen]);
+
+  const toggleDropdownOpen = useCallback(
+    (dropdown) => {
+      setDropdownOpen((prevState) =>
+        prevState === dropdown ? 'none' : dropdown
+      );
+    },
+    [setDropdownOpen]
+  );
 
   useKeyDownHandlers({
     ArrowLeft: (e) => {
@@ -163,7 +163,9 @@ function NavBar({ children, className }) {
       <header>
         <div className={className} ref={nodeRef}>
           <MenuOpenContext.Provider value={dropdownOpen}>
-            {children}
+            <ul className="nav__items-left" role="menubar">
+              {children}
+            </ul>
           </MenuOpenContext.Provider>
         </div>
       </header>
