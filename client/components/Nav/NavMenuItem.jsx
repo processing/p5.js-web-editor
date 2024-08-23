@@ -21,14 +21,14 @@ function NavMenuItem({ hideIf, className, ...rest }) {
   useEffect(() => {
     const menuItemNode = menuItemRef.current;
     if (menuItemNode) {
-      if (!submenuItems.size) {
+      if (!submenuItems?.size) {
         setIsFirstChild(true);
       }
-      submenuItems.add(menuItemNode);
+      submenuItems?.add(menuItemNode);
     }
 
     return () => {
-      submenuItems.delete(menuItemNode);
+      submenuItems?.delete(menuItemNode);
     };
   }, [submenuItems]);
 
