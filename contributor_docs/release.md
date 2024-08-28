@@ -50,3 +50,4 @@ Sometimes you might need to push a release for an isolated and small bug fix wit
 4. `git checkout -b <descriptive-branch-name>`
 5. `git cherry-pick <every sha in PR branch>`
 6. Make a new PR that merges into `release` (has a base branch `release`)
+7. Done!
