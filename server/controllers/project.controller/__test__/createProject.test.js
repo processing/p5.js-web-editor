@@ -179,6 +179,10 @@ describe('project.controller', () => {
     });
 
     it('fails if user does not have permission', async () => {
+      // We don't want to clog up the jest output with extra
+      // logs, so we turn off console warn for this one test.
+      jest.spyOn(console, 'warn').mockImplementation(() => {});
+
       request.user = { _id: 'abc123', username: 'alice' };
       request.params = {
         username: 'dana'
