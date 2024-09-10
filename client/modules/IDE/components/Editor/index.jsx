@@ -1,67 +1,52 @@
 import PropTypes from 'prop-types';
-import React, { useEffect, useRef, useState, useCallback } from 'react';
-import CodeMirror from 'codemirror';
-import Fuse from 'fuse.js';
-import emmet from '@emmetio/codemirror-plugin';
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  useCallback,
+  useMemo
+} from 'react';
+import CodeMirror from '@uiw/react-codemirror';
+import { javascript } from '@codemirror/lang-javascript';
+import {
+  expandAbbreviation,
+  abbreviationTracker,
+  findPersistentNext,
+  findPersistentPrev,
+  replaceCommand,
+  find
+} from '@emmetio/codemirror6-plugin';
+import { EditorState } from '@codemirror/state';
+import { Decoration, EditorView } from '@codemirror/view';
+import { RangeSetBuilder } from '@codemirror/state';
 import prettier from 'prettier/standalone';
 import babelParser from 'prettier/parser-babel';
 import htmlParser from 'prettier/parser-html';
 import cssParser from 'prettier/parser-postcss';
 import { withTranslation } from 'react-i18next';
 import StackTrace from 'stacktrace-js';
-import 'codemirror/mode/css/css';
-import 'codemirror/mode/clike/clike';
-import 'codemirror/addon/selection/active-line';
-import 'codemirror/addon/lint/lint';
-import 'codemirror/addon/lint/javascript-lint';
-import 'codemirror/addon/lint/css-lint';
-import 'codemirror/addon/lint/html-lint';
-import 'codemirror/addon/fold/brace-fold';
-import 'codemirror/addon/fold/comment-fold';
-import 'codemirror/addon/fold/foldcode';
-import 'codemirror/addon/fold/foldgutter';
-import 'codemirror/addon/fold/indent-fold';
-import 'codemirror/addon/fold/xml-fold';
-import 'codemirror/addon/comment/comment';
-import 'codemirror/keymap/sublime';
-import 'codemirror/addon/search/searchcursor';
-import 'codemirror/addon/search/matchesonscrollbar';
-import 'codemirror/addon/search/match-highlighter';
-import 'codemirror/addon/search/jump-to-line';
-import 'codemirror/addon/edit/matchbrackets';
-import 'codemirror/addon/edit/closebrackets';
-import 'codemirror/addon/selection/mark-selection';
-import 'codemirror/addon/hint/css-hint';
-import 'codemirror-colorpicker';
-
-import { JSHINT } from 'jshint';
-import { CSSLint } from 'csslint';
-import { HTMLHint } from 'htmlhint';
-import classNames from 'classnames';
+import { autocompletion } from '@codemirror/autocomplete';
+import { linter, lintGutter } from '@codemirror/lint';
+import { keymap } from '@codemirror/view';
+import { standardKeymap } from '@codemirror/commands';
 import { debounce } from 'lodash';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import MediaQuery from 'react-responsive';
+import classNames from 'classnames';
+// import MediaQuery from 'react-responsive';
+import { JSHINT } from 'jshint';
+import { CSSLint } from 'csslint';
+import { HTMLHint } from 'htmlhint';
+
+import * as hinter from '../../../../utils/p5-hinter';
 import '../../../../utils/htmlmixed';
 import '../../../../utils/p5-javascript';
 import { metaKey } from '../../../../utils/metaKey';
-import '../show-hint';
-import * as hinter from '../../../../utils/p5-hinter';
-import '../../../../utils/codemirror-search';
-
 import beepUrl from '../../../../sounds/audioAlert.mp3';
 import RightArrowIcon from '../../../../images/right-arrow.svg';
 import LeftArrowIcon from '../../../../images/left-arrow.svg';
 import { getHTMLFile } from '../../reducers/files';
 import { selectActiveFile } from '../../selectors/files';
-
-import * as FileActions from '../../actions/files';
-import * as IDEActions from '../../actions/ide';
-import * as ProjectActions from '../../actions/project';
-import * as EditorAccessibilityActions from '../../actions/editorAccessibility';
-import * as PreferencesActions from '../../actions/preferences';
-import * as UserActions from '../../../User/actions';
-import * as ConsoleActions from '../../actions/console';
 
 import AssetPreview from '../AssetPreview';
 import Timer from '../Timer';
@@ -71,13 +56,23 @@ import { EditorContainer, EditorHolder } from './MobileEditor';
 import { FolderIcon } from '../../../../common/icons';
 import IconButton from '../../../../common/IconButton';
 
-emmet(CodeMirror);
+import * as FileActions from '../../actions/files';
+import * as IDEActions from '../../actions/ide';
+import * as ProjectActions from '../../actions/project';
+import * as EditorAccessibilityActions from '../../actions/editorAccessibility';
+import * as PreferencesActions from '../../actions/preferences';
+import * as UserActions from '../../../User/actions';
+import * as ConsoleActions from '../../actions/console';
+
+// emmet(CodeMirror);
 
 window.JSHINT = JSHINT;
 window.CSSLint = CSSLint;
 window.HTMLHint = HTMLHint;
 
 const INDENTATION_AMOUNT = 2;
+
+// EmmetKnownSyntax, abbreviationTracker, balanceInward, balanceOutward, decrementNumber01, decrementNumber1, decrementNumber10, emmetCompletionSource, emmetConfig, enterAbbreviationMode, evaluateMath, expandAbbreviation, goToNextEditPoint, goToPreviousEditPoint, goToTagPair, incrementNumber01, incrementNumber1, incrementNumber10, removeTag, selectNextItem, selectPreviousItem, splitJoinTag, toggleComment, wrapWithAbbreviation
 
 const getFileMode = (fileName) => {
   let mode;
@@ -102,30 +97,53 @@ const getFileMode = (fileName) => {
 const prettierFormatWithCursor = (cmInstance, parser, plugins) => {
   try {
     const { formatted, cursorOffset } = prettier.formatWithCursor(
-      cmInstance.doc.getValue(),
+      cmInstance.state.doc.toString(),
       {
-        cursorOffset: cmInstance.doc.indexFromPos(cmInstance.doc.getCursor()),
+        cursorOffset: cmInstance.state.selection.main.head,
         parser,
         plugins
       }
     );
-    const { left, top } = cmInstance.getScrollInfo();
-    cmInstance.doc.setValue(formatted);
+    cmInstance.dispatch({
+      changes: { from: 0, to: cmInstance.state.doc.length, insert: formatted }
+    });
     cmInstance.focus();
-    cmInstance.doc.setCursor(cmInstance.doc.posFromIndex(cursorOffset));
-    cmInstance.scrollTo(left, top);
+    cmInstance.scrollIntoView({ from: cursorOffset });
   } catch (error) {
     console.error(error);
   }
 };
 
+const removeLineDecoration = (view, lineNumber) => {
+  const totalLines = view.state.doc.lines; // Total lines in the document
+
+  if (lineNumber > 0 && lineNumber <= totalLines) {
+    const line = view.state.doc.line(lineNumber);
+    const builder = new RangeSetBuilder();
+
+    // No decoration means removing any existing decoration
+    builder.add(line.from, line.from, Decoration.none);
+
+    const transaction = view.state.update({
+      effects: view.state.update({
+        effects: [view.state.facet(EditorView.decorations.of(builder.finish()))]
+      })
+    });
+
+    // view.dispatch(transaction);
+  } else {
+    console.error(
+      `Invalid line number ${lineNumber} in ${totalLines}-line document`
+    );
+  }
+};
+
 const Editor = (props) => {
   const [currentLine, setCurrentLine] = useState(1);
-  const codemirrorContainer = useRef(null);
-  const cmInstance = useRef(null);
   const beep = useRef(null);
+  const cmInstance = useRef(null);
   const docs = useRef({});
-
+  const [editorView, setEditorView] = useState(null);
   const {
     files,
     file,
@@ -159,17 +177,6 @@ const Editor = (props) => {
     updateLintMessage
   } = props;
 
-  const tidyCode = useCallback(() => {
-    const mode = cmInstance.current.getOption('mode');
-    if (mode === 'javascript') {
-      prettierFormatWithCursor(cmInstance.current, 'babel', [babelParser]);
-    } else if (mode === 'css') {
-      prettierFormatWithCursor(cmInstance.current, 'css', [cssParser]);
-    } else if (mode === 'htmlmixed') {
-      prettierFormatWithCursor(cmInstance.current, 'html', [htmlParser]);
-    }
-  }, []);
-
   const updateLintingMessageAccessibility = useCallback(
     debounce((annotations) => {
       clearLintMessage();
@@ -186,28 +193,27 @@ const Editor = (props) => {
   );
 
   const showFind = useCallback(() => {
-    cmInstance.current.execCommand('findPersistent');
+    editorView.execCommand('findPersistent');
   }, []);
 
   const showReplace = useCallback(() => {
-    cmInstance.current.execCommand('replace');
+    editorView.execCommand('replace');
   }, []);
 
   const getContent = useCallback(() => {
-    const content = cmInstance.current.getValue();
+    const content = editorView.state.doc.toString();
     return { ...file, content };
-  }, [file]);
+  }, [file, editorView]);
 
   const handleKeyUp = useCallback(() => {
-    const lineNumber = parseInt(cmInstance.current.getCursor().line + 1, 10);
+    const lineNumber = parseInt(editorView.state.selection.main.head + 1, 10);
     setCurrentLine(lineNumber);
   }, []);
 
   const showHint = useCallback(
     (_cm) => {
       if (!autocompleteHinter) {
-        CodeMirror.showHint(_cm, () => {}, {});
-        return;
+        return null; // Return null explicitly
       }
 
       let focusedLinkElement = null;
@@ -271,132 +277,87 @@ const Editor = (props) => {
         closeOnUnfocus: false
       };
 
-      if (_cm.options.mode === 'javascript') {
-        CodeMirror.showHint(
-          _cm,
-          () => {
-            const c = _cm.getCursor();
-            const token = _cm.getTokenAt(c);
+      if (_cm.state.mode === 'javascript') {
+        const c = _cm.state.selection.main.head;
+        const token = _cm.state.selection.main.head;
 
-            const hints = hinter.p5Hinter
-              .search(token.string)
-              .filter((h) => h.item.text[0] === token.string[0]);
+        const hints = hinter.p5Hinter
+          .search(token.string)
+          .filter((h) => h.item.text[0] === token.string[0]);
 
-            return {
-              list: hints,
-              from: CodeMirror.Pos(c.line, token.start),
-              to: CodeMirror.Pos(c.line, c.ch)
-            };
-          },
-          hintOptions
-        );
-      } else if (_cm.options.mode === 'css') {
-        CodeMirror.showHint(_cm, CodeMirror.hint.css, hintOptions);
+        return {
+          list: hints,
+          from: c,
+          to: c
+        };
+      } else if (_cm.state.mode === 'css') {
+        return CodeMirror.hint.css;
       }
+
+      return null; // Default return for other modes or no valid condition
     },
     [autocompleteHinter, fontSize]
   );
 
-  useEffect(() => {
-    beep.current = new Audio(beepUrl);
-    cmInstance.current = CodeMirror(codemirrorContainer.current, {
-      theme: `p5-${theme}`,
-      lineNumbers,
-      styleActiveLine: true,
-      inputStyle: 'contenteditable',
-      lineWrapping: linewrap,
-      fixedGutter: false,
-      foldGutter: true,
-      foldOptions: { widget: '\u2026' },
-      gutters: ['CodeMirror-foldgutter', 'CodeMirror-lint-markers'],
-      keyMap: 'sublime',
-      highlightSelectionMatches: true,
-      matchBrackets: true,
-      emmet: {
-        preview: ['html'],
-        markTagPairs: true,
-        autoRenameTags: true
-      },
-      autoCloseBrackets: autocloseBracketsQuotes,
-      styleSelectedText: true,
-      lint: {
-        onUpdateLinting: (annotations) => {
-          updateLintingMessageAccessibility(annotations);
-        },
-        options: {
-          asi: true,
-          eqeqeq: false,
-          '-W041': false,
-          esversion: 11
-        }
-      },
-      colorpicker: {
-        type: 'sketch',
-        mode: 'edit'
-      }
-    });
-
-    const cm = cmInstance.current;
-    emmet(CodeMirror);
-
-    const replaceCommand =
-      metaKey === 'Ctrl' ? `${metaKey}-H` : `${metaKey}-Option-F`;
-    cm.setOption('extraKeys', {
-      Tab: (_cmInstance) => {
-        if (!_cmInstance.execCommand('emmetExpandAbbreviation')) return;
-        const selection = _cmInstance.doc.getSelection();
-        if (selection.length > 0) {
-          _cmInstance.execCommand('indentMore');
-        } else {
-          _cmInstance.replaceSelection(' '.repeat(INDENTATION_AMOUNT));
-        }
-      },
-      Enter: 'emmetInsertLineBreak',
-      Esc: 'emmetResetAbbreviation',
-      [`${metaKey}-Enter`]: () => null,
-      [`Shift-${metaKey}-Enter`]: () => null,
-      [`${metaKey}-F`]: 'findPersistent',
-      [`Shift-${metaKey}-F`]: tidyCode,
-      [`${metaKey}-G`]: 'findPersistentNext',
-      [`Shift-${metaKey}-G`]: 'findPersistentPrev',
-      [replaceCommand]: 'replace',
-      [`${metaKey}-K`]: (_cmInstMetaKey, event) =>
-        _cmInstMetaKey.state.colorpicker.popup_color_picker({ length: 0 }),
-      [`${metaKey}-.`]: 'toggleComment'
-    });
-
-    cm.on(
-      'change',
-      debounce(() => {
-        setUnsavedChanges(true);
-        hideRuntimeErrorWarning();
-        updateFileContent(file.id, cm.getValue());
-        if (autorefresh && isPlaying) {
-          clearConsole();
-          startSketch();
-        }
-      }, 1000)
-    );
-
-    if (cm) {
-      cm.on('keyup', handleKeyUp);
+  const tidyCode = useCallback(() => {
+    const mode = getFileMode(file.name);
+    if (mode === javascript) {
+      prettierFormatWithCursor(editorView, 'babel', [babelParser]);
+    } else if (mode === cssParser) {
+      prettierFormatWithCursor(editorView, 'css', [cssParser]);
+    } else if (mode === htmlParser) {
+      prettierFormatWithCursor(editorView, 'html', [htmlParser]);
     }
+  }, [file]);
 
-    cm.on('keydown', (_cm, e) => {
-      const mode = cm.getOption('mode');
-      if (/^[a-z]$/i.test(e.key) && (mode === 'css' || mode === 'javascript')) {
-        showHint(cm);
-      }
-      if (e.key === 'Escape') {
-        e.preventDefault();
-        cm.getInputField().blur();
-      }
-    });
+  const debouncedTidyCode = useMemo(() => debounce(tidyCode, 300), [tidyCode]);
 
-    cm.getWrapperElement().style['font-size'] = `${fontSize}px`;
+  const handleEditorChange = useCallback((value, viewUpdate) => {
+    // Handle editor change, such as updating content or line numbers
+    const lineNumber = viewUpdate.state.doc.lineAt(
+      viewUpdate.state.selection.main.head
+    ).number;
+    setCurrentLine(lineNumber);
+  }, []);
+
+  useEffect(() => {
+    const cm = editorView;
+
+    // const replaceCommand =
+    //   metaKey === 'Ctrl' ? `${metaKey}-H` : `${metaKey}-Option-F`;
+
+    // cm.on(
+    //   'change',
+    //   debounce(() => {
+    //     setUnsavedChanges(true);
+    //     hideRuntimeErrorWarning();
+    //     updateFileContent(file.id, cm.state.doc.toString());
+    //     if (autorefresh && isPlaying) {
+    //       clearConsole();
+    //       startSketch();
+    //     }
+    //   }, 1000)
+    // );
+
+    // if (cm) {
+    //   cm.on('keyup', handleKeyUp);
+    // }
+
+    // cm.on('keydown', (_cm, e) => {
+    //   const mode = cm.getOption('mode');
+    //   if (/^[a-z]$/i.test(e.key) && (mode === 'css' || mode === 'javascript')) {
+    //     showHint(cm);
+    //   }
+    //   if (e.key === 'Escape') {
+    //     e.preventDefault();
+    //     cm.getInputField().blur();
+    //   }
+    // });
+
+    // cm.getWrapperElement().style['font-size'] = `${fontSize}px`;
 
     provideController({
-      tidyCode,
+      debouncedTidyCode,
       showFind,
       showReplace,
       getContent
@@ -404,18 +365,16 @@ const Editor = (props) => {
 
     return () => {
       if (cm) {
-        cm.off('keyup', handleKeyUp);
+        // cm.off('keyup', handleKeyUp);
       }
       provideController(null);
     };
   }, [
     theme,
     lineNumbers,
-    linewrap,
     autocloseBracketsQuotes,
     fontSize,
-    tidyCode,
-    updateLintingMessageAccessibility,
+    debouncedTidyCode,
     setUnsavedChanges,
     hideRuntimeErrorWarning,
     updateFileContent,
@@ -431,64 +390,242 @@ const Editor = (props) => {
     showHint
   ]);
 
+  // useEffect(() => {
+  //   const initializeDocuments = (fileList) => {
+  //     docs.current = {};
+  //     fileList.forEach((f) => {
+  //       if (f.name !== 'root') {
+  //         docs.current[f.id] = CodeMirror.Doc(f.content, getFileMode(f.name));
+  //       }
+  //     });
+  //   };
+  //   initializeDocuments(files);
+  //   cmInstance.current.swapDoc(docs.current[file.id]);
+  // }, [files, file.id]);
+
+  const myLinterFunction = (view) => {
+    const diagnostics = [];
+    const content = view.state.doc.toString(); // Get the content of the editor
+
+    // Pass the content through JSHint (or any other linter)
+    JSHINT(content, {
+      asi: true, // Allow missing semicolons
+      eqeqeq: false, // Allow non-strict equality (== and !=)
+      '-W041': false, // Disable warning for 'use of == null'
+      esversion: 11 // Use ECMAScript version 11 (ES2020)
+    });
+
+    // Process JSHint results and convert them into CodeMirror diagnostics
+    JSHINT.errors.forEach((error) => {
+      if (!error) return;
+
+      diagnostics.push({
+        from: view.state.doc.line(error.line).from + (error.character - 1), // Position of the error
+        to: view.state.doc.line(error.line).from + error.character, // End position of the error
+        severity: error.code.startsWith('W') ? 'warning' : 'error', // 'W' indicates a warning in JSHint
+        message: error.reason // The error message
+      });
+    });
+
+    // Call the onUpdateLinting function to handle linting messages
+    updateLintingMessageAccessibility(diagnostics);
+
+    return diagnostics;
+  };
+
   useEffect(() => {
     const initializeDocuments = (fileList) => {
       docs.current = {};
       fileList.forEach((f) => {
         if (f.name !== 'root') {
-          docs.current[f.id] = CodeMirror.Doc(f.content, getFileMode(f.name));
+          docs.current[f.id] = EditorState.create({
+            doc: f.content || '', // Ensure doc is never undefined, default to empty string
+            extensions: [javascript()] // Adjust based on file mode
+          });
         }
       });
     };
 
     initializeDocuments(files);
-    cmInstance.current.swapDoc(docs.current[file.id]);
+
+    // if (cmInstance.current && docs.current[file.id]) {
+    //   // Only proceed if cmInstance.current and the document state exists
+    //   cmInstance.current.dispatch({
+    //     changes: {
+    //       from: 0,
+    //       to: cmInstance.current.state?.doc?.length || 0, // Safely access doc length
+    //       insert: file.content || '' // Ensure content is not undefined
+    //     }
+    //   });
+    // } else if (docs.current[file.id]) {
+    //   cmInstance.current = new EditorView({
+    //     state: docs.current[file.id], // Use the stored state
+    //     parent: document.querySelector('#editor') // Ensure the correct parent element
+    //   });
+    // }
   }, [files, file.id]);
 
   useEffect(() => {
-    if (runtimeErrorWarningVisible) {
-      if (consoleEvents.length > 0) {
-        consoleEvents.forEach((consoleEvent) => {
-          if (consoleEvent.method === 'error') {
-            const errorObj = { stack: consoleEvent.data[0].toString() };
-            StackTrace.fromError(errorObj).then((stackLines) => {
-              expandConsole();
-              const line = stackLines.find(
-                (l) => l.fileName && l.fileName.startsWith('/')
-              );
-              if (!line) return;
-              const fileNameArray = line.fileName.split('/');
-              const fileName = fileNameArray.slice(-1)[0];
-              const filePath = fileNameArray.slice(0, -1).join('/');
-              const fileWithError = files.find(
-                (f) => f.name === fileName && f.filePath === filePath
-              );
-              setSelectedFile(fileWithError.id);
-              cmInstance.current.addLineClass(
-                line.lineNumber - 1,
-                'background',
-                'line-runtime-error'
-              );
-            });
+    const startState = EditorState.create({
+      doc: file.content,
+      options: {
+        lineNumbers,
+        styleActiveLine: true,
+        inputStyle: 'contenteditable',
+        lineWrapping: linewrap,
+        fixedGutter: false,
+        foldGutter: true,
+        foldOptions: { widget: '\u2026' }, // Ellipsis as the folding widget
+        gutters: ['CodeMirror-foldgutter', 'CodeMirror-lint-markers'],
+        highlightSelectionMatches: true,
+        matchBrackets: true,
+        autoCloseBrackets: autocloseBracketsQuotes,
+        styleSelectedText: true,
+        colorpicker: {
+          type: 'sketch',
+          mode: 'edit'
+        }
+      },
+      extensions: [
+        EditorView.updateListener.of((update) => {
+          if (update.changes && editorView) {
+            handleEditorChange(update.state.doc.toString(), editorView);
           }
-        });
-      } else {
-        for (let i = 0; i < cmInstance.current.lineCount(); i += 1) {
-          cmInstance.current.removeLineClass(
-            i,
-            'background',
-            'line-runtime-error'
-          );
+        }),
+        javascript(),
+        abbreviationTracker(),
+        autocompletion(),
+        lintGutter(), // Adds the lint gutter for displaying issues
+        linter(myLinterFunction), // Use your custom linter here
+        keymap.of([
+          {
+            key: 'Tab',
+            run: (_cmInstance) => {
+              if (!_cmInstance.dispatch(expandAbbreviation())) return;
+              const selection = _cmInstance.state.selection.main.head;
+              if (selection.length > 0) {
+                _cmInstance.dispatch({ changes: { indentMore: true } });
+              } else {
+                _cmInstance.dispatch({
+                  changes: { insert: ' '.repeat(INDENTATION_AMOUNT) }
+                });
+              }
+            }
+          },
+          // {
+          //   key: 'Enter',
+          //   run: emmet.insert
+          // },
+          // {
+          //   key: 'Esc',
+          //   run: emmet.resetAbbreviation
+          // },
+          {
+            key: `${metaKey}-Enter`,
+            run: () => null
+          },
+          {
+            key: `Shift-${metaKey}-Enter`,
+            run: () => null
+          },
+          {
+            key: `${metaKey}-F`,
+            run: find // Use the find command here
+          },
+          {
+            key: `Shift-${metaKey}-F`,
+            run: debouncedTidyCode // Tidy code with debounce
+          },
+          {
+            key: `${metaKey}-G`,
+            run: findPersistentNext // Find next occurrence
+          },
+          {
+            key: `Shift-${metaKey}-G`,
+            run: findPersistentPrev // Find previous occurrence
+          },
+          {
+            key: metaKey === 'Ctrl' ? `${metaKey}-H` : `${metaKey}-Option-F`,
+            run: replaceCommand // Replace command
+          },
+          {
+            key: `${metaKey}-K`,
+            run: (_cmInstMetaKey, event) => {
+              _cmInstMetaKey.state.colorpicker.popup_color_picker({
+                length: 0
+              });
+            }
+          }
+          // {
+          //   key: `${metaKey}-.`,
+          //   run: emmet.to // Toggle comment functionality
+          // }
+        ]),
+        keymap.of(standardKeymap) // Include default key bindings,
+      ]
+    });
+    const view = new EditorView({
+      state: startState,
+      parent: cmInstance.current
+    });
+    setEditorView(view);
+  }, []);
+
+  useEffect(() => {
+    if (editorView) {
+      if (editorView.state) {
+        if (runtimeErrorWarningVisible) {
+          if (consoleEvents.length > 0) {
+            consoleEvents.forEach((consoleEvent) => {
+              if (consoleEvent.method === 'error') {
+                const errorObj = { stack: consoleEvent.data[0].toString() };
+                StackTrace.fromError(errorObj).then((stackLines) => {
+                  console.log('expandConsole');
+                  expandConsole();
+                  const line = stackLines.find(
+                    (l) => l.fileName && l.fileName.startsWith('/')
+                  );
+                  if (!line) return;
+                  const fileNameArray = line.fileName.split('/');
+                  const fileName = fileNameArray.slice(-1)[0];
+                  const filePath = fileNameArray.slice(0, -1).join('/');
+                  const fileWithError = files.find(
+                    (f) => f.name === fileName && f.filePath === filePath
+                  );
+                  setSelectedFile(fileWithError.id);
+                  // editorView.addLineClass(
+                  //   line.lineNumber - 1,
+                  //   'background',
+                  //   'line-runtime-error'
+                  // );
+                });
+              }
+            });
+          } else {
+            for (let i = 0; i < editorView.state.doc.lines; i += 1) {
+              // cmInstance.current.removeLineClass(
+              //   i,
+              //   'background',
+              //   'line-runtime-error'
+              // );
+              removeLineDecoration(editorView, i);
+            }
+          }
+        }
+
+        for (let i = 0; i < editorView.state.doc.lines; i += 1) {
+          removeLineDecoration(editorView, i);
+          // cmInstance.current.removeLineClass(
+          //   i,
+          //   'background',
+          //   'line-runtime-error'
+          // );
         }
       }
     }
 
-    for (let i = 0; i < cmInstance.current.lineCount(); i += 1) {
-      cmInstance.current.removeLineClass(i, 'background', 'line-runtime-error');
-    }
-
     provideController({
-      tidyCode,
+      debouncedTidyCode,
       showFind,
       showReplace,
       getContent
@@ -497,14 +634,10 @@ const Editor = (props) => {
     runtimeErrorWarningVisible,
     consoleEvents,
     expandConsole,
-    files,
     file.id,
     setSelectedFile,
-    provideController,
-    tidyCode,
     showFind,
-    showReplace,
-    getContent
+    showReplace
   ]);
 
   const editorSectionClass = classNames({
@@ -518,66 +651,275 @@ const Editor = (props) => {
   });
 
   return (
-    <MediaQuery minWidth={770}>
-      {(matches) =>
-        matches ? (
-          <section className={editorSectionClass}>
-            <div className="editor__header">
-              <button
-                aria-label={t('Editor.OpenSketchARIA')}
-                className="sidebar__contract"
-                onClick={() => {
-                  collapseSidebar();
-                  closeProjectOptions();
-                }}
-              >
-                <LeftArrowIcon focusable="false" aria-hidden="true" />
-              </button>
-              <button
-                aria-label={t('Editor.CloseSketchARIA')}
-                className="sidebar__expand"
-                onClick={expandSidebar}
-              >
-                <RightArrowIcon focusable="false" aria-hidden="true" />
-              </button>
-              <div className="editor__file-name">
-                <span>
-                  {file.name}
-                  <UnsavedChangesIndicator />
-                </span>
-                <Timer />
-              </div>
-            </div>
-            <article ref={codemirrorContainer} className={editorHolderClass} />
-            {file.url ? <AssetPreview url={file.url} name={file.name} /> : null}
-            <EditorAccessibility
-              lintMessages={lintMessages}
-              currentLine={currentLine}
-            />
-          </section>
-        ) : (
-          <EditorContainer expanded={isExpanded}>
-            <div>
-              <IconButton onClick={expandSidebar} icon={FolderIcon} />
-              <span>
-                {file.name}
-                <UnsavedChangesIndicator />
-              </span>
-            </div>
-            <section>
-              <EditorHolder ref={codemirrorContainer} />
-              {file.url ? (
-                <AssetPreview url={file.url} name={file.name} />
-              ) : null}
-              <EditorAccessibility
-                lintMessages={lintMessages}
-                currentLine={currentLine}
-              />
-            </section>
-          </EditorContainer>
-        )
-      }
-    </MediaQuery>
+    <section className={editorSectionClass}>
+      <div className="editor__header">
+        <button
+          aria-label={t('Editor.OpenSketchARIA')}
+          className="sidebar__contract"
+          onClick={() => {
+            collapseSidebar();
+            closeProjectOptions();
+          }}
+        >
+          <LeftArrowIcon focusable="false" aria-hidden="true" />
+        </button>
+        <button
+          aria-label={t('Editor.CloseSketchARIA')}
+          className="sidebar__expand"
+          onClick={expandSidebar}
+        >
+          <RightArrowIcon focusable="false" aria-hidden="true" />
+        </button>
+        <div className="editor__file-name">
+          <span>
+            {file.name}
+            <UnsavedChangesIndicator />
+          </span>
+          <Timer />
+        </div>
+      </div>
+      {/* <article ref={codemirrorContainer} className={editorHolderClass} /> */}
+      <div className={editorHolderClass} ref={cmInstance}></div>
+      {/* <CodeMirror
+        className={editorHolderClass}
+        ref={cmInstance}
+        value={file.content}
+        // theme={`p5-${theme}`}
+        height="100%"
+        extensions={[
+          javascript(),
+          abbreviationTracker(),
+          autocompletion(),
+          lintGutter(), // Adds the lint gutter for displaying issues
+          linter(myLinterFunction), // Use your custom linter here
+          keymap.of([
+            {
+              key: 'Tab',
+              run: (_cmInstance) => {
+                if (!_cmInstance.dispatch(expandAbbreviation())) return;
+                const selection = _cmInstance.state.selection.main.head;
+                if (selection.length > 0) {
+                  _cmInstance.dispatch({ changes: { indentMore: true } });
+                } else {
+                  _cmInstance.dispatch({
+                    changes: { insert: ' '.repeat(INDENTATION_AMOUNT) }
+                  });
+                }
+              }
+            },
+            // {
+            //   key: 'Enter',
+            //   run: emmet.insert
+            // },
+            // {
+            //   key: 'Esc',
+            //   run: emmet.resetAbbreviation
+            // },
+            {
+              key: `${metaKey}-Enter`,
+              run: () => null
+            },
+            {
+              key: `Shift-${metaKey}-Enter`,
+              run: () => null
+            },
+            {
+              key: `${metaKey}-F`,
+              run: find // Use the find command here
+            },
+            {
+              key: `Shift-${metaKey}-F`,
+              run: debouncedTidyCode // Tidy code with debounce
+            },
+            {
+              key: `${metaKey}-G`,
+              run: findPersistentNext // Find next occurrence
+            },
+            {
+              key: `Shift-${metaKey}-G`,
+              run: findPersistentPrev // Find previous occurrence
+            },
+            {
+              key: metaKey === 'Ctrl' ? `${metaKey}-H` : `${metaKey}-Option-F`,
+              run: replaceCommand // Replace command
+            },
+            {
+              key: `${metaKey}-K`,
+              run: (_cmInstMetaKey, event) => {
+                _cmInstMetaKey.state.colorpicker.popup_color_picker({
+                  length: 0
+                });
+              }
+            }
+            // {
+            //   key: `${metaKey}-.`,
+            //   run: emmet.to // Toggle comment functionality
+            // }
+          ]),
+          keymap.of(standardKeymap) // Include default key bindings
+        ]}
+        onChange={handleEditorChange}
+        onKeyUp={handleKeyUp}
+        options={{
+          lineNumbers,
+          styleActiveLine: true,
+          inputStyle: 'contenteditable',
+          lineWrapping: linewrap,
+          fixedGutter: false,
+          foldGutter: true,
+          foldOptions: { widget: '\u2026' }, // Ellipsis as the folding widget
+          gutters: ['CodeMirror-foldgutter', 'CodeMirror-lint-markers'],
+          highlightSelectionMatches: true,
+          matchBrackets: true,
+          autoCloseBrackets: autocloseBracketsQuotes,
+          styleSelectedText: true,
+          colorpicker: {
+            type: 'sketch',
+            mode: 'edit'
+          }
+        }}
+      /> */}
+      {file.url ? <AssetPreview url={file.url} name={file.name} /> : null}
+      <EditorAccessibility
+        lintMessages={lintMessages}
+        currentLine={currentLine}
+      />
+    </section>
+    // <MediaQuery minWidth={770}>
+    //   {(matches) =>
+    //     matches ? (
+    //       <section className={editorSectionClass}>
+    //         <div className="editor__header">
+    //           <button
+    //             aria-label={t('Editor.OpenSketchARIA')}
+    //             className="sidebar__contract"
+    //             onClick={() => {
+    //               collapseSidebar();
+    //               closeProjectOptions();
+    //             }}
+    //           >
+    //             <LeftArrowIcon focusable="false" aria-hidden="true" />
+    //           </button>
+    //           <button
+    //             aria-label={t('Editor.CloseSketchARIA')}
+    //             className="sidebar__expand"
+    //             onClick={expandSidebar}
+    //           >
+    //             <RightArrowIcon focusable="false" aria-hidden="true" />
+    //           </button>
+    //           <div className="editor__file-name">
+    //             <span>
+    //               {file.name}
+    //               <UnsavedChangesIndicator />
+    //             </span>
+    //             <Timer />
+    //           </div>
+    //         </div>
+    //         {/* <article ref={codemirrorContainer} className={editorHolderClass} /> */}
+    //         <CodeMirror
+    //           className={editorHolderClass}
+    //           value={file.content}
+    //           theme={`p5-${theme}`}
+    //           height="100%"
+    //           extensions={[
+    //             javascript(),
+    //             emmet,
+    //             autocompletion(),
+    //             lintGutter(), // Adds the lint gutter for displaying issues
+    //             linter(myLinterFunction), // Use your custom linter here
+    //             keymap.of([sublimeKeymap])
+    //           ]}
+    //           onChange={handleEditorChange}
+    //           onKeyUp={handleKeyUp}
+    //           options={{
+    //             lineNumbers,
+    //             styleActiveLine: true,
+    //             inputStyle: 'contenteditable',
+    //             lineWrapping: linewrap,
+    //             fixedGutter: false,
+    //             foldGutter: true,
+    //             foldOptions: { widget: '\u2026' }, // Ellipsis as the folding widget
+    //             gutters: ['CodeMirror-foldgutter', 'CodeMirror-lint-markers'],
+    //             keyMap: 'sublime',
+    //             highlightSelectionMatches: true,
+    //             matchBrackets: true,
+    //             autoCloseBrackets: autocloseBracketsQuotes,
+    //             styleSelectedText: true,
+    //             colorpicker: {
+    //               type: 'sketch',
+    //               mode: 'edit'
+    //             }
+    //           }}
+    //         />
+
+    //         {file.url ? <AssetPreview url={file.url} name={file.name} /> : null}
+    //         <EditorAccessibility
+    //           lintMessages={lintMessages}
+    //           currentLine={currentLine}
+    //         />
+    //       </section>
+    //     ) : (
+    //       <EditorContainer expanded={isExpanded}>
+    //         <div>
+    //           <IconButton onClick={expandSidebar} icon={FolderIcon} />
+    //           <span>
+    //             {file.name}
+    //             <UnsavedChangesIndicator />
+    //           </span>
+    //         </div>
+    //         <section>
+    //           <div className="editor-container">
+    //             <CodeMirror
+    //               className={editorHolderClass}
+    //               value={file.content}
+    //               theme={`p5-${theme}`}
+    //               height="100%"
+    //               extensions={[
+    //                 javascript(),
+    //                 emmet,
+    //                 autocompletion(),
+    //                 lintGutter(), // Adds the lint gutter for displaying issues
+    //                 linter(myLinterFunction), // Use your custom linter here
+    //                 keymap.of([sublimeKeymap])
+    //               ]}
+    //               onChange={handleEditorChange}
+    //               onKeyUp={handleKeyUp}
+    //               options={{
+    //                 lineNumbers,
+    //                 styleActiveLine: true,
+    //                 inputStyle: 'contenteditable',
+    //                 lineWrapping: linewrap,
+    //                 fixedGutter: false,
+    //                 foldGutter: true,
+    //                 foldOptions: { widget: '\u2026' }, // Ellipsis as the folding widget
+    //                 gutters: [
+    //                   'CodeMirror-foldgutter',
+    //                   'CodeMirror-lint-markers'
+    //                 ],
+    //                 keyMap: 'sublime',
+    //                 highlightSelectionMatches: true,
+    //                 matchBrackets: true,
+    //                 autoCloseBrackets: autocloseBracketsQuotes,
+    //                 styleSelectedText: true,
+    //                 colorpicker: {
+    //                   type: 'sketch',
+    //                   mode: 'edit'
+    //                 }
+    //               }}
+    //             />
+    //           </div>
+    //           {file.url ? (
+    //             <AssetPreview url={file.url} name={file.name} />
+    //           ) : null}
+    //           <EditorAccessibility
+    //             lintMessages={lintMessages}
+    //             currentLine={currentLine}
+    //           />
+    //         </section>
+    //       </EditorContainer>
+    //     )
+    //   }
+    // </MediaQuery>
   );
 };
 
