@@ -245,7 +245,8 @@ class SketchList extends React.Component {
     this.props.resetSorting();
 
     this.state = {
-      isInitialDataLoad: true
+      isInitialDataLoad: true,
+      currentPage: 1
     };
   }
 
@@ -361,6 +362,19 @@ class SketchList extends React.Component {
         ? this.props.username
         : this.props.user.username;
     const { mobile } = this.props;
+    const pageNumbers = [];
+    let sketchesPerPage = 5;
+    if (mobile) {
+      sketchesPerPage = 7;
+    }
+    const { currentPage } = this.state;
+    const totalSketches = this.props.sketches.length;
+    const indexOfLastSketch = currentPage * sketchesPerPage;
+    const indexOfFirstSketch = indexOfLastSketch - sketchesPerPage;
+    const TotalPages = Math.ceil(totalSketches / sketchesPerPage);
+    for (let i = 1; i <= TotalPages; i += 1) {
+      pageNumbers.push(i);
+    }
     return (
       <article className="sketches-table-container">
         <Helmet>
@@ -395,22 +409,87 @@ class SketchList extends React.Component {
               </tr>
             </thead>
             <tbody>
-              {this.props.sketches.map((sketch) => (
-                <SketchListRow
-                  mobile={mobile}
-                  key={sketch.id}
-                  sketch={sketch}
-                  user={this.props.user}
-                  username={username}
-                  onAddToCollection={() => {
-                    this.setState({ sketchToAddToCollection: sketch });
-                  }}
-                  t={this.props.t}
-                />
-              ))}
+              {this.props.sketches
+                .slice(indexOfFirstSketch, indexOfLastSketch)
+                .map((sketch) => (
+                  <SketchListRow
+                    mobile={mobile}
+                    key={sketch.id}
+                    sketch={sketch}
+                    user={this.props.user}
+                    username={username}
+                    onAddToCollection={() => {
+                      this.setState({ sketchToAddToCollection: sketch });
+                    }}
+                    t={this.props.t}
+                  />
+                ))}
             </tbody>
           </table>
         )}
+        <div className="pagination">
+          <ul className="pagination-ul">
+            <li className="page-item">
+              <button
+                className="page-link"
+                onClick={() =>
+                  this.setState({
+                    currentPage: Math.max(currentPage - 1, 1)
+                  })
+                }
+                disabled={currentPage === 1}
+              >
+                Prev
+              </button>
+            </li>
+            <li>
+              <button
+                className="page-link"
+                onClick={() =>
+                  this.setState({
+                    currentPage: 1
+                  })
+                }
+              >
+                1
+              </button>
+            </li>
+            <li>
+              <span>.......</span>
+            </li>
+            <li>
+              <button className="page-link"> {currentPage} </button>
+            </li>
+            <li>
+              <span>&nbsp;of&nbsp;</span>
+            </li>
+            <li>
+              <button
+                className="page-link"
+                onClick={() =>
+                  this.setState({
+                    currentPage: TotalPages
+                  })
+                }
+              >
+                {TotalPages}
+              </button>
+            </li>
+            <li className="page-item">
+              <button
+                className="page-link"
+                onClick={() =>
+                  this.setState({
+                    currentPage: Math.min(currentPage + 1, TotalPages)
+                  })
+                }
+                disabled={currentPage === TotalPages}
+              >
+                Next
+              </button>
+            </li>
+          </ul>
+        </div>
         {this.state.sketchToAddToCollection && (
           <Overlay
             isFixedHeight
