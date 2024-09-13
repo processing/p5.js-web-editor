@@ -1,6 +1,7 @@
 import React from 'react';
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
+import { useTranslation } from 'react-i18next';
 import { setupServer } from 'msw/node';
 import { rest } from 'msw';
 import { act } from 'react-dom/test-utils';
@@ -26,8 +27,9 @@ afterAll(() => server.close());
 describe('<Sketchlist />', () => {
   const mockStore = configureStore([thunk]);
   const store = mockStore(initialTestState);
+  const { t } = useTranslation();
 
-  let subjectProps = { username: initialTestState.user.username };
+  let subjectProps = { username: initialTestState.user.username, t };
 
   const subject = () =>
     reduxRender(<SketchList {...subjectProps} />, { store });

@@ -93,7 +93,6 @@ const FileNode = ({
   const { t } = useTranslation();
   const fileNameInput = useRef(null);
   const fileOptionsRef = useRef(null);
-  const dispatch = useDispatch();
 
   const handleFileClick = (event) => {
     event.stopPropagation();
