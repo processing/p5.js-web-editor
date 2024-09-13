@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import React, { useState, useRef, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { bindActionCreators, connect } from 'redux';
+import { useDispatch, useSelector, connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { withTranslation } from 'react-i18next';
 import { useTranslation } from 'react-i18next';
 import * as IDEActions from '../actions/ide';
