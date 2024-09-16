@@ -1,13 +1,26 @@
 import React from 'react';
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { useTranslation } from 'react-i18next';
 import { setupServer } from 'msw/node';
 import { rest } from 'msw';
 import { act } from 'react-dom/test-utils';
 import SketchList from './SketchList';
 import { reduxRender, fireEvent, screen, within } from '../../../test-utils';
 import { initialTestState } from '../../../testData/testReduxStore';
+
+jest.mock('react-i18next', () => ({
+  useTranslation: () => ({
+    t: (key) => key,
+    i18n: {
+      changeLanguage: jest.fn(),
+      language: 'en-US'
+    }
+  }),
+  initReactI18next: {
+    type: '3rdParty',
+    init: jest.fn()
+  }
+}));
 
 jest.mock('../../../i18n');
 
@@ -27,9 +40,8 @@ afterAll(() => server.close());
 describe('<Sketchlist />', () => {
   const mockStore = configureStore([thunk]);
   const store = mockStore(initialTestState);
-  const { t } = useTranslation();
 
-  let subjectProps = { username: initialTestState.user.username, t };
+  let subjectProps = { username: initialTestState.user.username };
 
   const subject = () =>
     reduxRender(<SketchList {...subjectProps} />, { store });
