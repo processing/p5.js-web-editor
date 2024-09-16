@@ -92,6 +92,7 @@ const SketchListRowBase = ({
           onChange={handleRenameChange}
           onKeyDown={handleRenameEnter}
           onBlur={handleRenameBlur}
+          onClick={(e) => e.stopPropagation()}
           ref={renameInput}
           maxLength={128}
         />
