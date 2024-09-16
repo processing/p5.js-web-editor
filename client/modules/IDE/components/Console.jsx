@@ -227,6 +227,10 @@ const Console = () => {
     };
   });
 
+  useEffect(() => {
+    console.log(isExpanded);
+  }, [isExpanded]);
+
   const consoleClass = classNames({
     'preview-console': true,
     'preview-console--collapsed': !isExpanded
