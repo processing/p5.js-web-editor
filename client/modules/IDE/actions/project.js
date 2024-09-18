@@ -15,6 +15,22 @@ import {
 } from './ide';
 import { clearState, saveState } from '../../../persistState';
 
+import {
+  setProjectName,
+  startSavingProject,
+  endSavingProject,
+  resetProject,
+  setProjectSavedTime
+} from '../reducers/project';
+
+export {
+  setProjectName,
+  startSavingProject,
+  endSavingProject,
+  resetProject,
+  setProjectSavedTime
+} from '../reducers/project';
+
 const ROOT_URL = getConfig('API_URL');
 const S3_BUCKET_URL_BASE = getConfig('S3_BUCKET_URL_BASE');
 const S3_BUCKET = getConfig('S3_BUCKET');
@@ -25,13 +41,6 @@ export function setProject(project) {
     project,
     files: project.files,
     owner: project.user
-  };
-}
-
-export function setProjectName(name) {
-  return {
-    type: ActionTypes.SET_PROJECT_NAME,
-    name
   };
 }
 
@@ -85,18 +94,6 @@ export function clearPersistedState() {
       type: ActionTypes.CLEAR_PERSISTED_STATE
     });
     clearState();
-  };
-}
-
-export function startSavingProject() {
-  return {
-    type: ActionTypes.START_SAVING_PROJECT
-  };
-}
-
-export function endSavingProject() {
-  return {
-    type: ActionTypes.END_SAVING_PROJECT
   };
 }
 
@@ -262,12 +259,6 @@ export function exportProjectAsZip(projectId) {
   win.focus();
 }
 
-export function resetProject() {
-  return {
-    type: ActionTypes.RESET_PROJECT
-  };
-}
-
 export function newProject() {
   browserHistory.push('/', { confirmed: true });
   return resetProject();
@@ -344,13 +335,6 @@ export function cloneProject(project) {
           });
       }
     );
-  };
-}
-
-export function setProjectSavedTime(updatedAt) {
-  return {
-    type: ActionTypes.SET_PROJECT_SAVED_TIME,
-    value: updatedAt
   };
 }
 
