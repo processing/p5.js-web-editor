@@ -8,22 +8,6 @@ import SketchList from './SketchList';
 import { reduxRender, fireEvent, screen, within } from '../../../test-utils';
 import { initialTestState } from '../../../testData/testReduxStore';
 
-jest.mock('react-i18next', () => ({
-  useTranslation: () => ({
-    t: (key) => key,
-    i18n: {
-      changeLanguage: jest.fn(),
-      language: 'en-US'
-    }
-  }),
-  initReactI18next: {
-    type: '3rdParty',
-    init: jest.fn()
-  }
-}));
-
-jest.mock('../../../i18n');
-
 const server = setupServer(
   rest.get(`/${initialTestState.user.username}/projects`, (req, res, ctx) =>
     // it just needs to return something so it doesn't throw an error

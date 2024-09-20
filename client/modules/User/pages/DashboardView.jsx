@@ -107,12 +107,7 @@ const DashboardView = () => {
       case TabKey.sketches:
       default:
         return (
-          <SketchList
-            key={username}
-            mobile={mobile}
-            username={username}
-            t={t}
-          />
+          <SketchList key={username} mobile={mobile} username={username} />
         );
     }
   };

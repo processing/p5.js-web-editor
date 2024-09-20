@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import React, { useEffect, useState, useCallback } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { bindActionCreators } from 'redux';
 import * as ProjectsActions from '../actions/projects'; // Added Projects actions
 import * as CollectionsActions from '../actions/collections'; // Added Collections actions
@@ -25,11 +26,11 @@ const SketchList = ({
   sorting,
   toggleDirectionForField,
   resetSorting,
-  t,
   mobile
 }) => {
   const [isInitialDataLoad, setIsInitialDataLoad] = useState(true);
   const [sketchToAddToCollection, setSketchToAddToCollection] = useState(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     getProjects(username);
@@ -98,11 +99,13 @@ const SketchList = ({
           {field === fieldName &&
             (direction === SortingActions.DIRECTION.ASC ? (
               <ArrowUpIcon
+                focusable="false"
                 role="img"
                 aria-label={t('SketchList.DirectionAscendingARIA')}
               />
             ) : (
               <ArrowDownIcon
+                focusable="false"
                 role="img"
                 aria-label={t('SketchList.DirectionDescendingARIA')}
               />
@@ -192,8 +195,7 @@ SketchList.propTypes = {
     field: PropTypes.string.isRequired,
     direction: PropTypes.string.isRequired
   }).isRequired,
-  mobile: PropTypes.bool,
-  t: PropTypes.func.isRequired
+  mobile: PropTypes.bool
 };
 
 SketchList.defaultProps = {
