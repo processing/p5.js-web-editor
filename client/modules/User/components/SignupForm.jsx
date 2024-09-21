@@ -26,7 +26,10 @@ function asyncValidate(fieldToValidate, value) {
 }
 
 function validateUsername(username) {
-  return asyncValidate('username', username);
+  clearTimeout(timeout);
+  timeout = setTimeout(function() {
+    asyncValidate('username', username)
+  }, 100)
 }
 
 function validateEmail(email) {
