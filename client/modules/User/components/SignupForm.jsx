@@ -8,6 +8,14 @@ import { validateAndSignUpUser } from '../actions';
 import Button from '../../../common/Button';
 import apiClient from '../../../utils/apiClient';
 
+function debounce(func, delay = 300) {
+  let timerId;
+  return (...args) => {
+    clearTimeout(timerId);
+    timerId = setTimeout(() => func(...args), delay);
+  };
+}
+
 function asyncValidate(fieldToValidate, value) {
   if (!value || value.trim().length === 0) {
     return '';
@@ -25,12 +33,14 @@ function asyncValidate(fieldToValidate, value) {
     });
 }
 
+const debouncedValidation = debounce(asyncValidate, 300);
+
 function validateUsername(username) {
-  return asyncValidate('username', username);
+  return debouncedValidation('username', username);
 }
 
 function validateEmail(email) {
-  return asyncValidate('email', email);
+  return debouncedValidation('email', email);
 }
 
 function SignupForm() {
