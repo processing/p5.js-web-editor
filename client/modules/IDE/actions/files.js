@@ -53,6 +53,16 @@ export function createFile(file, parentId) {
   };
 }
 
+export function changeParent(id, oldParentId, newParentId) {
+  return (dispatch) =>
+    dispatch({
+      type: ActionTypes.CHANGE_PARENT,
+      id,
+      oldParentId,
+      newParentId
+    });
+}
+
 export function submitFile(formProps, files, parentId, projectId) {
   if (projectId) {
     const postParams = {

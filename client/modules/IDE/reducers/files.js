@@ -108,6 +108,20 @@ function updateParent(state, action) {
   });
 }
 
+function changeParent(state, action) {
+  return state.map((file) => {
+    // Add to children list of new parent
+    if (file.id === action.newParentId) {
+      file.children = [...file.children, action.id];
+    }
+    // Remove from children list of old parent
+    else if (file.id === action.oldParentId) {
+      file.children = file.children.filter((childId) => childId !== action.id);
+    }
+    return file;
+  });
+}
+
 function renameFile(state, action) {
   return state.map((file) => {
     if (file.id !== action.id) {
@@ -229,6 +243,9 @@ const files = (state, action) => {
         }
         return file;
       });
+    }
+    case ActionTypes.CHANGE_PARENT: {
+      return changeParent(state, action);
     }
     case ActionTypes.DELETE_FILE: {
       const newState = deleteMany(state, [

@@ -238,6 +238,45 @@ class FileNode extends React.Component {
     this.props.hideFolderChildren(this.props.id);
   };
 
+  handleDrag = (e) => {
+    e.dataTransfer.setData('text', `${this.props.id} ${this.props.parentId}`);
+  };
+
+  handleDragOver = (e) => {
+    e.preventDefault();
+    if (this.props.fileType === 'folder') {
+      e.target.parentNode.parentNode.style.border = '1px solid #ed225d';
+    } else if (this.props.fileType === 'file') {
+      e.target.parentNode.parentNode.parentNode.parentNode.parentNode.style.border =
+        '1px solid #ed225d';
+    }
+  };
+
+  handleDragLeave = (e) => {
+    e.preventDefault();
+    if (this.props.fileType === 'folder') {
+      e.target.parentNode.parentNode.style.border = null;
+    } else if (this.props.fileType === 'file') {
+      e.target.parentNode.parentNode.parentNode.parentNode.parentNode.style.border = null;
+    }
+  };
+
+  handleDrop = (e) => {
+    e.preventDefault();
+    const dragPayload = e.dataTransfer.getData('text');
+    const [id, oldParentId] = dragPayload.split(' ');
+    let newParentId = null;
+    if (this.props.fileType === 'folder') {
+      newParentId = this.props.id;
+      this.props.showFolderChildren(this.props.id);
+      e.target.parentNode.parentNode.style.border = null;
+    } else if (this.props.fileType === 'file') {
+      e.target.parentNode.parentNode.parentNode.parentNode.parentNode.style.border = null;
+      newParentId = this.props.parentId;
+    }
+    this.props.changeParent(id, oldParentId, newParentId);
+  };
+
   renderChild = (childId) => (
     <li key={childId}>
       <ConnectedFileNode
@@ -267,10 +306,15 @@ class FileNode extends React.Component {
     const { extension } = parseFileName(this.props.name);
 
     return (
-      <div className={itemClass}>
+      <div className={itemClass} onLoad={() => this.getRootID()}>
         {!isRoot && (
           <div
             className="file-item__content"
+            draggable
+            onDragStart={(e) => this.handleDrag(e)}
+            onDrop={(e) => this.handleDrop(e)}
+            onDragOver={(e) => this.handleDragOver(e)}
+            onDragLeave={(e) => this.handleDragLeave(e)}
             onContextMenu={this.toggleFileOptions}
           >
             <span className="file-item__spacer"></span>
@@ -431,6 +475,7 @@ FileNode.propTypes = {
   deleteFile: PropTypes.func.isRequired,
   updateFileName: PropTypes.func.isRequired,
   resetSelectedFile: PropTypes.func.isRequired,
+  changeParent: PropTypes.func.isRequired,
   newFile: PropTypes.func.isRequired,
   newFolder: PropTypes.func.isRequired,
   showFolderChildren: PropTypes.func.isRequired,
