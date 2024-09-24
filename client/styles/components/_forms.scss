@@ -81,7 +81,8 @@
   font-size: 28px;
   position: absolute;
   right: 0px;
-  top: 4px;
+  top: 50%;
+  transform: translateY(-50%);
   vertical-align: middle;
 }
 
