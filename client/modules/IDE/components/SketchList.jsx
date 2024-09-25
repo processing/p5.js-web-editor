@@ -1,14 +1,14 @@
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { bindActionCreators } from 'redux';
-import * as ProjectsActions from '../actions/projects'; // Added Projects actions
-import * as CollectionsActions from '../actions/collections'; // Added Collections actions
-import * as ToastActions from '../actions/toast'; // Added Toast actions
-import * as SortingActions from '../actions/sorting'; // Added Sorting actions
+import * as ProjectsActions from '../actions/projects';
+import * as CollectionsActions from '../actions/collections';
+import * as ToastActions from '../actions/toast';
+import * as SortingActions from '../actions/sorting';
 import getSortedSketches from '../selectors/projects';
 import Loader from '../../App/components/loader';
 import Overlay from '../../App/components/Overlay';
@@ -43,7 +43,7 @@ const SketchList = ({
     }
   }, [sketches]);
 
-  const getSketchesTitle = useCallback(
+  const getSketchesTitle = useMemo(
     () =>
       username === user.username
         ? t('SketchList.Title')
@@ -81,44 +81,47 @@ const SketchList = ({
     [sorting, t]
   );
 
-  const renderFieldHeader = (fieldName, displayName) => {
-    const { field, direction } = sorting;
-    const headerClass = classNames({
-      'sketches-table__header': true,
-      'sketches-table__header--selected': field === fieldName
-    });
-    const buttonLabel = getButtonLabel(fieldName, displayName);
-    return (
-      <th scope="col">
-        <button
-          className="sketch-list__sort-button"
-          onClick={() => toggleDirectionForField(fieldName)}
-          aria-label={buttonLabel}
-        >
-          <span className={headerClass}>{displayName}</span>
-          {field === fieldName &&
-            (direction === SortingActions.DIRECTION.ASC ? (
-              <ArrowUpIcon
-                focusable="false"
-                role="img"
-                aria-label={t('SketchList.DirectionAscendingARIA')}
-              />
-            ) : (
-              <ArrowDownIcon
-                focusable="false"
-                role="img"
-                aria-label={t('SketchList.DirectionDescendingARIA')}
-              />
-            ))}
-        </button>
-      </th>
-    );
-  };
+  const renderFieldHeader = useCallback(
+    (fieldName, displayName) => {
+      const { field, direction } = sorting;
+      const headerClass = classNames({
+        'sketches-table__header': true,
+        'sketches-table__header--selected': field === fieldName
+      });
+      const buttonLabel = getButtonLabel(fieldName, displayName);
+      return (
+        <th scope="col">
+          <button
+            className="sketch-list__sort-button"
+            onClick={() => toggleDirectionForField(fieldName)}
+            aria-label={buttonLabel}
+          >
+            <span className={headerClass}>{displayName}</span>
+            {field === fieldName &&
+              (direction === SortingActions.DIRECTION.ASC ? (
+                <ArrowUpIcon
+                  focusable="false"
+                  role="img"
+                  aria-label={t('SketchList.DirectionAscendingARIA')}
+                />
+              ) : (
+                <ArrowDownIcon
+                  focusable="false"
+                  role="img"
+                  aria-label={t('SketchList.DirectionDescendingARIA')}
+                />
+              ))}
+          </button>
+        </th>
+      );
+    },
+    [sorting, getButtonLabel, toggleDirectionForField, t]
+  );
 
   return (
     <article className="sketches-table-container">
       <Helmet>
-        <title>{getSketchesTitle()}</title>
+        <title>{getSketchesTitle}</title>
       </Helmet>
       {renderLoader()}
       {renderEmptyTable()}

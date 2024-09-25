@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as ProjectActions from '../actions/project';
-import * as IdeActions from '../actions/ide'; // Adding the missing Ide actions
+import * as IdeActions from '../actions/ide';
 import TableDropdown from '../../../components/Dropdown/TableDropdown';
 import MenuItem from '../../../components/Dropdown/MenuItem';
 import dates from '../../../utils/formatDate';

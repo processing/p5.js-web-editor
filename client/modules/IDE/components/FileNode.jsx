@@ -1,9 +1,8 @@
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import React, { useState, useRef, useEffect } from 'react';
-import { useDispatch, useSelector, connect } from 'react-redux';
+import React, { useState, useRef } from 'react';
+import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { withTranslation } from 'react-i18next';
 import { useTranslation } from 'react-i18next';
 import * as IDEActions from '../actions/ide';
 import * as FileActions from '../actions/files';
@@ -86,7 +85,6 @@ const FileNode = ({
 }) => {
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
   const [isEditingName, setIsEditingName] = useState(false);
-  const [isFocused, setIsFocused] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [updatedName, setUpdatedName] = useState(name);
 
@@ -245,7 +243,7 @@ const FileNode = ({
             <div className="sidebar__file-item--folder">
               <button
                 className="sidebar__file-item-closed"
-                onClick={showFolderChildren(id)}
+                onClick={() => showFolderChildren(id)}
                 aria-label={t('FileNode.OpenFolderARIA')}
                 title={t('FileNode.OpenFolderARIA')}
               >
@@ -257,7 +255,7 @@ const FileNode = ({
               </button>
               <button
                 className="sidebar__file-item-open"
-                onClick={hideFolderChildren(id)}
+                onClick={() => hideFolderChildren(id)}
                 aria-label={t('FileNode.CloseFolderARIA')}
                 title={t('FileNode.CloseFolderARIA')}
               >
@@ -408,11 +406,9 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(Object.assign(FileActions, IDEActions), dispatch);
 }
 
-const TranslatedFileNode = withTranslation()(FileNode);
-
 const ConnectedFileNode = connect(
   mapStateToProps,
   mapDispatchToProps
-)(TranslatedFileNode);
+)(FileNode);
 
-export { TranslatedFileNode as FileNode, ConnectedFileNode as default };
+export { FileNode, ConnectedFileNode as default };

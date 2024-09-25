@@ -1,13 +1,13 @@
-import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet';
-import { withTranslation, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import AssetListRow from './AssetListRow';
 import Loader from '../../App/components/loader';
 import * as AssetActions from '../actions/assets';
 
-const AssetList = ({ t }) => {
+const AssetList = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const { username, assetList, loading } = useSelector((state) => ({
     username: state.user.username,
@@ -60,8 +60,4 @@ const AssetList = ({ t }) => {
   );
 };
 
-AssetList.propTypes = {
-  t: PropTypes.func.isRequired
-};
-
-export default withTranslation()(AssetList);
+export default AssetList;

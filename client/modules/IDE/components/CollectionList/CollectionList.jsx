@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { Helmet } from 'react-helmet';
-import { withTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import classNames from 'classnames';
@@ -34,9 +34,9 @@ const CollectionList = ({
   resetSorting,
   sorting,
   project,
-  t,
   mobile
 }) => {
+  const { t } = useTranslation();
   const [hasLoadedData, setHasLoadedData] = useState(false);
   const [
     addingSketchesToCollectionId,
@@ -64,7 +64,7 @@ const CollectionList = ({
     }
   }, [loading]);
 
-  const getTitle = useCallback(() => {
+  const getTitle = useMemo(() => {
     if (propsUsername === user.username) {
       return t('CollectionList.Title');
     }
@@ -100,7 +100,7 @@ const CollectionList = ({
     return null;
   };
 
-  const getButtonLabel = useCallback(
+  const getButtonLabel = useMemo(
     (fieldName, displayName) => {
       const { field, direction } = sorting;
       let buttonLabel;
@@ -162,7 +162,7 @@ const CollectionList = ({
   return (
     <article className="sketches-table-container">
       <Helmet>
-        <title>{getTitle()}</title>
+        <title>{getTitle}</title>
       </Helmet>
 
       {renderLoader()}
@@ -258,7 +258,6 @@ CollectionList.propTypes = {
       id: PropTypes.string
     })
   }),
-  t: PropTypes.func.isRequired,
   mobile: PropTypes.bool
 };
 
@@ -297,6 +296,4 @@ function mapDispatchToProps(dispatch) {
   );
 }
 
-export default withTranslation()(
-  connect(mapStateToProps, mapDispatchToProps)(CollectionList)
-);
+export default connect(mapStateToProps, mapDispatchToProps)(CollectionList);
