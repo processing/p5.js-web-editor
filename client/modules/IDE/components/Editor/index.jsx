@@ -12,16 +12,14 @@ import {
   keymap,
   Decoration,
   highlightActiveLine,
-  highlightSpecialChars
+  highlightSpecialChars,
+  lineNumbers
 } from '@codemirror/view';
 import { javascript } from '@codemirror/lang-javascript';
-import { autocompletion } from '@codemirror/autocomplete';
+import { bracketMatching, foldGutter, foldKeymap } from '@codemirror/language';
+import { autocompletion, closeBrackets } from '@codemirror/autocomplete';
 import { linter, lintGutter } from '@codemirror/lint';
 import { standardKeymap } from '@codemirror/commands';
-import { lineNumbers } from '@codemirror/gutter';
-import { foldGutter, foldKeymap } from '@codemirror/fold';
-import { bracketMatching } from '@codemirror/matchbrackets';
-import { closeBrackets } from '@codemirror/closebrackets';
 
 import prettier from 'prettier/standalone';
 import babelParser from 'prettier/parser-babel';
@@ -282,7 +280,7 @@ const Editor = (props) => {
     },
     {
       key: metaKey === 'Ctrl' ? `${metaKey}-H` : `${metaKey}-Option-F`,
-      run: replaceCommand()
+      run: replaceCommand
     },
     {
       key: `${metaKey}-K`, // Meta + K to trigger color picker
