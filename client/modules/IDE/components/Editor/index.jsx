@@ -16,6 +16,7 @@ import {
   lineNumbers
 } from '@codemirror/view';
 import { javascript } from '@codemirror/lang-javascript';
+import { css } from '@codemirror/lang-css';
 import { bracketMatching, foldGutter, foldKeymap } from '@codemirror/language';
 import { autocompletion, closeBrackets } from '@codemirror/autocomplete';
 import { linter, lintGutter } from '@codemirror/lint';
@@ -50,6 +51,7 @@ import Pickr from '@simonwep/pickr';
 
 import classNames from 'classnames';
 import StackTrace from 'stacktrace-js';
+import beepUrl from '../../../../sounds/audioAlert.mp3';
 import RightArrowIcon from '../../../../images/right-arrow.svg';
 import LeftArrowIcon from '../../../../images/left-arrow.svg';
 import { metaKey } from '../../../../utils/metaKey';
@@ -73,6 +75,10 @@ import * as UserActions from '../../../User/actions';
 import * as ConsoleActions from '../../actions/console';
 
 const INDENTATION_AMOUNT = 2;
+
+window.JSHINT = JSHINT;
+window.CSSLint = CSSLint;
+window.HTMLHint = HTMLHint;
 
 const getFileMode = (fileName) => {
   if (fileName.match(/.+\.js$/i)) return 'javascript';
@@ -116,8 +122,37 @@ const Editor = (props) => {
     t,
     collapseSidebar,
     expandSidebar,
-    lintMessages
+    lintMessages,
+    clearLintMessage,
+    updateLintMessage,
+    lintWarning,
+    autocompleteHinter
   } = props;
+
+  const beepRef = useRef(null);
+
+  useEffect(() => {
+    beepRef.current = new Audio(beepUrl);
+
+    return () => {
+      beepRef.current = null;
+    };
+  }, [beepUrl]);
+
+  const updateLintingMessageAccessibility = useCallback(
+    debounce((annotations) => {
+      clearLintMessage();
+      annotations.forEach((x) => {
+        if (x.from.line > -1) {
+          updateLintMessage(x.severity, x.from.line + 1, x.message);
+        }
+      });
+      if (lintMessages.length > 0 && lintWarning) {
+        beepRef.current.play();
+      }
+    }, 2000),
+    []
+  );
 
   const editorRef = useRef(null);
   const viewRef = useRef(null);
@@ -177,13 +212,6 @@ const Editor = (props) => {
     setCurrentLine(lineNumber);
   }, []);
 
-  const triggerFindPersistent = () => {
-    const view = viewRef.current;
-    if (view) {
-      view.dispatch({ effects: find.of('') }); // Dispatch the find effect
-    }
-  };
-
   // Initialize Pickr color picker
   const initColorPicker = () => {
     const pickr = Pickr.create({
@@ -221,10 +249,47 @@ const Editor = (props) => {
     pickrRef.current = pickr;
   };
 
+  const myLinterFunction = (view) => {
+    const diagnostics = [];
+    const content = view.state.doc.toString(); // Get the content of the editor
+
+    // Pass the content through JSHint (or any other linter)
+    JSHINT(content, {
+      asi: true, // Allow missing semicolons
+      eqeqeq: false, // Allow non-strict equality (== and !=)
+      '-W041': false, // Disable warning for 'use of == null'
+      esversion: 11 // Use ECMAScript version 11 (ES2020)
+    });
+
+    // Process JSHint results and convert them into CodeMirror diagnostics
+    JSHINT.errors.forEach((error) => {
+      if (!error) return;
+
+      diagnostics.push({
+        from: view.state.doc.line(error.line).from + (error.character - 1), // Position of the error
+        to: view.state.doc.line(error.line).from + error.character, // End position of the error
+        severity: error.code.startsWith('W') ? 'warning' : 'error', // 'W' indicates a warning in JSHint
+        message: error.reason // The error message
+      });
+    });
+
+    // Call the onUpdateLinting function to handle linting messages
+    updateLintingMessageAccessibility(diagnostics);
+
+    return diagnostics;
+  };
+
   // Open the color picker when `MetaKey + K` is pressed
   const openColorPicker = () => {
     if (pickrRef.current) {
       pickrRef.current.show(); // Show the color picker programmatically
+    }
+  };
+
+  const triggerFindPersistent = () => {
+    const view = viewRef.current;
+    if (view) {
+      view.dispatch({ effects: find.of('') }); // Dispatch the find effect
     }
   };
 
@@ -292,15 +357,117 @@ const Editor = (props) => {
     ...standardKeymap // Default key bindings from CodeMirror
   ];
 
+  let focusedLinkElement = null;
+
   useEffect(() => {
+    if (!editorRef.current) return;
+
     initColorPicker();
+
+    const setFocusedLinkElement = (set) => {
+      if (set && !focusedLinkElement) {
+        const activeItemLink = document.querySelector(
+          '.cm-tooltip-autocomplete a'
+        );
+        if (activeItemLink) {
+          focusedLinkElement = activeItemLink;
+          focusedLinkElement.classList.add('focused-hint-link');
+          activeItemLink.parentElement?.parentElement?.classList.add(
+            'unfocused'
+          );
+        }
+      }
+    };
+
+    const removeFocusedLinkElement = () => {
+      if (focusedLinkElement) {
+        focusedLinkElement.classList.remove('focused-hint-link');
+        focusedLinkElement.parentElement?.parentElement?.classList.remove(
+          'unfocused'
+        );
+        focusedLinkElement = null;
+        return true;
+      }
+      return false;
+    };
+
+    const javascriptCompletion = (context) => {
+      const token = context.matchBefore(/\w*/);
+      if (!token) return null;
+
+      const hints = hinter
+        .search(token.text)
+        .filter((h) => h.item.text[0] === token.text[0]);
+
+      return {
+        from: token.from,
+        options: hints.map((h) => ({
+          label: h.item.text,
+          apply: h.item.text
+        }))
+      };
+    };
+
+    // const updateContentDebounced = lodashDebounce(() => {
+    //   setUnsavedChanges(true);
+    //   hideRuntimeErrorWarning();
+    //   if (view) {
+    //     const content = view.state.doc.toString();
+    //     updateFileContent(file.id, content);
+    //     if (autorefresh && isPlaying) {
+    //       clearConsole();
+    //       startSketch();
+    //     }
+    //   }
+    // }, 1000);
+
+    const hintExtension = autocompletion({
+      override: [javascriptCompletion], // Use the javascript completion we defined earlier
+      closeOnUnfocus: false,
+      extraKeys: {
+        'Shift-Right': () => {
+          const activeItemLink = document.querySelector(
+            '.cm-tooltip-autocomplete a'
+          );
+          if (activeItemLink) activeItemLink.click();
+          return true;
+        },
+        Right: () => {
+          setFocusedLinkElement(true);
+          return true;
+        },
+        Left: () => {
+          removeFocusedLinkElement();
+          return true;
+        },
+        Up: () => {
+          const onLink = removeFocusedLinkElement();
+          // Move focus manually here if needed
+          setFocusedLinkElement(onLink);
+          return true;
+        },
+        Down: () => {
+          const onLink = removeFocusedLinkElement();
+          // Move focus manually here if needed
+          setFocusedLinkElement(onLink);
+          return true;
+        },
+        Enter: () => {
+          if (focusedLinkElement) {
+            focusedLinkElement.click();
+            return true;
+          }
+          return false;
+        }
+      }
+    });
 
     const startState = EditorState.create({
       doc: file.content,
       extensions: [
         javascript(),
         autocompletion(),
-        linter(() => []), // Linter extension placeholder
+        linter(myLinterFunction), // Linter extension placeholder
         lintGutter(),
         abbreviationTracker(),
         lineNumbers(), // Line numbers
@@ -310,6 +477,8 @@ const Editor = (props) => {
         bracketMatching(), // Match brackets
         closeBrackets(), // Automatically close brackets
         highlightSelectionMatches(), // Highlight search matches
+        css(),
+        hintExtension,
         keymap.of(customKeymap),
         EditorView.updateListener.of((update) => {
           if (update.docChanged) {
@@ -325,6 +494,57 @@ const Editor = (props) => {
     });
     viewRef.current = view;
 
+    const showHint = () => {
+      if (view) {
+        // Trigger hinting manually if needed; CM6 autocompletion happens automatically with the proper extensions
+        view.dispatch({
+          effects: autocompletion.startCompletion.of({
+            source: javascriptCompletion
+          })
+        });
+      }
+    };
+
+    const onKeyDown = (e) => {
+      const mode = view?.state.facet(EditorState.languageDataAt)?.[0];
+      if (/^[a-z]$/i.test(e.key) && (mode === 'css' || mode === 'javascript')) {
+        showHint();
+      }
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        e.target.blur();
+      }
+    };
+
+    // const state = EditorState.create({
+    //   doc: file.content,
+    //   extensions: [
+    //     basicSetup,
+    //     javascript(),
+    //     css(),
+    //     hintExtension,
+    //     EditorView.updateListener.of((update) => {
+    //       if (update.docChanged) {
+    //         updateContentDebounced(); // Debounce the changes
+    //       }
+    //     }),
+    //     keymap.of([
+    //       {
+    //         key: 'Enter',
+    //         run: (view) => {
+    //           showHint();
+    //           return true;
+    //         }
+    //       }
+    //     ])
+    //   ]
+    // });
+
+    view.dom.style.fontSize = `${fontSize}px`; // Apply font size
+
+    // Attach keydown handler
+    view.dom.addEventListener('keydown', onKeyDown);
+
     provideController({
       tidyCode,
       showFind,
@@ -332,8 +552,63 @@ const Editor = (props) => {
       getContent
     });
 
-    return () => view.destroy();
+    // eslint-disable-next-line consistent-return
+    return () => {
+      view.dom.removeEventListener('keydown', onKeyDown);
+      view.destroy();
+    };
   }, []);
+
+  // useEffect(() => {
+  //   initColorPicker();
+
+  //   const startState = EditorState.create({
+  //     doc: file.content,
+  //     extensions: [
+  //       javascript(),
+  //       autocompletion(),
+  //       linter(myLinterFunction), // Linter extension placeholder
+  //       lintGutter(),
+  //       abbreviationTracker(),
+  //       lineNumbers(), // Line numbers
+  //       highlightActiveLine(), // Highlight active line
+  //       EditorView.lineWrapping, // Line wrapping
+  //       foldGutter(), // Fold gutter
+  //       bracketMatching(), // Match brackets
+  //       closeBrackets(), // Automatically close brackets
+  //       highlightSelectionMatches(), // Highlight search matches
+  //       keymap.of(customKeymap),
+  //       EditorView.updateListener.of((update) => {
+  //         if (update.docChanged) {
+  //           handleEditorChange(); // Ensure changes are handled properly
+  //         }
+  //       })
+  //     ]
+  //   });
+
+  //   const view = new EditorView({
+  //     state: startState,
+  //     parent: editorRef.current
+  //   });
+  //   viewRef.current = view;
+
+  //   view.dom.style.fontSize = `${fontSize}px`; // Apply font size
+
+  //   // Attach keydown handler
+  //   view.dom.addEventListener('keydown', onKeyDown);
+
+  //   provideController({
+  //     tidyCode,
+  //     showFind,
+  //     showReplace,
+  //     getContent
+  //   });
+
+  //   return () => {
+  //     view.dom.removeEventListener('keydown', onKeyDown);
+  //     view.destroy();
+  //   };
+  // }, []);
 
   return (
     <section
@@ -380,9 +655,9 @@ const Editor = (props) => {
 
 Editor.propTypes = {
   // autocloseBracketsQuotes: PropTypes.bool.isRequired,
-  // autocompleteHinter: PropTypes.bool.isRequired,
+  autocompleteHinter: PropTypes.bool.isRequired,
   // lineNumbers: PropTypes.bool.isRequired,
-  // lintWarning: PropTypes.bool.isRequired,
+  lintWarning: PropTypes.bool.isRequired,
   // linewrap: PropTypes.bool.isRequired,
   lintMessages: PropTypes.arrayOf(
     PropTypes.shape({
@@ -399,8 +674,8 @@ Editor.propTypes = {
   //     args: PropTypes.arrayOf(PropTypes.string)
   //   })
   // ).isRequired,
-  // updateLintMessage: PropTypes.func.isRequired,
-  // clearLintMessage: PropTypes.func.isRequired,
+  updateLintMessage: PropTypes.func.isRequired,
+  clearLintMessage: PropTypes.func.isRequired,
   updateFileContent: PropTypes.func.isRequired,
   fontSize: PropTypes.number.isRequired,
   file: PropTypes.shape({
