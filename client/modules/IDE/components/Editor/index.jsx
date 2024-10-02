@@ -6,18 +6,17 @@ import React, {
   useMemo
 } from 'react';
 import PropTypes from 'prop-types';
-import { EditorState } from '@codemirror/state';
+import { EditorState, StateEffect } from '@codemirror/state';
 import {
   EditorView,
   keymap,
-  Decoration,
   highlightActiveLine,
-  highlightSpecialChars,
   lineNumbers
 } from '@codemirror/view';
+import Fuse from 'fuse.js';
 import { javascript } from '@codemirror/lang-javascript';
 import { css } from '@codemirror/lang-css';
-import { bracketMatching, foldGutter, foldKeymap } from '@codemirror/language';
+import { bracketMatching, foldGutter } from '@codemirror/language';
 import { autocompletion, closeBrackets } from '@codemirror/autocomplete';
 import { linter, lintGutter } from '@codemirror/lint';
 import { standardKeymap } from '@codemirror/commands';
@@ -41,11 +40,9 @@ import {
   resetAbbreviation
 } from '@emmetio/codemirror6-plugin';
 import {
-  find,
   findNext,
   findPrevious,
-  highlightSelectionMatches,
-  searchKeymap
+  highlightSelectionMatches
 } from '@codemirror/search';
 import Pickr from '@simonwep/pickr';
 
@@ -107,10 +104,16 @@ const prettierFormatWithCursor = (view, parser, plugins) => {
   }
 };
 
+const createThemeExtension = (themeName) => {
+  const themeClass = themeName === 'dark' ? 'cm-s-p5-dark' : 'cm-s-p5-light';
+  return EditorView.theme({}, { dark: themeName === 'dark', themeClass });
+};
+
 const Editor = (props) => {
   const {
     file,
     fontSize,
+    unsavedChanges,
     setUnsavedChanges,
     updateFileContent,
     autorefresh,
@@ -126,6 +129,8 @@ const Editor = (props) => {
     clearLintMessage,
     updateLintMessage,
     lintWarning,
+    theme,
+    hideRuntimeErrorWarning,
     autocompleteHinter
   } = props;
 
@@ -157,6 +162,19 @@ const Editor = (props) => {
   const editorRef = useRef(null);
   const viewRef = useRef(null);
   const pickrRef = useRef(null);
+  const fuseRef = useRef(null); // Store the Fuse instance in a ref
+  const docsRef = useRef({}); // Store the documents in a ref
+  const prevFileIdRef = useRef(null); // Store the previous file ID in a ref
+
+  useEffect(() => {
+    // Initialize the Fuse instance only when `hinter` changes
+    if (hinter && hinter.p5Hinter) {
+      fuseRef.current = new Fuse(hinter.p5Hinter, {
+        threshold: 0.05, // Set your threshold
+        keys: ['text'] // Keys to search against
+      });
+    }
+  }, [hinter]);
 
   const [currentLine, setCurrentLine] = useState(1);
 
@@ -166,6 +184,7 @@ const Editor = (props) => {
   // Handle document changes (debounced)
   const handleEditorChange = useCallback(() => {
     setUnsavedChanges(true);
+    hideRuntimeErrorWarning();
     updateFileContent(file.id, viewRef.current.state.doc.toString());
     if (autorefresh && isPlaying) {
       clearConsole();
@@ -289,7 +308,8 @@ const Editor = (props) => {
   const triggerFindPersistent = () => {
     const view = viewRef.current;
     if (view) {
-      view.dispatch({ effects: find.of('') }); // Dispatch the find effect
+      // TODO: fix this use persistent using codemirror search
+      view.dispatch({ effects: findNext }); // Dispatch the find effect
     }
   };
 
@@ -395,7 +415,7 @@ const Editor = (props) => {
       const token = context.matchBefore(/\w*/);
       if (!token) return null;
 
-      const hints = hinter
+      const hints = fuseRef.current
         .search(token.text)
         .filter((h) => h.item.text[0] === token.text[0]);
 
@@ -407,19 +427,6 @@ const Editor = (props) => {
         }))
       };
     };
-
-    // const updateContentDebounced = lodashDebounce(() => {
-    //   setUnsavedChanges(true);
-    //   hideRuntimeErrorWarning();
-    //   if (view) {
-    //     const content = view.state.doc.toString();
-    //     updateFileContent(file.id, content);
-    //     if (autorefresh && isPlaying) {
-    //       clearConsole();
-    //       startSketch();
-    //     }
-    //   }
-    // }, 1000);
 
     const hintExtension = autocompletion({
       override: [javascriptCompletion], // Use the javascript completion we defined earlier
@@ -478,6 +485,7 @@ const Editor = (props) => {
         closeBrackets(), // Automatically close brackets
         highlightSelectionMatches(), // Highlight search matches
         css(),
+        createThemeExtension(theme),
         hintExtension,
         keymap.of(customKeymap),
         EditorView.updateListener.of((update) => {
@@ -506,7 +514,7 @@ const Editor = (props) => {
     };
 
     const onKeyDown = (e) => {
-      const mode = view?.state.facet(EditorState.languageDataAt)?.[0];
+      const mode = view?.state.facet(EditorState.languageData)?.[0];
       if (/^[a-z]$/i.test(e.key) && (mode === 'css' || mode === 'javascript')) {
         showHint();
       }
@@ -533,7 +541,58 @@ const Editor = (props) => {
       view.dom.removeEventListener('keydown', onKeyDown);
       view.destroy();
     };
-  }, []);
+  }, [fuseRef]);
+
+  // Handle file changes
+  useEffect(() => {
+    if (!viewRef.current) return;
+
+    const view = viewRef.current;
+    const prevFileId = prevFileIdRef.current; // Get the previous file ID
+
+    // Store the old document for the previous file
+    docsRef.current[prevFileId] = view.state.doc;
+
+    // Retrieve or create the document for the new file
+    const newDoc =
+      docsRef.current[file.id] || EditorState.create({ doc: file.content }).doc;
+
+    // Dispatch a transaction to update the document
+    view.dispatch({
+      changes: { from: 0, to: view.state.doc.length, insert: newDoc.toString() }
+    });
+
+    // Refocus the editor
+    view.focus();
+
+    // Update the previous file ID for the next render
+    prevFileIdRef.current = file.id;
+  }, [file.id]);
+
+  // Handle unsaved changes
+  useEffect(() => {
+    if (!viewRef.current) return;
+
+    // Handle unsaved changes
+    if (!unsavedChanges) {
+      setTimeout(() => setUnsavedChanges(false), 400);
+    }
+  }, [unsavedChanges]);
+
+  // Handle theme change
+  useEffect(() => {
+    if (!viewRef.current) return;
+
+    // Dispatch a transaction to apply the new theme class
+    const view = viewRef.current;
+    const newTheme = createThemeExtension(theme);
+
+    // Apply the new theme using StateEffect.reconfigure
+    // TODO: fix no line number issue
+    view.dispatch({
+      effects: StateEffect.reconfigure.of([newTheme])
+    });
+  }, [theme]);
 
   return (
     <section
@@ -581,9 +640,7 @@ const Editor = (props) => {
 Editor.propTypes = {
   // autocloseBracketsQuotes: PropTypes.bool.isRequired,
   autocompleteHinter: PropTypes.bool.isRequired,
-  // lineNumbers: PropTypes.bool.isRequired,
   lintWarning: PropTypes.bool.isRequired,
-  // linewrap: PropTypes.bool.isRequired,
   lintMessages: PropTypes.arrayOf(
     PropTypes.shape({
       severity: PropTypes.oneOf(['error', 'hint', 'info', 'warning'])
@@ -614,8 +671,8 @@ Editor.propTypes = {
   startSketch: PropTypes.func.isRequired,
   autorefresh: PropTypes.bool.isRequired,
   isPlaying: PropTypes.bool.isRequired,
-  // theme: PropTypes.string.isRequired,
-  // unsavedChanges: PropTypes.bool.isRequired,
+  theme: PropTypes.string.isRequired,
+  unsavedChanges: PropTypes.bool.isRequired,
   // files: PropTypes.arrayOf(
   //   PropTypes.shape({
   //     id: PropTypes.string.isRequired,
@@ -628,7 +685,7 @@ Editor.propTypes = {
   // closeProjectOptions: PropTypes.func.isRequired,
   expandSidebar: PropTypes.func.isRequired,
   clearConsole: PropTypes.func.isRequired,
-  // hideRuntimeErrorWarning: PropTypes.func.isRequired,
+  hideRuntimeErrorWarning: PropTypes.func.isRequired,
   // runtimeErrorWarningVisible: PropTypes.bool.isRequired,
   provideController: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired
