@@ -6,12 +6,14 @@ import React, {
   useMemo
 } from 'react';
 import PropTypes from 'prop-types';
-import { EditorState, StateEffect } from '@codemirror/state';
+import { EditorState, StateEffect, Prec } from '@codemirror/state';
 import {
   EditorView,
   keymap,
   highlightActiveLine,
-  lineNumbers
+  lineNumbers,
+  Decoration,
+  DecorationSet
 } from '@codemirror/view';
 import Fuse from 'fuse.js';
 import { javascript } from '@codemirror/lang-javascript';
@@ -109,6 +111,25 @@ const createThemeExtension = (themeName) => {
   return EditorView.theme({}, { dark: themeName === 'dark', themeClass });
 };
 
+const ColorPickerWidget = (color, onColorChange) => {
+  const dom = document.createElement('input');
+  dom.setAttribute('type', 'color');
+  dom.setAttribute('value', color);
+
+  dom.oninput = (e) => {
+    onColorChange(e.target.value); // Handle color change
+  };
+
+  return {
+    toDOM() {
+      return dom;
+    },
+    ignoreEvent() {
+      return false; // Ensures that the widget doesn't block editor interaction
+    }
+  };
+};
+
 const Editor = (props) => {
   const {
     file,
@@ -166,6 +187,20 @@ const Editor = (props) => {
   const docsRef = useRef({}); // Store the documents in a ref
   const prevFileIdRef = useRef(null); // Store the previous file ID in a ref
 
+  const [decorations, setDecorations] = useState(Decoration.none);
+
+  // Function to open color picker
+  const openColorPicker = (pos, initialColor) => {
+    const colorPicker = Decoration.widget({
+      widget: ColorPickerWidget(initialColor, (newColor) => {
+        console.log('Selected color:', newColor);
+        // You can apply the color to your code here
+      }),
+      side: 1 // Ensures it appears after the position
+    }).range(pos);
+    setDecorations(Decoration.set([colorPicker]));
+  };
+
   useEffect(() => {
     // Initialize the Fuse instance only when `hinter` changes
     if (hinter && hinter.p5Hinter) {
@@ -178,8 +213,7 @@ const Editor = (props) => {
 
   const [currentLine, setCurrentLine] = useState(1);
 
-  const replaceCommand =
-    metaKey === 'Ctrl' ? `${metaKey}-H` : `${metaKey}-Option-F`;
+  const replaceCommand = metaKey === 'Ctrl' ? `Mod-h` : `Mod-Alt-f`;
 
   // Handle document changes (debounced)
   const handleEditorChange = useCallback(() => {
@@ -200,7 +234,7 @@ const Editor = (props) => {
     startSketch
   ]);
 
-  const tidyCode = useCallback(() => {
+  const tidyCode = () => {
     const mode = getFileMode(file.name);
     if (mode === 'javascript') {
       prettierFormatWithCursor(viewRef.current, 'babel', [babelParser]);
@@ -209,7 +243,7 @@ const Editor = (props) => {
     } else if (mode === 'htmlmixed') {
       prettierFormatWithCursor(viewRef.current, 'html', [htmlParser]);
     }
-  }, [file]);
+  };
 
   const showFind = useCallback(() => {
     viewRef.current.dispatch({ effect: EditorView.findPersistent.of() });
@@ -232,43 +266,42 @@ const Editor = (props) => {
   }, []);
 
   // Initialize Pickr color picker
-  const initColorPicker = () => {
-    const pickr = Pickr.create({
-      el: '#color-picker', // ID for color picker container
-      theme: 'nano', // Color picker theme (can be adjusted)
-      components: {
-        // Define components of the color picker
-        preview: true,
-        opacity: true,
-        hue: true,
-        interaction: {
-          hex: true,
-          rgba: true,
-          hsla: true,
-          input: true,
-          clear: true,
-          save: true
-        }
-      }
-    });
+  // const initColorPicker = () => {
+  //   const pickr = Pickr.create({
+  //     el: '#color-picker', // ID for color picker container
+  //     theme: 'nano', // Color picker theme (can be adjusted)
+  //     components: {
+  //       // Define components of the color picker
+  //       preview: true,
+  //       opacity: true,
+  //       hue: true,
+  //       interaction: {
+  //         hex: true,
+  //         rgba: true,
+  //         hsla: true,
+  //         input: true,
+  //         clear: true,
+  //         save: true
+  //       }
+  //     }
+  //   });
 
-    // Listen for color changes
-    pickr.on('save', (color) => {
-      const colorHex = color.toHEXA().toString();
-      const view = viewRef.current;
+  //   // Listen for color changes
+  //   pickr.on('save', (color) => {
+  //     const colorHex = color.toHEXA().toString();
+  //     const view = viewRef.current;
+  //     if (view) {
+  //       view.dispatch({
+  //         changes: { from: view.state.selection.main.head, insert: colorHex }
+  //       });
+  //     }
+  //   });
+  //   pickr.hide();
 
-      // Insert the color value at the cursor position
-      if (view) {
-        view.dispatch({
-          changes: { from: view.state.selection.main.head, insert: colorHex }
-        });
-      }
-    });
+  //   pickrRef.current = pickr;
+  // };
 
-    pickrRef.current = pickr;
-  };
-
-  const myLinterFunction = (view) => {
+  const customLinterFunction = (view) => {
     const diagnostics = [];
     const content = view.state.doc.toString(); // Get the content of the editor
 
@@ -299,11 +332,11 @@ const Editor = (props) => {
   };
 
   // Open the color picker when `MetaKey + K` is pressed
-  const openColorPicker = () => {
-    if (pickrRef.current) {
-      pickrRef.current.show(); // Show the color picker programmatically
-    }
-  };
+  // const openColorPicker = () => {
+  //   if (pickrRef.current) {
+  //     pickrRef.current.show(); // Show the color picker programmatically
+  //   }
+  // };
 
   const triggerFindPersistent = () => {
     const view = viewRef.current;
@@ -313,7 +346,7 @@ const Editor = (props) => {
     }
   };
 
-  const customKeymap = [
+  const customKeymap = keymap.of([
     {
       key: 'Tab',
       run: (view) => {
@@ -337,163 +370,166 @@ const Editor = (props) => {
     //   run: resetAbbreviation, // Reset Emmet abbreviation on Esc key
     // },
     {
-      key: `${metaKey}-Enter`,
-      run: () => null // No action, handle meta + Enter
+      key: `Mod-Enter`,
+      run: () => {} // No action, handle meta + Enter
     },
     {
-      key: `Shift-${metaKey}-Enter`,
+      key: `Shift-Mod-Enter`,
       run: () => null // No action, handle shift + meta + Enter
     },
     {
-      key: `${metaKey}-F`, // Meta + F to trigger findPersistent
+      key: `Mod-f`, // Meta + F to trigger findPersistent
       run: () => {
         triggerFindPersistent(); // Trigger the findPersistent functionality
         return true; // Prevent default behavior
       }
     },
     {
-      key: `Shift-${metaKey}-F`,
-      run: tidyCode // Debounced tidy code
+      key: `Mod-F`,
+      run: tidyCode
     },
     {
-      key: `${metaKey}-G`,
+      key: `Mod-g`,
       run: findNext
     },
     {
-      key: `Shift-${metaKey}-G`,
+      key: `Mod-G`,
       run: findPrevious
     },
     {
-      key: metaKey === 'Ctrl' ? `${metaKey}-H` : `${metaKey}-Option-F`,
+      key: metaKey === 'Ctrl' ? `Mod-h` : `Mod-Alt-f`,
       run: replaceCommand
     },
     {
-      key: `${metaKey}-K`, // Meta + K to trigger color picker
+      key: `Mod-k`, // Meta + K to trigger color picker
       run: () => {
-        openColorPicker(); // Trigger the color picker
+        openColorPicker(5, '#ff0000'); // Trigger the color picker
         return true; // Prevent default behavior
       }
-    },
-    ...standardKeymap // Default key bindings from CodeMirror
-  ];
+    }
+  ]);
 
   let focusedLinkElement = null;
+
+  const setFocusedLinkElement = (set) => {
+    if (set && !focusedLinkElement) {
+      const activeItemLink = document.querySelector(
+        '.cm-tooltip-autocomplete a'
+      );
+      if (activeItemLink) {
+        focusedLinkElement = activeItemLink;
+        focusedLinkElement.classList.add('focused-hint-link');
+        activeItemLink.parentElement?.parentElement?.classList.add('unfocused');
+      }
+    }
+  };
+
+  const removeFocusedLinkElement = () => {
+    if (focusedLinkElement) {
+      focusedLinkElement.classList.remove('focused-hint-link');
+      focusedLinkElement.parentElement?.parentElement?.classList.remove(
+        'unfocused'
+      );
+      focusedLinkElement = null;
+      return true;
+    }
+    return false;
+  };
+
+  const javascriptCompletion = (context) => {
+    const token = context.matchBefore(/\w*/);
+    if (!token) return null;
+
+    const hints = fuseRef.current
+      .search(token.text)
+      .filter((h) => h.item.text[0] === token.text[0]);
+
+    return {
+      from: token.from,
+      options: hints.map((h) => ({
+        label: h.item.text,
+        apply: h.item.text
+      }))
+    };
+  };
+
+  const hintExtension = autocompletion({
+    override: [javascriptCompletion], // Use the javascript completion we defined earlier
+    closeOnUnfocus: false,
+    extraKeys: {
+      'Shift-Right': () => {
+        const activeItemLink = document.querySelector(
+          '.cm-tooltip-autocomplete a'
+        );
+        if (activeItemLink) activeItemLink.click();
+        return true;
+      },
+      Right: () => {
+        setFocusedLinkElement(true);
+        return true;
+      },
+      Left: () => {
+        removeFocusedLinkElement();
+        return true;
+      },
+      Up: () => {
+        const onLink = removeFocusedLinkElement();
+        setFocusedLinkElement(onLink);
+        return true;
+      },
+      Down: () => {
+        const onLink = removeFocusedLinkElement();
+        setFocusedLinkElement(onLink);
+        return true;
+      },
+      Enter: () => {
+        if (focusedLinkElement) {
+          focusedLinkElement.click();
+          return true;
+        }
+        return false;
+      }
+    }
+  });
+
+  const getCommonExtensions = () => [
+    javascript(),
+    autocompletion(),
+    linter(customLinterFunction), // Linter extension
+    lintGutter(),
+    abbreviationTracker(),
+    lineNumbers(), // Line numbers
+    highlightActiveLine(), // Highlight active line
+    foldGutter(), // Fold gutter
+    bracketMatching(), // Match brackets
+    closeBrackets(), // Automatically close brackets
+    highlightSelectionMatches(), // Highlight search matches
+    css(), // CSS support
+    keymap.of(standardKeymap),
+    Prec.highest(customKeymap), // Ensure custom keymap has the highest precedence
+    EditorView.updateListener.of((update) => {
+      if (update.docChanged) {
+        handleEditorChange(); // Handle document changes
+      }
+    }),
+    EditorView.updateListener.of((update) => {
+      if (update.domEvent && update.domEvent.type === 'keyup') {
+        handleKeyUp(update.domEvent);
+      }
+    }),
+    EditorView.lineWrapping,
+    hintExtension,
+    EditorView.decorations.compute([decorations], (state) => decorations)
+  ];
 
   useEffect(() => {
     if (!editorRef.current) return;
 
-    initColorPicker();
-
-    const setFocusedLinkElement = (set) => {
-      if (set && !focusedLinkElement) {
-        const activeItemLink = document.querySelector(
-          '.cm-tooltip-autocomplete a'
-        );
-        if (activeItemLink) {
-          focusedLinkElement = activeItemLink;
-          focusedLinkElement.classList.add('focused-hint-link');
-          activeItemLink.parentElement?.parentElement?.classList.add(
-            'unfocused'
-          );
-        }
-      }
-    };
-
-    const removeFocusedLinkElement = () => {
-      if (focusedLinkElement) {
-        focusedLinkElement.classList.remove('focused-hint-link');
-        focusedLinkElement.parentElement?.parentElement?.classList.remove(
-          'unfocused'
-        );
-        focusedLinkElement = null;
-        return true;
-      }
-      return false;
-    };
-
-    const javascriptCompletion = (context) => {
-      const token = context.matchBefore(/\w*/);
-      if (!token) return null;
-
-      const hints = fuseRef.current
-        .search(token.text)
-        .filter((h) => h.item.text[0] === token.text[0]);
-
-      return {
-        from: token.from,
-        options: hints.map((h) => ({
-          label: h.item.text,
-          apply: h.item.text
-        }))
-      };
-    };
-
-    const hintExtension = autocompletion({
-      override: [javascriptCompletion], // Use the javascript completion we defined earlier
-      closeOnUnfocus: false,
-      extraKeys: {
-        'Shift-Right': () => {
-          const activeItemLink = document.querySelector(
-            '.cm-tooltip-autocomplete a'
-          );
-          if (activeItemLink) activeItemLink.click();
-          return true;
-        },
-        Right: () => {
-          setFocusedLinkElement(true);
-          return true;
-        },
-        Left: () => {
-          removeFocusedLinkElement();
-          return true;
-        },
-        Up: () => {
-          const onLink = removeFocusedLinkElement();
-          // Move focus manually here if needed
-          setFocusedLinkElement(onLink);
-          return true;
-        },
-        Down: () => {
-          const onLink = removeFocusedLinkElement();
-          // Move focus manually here if needed
-          setFocusedLinkElement(onLink);
-          return true;
-        },
-        Enter: () => {
-          if (focusedLinkElement) {
-            focusedLinkElement.click();
-            return true;
-          }
-          return false;
-        }
-      }
-    });
+    // if (!pickrRef.current) initColorPicker();
 
     const startState = EditorState.create({
       doc: file.content,
-      extensions: [
-        javascript(),
-        autocompletion(),
-        linter(myLinterFunction), // Linter extension placeholder
-        lintGutter(),
-        abbreviationTracker(),
-        lineNumbers(), // Line numbers
-        highlightActiveLine(), // Highlight active line
-        EditorView.lineWrapping, // Line wrapping
-        foldGutter(), // Fold gutter
-        bracketMatching(), // Match brackets
-        closeBrackets(), // Automatically close brackets
-        highlightSelectionMatches(), // Highlight search matches
-        css(),
-        createThemeExtension(theme),
-        hintExtension,
-        keymap.of(customKeymap),
-        EditorView.updateListener.of((update) => {
-          if (update.docChanged) {
-            handleEditorChange(); // Ensure changes are handled properly
-          }
-        })
-      ]
+      extensions: [...getCommonExtensions(), createThemeExtension(theme)]
     });
 
     const view = new EditorView({
@@ -504,7 +540,6 @@ const Editor = (props) => {
 
     const showHint = () => {
       if (view) {
-        // Trigger hinting manually if needed; CM6 autocompletion happens automatically with the proper extensions
         view.dispatch({
           effects: autocompletion.startCompletion.of({
             source: javascriptCompletion
@@ -524,9 +559,8 @@ const Editor = (props) => {
       }
     };
 
-    view.dom.style.fontSize = `${fontSize}px`; // Apply font size
+    view.dom.style.fontSize = `${fontSize}px`;
 
-    // Attach keydown handler
     view.dom.addEventListener('keydown', onKeyDown);
 
     provideController({
@@ -541,31 +575,26 @@ const Editor = (props) => {
       view.dom.removeEventListener('keydown', onKeyDown);
       view.destroy();
     };
-  }, [fuseRef]);
+  }, [fuseRef, pickrRef]);
 
   // Handle file changes
   useEffect(() => {
     if (!viewRef.current) return;
 
     const view = viewRef.current;
-    const prevFileId = prevFileIdRef.current; // Get the previous file ID
+    const prevFileId = prevFileIdRef.current;
 
-    // Store the old document for the previous file
     docsRef.current[prevFileId] = view.state.doc;
 
-    // Retrieve or create the document for the new file
     const newDoc =
       docsRef.current[file.id] || EditorState.create({ doc: file.content }).doc;
 
-    // Dispatch a transaction to update the document
     view.dispatch({
       changes: { from: 0, to: view.state.doc.length, insert: newDoc.toString() }
     });
 
-    // Refocus the editor
     view.focus();
 
-    // Update the previous file ID for the next render
     prevFileIdRef.current = file.id;
   }, [file.id]);
 
@@ -573,7 +602,6 @@ const Editor = (props) => {
   useEffect(() => {
     if (!viewRef.current) return;
 
-    // Handle unsaved changes
     if (!unsavedChanges) {
       setTimeout(() => setUnsavedChanges(false), 400);
     }
@@ -583,14 +611,11 @@ const Editor = (props) => {
   useEffect(() => {
     if (!viewRef.current) return;
 
-    // Dispatch a transaction to apply the new theme class
     const view = viewRef.current;
     const newTheme = createThemeExtension(theme);
 
-    // Apply the new theme using StateEffect.reconfigure
-    // TODO: fix no line number issue
     view.dispatch({
-      effects: StateEffect.reconfigure.of([newTheme])
+      effects: StateEffect.reconfigure.of([...getCommonExtensions(), newTheme])
     });
   }, [theme]);
 
