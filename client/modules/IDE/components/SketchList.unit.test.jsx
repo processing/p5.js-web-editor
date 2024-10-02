@@ -8,8 +8,6 @@ import SketchList from './SketchList';
 import { reduxRender, fireEvent, screen, within } from '../../../test-utils';
 import { initialTestState } from '../../../testData/testReduxStore';
 
-jest.mock('../../../i18n');
-
 const server = setupServer(
   rest.get(`/${initialTestState.user.username}/projects`, (req, res, ctx) =>
     // it just needs to return something so it doesn't throw an error
