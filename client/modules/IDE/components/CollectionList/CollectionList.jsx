@@ -93,28 +93,25 @@ const CollectionList = ({
     return null;
   };
 
-  const getButtonLabel = useMemo(
-    (fieldName, displayName) => {
-      const { field, direction } = sorting;
-      let buttonLabel;
-      if (field !== fieldName) {
-        buttonLabel =
-          field === 'name'
-            ? t('CollectionList.ButtonLabelAscendingARIA', { displayName })
-            : t('CollectionList.ButtonLabelDescendingARIA', { displayName });
-      } else if (direction === SortingActions.DIRECTION.ASC) {
-        buttonLabel = t('CollectionList.ButtonLabelDescendingARIA', {
-          displayName
-        });
-      } else {
-        buttonLabel = t('CollectionList.ButtonLabelAscendingARIA', {
-          displayName
-        });
-      }
-      return buttonLabel;
-    },
-    [sorting, t]
-  );
+  const getButtonLabel = (fieldName, displayName) => {
+    const { field, direction } = sorting;
+    let buttonLabel;
+    if (field !== fieldName) {
+      buttonLabel =
+        field === 'name'
+          ? t('CollectionList.ButtonLabelAscendingARIA', { displayName })
+          : t('CollectionList.ButtonLabelDescendingARIA', { displayName });
+    } else if (direction === SortingActions.DIRECTION.ASC) {
+      buttonLabel = t('CollectionList.ButtonLabelDescendingARIA', {
+        displayName
+      });
+    } else {
+      buttonLabel = t('CollectionList.ButtonLabelAscendingARIA', {
+        displayName
+      });
+    }
+    return buttonLabel;
+  };
 
   const renderFieldHeader = (fieldName, displayName) => {
     const { field, direction } = sorting;
