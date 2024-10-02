@@ -516,30 +516,6 @@ const Editor = (props) => {
       }
     };
 
-    // const state = EditorState.create({
-    //   doc: file.content,
-    //   extensions: [
-    //     basicSetup,
-    //     javascript(),
-    //     css(),
-    //     hintExtension,
-    //     EditorView.updateListener.of((update) => {
-    //       if (update.docChanged) {
-    //         updateContentDebounced(); // Debounce the changes
-    //       }
-    //     }),
-    //     keymap.of([
-    //       {
-    //         key: 'Enter',
-    //         run: (view) => {
-    //           showHint();
-    //           return true;
-    //         }
-    //       }
-    //     ])
-    //   ]
-    // });
-
     view.dom.style.fontSize = `${fontSize}px`; // Apply font size
 
     // Attach keydown handler
@@ -558,57 +534,6 @@ const Editor = (props) => {
       view.destroy();
     };
   }, []);
-
-  // useEffect(() => {
-  //   initColorPicker();
-
-  //   const startState = EditorState.create({
-  //     doc: file.content,
-  //     extensions: [
-  //       javascript(),
-  //       autocompletion(),
-  //       linter(myLinterFunction), // Linter extension placeholder
-  //       lintGutter(),
-  //       abbreviationTracker(),
-  //       lineNumbers(), // Line numbers
-  //       highlightActiveLine(), // Highlight active line
-  //       EditorView.lineWrapping, // Line wrapping
-  //       foldGutter(), // Fold gutter
-  //       bracketMatching(), // Match brackets
-  //       closeBrackets(), // Automatically close brackets
-  //       highlightSelectionMatches(), // Highlight search matches
-  //       keymap.of(customKeymap),
-  //       EditorView.updateListener.of((update) => {
-  //         if (update.docChanged) {
-  //           handleEditorChange(); // Ensure changes are handled properly
-  //         }
-  //       })
-  //     ]
-  //   });
-
-  //   const view = new EditorView({
-  //     state: startState,
-  //     parent: editorRef.current
-  //   });
-  //   viewRef.current = view;
-
-  //   view.dom.style.fontSize = `${fontSize}px`; // Apply font size
-
-  //   // Attach keydown handler
-  //   view.dom.addEventListener('keydown', onKeyDown);
-
-  //   provideController({
-  //     tidyCode,
-  //     showFind,
-  //     showReplace,
-  //     getContent
-  //   });
-
-  //   return () => {
-  //     view.dom.removeEventListener('keydown', onKeyDown);
-  //     view.destroy();
-  //   };
-  // }, []);
 
   return (
     <section
