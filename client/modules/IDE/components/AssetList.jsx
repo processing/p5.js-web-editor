@@ -17,7 +17,7 @@ const AssetList = () => {
 
   useEffect(() => {
     dispatch(AssetActions.getAssets());
-  }, [dispatch]);
+  }, []);
 
   const hasAssets = () => !loading && assetList.length > 0;
 

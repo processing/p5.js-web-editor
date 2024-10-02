@@ -49,14 +49,7 @@ const CollectionList = ({
     }
     getCollections(propsUsername || user.username);
     resetSorting();
-  }, [
-    projectId,
-    getCollections,
-    getProject,
-    propsUsername,
-    resetSorting,
-    user.username
-  ]);
+  }, []);
 
   useEffect(() => {
     if (!loading) {
