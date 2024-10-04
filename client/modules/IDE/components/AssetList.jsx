@@ -46,7 +46,7 @@ const AssetList = () => {
               <th>{t('AssetList.HeaderName')}</th>
               <th>{t('AssetList.HeaderSize')}</th>
               <th>{t('AssetList.HeaderSketch')}</th>
-              <th scope="col"></th>
+              <th aria-label="dropdown" scope="col"></th>
             </tr>
           </thead>
           <tbody>

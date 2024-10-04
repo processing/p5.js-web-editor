@@ -39,20 +39,20 @@ function NewFileForm() {
           <div className="new-file-form__input-wrapper">
             <Field name="name">
               {(field) => (
-                <React.Fragment>
+                <div>
                   <label className="new-file-form__name-label" htmlFor="name">
                     Name:
+                    <input
+                      className="new-file-form__name-input"
+                      id="name"
+                      type="text"
+                      placeholder={t('NewFileForm.Placeholder')}
+                      maxLength="128"
+                      {...field.input}
+                      ref={fileNameInput}
+                    />
                   </label>
-                  <input
-                    className="new-file-form__name-input"
-                    id="name"
-                    type="text"
-                    placeholder={t('NewFileForm.Placeholder')}
-                    maxLength="128"
-                    {...field.input}
-                    ref={fileNameInput}
-                  />
-                </React.Fragment>
+                </div>
               )}
             </Field>
             <Field name="submitButton">

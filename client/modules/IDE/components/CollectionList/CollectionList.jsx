@@ -183,7 +183,7 @@ const CollectionList = ({
                   context: mobile ? 'mobile' : ''
                 })
               )}
-              <th scope="col"></th>
+              <th aria-label="dropdown" scope="col"></th>
             </tr>
           </thead>
           <tbody>

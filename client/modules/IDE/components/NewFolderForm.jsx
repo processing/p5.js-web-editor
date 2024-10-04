@@ -36,20 +36,20 @@ function NewFolderForm() {
           <div className="new-folder-form__input-wrapper">
             <Field name="name">
               {(field) => (
-                <React.Fragment>
+                <div>
                   <label className="new-folder-form__name-label" htmlFor="name">
                     Name:
+                    <input
+                      className="new-folder-form__name-input"
+                      id="name"
+                      type="text"
+                      maxLength="128"
+                      placeholder={t('NewFolderForm.Placeholder')}
+                      ref={folderNameInput}
+                      {...field.input}
+                    />
                   </label>
-                  <input
-                    className="new-folder-form__name-input"
-                    id="name"
-                    type="text"
-                    maxLength="128"
-                    placeholder={t('NewFolderForm.Placeholder')}
-                    ref={folderNameInput}
-                    {...field.input}
-                  />
-                </React.Fragment>
+                </div>
               )}
             </Field>
             <Field name="submitButton">
