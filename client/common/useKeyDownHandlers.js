@@ -66,3 +66,7 @@ export const DocumentKeyDown = ({ handlers }) => {
 DocumentKeyDown.propTypes = {
   handlers: PropTypes.objectOf(PropTypes.func)
 };
+
+DocumentKeyDown.defaultProps = {
+  handlers: {}
+};

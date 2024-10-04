@@ -21,12 +21,12 @@ const initialState = window.__INITIAL_STATE__;
 const store = configureStore(initialState);
 
 const App = () => (
-  <>
+  <div>
     <Router history={browserHistory}>
       <SkipLink targetId="play-sketch" text="PlaySketch" />
       <Routing />
     </Router>
-  </>
+  </div>
 );
 
 render(

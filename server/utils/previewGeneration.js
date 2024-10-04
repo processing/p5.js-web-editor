@@ -1,4 +1,4 @@
-import { resolvePathToFile } from '../utils/filePath';
+import { resolvePathToFile } from './filePath';
 
 import {
   MEDIA_FILE_REGEX,

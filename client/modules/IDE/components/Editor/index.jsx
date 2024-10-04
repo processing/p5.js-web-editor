@@ -227,6 +227,7 @@ class Editor extends React.Component {
     });
   }
 
+  /* eslint-disable react/no-deprecated */
   componentWillUpdate(nextProps) {
     // check if files have changed
     if (this.props.files[0].id !== nextProps.files[0].id) {

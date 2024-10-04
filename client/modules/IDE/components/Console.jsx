@@ -30,8 +30,8 @@ import resultContrastUrl from '../../../images/console-result-contrast.svg?byUrl
 import UpArrowIcon from '../../../images/up-arrow.svg';
 import DownArrowIcon from '../../../images/down-arrow.svg';
 
-import * as IDEActions from '../../IDE/actions/ide';
-import * as ConsoleActions from '../../IDE/actions/console';
+import * as IDEActions from '../actions/ide';
+import * as ConsoleActions from '../actions/console';
 import { useDidUpdate } from '../hooks/custom-hooks';
 import useHandleMessageEvent from '../hooks/useHandleMessageEvent';
 import { listen } from '../../../utils/dispatcher';
