@@ -35,7 +35,7 @@
     "max-classes-per-file": 0,
     "quote-props": [1, "as-needed"],
     "no-unused-vars": [1, {"vars": "local", "args": "none"}],
-    "consistent-return": ["error", { "treatUndefinedAsUnspecified": true}], 
+    "consistent-return": ["error", { "treatUndefinedAsUnspecified": true }],
     "no-param-reassign": [2, { "props": false }],
     "react/self-closing-comp": ["error", {
       "component": true,

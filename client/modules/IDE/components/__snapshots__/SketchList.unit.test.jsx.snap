@@ -80,6 +80,7 @@ exports[`<Sketchlist /> snapshot testing 1`] = `
             </button>
           </th>
           <th
+            aria-label="dropdown"
             scope="col"
           />
         </tr>
