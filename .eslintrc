@@ -15,17 +15,27 @@
     "import/namespace": 0,
     "import/no-unresolved": 0,
     "import/no-named-as-default": 0,
+    "import/no-cycle":1, 
+    "import/no-import-module-exports": 1,
     "import/no-named-as-default-member": 0,
+    "import/no-useless-path-segments": 1,
     "comma-dangle": 0,  // not sure why airbnb turned this on. gross!
+    "default-param-last": 0,
+    "no-else-return" :0,
     "indent": 0,
     "no-console": 0,
     "no-alert": 0,
+    "no-import-assign": 2,
+    "no-promise-executor-return": 1,
+    "no-restricted-exports": 1,
     "no-underscore-dangle": 0,
     "no-useless-catch": 2,
+    "prefer-object-spread": 0,
     "max-len": [1, 120, 2, {"ignoreComments": true, "ignoreTemplateLiterals": true}],
+    "max-classes-per-file": 0,
     "quote-props": [1, "as-needed"],
     "no-unused-vars": [1, {"vars": "local", "args": "none"}],
-    "consistent-return": ["error", { "treatUndefinedAsUnspecified": true }],
+    "consistent-return": ["error", { "treatUndefinedAsUnspecified": true}], 
     "no-param-reassign": [2, { "props": false }],
     "react/self-closing-comp": ["error", {
       "component": true,
@@ -36,7 +46,19 @@
       { "ignorePureComponents": true
     }],
     "class-methods-use-this": 0,
-    "react/jsx-no-bind": [2, {"allowBind": true, "allowArrowFunctions": true}],
+    "react/button-has-type": 0,
+    "react/destructuring-assignment":0,
+    "react/function-component-definition": 0,
+    "react/jsx-curly-newline":0,
+    "react/jsx-fragments":0,
+    "react/jsx-no-useless-fragment":1,
+    "react/jsx-one-expression-per-line": 0,
+    "react/jsx-props-no-spreading": 0,
+    "react/jsx-wrap-multilines": 0,
+    "react/jsx-no-bind": [2, {"allowBind": true, "allowArrowFunctions": true, "allowFunctions": true}],
+    "react/no-deprecated": 1,
+    "react/no-unused-class-component-methods": 1,
+    "react/sort-comp": 0,
     "no-return-assign": [2, "except-parens"],
     "jsx-a11y/anchor-is-valid": [
       "error",
@@ -49,6 +71,8 @@
         ]
       }
     ],
+    "jsx-a11y/control-has-associated-label": 1,
+    "jsx-a11y/label-has-associated-control": 1,
     "jsx-a11y/label-has-for": [
       2,
       {

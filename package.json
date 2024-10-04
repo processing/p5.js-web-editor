@@ -115,8 +115,8 @@
     "babel-plugin-transform-react-remove-prop-types": "^0.2.12",
     "css-loader": "^5.2.7",
     "css-minimizer-webpack-plugin": "^3.4.1",
-    "eslint": "^7.31.0",
-    "eslint-config-airbnb": "^16.1.0",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^7.2.0",
     "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-jsx-a11y": "^6.4.1",
@@ -150,7 +150,7 @@
     "webpack-node-externals": "^3.0.0"
   },
   "engines": {
-    "node": "16.14.2",
+    "node": "16.20.2",
     "npm": "8.5.0"
   },
   "dependencies": {
