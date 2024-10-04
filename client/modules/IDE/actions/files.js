@@ -11,7 +11,7 @@ import {
 import { setProjectSavedTime } from './project';
 import { createError } from './ide';
 
-function appendToFilename(filename, string) {
+export function appendToFilename(filename, string) {
   const dotIndex = filename.lastIndexOf('.');
   if (dotIndex === -1) return filename + string;
   return (
@@ -19,7 +19,7 @@ function appendToFilename(filename, string) {
   );
 }
 
-function createUniqueName(name, parentId, files) {
+export function createUniqueName(name, parentId, files) {
   const siblingFiles = files
     .find((file) => file.id === parentId)
     .children.map((childFileId) =>

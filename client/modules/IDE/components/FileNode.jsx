@@ -2,8 +2,8 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import React, { useState, useRef } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { useTranslation } from 'react-i18next';
+
 import * as IDEActions from '../actions/ide';
 import * as FileActions from '../actions/files';
 import DownArrowIcon from '../../../images/down-filled-triangle.svg';
@@ -353,7 +353,12 @@ const FileNode = ({
         <ul className="file-item__children">
           {children.map((childId) => (
             <li key={childId}>
-              <ConnectedFileNode id={childId} parentId={id} />
+              <ConnectedFileNode
+                id={childId}
+                parentId={id}
+                canEdit={canEdit}
+                onClickFile={onClickFile}
+              />
             </li>
           ))}
         </ul>
@@ -402,13 +407,12 @@ function mapStateToProps(state, ownProps) {
   });
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(Object.assign(FileActions, IDEActions), dispatch);
-}
+const mapDispatchToProps = { ...FileActions, ...IDEActions };
 
 const ConnectedFileNode = connect(
   mapStateToProps,
   mapDispatchToProps
 )(FileNode);
 
-export { FileNode, ConnectedFileNode as default };
+export { FileNode };
+export default ConnectedFileNode;
