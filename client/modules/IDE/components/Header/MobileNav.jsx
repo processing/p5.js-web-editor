@@ -27,6 +27,7 @@ import {
 } from '../../actions/ide';
 import { logoutUser } from '../../../User/actions';
 import { useSketchActions, useWhatPage } from '../../hooks';
+// eslint-disable-next-line import/no-cycle
 import { CmControllerContext } from '../../pages/IDEView';
 import { selectSketchPath } from '../../selectors/project';
 import { availableLanguages, languageKeyToLabel } from '../../../../i18n';

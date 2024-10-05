@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import useIsMobile from '../../hooks/useIsMobile';
 
+// eslint-disable-next-line import/no-cycle
 import Nav from './Nav';
 import Toolbar from './Toolbar';
 

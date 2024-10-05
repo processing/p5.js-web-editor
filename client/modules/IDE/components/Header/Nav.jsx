@@ -27,6 +27,7 @@ import {
   stopSketch
 } from '../../actions/ide';
 import { logoutUser } from '../../../User/actions';
+// eslint-disable-next-line import/no-cycle
 import { CmControllerContext } from '../../pages/IDEView';
 import MobileNav from './MobileNav';
 import useIsMobile from '../../hooks/useIsMobile';

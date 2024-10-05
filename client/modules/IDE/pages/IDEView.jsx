@@ -18,6 +18,7 @@ import {
 } from '../actions/project';
 import { getIsUserOwner } from '../selectors/users';
 import RootPage from '../../../components/RootPage';
+// eslint-disable-next-line import/no-cycle
 import Header from '../components/Header';
 import FloatingActionButton from '../components/FloatingActionButton';
 import Editor from '../components/Editor';
