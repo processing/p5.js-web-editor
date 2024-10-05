@@ -3,8 +3,6 @@ import React from 'react';
 import { orderBy } from 'lodash';
 import { useTranslation } from 'react-i18next';
 
-import { APIKeyPropType } from './APIKeyForm';
-
 import dates from '../../../utils/formatDate';
 import TrashCanIcon from '../../../images/trash-can.svg';
 
@@ -49,8 +47,26 @@ function APIKeyList({ apiKeys, onRemove }) {
 }
 
 APIKeyList.propTypes = {
-  apiKeys: PropTypes.arrayOf(PropTypes.shape(APIKeyPropType)).isRequired,
+  apiKeys: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      token: PropTypes.string,
+      label: PropTypes.string.isRequired,
+      createdAt: PropTypes.string.isRequired,
+      lastUsedAt: PropTypes.string
+    })
+  ),
   onRemove: PropTypes.func.isRequired
+};
+
+APIKeyList.defaultProps = {
+  apiKeys: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: 0,
+      label: 'api-key',
+      createdAt: new Date()
+    })
+  )
 };
 
 export default APIKeyList;

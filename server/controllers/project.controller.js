@@ -100,13 +100,6 @@ export async function getProject(req, res) {
   return res.json(project);
 }
 
-export function getProjectsForUserId(userId) {
-  return Project.find({ user: userId })
-    .sort('-createdAt')
-    .select('name files id createdAt updatedAt')
-    .exec();
-}
-
 export async function getProjectAsset(req, res) {
   const projectId = req.params.project_id;
   const project = await Project.findOne({
@@ -141,7 +134,7 @@ export async function getProjectAsset(req, res) {
 
 export async function getProjects(req, res) {
   if (req.user) {
-    const projects = await getProjectsForUserId(req.user._id);
+    const projects = await Project.getProjectsForUserId(req.user._id);
     res.json(projects);
   } else {
     // could just move this to client side

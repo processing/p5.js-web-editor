@@ -8,8 +8,8 @@ import {
   DeleteObjectsCommand
 } from '@aws-sdk/client-s3';
 import mongoose from 'mongoose';
-import { getProjectsForUserId } from './project.controller';
 import User from '../models/user';
+import Project from '../models/project';
 
 const { ObjectId } = mongoose.Types;
 
@@ -194,7 +194,7 @@ export async function listObjectsInS3ForUser(userId) {
       size: object.Size
     }));
 
-    const projects = await getProjectsForUserId(userId);
+    const projects = await Project.getProjectsForUserId(userId);
     const projectAssets = [];
     let totalSize = 0;
 
