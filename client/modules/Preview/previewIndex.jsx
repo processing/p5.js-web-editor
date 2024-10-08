@@ -52,6 +52,19 @@ const App = () => {
     }
   }
 
+  function addCacheBustingToAssets(files) {
+    const timestamp = new Date().getTime();
+    return files.map((file) => {
+      if (file.url) {
+        return {
+          ...file,
+          url: `${file.url}?v=${timestamp}`
+        };
+      }
+      return file;
+    });
+  }
+
   useEffect(() => {
     const unsubscribe = listen(handleMessageEvent);
     return function cleanup() {
@@ -62,7 +75,7 @@ const App = () => {
     <React.Fragment>
       <GlobalStyle />
       <EmbedFrame
-        files={state}
+        files={addCacheBustingToAssets(state)}
         isPlaying={isPlaying}
         basePath={basePath}
         gridOutput={gridOutput}
