@@ -175,6 +175,7 @@
     "@redux-devtools/dock-monitor": "^3.0.1",
     "@redux-devtools/log-monitor": "^4.0.2",
     "@reduxjs/toolkit": "^1.9.3",
+    "@replit/codemirror-css-color-picker": "^6.2.0",
     "@simonwep/pickr": "^1.9.1",
     "@uiw/react-codemirror": "^4.23.1",
     "async": "^3.2.3",

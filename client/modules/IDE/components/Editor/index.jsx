@@ -6,7 +6,7 @@ import React, {
   useMemo
 } from 'react';
 import PropTypes from 'prop-types';
-import { EditorState, StateEffect, Prec } from '@codemirror/state';
+import { EditorState, StateEffect, Prec, StateField } from '@codemirror/state';
 import {
   EditorView,
   keymap,
@@ -22,6 +22,10 @@ import { bracketMatching, foldGutter } from '@codemirror/language';
 import { autocompletion, closeBrackets } from '@codemirror/autocomplete';
 import { linter, lintGutter } from '@codemirror/lint';
 import { standardKeymap } from '@codemirror/commands';
+import {
+  colorPicker,
+  wrapperClassName
+} from '@replit/codemirror-css-color-picker';
 
 import prettier from 'prettier/standalone';
 import babelParser from 'prettier/parser-babel';
@@ -46,7 +50,6 @@ import {
   findPrevious,
   highlightSelectionMatches
 } from '@codemirror/search';
-import Pickr from '@simonwep/pickr';
 
 import classNames from 'classnames';
 import StackTrace from 'stacktrace-js';
@@ -111,24 +114,34 @@ const createThemeExtension = (themeName) => {
   return EditorView.theme({}, { dark: themeName === 'dark', themeClass });
 };
 
-const ColorPickerWidget = (color, onColorChange) => {
-  const dom = document.createElement('input');
-  dom.setAttribute('type', 'color');
-  dom.setAttribute('value', color);
+// Create an effect to add or remove decorations
+const addDecorationEffect = StateEffect.define();
+const removeDecorationEffect = StateEffect.define();
 
-  dom.oninput = (e) => {
-    onColorChange(e.target.value); // Handle color change
-  };
-
-  return {
-    toDOM() {
-      return dom;
+// Define a StateField to manage decorations
+const decorationsField =
+  StateField.define <
+  DecorationSet >
+  {
+    create() {
+      return Decoration.none;
     },
-    ignoreEvent() {
-      return false; // Ensures that the widget doesn't block editor interaction
-    }
+    update(decorations, tr) {
+      let newDecorations = decorations; // Create a new variable to hold the updated decorations
+
+      tr.effects.forEach((effect) => {
+        if (effect.is(addDecorationEffect)) {
+          newDecorations = newDecorations.update({ add: [effect.value] });
+        }
+        if (effect.is(removeDecorationEffect)) {
+          newDecorations = Decoration.none;
+        }
+      });
+
+      return newDecorations; // Return the new variable instead of reassigning the parameter
+    },
+    provide: (f) => EditorView.decorations.from(f)
   };
-};
 
 const Editor = (props) => {
   const {
@@ -152,6 +165,11 @@ const Editor = (props) => {
     lintWarning,
     theme,
     hideRuntimeErrorWarning,
+    files,
+    setSelectedFile,
+    expandConsole,
+    runtimeErrorWarningVisible,
+    consoleEvents,
     autocompleteHinter
   } = props;
 
@@ -186,20 +204,6 @@ const Editor = (props) => {
   const fuseRef = useRef(null); // Store the Fuse instance in a ref
   const docsRef = useRef({}); // Store the documents in a ref
   const prevFileIdRef = useRef(null); // Store the previous file ID in a ref
-
-  const [decorations, setDecorations] = useState(Decoration.none);
-
-  // Function to open color picker
-  const openColorPicker = (pos, initialColor) => {
-    const colorPicker = Decoration.widget({
-      widget: ColorPickerWidget(initialColor, (newColor) => {
-        console.log('Selected color:', newColor);
-        // You can apply the color to your code here
-      }),
-      side: 1 // Ensures it appears after the position
-    }).range(pos);
-    setDecorations(Decoration.set([colorPicker]));
-  };
 
   useEffect(() => {
     // Initialize the Fuse instance only when `hinter` changes
@@ -265,42 +269,6 @@ const Editor = (props) => {
     setCurrentLine(lineNumber);
   }, []);
 
-  // Initialize Pickr color picker
-  // const initColorPicker = () => {
-  //   const pickr = Pickr.create({
-  //     el: '#color-picker', // ID for color picker container
-  //     theme: 'nano', // Color picker theme (can be adjusted)
-  //     components: {
-  //       // Define components of the color picker
-  //       preview: true,
-  //       opacity: true,
-  //       hue: true,
-  //       interaction: {
-  //         hex: true,
-  //         rgba: true,
-  //         hsla: true,
-  //         input: true,
-  //         clear: true,
-  //         save: true
-  //       }
-  //     }
-  //   });
-
-  //   // Listen for color changes
-  //   pickr.on('save', (color) => {
-  //     const colorHex = color.toHEXA().toString();
-  //     const view = viewRef.current;
-  //     if (view) {
-  //       view.dispatch({
-  //         changes: { from: view.state.selection.main.head, insert: colorHex }
-  //       });
-  //     }
-  //   });
-  //   pickr.hide();
-
-  //   pickrRef.current = pickr;
-  // };
-
   const customLinterFunction = (view) => {
     const diagnostics = [];
     const content = view.state.doc.toString(); // Get the content of the editor
@@ -331,13 +299,6 @@ const Editor = (props) => {
     return diagnostics;
   };
 
-  // Open the color picker when `MetaKey + K` is pressed
-  // const openColorPicker = () => {
-  //   if (pickrRef.current) {
-  //     pickrRef.current.show(); // Show the color picker programmatically
-  //   }
-  // };
-
   const triggerFindPersistent = () => {
     const view = viewRef.current;
     if (view) {
@@ -361,6 +322,7 @@ const Editor = (props) => {
         }
       }
     },
+    // TODO: test emmet
     // {
     //   key: 'Enter',
     //   run: emmetInsert, // Run Emmet insert on Enter key
@@ -401,11 +363,8 @@ const Editor = (props) => {
       run: replaceCommand
     },
     {
-      key: `Mod-k`, // Meta + K to trigger color picker
-      run: () => {
-        openColorPicker(5, '#ff0000'); // Trigger the color picker
-        return true; // Prevent default behavior
-      }
+      key: `Mod-k`, // TODO: need to find a way to create custom color picker since codemirror 6 doesn't have one
+      run: () => null
     }
   ]);
 
@@ -519,13 +478,17 @@ const Editor = (props) => {
     }),
     EditorView.lineWrapping,
     hintExtension,
-    EditorView.decorations.compute([decorations], (state) => decorations)
+    // colorPicker,
+    EditorView.theme({
+      [`.${wrapperClassName}`]: {
+        outlineColor: 'transparent'
+      }
+    })
+    // decorationsField
   ];
 
   useEffect(() => {
     if (!editorRef.current) return;
-
-    // if (!pickrRef.current) initColorPicker();
 
     const startState = EditorState.create({
       doc: file.content,
@@ -577,6 +540,77 @@ const Editor = (props) => {
     };
   }, [fuseRef, pickrRef]);
 
+  const prevConsoleEventsLengthRef = useRef(consoleEvents.length);
+  const errorDecoration = useRef([]);
+
+  // Effect to handle runtime error highlighting
+  useEffect(() => {
+    if (runtimeErrorWarningVisible) {
+      const prevConsoleEventsLength = prevConsoleEventsLengthRef.current;
+
+      if (consoleEvents.length !== prevConsoleEventsLength) {
+        // Process new console events
+        consoleEvents.forEach((consoleEvent) => {
+          if (consoleEvent.method === 'error') {
+            const errorObj = { stack: consoleEvent.data[0].toString() };
+
+            StackTrace.fromError(errorObj).then((stackLines) => {
+              expandConsole();
+              const line = stackLines.find(
+                (l) => l.fileName && l.fileName.startsWith('/')
+              );
+              if (!line) return;
+
+              const fileNameArray = line.fileName.split('/');
+              const fileName = fileNameArray.slice(-1)[0];
+              const filePath = fileNameArray.slice(0, -1).join('/');
+
+              const fileWithError = files.find(
+                (f) => f.name === fileName && f.filePath === filePath
+              );
+              if (fileWithError) {
+                setSelectedFile(fileWithError.id);
+
+                // Create a line decoration for the error
+                const decoration = Decoration.line({
+                  class: 'line-runtime-error'
+                }).range(
+                  viewRef.current.state.doc.line(line.lineNumber - 1).from
+                );
+
+                // Apply the decoration to highlight the line
+                viewRef.current.dispatch({
+                  effects: StateEffect.appendConfig.of(
+                    EditorView.decorations.of(Decoration.set([decoration]))
+                  )
+                });
+
+                // Store the decoration so it can be cleared later
+                errorDecoration.current = Decoration.set([decoration]);
+              }
+            });
+          }
+        });
+      } else if (errorDecoration.current) {
+        viewRef.current.dispatch({
+          effects: StateEffect.appendConfig.of(
+            EditorView.decorations.of(Decoration.none)
+          )
+        });
+        errorDecoration.current = Decoration.none; // Clear the stored decorations
+      }
+
+      prevConsoleEventsLengthRef.current = consoleEvents.length;
+    }
+  }, [
+    runtimeErrorWarningVisible,
+    consoleEvents,
+    files,
+    expandConsole,
+    setSelectedFile,
+    viewRef
+  ]);
+
   // Handle file changes
   useEffect(() => {
     if (!viewRef.current) return;
@@ -617,7 +651,7 @@ const Editor = (props) => {
     view.dispatch({
       effects: StateEffect.reconfigure.of([...getCommonExtensions(), newTheme])
     });
-  }, [theme]);
+  }, [props.file.content, theme]);
 
   return (
     <section
@@ -675,12 +709,12 @@ Editor.propTypes = {
       id: PropTypes.number.isRequired
     })
   ).isRequired,
-  // consoleEvents: PropTypes.arrayOf(
-  //   PropTypes.shape({
-  //     method: PropTypes.string.isRequired,
-  //     args: PropTypes.arrayOf(PropTypes.string)
-  //   })
-  // ).isRequired,
+  consoleEvents: PropTypes.arrayOf(
+    PropTypes.shape({
+      method: PropTypes.string.isRequired,
+      args: PropTypes.arrayOf(PropTypes.string)
+    })
+  ).isRequired,
   updateLintMessage: PropTypes.func.isRequired,
   clearLintMessage: PropTypes.func.isRequired,
   updateFileContent: PropTypes.func.isRequired,
@@ -698,24 +732,24 @@ Editor.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
   theme: PropTypes.string.isRequired,
   unsavedChanges: PropTypes.bool.isRequired,
-  // files: PropTypes.arrayOf(
-  //   PropTypes.shape({
-  //     id: PropTypes.string.isRequired,
-  //     name: PropTypes.string.isRequired,
-  //     content: PropTypes.string.isRequired
-  //   })
-  // ).isRequired,
+  files: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      content: PropTypes.string.isRequired
+    })
+  ).isRequired,
   isExpanded: PropTypes.bool.isRequired,
   collapseSidebar: PropTypes.func.isRequired,
   // closeProjectOptions: PropTypes.func.isRequired,
   expandSidebar: PropTypes.func.isRequired,
   clearConsole: PropTypes.func.isRequired,
   hideRuntimeErrorWarning: PropTypes.func.isRequired,
-  // runtimeErrorWarningVisible: PropTypes.bool.isRequired,
+  runtimeErrorWarningVisible: PropTypes.bool.isRequired,
   provideController: PropTypes.func.isRequired,
-  t: PropTypes.func.isRequired
-  // setSelectedFile: PropTypes.func.isRequired,
-  // expandConsole: PropTypes.func.isRequired
+  t: PropTypes.func.isRequired,
+  setSelectedFile: PropTypes.func.isRequired,
+  expandConsole: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
