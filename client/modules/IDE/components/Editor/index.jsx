@@ -26,7 +26,7 @@ import {
   colorPicker,
   wrapperClassName
 } from '@replit/codemirror-css-color-picker';
-
+import MediaQuery from 'react-responsive';
 import prettier from 'prettier/standalone';
 import babelParser from 'prettier/parser-babel';
 import htmlParser from 'prettier/parser-html';
@@ -654,45 +654,73 @@ const Editor = (props) => {
   }, [props.file.content, theme]);
 
   return (
-    <section
-      className={classNames('editor', { 'sidebar--contracted': !isExpanded })}
-    >
-      <div className="editor__header">
-        <button
-          aria-label={t('Editor.OpenSketchARIA')}
-          className="sidebar__contract"
-          onClick={collapseSidebar}
-        >
-          <LeftArrowIcon focusable="false" aria-hidden="true" />
-        </button>
-        <button
-          aria-label={t('Editor.CloseSketchARIA')}
-          className="sidebar__expand"
-          onClick={expandSidebar}
-        >
-          <RightArrowIcon focusable="false" aria-hidden="true" />
-        </button>
-        <div className="editor__file-name">
-          <span>
-            {file.name}
-            <UnsavedChangesIndicator />
-          </span>
-          <Timer />
-        </div>
-      </div>
-      <div
-        ref={editorRef}
-        className={classNames('editor-holder', {
-          'editor-holder--hidden': file.fileType === 'folder' || file.url
-        })}
-      />
-      <div id="color-picker" />
-      {file.url ? <AssetPreview url={file.url} name={file.name} /> : null}
-      <EditorAccessibility
-        lintMessages={lintMessages}
-        currentLine={currentLine}
-      />
-    </section>
+    <MediaQuery minWidth={770}>
+      {(matches) =>
+        matches ? (
+          <section
+            className={classNames('editor', {
+              'sidebar--contracted': !isExpanded
+            })}
+          >
+            <div className="editor__header">
+              <button
+                aria-label={t('Editor.OpenSketchARIA')}
+                className="sidebar__contract"
+                onClick={collapseSidebar}
+              >
+                <LeftArrowIcon focusable="false" aria-hidden="true" />
+              </button>
+              <button
+                aria-label={t('Editor.CloseSketchARIA')}
+                className="sidebar__expand"
+                onClick={expandSidebar}
+              >
+                <RightArrowIcon focusable="false" aria-hidden="true" />
+              </button>
+              <div className="editor__file-name">
+                <span>
+                  {file.name}
+                  <UnsavedChangesIndicator />
+                </span>
+                <Timer />
+              </div>
+            </div>
+            <div
+              ref={editorRef}
+              className={classNames('editor-holder', {
+                'editor-holder--hidden': file.fileType === 'folder' || file.url
+              })}
+            />
+            <div id="color-picker" />
+            {file.url ? <AssetPreview url={file.url} name={file.name} /> : null}
+            <EditorAccessibility
+              lintMessages={lintMessages}
+              currentLine={currentLine}
+            />
+          </section>
+        ) : (
+          <EditorContainer expanded={isExpanded}>
+            <div>
+              <IconButton onClick={expandSidebar} icon={FolderIcon} />
+              <span>
+                {file.name}
+                <UnsavedChangesIndicator />
+              </span>
+            </div>
+            <section>
+              <EditorHolder ref={editorRef} />
+              {file.url ? (
+                <AssetPreview url={file.url} name={file.name} />
+              ) : null}
+              <EditorAccessibility
+                lintMessages={lintMessages}
+                currentLine={currentLine}
+              />
+            </section>
+          </EditorContainer>
+        )
+      }
+    </MediaQuery>
   );
 };
 
