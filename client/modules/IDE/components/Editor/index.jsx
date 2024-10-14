@@ -6,26 +6,26 @@ import React, {
   useMemo
 } from 'react';
 import PropTypes from 'prop-types';
-import { EditorState, StateEffect, Prec, StateField } from '@codemirror/state';
+import { EditorState, StateEffect, Prec } from '@codemirror/state';
 import {
   EditorView,
   keymap,
   highlightActiveLine,
   lineNumbers,
-  Decoration,
-  DecorationSet
+  Decoration
 } from '@codemirror/view';
 import Fuse from 'fuse.js';
 import { javascript } from '@codemirror/lang-javascript';
 import { css } from '@codemirror/lang-css';
-import { bracketMatching, foldGutter } from '@codemirror/language';
+import {
+  bracketMatching,
+  foldGutter,
+  syntaxHighlighting,
+  codeFolding
+} from '@codemirror/language';
 import { autocompletion, closeBrackets } from '@codemirror/autocomplete';
 import { linter, lintGutter } from '@codemirror/lint';
 import { standardKeymap } from '@codemirror/commands';
-import {
-  colorPicker,
-  wrapperClassName
-} from '@replit/codemirror-css-color-picker';
 import MediaQuery from 'react-responsive';
 import prettier from 'prettier/standalone';
 import babelParser from 'prettier/parser-babel';
@@ -67,6 +67,16 @@ import { selectActiveFile } from '../../selectors/files';
 import { EditorContainer, EditorHolder } from './MobileEditor';
 import { FolderIcon } from '../../../../common/icons';
 import IconButton from '../../../../common/IconButton';
+import {
+  lightHighlightStyle,
+  p5LightTheme
+} from '../../utils/p5-light-cm-theme';
+import { darkHighlightStyle, p5DarkTheme } from '../../utils/p5-dark-cm-theme';
+import {
+  contrastHighlightStyle,
+  p5ContrastTheme
+} from '../../utils/p5-contrast-cm-theme';
+import p5ViewPlugin from '../../utils/p5ViewPlugin';
 
 import * as FileActions from '../../actions/files';
 import * as IDEActions from '../../actions/ide';
@@ -109,39 +119,29 @@ const prettierFormatWithCursor = (view, parser, plugins) => {
   }
 };
 
-const createThemeExtension = (themeName) => {
-  const themeClass = themeName === 'dark' ? 'cm-s-p5-dark' : 'cm-s-p5-light';
-  return EditorView.theme({}, { dark: themeName === 'dark', themeClass });
+const getThemeByName = (themeName) => {
+  switch (themeName) {
+    case 'dark':
+      return p5DarkTheme;
+    case 'contrast':
+      return p5ContrastTheme;
+    case 'light':
+    default:
+      return p5LightTheme;
+  }
 };
 
-// Create an effect to add or remove decorations
-const addDecorationEffect = StateEffect.define();
-const removeDecorationEffect = StateEffect.define();
-
-// Define a StateField to manage decorations
-const decorationsField =
-  StateField.define <
-  DecorationSet >
-  {
-    create() {
-      return Decoration.none;
-    },
-    update(decorations, tr) {
-      let newDecorations = decorations; // Create a new variable to hold the updated decorations
-
-      tr.effects.forEach((effect) => {
-        if (effect.is(addDecorationEffect)) {
-          newDecorations = newDecorations.update({ add: [effect.value] });
-        }
-        if (effect.is(removeDecorationEffect)) {
-          newDecorations = Decoration.none;
-        }
-      });
-
-      return newDecorations; // Return the new variable instead of reassigning the parameter
-    },
-    provide: (f) => EditorView.decorations.from(f)
-  };
+const getHighlightStyleByName = (themeName) => {
+  switch (themeName) {
+    case 'dark':
+      return darkHighlightStyle;
+    case 'contrast':
+      return contrastHighlightStyle;
+    case 'light':
+    default:
+      return lightHighlightStyle;
+  }
+};
 
 const Editor = (props) => {
   const {
@@ -195,7 +195,7 @@ const Editor = (props) => {
         beepRef.current.play();
       }
     }, 2000),
-    []
+    [lintMessages]
   );
 
   const editorRef = useRef(null);
@@ -219,7 +219,7 @@ const Editor = (props) => {
 
   const replaceCommand = metaKey === 'Ctrl' ? `Mod-h` : `Mod-Alt-f`;
 
-  // Handle document changes (debounced)
+  // TODO: test debounce
   const handleEditorChange = useCallback(() => {
     setUnsavedChanges(true);
     hideRuntimeErrorWarning();
@@ -249,51 +249,45 @@ const Editor = (props) => {
     }
   };
 
-  const showFind = useCallback(() => {
+  const showFind = () => {
     viewRef.current.dispatch({ effect: EditorView.findPersistent.of() });
-  }, []);
+  };
 
-  const showReplace = useCallback(() => {
+  const showReplace = () => {
     viewRef.current.dispatch({ effect: EditorView.replacePersistent.of() });
-  }, []);
+  };
 
-  const getContent = useCallback(
-    () => viewRef.current.state.doc.toString(),
-    []
-  );
+  const getContent = () => viewRef.current.state.doc.toString();
 
-  const handleKeyUp = useCallback(() => {
+  const handleKeyUp = () => {
     const lineNumber = viewRef.current.state.doc.lineAt(
       viewRef.current.state.selection.main.head
     ).number;
     setCurrentLine(lineNumber);
-  }, []);
+  };
 
   const customLinterFunction = (view) => {
     const diagnostics = [];
-    const content = view.state.doc.toString(); // Get the content of the editor
+    const content = view.state.doc.toString();
 
-    // Pass the content through JSHint (or any other linter)
     JSHINT(content, {
-      asi: true, // Allow missing semicolons
-      eqeqeq: false, // Allow non-strict equality (== and !=)
-      '-W041': false, // Disable warning for 'use of == null'
-      esversion: 11 // Use ECMAScript version 11 (ES2020)
+      asi: true,
+      eqeqeq: false,
+      '-W041': false,
+      esversion: 11
     });
 
-    // Process JSHint results and convert them into CodeMirror diagnostics
     JSHINT.errors.forEach((error) => {
       if (!error) return;
 
       diagnostics.push({
-        from: view.state.doc.line(error.line).from + (error.character - 1), // Position of the error
-        to: view.state.doc.line(error.line).from + error.character, // End position of the error
-        severity: error.code.startsWith('W') ? 'warning' : 'error', // 'W' indicates a warning in JSHint
-        message: error.reason // The error message
+        from: view.state.doc.line(error.line).from + (error.character - 1),
+        to: view.state.doc.line(error.line).from + error.character,
+        severity: error.code.startsWith('W') ? 'warning' : 'error',
+        message: error.reason
       });
     });
 
-    // Call the onUpdateLinting function to handle linting messages
     updateLintingMessageAccessibility(diagnostics);
 
     return diagnostics;
@@ -303,7 +297,7 @@ const Editor = (props) => {
     const view = viewRef.current;
     if (view) {
       // TODO: fix this use persistent using codemirror search
-      view.dispatch({ effects: findNext }); // Dispatch the find effect
+      view.dispatch({ effects: findNext });
     }
   };
 
@@ -340,6 +334,7 @@ const Editor = (props) => {
       run: () => null // No action, handle shift + meta + Enter
     },
     {
+      // TODO: connect search widget
       key: `Mod-f`, // Meta + F to trigger findPersistent
       run: () => {
         triggerFindPersistent(); // Trigger the findPersistent functionality
@@ -364,7 +359,7 @@ const Editor = (props) => {
     },
     {
       key: `Mod-k`, // TODO: need to find a way to create custom color picker since codemirror 6 doesn't have one
-      run: () => null
+      run: (view) => view.state.colorpicker.popup_color_picker({ length: 0 })
     }
   ]);
 
@@ -454,21 +449,21 @@ const Editor = (props) => {
   const getCommonExtensions = () => [
     javascript(),
     autocompletion(),
-    linter(customLinterFunction), // Linter extension
+    linter(customLinterFunction),
     lintGutter(),
     abbreviationTracker(),
-    lineNumbers(), // Line numbers
-    highlightActiveLine(), // Highlight active line
-    foldGutter(), // Fold gutter
-    bracketMatching(), // Match brackets
-    closeBrackets(), // Automatically close brackets
-    highlightSelectionMatches(), // Highlight search matches
-    css(), // CSS support
+    lineNumbers(),
+    highlightActiveLine(),
+    foldGutter(),
+    bracketMatching(),
+    closeBrackets(),
+    highlightSelectionMatches(),
+    css(),
     keymap.of(standardKeymap),
-    Prec.highest(customKeymap), // Ensure custom keymap has the highest precedence
+    Prec.highest(customKeymap),
     EditorView.updateListener.of((update) => {
       if (update.docChanged) {
-        handleEditorChange(); // Handle document changes
+        handleEditorChange();
       }
     }),
     EditorView.updateListener.of((update) => {
@@ -478,13 +473,8 @@ const Editor = (props) => {
     }),
     EditorView.lineWrapping,
     hintExtension,
-    // colorPicker,
-    EditorView.theme({
-      [`.${wrapperClassName}`]: {
-        outlineColor: 'transparent'
-      }
-    })
-    // decorationsField
+    codeFolding(),
+    p5ViewPlugin
   ];
 
   useEffect(() => {
@@ -492,7 +482,7 @@ const Editor = (props) => {
 
     const startState = EditorState.create({
       doc: file.content,
-      extensions: [...getCommonExtensions(), createThemeExtension(theme)]
+      extensions: [...getCommonExtensions()]
     });
 
     const view = new EditorView({
@@ -549,7 +539,6 @@ const Editor = (props) => {
       const prevConsoleEventsLength = prevConsoleEventsLengthRef.current;
 
       if (consoleEvents.length !== prevConsoleEventsLength) {
-        // Process new console events
         consoleEvents.forEach((consoleEvent) => {
           if (consoleEvent.method === 'error') {
             const errorObj = { stack: consoleEvent.data[0].toString() };
@@ -571,21 +560,18 @@ const Editor = (props) => {
               if (fileWithError) {
                 setSelectedFile(fileWithError.id);
 
-                // Create a line decoration for the error
                 const decoration = Decoration.line({
                   class: 'line-runtime-error'
                 }).range(
                   viewRef.current.state.doc.line(line.lineNumber - 1).from
                 );
 
-                // Apply the decoration to highlight the line
                 viewRef.current.dispatch({
                   effects: StateEffect.appendConfig.of(
                     EditorView.decorations.of(Decoration.set([decoration]))
                   )
                 });
 
-                // Store the decoration so it can be cleared later
                 errorDecoration.current = Decoration.set([decoration]);
               }
             });
@@ -597,7 +583,7 @@ const Editor = (props) => {
             EditorView.decorations.of(Decoration.none)
           )
         });
-        errorDecoration.current = Decoration.none; // Clear the stored decorations
+        errorDecoration.current = Decoration.none;
       }
 
       prevConsoleEventsLengthRef.current = consoleEvents.length;
@@ -644,12 +630,19 @@ const Editor = (props) => {
   // Handle theme change
   useEffect(() => {
     if (!viewRef.current) return;
-
     const view = viewRef.current;
-    const newTheme = createThemeExtension(theme);
+    const newTheme = getThemeByName(theme);
+    const newHighLightStyle = syntaxHighlighting(
+      getHighlightStyleByName(theme)
+    );
+    console.log('theme', newTheme, newHighLightStyle);
 
     view.dispatch({
-      effects: StateEffect.reconfigure.of([...getCommonExtensions(), newTheme])
+      effects: StateEffect.reconfigure.of([
+        ...getCommonExtensions(),
+        newTheme,
+        newHighLightStyle
+      ])
     });
   }, [props.file.content, theme]);
 
@@ -691,7 +684,6 @@ const Editor = (props) => {
                 'editor-holder--hidden': file.fileType === 'folder' || file.url
               })}
             />
-            <div id="color-picker" />
             {file.url ? <AssetPreview url={file.url} name={file.name} /> : null}
             <EditorAccessibility
               lintMessages={lintMessages}
