@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form, Field } from 'react-final-form';
 import { useDispatch } from 'react-redux';
@@ -34,7 +34,7 @@ function validateEmail(email) {
 }
 
 function SignupForm() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const dispatch = useDispatch();
   function onSubmit(formProps) {
@@ -42,18 +42,23 @@ function SignupForm() {
   }
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [formUpdateKey, setFormUpdateKey] = useState(false);
   const handleVisibility = () => {
     setShowPassword(!showPassword);
   };
   const handleConfirmVisibility = () => {
     setShowConfirmPassword(!showConfirmPassword);
   };
+  useEffect(() => {
+    setFormUpdateKey(!formUpdateKey);
+  }, [i18n.language]);
 
   return (
     <Form
       fields={['username', 'email', 'password', 'confirmPassword']}
       validate={validateSignup}
       onSubmit={onSubmit}
+      key={formUpdateKey}
     >
       {({ handleSubmit, pristine, submitting, invalid }) => (
         <form className="form" onSubmit={handleSubmit}>
