@@ -63,7 +63,7 @@ function About(props) {
         </p>
         <p className="about__content-column-list">
           <a
-            href="https://p5js.org/learn/"
+            href="https://p5js.org/tutorials/"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -164,7 +164,7 @@ function About(props) {
         </p>
         <p className="about__content-column-list">
           <a
-            href="https://p5js.org/download/support.html"
+            href="https://p5js.org/donate/"
             target="_blank"
             rel="noopener noreferrer"
           >
