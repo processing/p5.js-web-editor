@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form, Field } from 'react-final-form';
 import { useDispatch } from 'react-redux';
@@ -8,22 +8,28 @@ import { validateLogin } from '../../../utils/reduxFormUtils';
 import { validateAndLoginUser } from '../actions';
 
 function LoginForm() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const dispatch = useDispatch();
   function onSubmit(formProps) {
     return dispatch(validateAndLoginUser(formProps));
   }
   const [showPassword, setShowPassword] = useState(false);
+  const [formUpdateKey, setFormUpdateKey] = useState(false);
+
   const handleVisibility = () => {
     setShowPassword(!showPassword);
   };
+  useEffect(() => {
+    setFormUpdateKey(!formUpdateKey);
+  }, [i18n.language]);
 
   return (
     <Form
       fields={['email', 'password']}
       validate={validateLogin}
       onSubmit={onSubmit}
+      key={formUpdateKey}
     >
       {({ handleSubmit, submitError, submitting, modifiedSinceLastSubmit }) => (
         <form className="form" onSubmit={handleSubmit}>
