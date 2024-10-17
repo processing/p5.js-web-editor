@@ -18,6 +18,7 @@ import {
   setAutocompleteHinter,
   setLinewrap
 } from '../../actions/preferences';
+import OnOffToggle from './OnOffToggle';
 
 export default function Preferences() {
   const { t } = useTranslation();
@@ -196,143 +197,43 @@ export default function Preferences() {
           </div>
           <div className="preference">
             <h4 className="preference__title">{t('Preferences.Autosave')}</h4>
-            <div className="preference__options">
-              <input
-                type="radio"
-                onChange={() => dispatch(setAutosave(true))}
-                aria-label={t('Preferences.AutosaveOnARIA')}
-                name="autosave"
-                id="autosave-on"
-                className="preference__radio-button"
-                value="On"
-                checked={autosave}
-              />
-              <label htmlFor="autosave-on" className="preference__option">
-                {t('Preferences.On')}
-              </label>
-              <input
-                type="radio"
-                onChange={() => dispatch(setAutosave(false))}
-                aria-label={t('Preferences.AutosaveOffARIA')}
-                name="autosave"
-                id="autosave-off"
-                className="preference__radio-button"
-                value="Off"
-                checked={!autosave}
-              />
-              <label htmlFor="autosave-off" className="preference__option">
-                {t('Preferences.Off')}
-              </label>
-            </div>
+            <OnOffToggle
+              value={autosave}
+              setValue={(value) => dispatch(setAutosave(value))}
+              name="autosave"
+              translationKey="Autosave"
+            />
           </div>
           <div className="preference">
             <h4 className="preference__title">
               {t('Preferences.AutocloseBracketsQuotes')}
             </h4>
-            <div className="preference__options">
-              <input
-                type="radio"
-                onChange={() => dispatch(setAutocloseBracketsQuotes(true))}
-                aria-label={t('Preferences.AutocloseBracketsQuotesOnARIA')}
-                name="autoclosebracketsquotes"
-                id="autoclosebracketsquotes-on"
-                className="preference__radio-button"
-                value="On"
-                checked={autocloseBracketsQuotes}
-              />
-              <label
-                htmlFor="autoclosebracketsquotes-on"
-                className="preference__option"
-              >
-                {t('Preferences.On')}
-              </label>
-              <input
-                type="radio"
-                onChange={() => dispatch(setAutocloseBracketsQuotes(false))}
-                aria-label={t('Preferences.AutocloseBracketsQuotesOffARIA')}
-                name="autoclosebracketsquotes"
-                id="autoclosebracketsquotes-off"
-                className="preference__radio-button"
-                value="Off"
-                checked={!autocloseBracketsQuotes}
-              />
-              <label
-                htmlFor="autoclosebracketsquotes-off"
-                className="preference__option"
-              >
-                {t('Preferences.Off')}
-              </label>
-            </div>
+            <OnOffToggle
+              value={autocloseBracketsQuotes}
+              setValue={(value) => dispatch(setAutocloseBracketsQuotes(value))}
+              name="autoclosebracketsquotes"
+              translationKey="AutocloseBracketsQuotes"
+            />
           </div>
           <div className="preference">
             <h4 className="preference__title">
               {t('Preferences.AutocompleteHinter')}
             </h4>
-            <div className="preference__options">
-              <input
-                type="radio"
-                onChange={() => dispatch(setAutocompleteHinter(true))}
-                aria-label={t('Preferences.AutocompleteHinterOnARIA')}
-                name="autocompletehinter"
-                id="autocompletehinter-on"
-                className="preference__radio-button"
-                value="On"
-                checked={autocompleteHinter}
-              />
-              <label
-                htmlFor="autocompletehinter-on"
-                className="preference__option"
-              >
-                {t('Preferences.On')}
-              </label>
-              <input
-                type="radio"
-                onChange={() => dispatch(setAutocompleteHinter(false))}
-                aria-label={t('Preferences.AutocompleteHinterOffARIA')}
-                name="autocompletehinter"
-                id="autocompletehinter-off"
-                className="preference__radio-button"
-                value="Off"
-                checked={!autocompleteHinter}
-              />
-              <label
-                htmlFor="autocompletehinter-off"
-                className="preference__option"
-              >
-                {t('Preferences.Off')}
-              </label>
-            </div>
+            <OnOffToggle
+              value={autocompleteHinter}
+              setValue={(value) => dispatch(setAutocompleteHinter(value))}
+              name="autocompletehinter"
+              translationKey="AutocompleteHinter"
+            />
           </div>
           <div className="preference">
             <h4 className="preference__title">{t('Preferences.WordWrap')}</h4>
-            <div className="preference__options">
-              <input
-                type="radio"
-                onChange={() => dispatch(setLinewrap(true))}
-                aria-label={t('Preferences.LineWrapOnARIA')}
-                name="linewrap"
-                id="linewrap-on"
-                className="preference__radio-button"
-                value="On"
-                checked={linewrap}
-              />
-              <label htmlFor="linewrap-on" className="preference__option">
-                {t('Preferences.On')}
-              </label>
-              <input
-                type="radio"
-                onChange={() => dispatch(setLinewrap(false))}
-                aria-label={t('Preferences.LineWrapOffARIA')}
-                name="linewrap"
-                id="linewrap-off"
-                className="preference__radio-button"
-                value="Off"
-                checked={!linewrap}
-              />
-              <label htmlFor="linewrap-off" className="preference__option">
-                {t('Preferences.Off')}
-              </label>
-            </div>
+            <OnOffToggle
+              value={linewrap}
+              setValue={(value) => dispatch(setLinewrap(value))}
+              name="linewrap"
+              translationKey="LineWrap"
+            />
           </div>
         </TabPanel>
         <TabPanel>
@@ -340,66 +241,23 @@ export default function Preferences() {
             <h4 className="preference__title">
               {t('Preferences.LineNumbers')}
             </h4>
-            <div className="preference__options">
-              <input
-                type="radio"
-                onChange={() => dispatch(setLineNumbers(true))}
-                aria-label={t('Preferences.LineNumbersOnARIA')}
-                name="line numbers"
-                id="line-numbers-on"
-                className="preference__radio-button"
-                value="On"
-                checked={lineNumbers}
-              />
-              <label htmlFor="line-numbers-on" className="preference__option">
-                {t('Preferences.On')}
-              </label>
-              <input
-                type="radio"
-                onChange={() => dispatch(setLineNumbers(false))}
-                aria-label={t('Preferences.LineNumbersOffARIA')}
-                name="line numbers"
-                id="line-numbers-off"
-                className="preference__radio-button"
-                value="Off"
-                checked={!lineNumbers}
-              />
-              <label htmlFor="line-numbers-off" className="preference__option">
-                {t('Preferences.Off')}
-              </label>
-            </div>
+            <OnOffToggle
+              value={lineNumbers}
+              setValue={(value) => dispatch(setLineNumbers(value))}
+              name="line numbers"
+              translationKey="LineNumbers"
+            />
           </div>
           <div className="preference">
             <h4 className="preference__title">
               {t('Preferences.LintWarningSound')}
             </h4>
-            <div className="preference__options">
-              <input
-                type="radio"
-                onChange={() => dispatch(setLintWarning(true))}
-                aria-label={t('Preferences.LintWarningOnARIA')}
-                name="lint warning"
-                id="lint-warning-on"
-                className="preference__radio-button"
-                value="On"
-                checked={lintWarning}
-              />
-              <label htmlFor="lint-warning-on" className="preference__option">
-                {t('Preferences.On')}
-              </label>
-              <input
-                type="radio"
-                onChange={() => dispatch(setLintWarning(false))}
-                aria-label={t('Preferences.LintWarningOffARIA')}
-                name="lint warning"
-                id="lint-warning-off"
-                className="preference__radio-button"
-                value="Off"
-                checked={!lintWarning}
-              />
-              <label htmlFor="lint-warning-off" className="preference__option">
-                {t('Preferences.Off')}
-              </label>
+            <OnOffToggle
+              value={lintWarning}
+              setValue={(value) => dispatch(setLintWarning(value))}
+              name="lint warning"
+              translationKey="LintWarning"
+            >
               <button
                 className="preference__preview-button"
                 onClick={() => new Audio(beepUrl).play()}
@@ -407,7 +265,7 @@ export default function Preferences() {
               >
                 {t('Preferences.PreviewSound')}
               </button>
-            </div>
+            </OnOffToggle>
           </div>
           <div className="preference">
             <h4 className="preference__title">
