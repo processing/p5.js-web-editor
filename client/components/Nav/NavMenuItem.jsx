@@ -1,25 +1,51 @@
 import PropTypes from 'prop-types';
-import React, { useContext, useMemo } from 'react';
+import React, { useContext, useMemo, useState, useRef, useEffect } from 'react';
 import ButtonOrLink from '../../common/ButtonOrLink';
-import { NavBarContext, ParentMenuContext } from './contexts';
+import { NavBarContext, ParentMenuContext, SubmenuContext } from './contexts';
 
 function NavMenuItem({ hideIf, className, ...rest }) {
+  const [isFirstChild, setIsFirstChild] = useState(false);
+  const menuItemRef = useRef(null);
+  const menubarContext = useContext(NavBarContext);
+  const submenuContext = useContext(SubmenuContext);
+  const { submenuItems } = submenuContext;
   const parent = useContext(ParentMenuContext);
 
-  const { createMenuItemHandlers } = useContext(NavBarContext);
+  const { createMenuItemHandlers } = menubarContext;
 
   const handlers = useMemo(() => createMenuItemHandlers(parent), [
     createMenuItemHandlers,
     parent
   ]);
 
+  useEffect(() => {
+    const menuItemNode = menuItemRef.current;
+    if (menuItemNode) {
+      if (!submenuItems?.size) {
+        setIsFirstChild(true);
+      }
+      submenuItems?.add(menuItemNode);
+    }
+
+    return () => {
+      submenuItems?.delete(menuItemNode);
+    };
+  }, [submenuItems]);
+
   if (hideIf) {
     return null;
   }
 
+  const buttonProps = {
+    ...rest,
+    ...handlers,
+    role: 'menuitem',
+    tabIndex: !submenuContext && isFirstChild ? 0 : -1
+  };
+
   return (
-    <li className={className}>
-      <ButtonOrLink {...rest} {...handlers} role="menuitem" />
+    <li className={className} ref={menuItemRef}>
+      <ButtonOrLink {...buttonProps} />
     </li>
   );
 }
