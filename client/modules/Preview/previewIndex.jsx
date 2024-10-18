@@ -55,7 +55,7 @@ const App = () => {
   function addCacheBustingToAssets(files) {
     const timestamp = new Date().getTime();
     return files.map((file) => {
-      if (file.url) {
+      if (file.url && !file.url.endsWith('obj') && !file.url.endsWith('stl')) {
         return {
           ...file,
           url: `${file.url}?v=${timestamp}`
