@@ -76,32 +76,38 @@ app.use(cookieParser());
 
 mongoose.set('strictQuery', true);
 
-const clientPromise = mongoose
-  .connect(mongoConnectionString, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    serverSelectionTimeoutMS: 30000, // 30 seconds timeout
-    socketTimeoutMS: 45000 // 45 seconds timeout
-  })
-  .then((m) => m.connection.getClient());
+async function initializeSession() {
+  try {
+    const mongooseConnection = await mongoose.connect(mongoConnectionString, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      serverSelectionTimeoutMS: 30000, // 30 seconds timeout
+      socketTimeoutMS: 45000 // 45 seconds timeout
+    });
 
-app.use(
-  session({
-    resave: true,
-    saveUninitialized: false,
-    secret: process.env.SESSION_SECRET,
-    proxy: true,
-    name: 'sessionId',
-    cookie: {
-      httpOnly: true,
-      secure: false
-    },
-    store: new MongoStore({
-      clientPromise,
-      autoReconnect: true
-    })
-  })
-);
+    app.use(
+      session({
+        resave: true,
+        saveUninitialized: false,
+        secret: process.env.SESSION_SECRET,
+        proxy: true,
+        name: 'sessionId',
+        cookie: {
+          httpOnly: true,
+          secure: false
+        },
+        store: new MongoStore({
+          mongooseConnection: mongooseConnection.connection,
+          autoReconnect: true
+        })
+      })
+    );
+  } catch (error) {
+    console.error('Error connecting to the database:', error);
+  }
+}
+
+initializeSession();
 
 app.use('/api/v1', requestsOfTypeJSON(), api);
 // This is a temporary way to test access via Personal Access Tokens
