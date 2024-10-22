@@ -6,6 +6,7 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import Button from '../../../common/Button';
 import { validateLogin } from '../../../utils/reduxFormUtils';
 import { validateAndLoginUser } from '../actions';
+import './LoginForm.css'; // Added import for the CSS
 
 function LoginForm() {
   const { t } = useTranslation();
