@@ -59,10 +59,7 @@ const headers = { 'User-Agent': 'p5js-web-editor/0.0.1' };
 
 const mongoConnectionString = process.env.MONGO_URL;
 
-mongoose.connect(mongoConnectionString, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
+mongoose.connect(mongoConnectionString);
 mongoose.set('strictQuery', true);
 mongoose.connection.on('error', () => {
   console.error(

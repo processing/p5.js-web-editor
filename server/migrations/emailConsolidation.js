@@ -14,10 +14,7 @@ const mongoConnectionString = process.env.MONGO_URL;
 const { ObjectId } = mongoose.Types;
 // Connect to MongoDB
 mongoose.Promise = global.Promise;
-mongoose.connect(mongoConnectionString, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
+mongoose.connect(mongoConnectionString);
 mongoose.set('strictQuery', true);
 mongoose.connection.on('error', () => {
   console.error(
