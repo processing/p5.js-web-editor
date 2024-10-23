@@ -76,14 +76,19 @@ app.use(cookieParser());
 
 mongoose.set('strictQuery', true);
 
-const clientPromise = mongoose
-  .connect(mongoConnectionString, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    serverSelectionTimeoutMS: 30000, // 30 seconds timeout
-    socketTimeoutMS: 45000 // 45 seconds timeout
-  })
-  .then((m) => m.connection.getClient());
+async function connectToMongoDB() {
+  try {
+    const mongooseConnection = await mongoose.connect(mongoConnectionString, {
+      serverSelectionTimeoutMS: 30000, // 30 seconds timeout
+      socketTimeoutMS: 45000 // 45 seconds timeout
+    });
+    return mongooseConnection.connection.getClient();
+  } catch (err) {
+    throw new Error('MongoDB connection failed', err);
+  }
+}
+
+const clientInstancePromise = connectToMongoDB();
 
 app.use(
   session({
@@ -97,8 +102,7 @@ app.use(
       secure: false
     },
     store: new MongoStore({
-      clientPromise,
-      autoReconnect: true
+      clientPromise: clientInstancePromise
     })
   })
 );
