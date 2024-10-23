@@ -1,0 +1,31 @@
+.form__field {
+    position: relative;
+    margin-bottom: 20px;
+  }
+  
+  .form__input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .form__field__password {
+    position: relative;
+  }
+  
+  .form__eye__icon {
+    position: absolute;
+    right: 10px; /* Align icon to the right */
+    top: 50%; /* Vertically center the icon */
+    transform: translateY(-50%); /* Adjust for centering */
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .form__eye__icon svg {
+    font-size: 20px; /* Adjust size of the eye icon */
+  }
+  
