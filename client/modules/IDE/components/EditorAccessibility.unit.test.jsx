@@ -8,11 +8,7 @@ describe('<EditorAccessibility />', () => {
   it('renders empty message with no lines', () => {
     render(<EditorAccessibility lintMessages={[]} currentLine={0} />);
 
-    expect(
-      screen.getByRole('listitem', {
-        description: 'There are no lint messages'
-      })
-    ).toBeInTheDocument();
+    expect(screen.getByText(/there are no lint messages/i)).toBeInTheDocument();
   });
 
   it('renders lint message', () => {

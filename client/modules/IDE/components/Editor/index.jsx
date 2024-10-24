@@ -678,7 +678,7 @@ const Editor = (props) => {
                 <Timer />
               </div>
             </div>
-            <div
+            <article
               ref={editorRef}
               className={classNames('editor-holder', {
                 'editor-holder--hidden': file.fileType === 'folder' || file.url
