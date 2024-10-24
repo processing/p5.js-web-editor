@@ -24,10 +24,17 @@ function asyncValidate(fieldToValidate, value) {
       return '';
     });
 }
-
+let timeout=0
 function validateUsername(username) {
-  return asyncValidate('username', username);
-}
+   clearTimeout(timeout)
+ let timeout= setTimeout(function(){
+  //added debouncing
+   //if someone starts typing in the frontend it will take 100ms to call backend
+   //it will eventually help for multiple requests at same time
+   //deferring the backend request
+   asyncValidate('username', username)
+ },100
+ }
 
 function validateEmail(email) {
   return asyncValidate('email', email);
