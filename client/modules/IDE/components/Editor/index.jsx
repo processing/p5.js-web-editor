@@ -193,6 +193,18 @@ class Editor extends React.Component {
       if (/^[a-z]$/i.test(e.key) && (mode === 'css' || mode === 'javascript')) {
         showHint(_cm, this.props.autocompleteHinter, this.props.fontSize);
       }
+      if (e.key === 'Escape') {
+        console.log(this._cm);
+        e.preventDefault();
+        const selections = this._cm.listSelections();
+        if (selections.length > 1) {
+          const firstPos = selections[0].head || selections[0].anchor;
+          this._cm.setSelection(firstPos);
+          this._cm.scrollIntoView(firstPos);
+        } else {
+          this._cm.getInputField().blur();
+        }
+      }
     });
 
     this._cm.getWrapperElement().style[
