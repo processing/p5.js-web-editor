@@ -6,6 +6,7 @@ import { Route as RouterRoute, Switch } from 'react-router-dom';
 import App from './modules/App/App';
 import IDEView from './modules/IDE/pages/IDEView';
 import FullView from './modules/IDE/pages/FullView';
+import About from './modules/About/pages/About';
 import CodeOfConduct from './modules/Legal/pages/CodeOfConduct';
 import PrivacyPolicy from './modules/Legal/pages/PrivacyPolicy';
 import TermsOfUse from './modules/Legal/pages/TermsOfUse';
@@ -72,7 +73,7 @@ const routes = (
     <Route path="/sketches" component={DashboardView} />
     <Route path="/assets" component={DashboardView} />
     <Route path="/account" component={AccountView} />
-    <Route path="/about" component={IDEView} />
+    <Route path="/about" component={About} />
     <Route path="/privacy-policy" component={PrivacyPolicy} />
     <Route path="/terms-of-use" component={TermsOfUse} />
     <Route path="/code-of-conduct" component={CodeOfConduct} />

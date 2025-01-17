@@ -38,7 +38,7 @@ function isAuth(pathname) {
 }
 
 function isOverlay(pathname) {
-  return pathname === '/about' || pathname === '/feedback';
+  return pathname === '/feedback';
 }
 
 function WarnIfUnsavedChanges() {
