@@ -21,7 +21,10 @@ export function hideHinter() {
   CodeMirror.showHint(this._cm, () => {}, {});
 }
 
-/** Shows a hint in the codemirror instance. */
+/**
+ * Shows a hint popup in the codemirror instance.
+ * It will only be visible if the user has autocomplete on in the settings.
+ */
 export function showHint(cmInstance, autocompleteHinter, fontSize) {
   if (!autocompleteHinter) {
     CodeMirror.showHint(cmInstance, () => {}, {});
