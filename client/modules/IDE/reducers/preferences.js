@@ -11,6 +11,7 @@ export const initialState = {
   theme: 'light',
   autorefresh: false,
   language: 'en-US',
+  direction: 'ltr',
   autocloseBracketsQuotes: true,
   autocompleteHinter: false
 };
