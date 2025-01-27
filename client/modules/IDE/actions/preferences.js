@@ -239,7 +239,10 @@ export function setLanguage(value, { persistPreference = true } = {}) {
     // change direction base on language
     dispatch({
       type: ActionTypes.SET_DIRECTION,
-      direction: rtlLanguageList.includes(value) ? 'rtl' : 'ltr'
+      direction:
+        Array.isArray(rtlLanguageList) && rtlLanguageList.includes(value)
+          ? 'rtl'
+          : 'ltr'
     });
     const state = getState();
     if (persistPreference && state.user.authenticated) {
