@@ -532,37 +532,75 @@ class Editor extends React.Component {
 
     const { currentLine } = this.state;
 
+    // for better ui in rtl
+    const { direction } = this.props; // Access direction from props
+    let editorHeader = 'editor__header';
+    let editorHeaderContent = (
+      <>
+        <button
+          aria-label={this.props.t('Editor.OpenSketchARIA')}
+          className="sidebar__contract"
+          onClick={() => {
+            this.props.collapseSidebar();
+            this.props.closeProjectOptions();
+          }}
+        >
+          <LeftArrowIcon focusable="false" aria-hidden="true" />
+        </button>
+        <button
+          aria-label={this.props.t('Editor.CloseSketchARIA')}
+          className="sidebar__expand"
+          onClick={this.props.expandSidebar}
+        >
+          <RightArrowIcon focusable="false" aria-hidden="true" />
+        </button>
+        <div className="editor__file-name">
+          <span>
+            {this.props.file.name}
+            <UnsavedChangesIndicator />
+          </span>
+          <Timer />
+        </div>
+      </>
+    );
+    if (direction === 'rtl') {
+      editorHeader = 'editor__header-rtl';
+      editorHeaderContent = (
+        <>
+          <div className="editor__file-name-rtl">
+            <span>
+              {this.props.file.name}
+              <UnsavedChangesIndicator />
+            </span>
+            <Timer />
+          </div>
+          <button
+            aria-label={this.props.t('Editor.CloseSketchARIA')}
+            className="sidebar__expand"
+            onClick={this.props.expandSidebar}
+          >
+            <LeftArrowIcon focusable="false" aria-hidden="true" />
+          </button>
+          <button
+            aria-label={this.props.t('Editor.OpenSketchARIA')}
+            className="sidebar__contract"
+            onClick={() => {
+              this.props.collapseSidebar();
+              this.props.closeProjectOptions();
+            }}
+          >
+            <RightArrowIcon focusable="false" aria-hidden="true" />
+          </button>
+        </>
+      );
+    }
+
     return (
       <MediaQuery minWidth={770}>
         {(matches) =>
           matches ? (
             <section className={editorSectionClass}>
-              <div className="editor__header">
-                <button
-                  aria-label={this.props.t('Editor.OpenSketchARIA')}
-                  className="sidebar__contract"
-                  onClick={() => {
-                    this.props.collapseSidebar();
-                    this.props.closeProjectOptions();
-                  }}
-                >
-                  <LeftArrowIcon focusable="false" aria-hidden="true" />
-                </button>
-                <button
-                  aria-label={this.props.t('Editor.CloseSketchARIA')}
-                  className="sidebar__expand"
-                  onClick={this.props.expandSidebar}
-                >
-                  <RightArrowIcon focusable="false" aria-hidden="true" />
-                </button>
-                <div className="editor__file-name">
-                  <span>
-                    {this.props.file.name}
-                    <UnsavedChangesIndicator />
-                  </span>
-                  <Timer />
-                </div>
-              </div>
+              <div className={editorHeader}>{editorHeaderContent}</div>
               <article
                 ref={(element) => {
                   this.codemirrorContainer = element;
@@ -672,7 +710,8 @@ Editor.propTypes = {
   provideController: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
   setSelectedFile: PropTypes.func.isRequired,
-  expandConsole: PropTypes.func.isRequired
+  expandConsole: PropTypes.func.isRequired,
+  direction: PropTypes.string.isRequired // Add direction to propTypes
 };
 
 function mapStateToProps(state) {
@@ -686,7 +725,7 @@ function mapStateToProps(state) {
     user: state.user,
     project: state.project,
     consoleEvents: state.console,
-
+    direction: state.preferences.direction, // Map direction to props
     ...state.preferences,
     ...state.ide,
     ...state.project,

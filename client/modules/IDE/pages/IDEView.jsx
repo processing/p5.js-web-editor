@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet';
 import SplitPane from 'react-split-pane';
+import classNames from 'classnames';
 import IDEKeyHandlers from '../components/IDEKeyHandlers';
 import Sidebar from '../components/Sidebar';
 import PreviewFrame from '../components/PreviewFrame';
@@ -165,6 +166,18 @@ const IDEView = () => {
     ? consoleSize
     : consoleCollapsedSize;
 
+  // for better ui in rtl
+  let editorPreviewContainerClass = 'editor-preview-container';
+  let previewFrameTitle = 'preview-frame__title';
+  const direction = useSelector((state) => state.preferences.direction);
+  if (direction === 'rtl') {
+    editorPreviewContainerClass = classNames(
+      editorPreviewContainerClass,
+      'rtl'
+    ); // add rtl
+    previewFrameTitle = 'preview-frame__title-rtl';
+  }
+
   return (
     <RootPage>
       <Helmet>
@@ -218,7 +231,7 @@ const IDEView = () => {
           </EditorSidebarWrapper>
         </>
       ) : (
-        <main className="editor-preview-container">
+        <main className={editorPreviewContainerClass}>
           <SplitPane
             split="vertical"
             size={ide.sidebarIsExpanded ? sidebarSize : 20}
@@ -266,9 +279,7 @@ const IDEView = () => {
               </SplitPane>
               <section className="preview-frame-holder">
                 <header className="preview-frame__header">
-                  <h2 className="preview-frame__title">
-                    {t('Toolbar.Preview')}
-                  </h2>
+                  <h2 className={previewFrameTitle}>{t('Toolbar.Preview')}</h2>
                 </header>
                 <div className="preview-frame__content">
                   <PreviewFrame

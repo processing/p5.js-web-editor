@@ -39,6 +39,8 @@ const preferences = (state = initialState, action) => {
       return Object.assign({}, state, { lineNumbers: action.value });
     case ActionTypes.SET_LANGUAGE:
       return Object.assign({}, state, { language: action.language });
+    case ActionTypes.SET_DIRECTION:
+      return Object.assign({}, state, { direction: action.direction });
     case ActionTypes.SET_AUTOCLOSE_BRACKETS_QUOTES:
       return Object.assign({}, state, {
         autocloseBracketsQuotes: action.value

@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useContext, useMemo } from 'react';
+import { useSelector } from 'react-redux';
 import ButtonOrLink from '../../common/ButtonOrLink';
 import { MenubarContext, ParentMenuContext } from './contexts';
 
@@ -26,8 +27,13 @@ function MenubarItem({
   const role = customRole || 'menuitem';
   const ariaSelected = role === 'option' ? { 'aria-selected': selected } : {};
 
+  // change sub menu direction
+  let newClassName = 'nav__dropdown-item';
+  const direction = useSelector((state) => state.preferences.direction);
+  if (direction === 'rtl') newClassName = 'rtl-nav__dropdown-item';
+
   return (
-    <li className={className}>
+    <li className={newClassName}>
       <ButtonOrLink {...rest} {...handlers} {...ariaSelected} role={role} />
     </li>
   );

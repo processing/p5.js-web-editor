@@ -1,18 +1,19 @@
 @use "sass:math";
 
-.nav {
+.rtl-nav {
   height: #{math.div(42, $base-font-size)}rem;
   display: flex;
   width: 100%;
   flex-direction: row;
   justify-content: space-between;
+  direction: rtl;
 
   & button {
     padding: 0;
   }
 }
 
-.nav__header {
+.rtl-nav__header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -25,8 +26,8 @@
   // padding-left: #{math.div(20, $base-font-size)}rem;
 }
 
-.nav__items-left,
-.nav__items-right {
+.rtl-nav__items-left,
+.rtl-nav__items-right {
   list-style: none;
   display: flex;
   flex-direction: row;
@@ -34,20 +35,7 @@
   height: 100%;
 }
 
-.preview-nav__editor-svg {
-  @include icon();
-}
-
-// .nav__items-left,
-// .nav__items-right {
-//   & button, & a {
-//     @include themify() {
-//       color: getThemifyVariable('primary-text-color');
-//     }
-//   }
-// }
-
-.nav__item {
+.rtl-nav__item {
   position: relative;
   display: flex;
   align-items: center;
@@ -59,18 +47,11 @@
   }
 }
 
-.nav__item--no-icon {
-  padding-left: #{math.div(15, $base-font-size)}rem;
+.rtl-nav__item--no-icon {
+  padding-right: #{math.div(15, $base-font-size)}rem;
 }
 
-.nav__item-header-triangle polygon,
-.nav__item-header-triangle path {
-  @include themify() {
-    fill: getThemifyVariable('icon-color');
-  }
-}
-
-.nav__item:hover {
+.rtl-nav__item:hover {
   .nav__item-header {
     @include themify() {
       color: getThemifyVariable('nav-hover-color');
@@ -84,15 +65,15 @@
     }
   }
 
-  .nav__item-header-triangle polygon,
-  .nav__item-header-triangle path {
+  .rtl-nav__item-header-triangle polygon,
+  .rtl-nav__item-header-triangle path {
     @include themify() {
       fill: getThemifyVariable('nav-hover-color');
     }
   }
 }
 
-.nav__item-header:hover {
+.rtl-nav__item-header:hover {
   @include themify() {
     color: getThemifyVariable('nav-hover-color');
   }
@@ -105,61 +86,57 @@
   }
 }
 
-.nav__item-header-triangle {
-  margin-left: #{math.div(5, $base-font-size)}rem;
+.rtl-nav__item-header-triangle {
+  margin-right: #{math.div(5, $base-font-size)}rem;
 }
 
-.nav__dropdown {
+.rtl-nav__dropdown {
   @include themify() {
     color: getThemifyVariable('nav-hover-color');
   }
 }
 
-.nav__item-header-triangle {
-  margin-left: #{math.div(5, $base-font-size)}rem;
+.rtl-nav__item-header-triangle {
+  margin-right: #{math.div(5, $base-font-size)}rem;
 }
 
-.nav__dropdown {
-  @extend %dropdown-open-left;
+.rtl-nav__dropdown {
+  @extend %dropdown-open-right;
   display: none;
   max-height: 60vh;
   overflow-y: auto;
 
-  .nav__item--open & {
+  .rtl-nav__item--open & {
     display: flex;
   }
 }
 
-.nav__items-right {
+.rtl-nav__items-right {
   padding-right: #{math.div(20, $base-font-size)}rem;
 
-  & .nav__dropdown {
+  & .rtl-nav__dropdown {
     width: #{math.div(125, $base-font-size)}rem;
   }
 }
 
-.nav__item-spacer {
+.rtl-nav__item-spacer {
   @include themify() {
     color: map-get($theme-map, 'inactive-text-color');
-    margin-left: #{math.div(8, $base-font-size)}rem;
+    margin-right: #{math.div(8, $base-font-size)}rem;
   }
 }
 
-.nav__item-or {
+.rtl-nav__item-or {
   @include themify() {
     color: map-get($theme-map, 'inactive-text-color');
   }
 }
 
-.nav__auth-button {
+.rtl-nav__auth-button {
   padding: #{math.div(10, $base-font-size)}rem;
 }
 
-// .nav__dropdown button {
-//   padding: 0;
-// }
-
-.nav__dropdown-item {
+.rtl-nav__dropdown-item {
 
   & button,
   & a {
@@ -171,51 +148,15 @@
   }
 }
 
-.nav__item-logo {
-  position: relative;
-  height: #{math.div(42, $base-font-size)}rem;
-  width: #{math.div(56, $base-font-size)}rem;
+.rtl-nav__items-left {
+  padding-left: #{math.div(20, $base-font-size)}rem;
 
-  & span {
-    position: absolute;
+  & .rtl-nav__dropdown {
+    width: #{math.div(125, $base-font-size)}rem;
   }
 }
 
-.svg__logo {
-
-  @include themify() {
-    // Set background color of the logo
-    background-color: getThemifyVariable('logo-color');
-  }
-
-}
-
-.svg__logo g path {
-
-  @include themify() {
-    // Set internal color of the logo;
-    fill: getThemifyVariable('logo-background-color');
-  }
-
-}
-
-
-.nav__keyboard-shortcut {
-  font-size: #{math.div(12, $base-font-size)}rem;
-  font-family: Inconsololata, monospace;
-
-  @include themify() {
-    color: getThemifyVariable('keyboard-shortcut-color');
-  }
-
-  .nav__dropdown-item:hover & {
-    @include themify() {
-      color: getThemifyVariable('button-hover-color');
-    }
-  }
-}
-
-.nav__back-icon {
+.rtl-nav__back-icon {
 
   & g,
   & path {
@@ -226,9 +167,5 @@
     }
   }
 
-  margin-right: #{math.div(5, $base-font-size)}rem;
-}
-
-.nav__back-link {
-  display: flex;
+  margin-left: #{math.div(5, $base-font-size)}rem;
 }

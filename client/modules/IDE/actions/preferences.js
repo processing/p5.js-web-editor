@@ -1,6 +1,7 @@
 import i18next from 'i18next';
 import apiClient from '../../../utils/apiClient';
 import * as ActionTypes from '../../../constants';
+import { rtlLanguageList } from '../../../i18n';
 
 function updatePreferences(formParams, dispatch) {
   apiClient
@@ -234,6 +235,11 @@ export function setLanguage(value, { persistPreference = true } = {}) {
     dispatch({
       type: ActionTypes.SET_LANGUAGE,
       language: value
+    });
+    // change direction base on language
+    dispatch({
+      type: ActionTypes.SET_DIRECTION,
+      direction: rtlLanguageList.includes(value) ? 'rtl' : 'ltr'
     });
     const state = getState();
     if (persistPreference && state.user.authenticated) {

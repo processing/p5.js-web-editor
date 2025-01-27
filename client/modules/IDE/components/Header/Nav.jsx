@@ -4,6 +4,7 @@ import { sortBy } from 'lodash';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import classNames from 'classnames';
 import MenubarSubmenu from '../../../../components/Menubar/MenubarSubmenu';
 import MenubarItem from '../../../../components/Menubar/MenubarItem';
 import { availableLanguages, languageKeyToLabel } from '../../../../i18n';
@@ -12,6 +13,7 @@ import { showToast } from '../../actions/toast';
 import { setLanguage } from '../../actions/preferences';
 import Menubar from '../../../../components/Menubar/Menubar';
 import CaretLeftIcon from '../../../../images/left-arrow.svg';
+import CaretRightIcon from '../../../../images/right-arrow.svg';
 import LogoIcon from '../../../../images/p5js-logo-small.svg';
 import { selectRootFile } from '../../selectors/files';
 import { selectSketchPath } from '../../selectors/project';
@@ -90,6 +92,28 @@ const UserMenu = () => {
 const DashboardMenu = () => {
   const { t } = useTranslation();
   const editorLink = useSelector(selectSketchPath);
+
+  // for better ui in rtl
+  const direction = useSelector((state) => state.preferences.direction);
+  let rtlNavItemNoIconClass = classNames('nav__item', 'nav__item--no-icon');
+  let caretIcon = (
+    <CaretLeftIcon
+      className="nav__back-icon"
+      focusable="false"
+      aria-hidden="true"
+    />
+  );
+  if (direction === 'rtl') {
+    rtlNavItemNoIconClass = classNames('nav__item', 'rtl-nav__item--no-icon');
+    caretIcon = (
+      <CaretRightIcon
+        className="rtl-nav__back-icon"
+        focusable="false"
+        aria-hidden="true"
+      />
+    );
+  }
+
   return (
     <ul className="nav__items-left">
       <li className="nav__item-logo">
@@ -100,13 +124,9 @@ const DashboardMenu = () => {
           className="svg__logo"
         />
       </li>
-      <li className="nav__item nav__item--no-icon">
+      <li className={rtlNavItemNoIconClass}>
         <Link to={editorLink} className="nav__back-link">
-          <CaretLeftIcon
-            className="nav__back-icon"
-            focusable="false"
-            aria-hidden="true"
-          />
+          {caretIcon}
           <span className="nav__item-header">{t('Nav.BackEditor')}</span>
         </Link>
       </li>
@@ -290,8 +310,17 @@ const LanguageMenu = () => {
 
 const UnauthenticatedUserMenu = () => {
   const { t } = useTranslation();
+
+  // for better padding in rtl
+  const direction = useSelector((state) => state.preferences.direction);
+
   return (
-    <ul className="nav__items-right" title="user-menu">
+    <ul
+      className={
+        direction === 'rtl' ? 'rtl-nav__items-left' : 'nav__items-right'
+      }
+      title="user-menu"
+    >
       <li className="nav__item">
         <Link to="/login" className="nav__auth-button">
           <span className="nav__item-header" title="Login">
@@ -319,8 +348,16 @@ const AuthenticatedUserMenu = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
+  // for better padding in rtl
+  const direction = useSelector((state) => state.preferences.direction);
+
   return (
-    <ul className="nav__items-right" title="user-menu">
+    <ul
+      className={
+        direction === 'rtl' ? 'rtl-nav__items-right' : 'nav__items-right'
+      }
+      title="user-menu"
+    >
       <MenubarSubmenu
         id="account"
         title={

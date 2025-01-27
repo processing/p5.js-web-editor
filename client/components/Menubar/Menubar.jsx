@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 import useModalClose from '../../common/useModalClose';
 import { MenuOpenContext, MenubarContext } from './contexts';
 
@@ -62,9 +63,14 @@ function Menubar({ children, className }) {
     [setMenuOpen, toggleMenuOpen, clearHideTimeout, handleBlur]
   );
 
+  // change menu direction to rtl for rtl languages like [urdo, persian, arabic, ...]
+  let newClassName = className;
+  const direction = useSelector((state) => state.preferences.direction);
+  if (direction === 'rtl') newClassName = 'rtl-nav';
+
   return (
     <MenubarContext.Provider value={contextValue}>
-      <div className={className} ref={nodeRef}>
+      <div className={newClassName} ref={nodeRef}>
         <MenuOpenContext.Provider value={menuOpen}>
           {children}
         </MenuOpenContext.Provider>

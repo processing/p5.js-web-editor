@@ -1,0 +1,29 @@
+@use "sass:math";
+
+.editor__header-rtl {
+  height: #{math.div(29, $base-font-size)}rem;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row-reverse;
+  align-items: center;
+}
+
+.editor__file-name-rtl {
+  @include themify() {
+    color: getThemifyVariable("primary-text-color");
+  }
+  height: #{math.div(29, $base-font-size)}rem;
+  padding-top: #{math.div(7, $base-font-size)}rem;
+  padding-right: #{math.div(56, $base-font-size)}rem;
+  font-size: #{math.div(12, $base-font-size)}rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.editor__unsaved-changes-rtl {
+  margin-right: #{math.div(2, $base-font-size)}rem;
+}
+
+.editor__header-rtl button{
+  position: static;
+}

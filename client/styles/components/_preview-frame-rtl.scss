@@ -1,0 +1,12 @@
+@use "sass:math";
+
+.preview-frame__title-rtl {
+  @include themify() {
+    color: getThemifyVariable('secondary-text-color');
+  }
+  height: #{math.div(29, $base-font-size)}rem;
+  padding-top: #{math.div(7, $base-font-size)}rem;
+  padding-right: #{math.div(5, $base-font-size)}rem;
+  font-size: #{math.div(12, $base-font-size)}rem;
+  font-weight: normal;
+}

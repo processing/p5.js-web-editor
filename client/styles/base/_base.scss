@@ -9,24 +9,35 @@ body {
 	font-size: #{$base-font-size}px;
 }
 
+.rtl {
+	direction: rtl;
+}
+
+.ltr {
+	direction: ltr;
+}
 
 /* Styles for non-touch devices */
 @media (hover: hover) and (pointer: fine) {
+
 	/*Scrollbar theming */
 	/* width */
 	::-webkit-scrollbar {
 		width: 10px;
 	}
+
 	/* Track */
 	::-webkit-scrollbar-track {
 		@include themify() {
 			color: getThemifyVariable("modal-border-color");
 		}
 	}
+
 	/* Handle */
 	::-webkit-scrollbar-thumb {
 		background: #888;
 	}
+
 	/* Handle on hover */
 	::-webkit-scrollbar-thumb:hover {
 		background: #555;
@@ -71,6 +82,7 @@ textarea {
 	border: 1px solid;
 	border-radius: 2px;
 	padding: #{math.div(10, $base-font-size)}rem;
+
 	@include themify() {
 		color: getThemifyVariable("input-text-color");
 		background-color: getThemifyVariable("input-background-color");
@@ -102,6 +114,7 @@ button {
 	@include themify() {
 		@extend %link;
 	}
+
 	background: transparent;
 	border: none;
 }
@@ -118,16 +131,20 @@ h3 {
 	font-weight: normal;
 	font-size: #{math.div(16, $base-font-size)}rem;
 }
+
 h4 {
 	font-weight: normal;
 }
+
 h6 {
 	font-weight: normal;
 	font-size: #{math.div(12, $base-font-size)}rem;
 }
+
 thead {
 	text-align: left;
 }
+
 th {
 	text-align: left;
 }
