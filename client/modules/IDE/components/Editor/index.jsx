@@ -34,7 +34,6 @@ import 'codemirror/addon/edit/closebrackets';
 import 'codemirror/addon/selection/mark-selection';
 import 'codemirror-colorpicker';
 
-import { CSSLint } from 'csslint';
 import classNames from 'classnames';
 import { debounce } from 'lodash';
 import { connect } from 'react-redux';
@@ -70,8 +69,6 @@ import IconButton from '../../../../common/IconButton';
 import { showHint, hideHinter } from './hinter';
 
 emmet(CodeMirror);
-
-window.CSSLint = CSSLint;
 
 const INDENTATION_AMOUNT = 2;
 

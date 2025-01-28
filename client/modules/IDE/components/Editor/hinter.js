@@ -2,13 +2,14 @@ import Fuse from 'fuse.js';
 import CodeMirror from 'codemirror';
 import { JSHINT } from 'jshint';
 import { HTMLHint } from 'htmlhint';
+import { CSSLint } from 'csslint';
+
 import 'codemirror/addon/hint/css-hint';
-
 import * as hinterDefinition from '../../../../utils/p5-hinter';
-import '../show-hint'; // Remove for codemirror v6?
+import '../show-hint'; // TODO: Remove for codemirror v6?
 
-// Are we using these?????
 window.JSHINT = JSHINT;
+window.CSSLint = CSSLint;
 window.HTMLHint = HTMLHint;
 
 const hinter = new Fuse(hinterDefinition.p5Hinter, {
