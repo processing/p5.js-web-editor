@@ -18,8 +18,8 @@ const hinter = new Fuse(hinterDefinition.p5Hinter, {
 });
 
 /** Hides the hinter. */
-export function hideHinter() {
-  CodeMirror.showHint(this._cm, () => {}, {});
+export function hideHinter(cmInstance) {
+  CodeMirror.showHint(cmInstance, () => {}, {});
 }
 
 /**

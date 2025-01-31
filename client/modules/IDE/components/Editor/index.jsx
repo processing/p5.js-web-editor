@@ -269,7 +269,7 @@ class Editor extends React.Component {
     if (this.props.autocompleteHinter !== prevProps.autocompleteHinter) {
       if (!this.props.autocompleteHinter) {
         // close the hinter window once the preference is turned off
-        hideHinter();
+        hideHinter(this._cm);
       }
     }
 
