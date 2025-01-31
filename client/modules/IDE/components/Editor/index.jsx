@@ -3,7 +3,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import CodeMirror from 'codemirror';
-import Fuse from 'fuse.js';
 import emmet from '@emmetio/codemirror-plugin';
 import prettier from 'prettier/standalone';
 import babelParser from 'prettier/parser-babel';
@@ -33,12 +32,8 @@ import 'codemirror/addon/search/jump-to-line';
 import 'codemirror/addon/edit/matchbrackets';
 import 'codemirror/addon/edit/closebrackets';
 import 'codemirror/addon/selection/mark-selection';
-import 'codemirror/addon/hint/css-hint';
 import 'codemirror-colorpicker';
 
-import { JSHINT } from 'jshint';
-import { CSSLint } from 'csslint';
-import { HTMLHint } from 'htmlhint';
 import classNames from 'classnames';
 import { debounce } from 'lodash';
 import { connect } from 'react-redux';
@@ -47,8 +42,6 @@ import MediaQuery from 'react-responsive';
 import '../../../../utils/htmlmixed';
 import '../../../../utils/p5-javascript';
 import { metaKey } from '../../../../utils/metaKey';
-import '../show-hint';
-import * as hinter from '../../../../utils/p5-hinter';
 import '../../../../utils/codemirror-search';
 
 import beepUrl from '../../../../sounds/audioAlert.mp3';
@@ -73,11 +66,9 @@ import { EditorContainer, EditorHolder } from './MobileEditor';
 import { FolderIcon } from '../../../../common/icons';
 import IconButton from '../../../../common/IconButton';
 
-emmet(CodeMirror);
+import { showHint, hideHinter } from './hinter';
 
-window.JSHINT = JSHINT;
-window.CSSLint = CSSLint;
-window.HTMLHint = HTMLHint;
+emmet(CodeMirror);
 
 const INDENTATION_AMOUNT = 2;
 
@@ -146,11 +137,6 @@ class Editor extends React.Component {
       }
     });
 
-    this.hinter = new Fuse(hinter.p5Hinter, {
-      threshold: 0.05,
-      keys: ['text']
-    });
-
     delete this._cm.options.lint.options.errors;
 
     const replaceCommand =
@@ -207,7 +193,7 @@ class Editor extends React.Component {
       // Show hint
       const mode = this._cm.getOption('mode');
       if (/^[a-z]$/i.test(e.key) && (mode === 'css' || mode === 'javascript')) {
-        this.showHint(_cm);
+        showHint(_cm, this.props.autocompleteHinter, this.props.fontSize);
       }
       if (e.key === 'Escape') {
         e.preventDefault();
@@ -283,7 +269,7 @@ class Editor extends React.Component {
     if (this.props.autocompleteHinter !== prevProps.autocompleteHinter) {
       if (!this.props.autocompleteHinter) {
         // close the hinter window once the preference is turned off
-        CodeMirror.showHint(this._cm, () => {}, {});
+        hideHinter(this._cm);
       }
     }
 
@@ -376,99 +362,6 @@ class Editor extends React.Component {
 
   showFind() {
     this._cm.execCommand('findPersistent');
-  }
-
-  showHint(_cm) {
-    if (!this.props.autocompleteHinter) {
-      CodeMirror.showHint(_cm, () => {}, {});
-      return;
-    }
-
-    let focusedLinkElement = null;
-    const setFocusedLinkElement = (set) => {
-      if (set && !focusedLinkElement) {
-        const activeItemLink = document.querySelector(
-          `.CodeMirror-hint-active a`
-        );
-        if (activeItemLink) {
-          focusedLinkElement = activeItemLink;
-          focusedLinkElement.classList.add('focused-hint-link');
-          focusedLinkElement.parentElement.parentElement.classList.add(
-            'unfocused'
-          );
-        }
-      }
-    };
-    const removeFocusedLinkElement = () => {
-      if (focusedLinkElement) {
-        focusedLinkElement.classList.remove('focused-hint-link');
-        focusedLinkElement.parentElement.parentElement.classList.remove(
-          'unfocused'
-        );
-        focusedLinkElement = null;
-        return true;
-      }
-      return false;
-    };
-
-    const hintOptions = {
-      _fontSize: this.props.fontSize,
-      completeSingle: false,
-      extraKeys: {
-        'Shift-Right': (cm, e) => {
-          const activeItemLink = document.querySelector(
-            `.CodeMirror-hint-active a`
-          );
-          if (activeItemLink) activeItemLink.click();
-        },
-        Right: (cm, e) => {
-          setFocusedLinkElement(true);
-        },
-        Left: (cm, e) => {
-          removeFocusedLinkElement();
-        },
-        Up: (cm, e) => {
-          const onLink = removeFocusedLinkElement();
-          e.moveFocus(-1);
-          setFocusedLinkElement(onLink);
-        },
-        Down: (cm, e) => {
-          const onLink = removeFocusedLinkElement();
-          e.moveFocus(1);
-          setFocusedLinkElement(onLink);
-        },
-        Enter: (cm, e) => {
-          if (focusedLinkElement) focusedLinkElement.click();
-          else e.pick();
-        }
-      },
-      closeOnUnfocus: false
-    };
-
-    if (_cm.options.mode === 'javascript') {
-      // JavaScript
-      CodeMirror.showHint(
-        _cm,
-        () => {
-          const c = _cm.getCursor();
-          const token = _cm.getTokenAt(c);
-
-          const hints = this.hinter
-            .search(token.string)
-            .filter((h) => h.item.text[0] === token.string[0]);
-
-          return {
-            list: hints,
-            from: CodeMirror.Pos(c.line, token.start),
-            to: CodeMirror.Pos(c.line, c.ch)
-          };
-        },
-        hintOptions
-      );
-    } else if (_cm.options.mode === 'css') {
-      // CSS
-      CodeMirror.showHint(_cm, CodeMirror.hint.css, hintOptions);
-    }
   }
 
   showReplace() {
