@@ -27,18 +27,22 @@ const CoordinateTracker = (isPlaying) => {
   const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
+    console.log('we here');
     let isListenerAttached = false;
+    let mouseMoveHandler;
+    let canvas;
 
     const waitForCanvas = () => {
       const iFrame = document.getElementById('previewIframe0');
-      const canvas = iFrame.contentWindow.document.getElementById(
-        'defaultCanvas0'
-      );
+      canvas = iFrame.contentWindow.document.getElementById('defaultCanvas0');
+      console.log('iframe: ', iFrame);
 
       if (canvas && !isListenerAttached) {
         isListenerAttached = true;
+        console.log('Adding listener');
 
-        const mouseMoveHandler = (event) => {
+        mouseMoveHandler = (event) => {
+          console.log('hellooooo');
           const rect = canvas.getBoundingClientRect();
           const x = event.clientX - rect.left;
           const y = event.clientY - rect.top;
@@ -46,23 +50,31 @@ const CoordinateTracker = (isPlaying) => {
           setCoordinates({ x, y });
         };
 
-        canvas.addEventListener('mousemove', mouseMoveHandler);
+        console.log('mouseMoveHandler', mouseMoveHandler);
+        console.log('canvas', canvas);
 
-        const observer = new MutationObserver(() => {
-          if (!document.body.contains(canvas)) {
-            canvas.removeEventListener('mousemove', mouseMoveHandler);
-            observer.disconnect();
-            isListenerAttached = false;
-          }
-        });
-
-        observer.observe(document.body, { childList: true, subtree: true });
+        document
+          .querySelector('#defaultCanvas0')
+          .addEventListener('mousemove', () => {
+            console.log('Button clicked!');
+            mouseMoveHandler();
+          });
+        // canvas.addEventListener('mousemove', mouseMoveHandler);
       } else if (!canvas) {
         setTimeout(waitForCanvas, 500);
       }
     };
 
     waitForCanvas();
+
+    return () => {
+      if (canvas && isListenerAttached) {
+        console.log('Removing listener');
+        canvas.removeEventListener('mousemove', mouseMoveHandler);
+        canvas = null;
+        isListenerAttached = false;
+      }
+    };
   }, [isPlaying]);
 
   return (
