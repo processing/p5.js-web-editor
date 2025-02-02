@@ -5,10 +5,10 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { sortBy } from 'lodash';
 import classNames from 'classnames';
-import { ParentMenuContext } from '../../../../components/Nav/contexts';
-import NavBar from '../../../../components/Nav/NavBar';
-import { useMenuProps } from '../../../../components/Nav/NavDropdownMenu';
-import NavMenuItem from '../../../../components/Nav/NavMenuItem';
+import { ParentMenuContext } from '../../../../components/Menubar/contexts';
+import Menubar from '../../../../components/Menubar/Menubar';
+import { useMenuProps } from '../../../../components/Menubar/MenubarSubmenu';
+import NavMenuItem from '../../../../components/Menubar/MenubarItem';
 import { prop, remSize } from '../../../../theme';
 import AsteriskIcon from '../../../../images/p5-asterisk.svg';
 import IconButton from '../../../../common/IconButton';
@@ -36,7 +36,7 @@ import Overlay from '../../../App/components/Overlay';
 import ProjectName from './ProjectName';
 import CollectionCreate from '../../../User/components/CollectionCreate';
 
-const Nav = styled(NavBar)`
+const Nav = styled(Menubar)`
   background: ${prop('MobilePanel.default.background')};
   color: ${prop('primaryTextColor')};
   padding: ${remSize(8)} 0;
