@@ -4,10 +4,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import CodeMirror from 'codemirror';
 import emmet from '@emmetio/codemirror-plugin';
-import prettier from 'prettier/standalone';
-import babelParser from 'prettier/parser-babel';
-import htmlParser from 'prettier/parser-html';
-import cssParser from 'prettier/parser-postcss';
 import { withTranslation } from 'react-i18next';
 import StackTrace from 'stacktrace-js';
 import 'codemirror/mode/css/css';
@@ -67,6 +63,8 @@ import { FolderIcon } from '../../../../common/icons';
 import IconButton from '../../../../common/IconButton';
 
 import { showHint, hideHinter } from './hinter';
+import getFileMode from './utils';
+import tidyCode from './tidier';
 
 emmet(CodeMirror);
 
@@ -79,7 +77,6 @@ class Editor extends React.Component {
       currentLine: 1
     };
     this._cm = null;
-    this.tidyCode = this.tidyCode.bind(this);
 
     this.updateLintingMessageAccessibility = debounce((annotations) => {
       this.props.clearLintMessage();
@@ -157,7 +154,7 @@ class Editor extends React.Component {
       [`${metaKey}-Enter`]: () => null,
       [`Shift-${metaKey}-Enter`]: () => null,
       [`${metaKey}-F`]: 'findPersistent',
-      [`Shift-${metaKey}-F`]: this.tidyCode,
+      [`Shift-${metaKey}-F`]: () => tidyCode(this._cm),
       [`${metaKey}-G`]: 'findPersistentNext',
       [`Shift-${metaKey}-G`]: 'findPersistentPrev',
       [replaceCommand]: 'replace',
@@ -206,7 +203,7 @@ class Editor extends React.Component {
     ] = `${this.props.fontSize}px`;
 
     this.props.provideController({
-      tidyCode: this.tidyCode,
+      tidyCode: () => tidyCode(this._cm),
       showFind: this.showFind,
       showReplace: this.showReplace,
       getContent: this.getContent
@@ -226,7 +223,7 @@ class Editor extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.file.id !== prevProps.file.id) {
-      const fileMode = this.getFileMode(this.props.file.name);
+      const fileMode = getFileMode(this.props.file.name);
       if (fileMode === 'javascript') {
         // Define the new Emmet configuration based on the file mode
         const emmetConfig = {
@@ -315,7 +312,7 @@ class Editor extends React.Component {
     }
 
     this.props.provideController({
-      tidyCode: this.tidyCode,
+      tidyCode: () => tidyCode(this._cm),
       showFind: this.showFind,
       showReplace: this.showReplace,
       getContent: this.getContent
@@ -327,26 +324,6 @@ class Editor extends React.Component {
       this._cm.off('keyup', this.handleKeyUp);
     }
     this.props.provideController(null);
-  }
-
-  getFileMode(fileName) {
-    let mode;
-    if (fileName.match(/.+\.js$/i)) {
-      mode = 'javascript';
-    } else if (fileName.match(/.+\.css$/i)) {
-      mode = 'css';
-    } else if (fileName.match(/.+\.(html|xml)$/i)) {
-      mode = 'htmlmixed';
-    } else if (fileName.match(/.+\.json$/i)) {
-      mode = 'application/json';
-    } else if (fileName.match(/.+\.(frag|glsl)$/i)) {
-      mode = 'x-shader/x-fragment';
-    } else if (fileName.match(/.+\.(vert|stl|mtl)$/i)) {
-      mode = 'x-shader/x-vertex';
-    } else {
-      mode = 'text/plain';
-    }
-    return mode;
   }
 
   getContent() {
@@ -368,44 +345,13 @@ class Editor extends React.Component {
     this._cm.execCommand('replace');
   }
 
-  prettierFormatWithCursor(parser, plugins) {
-    try {
-      const { formatted, cursorOffset } = prettier.formatWithCursor(
-        this._cm.doc.getValue(),
-        {
-          cursorOffset: this._cm.doc.indexFromPos(this._cm.doc.getCursor()),
-          parser,
-          plugins
-        }
-      );
-      const { left, top } = this._cm.getScrollInfo();
-      this._cm.doc.setValue(formatted);
-      this._cm.focus();
-      this._cm.doc.setCursor(this._cm.doc.posFromIndex(cursorOffset));
-      this._cm.scrollTo(left, top);
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  tidyCode() {
-    const mode = this._cm.getOption('mode');
-    if (mode === 'javascript') {
-      this.prettierFormatWithCursor('babel', [babelParser]);
-    } else if (mode === 'css') {
-      this.prettierFormatWithCursor('css', [cssParser]);
-    } else if (mode === 'htmlmixed') {
-      this.prettierFormatWithCursor('html', [htmlParser]);
-    }
-  }
-
   initializeDocuments(files) {
     this._docs = {};
     files.forEach((file) => {
       if (file.name !== 'root') {
         this._docs[file.id] = CodeMirror.Doc(
           file.content,
-          this.getFileMode(file.name)
+          getFileMode(file.name)
         ); // eslint-disable-line
       }
     });
