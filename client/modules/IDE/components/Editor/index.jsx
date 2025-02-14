@@ -3,32 +3,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import CodeMirror from 'codemirror';
-import emmet from '@emmetio/codemirror-plugin';
 import { withTranslation } from 'react-i18next';
 import StackTrace from 'stacktrace-js';
-import 'codemirror/mode/css/css';
-import 'codemirror/mode/clike/clike';
-import 'codemirror/addon/selection/active-line';
-import 'codemirror/addon/lint/lint';
-import 'codemirror/addon/lint/javascript-lint';
-import 'codemirror/addon/lint/css-lint';
-import 'codemirror/addon/lint/html-lint';
-import 'codemirror/addon/fold/brace-fold';
-import 'codemirror/addon/fold/comment-fold';
-import 'codemirror/addon/fold/foldcode';
-import 'codemirror/addon/fold/foldgutter';
-import 'codemirror/addon/fold/indent-fold';
-import 'codemirror/addon/fold/xml-fold';
-import 'codemirror/addon/comment/comment';
-import 'codemirror/keymap/sublime';
-import 'codemirror/addon/search/searchcursor';
-import 'codemirror/addon/search/matchesonscrollbar';
-import 'codemirror/addon/search/match-highlighter';
-import 'codemirror/addon/search/jump-to-line';
-import 'codemirror/addon/edit/matchbrackets';
-import 'codemirror/addon/edit/closebrackets';
-import 'codemirror/addon/selection/mark-selection';
-import 'codemirror-colorpicker';
 
 import classNames from 'classnames';
 import { debounce } from 'lodash';
@@ -37,7 +13,6 @@ import { bindActionCreators } from 'redux';
 import MediaQuery from 'react-responsive';
 import '../../../../utils/htmlmixed';
 import '../../../../utils/p5-javascript';
-import { metaKey } from '../../../../utils/metaKey';
 import '../../../../utils/codemirror-search';
 
 import beepUrl from '../../../../sounds/audioAlert.mp3';
@@ -62,13 +37,10 @@ import { EditorContainer, EditorHolder } from './MobileEditor';
 import { FolderIcon } from '../../../../common/icons';
 import IconButton from '../../../../common/IconButton';
 
-import { showHint, hideHinter } from './hinter';
+import { hideHinter } from './hinter';
 import getFileMode from './utils';
 import tidyCode from './tidier';
-
-emmet(CodeMirror);
-
-const INDENTATION_AMOUNT = 2;
+import setupCodeMirror from './codemirror';
 
 class Editor extends React.Component {
   constructor(props) {
@@ -96,120 +68,17 @@ class Editor extends React.Component {
 
   componentDidMount() {
     this.beep = new Audio(beepUrl);
-    // this.widgets = [];
-    this._cm = CodeMirror(this.codemirrorContainer, {
-      theme: `p5-${this.props.theme}`,
-      lineNumbers: this.props.lineNumbers,
-      styleActiveLine: true,
-      inputStyle: 'contenteditable',
-      lineWrapping: this.props.linewrap,
-      fixedGutter: false,
-      foldGutter: true,
-      foldOptions: { widget: '\u2026' },
-      gutters: ['CodeMirror-foldgutter', 'CodeMirror-lint-markers'],
-      keyMap: 'sublime',
-      highlightSelectionMatches: true, // highlight current search match
-      matchBrackets: true,
-      emmet: {
-        preview: ['html'],
-        markTagPairs: true,
-        autoRenameTags: true
-      },
-      autoCloseBrackets: this.props.autocloseBracketsQuotes,
-      styleSelectedText: true,
-      lint: {
-        onUpdateLinting: (annotations) => {
-          this.updateLintingMessageAccessibility(annotations);
-        },
-        options: {
-          asi: true,
-          eqeqeq: false,
-          '-W041': false,
-          esversion: 11
-        }
-      },
-      colorpicker: {
-        type: 'sketch',
-        mode: 'edit'
-      }
-    });
-
-    delete this._cm.options.lint.options.errors;
-
-    const replaceCommand =
-      metaKey === 'Ctrl' ? `${metaKey}-H` : `${metaKey}-Option-F`;
-    this._cm.setOption('extraKeys', {
-      Tab: (cm) => {
-        if (!cm.execCommand('emmetExpandAbbreviation')) return;
-        // might need to specify and indent more?
-        const selection = cm.doc.getSelection();
-        if (selection.length > 0) {
-          cm.execCommand('indentMore');
-        } else {
-          cm.replaceSelection(' '.repeat(INDENTATION_AMOUNT));
-        }
-      },
-      Enter: 'emmetInsertLineBreak',
-      Esc: 'emmetResetAbbreviation',
-      [`Shift-Tab`]: false,
-      [`${metaKey}-Enter`]: () => null,
-      [`Shift-${metaKey}-Enter`]: () => null,
-      [`${metaKey}-F`]: 'findPersistent',
-      [`Shift-${metaKey}-F`]: () => tidyCode(this._cm),
-      [`${metaKey}-G`]: 'findPersistentNext',
-      [`Shift-${metaKey}-G`]: 'findPersistentPrev',
-      [replaceCommand]: 'replace',
-      // Cassie Tarakajian: If you don't set a default color, then when you
-      // choose a color, it deletes characters inline. This is a
-      // hack to prevent that.
-      [`${metaKey}-K`]: (cm, event) =>
-        cm.state.colorpicker.popup_color_picker({ length: 0 }),
-      [`${metaKey}-.`]: 'toggleComment' // Note: most adblockers use the shortcut ctrl+.
-    });
-
     this.initializeDocuments(this.props.files);
-    this._cm.swapDoc(this._docs[this.props.file.id]);
 
-    this._cm.on(
-      'change',
-      debounce(() => {
-        this.props.setUnsavedChanges(true);
-        this.props.hideRuntimeErrorWarning();
-        this.props.updateFileContent(this.props.file.id, this._cm.getValue());
-        if (this.props.autorefresh && this.props.isPlaying) {
-          this.props.clearConsole();
-          this.props.startSketch();
-        }
-      }, 1000)
+    this._cm = setupCodeMirror(
+      this.codemirrorContainer,
+      this.props,
+      (annotations) => {
+        this.updateLintingMessageAccessibility(annotations);
+      },
+      this._docs,
+      (lineNumber) => this.setState({ currentLine: lineNumber })
     );
-
-    if (this._cm) {
-      this._cm.on('keyup', this.handleKeyUp);
-    }
-
-    this._cm.on('keydown', (_cm, e) => {
-      // Show hint
-      const mode = this._cm.getOption('mode');
-      if (/^[a-z]$/i.test(e.key) && (mode === 'css' || mode === 'javascript')) {
-        showHint(_cm, this.props.autocompleteHinter, this.props.fontSize);
-      }
-      if (e.key === 'Escape') {
-        e.preventDefault();
-        const selections = this._cm.listSelections();
-
-        if (selections.length > 1) {
-          const firstPos = selections[0].head || selections[0].anchor;
-          this._cm.setSelection(firstPos);
-          this._cm.scrollIntoView(firstPos);
-        } else {
-          this._cm.getInputField().blur();
-        }
-      }
-    });
-
-    this._cm.getWrapperElement().style[
-      'font-size'
-    ] = `${this.props.fontSize}px`;
 
     this.props.provideController({
       tidyCode: () => tidyCode(this._cm),
@@ -340,11 +209,6 @@ class Editor extends React.Component {
     const updatedFile = Object.assign({}, this.props.file, { content });
     return updatedFile;
   }
-
-  handleKeyUp = () => {
-    const lineNumber = parseInt(this._cm.getCursor().line + 1, 10);
-    this.setState({ currentLine: lineNumber });
-  };
 
   showFind() {
     this._cm.execCommand('findPersistent');
@@ -488,7 +352,7 @@ Editor.propTypes = {
   ).isRequired,
   updateLintMessage: PropTypes.func.isRequired,
   clearLintMessage: PropTypes.func.isRequired,
-  updateFileContent: PropTypes.func.isRequired,
+  // updateFileContent: PropTypes.func.isRequired,
   fontSize: PropTypes.number.isRequired,
   file: PropTypes.shape({
     name: PropTypes.string.isRequired,
@@ -498,9 +362,9 @@ Editor.propTypes = {
     url: PropTypes.string
   }).isRequired,
   setUnsavedChanges: PropTypes.func.isRequired,
-  startSketch: PropTypes.func.isRequired,
-  autorefresh: PropTypes.bool.isRequired,
-  isPlaying: PropTypes.bool.isRequired,
+  // startSketch: PropTypes.func.isRequired,
+  // autorefresh: PropTypes.bool.isRequired,
+  // isPlaying: PropTypes.bool.isRequired,
   theme: PropTypes.string.isRequired,
   unsavedChanges: PropTypes.bool.isRequired,
   files: PropTypes.arrayOf(
@@ -514,8 +378,8 @@ Editor.propTypes = {
   collapseSidebar: PropTypes.func.isRequired,
   closeProjectOptions: PropTypes.func.isRequired,
   expandSidebar: PropTypes.func.isRequired,
-  clearConsole: PropTypes.func.isRequired,
-  hideRuntimeErrorWarning: PropTypes.func.isRequired,
+  // clearConsole: PropTypes.func.isRequired,
+  // hideRuntimeErrorWarning: PropTypes.func.isRequired,
   runtimeErrorWarningVisible: PropTypes.bool.isRequired,
   provideController: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
