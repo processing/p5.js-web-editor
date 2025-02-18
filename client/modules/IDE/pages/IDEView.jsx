@@ -20,6 +20,7 @@ import { getIsUserOwner } from '../selectors/users';
 import RootPage from '../../../components/RootPage';
 import Header from '../components/Header';
 import FloatingActionButton from '../components/FloatingActionButton';
+import ShowOutputButton from '../components/showOutputButton';
 import Editor from '../components/Editor';
 import {
   EditorSidebarWrapper,
@@ -102,6 +103,7 @@ const IDEView = () => {
 
   const [consoleSize, setConsoleSize] = useState(150);
   const [sidebarSize, setSidebarSize] = useState(160);
+  const [showOutput, setShowOutput] = useState(false);
   const [isOverlayVisible, setIsOverlayVisible] = useState(false);
   const [MaxSize, setMaxSize] = useState(window.innerWidth);
 
@@ -114,6 +116,13 @@ const IDEView = () => {
     dispatch(updateFileContent(file.id, file.content));
   };
 
+  useEffect(() => {
+    if (ide.isPlaying) {
+      setShowOutput(true);
+    } else {
+      setShowOutput(false);
+    }
+  }, [ide.isPlaying]);
   useEffect(() => {
     dispatch(clearPersistedState());
   }, [dispatch]);
@@ -182,7 +191,11 @@ const IDEView = () => {
             syncFileContent={syncFileContent}
             offsetBottom={ide.isPlaying ? currentConsoleSize : 0}
           />
-          <PreviewWrapper show={ide.isPlaying}>
+          <ShowOutputButton
+            showOutput={showOutput}
+            setShowOutput={setShowOutput}
+          />
+          <PreviewWrapper show={showOutput}>
             <SplitPane
               style={{ position: 'static' }}
               split="horizontal"
@@ -201,14 +214,14 @@ const IDEView = () => {
             >
               <PreviewFrame
                 fullView
-                hide={!ide.isPlaying}
+                hide={!showOutput}
                 cmController={cmRef.current}
                 isOverlayVisible={isOverlayVisible}
               />
               <Console />
             </SplitPane>
           </PreviewWrapper>
-          <EditorSidebarWrapper show={!ide.isPlaying}>
+          <EditorSidebarWrapper show={!showOutput}>
             <Sidebar />
             <Editor
               provideController={(ctl) => {
