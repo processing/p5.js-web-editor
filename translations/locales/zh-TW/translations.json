@@ -370,7 +370,7 @@
     "InvalidTokenNull": "連結無效",
     "Checking": "驗證權杖中, 請稍後...",
     "Verified": "完成, 你的電子郵件已經通過驗證",
-    "InvalidState": "有地方出錯了"
+    "InvalidState": "令牌無效或已過期。"
   },
   "AssetList": {
     "Title": "p5.js 網頁編輯器 | 我的資產",

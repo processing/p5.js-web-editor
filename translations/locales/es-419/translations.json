@@ -367,7 +367,7 @@
     "InvalidTokenNull": "La liga es inválida.",
     "Checking": "Validando token, por favor espera...",
     "Verified": "Concluido, tu correo electrónico ha sido verificado.",
-    "InvalidState": "Algo salió mal."
+    "InvalidState": "El token no es válido o ha expirado."
   },
   "AssetList": {
     "Title": "Editor Web p5.js | Mis recursos",

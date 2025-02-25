@@ -370,7 +370,7 @@
     "InvalidTokenNull": "这个链接是无效的。",
     "Checking": "正在验证令牌，请耐心等待……",
     "Verified": "完成！您的邮箱地址已验证成功。",
-    "InvalidState": "出了一些问题。"
+    "InvalidState": "令牌无效或已过期。"
   },
   "AssetList": {
     "Title": "p5.js 在线编辑器 ｜ 我的项目",

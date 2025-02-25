@@ -370,7 +370,7 @@
     "InvalidTokenNull": "Quel link non è valido.",
     "Checking": "Validazione codice, prego attendere...",
     "Verified": "Fatto tutto, il tuo indirizzo email è stato verificato.",
-    "InvalidState": "Qualcosa è andato storto."
+    "InvalidState": "Il token non è valido o è scaduto."
   },
   "AssetList": {
     "Title": "p5.js redattore web | Mie risorse",

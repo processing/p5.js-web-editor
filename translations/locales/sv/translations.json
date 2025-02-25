@@ -367,7 +367,7 @@
     "InvalidTokenNull": "Den länken är ogiltig.",
     "Checking": "Validerar token, var god vänta...",
     "Verified": "Allt klart, din e-postadress är verifierad.",
-    "InvalidState": "Någonting gick fel."
+    "InvalidState": "Token är ogiltig eller har upphört att gälla."
   },
   "AssetList": {
     "Title": "p5.js Webb editor | Mina resurser",

@@ -368,7 +368,7 @@
       "InvalidTokenNull": "そのリンクは無効です。",
       "Checking": "トークンを検証中です、お待ちください...",
       "Verified": "すべて完了しました、あなたのメールアドレスは確認されました。",
-      "InvalidState": "何か問題が発生しました。"
+      "InvalidState": "トークンが無効または期限切れです。"
     },
     "AssetList": {
       "Title": "p5.js ウェブエディター | マイアセット",

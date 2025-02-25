@@ -1,0 +1,654 @@
+{
+    "Nav": {
+      "File": {
+        "Title": "ఫైల్",
+        "New": "కొత్తది",
+        "Share": "షేర్ చేయండి",
+        "Duplicate": "నకలు",
+        "Open": "తెరవండి",
+        "Download": "డౌన్లోడ్ చేయండి",
+        "AddToCollection": "కలెక్షన్‌కు జోడించండి",
+        "Examples": "ఉదాహరణలు"
+      },
+      "Edit": {
+        "Title": "సవరించు",
+        "TidyCode": "కోడ్‌ను టిడీ చేయండి",
+        "Find": "కనుగొనండి",
+        "Replace": "మార్చండి"
+      },
+      "Sketch": {
+        "Title": "స్కెచ్",
+        "AddFile": "ఫైల్‌ను జోడించండి",
+        "AddFolder": "ఫోల్డర్‌ను జోడించండి",
+        "Run": "రన్ చేయండి",
+        "Stop": "ఆపు"
+      },
+      "Help": {
+        "Title": "సహాయం",
+        "KeyboardShortcuts": "కీబోర్డ్ షార్ట్‌కట్స్",
+        "Reference": "రిఫరెన్స్",
+        "About": "గురించి"
+      },
+      "Lang": "భాష",
+      "BackEditor": "ఎడిటర్‌కు తిరిగి వెళ్లండి",
+      "WarningUnsavedChanges": "మీరు ఈ పేజీని విడిచిపెట్టాలనుకుంటున్నారా? మీకు సేవ్ చేయని మార్పులు ఉన్నాయి.",
+      "Login": "లాగిన్",
+      "LoginOr": "లేదా",
+      "SignUp": "సైన్ అప్",
+      "Auth": {
+        "Welcome": "స్వాగతం",
+        "Hello": "హలో",
+        "MyAccount": "నా ఖాతా",
+        "My": "నా",
+        "MySketches": "నా స్కెచ్‌లు",
+        "MyCollections": "నా కలెక్షన్‌లు",
+        "Asset": "ఆసెట్",
+        "MyAssets": "నా ఆసెట్‌లు",
+        "LogOut": "లాగ్ అవుట్"
+      }
+    },
+    "CodemirrorFindAndReplace": {
+      "ToggleReplace": "మార్పిడిని టోగుల్ చేయండి",
+      "Find": "కనుగొనండి",
+      "FindPlaceholder": "ఫైల్‌లో కనుగొనండి",
+      "Replace": "మార్చండి",
+      "ReplaceAll": "అన్నింటినీ మార్చండి",
+      "ReplacePlaceholder": "మార్చడానికి టెక్స్ట్",
+      "Regex": "రెగ్యులర్ ఎక్స్‌ప్రెషన్",
+      "CaseSensitive": "కేస్ సెన్సిటివ్",
+      "WholeWords": "మొత్తం పదాలు",
+      "Previous": "మునుపటి",
+      "Next": "తరువాత",
+      "NoResults": "ఫలితాలు లేవు",
+      "Close": "మూసివేయి"
+    },
+    "LoginForm": {
+      "UsernameOrEmail": "ఇమెయిల్ లేదా యూజర్‌నేమ్",
+      "UsernameOrEmailARIA": "ఇమెయిల్ లేదా యూజర్‌నేమ్",
+      "Password": "పాస్‌వర్డ్",
+      "PasswordARIA": "పాస్‌వర్డ్",
+      "Submit": "లాగిన్"
+    },
+    "LoginView": {
+      "Title": "p5.js వెబ్ ఎడిటర్ | లాగిన్",
+      "Login": "లాగిన్",
+      "LoginOr": "లేదా",
+      "SignUp": "సైన్ అప్",
+      "Email": "ఇమెయిల్",
+      "Username": "యూజర్‌నేమ్",
+      "DontHaveAccount": "ఖాతా లేదా? ",
+      "ForgotPassword": "పాస్‌వర్డ్ మర్చిపోయారా? ",
+      "ResetPassword": "మీ పాస్‌వర్డ్‌ను రీసెట్ చేయండి"
+    },
+    "SocialAuthButton": {
+      "Connect": "{{serviceauth}} ఖాతాను కనెక్ట్ చేయండి",
+      "Unlink": "{{serviceauth}} ఖాతాను అన్‌లింక్ చేయండి",
+      "Login": "{{serviceauth}}తో లాగిన్",
+      "LogoARIA": "{{serviceauth}} లోగో"
+    },
+    "About": {
+      "Title": "గురించి",
+      "TitleHelmet": "p5.js వెబ్ ఎడిటర్ | గురించి",
+      "Headline": "p5.js ఎడిటర్‌తో p5.js స్కెచ్‌లను సృష్టించండి, షేర్ చేయండి మరియు రీమిక్స్ చేయండి.",
+      "Contribute": "సహకరించండి",
+      "IntroDescription1": "p5.js అనేది కోడ్ నేర్చుకోవడానికి మరియు కళను సృష్టించడానికి ఉచిత, ఓపెన్-సోర్స్ జావాస్క్రిప్ట్ లైబ్రరీ. p5.js ఎడిటర్‌ను ఉపయోగించి, మీరు ఏదైనా డౌన్‌లోడ్ లేదా కాన్ఫిగర్ చేయకుండా p5.js స్కెచ్‌లను సృష్టించవచ్చు, షేర్ చేయవచ్చు మరియు రీమిక్స్ చేయవచ్చు.",
+      "IntroDescription2": "సాఫ్ట్‌వేర్ మరియు దానిని నేర్చుకునే సాధనాలు సాధ్యమైనంత ఓపెన్ మరియు సమగ్రంగా ఉండాలని మేము నమ్ముతున్నాము. మీరు p5.jsకు మద్దతు ఇచ్చే ప్రాసెసింగ్ ఫౌండేషన్‌కు దాన్ చేయడం ద్వారా ఈ పనికి మద్దతు ఇవ్వవచ్చు. మీ దాన్ p5.js కోసం సాఫ్ట్‌వేర్ అభివృద్ధి, కోడ్ ఉదాహరణలు మరియు ట్యుటోరియల్‌లు, ఫెలోషిప్‌లు మరియు కమ్యూనిటీ ఈవెంట్‌లకు మద్దతు ఇస్తుంది.",
+      "Donate": "దాన్ చేయండి",
+      "NewP5": "p5.jsకు కొత్తగా ఉన్నారా?",
+      "Report": "బగ్‌ను రిపోర్ట్ చేయండి",
+      "Learn": "నేర్చుకోండి",
+      "X": "X",
+      "Home": "p5.js హోమ్",
+      "Instagram": "ఇన్‌స్టాగ్రామ్",
+      "Discord": "డిస్‌కార్డ్",
+      "DiscordCTA": "డిస్‌కార్డ్‌లో చేరండి",
+      "Youtube": "యూట్యూబ్",
+      "Github": "గిట్‌హబ్",
+      "GetInvolved": "పాల్గొనండి",
+      "WebEditor": "వెబ్ ఎడిటర్",
+      "Resources": "రిసోర్స్‌లు",
+      "Reference": "రిఫరెన్స్",
+      "Libraries": "లైబ్రరీలు",
+      "Forum": "ఫోరమ్",
+      "ForumCTA": "ఫోరమ్‌లో చేరండి",
+      "Examples": "ఉదాహరణలు",
+      "PrivacyPolicy": "గోప్యతా విధానం",
+      "TermsOfUse": "ఉపయోగ నిబంధనలు",
+      "CodeOfConduct": "ప్రవర్తనా సంహిత",
+      "Email": "ఇమెయిల్",
+      "EmailAddress": "hello@p5js.org",
+      "Socials": "సోషల్‌లు",
+      "LinkDescriptions": {
+        "Home": "p5.js మరియు మా కమ్యూనిటీ గురించి మరింత తెలుసుకోండి.",
+        "Examples": "స్వల్ప ఉదాహరణలతో p5.js యొక్క అవకాశాలను అన్వేషించండి.",
+        "CodeOfConduct": "మా కమ్యూనిటీ స్టేట్ మరియు ప్రవర్తనా సంహితను చదవండి.",
+        "Libraries": "కమ్యూనిటీ-సృష్టించిన లైబ్రరీలతో p5.js యొక్క అవకాశాలను విస్తరించండి.",
+        "Reference": "p5.js కోడ్ యొక్క ప్రతి భాగానికి సులభ వివరణలను కనుగొనండి.",
+        "Donate": "ప్రాసెసింగ్ ఫౌండేషన్‌కు దాన్ చేయడం ద్వారా ఈ పనికి మద్దతు ఇవ్వండి.",
+        "Contribute": "గిట్‌హబ్‌లో p5.js ఎడిటర్‌కు సహకరించండి.",
+        "Report": "p5.js ఎడిటర్‌తో సమస్యలను రిపోర్ట్ చేయండి.",
+        "Forum": "కమ్యూనిటీ-సృష్టించిన లైబ్రరీలతో p5.js యొక్క అవకాశాలను విస్తరించండి.",
+        "Discord": "కమ్యూనిటీ-సృష్టించిన లైబ్రరీలతో p5.js యొక్క అవకాశాలను విస్తరించండి."
+      }
+    },
+    "Toast": {
+      "OpenedNewSketch": "కొత్త స్కెచ్ తెరవబడింది.",
+      "SketchSaved": "స్కెచ్ సేవ్ చేయబడింది.",
+      "SketchFailedSave": "స్కెచ్‌ను సేవ్ చేయడంలో విఫలమైంది.",
+      "AutosaveEnabled": "ఆటోసేవ్ ప్రారంభించబడింది.",
+      "LangChange": "భాష మార్చబడింది",
+      "SettingsSaved": "సెట్టింగ్‌లు సేవ్ చేయబడ్డాయి.",
+      "EmptyCurrentPass": "ప్రస్తుత పాస్‌వర్డ్ ఫీల్డ్ ఖాళీగా ఉంది",
+      "IncorrectCurrentPass": "ప్రస్తుత పాస్‌వర్డ్ తప్పు",
+      "DefaultError": "ఏదో తప్పు జరిగింది",
+      "UserNotFound": "యూజర్ కనుగొనబడలేదు",
+      "NetworkError": "నెట్‌వర్క్ లోపం"
+    },
+    "Toolbar": {
+      "Preview": "ప్రివ్యూ",
+      "Auto-refresh": "ఆటో-రిఫ్రెష్",
+      "OpenPreferencesARIA": "ప్రిఫరెన్స్‌లను తెరవండి",
+      "PlaySketchARIA": "స్కెచ్ ప్లే చేయండి",
+      "PlayOnlyVisualSketchARIA": "విజువల్ స్కెచ్ మాత్రమే ప్లే చేయండి",
+      "StopSketchARIA": "స్కెచ్ ఆపు",
+      "EditSketchARIA": "స్కెచ్ పేరును సవరించండి",
+      "NewSketchNameARIA": "కొత్త స్కెచ్ పేరు",
+      "By": " ద్వారా "
+    },
+    "Console": {
+      "Title": "కన్సోల్",
+      "Clear": "క్లియర్",
+      "ClearARIA": "కన్సోల్‌ను క్లియర్ చేయండి",
+      "Close": "మూసివేయి",
+      "CloseARIA": "కన్సోల్‌ను మూసివేయి",
+      "Open": "తెరవండి",
+      "OpenARIA": "కన్సోల్‌ను తెరవండి"
+    },
+    "Preferences": {
+        "Settings": "సెట్టింగులు",
+        "GeneralSettings": "సాధారణ సెట్టింగులు",
+        "Accessibility": "అంగవైకల్య సౌకర్యం",
+        "Theme": "థీమ్",
+        "LightTheme": "లైట్",
+        "LightThemeARIA": "లైట్ థీమ్ ఆన్",
+        "DarkTheme": "డార్క్",
+        "DarkThemeARIA": "డార్క్ థీమ్ ఆన్",
+        "HighContrastTheme": "హై కాంట్రాస్ట్",
+        "HighContrastThemeARIA": "హై కాంట్రాస్ట్ థీమ్ ఆన్",
+        "TextSize": "పాఠ్య పరిమాణం",
+        "DecreaseFont": "తగ్గించు",
+        "DecreaseFontARIA": "ఫాంట్ పరిమాణాన్ని తగ్గించు",
+        "IncreaseFont": "పెంచు",
+        "IncreaseFontARIA": "ఫాంట్ పరిమాణాన్ని పెంచు",
+        "FontSize": "ఫాంట్ పరిమాణం",
+        "SetFontSize": "ఫాంట్ పరిమాణాన్ని సెట్ చేయండి",
+        "Autosave": "ఆటోసేవ్",
+        "On": "ఆన్",
+        "AutosaveOnARIA": "ఆటోసేవ్ ఆన్",
+        "Off": "ఆఫ్",
+        "AutosaveOffARIA": "ఆటోసేవ్ ఆఫ్",
+        "AutocloseBracketsQuotes": "ఆటోక్లోజ్ బ్రాకెట్లు మరియు కోట్స్",
+        "AutocloseBracketsQuotesOnARIA": "ఆటోక్లోజ్ బ్రాకెట్లు మరియు కోట్స్ ఆన్",
+        "AutocloseBracketsQuotesOffARIA": "ఆటోక్లోజ్ బ్రాకెట్లు మరియు కోట్స్ ఆఫ్",
+        "AutocompleteHinter": "ఆటోకంప్లీట్ హింటర్",
+        "AutocompleteHinterOnARIA": "ఆటోకంప్లీట్ హింటర్ ఆన్",
+        "AutocompleteHinterOffARIA": "ఆటోకంప్లీట్ హింటర్ ఆఫ్",
+        "WordWrap": "వర్డ్ ర్యాప్",
+        "LineWrapOnARIA": "లైన్ ర్యాప్ ఆన్",
+        "LineWrapOffARIA": "లైన్ ర్యాప్ ఆఫ్",
+        "LineNumbers": "లైన్ నంబర్లు",
+        "LineNumbersOnARIA": "లైన్ నంబర్లు ఆన్",
+        "LineNumbersOffARIA": "లైన్ నంబర్లు ఆఫ్",
+        "LintWarningSound": "లింట్ హెచ్చరిక శబ్దం",
+        "LintWarningOnARIA": "లింట్ హెచ్చరిక శబ్దం ఆన్",
+        "LintWarningOffARIA": "లింట్ హెచ్చరిక శబ్దం ఆఫ్",
+        "PreviewSound": "ప్రివ్యూను వినిపించు",
+        "PreviewSoundARIA": "ప్రివ్యూను వినిపించు",
+        "AccessibleTextBasedCanvas": "అంగవైకల్యులకు అనుకూలమైన టెక్స్ట్ ఆధారిత కాన్వాస్",
+        "UsedScreenReader": "స్క్రీన్ రీడర్‌తో ఉపయోగించబడింది",
+        "PlainText": "సాధారణ పాఠ్యం",
+        "TextOutputARIA": "పాఠ్య అవుట్‌పుట్ ఆన్",
+        "TableText": "టేబుల్-పాఠ్యం",
+        "TableOutputARIA": "టేబుల్ అవుట్‌పుట్ ఆన్"
+    },
+    "KeyboardShortcuts": {
+        "Title": "కీబోర్డ్ షార్ట్‌కట్లు",
+        "ShortcutsFollow": "కోడ్ ఎడిటింగ్ కీబోర్డ్ షార్ట్‌కట్లు అనుసరిస్తాయి",
+        "SublimeText": "సబ్లైమ్ టెక్స్ట్ షార్ట్‌కట్లు",
+        "CodeEditing": {
+        "Tidy": "టైడి",
+        "FindText": "పాఠ్యాన్ని కనుగొనండి",
+        "FindNextMatch": "తదుపరి సరిపోలిక కనుగొనండి",
+        "FindPrevMatch": "మునుపటి సరిపోలిక కనుగొనండి",
+        "ReplaceTextMatch": "పాఠ్య సరిపోలికను మార్చండి",
+        "IndentCodeLeft": "కోడ్‌ను ఎడమవైపుకు చొప్పించు",
+        "IndentCodeRight": "కోడ్‌ను కుడివైపుకు చొప్పించు",
+        "CommentLine": "లైన్ వ్యాఖ్యానించు",
+        "FindNextTextMatch": "తదుపరి టెక్స్ట్ సరిపోలికను కనుగొనండి",
+        "FindPreviousTextMatch": "మునుపటి టెక్స్ట్ సరిపోలికను కనుగొనండి",
+        "CodeEditing": "కోడ్ ఎడిటింగ్",
+        "ColorPicker": "ఇన్‌లైన్ కలర్ పికర్ చూపించు",
+        "CreateNewFile": "కొత్త ఫైల్ సృష్టించు"
+        },
+        "General": {
+        "StartSketch": "స్కెచ్ ప్రారంభించు",
+        "StopSketch": "స్కెచ్ ఆపండి",
+        "TurnOnAccessibleOutput": "అంగవైకల్య అవుట్‌పుట్ ఆన్ చేయండి",
+        "TurnOffAccessibleOutput": "అంగవైకల్య అవుట్‌పుట్ ఆఫ్ చేయండి"
+        }
+    },
+    "Sidebar": {
+        "Title": "స్కెచ్ ఫైళ్లు",
+        "ToggleARIA": "స్కెచ్ ఫైల్ ఎంపికలను తెరవండి/మూసివేయండి",
+        "AddFolder": "ఫోల్డర్ సృష్టించండి",
+        "AddFolderARIA": "ఫోల్డర్ జోడించండి",
+        "AddFile": "ఫైల్ సృష్టించండి",
+        "AddFileARIA": "ఫైల్ జోడించండి",
+        "UploadFile": "ఫైల్ అప్‌లోడ్ చేయండి",
+        "UploadFileARIA": "ఫైల్ అప్‌లోడ్ చేయండి"
+    },
+    "FileNode": {
+        "OpenFolderARIA": "ఫోల్డర్ విషయాలను తెరవండి",
+        "CloseFolderARIA": "ఫోల్డర్ విషయాలను మూసివేయండి",
+        "ToggleFileOptionsARIA": "ఫైల్ ఎంపికలను తెరవండి/మూసివేయండి",
+        "AddFolder": "ఫోల్డర్ సృష్టించండి",
+        "AddFolderARIA": "ఫోల్డర్ జోడించండి",
+        "AddFile": "ఫైల్ సృష్టించండి",
+        "AddFileARIA": "ఫైల్ జోడించండి",
+        "UploadFile": "ఫైల్ అప్‌లోడ్ చేయండి",
+        "UploadFileARIA": "ఫైల్ అప్‌లోడ్ చేయండి",
+        "Rename": "పేరు మార్చండి",
+        "Delete": "తొలగించండి"
+    },
+    "Common": {
+        "SiteName": "p5.js వెబ్ ఎడిటర్",
+        "Error": "తప్పు",
+        "ErrorARIA": "తప్పు",
+        "Save": "సేవ్",
+        "p5logoARIA": "p5.js లోగో",
+        "DeleteConfirmation": "మీరు నిజంగా {{name}} ని తొలగించాలనుకుంటున్నారా?"
+    },
+    "IDEView": {
+        "SubmitFeedback": "అభిప్రాయాన్ని సమర్పించండి",
+        "SubmitFeedbackARIA": "అభిప్రాయాన్ని సమర్పించండి",
+        "AddCollectionTitle": "కలెక్షన్‌కి జోడించండి",
+        "AddCollectionARIA": "కలెక్షన్‌కి జోడించండి",
+        "ShareTitle": "షేర్ చేయండి",
+        "ShareARIA": "షేర్ చేయండి"
+    },
+    "NewFileModal": {
+        "Title": "ఫైల్ సృష్టించండి",
+        "CloseButtonARIA": "కొత్త ఫైల్ మోడల్‌ను మూసివేయండి",
+        "EnterName": "దయచేసి ఒక పేరు నమోదు చేయండి",
+        "InvalidType": "చెల్లని ఫైల్ రకం. చెల్లిన పొడిగింపులు: .js, .css, .json, .xml, .stl, .txt, .csv, .tsv, .mtl, .frag, మరియు .vert."
+    },
+    "NewFileForm": {
+        "AddFileSubmit": "ఫైల్ జోడించండి",
+        "Placeholder": "పేరు"
+    },
+    "NewFolderModal": {
+        "Title": "ఫోల్డర్ సృష్టించండి",
+        "CloseButtonARIA": "కొత్త ఫోల్డర్ మోడల్‌ను మూసివేయండి",
+        "EnterName": "దయచేసి ఒక పేరు నమోదు చేయండి",
+        "EmptyName": "ఫోల్డర్ పేరు ఖాళీగా లేదా ఖాళీ స్థలాలతో మాత్రమే ఉండకూడదు",
+        "InvalidExtension": "ఫోల్డర్ పేరులో పొడిగింపు ఉండకూడదు"
+    },
+    "NewFolderForm": {
+        "AddFolderSubmit": "ఫోల్డర్ జోడించండి",
+        "Placeholder": "పేరు"
+    },
+    "ResetPasswordForm": {
+        "Email": "నమోదు కోసం ఉపయోగించిన ఈమెయిల్",
+        "EmailARIA": "ఈమెయిల్",
+        "Submit": "పాస్వర్డ్ రీసెట్ ఈమెయిల్ పంపండి"
+    },
+    "ResetPasswordView": {
+        "Title": "p5.js వెబ్ ఎడిటర్ | పాస్వర్డ్ రీసెట్",
+        "Reset": "మీ పాస్వర్డ్ రీసెట్ చేయండి",
+        "Submitted": "మీ పాస్వర్డ్ రీసెట్ ఈమెయిల్ త్వరలో రానుంది. మీరు చూడకపోతే, దయచేసి మీ స్పామ్ ఫోల్డర్‌ను తనిఖీ చేయండి, అక్కడ ఉండే అవకాశముంది.",
+        "Login": "లాగిన్",
+        "LoginOr": "లేదా",
+        "SignUp": "సైన్ అప్"
+    },
+    "ReduxFormUtils": {
+        "errorInvalidEmail": "దయచేసి సరైన ఈమెయిల్ చిరునామాను నమోదు చేయండి",
+        "errorEmptyEmail": "దయచేసి ఈమెయిల్ నమోదు చేయండి",
+        "errorPasswordMismatch": "పాస్వర్డ్లు సరిపోలాలి",
+        "errorEmptyPassword": "దయచేసి పాస్వర్డ్ నమోదు చేయండి",
+        "errorShortPassword": "పాస్వర్డ్ కనీసం 6 అక్షరాల పొడవుండాలి",
+        "errorConfirmPassword": "దయచేసి మీ పాస్వర్డ్‌ను నిర్ధారించండి",
+        "errorNewPassword": "దయచేసి కొత్త పాస్వర్డ్‌ను నమోదు చేయండి లేదా ప్రస్తుత పాస్వర్డ్‌ను ఖాళీగా ఉంచండి.",
+        "errorNewPasswordRepeat": "మీ కొత్త పాస్వర్డ్ ప్రస్తుత పాస్వర్డ్‌కి భిన్నంగా ఉండాలి.",
+        "errorEmptyUsername": "దయచేసి వినియోగదారు పేరును నమోదు చేయండి.",
+        "errorLongUsername": "వినియోగదారు పేరు 20 అక్షరాలకు తక్కువగా ఉండాలి.",
+        "errorValidUsername": "వినియోగదారు పేరులో సంఖ్యలు, అక్షరాలు, పీరియడ్లు, డాష్‌లు మరియు అండర్‌స్కోర్లు మాత్రమే ఉండాలి."
+    },
+    "NewPasswordView": {
+        "Title": "p5.js వెబ్ ఎడిటర్ | కొత్త పాస్వర్డ్",
+        "Description": "కొత్త పాస్వర్డ్ సెట్ చేయండి",
+        "TokenInvalidOrExpired": "పాస్వర్డ్ రీసెట్ టోకెన్ చెల్లదు లేదా గడువు ముగిసింది.",
+        "EmptyPassword": "దయచేసి పాస్వర్డ్ నమోదు చేయండి",
+        "PasswordConfirmation": "దయచేసి మీ పాస్వర్డ్‌ను నిర్ధారించండి",
+        "PasswordMismatch": "పాస్వర్డ్లు సరిపోలాలి"
+    },
+    "AccountForm": {
+        "Email": "ఈమెయిల్",
+        "EmailARIA": "ఈమెయిల్",
+        "Unconfirmed": "నిర్ధారణ కాలేదు.",
+        "EmailSent": "ధృవీకరణ పంపబడింది, మీ ఈమెయిల్‌ను తనిఖీ చేయండి.",
+        "Resend": "ధృవీకరణ ఈమెయిల్‌ను మళ్లీ పంపండి",
+        "UserName": "వినియోగదారు పేరు",
+        "UserNameARIA": "వినియోగదారు పేరు",
+        "CurrentPassword": "ప్రస్తుత పాస్వర్డ్",
+        "CurrentPasswordARIA": "ప్రస్తుత పాస్వర్డ్",
+        "NewPassword": "కొత్త పాస్వర్డ్",
+        "NewPasswordARIA": "కొత్త పాస్వర్డ్",
+        "SubmitSaveAllSettings": "అన్ని సెట్టింగ్‌లను సేవ్ చేయండి"
+    },
+    "AccountView": {
+        "SocialLogin": "సోషల్ లాగిన్",
+        "SocialLoginDescription": "GitHub లేదా Google ఖాతాను ఉపయోగించి p5.js వెబ్ ఎడిటర్‌లో లాగిన్ అవ్వండి.",
+        "Title": "p5.js వెబ్ ఎడిటర్ | ఖాతా సెట్టింగ్‌లు",
+        "Settings": "ఖాతా సెట్టింగ్‌లు",
+        "AccountTab": "ఖాతా",
+        "AccessTokensTab": "యాక్సెస్ టోకెన్లు"
+    },
+    "APIKeyForm": {
+        "ConfirmDelete": "మీరు నిజంగా {{key_label}} ని తొలగించాలనుకుంటున్నారా?",
+        "Summary": "వ్యక్తిగత యాక్సెస్ టోకెన్లు మీ పాస్వర్డ్‌లాగా పనిచేస్తాయి, ఆటోమేటెడ్ స్క్రిప్ట్‌లు ఎడిటర్ API ను యాక్సెస్ చేయడానికి వీలు కల్పిస్తాయి. యాక్సెస్ అవసరమైన ప్రతి స్క్రిప్ట్ కోసం ఒక టోకెన్‌ను సృష్టించండి.",
+        "CreateToken": "కొత్త టోకెన్‌ను సృష్టించండి",
+        "TokenLabel": "ఈ టోకెన్ ఏ కోసం?",
+        "TokenPlaceholder": "ఈ టోకెన్ ఏ కోసం? ఉదా. ఉదాహరణ ఇంపోర్ట్ స్క్రిప్ట్",
+        "CreateTokenSubmit": "సృష్టించండి",
+        "NoTokens": "మీకు ఏదైనా టోకెన్లు లేవు.",
+        "NewTokenTitle": "మీ కొత్త యాక్సెస్ టోకెన్",
+        "NewTokenInfo": "మీ కొత్త వ్యక్తిగత యాక్సెస్ టోకెన్‌ను ఇప్పుడు కాపీ చేసుకోండి. మీరు దీన్ని మళ్లీ చూడలేరు!",
+        "ExistingTokensTitle": "ఇప్పటికే ఉన్న టోకెన్లు"
+    },
+    "APIKeyList": {
+        "Name": "పేరు",
+        "Created": "సృష్టించిన తేదీ",
+        "LastUsed": "చివరిసారిగా ఉపయోగించినది",
+        "Actions": "కార్యాచరణలు",
+        "Never": "ఎప్పుడూ కాదు",
+        "DeleteARIA": "API కీను తొలగించండి"
+    },
+    "NewPasswordForm": {
+        "Title": "పాస్‌వర్డ్",
+        "TitleARIA": "పాస్‌వర్డ్",
+        "ConfirmPassword": "పాస్‌వర్డ్‌ని నిర్ధారించండి",
+        "ConfirmPasswordARIA": "పాస్‌వర్డ్‌ని నిర్ధారించండి",
+        "SubmitSetNewPassword": "కొత్త పాస్‌వర్డ్‌ని సెట్ చేయండి"
+    },
+    "SignupForm": {
+        "Title": "యూజర్ పేరు",
+        "TitleARIA": "యూజర్ పేరు",
+        "Email": "ఈమెయిల్",
+        "EmailARIA": "ఈమెయిల్",
+        "Password": "పాస్‌వర్డ్",
+        "PasswordARIA": "పాస్‌వర్డ్",
+        "ConfirmPassword": "పాస్‌వర్డ్‌ని నిర్ధారించండి",
+        "ConfirmPasswordARIA": "పాస్‌వర్డ్‌ని నిర్ధారించండి",
+        "SubmitSignup": "సైన్ అప్"
+    },
+    "SignupView": {
+        "Title": "p5.js వెబ్ ఎడిటర్ | సైన్ అప్",
+        "Description": "సైన్ అప్",
+        "Or": "లేదా",
+        "AlreadyHave": "మీకు ఇప్పటికే ఖాతా ఉందా?",
+        "Login": "లాగిన్ చేయండి",
+        "Warning": "సైన్ అప్ చేయడం ద్వారా, మీరు p5.js ఎడిటర్ యొక్క <0>వినియోగ నిబంధనలు</0> మరియు <1>గోప్యతా విధానం</1>కు అంగీకరిస్తున్నారు."
+    },
+    "EmailVerificationView": {
+        "Title": "p5.js వెబ్ ఎడిటర్ | ఈమెయిల్ ధృవీకరణ",
+        "Verify": "మీ ఈమెయిల్‌ని ధృవీకరించండి",
+        "InvalidTokenNull": "ఆ లింక్ చెల్లదు.",
+        "Checking": "టోకెన్‌ను ధృవీకరిస్తున్నాము, దయచేసి వేచి ఉండండి...",
+        "Verified": "అంతా పూర్తయింది, మీ ఈమెయిల్ చిరునామా ధృవీకరించబడింది.",
+        "InvalidState": "టోకెన్ చెల్లదు లేదా గడువు ముగిసింది."
+    },
+    "AssetList": {
+        "Title": "p5.js వెబ్ ఎడిటర్ | నా అసెట్స్",
+        "ToggleOpenCloseARIA": "అసెట్ ఎంపికలను తెరవండి/మూసివేయండి",
+        "Delete": "తొలగించండి",
+        "OpenNewTab": "కొత్త ట్యాబ్‌లో తెరువండి",
+        "NoUploadedAssets": "ఎటువంటి అప్‌లోడ్ చేసిన అసెట్స్ లేవు.",
+        "HeaderName": "పేరు",
+        "HeaderSize": "పరిమాణం",
+        "HeaderSketch": "స్కెచ్"
+    },
+    "Feedback": {
+        "Title": "p5.js వెబ్ ఎడిటర్ | అభిప్రాయం",
+        "ViaGithubHeader": "Github ఇష్యూల ద్వారా",
+        "ViaGithubDescription": "మీరు గిట్హబ్‌తో పరిచయం ఉన్నట్లయితే, బగ్ రిపోర్టులు మరియు అభిప్రాయం అందించడానికి ఇది మా ప్రాధాన్యతా విధానం.",
+        "GoToGithub": "Githubకు వెళ్లండి",
+        "ViaGoogleHeader": "Google ఫారమ్ ద్వారా",
+        "ViaGoogleDescription": "మీరు ఈ తక్షణ ఫారమ్‌ను కూడా సమర్పించవచ్చు.",
+        "GoToForm": "ఫారమ్‌కు వెళ్లండి"
+    },
+    "Searchbar": {
+        "SearchSketch": "స్కెచ్‌లను వెతకండి...",
+        "SearchCollection": "సేకరణలను వెతకండి...",
+        "ClearTerm": "తొలగించండి"
+    },
+    "UploadFileModal": {
+        "Title": "ఫైల్ అప్‌లోడ్ చేయండి",
+        "CloseButtonARIA": "ఫైల్ అప్‌లోడ్ మోడల్ మూసివేయండి",
+        "SizeLimitError": "దోషం: మీరు మరిన్ని ఫైళ్ళను అప్‌లోడ్ చేయలేరు. మీరు మొత్తం పరిమితి {{sizeLimit}}కి చేరుకున్నారు.\n                మీరు మరిన్ని అప్‌లోడ్ చేయాలనుకుంటే, మీరు ఇకపై ఉపయోగించని వాటిని తొలగించండి."
+    },
+    "FileUploader": {
+        "DictDefaultMessage": "ఫైళ్లను ఇక్కడ డ్రాప్ చేయండి లేదా ఫైల్ బ్రౌజర్‌ని ఉపయోగించడానికి క్లిక్ చేయండి"
+    },
+    "ErrorModal": {
+        "MessageLogin": "స్కెచ్‌లను సేవ్ చేయడానికి, మీరు లాగిన్ అయి ఉండాలి. దయచేసి ",
+        "Login": "లాగిన్",
+        "LoginOr": " లేదా ",
+        "SignUp": "సైన్ అప్",
+        "MessageLoggedOut": "మీరు లాగౌట్ అయినట్లు అనిపిస్తోంది. దయచేసి ",
+        "LogIn": "లాగిన్ అవ్వండి",
+        "SavedDifferentWindow": "మీరు సేవ్ చేయడానికి ప్రయత్నించిన ప్రాజెక్ట్ మరొక విండోలో సేవ్ చేయబడింది.\n        తాజా వెర్షన్‌ను చూడటానికి దయచేసి పేజీని రిఫ్రెష్ చేయండి.",
+        "LinkTitle": "ఖాతా లింక్ చేసేలోపం",
+        "LinkMessage": "మీ {{serviceauth}} ఖాతాను p5.js వెబ్ ఎడిటర్ ఖాతాతో లింక్ చేయడంలో ఒక సమస్య వచ్చింది. మీ {{serviceauth}} ఖాతా ఇప్పటికే మరొక p5.js వెబ్ ఎడిటర్ ఖాతాతో లింక్ చేయబడింది."
+    },
+    "ShareModal": {
+        "Embed": "ఎంబెడ్",
+        "Present": "ప్రదర్శన",
+        "Fullscreen": "పూర్తి తెర",
+        "Edit": "సంపాదించండి"
+    },
+    "CollectionView": {
+        "TitleCreate": "కలెక్షన్ సృష్టించండి",
+        "TitleDefault": "కలెక్షన్"
+    },
+    "Collection": {
+        "Title": "p5.js వెబ్ ఎడిటర్ | నా కలెక్షన్లు",
+        "AnothersTitle": "p5.js వెబ్ ఎడిటర్ | {{anotheruser}} యొక్క కలెక్షన్లు",
+        "Share": "షేర్",
+        "URLLink": "కలెక్షన్ లింక్",
+        "AddSketch": "స్కెచ్ జోడించండి",
+        "DeleteFromCollection": "మీరు ఖచ్చితంగా {{name_sketch}} ని ఈ కలెక్షన్ నుండి తొలగించాలనుకుంటున్నారా?",
+        "SketchDeleted": "స్కెచ్ తొలగించబడింది",
+        "SketchRemoveARIA": "కలెక్షన్ నుండి స్కెచ్ తొలగించు",
+        "DescriptionPlaceholder": "వివరణను జోడించండి",
+        "Description": "వివరణ",
+        "NumSketches": "{{count}} స్కెచ్",
+        "NumSketches_plural": "{{count}} స్కెచ్‌లు",
+        "By": "కలెక్షన్ సృష్టించిన వ్యక్తి ",
+        "NoSketches": "కలెక్షన్‌లో స్కెచ్‌లు లేవు",
+        "TableSummary": "అన్ని కలెక్షన్లను కలిగిన పట్టిక",
+        "HeaderName": "పేరు",
+        "HeaderCreatedAt": "జోడించిన తేదీ",
+        "HeaderUser": "యజమాని",
+        "DirectionAscendingARIA": "ఆరోహణ",
+        "DirectionDescendingARIA": "అవరోహణ",
+        "ButtonLabelAscendingARIA": "{{displayName}} ని ఆరోహణ క్రమంలో క్రమబద్ధీకరించు.",
+        "ButtonLabelDescendingARIA": "{{displayName}} ని అవరోహణ క్రమంలో క్రమబద్ధీకరించు."
+    },
+    "AddToCollectionList": {
+        "Title": "p5.js వెబ్ ఎడిటర్ | నా కలెక్షన్లు",
+        "AnothersTitle": "p5.js వెబ్ ఎడిటర్ | {{anotheruser}} యొక్క కలెక్షన్లు",
+        "Empty": "కలెక్షన్లు లేవు"
+    },
+    "CollectionCreate": {
+        "Title": "p5.js వెబ్ ఎడిటర్ | కలెక్షన్ సృష్టించండి",
+        "FormError": "కలెక్షన్ సృష్టించలేకపోయాం",
+        "FormLabel": "కలెక్షన్ పేరు",
+        "FormLabelARIA": "పేరు",
+        "NameRequired": "కలెక్షన్ పేరు అవసరం",
+        "Description": "వివరణ (ఐచ్ఛికం)",
+        "DescriptionARIA": "వివరణ",
+        "DescriptionPlaceholder": "నా ఇష్టమైన స్కెచ్‌లు",
+        "SubmitCollectionCreate": "కలెక్షన్ సృష్టించండి"
+    },
+    "DashboardView": {
+        "CreateCollection": "కలెక్షన్ సృష్టించండి",
+        "NewSketch": "కొత్త స్కెచ్",
+        "CreateCollectionOverlay": "కలెక్షన్ సృష్టించండి"
+    },
+    "DashboardTabSwitcher": {
+        "Sketches": "స్కెచ్‌లు",
+        "Collections": "కలెక్షన్లు",
+        "Assets": "ఆస్తులు"
+    },
+    "CollectionList": {
+        "Title": "p5.js వెబ్ ఎడిటర్ | నా కలెక్షన్లు",
+        "AnothersTitle": "p5.js వెబ్ ఎడిటర్ | {{anotheruser}} యొక్క కలెక్షన్లు",
+        "NoCollections": "కలెక్షన్లు లేవు.",
+        "TableSummary": "అన్ని కలెక్షన్లను కలిగిన పట్టిక",
+        "HeaderName": "పేరు",
+        "HeaderCreatedAt": "సృష్టించిన తేదీ",
+        "HeaderCreatedAt_mobile": "సృష్టించబడింది",
+        "HeaderUpdatedAt": "నవీకరించిన తేదీ",
+        "HeaderUpdatedAt_mobile": "నవీకరించబడింది",
+        "HeaderNumItems": "# స్కెచ్‌లు",
+        "HeaderNumItems_mobile": "# స్కెచ్‌లు",
+        "DirectionAscendingARIA": "ఆరోహణ",
+        "DirectionDescendingARIA": "అవరోహణ",
+        "ButtonLabelAscendingARIA": "{{displayName}} ని ఆరోహణ క్రమంలో క్రమబద్ధీకరించు.",
+        "ButtonLabelDescendingARIA": "{{displayName}} ని అవరోహణ క్రమంలో క్రమబద్ధీకరించు.",
+        "AddSketch": "స్కెచ్ జోడించండి"
+    },
+    "CollectionListRow": {
+        "ToggleCollectionOptionsARIA": "సేకరణ ఎంపికలను తెరవండి/మూసివేయండి",
+        "AddSketch": "స్కెచ్ జోడించండి",
+        "Delete": "తొలగించండి",
+        "Rename": "పేరు మార్చండి"
+    },
+    "Overlay": {
+        "AriaLabel": "{{title}} ఓవర్లే మూసివేయండి"
+    },
+    "QuickAddList": {
+        "ButtonRemoveARIA": "సేకరణ నుండి తీసివేయండి",
+        "ButtonAddToCollectionARIA": "సేకరణకు జోడించండి",
+        "View": "దృశ్యం"
+    },
+    "SketchList": {
+        "View": "దృశ్యం",
+        "Title": "p5.js వెబ్ ఎడిటర్ | నా స్కెచ్‌లు",
+        "AnothersTitle": "p5.js వెబ్ ఎడిటర్ | {{anotheruser}} యొక్క స్కెచ్‌లు",
+        "ToggleLabelARIA": "స్కెచ్ ఎంపికలను తెరవండి/మూసివేయండి",
+        "DropdownRename": "పేరు మార్చండి",
+        "DropdownDownload": "డౌన్‌లోడ్ చేయండి",
+        "DropdownDuplicate": "నకలు చేసుకోండి",
+        "DropdownAddToCollection": "సేకరణకు జోడించండి",
+        "DropdownDelete": "తొలగించండి",
+        "DirectionAscendingARIA": "ఆరోహణ",
+        "DirectionDescendingARIA": "అవరోహణ",
+        "ButtonLabelAscendingARIA": "{{displayName}} పైకి వరుసలో క్రమపరచు.",
+        "ButtonLabelDescendingARIA": "{{displayName}} దిగువ వరుసలో క్రమపరచు.",
+        "AddToCollectionOverlayTitle": "సేకరణకు జోడించండి",
+        "TableSummary": "అన్ని సేవ్ చేసిన ప్రాజెక్టుల టేబుల్",
+        "HeaderName": "స్కెచ్",
+        "HeaderCreatedAt": "తేదీ సృష్టించబడింది",
+        "HeaderCreatedAt_mobile": "సృష్టించబడింది",
+        "HeaderUpdatedAt": "తేదీ నవీకరించబడింది",
+        "HeaderUpdatedAt_mobile": "నవీకరించబడింది",
+        "NoSketches": "స్కెచ్‌లు లేవు."
+    },
+    "AddToCollectionSketchList": {
+        "Title": "p5.js వెబ్ ఎడిటర్ | నా స్కెచ్‌లు",
+        "AnothersTitle": "p5.js వెబ్ ఎడిటర్ | {{anotheruser}} యొక్క స్కెచ్‌లు",
+        "NoCollections": "సేకరణలు లేవు."
+    },
+    "Editor": {
+        "OpenSketchARIA": "స్కెచ్ ఫైళ్ళ నావిగేషన్‌ను తెరవండి",
+        "CloseSketchARIA": "స్కెచ్ ఫైళ్ళ నావిగేషన్‌ను మూసివేయండి",
+        "UnsavedChangesARIA": "స్కెచ్‌లో సేవ్ చేయని మార్పులు ఉన్నాయి",
+        "KeyUpLineNumber": "లైన్ {{lineNumber}}"
+    },
+    "EditorAccessibility": {
+        "NoLintMessages": "లింట్ సందేశాలు లేవు",
+        "CurrentLine": "ప్రస్తుత లైన్"
+    },
+    "Timer": {
+        "SavedAgo": "సేవ్ చేయబడింది: {{timeAgo}}"
+    },
+    "formatDate": {
+        "JustNow": "ఇప్పుడే",
+        "15Seconds": "15 సెకన్లు క్రితం",
+        "25Seconds": "25 సెకన్లు క్రితం",
+        "35Seconds": "35 సెకన్లు క్రితం",
+        "Ago": "{{timeAgo}} క్రితం"
+    },
+    "CopyableInput": {
+        "CopiedARIA": "క్లిప్‌బోర్డ్‌కు కాపీ చేయబడింది!",
+        "OpenViewTabARIA": "{{label}} వ్యూలో కొత్త ట్యాబ్ తెరవండి"
+    },
+    "EditableInput": {
+        "EditValue": "{{display}} విలువను సవరించండి",
+        "EmptyPlaceholder": "విలువ లేదు"
+    },
+    "PreviewNav": {
+        "EditSketchARIA": "స్కెచ్‌ను సవరించండి",
+        "ByUser": "ద్వారా"
+    },
+    "MobilePreferences": {
+        "Settings": "సెట్టింగ్‌లు",
+        "GeneralSettings": "సాధారణ సెట్టింగ్‌లు",
+        "Accessibility": "అభ్యాస సౌలభ్యం",
+        "AccessibleOutput": "అభ్యాస యోగ్య ఔట్‌పుట్",
+        "Theme": "థీమ్",
+        "LightTheme": "లైట్",
+        "DarkTheme": "డార్క్",
+        "HighContrastTheme": "హై కాంట్రాస్ట్",
+        "Autosave": "ఆటో సేవ్",
+        "AutocompleteHinter": "ఆటోకంప్లీట్ హింటర్",
+        "WordWrap": "వర్డ్ ర్యాప్",
+        "LineNumbers": "లైన్ నంబర్లు",
+        "LintWarningSound": "లింట్ హెచ్చరిక శబ్దం",
+        "UsedScreenReader": "స్క్రీన్ రీడర్‌తో ఉపయోగించారు",
+        "PlainText": "ప్లెయిన్-టెక్స్ట్",
+        "TableText": "టేబుల్-టెక్స్ట్",
+        "Sound": "శబ్దం"
+    },
+    "PreferenceCreators": {
+        "On": "ఆన్",
+        "Off": "ఆఫ్"
+    },
+    "MobileDashboardView": {
+        "Examples": "ఉదాహరణలు",
+        "Sketches": "స్కెచ్‌లు",
+        "Collections": "సేకరణలు",
+        "Assets": "ఆస్తులు",
+        "MyStuff": "నా వస్తువులు",
+        "CreateSketch": "స్కెచ్ సృష్టించండి",
+        "CreateCollection": "సేకరణ సృష్టించండి"
+    },
+    "Explorer": {
+        "Files": "ఫైళ్లు"
+    },
+    "Cookies": {
+        "Header": "కుకీలు",
+        "Body": "p5.js ఎడిటర్ కుకీలను ఉపయోగిస్తుంది. కొన్నివెబ్‌సైట్ పనితీరుకు అవసరం, అవి మీ ఖాతా మరియు ప్రాధాన్యతలను నిర్వహించడానికి అనుమతిస్తాయి. మిగతావి అంతగా అవసరం లేనివి—ఆనాలిటిక్స్ కోసం ఉపయోగించబడతాయి మరియు మా కమ్యూనిటీ గురించి మరింత తెలుసుకోవడానికి సహాయపడతాయి. <strong> మేము ఈ డేటాను ఎప్పటికీ అమ్మము లేదా ప్రకటనల కోసం ఉపయోగించము. </strong> మీరు ఏ కుకీలను అనుమతించాలనుకుంటున్నారో నిర్ణయించుకోండి, ఇంకా మరింత తెలుసుకోవడానికి మా <0>గోప్యతా విధానం<0> చూడండి.",
+        "AllowAll": "అన్నిటినీ అనుమతించండి",
+        "AllowEssential": "ముఖ్యమైన వాటినే అనుమతించండి"
+    },
+    "Legal": {
+        "PrivacyPolicy": "గోప్యతా విధానం",
+        "TermsOfUse": "వాడుక నిబంధనలు",
+        "CodeOfConduct": "ప్రవర్తనా నియమావళి"
+    },
+    "SkipLink": {
+        "PlaySketch": "స్కెచ్ ప్లే చేయడానికి వెళ్లండి"
+    }
+}

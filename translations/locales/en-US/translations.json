@@ -405,7 +405,7 @@
     "InvalidTokenNull": "That link is invalid.",
     "Checking": "Validating token, please wait...",
     "Verified": "All done, your email address has been verified.",
-    "InvalidState": "Token is invalid or expired."
+    "InvalidState": "The Token is invalid or expired."
   },
   "AssetList": {
     "Title": "p5.js Web Editor | My assets",
