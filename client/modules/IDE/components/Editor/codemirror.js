@@ -93,12 +93,26 @@ function setupCodeMirrorHooks(
 
 export default function setupCodeMirror(
   container,
-  props,
+  {
+    theme,
+    lineNumbers,
+    linewrap,
+    autocloseBracketsQuotes,
+    setUnsavedChanges,
+    hideRuntimeErrorWarning,
+    updateFileContent,
+    file,
+    autorefresh,
+    isPlaying,
+    clearConsole,
+    startSketch,
+    autocompleteHinter,
+    fontSize
+  },
   onUpdateLinting,
   docs,
   updateLineNumber
 ) {
-  const { theme, lineNumbers, linewrap, autocloseBracketsQuotes } = props;
   const cm = CodeMirror(container, {
     theme: `p5-${theme}`,
     lineNumbers,
@@ -167,9 +181,24 @@ export default function setupCodeMirror(
     [`${metaKey}-.`]: 'toggleComment' // Note: most adblockers use the shortcut ctrl+.
   });
 
-  setupCodeMirrorHooks(cm, props, updateLineNumber);
+  setupCodeMirrorHooks(
+    cm,
+    {
+      setUnsavedChanges,
+      hideRuntimeErrorWarning,
+      updateFileContent,
+      file,
+      autorefresh,
+      isPlaying,
+      clearConsole,
+      startSketch,
+      autocompleteHinter,
+      fontSize
+    },
+    updateLineNumber
+  );
 
-  cm.swapDoc(docs[props.file.id]);
+  cm.swapDoc(docs[file.id]);
 
   return cm;
 }
