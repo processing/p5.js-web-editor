@@ -6,6 +6,15 @@ function draw() {
   background(220);
 }`;
 
+export const defaultModuleSketch = `// ES Module version
+export function setup() {
+  createCanvas(400, 400);
+}
+
+export function draw() {
+  background(220);
+}`;
+
 export const defaultHTML = `<!DOCTYPE html>
 <html lang="en">
   <head>
@@ -19,6 +28,23 @@ export const defaultHTML = `<!DOCTYPE html>
     <main>
     </main>
     <script src="sketch.js"></script>
+  </body>
+</html>
+`;
+
+export const defaultModuleHTML = `<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/addons/p5.sound.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta charset="utf-8" />
+
+  </head>
+  <body>
+    <main>
+    </main>
+    <script src="sketch.js" type="module"></script>
   </body>
 </html>
 `;
@@ -42,6 +68,20 @@ export default function createDefaultFiles() {
     },
     'sketch.js': {
       content: defaultSketch
+    }
+  };
+}
+
+export function createDefaultModuleFiles() {
+  return {
+    'index.html': {
+      content: defaultModuleHTML
+    },
+    'style.css': {
+      content: defaultCSS
+    },
+    'sketch.js': {
+      content: defaultModuleSketch
     }
   };
 }

@@ -69,10 +69,22 @@ function resolveCSSLinksInString(content, files) {
   return newContent;
 }
 
-function jsPreprocess(jsText) {
+function jsPreprocess(jsText, isModule = false) {
   let newContent = jsText;
-  // check the code for js errors before sending it to strip comments
-  // or loops.
+  // If this is a module, we need to be careful with transformations
+  // as they might break import/export statements
+  if (isModule || /\b(import|export)\b/.test(jsText)) {
+    // For modules, we still want to check for errors but we'll be more careful with transformations
+    JSHINT(newContent, { esversion: 11, module: true });
+    // For modules, we only decomment but don't apply loop protection
+    // as it might break module semantics
+    newContent = decomment(newContent, {
+      ignore: /\/\/\s*noprotect/g,
+      space: true
+    });
+    return newContent;
+  }
+  // For regular scripts, apply the standard processing
   JSHINT(newContent);
 
   if (JSHINT.errors.length === 0) {
@@ -87,6 +99,9 @@ function jsPreprocess(jsText) {
 
 function resolveJSLinksInString(content, files) {
   let newContent = content;
+  // Check if this is an ES module (contains import/export statements)
+  const isModule = /\b(import|export)\b/.test(content);
+  // Handle regular string references to files
   let jsFileStrings = content.match(STRING_REGEX);
   jsFileStrings = jsFileStrings || [];
   jsFileStrings.forEach((jsFileString) => {
@@ -101,23 +116,63 @@ function resolveJSLinksInString(content, files) {
             jsFileString,
             quoteCharacter + resolvedFile.url + quoteCharacter
           );
-        } else if (resolvedFile.name.match(PLAINTEXT_FILE_REGEX)) {
-          newContent = newContent.replace(
-            jsFileString,
-            quoteCharacter + resolvedFile.blobUrl + quoteCharacter
-          );
         }
       }
     }
   });
-
-  return jsPreprocess(newContent);
+  // If this is a module, also handle import statements
+  if (isModule) {
+    // Match import statements like: import { x } from './file.js';
+    // or import x from './file.js';
+    const importRegex = /import\s+(?:(?:\{[^}]*\}|\*\s+as\s+\w+|\w+)\s+from\s+)?(['"])([^'"]+)(['"])/g;
+    let importMatch;
+    // eslint-disable-next-line no-cond-assign
+    while ((importMatch = importRegex.exec(content))) {
+      const [fullMatch, openQuote, importPath, closeQuote] = importMatch;
+      // Only process relative imports, not package imports
+      if (importPath.startsWith('./') || importPath.startsWith('../')) {
+        const resolvedFile = resolvePathToFile(importPath, files);
+        if (resolvedFile) {
+          if (resolvedFile.url) {
+            // Replace the import path with the resolved URL
+            newContent = newContent.replace(
+              fullMatch,
+              fullMatch.replace(
+                `${openQuote}${importPath}${closeQuote}`,
+                `${openQuote}${resolvedFile.url}${closeQuote}`
+              )
+            );
+          } else {
+            // Create a blob URL for the imported file
+            const blobUrl = createBlobUrl(resolvedFile);
+            const blobPath = blobUrl.split('/').pop();
+            objectUrls[
+              blobUrl
+            ] = `${resolvedFile.filePath}/${resolvedFile.name}`;
+            objectPaths[blobPath] = resolvedFile.name;
+            // Replace the import path with the blob URL
+            newContent = newContent.replace(
+              fullMatch,
+              fullMatch.replace(
+                `${openQuote}${importPath}${closeQuote}`,
+                `${openQuote}${blobUrl}${closeQuote}`
+              )
+            );
+          }
+        }
+      }
+    }
+  }
+  // Apply preprocessing with module awareness
+  return jsPreprocess(newContent, isModule);
 }
 
 function resolveScripts(sketchDoc, files) {
   const scriptsInHTML = sketchDoc.getElementsByTagName('script');
   const scriptsInHTMLArray = Array.prototype.slice.call(scriptsInHTML);
   scriptsInHTMLArray.forEach((script) => {
+    // Check if this is a module script
+    const isModule = script.getAttribute('type') === 'module';
     if (
       script.getAttribute('src') &&
       script.getAttribute('src').match(NOT_EXTERNAL_LINK_REGEX) !== null
@@ -137,9 +192,10 @@ function resolveScripts(sketchDoc, files) {
           // }${resolvedFile.name}`;
           objectUrls[blobUrl] = `${resolvedFile.filePath}/${resolvedFile.name}`;
           objectPaths[blobPath] = resolvedFile.name;
-          // script.setAttribute('data-tag', `${startTag}${resolvedFile.name}`);
-          // script.removeAttribute('src');
-          // script.innerHTML = resolvedFile.content; // eslint-disable-line
+          // Preserve the module type if it was set
+          if (isModule) {
+            script.setAttribute('type', 'module');
+          }
         }
       }
     } else if (
@@ -149,7 +205,14 @@ function resolveScripts(sketchDoc, files) {
       ) !== null
     ) {
       script.setAttribute('crossorigin', '');
-      script.innerHTML = resolveJSLinksInString(script.innerHTML, files); // eslint-disable-line
+      // For inline scripts, we need to handle module content differently
+      // to preserve ES module semantics
+      if (isModule) {
+        // For module scripts, we don't apply loop protection as it might break imports
+        script.innerHTML = resolveJSLinksInString(script.innerHTML, files); // eslint-disable-line
+      } else {
+        script.innerHTML = resolveJSLinksInString(script.innerHTML, files); // eslint-disable-line
+      }
     }
   });
 }

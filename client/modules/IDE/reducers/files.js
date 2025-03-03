@@ -3,7 +3,10 @@ import * as ActionTypes from '../../../constants';
 import {
   defaultSketch,
   defaultCSS,
-  defaultHTML
+  defaultHTML,
+  defaultModuleSketch,
+  defaultModuleHTML,
+  createDefaultModuleFiles
 } from '../../../../server/domain-objects/createDefaultFiles';
 
 export const initialState = () => {
@@ -33,6 +36,51 @@ export const initialState = () => {
     {
       name: 'index.html',
       content: defaultHTML,
+      id: b,
+      _id: b,
+      fileType: 'file',
+      children: [],
+      filePath: ''
+    },
+    {
+      name: 'style.css',
+      content: defaultCSS,
+      id: c,
+      _id: c,
+      fileType: 'file',
+      children: [],
+      filePath: ''
+    }
+  ];
+};
+
+export const moduleState = () => {
+  const a = objectID().toHexString();
+  const b = objectID().toHexString();
+  const c = objectID().toHexString();
+  const r = objectID().toHexString();
+  return [
+    {
+      name: 'root',
+      id: r,
+      _id: r,
+      children: [b, a, c],
+      fileType: 'folder',
+      content: ''
+    },
+    {
+      name: 'sketch.js',
+      content: defaultModuleSketch,
+      id: a,
+      _id: a,
+      isSelectedFile: true,
+      fileType: 'file',
+      children: [],
+      filePath: ''
+    },
+    {
+      name: 'index.html',
+      content: defaultModuleHTML,
       id: b,
       _id: b,
       fileType: 'file',
@@ -158,17 +206,10 @@ const files = (state, action) => {
         }
         return Object.assign({}, file, { blobURL: action.blobURL });
       });
-    case ActionTypes.NEW_PROJECT: {
-      const newFiles = action.files.map((file) => {
-        const corrospondingObj = state.find((obj) => obj.id === file.id);
-        if (corrospondingObj && corrospondingObj.fileType === 'folder') {
-          const isFolderClosed = corrospondingObj.isFolderClosed || false;
-          return { ...file, isFolderClosed };
-        }
-        return file;
-      });
-      return setFilePaths(newFiles);
-    }
+    case ActionTypes.NEW_PROJECT:
+      return initialState();
+    case ActionTypes.NEW_MODULE_PROJECT:
+      return moduleState();
     case ActionTypes.SET_PROJECT: {
       const newFiles = action.files.map((file) => {
         const corrospondingObj = state.find((obj) => obj.id === file.id);

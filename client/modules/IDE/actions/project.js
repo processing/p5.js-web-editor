@@ -273,6 +273,13 @@ export function newProject() {
   return resetProject();
 }
 
+export function newModuleProject() {
+  browserHistory.push('/', { confirmed: true, moduleProject: true });
+  return {
+    type: ActionTypes.NEW_MODULE_PROJECT
+  };
+}
+
 function generateNewIdsForChildren(file, files) {
   const newChildren = [];
   file.children.forEach((childId) => {

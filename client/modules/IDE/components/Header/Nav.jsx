@@ -130,6 +130,7 @@ const ProjectMenu = () => {
   const { t } = useTranslation();
   const {
     newSketch,
+    newModuleSketch,
     saveSketch,
     downloadSketch,
     shareSketch
@@ -165,6 +166,9 @@ const ProjectMenu = () => {
       </li>
       <MenubarSubmenu id="file" title={t('Nav.File.Title')}>
         <MenubarItem onClick={newSketch}>{t('Nav.File.New')}</MenubarItem>
+        <MenubarItem onClick={newModuleSketch}>
+          {t('Nav.File.NewModule')}
+        </MenubarItem>
         <MenubarItem
           hideIf={
             !getConfig('LOGIN_ENABLED') || (project?.owner && !isUserOwner)

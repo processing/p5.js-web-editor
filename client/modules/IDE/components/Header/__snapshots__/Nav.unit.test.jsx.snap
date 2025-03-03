@@ -540,6 +540,15 @@ exports[`Nav renders editor version for desktop 1`] = `
                 New
               </button>
             </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button
+                role="menuitem"
+              >
+                New Module
+              </button>
+            </li>
           </ul>
         </li>
         <li

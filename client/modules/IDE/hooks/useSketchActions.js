@@ -5,6 +5,7 @@ import {
   autosaveProject,
   exportProjectAsZip,
   newProject,
+  newModuleProject,
   saveProject,
   setProjectName
 } from '../actions/project';
@@ -29,6 +30,16 @@ const useSketchActions = () => {
     } else if (window.confirm(t('Nav.WarningUnsavedChanges'))) {
       dispatch(showToast('Toast.OpenedNewSketch'));
       dispatch(newProject());
+    }
+  }
+
+  function newModuleSketch() {
+    if (!unsavedChanges) {
+      dispatch(showToast('Toast.OpenedNewModuleSketch'));
+      dispatch(newModuleProject());
+    } else if (window.confirm(t('Nav.WarningUnsavedChanges'))) {
+      dispatch(showToast('Toast.OpenedNewModuleSketch'));
+      dispatch(newModuleProject());
     }
   }
 
@@ -62,6 +73,7 @@ const useSketchActions = () => {
 
   return {
     newSketch,
+    newModuleSketch,
     saveSketch,
     downloadSketch,
     shareSketch,
