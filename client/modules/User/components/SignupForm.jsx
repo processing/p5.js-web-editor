@@ -9,43 +9,51 @@ import Button from '../../../common/Button';
 import apiClient from '../../../utils/apiClient';
 import useSyncFormTranslations from '../../../common/useSyncFormTranslations';
 
-const debounce = (func, delay) => {
-  let timer;
-  return (...args) =>
-    new Promise((resolve) => {
-      clearTimeout(timer);
-      timer = setTimeout(() => resolve(func(...args)), delay);
-    });
-};
+const timeoutRef = { current: null };
 
-// API Validation Function
-async function asyncValidate(fieldToValidate, value) {
+function asyncValidate(fieldToValidate, value) {
   if (!value || value.trim().length === 0) {
-    return '';
+    return Promise.resolve('');
   }
+
   const queryParams = {
     [fieldToValidate]: value,
     check_type: fieldToValidate
   };
 
-  try {
-    const response = await apiClient.get('/signup/duplicate_check', {
-      params: queryParams
-    });
-    return response.data.exists ? response.data.message : '';
-  } catch (error) {
-    return 'Error validating field.';
-  }
+  return new Promise((resolve) => {
+    if (timeoutRef.current) {
+      timeoutRef.current();
+    }
+
+    const timerId = setTimeout(() => {
+      apiClient
+        .get('/signup/duplicate_check', { params: queryParams })
+        .then((response) => {
+          if (response.data.exists) {
+            resolve(response.data.message);
+          } else {
+            resolve('');
+          }
+        })
+        .catch(() => {
+          resolve('An error occurred while validating');
+        });
+    }, 300);
+
+    timeoutRef.current = () => {
+      clearTimeout(timerId);
+      resolve('');
+    };
+  });
 }
 
-const debouncedAsyncValidate = debounce(asyncValidate, 300);
-
 function validateUsername(username) {
-  return debouncedAsyncValidate('username', username);
+  return asyncValidate('username', username);
 }
 
 function validateEmail(email) {
-  return debouncedAsyncValidate('email', email);
+  return asyncValidate('email', email);
 }
 
 function SignupForm() {
@@ -62,6 +70,7 @@ function SignupForm() {
     setShowConfirmPassword(!showConfirmPassword);
 
   function onSubmit(formProps) {
+    console.log("it's happening");
     return dispatch(validateAndSignUpUser(formProps));
   }
 
@@ -69,19 +78,21 @@ function SignupForm() {
     <Form
       fields={['username', 'email', 'password', 'confirmPassword']}
       validate={validateSignup}
-      onSubmit={onSubmit}
+      onSubmit={(values) => {
+        console.log('Form onSubmit triggered', values);
+        return onSubmit(values);
+      }}
     >
       {({ handleSubmit, pristine, submitting, invalid, form }) => {
         formRef.current = form;
         return (
           <form className="form" onSubmit={handleSubmit}>
-            {/* Username Field */}
             <Field
               name="username"
               validate={validateUsername}
               validateFields={[]}
             >
-              {({ input, meta }) => (
+              {(field) => (
                 <div className="form__field">
                   <label htmlFor="username" className="form__label">
                     {t('SignupForm.Title')}
@@ -93,20 +104,18 @@ function SignupForm() {
                     id="username"
                     autoComplete="username"
                     autoCapitalize="none"
-                    {...input}
+                    {...field.input}
                   />
-                  {meta.touched && meta.error && (
+                  {field.meta.touched && field.meta.error && (
                     <span className="form-error" aria-live="polite">
-                      {meta.error}
+                      {field.meta.error}
                     </span>
                   )}
                 </div>
               )}
             </Field>
-
-            {/* Email Field */}
             <Field name="email" validate={validateEmail} validateFields={[]}>
-              {({ input, meta }) => (
+              {(field) => (
                 <div className="form__field">
                   <label htmlFor="email" className="form__label">
                     {t('SignupForm.Email')}
@@ -117,20 +126,18 @@ function SignupForm() {
                     type="email"
                     id="email"
                     autoComplete="email"
-                    {...input}
+                    {...field.input}
                   />
-                  {meta.touched && meta.error && (
+                  {field.meta.touched && field.meta.error && (
                     <span className="form-error" aria-live="polite">
-                      {meta.error}
+                      {field.meta.error}
                     </span>
                   )}
                 </div>
               )}
             </Field>
-
-            {/* Password Field */}
             <Field name="password">
-              {({ input, meta }) => (
+              {(field) => (
                 <div className="form__field">
                   <label htmlFor="password" className="form__label">
                     {t('SignupForm.Password')}
@@ -142,7 +149,7 @@ function SignupForm() {
                       type={showPassword ? 'text' : 'password'}
                       id="password"
                       autoComplete="new-password"
-                      {...input}
+                      {...field.input}
                     />
                     <button
                       className="form__eye__icon"
@@ -157,18 +164,16 @@ function SignupForm() {
                       )}
                     </button>
                   </div>
-                  {meta.touched && meta.error && (
+                  {field.meta.touched && field.meta.error && (
                     <span className="form-error" aria-live="polite">
-                      {meta.error}
+                      {field.meta.error}
                     </span>
                   )}
                 </div>
               )}
             </Field>
-
-            {/* Confirm Password Field */}
             <Field name="confirmPassword">
-              {({ input, meta }) => (
+              {(field) => (
                 <div className="form__field">
                   <label htmlFor="confirmPassword" className="form__label">
                     {t('SignupForm.ConfirmPassword')}
@@ -176,11 +181,11 @@ function SignupForm() {
                   <div className="form__field__password">
                     <input
                       className="form__input"
-                      aria-label={t('SignupForm.ConfirmPasswordARIA')}
                       type={showConfirmPassword ? 'text' : 'password'}
-                      id="confirmPassword"
+                      aria-label={t('SignupForm.ConfirmPasswordARIA')}
+                      id="confirmPassword" // Match the id with htmlFor
                       autoComplete="new-password"
-                      {...input}
+                      {...field.input}
                     />
                     <button
                       className="form__eye__icon"
@@ -195,16 +200,14 @@ function SignupForm() {
                       )}
                     </button>
                   </div>
-                  {meta.touched && meta.error && (
+                  {field.meta.touched && field.meta.error && (
                     <span className="form-error" aria-live="polite">
-                      {meta.error}
+                      {field.meta.error}
                     </span>
                   )}
                 </div>
               )}
             </Field>
-
-            {/* Submit Button */}
             <Button type="submit" disabled={submitting || invalid || pristine}>
               {t('SignupForm.SubmitSignup')}
             </Button>
