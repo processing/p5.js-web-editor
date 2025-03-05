@@ -109,6 +109,9 @@
   text-align: left;
   margin-top: #{math.div(15, $base-font-size)}rem;
 }
+.form__resend-button {
+  margin-top: #{math.div(8, $base-font-size)}rem;
+}
 
 .form__status {
   @include themify() {
