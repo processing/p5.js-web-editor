@@ -1,3 +1,4 @@
+import { resolvePathsForElementsWithAttribute } from '../../shared/resolveUtils';
 import { resolvePathToFile } from '../utils/filePath';
 
 import {
@@ -13,8 +14,8 @@ function resolveLinksInString(content, files, projectId) {
   let fileStrings = content.match(STRING_REGEX);
   const fileStringRegex = /^('|")(?!(http:\/\/|https:\/\/)).*('|")$/i;
   fileStrings = fileStrings || [];
+  // if string does not begin with http or https
   fileStrings.forEach((fileString) => {
-    // if string does not begin with http or https
     if (fileString.match(fileStringRegex)) {
       const filePath = fileString.substr(1, fileString.length - 2);
       const resolvedFile = resolvePathToFile(filePath, files);
@@ -44,17 +45,9 @@ export function injectMediaUrls(filesToInject, allFiles, projectId) {
   });
 }
 
-export function resolvePathsForElementsWithAttribute(attr, sketchDoc, files) {
-  const elements = sketchDoc.querySelectorAll(`[${attr}]`);
-  const elementsArray = Array.prototype.slice.call(elements);
-  elementsArray.forEach((element) => {
-    if (element.getAttribute(attr).match(MEDIA_FILE_REGEX)) {
-      const resolvedFile = resolvePathToFile(element.getAttribute(attr), files);
-      if (resolvedFile && resolvedFile.url) {
-        element.setAttribute(attr, resolvedFile.url);
-      }
-    }
-  });
+// Wrapped the function in a proper call
+export function resolveMediaElements(sketchDoc, files) {
+  resolvePathsForElementsWithAttribute('src', sketchDoc, files);
 }
 
 export function resolveScripts(sketchDoc, files, projectId) {

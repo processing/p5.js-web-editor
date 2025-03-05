@@ -18,6 +18,7 @@ import {
 import { getAllScriptOffsets } from '../../utils/consoleUtils';
 import { registerFrame } from '../../utils/dispatcher';
 import { createBlobUrl } from './filesReducer';
+import { resolvePathsForElementsWithAttribute } from '../../../shared/resolveUtils';
 
 let objectUrls = {};
 let objectPaths = {};
@@ -33,19 +34,6 @@ const Frame = styled.iframe`
     position: relative;
   `}
 `;
-
-function resolvePathsForElementsWithAttribute(attr, sketchDoc, files) {
-  const elements = sketchDoc.querySelectorAll(`[${attr}]`);
-  const elementsArray = Array.prototype.slice.call(elements);
-  elementsArray.forEach((element) => {
-    if (element.getAttribute(attr).match(MEDIA_FILE_REGEX)) {
-      const resolvedFile = resolvePathToFile(element.getAttribute(attr), files);
-      if (resolvedFile && resolvedFile.url) {
-        element.setAttribute(attr, resolvedFile.url);
-      }
-    }
-  });
-}
 
 function resolveCSSLinksInString(content, files) {
   let newContent = content;
@@ -218,7 +206,12 @@ function injectLocalFiles(files, htmlFile, options) {
   base.href = `${window.origin}${basePath}${basePath.length > 1 && '/'}`;
   sketchDoc.head.appendChild(base);
 
+  // Resolve paths for elements with the 'src' attribute
+  // This updates the 'src' attribute of elements (e.g., <img>, <script>) to their resolved URLs
   resolvePathsForElementsWithAttribute('src', sketchDoc, resolvedFiles);
+
+  // Resolve paths for elements with the 'href' attribute
+  // This updates the 'href' attribute of elements (e.g., <a>, <link>) to their resolved URLs
   resolvePathsForElementsWithAttribute('href', sketchDoc, resolvedFiles);
   // should also include background, data, poster, but these are used way less often
 
