@@ -366,7 +366,7 @@ When testing redux, the general guidance [[1]](#References) seems to suggest spl
 2. reducers
 3. connected components
 
-Testing reducers and action creators is covered pretty well in [Redux's documentation](https://redux.js.org/recipes/writing-tests). An example of testing an action creator can be found at [projects.test.js](../client/modules/IDE/components/actions/__tests__/projects.test.jsx)
+Testing reducers and action creators is covered pretty well in [Redux's documentation](https://redux.js.org/recipes/writing-tests). An example of testing an action creator can be found at [projects.unit.test.js](../client/modules/IDE/actions/projects.unit.test.js)
 
 ### Connected Components
 
