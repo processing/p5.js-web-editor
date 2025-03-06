@@ -9,7 +9,6 @@ import {
   closeShareModal,
   hideErrorModal
 } from '../actions/ide';
-import About from './About';
 import AddToCollectionList from './AddToCollectionList';
 import ErrorModal from './ErrorModal';
 import Feedback from './Feedback';
@@ -47,15 +46,6 @@ export default function IDEOverlays() {
           closeOverlay={() => dispatch(closePreferences())}
         >
           <Preferences />
-        </Overlay>
-      )}
-      {location.pathname === '/about' && (
-        <Overlay
-          title={t('About.Title')}
-          previousPath={previousPath}
-          ariaLabel={t('About.Title')}
-        >
-          <About />
         </Overlay>
       )}
       {location.pathname === '/feedback' && (

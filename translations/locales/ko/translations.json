@@ -355,7 +355,7 @@
     "InvalidTokenNull": "이 링크는 유효하지 않습니다.",
     "Checking": "Validating token, please wait...",
     "Verified": "All done, your email address has been verified.",
-    "InvalidState": "Something went wrong."
+    "InvalidState": "토큰이 유효하지 않거나 만료되었습니다."
   },
   "AssetList": {
     "Title": "p5.js Web Editor | My assets",
