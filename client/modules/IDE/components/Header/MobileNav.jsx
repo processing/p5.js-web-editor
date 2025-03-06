@@ -249,7 +249,7 @@ const MobileNav = () => {
         <Options>
           <div>
             <Link to={editorLink}>
-              <IconButton icon={CrossIcon} />
+              <IconButton ariaLabel="Close button" icon={CrossIcon} />
             </Link>
           </div>
         </Options>
@@ -262,7 +262,7 @@ const MobileNav = () => {
           ) : (
             <div>
               <Link to="/login">
-                <IconButton icon={AccountIcon} />
+                <IconButton ariaLabel="Login button" icon={AccountIcon} />
               </Link>
             </div>
           )}
@@ -271,7 +271,7 @@ const MobileNav = () => {
           ) : (
             <div>
               <Link to={editorLink}>
-                <IconButton icon={EditorIcon} />
+                <IconButton ariaLabel="Editor button" icon={EditorIcon} />
               </Link>
             </div>
           )}
@@ -291,8 +291,19 @@ const StuffMenu = () => {
 
   return (
     <div>
-      <IconButton icon={AddIcon} {...handlers} />
-      <ul className={isOpen ? 'opened' : ''}>
+      <IconButton
+        icon={AddIcon}
+        ariaLabel="Stuff Menu"
+        aria-controls="stuff-menu"
+        id="stuff-menu-button"
+        {...handlers}
+      />
+      <ul
+        className={isOpen ? 'opened' : ''}
+        id="stuff-menu"
+        role="menu"
+        aria-labelledby="stuff-menu-button"
+      >
         <ParentMenuContext.Provider value="stuff">
           <NavMenuItem onClick={() => newSketch()}>
             {t('DashboardView.NewSketch')}
@@ -322,8 +333,19 @@ const AccountMenu = () => {
 
   return (
     <div>
-      <IconButton icon={AccountIcon} {...handlers} />
-      <ul className={isOpen ? 'opened' : ''}>
+      <IconButton
+        icon={AccountIcon}
+        ariaLabel="Account Menu"
+        aria-controls="more-menu"
+        id="account-menu-button"
+        {...handlers}
+      />
+      <ul
+        className={isOpen ? 'opened' : ''}
+        id="account-menu"
+        role="menu"
+        aria-labelledby="account-menu-button"
+      >
         <ParentMenuContext.Provider value="account">
           <li className="user">{user.username}</li>
           <NavMenuItem href={`/${user.username}/sketches`}>
@@ -393,8 +415,19 @@ const MoreMenu = () => {
           </LanguageSelect>
         </Overlay>
       )}
-      <IconButton icon={MoreIcon} {...handlers} />
-      <ul className={isOpen ? 'opened' : ''}>
+      <IconButton
+        icon={MoreIcon}
+        ariaLabel="More Menu"
+        aria-controls="more-menu"
+        id="more-menu-button"
+        {...handlers}
+      />
+      <ul
+        id="more-menu"
+        className={isOpen ? 'opened' : ''}
+        role="menu"
+        aria-labelledby="more-menu-button"
+      >
         <ParentMenuContext.Provider value="more">
           <b>{t('Nav.File.Title')}</b>
           <NavMenuItem onClick={newSketch}>{t('Nav.File.New')}</NavMenuItem>

@@ -316,6 +316,7 @@ exports[`Nav renders dashboard version for mobile 1`] = `
           href="/login"
         >
           <button
+            aria-label="Login button"
             class="c4 c5"
             display="inline"
             focusable="false"
@@ -332,9 +333,12 @@ exports[`Nav renders dashboard version for mobile 1`] = `
       </div>
       <div>
         <button
+          aria-controls="more-menu"
+          aria-label="More Menu"
           class="c4 c5"
           display="inline"
           focusable="false"
+          id="more-menu-button"
           kind="primary"
           type="button"
         >
@@ -345,7 +349,10 @@ exports[`Nav renders dashboard version for mobile 1`] = `
           />
         </button>
         <ul
+          aria-labelledby="more-menu-button"
           class=""
+          id="more-menu"
+          role="menu"
         >
           <b>
             File
@@ -1017,6 +1024,7 @@ exports[`Nav renders editor version for mobile 1`] = `
           href="/login"
         >
           <button
+            aria-label="Login button"
             class="c4 c5"
             display="inline"
             focusable="false"
@@ -1033,9 +1041,12 @@ exports[`Nav renders editor version for mobile 1`] = `
       </div>
       <div>
         <button
+          aria-controls="more-menu"
+          aria-label="More Menu"
           class="c4 c5"
           display="inline"
           focusable="false"
+          id="more-menu-button"
           kind="primary"
           type="button"
         >
@@ -1046,7 +1057,10 @@ exports[`Nav renders editor version for mobile 1`] = `
           />
         </button>
         <ul
+          aria-labelledby="more-menu-button"
           class=""
+          id="more-menu"
+          role="menu"
         >
           <b>
             File

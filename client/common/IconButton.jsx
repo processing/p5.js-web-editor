@@ -13,7 +13,7 @@ const ButtonWrapper = styled(Button)`
 `;
 
 const IconButton = (props) => {
-  const { icon, ...otherProps } = props;
+  const { icon, ariaLabel, ...otherProps } = props;
   const Icon = icon;
 
   return (
@@ -22,17 +22,20 @@ const IconButton = (props) => {
       iconOnly
       display={Button.displays.inline}
       focusable="false"
+      aria-label={ariaLabel}
       {...otherProps}
     />
   );
 };
 
 IconButton.propTypes = {
-  icon: PropTypes.func
+  icon: PropTypes.func,
+  ariaLabel: PropTypes.string
 };
 
 IconButton.defaultProps = {
-  icon: null
+  icon: null,
+  ariaLabel: ''
 };
 
 export default IconButton;
