@@ -169,6 +169,8 @@
     "GeneralSettings": "General settings",
     "Accessibility": "Accessibility",
     "Theme": "Theme",
+    "SystemTheme": "System Preference",
+    "SystemThemeARIA": "use system theme preference",
     "LightTheme": "Light",
     "LightThemeARIA": "light theme on",
     "DarkTheme": "Dark",
@@ -362,7 +364,7 @@
     "CreateTokenSubmit": "Create",
     "NoTokens": "You have no existing tokens.",
     "NewTokenTitle": "Your new access token",
-    "NewTokenInfo": "Make sure to copy your new personal access token now.\n                  You won’t be able to see it again!",
+    "NewTokenInfo": "Make sure to copy your new personal access token now.\n                  You won't be able to see it again!",
     "ExistingTokensTitle": "Existing tokens"
   },
   "APIKeyList": {
