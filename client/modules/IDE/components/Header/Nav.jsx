@@ -4,13 +4,13 @@ import { sortBy } from 'lodash';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import NavDropdownMenu from '../../../../components/Nav/NavDropdownMenu';
-import NavMenuItem from '../../../../components/Nav/NavMenuItem';
+import MenubarSubmenu from '../../../../components/Menubar/MenubarSubmenu';
+import MenubarItem from '../../../../components/Menubar/MenubarItem';
 import { availableLanguages, languageKeyToLabel } from '../../../../i18n';
 import getConfig from '../../../../utils/getConfig';
 import { showToast } from '../../actions/toast';
 import { setLanguage } from '../../actions/preferences';
-import NavBar from '../../../../components/Nav/NavBar';
+import Menubar from '../../../../components/Menubar/Menubar';
 import CaretLeftIcon from '../../../../images/left-arrow.svg';
 import LogoIcon from '../../../../images/p5js-logo-small.svg';
 import { selectRootFile } from '../../selectors/files';
@@ -37,10 +37,14 @@ const Nav = ({ layout }) => {
   return isMobile ? (
     <MobileNav />
   ) : (
-    <NavBar>
-      <LeftLayout layout={layout} />
-      <UserMenu />
-    </NavBar>
+    <>
+      <header className="nav__header">
+        <Menubar>
+          <LeftLayout layout={layout} />
+          <UserMenu />
+        </Menubar>
+      </header>
+    </>
   );
 };
 
@@ -159,9 +163,9 @@ const ProjectMenu = () => {
           </a>
         )}
       </li>
-      <NavDropdownMenu id="file" title={t('Nav.File.Title')}>
-        <NavMenuItem onClick={newSketch}>{t('Nav.File.New')}</NavMenuItem>
-        <NavMenuItem
+      <MenubarSubmenu id="file" title={t('Nav.File.Title')}>
+        <MenubarItem onClick={newSketch}>{t('Nav.File.New')}</MenubarItem>
+        <MenubarItem
           hideIf={
             !getConfig('LOGIN_ENABLED') || (project?.owner && !isUserOwner)
           }
@@ -169,26 +173,26 @@ const ProjectMenu = () => {
         >
           {t('Common.Save')}
           <span className="nav__keyboard-shortcut">{metaKeyName}+S</span>
-        </NavMenuItem>
-        <NavMenuItem
+        </MenubarItem>
+        <MenubarItem
           hideIf={isUnsaved || !user.authenticated}
           onClick={() => dispatch(cloneProject())}
         >
           {t('Nav.File.Duplicate')}
-        </NavMenuItem>
-        <NavMenuItem hideIf={isUnsaved} onClick={shareSketch}>
+        </MenubarItem>
+        <MenubarItem hideIf={isUnsaved} onClick={shareSketch}>
           {t('Nav.File.Share')}
-        </NavMenuItem>
-        <NavMenuItem hideIf={isUnsaved} onClick={downloadSketch}>
+        </MenubarItem>
+        <MenubarItem hideIf={isUnsaved} onClick={downloadSketch}>
           {t('Nav.File.Download')}
-        </NavMenuItem>
-        <NavMenuItem
+        </MenubarItem>
+        <MenubarItem
           hideIf={!user.authenticated}
           href={`/${user.username}/sketches`}
         >
           {t('Nav.File.Open')}
-        </NavMenuItem>
-        <NavMenuItem
+        </MenubarItem>
+        <MenubarItem
           hideIf={
             !getConfig('UI_COLLECTIONS_ENABLED') ||
             !user.authenticated ||
@@ -197,56 +201,57 @@ const ProjectMenu = () => {
           href={`/${user.username}/sketches/${project?.id}/add-to-collection`}
         >
           {t('Nav.File.AddToCollection')}
-        </NavMenuItem>
-        <NavMenuItem
+        </MenubarItem>
+        <MenubarItem
           hideIf={!getConfig('EXAMPLES_ENABLED')}
           href="/p5/sketches"
         >
           {t('Nav.File.Examples')}
-        </NavMenuItem>
-      </NavDropdownMenu>
-      <NavDropdownMenu id="edit" title={t('Nav.Edit.Title')}>
-        <NavMenuItem onClick={cmRef.current?.tidyCode}>
+        </MenubarItem>
+      </MenubarSubmenu>
+      <MenubarSubmenu id="edit" title={t('Nav.Edit.Title')}>
+        <MenubarItem onClick={cmRef.current?.tidyCode}>
           {t('Nav.Edit.TidyCode')}
           <span className="nav__keyboard-shortcut">{metaKeyName}+Shift+F</span>
-        </NavMenuItem>
-        <NavMenuItem onClick={cmRef.current?.showFind}>
+        </MenubarItem>
+        <MenubarItem onClick={cmRef.current?.showFind}>
           {t('Nav.Edit.Find')}
           <span className="nav__keyboard-shortcut">{metaKeyName}+F</span>
-        </NavMenuItem>
-        <NavMenuItem onClick={cmRef.current?.showReplace}>
+        </MenubarItem>
+        <MenubarItem onClick={cmRef.current?.showReplace}>
           {t('Nav.Edit.Replace')}
           <span className="nav__keyboard-shortcut">{replaceCommand}</span>
-        </NavMenuItem>
-      </NavDropdownMenu>
-      <NavDropdownMenu id="sketch" title={t('Nav.Sketch.Title')}>
-        <NavMenuItem onClick={() => dispatch(newFile(rootFile.id))}>
+        </MenubarItem>
+      </MenubarSubmenu>
+      <MenubarSubmenu id="sketch" title={t('Nav.Sketch.Title')}>
+        <MenubarItem onClick={() => dispatch(newFile(rootFile.id))}>
           {t('Nav.Sketch.AddFile')}
           <span className="nav__keyboard-shortcut">{newFileCommand}</span>
-        </NavMenuItem>
-        <NavMenuItem onClick={() => dispatch(newFolder(rootFile.id))}>
+        </MenubarItem>
+        <MenubarItem onClick={() => dispatch(newFolder(rootFile.id))}>
           {t('Nav.Sketch.AddFolder')}
-        </NavMenuItem>
-        <NavMenuItem onClick={() => dispatch(startSketch())}>
+        </MenubarItem>
+        <MenubarItem onClick={() => dispatch(startSketch())}>
           {t('Nav.Sketch.Run')}
           <span className="nav__keyboard-shortcut">{metaKeyName}+Enter</span>
-        </NavMenuItem>
-        <NavMenuItem onClick={() => dispatch(stopSketch())}>
+        </MenubarItem>
+        <MenubarItem onClick={() => dispatch(stopSketch())}>
           {t('Nav.Sketch.Stop')}
           <span className="nav__keyboard-shortcut">
             Shift+{metaKeyName}+Enter
           </span>
-        </NavMenuItem>
-      </NavDropdownMenu>
-      <NavDropdownMenu id="help" title={t('Nav.Help.Title')}>
-        <NavMenuItem onClick={() => dispatch(showKeyboardShortcutModal())}>
+        </MenubarItem>
+      </MenubarSubmenu>
+      <MenubarSubmenu id="help" title={t('Nav.Help.Title')}>
+        <MenubarItem onClick={() => dispatch(showKeyboardShortcutModal())}>
           {t('Nav.Help.KeyboardShortcuts')}
-        </NavMenuItem>
-        <NavMenuItem href="https://p5js.org/reference/">
+        </MenubarItem>
+        <MenubarItem href="https://p5js.org/reference/">
           {t('Nav.Help.Reference')}
-        </NavMenuItem>
-        <NavMenuItem href="/about">{t('Nav.Help.About')}</NavMenuItem>
-      </NavDropdownMenu>
+        </MenubarItem>
+        <MenubarItem href="/about">{t('Nav.Help.About')}</MenubarItem>
+      </MenubarSubmenu>
+      {getConfig('TRANSLATIONS_ENABLED') && <LanguageMenu />}
     </ul>
   );
 };
@@ -261,32 +266,44 @@ const LanguageMenu = () => {
   }
 
   return (
-    <NavDropdownMenu id="lang" title={languageKeyToLabel(language)}>
+    <MenubarSubmenu
+      id="lang"
+      title={languageKeyToLabel(language)}
+      triggerRole="button"
+      listRole="listbox"
+    >
       {sortBy(availableLanguages).map((key) => (
         // eslint-disable-next-line react/jsx-no-bind
-        <NavMenuItem key={key} value={key} onClick={handleLangSelection}>
+        <MenubarItem
+          key={key}
+          value={key}
+          onClick={handleLangSelection}
+          role="option"
+          selected={key === language}
+        >
           {languageKeyToLabel(key)}
-        </NavMenuItem>
+        </MenubarItem>
       ))}
-    </NavDropdownMenu>
+    </MenubarSubmenu>
   );
 };
 
 const UnauthenticatedUserMenu = () => {
   const { t } = useTranslation();
   return (
-    <ul className="nav__items-right" title="user-menu" role="navigation">
-      {getConfig('TRANSLATIONS_ENABLED') && <LanguageMenu />}
+    <ul className="nav__items-right" title="user-menu">
       <li className="nav__item">
-        <Link to="/login" className="nav__auth-button" role="menuitem">
+        <Link to="/login" className="nav__auth-button">
           <span className="nav__item-header" title="Login">
             {t('Nav.Login')}
           </span>
         </Link>
       </li>
-      <li className="nav__item-or">{t('Nav.LoginOr')}</li>
+      <li className="nav__item-or" role="presentation">
+        {t('Nav.LoginOr')}
+      </li>
       <li className="nav__item">
-        <Link to="/signup" className="nav__auth-button" role="menuitem">
+        <Link to="/signup" className="nav__auth-button">
           <span className="nav__item-header" title="SignUp">
             {t('Nav.SignUp')}
           </span>
@@ -303,9 +320,8 @@ const AuthenticatedUserMenu = () => {
   const dispatch = useDispatch();
 
   return (
-    <ul className="nav__items-right" title="user-menu" role="navigation">
-      {getConfig('TRANSLATIONS_ENABLED') && <LanguageMenu />}
-      <NavDropdownMenu
+    <ul className="nav__items-right" title="user-menu">
+      <MenubarSubmenu
         id="account"
         title={
           <span>
@@ -313,23 +329,23 @@ const AuthenticatedUserMenu = () => {
           </span>
         }
       >
-        <NavMenuItem href={`/${username}/sketches`}>
+        <MenubarItem href={`/${username}/sketches`}>
           {t('Nav.Auth.MySketches')}
-        </NavMenuItem>
-        <NavMenuItem
+        </MenubarItem>
+        <MenubarItem
           href={`/${username}/collections`}
           hideIf={!getConfig('UI_COLLECTIONS_ENABLED')}
         >
           {t('Nav.Auth.MyCollections')}
-        </NavMenuItem>
-        <NavMenuItem href={`/${username}/assets`}>
+        </MenubarItem>
+        <MenubarItem href={`/${username}/assets`}>
           {t('Nav.Auth.MyAssets')}
-        </NavMenuItem>
-        <NavMenuItem href="/account">{t('Preferences.Settings')}</NavMenuItem>
-        <NavMenuItem onClick={() => dispatch(logoutUser())}>
+        </MenubarItem>
+        <MenubarItem href="/account">{t('Preferences.Settings')}</MenubarItem>
+        <MenubarItem onClick={() => dispatch(logoutUser())}>
           {t('Nav.Auth.LogOut')}
-        </NavMenuItem>
-      </NavDropdownMenu>
+        </MenubarItem>
+      </MenubarSubmenu>
     </ul>
   );
 };

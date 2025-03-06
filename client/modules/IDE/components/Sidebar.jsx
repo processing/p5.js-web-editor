@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -30,21 +30,37 @@ export default function SideBar() {
   );
   const isExpanded = useSelector((state) => state.ide.sidebarIsExpanded);
   const canEditProject = useSelector(selectCanEditSketch);
+  const isAuthenticated = useSelector(getAuthenticated);
 
   const sidebarOptionsRef = useRef(null);
 
-  const isAuthenticated = useSelector(getAuthenticated);
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (
+        projectOptionsVisible &&
+        sidebarOptionsRef.current &&
+        !sidebarOptionsRef.current.contains(event.target)
+      ) {
+        setTimeout(() => dispatch(closeProjectOptions()), 300);
+      }
+    }
 
-  const onBlurComponent = () => {
-    setTimeout(() => dispatch(closeProjectOptions()), 200);
-  };
+    if (projectOptionsVisible) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [projectOptionsVisible, dispatch]);
 
   const toggleProjectOptions = (e) => {
     e.preventDefault();
     if (projectOptionsVisible) {
       dispatch(closeProjectOptions());
     } else {
-      sidebarOptionsRef.current?.focus();
       dispatch(openProjectOptions());
     }
   };
@@ -65,9 +81,7 @@ export default function SideBar() {
             dispatch(collapseSidebar());
             dispatch(closeProjectOptions());
           }}
-        >
-          {' '}
-        </button>
+        />
       )}
       <section className={sidebarClass}>
         <header
@@ -77,57 +91,54 @@ export default function SideBar() {
           <h3 className="sidebar__title">
             <span>{t('Sidebar.Title')}</span>
           </h3>
-          <div className="sidebar__icons">
+          <div className="sidebar__icons" ref={sidebarOptionsRef}>
             <button
               aria-label={t('Sidebar.ToggleARIA')}
               className="sidebar__add"
               tabIndex="0"
-              ref={sidebarOptionsRef}
               onClick={toggleProjectOptions}
-              onBlur={onBlurComponent}
             >
               <PlusIcon focusable="false" aria-hidden="true" />
             </button>
-            <ul className="sidebar__project-options">
-              <li>
-                <button
-                  aria-label={t('Sidebar.AddFolderARIA')}
-                  onClick={() => {
-                    dispatch(newFolder(rootFile.id));
-                    setTimeout(() => dispatch(closeProjectOptions()), 0);
-                  }}
-                  onBlur={onBlurComponent}
-                >
-                  {t('Sidebar.AddFolder')}
-                </button>
-              </li>
-              <li>
-                <button
-                  aria-label={t('Sidebar.AddFileARIA')}
-                  onClick={() => {
-                    dispatch(newFile(rootFile.id));
-                    setTimeout(() => dispatch(closeProjectOptions()), 0);
-                  }}
-                  onBlur={onBlurComponent}
-                >
-                  {t('Sidebar.AddFile')}
-                </button>
-              </li>
-              {isAuthenticated && (
+            {projectOptionsVisible && (
+              <ul className="sidebar__project-options">
                 <li>
                   <button
-                    aria-label={t('Sidebar.UploadFileARIA')}
+                    aria-label={t('Sidebar.AddFolderARIA')}
                     onClick={() => {
-                      dispatch(openUploadFileModal(rootFile.id));
-                      setTimeout(() => dispatch(closeProjectOptions()), 0);
+                      dispatch(newFolder(rootFile.id));
+                      setTimeout(() => dispatch(closeProjectOptions()), 300);
                     }}
-                    onBlur={onBlurComponent}
                   >
-                    {t('Sidebar.UploadFile')}
+                    {t('Sidebar.AddFolder')}
                   </button>
                 </li>
-              )}
-            </ul>
+                <li>
+                  <button
+                    aria-label={t('Sidebar.AddFileARIA')}
+                    onClick={() => {
+                      dispatch(newFile(rootFile.id));
+                      setTimeout(() => dispatch(closeProjectOptions()), 300);
+                    }}
+                  >
+                    {t('Sidebar.AddFile')}
+                  </button>
+                </li>
+                {isAuthenticated && (
+                  <li>
+                    <button
+                      aria-label={t('Sidebar.UploadFileARIA')}
+                      onClick={() => {
+                        dispatch(openUploadFileModal(rootFile.id));
+                        setTimeout(() => dispatch(closeProjectOptions()), 300);
+                      }}
+                    >
+                      {t('Sidebar.UploadFile')}
+                    </button>
+                  </li>
+                )}
+              </ul>
+            )}
           </div>
         </header>
         <ConnectedFileNode id={rootFile.id} canEdit={canEditProject} />

@@ -3,16 +3,25 @@
 .nav {
   height: #{math.div(42, $base-font-size)}rem;
   display: flex;
+  width: 100%;
   flex-direction: row;
   justify-content: space-between;
-
-  @include themify() {
-    border-bottom: 1px dashed map-get($theme-map, 'nav-border-color');
-  }
 
   & button {
     padding: 0;
   }
+}
+
+.nav__header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  @include themify() {
+    border-bottom: 1px dashed map-get($theme-map, 'nav-border-color');
+  }
+  // padding-left: #{math.div(20, $base-font-size)}rem;
 }
 
 .nav__items-left,
@@ -20,9 +29,8 @@
   list-style: none;
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
-  height: 100%;
   align-items: center;
+  height: 100%;
 }
 
 .preview-nav__editor-svg {
