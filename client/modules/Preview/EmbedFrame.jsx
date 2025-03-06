@@ -8,7 +8,6 @@ import decomment from 'decomment';
 import { resolvePathToFile } from '../../../server/utils/filePath';
 import getConfig from '../../utils/getConfig';
 import {
-  MEDIA_FILE_REGEX,
   MEDIA_FILE_QUOTED_REGEX,
   STRING_REGEX,
   PLAINTEXT_FILE_REGEX,
@@ -18,7 +17,7 @@ import {
 import { getAllScriptOffsets } from '../../utils/consoleUtils';
 import { registerFrame } from '../../utils/dispatcher';
 import { createBlobUrl } from './filesReducer';
-import { resolvePathsForElementsWithAttribute } from '../../../shared/resolveUtils';
+import resolvePathsForElementsWithAttribute from '../../../shared/resolveUtils';
 
 let objectUrls = {};
 let objectPaths = {};
