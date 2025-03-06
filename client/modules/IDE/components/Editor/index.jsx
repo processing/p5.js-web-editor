@@ -168,6 +168,7 @@ class Editor extends React.Component {
       },
       Enter: 'emmetInsertLineBreak',
       Esc: 'emmetResetAbbreviation',
+      [`Shift-Tab`]: false,
       [`${metaKey}-Enter`]: () => null,
       [`Shift-${metaKey}-Enter`]: () => null,
       [`${metaKey}-F`]: 'findPersistent',
@@ -208,10 +209,6 @@ class Editor extends React.Component {
       const mode = this._cm.getOption('mode');
       if (/^[a-z]$/i.test(e.key) && (mode === 'css' || mode === 'javascript')) {
         this.showHint(_cm);
-      }
-      if (e.key === 'Escape') {
-        e.preventDefault();
-        this._cm.getInputField().blur();
       }
     });
 

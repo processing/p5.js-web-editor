@@ -46,7 +46,7 @@ For first-time contributors or those who want to start with a small task, [check
 If you're looking for a bigger project to take on, look through the issues tagged [good medium issue](https://github.com/processing/p5.js-web-editor/labels/good%20medium%20issue). These issues are self-contained projects that may take longer to work on, but are great if you're looking to get more deeply involved in contributing!
 
 ### Project Board
-Many issues are related to each other and fall under bigger projects. To get a bigger picture, look at the [All Projects](https://github.com/processing/p5.js-web-editor/projects/4) board.
+Many issues are related to each other and fall under bigger projects. To get a bigger picture, look at the [All Projects](https://github.com/processing/p5.js-web-editor/projects/) board.
 
 ### Project Ideas
 If you're looking for inspiration for Google Summer of Code or a bigger project, there's a [project list](https://github.com/processing/processing/wiki/Project-List#p5js-web-editor) maintained on the Processing wiki.
