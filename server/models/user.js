@@ -116,34 +116,52 @@ userSchema.pre('save', function checkPassword(next) {
  * API keys hash middleware
  */
 userSchema.pre('save', function checkApiKey(next) {
-  // eslint-disable-line consistent-return
   const user = this;
   if (!user.isModified('apiKeys')) {
     next();
     return;
   }
+
   let hasNew = false;
+  let pendingTasks = 0;
+  let nextCalled = false;
+
+  const done = (err) => {
+    if (nextCalled) return;
+    if (err) {
+      nextCalled = true;
+      next(err);
+      return;
+    }
+    pendingTasks -= 1;
+    if (pendingTasks === 0) {
+      nextCalled = true;
+      next();
+    }
+  };
+
   user.apiKeys.forEach((k) => {
     if (k.isNew) {
       hasNew = true;
+      pendingTasks += 1;
       bcrypt.genSalt(10, (err, salt) => {
-        // eslint-disable-line consistent-return
         if (err) {
-          next(err);
-          return;
+          done(err);
         }
         bcrypt.hash(k.hashedKey, salt, (innerErr, hash) => {
           if (innerErr) {
-            next(innerErr);
-            return;
+            done(innerErr);
           }
           k.hashedKey = hash;
-          next();
+          done();
         });
       });
     }
   });
-  if (!hasNew) next();
+
+  if (!hasNew) {
+    next();
+  }
 });
 
 userSchema.virtual('id').get(function idToString() {

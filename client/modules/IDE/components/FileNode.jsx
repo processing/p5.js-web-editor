@@ -292,6 +292,7 @@ const FileNode = ({
             ref={fileOptionsRef}
             tabIndex="0"
             onClick={toggleFileOptions}
+            onBlur={() => setTimeout(hideFileOptions, 200)}
           >
             <DownArrowIcon focusable="false" aria-hidden="true" />
           </button>

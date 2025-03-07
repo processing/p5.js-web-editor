@@ -10,5 +10,5 @@ variable "region" {
 
 variable "gke_version" {
   type    = string
-  default = "1.22.8-gke.200"
+  default = "1.30.8-gke.1261000"
 }

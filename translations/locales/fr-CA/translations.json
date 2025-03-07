@@ -370,7 +370,7 @@
       "InvalidTokenNull": "Ce lien n'est pas valide.",
       "Checking": "Validation du jeton, veuillez patienter...",
       "Verified": "Ça y est, votre adresse courriel a été vérifiée.",
-      "InvalidState": "Quelque chose a mal tourné."
+      "InvalidState": "Le jeton est invalide ou expiré."
     },
     "AssetList": {
       "Title": "Éditeur web p5.js | Mes ressources",
