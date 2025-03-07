@@ -1,3 +1,4 @@
+import { useRef, useEffect } from 'react';
 import CodeMirror from 'codemirror';
 import 'codemirror/mode/css/css';
 import 'codemirror/mode/clike/clike';
@@ -34,171 +35,181 @@ const INDENTATION_AMOUNT = 2;
 
 emmet(CodeMirror);
 
-function setupCodeMirrorHooks(
-  cmInstance,
-  {
-    setUnsavedChanges,
-    hideRuntimeErrorWarning,
-    updateFileContent,
-    file,
-    autorefresh,
-    isPlaying,
-    clearConsole,
-    startSketch,
-    autocompleteHinter,
-    fontSize
-  },
-  updateLineNumber
-) {
-  cmInstance.on(
-    'change',
-    debounce(() => {
-      setUnsavedChanges(true);
-      hideRuntimeErrorWarning();
-      updateFileContent(file.id, cmInstance.getValue());
-      if (autorefresh && isPlaying) {
-        clearConsole();
-        startSketch();
-      }
-    }, 1000)
-  );
+export default function useCodeMirror({
+  theme,
+  lineNumbers,
+  linewrap,
+  autocloseBracketsQuotes,
+  setUnsavedChanges,
+  setCurrentLine,
+  hideRuntimeErrorWarning,
+  updateFileContent,
+  file,
+  autorefresh,
+  isPlaying,
+  clearConsole,
+  startSketch,
+  autocompleteHinter,
+  fontSize,
+  onUpdateLinting
+}) {
+  const cmInstance = useRef();
 
-  cmInstance.on('keyup', () => {
-    const lineNumber = parseInt(cmInstance.getCursor().line + 1, 10);
-    updateLineNumber(lineNumber);
-  });
+  function onKeyUp() {
+    const lineNumber = parseInt(cmInstance.current.getCursor().line + 1, 10);
+    setCurrentLine(lineNumber);
+  }
 
-  cmInstance.on('keydown', (_cm, e) => {
+  function onKeyDown(_cm, e) {
     // Show hint
-    const mode = cmInstance.getOption('mode');
+    const mode = cmInstance.current.getOption('mode');
     if (/^[a-z]$/i.test(e.key) && (mode === 'css' || mode === 'javascript')) {
       showHint(_cm, autocompleteHinter, fontSize);
     }
     if (e.key === 'Escape') {
       e.preventDefault();
-      const selections = cmInstance.listSelections();
+      const selections = cmInstance.current.listSelections();
 
       if (selections.length > 1) {
         const firstPos = selections[0].head || selections[0].anchor;
-        cmInstance.setSelection(firstPos);
-        cmInstance.scrollIntoView(firstPos);
+        cmInstance.current.setSelection(firstPos);
+        cmInstance.current.scrollIntoView(firstPos);
       } else {
-        cmInstance.getInputField().blur();
+        cmInstance.current.getInputField().blur();
       }
     }
-  });
+  }
 
-  cmInstance.getWrapperElement().style['font-size'] = `${fontSize}px`;
-}
-
-export default function setupCodeMirror(
-  container,
-  {
-    theme,
-    lineNumbers,
-    linewrap,
-    autocloseBracketsQuotes,
-    setUnsavedChanges,
-    hideRuntimeErrorWarning,
-    updateFileContent,
-    file,
-    autorefresh,
-    isPlaying,
-    clearConsole,
-    startSketch,
-    autocompleteHinter,
-    fontSize
-  },
-  onUpdateLinting,
-  docs,
-  updateLineNumber
-) {
-  const cm = CodeMirror(container, {
-    theme: `p5-${theme}`,
-    lineNumbers,
-    styleActiveLine: true,
-    inputStyle: 'contenteditable',
-    lineWrapping: linewrap,
-    fixedGutter: false,
-    foldGutter: true,
-    foldOptions: { widget: '\u2026' },
-    gutters: ['CodeMirror-foldgutter', 'CodeMirror-lint-markers'],
-    keyMap: 'sublime',
-    highlightSelectionMatches: true, // highlight current search match
-    matchBrackets: true,
-    emmet: {
-      preview: ['html'],
-      markTagPairs: true,
-      autoRenameTags: true
-    },
-    autoCloseBrackets: autocloseBracketsQuotes,
-    styleSelectedText: true,
-    lint: {
-      onUpdateLinting,
-      options: {
-        asi: true,
-        eqeqeq: false,
-        '-W041': false,
-        esversion: 11
+  function onChange() {
+    debounce(() => {
+      setUnsavedChanges(true);
+      hideRuntimeErrorWarning();
+      updateFileContent(file.id, cmInstance.current.getValue());
+      if (autorefresh && isPlaying) {
+        clearConsole();
+        startSketch();
       }
-    },
-    colorpicker: {
-      type: 'sketch',
-      mode: 'edit'
-    }
-  });
+    }, 1000);
+  }
 
-  delete cm.options.lint.options.errors;
-
-  const replaceCommand =
-    metaKey === 'Ctrl' ? `${metaKey}-H` : `${metaKey}-Option-F`;
-  cm.setOption('extraKeys', {
-    Tab: (tabCm) => {
-      if (!tabCm.execCommand('emmetExpandAbbreviation')) return;
-      // might need to specify and indent more?
-      const selection = tabCm.doc.getSelection();
-      if (selection.length > 0) {
-        tabCm.execCommand('indentMore');
-      } else {
-        tabCm.replaceSelection(' '.repeat(INDENTATION_AMOUNT));
+  function setupCodeMirrorOnContainerMounted(container) {
+    cmInstance.current = CodeMirror(container, {
+      theme: `p5-${theme}`,
+      lineNumbers,
+      styleActiveLine: true,
+      inputStyle: 'contenteditable',
+      lineWrapping: linewrap,
+      fixedGutter: false,
+      foldGutter: true,
+      foldOptions: { widget: '\u2026' },
+      gutters: ['CodeMirror-foldgutter', 'CodeMirror-lint-markers'],
+      keyMap: 'sublime',
+      highlightSelectionMatches: true, // highlight current search match
+      matchBrackets: true,
+      emmet: {
+        preview: ['html'],
+        markTagPairs: true,
+        autoRenameTags: true
+      },
+      autoCloseBrackets: autocloseBracketsQuotes,
+      styleSelectedText: true,
+      lint: {
+        onUpdateLinting,
+        options: {
+          asi: true,
+          eqeqeq: false,
+          '-W041': false,
+          esversion: 11
+        }
+      },
+      colorpicker: {
+        type: 'sketch',
+        mode: 'edit'
       }
-    },
-    Enter: 'emmetInsertLineBreak',
-    Esc: 'emmetResetAbbreviation',
-    [`Shift-Tab`]: false,
-    [`${metaKey}-Enter`]: () => null,
-    [`Shift-${metaKey}-Enter`]: () => null,
-    [`${metaKey}-F`]: 'findPersistent',
-    [`Shift-${metaKey}-F`]: () => tidyCode(cm),
-    [`${metaKey}-G`]: 'findPersistentNext',
-    [`Shift-${metaKey}-G`]: 'findPersistentPrev',
-    [replaceCommand]: 'replace',
-    // Cassie Tarakajian: If you don't set a default color, then when you
-    // choose a color, it deletes characters inline. This is a
-    // hack to prevent that.
-    [`${metaKey}-K`]: (metaCm, event) =>
-      metaCm.state.colorpicker.popup_color_picker({ length: 0 }),
-    [`${metaKey}-.`]: 'toggleComment' // Note: most adblockers use the shortcut ctrl+.
-  });
+    });
 
-  setupCodeMirrorHooks(
-    cm,
-    {
-      setUnsavedChanges,
-      hideRuntimeErrorWarning,
-      updateFileContent,
-      file,
-      autorefresh,
-      isPlaying,
-      clearConsole,
-      startSketch,
-      autocompleteHinter,
-      fontSize
-    },
-    updateLineNumber
-  );
+    delete cmInstance.current.options.lint.options.errors;
 
-  cm.swapDoc(docs[file.id]);
+    const replaceCommand =
+      metaKey === 'Ctrl' ? `${metaKey}-H` : `${metaKey}-Option-F`;
+    cmInstance.current.setOption('extraKeys', {
+      Tab: (tabCm) => {
+        if (!tabCm.execCommand('emmetExpandAbbreviation')) return;
+        // might need to specify and indent more?
+        const selection = tabCm.doc.getSelection();
+        if (selection.length > 0) {
+          tabCm.execCommand('indentMore');
+        } else {
+          tabCm.replaceSelection(' '.repeat(INDENTATION_AMOUNT));
+        }
+      },
+      Enter: 'emmetInsertLineBreak',
+      Esc: 'emmetResetAbbreviation',
+      [`Shift-Tab`]: false,
+      [`${metaKey}-Enter`]: () => null,
+      [`Shift-${metaKey}-Enter`]: () => null,
+      [`${metaKey}-F`]: 'findPersistent',
+      [`Shift-${metaKey}-F`]: () => tidyCode(cmInstance.current),
+      [`${metaKey}-G`]: 'findPersistentNext',
+      [`Shift-${metaKey}-G`]: 'findPersistentPrev',
+      [replaceCommand]: 'replace',
+      // Cassie Tarakajian: If you don't set a default color, then when you
+      // choose a color, it deletes characters inline. This is a
+      // hack to prevent that.
+      [`${metaKey}-K`]: (metaCm, event) =>
+        metaCm.state.colorpicker.popup_color_picker({ length: 0 }),
+      [`${metaKey}-.`]: 'toggleComment' // Note: most adblockers use the shortcut ctrl+.
+    });
 
-  return cm;
+    cmInstance.current.on('change', onChange);
+    cmInstance.current.on('keyup', onKeyUp);
+    cmInstance.current.on('keydown', onKeyDown);
+
+    cmInstance.current.getWrapperElement().style['font-size'] = `${fontSize}px`;
+  }
+
+  useEffect(() => {
+    cmInstance.current.getWrapperElement().style['font-size'] = `${fontSize}px`;
+  }, [fontSize]);
+  useEffect(() => {
+    cmInstance.current.setOption('lineWrapping', linewrap);
+  }, [linewrap]);
+  useEffect(() => {
+    cmInstance.current.setOption('theme', `p5-${theme}`);
+  }, [theme]);
+  useEffect(() => {
+    cmInstance.current.setOption('lineNumbers', lineNumbers);
+  }, [lineNumbers]);
+  useEffect(() => {
+    cmInstance.current.setOption('autoCloseBrackets', autocloseBracketsQuotes);
+  }, [autocloseBracketsQuotes]);
+
+  function teardownCodeMirror() {
+    cmInstance.current.off('keyup', onKeyUp);
+    cmInstance.current.off('change', onChange);
+    cmInstance.current.off('keydown', onKeyDown);
+  }
+
+  const getContent = () => {
+    const content = cmInstance.current.getValue();
+    const updatedFile = Object.assign({}, file, { content });
+    return updatedFile;
+  };
+
+  const showFind = () => {
+    cmInstance.current.execCommand('findPersistent');
+  };
+
+  const showReplace = () => {
+    cmInstance.current.execCommand('replace');
+  };
+
+  return {
+    setupCodeMirrorOnContainerMounted,
+    teardownCodeMirror,
+    cmInstance,
+    getContent,
+    showFind,
+    showReplace
+  };
 }

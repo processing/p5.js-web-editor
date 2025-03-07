@@ -1,5 +1,3 @@
-// TODO: convert to functional component
-
 import PropTypes from 'prop-types';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import CodeMirror from 'codemirror';
@@ -40,7 +38,7 @@ import IconButton from '../../../../common/IconButton';
 import { hideHinter } from './hinter';
 import getFileMode from './utils';
 import tidyCode from './tidier';
-import setupCodeMirror from './codemirror';
+import useCodeMirror from './codemirror';
 import usePrevious from '../../../../utils/usePrevious';
 
 function Editor({
@@ -76,7 +74,6 @@ function Editor({
   expandSidebar
 }) {
   const [currentLine, setCurrentLine] = useState(1);
-  const cm = useRef();
   const beep = useRef();
   const docs = useRef();
   const previous = usePrevious({ file, unsavedChanges, consoleEvents });
@@ -93,19 +90,31 @@ function Editor({
     }
   }, 2000);
 
-  const getContent = () => {
-    const content = cm.current.getValue();
-    const updatedFile = Object.assign({}, file, { content });
-    return updatedFile;
-  };
-
-  const showFind = () => {
-    cm.current.execCommand('findPersistent');
-  };
-
-  const showReplace = () => {
-    cm.current.execCommand('replace');
-  };
+  const {
+    setupCodeMirrorOnContainerMounted,
+    teardownCodeMirror,
+    cmInstance,
+    getContent,
+    showFind,
+    showReplace
+  } = useCodeMirror({
+    theme,
+    lineNumbers,
+    linewrap,
+    autocloseBracketsQuotes,
+    setUnsavedChanges,
+    hideRuntimeErrorWarning,
+    updateFileContent,
+    file,
+    autorefresh,
+    isPlaying,
+    clearConsole,
+    startSketch,
+    autocompleteHinter,
+    fontSize,
+    updateLintingMessageAccessibility,
+    setCurrentLine
+  });
 
   const initializeDocuments = () => {
     docs.current = {};
@@ -120,40 +129,14 @@ function Editor({
   };
 
   // Component did mount
-  const onContainerMounted = useCallback((containerNode) => {
-    beep.current = new Audio(beepUrl);
-
-    // We need to do this first so docs exists.
-    initializeDocuments();
-
-    cm.current = setupCodeMirror(
-      containerNode,
-      {
-        theme,
-        lineNumbers,
-        linewrap,
-        autocloseBracketsQuotes,
-        setUnsavedChanges,
-        hideRuntimeErrorWarning,
-        updateFileContent,
-        file,
-        autorefresh,
-        isPlaying,
-        clearConsole,
-        startSketch,
-        autocompleteHinter,
-        fontSize
-      },
-      updateLintingMessageAccessibility,
-      docs.current,
-      setCurrentLine
-    );
-  }, []);
+  const onContainerMounted = useCallback(setupCodeMirrorOnContainerMounted, []);
 
   // Component did mount
   useEffect(() => {
+    beep.current = new Audio(beepUrl);
+
     provideController({
-      tidyCode: () => tidyCode(cm.current),
+      tidyCode: () => tidyCode(cmInstance.current),
       showFind,
       showReplace,
       getContent
@@ -161,9 +144,7 @@ function Editor({
 
     return () => {
       provideController(null);
-      // if (cm.current) {
-      //   cm.current.off('keyup', this.handleKeyUp);
-      // }
+      teardownCodeMirror();
     };
   }, []);
 
@@ -180,53 +161,35 @@ function Editor({
         markTagPairs: false,
         autoRenameTags: true
       };
-      cm.current.setOption('emmet', emmetConfig);
+      cmInstance.current.setOption('emmet', emmetConfig);
     }
-    const oldDoc = cm.current.swapDoc(docs.current[file.id]);
+    const oldDoc = cmInstance.current.swapDoc(docs.current[file.id]);
     if (previous?.file) {
       docs.current[previous.file.id] = oldDoc;
     }
-    cm.current.focus();
+    cmInstance.current.focus();
 
     if (!previous?.unsavedChanges) {
       setTimeout(() => setUnsavedChanges(false), 400);
     }
 
-    for (let i = 0; i < cm.current.lineCount(); i += 1) {
-      cm.current.removeLineClass(i, 'background', 'line-runtime-error');
+    for (let i = 0; i < cmInstance.current.lineCount(); i += 1) {
+      cmInstance.current.removeLineClass(i, 'background', 'line-runtime-error');
     }
 
     // I think we only need to re-provide this if the content changes? idk
     // TODO(connie) - Revisit the logic here
     provideController({
-      tidyCode: () => tidyCode(cm.current),
+      tidyCode: () => tidyCode(cmInstance.current),
       showFind,
       showReplace,
       getContent
     });
   }, [file]);
 
-  /** Move this to CM file */
-  useEffect(() => {
-    cm.current.getWrapperElement().style['font-size'] = `${fontSize}px`;
-  }, [fontSize]);
-  useEffect(() => {
-    cm.current.setOption('lineWrapping', linewrap);
-  }, [linewrap]);
-  useEffect(() => {
-    cm.current.setOption('theme', `p5-${theme}`);
-  }, [theme]);
-  useEffect(() => {
-    cm.current.setOption('lineNumbers', lineNumbers);
-  }, [lineNumbers]);
-  useEffect(() => {
-    cm.current.setOption('autoCloseBrackets', autocloseBracketsQuotes);
-  }, [autocloseBracketsQuotes]);
-  /** end move to CM file */
-
   useEffect(() => {
     // close the hinter window once the preference is turned off
-    if (!autocompleteHinter) hideHinter(cm.current);
+    if (!autocompleteHinter) hideHinter(cmInstance.current);
   }, [autocompleteHinter]);
 
   // TODO: Should this be watching more deps?
@@ -251,7 +214,7 @@ function Editor({
                 (f) => f.name === fileName && f.filePath === filePath
               );
               setSelectedFile(fileWithError.id);
-              cm.current.addLineClass(
+              cmInstance.current.addLineClass(
                 line.lineNumber - 1,
                 'background',
                 'line-runtime-error'
@@ -260,8 +223,12 @@ function Editor({
           }
         });
       } else {
-        for (let i = 0; i < cm.current.lineCount(); i += 1) {
-          cm.current.removeLineClass(i, 'background', 'line-runtime-error');
+        for (let i = 0; i < cmInstance.current.lineCount(); i += 1) {
+          cmInstance.current.removeLineClass(
+            i,
+            'background',
+            'line-runtime-error'
+          );
         }
       }
     }
