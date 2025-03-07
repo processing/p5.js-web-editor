@@ -92,7 +92,7 @@ function persistentDialog(cm, text, deflt, onEnter, replaceOpened, onKeyDown) {
       state.replaceStarted = false;
       if (e.keyCode !== 13 && searchField.value.length > 1) {
         // not enter and more than 1 character to search
-        startSearch(cm, getSearchState(cm), searchField.value);
+        startSearch(cm, state, searchField.value); // Updated
       } else if (searchField.value.length < 1) {
         cm.display.wrapper.querySelector(
           '.CodeMirror-search-results'
@@ -134,7 +134,7 @@ function persistentDialog(cm, text, deflt, onEnter, replaceOpened, onKeyDown) {
     CodeMirror.on(regexpButton, 'click', function (event) {
       var state = getSearchState(cm);
       state.regexp = toggle(regexpButton);
-      startSearch(cm, getSearchState(cm), searchField.value);
+      startSearch(cm, state, searchField.value); // Call startSearch
       if (isMouseClick(event)) searchField.focus();
     });
 
@@ -146,7 +146,7 @@ function persistentDialog(cm, text, deflt, onEnter, replaceOpened, onKeyDown) {
     CodeMirror.on(caseSensitiveButton, 'click', function (event) {
       var state = getSearchState(cm);
       state.caseInsensitive = !toggle(caseSensitiveButton);
-      startSearch(cm, getSearchState(cm), searchField.value);
+      startSearch(cm, state, searchField.value); // Call startSearch
       if (isMouseClick(event)) searchField.focus();
     });
 
@@ -158,7 +158,7 @@ function persistentDialog(cm, text, deflt, onEnter, replaceOpened, onKeyDown) {
     CodeMirror.on(wholeWordButton, 'click', function (event) {
       var state = getSearchState(cm);
       state.wholeWord = toggle(wholeWordButton);
-      startSearch(cm, getSearchState(cm), searchField.value);
+      startSearch(cm, state, searchField.value); // Call startSearch
       if (isMouseClick(event)) searchField.focus();
     });
 
@@ -246,7 +246,7 @@ function persistentDialog(cm, text, deflt, onEnter, replaceOpened, onKeyDown) {
             })
       );
       cursor.findNext();
-      // cm.focus();
+            // cm.focus()
       CodeMirror.commands.findNext(cm);
       // searchField.blur();
     }
@@ -300,7 +300,6 @@ function persistentDialog(cm, text, deflt, onEnter, replaceOpened, onKeyDown) {
     });
   } else {
     searchField.value = deflt;
-
     searchField.focus();
     searchField.select();
   }
