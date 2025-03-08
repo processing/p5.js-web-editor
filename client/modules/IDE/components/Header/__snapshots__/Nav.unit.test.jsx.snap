@@ -653,7 +653,7 @@ exports[`Nav renders editor version for desktop 1`] = `
                 role="menuitem"
               >
                 Add Folder
-                 <span
+                <span
                   class="nav__keyboard-shortcut"
                 >
                   Ctrl+Alt+F
