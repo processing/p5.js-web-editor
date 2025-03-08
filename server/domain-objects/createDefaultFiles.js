@@ -1,5 +1,9 @@
 export const defaultSketch = `function setup() {
   createCanvas(400, 400);
+
+// Add a general description of the Canvas
+describe("Write description of your project")
+
 }
 
 function draw() {
