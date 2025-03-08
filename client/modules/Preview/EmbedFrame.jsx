@@ -41,7 +41,22 @@ function resolvePathsForElementsWithAttribute(attr, sketchDoc, files) {
     if (element.getAttribute(attr).match(MEDIA_FILE_REGEX)) {
       const resolvedFile = resolvePathToFile(element.getAttribute(attr), files);
       if (resolvedFile && resolvedFile.url) {
+        // Set the resolved URL as the attribute value
         element.setAttribute(attr, resolvedFile.url);
+
+        // Extract the font name from the file name with multiple dots.
+        const fontName = resolvedFile.name.replace(/\.[^/.]+$/, '');
+        // Create a <style> element with the correct @font-face rule
+        const style = document.createElement('style');
+        style.innerHTML = `
+          @font-face {
+            font-family: "${fontName}";
+            src: url("${resolvedFile.url}");
+          }
+        `;
+
+        // Append the <style> element to the document head
+        document.head.appendChild(style);
       }
     }
   });
