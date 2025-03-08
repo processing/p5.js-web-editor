@@ -9,7 +9,8 @@ import {
   showErrorModal,
   startSketch,
   stopSketch,
-  newFile
+  newFile,
+  newFolder
 } from '../actions/ide';
 import { setAllAccessibleOutput } from '../actions/preferences';
 import { cloneProject, saveProject } from '../actions/project';
@@ -81,6 +82,11 @@ export const useIDEKeyHandlers = ({ getContent }) => {
       e.preventDefault();
       e.stopPropagation();
       dispatch(newFile(rootFile.id));
+    },
+    'ctrl-alt-f': (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      dispatch(newFolder(rootFile.id));
     },
     'ctrl-`': (e) => {
       e.preventDefault();

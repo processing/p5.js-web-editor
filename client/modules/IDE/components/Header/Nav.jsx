@@ -139,6 +139,8 @@ const ProjectMenu = () => {
     metaKey === 'Ctrl' ? `${metaKeyName}+H` : `${metaKeyName}+⌥+F`;
   const newFileCommand =
     metaKey === 'Ctrl' ? `${metaKeyName}+Alt+N` : `${metaKeyName}+⌥+N`;
+  const newFolderCommand =
+    metaKey === 'Ctrl' ? `${metaKeyName}+Alt+F` : `${metaKeyName}+⌥+F`;
 
   return (
     <ul className="nav__items-left" role="menubar">
@@ -230,6 +232,7 @@ const ProjectMenu = () => {
         </MenubarItem>
         <MenubarItem onClick={() => dispatch(newFolder(rootFile.id))}>
           {t('Nav.Sketch.AddFolder')}
+          <span className="nav__keyboard-shortcut">{newFolderCommand}</span>
         </MenubarItem>
         <MenubarItem onClick={() => dispatch(startSketch())}>
           {t('Nav.Sketch.Run')}

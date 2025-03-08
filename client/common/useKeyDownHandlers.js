@@ -41,6 +41,9 @@ export default function useKeyDownHandlers(keyHandlers) {
     } else if (isCtrl && e.altKey && e.code === 'KeyN') {
       // specifically for creating a new file
       handlers.current[`ctrl-alt-n`]?.(e);
+    } else if (isCtrl && e.altKey && e.code === 'KeyF') {
+      // specifically for creating a new folder
+      handlers.current[`ctrl-alt-f`]?.(e);
     } else if (isCtrl) {
       handlers.current[`ctrl-${e.key.toLowerCase()}`]?.(e);
     }
