@@ -2,7 +2,6 @@ import { resolvePathsForElementsWithAttribute } from '../../shared/resolveUtils'
 import { resolvePathToFile } from '../utils/filePath';
 
 import {
-  MEDIA_FILE_REGEX,
   STRING_REGEX,
   PLAINTEXT_FILE_REGEX,
   EXTERNAL_LINK_REGEX,
