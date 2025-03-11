@@ -1,11 +1,9 @@
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import React, { useState, useRef } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
-import * as IDEActions from '../actions/ide';
-import * as FileActions from '../actions/files';
 import DownArrowIcon from '../../../images/down-filled-triangle.svg';
 import FolderRightIcon from '../../../images/triangle-arrow-right.svg';
 import FolderDownIcon from '../../../images/triangle-arrow-down.svg';
@@ -66,7 +64,7 @@ const FileNode = ({
   id,
   parentId,
   children,
-  name,
+  name = 'default',
   fileType,
   isSelectedFile,
   isFolderClosed,
@@ -80,7 +78,6 @@ const FileNode = ({
   hideFolderChildren,
   canEdit,
   openUploadFileModal,
-  authenticated,
   onClickFile
 }) => {
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
@@ -91,11 +88,20 @@ const FileNode = ({
   const { t } = useTranslation();
   const fileNameInput = useRef(null);
   const fileOptionsRef = useRef(null);
+  const dispatch = useDispatch();
+  const fileNode = useSelector(
+    (state) =>
+      state.files.find((file) => file.id === id) || {
+        name: 'test',
+        fileType: 'file'
+      }
+  );
+  const authenticated = useSelector((state) => state.user.authenticated);
 
   const handleFileClick = (event) => {
     event.stopPropagation();
     if (name !== 'root' && !isDeleting) {
-      setSelectedFile(id);
+      dispatch(setSelectedFile(id));
     }
     if (onClickFile) {
       onClickFile();
@@ -116,6 +122,7 @@ const FileNode = ({
 
   const handleClickRename = () => {
     setUpdatedName(name);
+    setIsEditingName(true);
     showEditFileName();
     setTimeout(() => fileNameInput.current.focus(), 0);
     setTimeout(() => hideFileOptions(), 0);
@@ -137,12 +144,9 @@ const FileNode = ({
   };
 
   const handleClickDelete = () => {
-    const prompt = t('Common.DeleteConfirmation', { name });
-
-    if (window.confirm(prompt)) {
-      setIsDeleting(true);
-      resetSelectedFile(id);
-      setTimeout(() => deleteFile(id, parentId), 100);
+    if (window.confirm(t('Common.DeleteConfirmation', { name }))) {
+      dispatch(resetSelectedFile(id));
+      setTimeout(() => dispatch(deleteFile({ id, parentId })), 100);
     }
   };
 
@@ -354,7 +358,7 @@ const FileNode = ({
         <ul className="file-item__children">
           {children.map((childId) => (
             <li key={childId}>
-              <ConnectedFileNode
+              <FileNode
                 id={childId}
                 parentId={id}
                 canEdit={canEdit}
@@ -386,7 +390,6 @@ FileNode.propTypes = {
   hideFolderChildren: PropTypes.func.isRequired,
   canEdit: PropTypes.bool.isRequired,
   openUploadFileModal: PropTypes.func.isRequired,
-  authenticated: PropTypes.bool.isRequired,
   onClickFile: PropTypes.func
 };
 
@@ -397,23 +400,4 @@ FileNode.defaultProps = {
   isFolderClosed: false
 };
 
-function mapStateToProps(state, ownProps) {
-  // this is a hack, state is updated before ownProps
-  const fileNode = state.files.find((file) => file.id === ownProps.id) || {
-    name: 'test',
-    fileType: 'file'
-  };
-  return Object.assign({}, fileNode, {
-    authenticated: state.user.authenticated
-  });
-}
-
-const mapDispatchToProps = { ...FileActions, ...IDEActions };
-
-const ConnectedFileNode = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(FileNode);
-
-export { FileNode };
-export default ConnectedFileNode;
+export default FileNode;
