@@ -314,13 +314,50 @@ function EmbedFrame({ files, isPlaying, basePath, gridOutput, textOutput }) {
 
   useEffect(renderSketch, [files, isPlaying]);
   return (
-    <Frame
-      aria-label="Sketch Preview"
-      role="main"
-      frameBorder="0"
-      ref={iframe}
-    />
+    <div style={{ position: "relative" }}>
+      {/* Expand Button */}
+      <button
+        onClick={() => {
+          if (iframe.current.style.width === "100vw") {
+            // Minimize
+            iframe.current.style.width = "600px";
+            iframe.current.style.height = "400px";
+            iframe.current.style.position = "static";
+          } else {
+            // Expand to full screen
+            iframe.current.style.width = "100vw";
+            iframe.current.style.height = "100vh";
+            iframe.current.style.position = "fixed";
+            iframe.current.style.top = "0";
+            iframe.current.style.left = "0";
+          }
+        }}
+        style={{
+          position: "absolute",
+          top: "5px",
+          right: "5px",
+          zIndex: 1000,
+          padding: "5px 10px",
+          background: "#333",
+          color: "#fff",
+          border: "none",
+          cursor: "pointer",
+        }}
+      >
+        Expand
+      </button>
+
+      {/* Sketch Preview */}
+      <Frame
+        aria-label="Sketch Preview"
+        role="main"
+        frameBorder="0"
+        ref={iframe}
+        style={{ overflow: "hidden", width: "100%", height: "100%" }}
+      />
+    </div>
   );
+
 }
 
 EmbedFrame.propTypes = {
