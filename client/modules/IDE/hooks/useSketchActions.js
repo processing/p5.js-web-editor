@@ -21,13 +21,22 @@ const useSketchActions = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const params = useParams();
-
+  const preferences = useSelector((state) => state.preferences);
   function newSketch() {
-    if (!unsavedChanges) {
-      dispatch(showToast('Toast.OpenedNewSketch'));
+    dispatch(showToast('Toast.OpenedNewSketch'));
+
+    if (authenticated && preferences.autosave) {
       dispatch(newProject());
-    } else if (window.confirm(t('Nav.WarningUnsavedChanges'))) {
-      dispatch(showToast('Toast.OpenedNewSketch'));
+      dispatch(autosaveProject());
+
+      // Delay the second toast message to prevent overlap
+      setTimeout(() => {
+        dispatch(showToast('Toast.AutosaveEnabled'));
+      }, 1000);
+    } else if (
+      !unsavedChanges ||
+      window.confirm(t('Nav.WarningUnsavedChanges'))
+    ) {
       dispatch(newProject());
     }
   }

@@ -27,6 +27,7 @@ import {
 } from '../components/Editor/MobileEditor';
 import IDEOverlays from '../components/IDEOverlays';
 import useIsMobile from '../hooks/useIsMobile';
+import { showToast } from '../actions/toast';
 
 function getTitle(project) {
   const { id } = project;
@@ -127,6 +128,43 @@ const IDEView = () => {
 
   const autosaveAllowed = isUserOwner && project.id && preferences.autosave;
   const shouldAutosave = autosaveAllowed && ide.unsavedChanges;
+  const hasEditedDefaultFile = useRef(false); // Track if user has made first change
+  const authenticated = useSelector((state) => state.user.authenticated);
+
+  useEffect(() => {
+    if (
+      authenticated &&
+      !hasEditedDefaultFile.current &&
+      preferences.autosave &&
+      ide.unsavedChanges
+    ) {
+      hasEditedDefaultFile.current = true; // Mark that user has made changes
+      dispatch(autosaveProject()); // 🚀 Start autosave immediately
+      dispatch(showToast('Toast.AutosaveEnabled')); // Optional: Notify user
+    }
+
+    if (autosaveIntervalRef.current) {
+      clearTimeout(autosaveIntervalRef.current);
+    }
+
+    if (shouldAutosave) {
+      autosaveIntervalRef.current = setTimeout(() => {
+        dispatch(autosaveProject());
+      }, 5000);
+    }
+
+    return () => {
+      if (autosaveIntervalRef.current) {
+        clearTimeout(autosaveIntervalRef.current);
+      }
+    };
+  }, [
+    shouldAutosave,
+    autosaveAllowed,
+    ide.unsavedChanges,
+    dispatch,
+    preferences.autosave
+  ]);
 
   // For autosave - send to API after 5 seconds without changes
   useEffect(() => {
