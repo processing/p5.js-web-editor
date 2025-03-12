@@ -2,41 +2,29 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState, useMemo } from 'react';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { useSelector, useDispatch } from 'react-redux';
 import classNames from 'classnames';
 import { find } from 'lodash';
 import * as ProjectActions from '../../actions/project';
-import * as ProjectsActions from '../../actions/projects';
 import * as CollectionsActions from '../../actions/collections';
-import * as ToastActions from '../../actions/toast';
 import * as SortingActions from '../../actions/sorting';
 import getSortedCollections from '../../selectors/collections';
 import Loader from '../../../App/components/loader';
 import Overlay from '../../../App/components/Overlay';
 import AddToCollectionSketchList from '../AddToCollectionSketchList';
 import { SketchSearchbar } from '../Searchbar';
-
 import CollectionListRow from './CollectionListRow';
-
 import ArrowUpIcon from '../../../../images/sort-arrow-up.svg';
 import ArrowDownIcon from '../../../../images/sort-arrow-down.svg';
 
-const CollectionList = ({
-  user,
-  projectId,
-  getCollections,
-  getProject,
-  collections,
-  username: propsUsername,
-  loading,
-  toggleDirectionForField,
-  resetSorting,
-  sorting,
-  project,
-  mobile
-}) => {
+const CollectionList = ({ projectId, username: propsUsername, mobile }) => {
+  const dispatch = useDispatch();
   const { t } = useTranslation();
+  const user = useSelector((state) => state.user);
+  const collections = useSelector((state) => getSortedCollections(state));
+  const sorting = useSelector((state) => state.sorting);
+  const loading = useSelector((state) => state.loading);
+  const project = useSelector((state) => state.project);
   const [hasLoadedData, setHasLoadedData] = useState(false);
   const [
     addingSketchesToCollectionId,
@@ -45,11 +33,11 @@ const CollectionList = ({
 
   useEffect(() => {
     if (projectId) {
-      getProject(projectId);
+      dispatch(ProjectActions.getProject(projectId));
     }
-    getCollections(propsUsername || user.username);
-    resetSorting();
-  }, []);
+    dispatch(CollectionsActions.getCollections(propsUsername || user.username));
+    dispatch(SortingActions.resetSorting());
+  }, [dispatch, projectId, propsUsername, user.username]);
 
   useEffect(() => {
     if (!loading) {
@@ -124,7 +112,9 @@ const CollectionList = ({
       <th scope="col">
         <button
           className="sketch-list__sort-button"
-          onClick={() => toggleDirectionForField(fieldName)}
+          onClick={() =>
+            dispatch(SortingActions.toggleDirectionForField(fieldName))
+          }
           aria-label={buttonLabel}
         >
           <span className={headerClass}>{displayName}</span>
@@ -223,21 +213,7 @@ CollectionList.propTypes = {
     authenticated: PropTypes.bool.isRequired
   }).isRequired,
   projectId: PropTypes.string,
-  getCollections: PropTypes.func.isRequired,
-  getProject: PropTypes.func.isRequired,
-  collections: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      description: PropTypes.string,
-      createdAt: PropTypes.string.isRequired,
-      updatedAt: PropTypes.string.isRequired
-    })
-  ).isRequired,
   username: PropTypes.string,
-  loading: PropTypes.bool.isRequired,
-  toggleDirectionForField: PropTypes.func.isRequired,
-  resetSorting: PropTypes.func.isRequired,
   sorting: PropTypes.shape({
     field: PropTypes.string.isRequired,
     direction: PropTypes.string.isRequired
@@ -261,29 +237,4 @@ CollectionList.defaultProps = {
   mobile: false
 };
 
-function mapStateToProps(state, ownProps) {
-  return {
-    user: state.user,
-    collections: getSortedCollections(state),
-    sorting: state.sorting,
-    loading: state.loading,
-    project: state.project,
-    projectId: ownProps && ownProps.params ? ownProps.params.project_id : null
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(
-    Object.assign(
-      {},
-      CollectionsActions,
-      ProjectsActions,
-      ProjectActions,
-      ToastActions,
-      SortingActions
-    ),
-    dispatch
-  );
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(CollectionList);
+export default CollectionList;
