@@ -16,6 +16,8 @@ import { SketchSearchbar } from '../Searchbar';
 import CollectionListRow from './CollectionListRow';
 import ArrowUpIcon from '../../../../images/sort-arrow-up.svg';
 import ArrowDownIcon from '../../../../images/sort-arrow-down.svg';
+import * as ProjectsActions from '../../actions/projects';
+import * as ToastActions from '../../actions/toast';
 
 const CollectionList = ({ projectId, username: propsUsername, mobile }) => {
   const dispatch = useDispatch();
@@ -37,6 +39,8 @@ const CollectionList = ({ projectId, username: propsUsername, mobile }) => {
     }
     dispatch(CollectionsActions.getCollections(propsUsername || user.username));
     dispatch(SortingActions.resetSorting());
+    dispatch(ProjectsActions.getProjects(propsUsername || user.username));
+    dispatch(ToastActions.showToast('Collections loaded successfully!'));
   }, [dispatch, projectId, propsUsername, user.username]);
 
   useEffect(() => {
