@@ -1,36 +1,20 @@
 import PropTypes from 'prop-types';
-import React, { useEffect, useRef, useState } from 'react';
-import Clipboard from 'clipboard';
+import React, { useRef } from 'react';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
+
+import CopyableTool from '../../../components/CopyableTool';
 
 import ShareIcon from '../../../images/share.svg';
 
 const CopyableInput = ({ label, value, hasPreviewLink }) => {
   const { t } = useTranslation();
-
-  const [isCopied, setIsCopied] = useState(false);
-
   const inputRef = useRef(null);
 
-  useEffect(() => {
-    const input = inputRef.current;
-
-    if (!input) return; // should never happen
-
-    const clipboard = new Clipboard(input, {
-      target: () => input
-    });
-
-    clipboard.on('success', () => {
-      setIsCopied(true);
-    });
-
-    // eslint-disable-next-line consistent-return
-    return () => {
-      clipboard.destroy();
-    };
-  }, [inputRef, setIsCopied]);
+  const handleInputFocus = () => {
+    if (!inputRef?.current) return;
+    inputRef.current.select();
+  };
 
   return (
     <div
@@ -39,14 +23,10 @@ const CopyableInput = ({ label, value, hasPreviewLink }) => {
         hasPreviewLink && 'copyable-input--with-preview'
       )}
     >
-      <div
-        className={classNames(
-          'copyable-input__value-container',
-          'tooltipped-no-delay',
-          isCopied && 'tooltipped tooltipped-n'
-        )}
-        aria-label={t('CopyableInput.CopiedARIA')}
-        onMouseLeave={() => setIsCopied(false)}
+      <CopyableTool
+        className="copyable-input__value-container"
+        label={t('CopyableInput.CopiedARIA')}
+        copyText={value}
       >
         <label
           className="copyable-input__label"
@@ -55,14 +35,16 @@ const CopyableInput = ({ label, value, hasPreviewLink }) => {
           <div className="copyable-input__label-container">{label}</div>
           <input
             type="text"
-            className="copyable-input__value"
+            className={classNames('copy-trigger', 'copyable-input__value')}
             id={`copyable-input__value-${label}`}
             value={value}
             ref={inputRef}
+            onFocus={handleInputFocus}
             readOnly
           />
         </label>
-      </div>
+      </CopyableTool>
+
       {hasPreviewLink && (
         <a
           target="_blank"
