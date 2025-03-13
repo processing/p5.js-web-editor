@@ -67,7 +67,10 @@
     "UsernameOrEmailARIA": "Email or Username",
     "Password": "Password",
     "PasswordARIA": "Password",
-    "Submit": "Log In"
+    "Submit": "Log In",
+    "Errors": {
+      "invalidCredentials": "Invalid email or password."
+    }
   },
   "LoginView": {
     "Title": "p5.js Web Editor | Login",

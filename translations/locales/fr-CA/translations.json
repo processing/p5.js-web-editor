@@ -362,7 +362,8 @@
       "Description": "S'inscrire",
       "Or": "Ou",
       "AlreadyHave": "Vous avez déjà un compte?",
-      "Login": "Se connecter"
+      "Login": "Se connecter",
+      "Warning" : "En vous inscrivant, vous acceptez les <0>Conditions d'utilisation</0> et la <1>Politique de confidentialité</1> de l'éditeur p5.js."
     },
     "EmailVerificationView": {
       "Title": "Éditeur web p5.js | Vérification du courriel",
