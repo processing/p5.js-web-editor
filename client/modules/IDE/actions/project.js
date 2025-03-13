@@ -174,15 +174,15 @@ export function saveProject(
           dispatch(projectSaveSuccess());
           if (!autosave) {
             if (state.ide.justOpenedProject && state.preferences.autosave) {
-              dispatch(showToast(5500));
+              dispatch(showToast(12000));
               dispatch(setToastText('Toast.SketchSaved'));
               setTimeout(
                 () => dispatch(setToastText('Toast.AutosaveEnabled')),
-                1500
+                60000
               );
               dispatch(resetJustOpenedProject());
             } else {
-              dispatch(showToast(1500));
+              dispatch(showToast(6000));
               dispatch(setToastText('Toast.SketchSaved'));
             }
           }
@@ -224,15 +224,15 @@ export function saveProject(
         dispatch(projectSaveSuccess());
         if (!autosave) {
           if (state.preferences.autosave) {
-            dispatch(showToast(5500));
+            dispatch(showToast(12000));
             dispatch(setToastText('Toast.SketchSaved'));
             setTimeout(
               () => dispatch(setToastText('Toast.AutosaveEnabled')),
-              1500
+              6000
             );
             dispatch(resetJustOpenedProject());
           } else {
-            dispatch(showToast(1500));
+            dispatch(showToast(6000));
             dispatch(setToastText('Toast.SketchSaved'));
           }
         }

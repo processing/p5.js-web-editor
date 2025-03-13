@@ -10,12 +10,12 @@ export function hideToast() {
  * Temporary fix until #2206 is merged.
  * Supports legacy two-action syntax:
  *    dispatch(setToastText('Toast.SketchFailedSave'));
- *    dispatch(showToast(1500));
+ *    dispatch(showToast(6000));
  * And also supports proposed single-action syntax with message and optional timeout.
  *    dispatch(showToast('Toast.SketchFailedSave'));
- *    dispatch(showToast('Toast.SketchSaved', 5500));
+ *    dispatch(showToast('Toast.SketchSaved', 6000));
  */
-export function showToast(textOrTime, timeout = 1500) {
+export function showToast(textOrTime, timeout = 6000) {
   return (dispatch) => {
     let time = timeout;
     if (typeof textOrTime === 'string') {
