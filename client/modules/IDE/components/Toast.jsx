@@ -28,7 +28,7 @@ export default function Toast() {
       {/* Global ARIA Live Region */}
       <div
         id="toast-live-region"
-        aria-live="assertive"
+        aria-live="polite"
         style={{ position: 'absolute', left: '-9999px' }}
       />
 
