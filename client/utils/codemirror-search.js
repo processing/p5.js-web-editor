@@ -18,13 +18,14 @@ import upArrow from '../images/up-arrow.svg?byContent';
 import exitIcon from '../images/exit.svg?byContent';
 
 function searchOverlay(query, caseInsensitive) {
-  if (typeof query == 'string')
+  if (typeof query == 'string') {
     query = new RegExp(
       query.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&'),
       caseInsensitive ? 'gi' : 'g'
     );
-  else if (!query.global)
+  } else if (!query.global) {
     query = new RegExp(query.source, query.ignoreCase ? 'gi' : 'g');
+  }
 
   return {
     token: function (stream) {
@@ -49,6 +50,8 @@ function SearchState() {
   this.caseInsensitive = true;
   this.wholeWord = false;
   this.replaceStarted = false;
+  this.lastFileName =
+    document.querySelector('.editor__file-name span')?.innerText || null;
 }
 
 function getSearchState(cm) {
@@ -58,6 +61,50 @@ function getSearchState(cm) {
 function getSearchCursor(cm, query, pos) {
   // Heuristic: if the query string is all lowercase, do a case insensitive search.
   return cm.getSearchCursor(query, pos, getSearchState(cm).caseInsensitive);
+}
+
+function watchFileChanges(cm, searchState, searchField) {
+  let observer = null;
+
+  function setupObserver() {
+    var fileNameElement = document.querySelector('.editor__file-name span');
+
+    if (!fileNameElement) {
+      setTimeout(setupObserver, 500);
+      return;
+    }
+
+    if (observer) {
+      return;
+    }
+
+    observer = new MutationObserver(() => {
+      if (searchField.value.length > 1) {
+        startSearch(cm, searchState, searchField.value);
+      }
+    });
+
+    observer.observe(fileNameElement, { characterData: true, subtree: true });
+  }
+
+  function disconnectObserver() {
+    if (observer) {
+      observer.disconnect();
+      observer = null;
+    }
+  }
+
+  setupObserver();
+
+  setInterval(() => {
+    var searchDialog = document.querySelector('.CodeMirror-dialog');
+    if (!searchDialog && observer) {
+      disconnectObserver();
+      return;
+    } else if (searchDialog && !observer) {
+      setupObserver();
+    }
+  }, 500);
 }
 
 function isMouseClick(event) {
@@ -88,10 +135,11 @@ function persistentDialog(cm, text, deflt, onEnter, replaceOpened, onKeyDown) {
 
     var state = getSearchState(cm);
 
+    watchFileChanges(cm, getSearchState(cm), searchField);
+
     CodeMirror.on(searchField, 'keyup', function (e) {
       state.replaceStarted = false;
       if (e.keyCode !== 13 && searchField.value.length > 1) {
-        // not enter and more than 1 character to search
         startSearch(cm, getSearchState(cm), searchField.value);
       } else if (searchField.value.length < 1) {
         cm.display.wrapper.querySelector(
@@ -101,8 +149,8 @@ function persistentDialog(cm, text, deflt, onEnter, replaceOpened, onKeyDown) {
     });
 
     CodeMirror.on(closeButton, 'click', function () {
-      clearSearch(cm);
       dialog.parentNode.removeChild(dialog);
+      clearSearch(cm);
       cm.focus();
     });
 
@@ -323,7 +371,6 @@ function parseString(string) {
 function parseQuery(query, state) {
   var emptyQuery = 'x^'; // matches nothing
   if (query === '') {
-    // empty string matches nothing
     query = emptyQuery;
   } else {
     if (state.regexp === false) {
@@ -349,44 +396,64 @@ function parseQuery(query, state) {
 }
 
 function startSearch(cm, state, query) {
-  state.queryText = query;
-  state.lastQuery = query;
-  state.query = parseQuery(query, state);
-  cm.removeOverlay(state.overlay, state.caseInsensitive);
-  state.overlay = searchOverlay(state.query, state.caseInsensitive);
-  cm.addOverlay(state.overlay);
-  if (cm.showMatchesOnScrollbar) {
-    if (state.annotate) {
-      state.annotate.clear();
-      state.annotate = null;
-    }
-    state.annotate = cm.showMatchesOnScrollbar(
-      state.query,
-      state.caseInsensitive
-    );
-  }
+  var searchDialog = document.querySelector('.CodeMirror-dialog');
+  if (searchDialog) {
+    // check if the file has changed
+    let currentFileName = document.querySelector('.editor__file-name span')
+      ?.innerText;
 
-  //Updating the UI everytime the search input changes
-  var cursor = getSearchCursor(cm, state.query);
-  cursor.findNext();
-  var num_match = cm.state.search.annotate.matches.length;
-  //no matches found
-  if (num_match == 0) {
-    cm.display.wrapper.querySelector(
-      '.CodeMirror-search-results'
-    ).innerText = i18n.t('CodemirrorFindAndReplace.NoResults');
+    if (state.lastFileName !== currentFileName) {
+      state.lastFileName = currentFileName;
+      state.queryText = null;
+      state.lastQuery = null;
+      state.query = null;
+      cm.removeOverlay(state.overlay);
+      state.overlay = null;
+
+      if (searchDialog) {
+        cm.display.wrapper.querySelector(
+          '.CodeMirror-search-results'
+        ).innerText = '0/0';
+      }
+    }
+
+    state.queryText = query;
+    state.lastQuery = query;
+    state.query = parseQuery(query, state);
     cm.removeOverlay(state.overlay, state.caseInsensitive);
-  } else {
-    var next =
-      cm.state.search.annotate.matches.findIndex((s) => {
-        return (
-          s.from.ch === cursor.from().ch && s.from.line === cursor.from().line
-        );
-      }) + 1;
-    var text_match = next + '/' + num_match;
-    cm.display.wrapper.querySelector(
-      '.CodeMirror-search-results'
-    ).innerText = text_match;
+    state.overlay = searchOverlay(state.query, state.caseInsensitive);
+    cm.addOverlay(state.overlay);
+    if (cm.showMatchesOnScrollbar) {
+      if (state.annotate) {
+        state.annotate.clear();
+        state.annotate = null;
+      }
+      state.annotate = cm.showMatchesOnScrollbar(
+        state.query,
+        state.caseInsensitive
+      );
+    }
+
+    var cursor = getSearchCursor(cm, state.query);
+    cursor.findNext();
+    var num_match = cm.state.search.annotate.matches.length;
+    if (num_match == 0) {
+      cm.display.wrapper.querySelector(
+        '.CodeMirror-search-results'
+      ).innerText = i18n.t('CodemirrorFindAndReplace.NoResults');
+      cm.removeOverlay(state.overlay, state.caseInsensitive);
+    } else {
+      var next =
+        cm.state.search.annotate.matches.findIndex((s) => {
+          return (
+            s.from.ch === cursor.from().ch && s.from.line === cursor.from().line
+          );
+        }) + 1;
+      var text_match = next + '/' + num_match;
+      cm.display.wrapper.querySelector(
+        '.CodeMirror-search-results'
+      ).innerText = text_match;
+    }
   }
 }
 

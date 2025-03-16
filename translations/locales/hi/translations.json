@@ -67,7 +67,10 @@
       "UsernameOrEmailARIA": "ईमेल या यूजरनेम",
       "Password": "पासवर्ड",
       "PasswordARIA": "पासवर्ड",
-      "Submit": "लॉग इन"
+      "Submit": "लॉग इन",
+        "Errors": {
+          "invalidCredentials": "अमान्य ईमेल या पासवर्ड।"
+        }
     },
     "LoginView": {
       "Title": "p5.js वेब एडिटर | लॉग इन",

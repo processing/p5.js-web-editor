@@ -347,7 +347,8 @@
     "Description": "회원가입",
     "Or": "또는",
     "AlreadyHave": "이미 계정이 있나요?",
-    "Login": "로그인"
+    "Login": "로그인",
+    "Warning" : "가입하면 p5.js 편집기의 <0>이용 약관</0> 및 <1>개인정보 보호정책</1>에 동의하는 것입니다."
   },
   "EmailVerificationView": {
     "Title": "p5.js 웹에디터 | 이메일 확인",
