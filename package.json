@@ -25,7 +25,8 @@
     "heroku-postbuild": "touch .env; npm run build",
     "storybook:build:css": "sass client/styles/main.scss client/styles/storybook.css",
     "storybook": "npm run storybook:build:css && storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "health-check": "node server/scripts/health-check.js"
   },
   "husky": {
     "hooks": {

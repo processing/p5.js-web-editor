@@ -1,0 +1,85 @@
+name: CI Checks
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  push:
+    branches:
+      - main
+      - develop
+
+jobs:
+  sensitive-files-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Check for sensitive file changes
+        run: |
+          # Get the list of changed files
+          CHANGED_FILES=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }})
+          
+          # Define sensitive files and directories
+          SENSITIVE_PATHS=(
+            ".env"
+            ".env.example"
+            "server/config/keys.js"
+            "server/config/credentials.json"
+            "infrastructure/secrets/"
+            "kubernetes_app.yml"
+          )
+          
+          # Initialize violation flag
+          VIOLATIONS_FOUND=0
+          
+          # Check each changed file
+          for FILE in $CHANGED_FILES; do
+            for SENSITIVE_PATH in "${SENSITIVE_PATHS[@]}"; do
+              if [[ $FILE == $SENSITIVE_PATH* ]]; then
+                echo "⚠️ Warning: Sensitive file modified: $FILE"
+                VIOLATIONS_FOUND=1
+              fi
+            done
+          done
+          
+          # Fail if violations found
+          if [ $VIOLATIONS_FOUND -eq 1 ]; then
+            echo "❌ Changes to sensitive files detected. Please review these changes carefully."
+            exit 1
+          else
+            echo "✅ No sensitive file modifications detected."
+          fi
+
+  build-and-health-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build application
+        run: npm run build
+
+      - name: Start application
+        run: |
+          npm run start:prod &
+          echo "Waiting for application to start..."
+          sleep 30
+
+      - name: Run health check
+        run: npm run health-check
+
+      - name: Stop application
+        run: |
+          pkill -f "node index.js" || true 
