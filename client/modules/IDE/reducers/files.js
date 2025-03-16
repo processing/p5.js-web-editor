@@ -1,5 +1,5 @@
-import objectID from 'bson-objectid';
-import * as ActionTypes from '../../../constants';
+import { createSlice } from '@reduxjs/toolkit';
+import { nanoid } from '@reduxjs/toolkit';
 import {
   defaultSketch,
   defaultCSS,
@@ -7,10 +7,11 @@ import {
 } from '../../../../server/domain-objects/createDefaultFiles';
 
 export const initialState = () => {
-  const a = objectID().toHexString();
-  const b = objectID().toHexString();
-  const c = objectID().toHexString();
-  const r = objectID().toHexString();
+  const r = nanoid();
+  const a = nanoid();
+  const b = nanoid();
+  const c = nanoid();
+
   return [
     {
       name: 'root',
@@ -51,18 +52,14 @@ export const initialState = () => {
   ];
 };
 
-function getAllDescendantIds(state, nodeId) {
-  return state
-    .find((file) => file.id === nodeId)
-    .children.reduce(
-      (acc, childId) => [
-        ...acc,
-        childId,
-        ...getAllDescendantIds(state, childId)
-      ],
-      []
-    );
-}
+export const getAllDescendantIds = (state, nodeId) => {
+  const node = state.find((file) => file.id === nodeId);
+  if (!node || !node.children.length) return [];
+  return node.children.flatMap((childId) => [
+    childId,
+    ...getAllDescendantIds(state, childId)
+  ]);
+};
 
 function deleteChild(state, parentId, id) {
   const newState = state.map((file) => {
@@ -91,188 +88,159 @@ function deleteMany(state, ids) {
   return newState;
 }
 
-function sortedChildrenId(state, children) {
-  const childrenArray = state.filter((file) => children.includes(file.id));
-  childrenArray.sort((a, b) => (a.name > b.name ? 1 : -1));
-  return childrenArray.map((child) => child.id);
+export function sortedChildrenId(state, children) {
+  return children
+    .map((id) => state.find((file) => file.id === id))
+    .filter(Boolean) // Remove undefined values
+    .sort((a, b) => a.name.localeCompare(b.name))
+    .map((file) => file.id);
 }
 
-function updateParent(state, action) {
-  return state.map((file) => {
-    if (file.id === action.parentId) {
-      const newFile = Object.assign({}, file);
-      newFile.children = [...newFile.children, action.id];
-      return newFile;
-    }
-    return file;
-  });
+export function updateParent(state, action) {
+  return state.map((file) =>
+    file.id === action.parentId
+      ? { ...file, children: [...file.children, action.id] }
+      : file
+  );
 }
 
-function renameFile(state, action) {
-  return state.map((file) => {
-    if (file.id !== action.id) {
-      return file;
-    }
-    return Object.assign({}, file, { name: action.name });
-  });
+export function renameFile(state, action) {
+  return state.map((file) =>
+    file.id === action.id ? { ...file, name: action.name } : file
+  );
 }
 
-function setFilePath(files, fileId, path) {
+export function setFilePath(files, fileId, path) {
   const file = files.find((f) => f.id === fileId);
+  if (!file) return;
+
   file.filePath = path;
-  // const newPath = `${path}${path.length > 0 ? '/' : ''}${file.name}`;
-  const newPath = `${path}/${file.name}`;
-  if (file.children.length === 0) return;
-  file.children.forEach((childFileId) => {
-    setFilePath(files, childFileId, newPath);
+  const newPath = path ? `${path}/${file.name}` : file.name;
+
+  file.children.forEach((childId) => {
+    setFilePath(files, childId, newPath);
   });
 }
 
-function setFilePaths(files) {
+export const setFilePaths = (files) => {
   const updatedFiles = [...files];
-  const rootPath = '';
-  const rootFile = files.find((f) => f.name === 'root');
-  rootFile.children.forEach((fileId) => {
-    setFilePath(updatedFiles, fileId, rootPath);
-  });
-  return updatedFiles;
-}
+  const rootFile = updatedFiles.find((f) => f.name === 'root');
 
-const files = (state, action) => {
-  if (state === undefined) {
-    state = initialState(); // eslint-disable-line
+  if (rootFile) {
+    rootFile.children.forEach((fileId) =>
+      setFilePath(updatedFiles, fileId, '')
+    );
   }
-  switch (action.type) {
-    case ActionTypes.UPDATE_FILE_CONTENT:
-      return state.map((file) => {
-        if (file.id !== action.id) {
-          return file;
-        }
 
-        return Object.assign({}, file, { content: action.content });
-      });
-    case ActionTypes.SET_BLOB_URL:
-      return state.map((file) => {
-        if (file.id !== action.id) {
-          return file;
+  return updatedFiles;
+};
+
+const filesSlice = createSlice({
+  name: 'files',
+  initialState: initialState(),
+  reducers: {
+    updateFileContent: (state, action) => {
+      const file = state.find((x) => x.id === action.payload.id);
+      if (file) file.content = action.payload.content;
+    },
+    setBlobURL: (state, action) => {
+      const file = state.find((x) => x.id === action.payload.id);
+      if (file) file.blobURL = action.payload.blobURL;
+    },
+    newProject(state, action) {
+      return setFilePaths(
+        action.payload.files.map((file) => {
+          const existingFile = state.find((obj) => obj.id === file.id);
+          return existingFile?.fileType === 'folder'
+            ? { ...file, isFolderClosed: existingFile.isFolderClosed || false }
+            : file;
+        })
+      );
+    },
+    setProject(state, action) {
+      if (!action.payload.files) return state;
+      action.payload.files.forEach((file) => {
+        const correspondingObj = state.find((obj) => obj.id === file.id);
+
+        if (correspondingObj && correspondingObj.fileType === 'folder') {
+          file.isFolderClosed = correspondingObj.isFolderClosed || false;
         }
-        return Object.assign({}, file, { blobURL: action.blobURL });
       });
-    case ActionTypes.NEW_PROJECT: {
-      const newFiles = action.files.map((file) => {
-        const corrospondingObj = state.find((obj) => obj.id === file.id);
-        if (corrospondingObj && corrospondingObj.fileType === 'folder') {
-          const isFolderClosed = corrospondingObj.isFolderClosed || false;
-          return { ...file, isFolderClosed };
-        }
-        return file;
-      });
-      return setFilePaths(newFiles);
-    }
-    case ActionTypes.SET_PROJECT: {
-      const newFiles = action.files.map((file) => {
-        const corrospondingObj = state.find((obj) => obj.id === file.id);
-        if (corrospondingObj && corrospondingObj.fileType === 'folder') {
-          const isFolderClosed = corrospondingObj.isFolderClosed || false;
-          return { ...file, isFolderClosed };
-        }
-        return file;
-      });
-      return setFilePaths(newFiles);
-    }
-    case ActionTypes.RESET_PROJECT:
-      return initialState();
-    case ActionTypes.CREATE_FILE: {
-      const parentFile = state.find((file) => file.id === action.parentId);
-      // const filePath =
-      //   parentFile.name === 'root'
-      //     ? ''
-      //     : `${parentFile.filePath}${parentFile.filePath.length > 0 ? '/' : ''}
-      //     ${parentFile.name}`;
+
+      return setFilePaths(action.payload.files);
+    },
+    resetProject: () => initialState,
+    createFile: (state, action) => {
+      const parentFile = state.find(
+        (file) => file.id === action.payload.parentId
+      );
       const filePath =
-        parentFile.name === 'root'
+        parentFile?.name === 'root'
           ? ''
           : `${parentFile.filePath}/${parentFile.name}`;
-      const newState = [
-        ...updateParent(state, action),
-        {
-          name: action.name,
-          id: action.id,
-          _id: action._id,
-          content: action.content,
-          url: action.url,
-          children: action.children,
-          fileType: action.fileType || 'file',
-          filePath
-        }
-      ];
 
-      return newState.map((file) => {
-        if (file.id === action.parentId) {
-          file.children = sortedChildrenId(newState, file.children);
-        }
-        return file;
+      state.push({
+        name: action.payload.name,
+        id: action.payload.id,
+        _id: action.payload._id,
+        content: action.payload.content,
+        url: action.payload.url,
+        children: action.payload.children,
+        fileType: action.payload.fileType || 'file',
+        filePath
       });
-    }
-    case ActionTypes.UPDATE_FILE_NAME: {
-      const newState = renameFile(state, action);
-      const updatedFile = newState.find((file) => file.id === action.id);
-      // const childPath = `${updatedFile.filePath}
-      // ${updatedFile.filePath.length > 0 ? '/' : ''}${updatedFile.name}`;
-      const childPath = `${updatedFile.filePath}/${updatedFile.name}`;
-      updatedFile.children.forEach((childId) => {
-        setFilePath(newState, action.id, childPath);
-      });
-      return newState.map((file) => {
-        if (file.children.includes(action.id)) {
-          file.children = sortedChildrenId(newState, file.children);
-        }
-        return file;
-      });
-    }
-    case ActionTypes.DELETE_FILE: {
+
+      const parent = state.find((file) => file.id === action.payload.parentId);
+      if (parent) {
+        parent.children = sortedChildrenId(state, parent.children);
+      }
+    },
+    updateFileName(state, action) {
+      const file = state.find((x) => x.id === action.payload.id);
+      if (file) {
+        const childPath = `${file.filePath}/${action.payload.name}`;
+        file.name = action.payload.name;
+        file.children.forEach((childId) => {
+          setFilePath(state, action.payload.id, childPath);
+        });
+      }
+    },
+    DeleteFile(state, action) {
       const newState = deleteMany(state, [
-        action.id,
-        ...getAllDescendantIds(state, action.id)
+        action.payload.id,
+        ...getAllDescendantIds(state, action.payload.id)
       ]);
       return deleteChild(newState, action.parentId, action.id);
-      // const newState = state.map((file) => {
-      //   if (file.id === action.parentId) {
-      //     const newChildren = file.children.filter(child => child !== action.id);
-      //     return { ...file, children: newChildren };
-      //   }
-      //   return file;
-      // });
-      // return newState.filter(file => file.id !== action.id);
+    },
+    setSelectedFile: (state, action) => {
+      state.forEach((file) => {
+        file.isSelectedFile = file.id === action.payload.selectedFile;
+      });
+    },
+    showFolderChildren: (state, action) => {
+      const file = state.find((x) => x.id === action.payload.id);
+      if (file) file.isFolderClosed = false;
+    },
+    hideFolderChildren(state, action) {
+      const file = state.find((x) => x.id === action.payload.id);
+      if (file) file.isFolderClosed = true;
     }
-    case ActionTypes.SET_SELECTED_FILE:
-      return state.map((file) => {
-        if (file.id === action.selectedFile) {
-          return Object.assign({}, file, { isSelectedFile: true });
-        }
-        return Object.assign({}, file, { isSelectedFile: false });
-      });
-    case ActionTypes.SHOW_FOLDER_CHILDREN:
-      return state.map((file) => {
-        if (file.id === action.id) {
-          return Object.assign({}, file, { isFolderClosed: false });
-        }
-        return file;
-      });
-    case ActionTypes.HIDE_FOLDER_CHILDREN:
-      return state.map((file) => {
-        if (file.id === action.id) {
-          return Object.assign({}, file, { isFolderClosed: true });
-        }
-        return file;
-      });
-    default:
-      return state.map((file) => {
-        file.children = sortedChildrenId(state, file.children);
-        return file;
-      });
   }
-};
+});
+
+export const {
+  updateFileContent,
+  setBlobURL,
+  newProject,
+  setProject,
+  resetProject,
+  createFile,
+  updateFileName,
+  DeleteFile,
+  setSelectedFile,
+  showFolderChildren,
+  hideFolderChildren
+} = filesSlice.actions;
 
 export const getHTMLFile = (state) =>
   state.filter((file) => file.name.match(/.*\.html$/i))[0];
@@ -282,4 +250,4 @@ export const getCSSFiles = (state) =>
   state.filter((file) => file.name.match(/.*\.css$/i));
 export const getLinkedFiles = (state) => state.filter((file) => file.url);
 
-export default files;
+export default filesSlice.reducer;

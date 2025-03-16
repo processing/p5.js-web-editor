@@ -1,7 +1,9 @@
 import * as ActionTypes from '../../../constants';
 import { clearConsole } from './console';
 import { dispatchMessage, MessageTypes } from '../../../utils/dispatcher';
+import { setSelectedFile } from '../reducers/files';
 
+export { setSelectedFile };
 export function startVisualSketch() {
   return {
     type: ActionTypes.START_SKETCH
@@ -42,13 +44,6 @@ export function startAccessibleOutput() {
 export function stopAccessibleOutput() {
   return {
     type: ActionTypes.STOP_ACCESSIBLE_OUTPUT
-  };
-}
-
-export function setSelectedFile(fileId) {
-  return {
-    type: ActionTypes.SET_SELECTED_FILE,
-    selectedFile: fileId
   };
 }
 

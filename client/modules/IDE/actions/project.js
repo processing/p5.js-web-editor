@@ -14,19 +14,13 @@ import {
   setPreviousPath
 } from './ide';
 import { clearState, saveState } from '../../../persistState';
+import { setProject } from './files';
+
+export { setProject };
 
 const ROOT_URL = getConfig('API_URL');
 const S3_BUCKET_URL_BASE = getConfig('S3_BUCKET_URL_BASE');
 const S3_BUCKET = getConfig('S3_BUCKET');
-
-export function setProject(project) {
-  return {
-    type: ActionTypes.SET_PROJECT,
-    project,
-    files: project.files,
-    owner: project.user
-  };
-}
 
 export function setProjectName(name) {
   return {
@@ -189,6 +183,8 @@ export function saveProject(
         })
         .catch((error) => {
           const { response } = error;
+          console.log(response);
+          console.log(error);
           dispatch(endSavingProject());
           dispatch(setToastText('Toast.SketchFailedSave'));
           dispatch(showToast(1500));
