@@ -146,15 +146,17 @@ export function submitFolder(formProps, files, parentId, projectId) {
   }
   const id = objectID().toHexString();
   const file = {
-    type: 'CREATE_FILE',
     name: createUniqueName(formProps.name, parentId, files),
     id,
     _id: id,
     content: '',
     // TODO pass parent id from File Tree
     fileType: 'folder',
+    parentId,
     children: []
   };
+
+  // Dispatch local folder creation
   return Promise.resolve({
     file
   });
@@ -170,7 +172,7 @@ export function handleCreateFolder(formProps) {
       submitFolder(formProps, files, parentId, projectId)
         .then((response) => {
           const { file, updatedAt } = response;
-          dispatch(createFile(file, parentId));
+          dispatch(createFile({ ...file, parentId }));
           if (updatedAt) dispatch(setProjectSavedTime(updatedAt));
           dispatch(closeNewFolderModal());
           dispatch(setUnsavedChanges(true));
@@ -198,7 +200,7 @@ export function deleteFile(id, parentId) {
         .delete(`/projects/${state.project.id}/files/${id}`, deleteConfig)
         .then((response) => {
           dispatch(setProjectSavedTime(response.data.project.updatedAt));
-          dispatch(dispatch(DeleteFile(id, parentId)));
+          dispatch(DeleteFile(id, parentId));
         })
         .catch((error) => {
           const { response } = error;

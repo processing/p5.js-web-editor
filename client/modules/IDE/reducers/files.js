@@ -171,29 +171,51 @@ const filesSlice = createSlice({
     },
     resetProject: () => initialState,
     createFile: (state, action) => {
-      const parentFile = state.find(
-        (file) => file.id === action.payload.parentId
-      );
+      const {
+        name,
+        id,
+        _id,
+        content,
+        url,
+        children,
+        fileType,
+        parentId
+      } = action.payload;
+
+      // Find parent file
+      const parentFile = state.files.find((file) => file.id === parentId);
+
+      // Construct file path
       const filePath =
-        parentFile?.name === 'root'
+        parentFile.name === 'root'
           ? ''
           : `${parentFile.filePath}/${parentFile.name}`;
 
-      state.push({
-        name: action.payload.name,
-        id: action.payload.id,
-        _id: action.payload._id,
-        content: action.payload.content,
-        url: action.payload.url,
-        children: action.payload.children,
-        fileType: action.payload.fileType || 'file',
+      // Create new file object
+      const newFile = {
+        name,
+        id,
+        _id,
+        content: content || '',
+        url: url || '',
+        children: children || [],
+        fileType: fileType || 'file',
         filePath
-      });
+      };
 
-      const parent = state.find((file) => file.id === action.payload.parentId);
-      if (parent) {
-        parent.children = sortedChildrenId(state, parent.children);
+      // Add new file to state
+      state.files.push(newFile);
+
+      // Update parent's children list if applicable
+      if (parentFile) {
+        parentFile.children.push(newFile.id);
+        parentFile.children = sortedChildrenId(
+          state.files,
+          parentFile.children
+        );
       }
+
+      return newFile; // Returning this does not affect Redux state but might be useful for debugging
     },
     updateFileName(state, action) {
       const file = state.find((x) => x.id === action.payload.id);

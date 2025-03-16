@@ -183,8 +183,6 @@ export function saveProject(
         })
         .catch((error) => {
           const { response } = error;
-          console.log(response);
-          console.log(error);
           dispatch(endSavingProject());
           dispatch(setToastText('Toast.SketchFailedSave'));
           dispatch(showToast(1500));
