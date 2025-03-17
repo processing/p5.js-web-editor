@@ -454,10 +454,30 @@ class Editor extends React.Component {
             .search(token.string)
             .filter((h) => h.item.text[0] === token.string[0]);
 
+          if (hints.length === 0) {
+            return {
+              list: [
+                {
+                  text: 'No results found',
+                  render: (element) => {
+                    element.textContent = 'No results found';
+                    element.style.backgroundColor = 'grey'; // White background
+                    element.style.color = 'white'; // Black text
+                    element.style.padding = '5px 10px'; // Add padding
+                    element.style.fontSize = '14px'; // Adjust font size
+                  }
+                }
+              ],
+              from: CodeMirror.Pos(c.line, token.start),
+              to: CodeMirror.Pos(c.line, c.ch),
+              selectedHint: 0
+            };
+          }
           return {
             list: hints,
             from: CodeMirror.Pos(c.line, token.start),
-            to: CodeMirror.Pos(c.line, c.ch)
+            to: CodeMirror.Pos(c.line, c.ch),
+            selectedHint: 0
           };
         },
         hintOptions
