@@ -5,11 +5,7 @@ const PORT = process.env.PORT || 8000;
 const PROTOCOL = process.env.NODE_ENV === 'production' ? 'https' : 'http';
 const HOST = process.env.HOST || 'localhost';
 
-const checkEndpoints = [
-  '/',
-  '/health',
-  '/editor'
-];
+const checkEndpoints = ['/', '/health', '/editor'];
 
 function makeRequest(endpoint) {
   return new Promise((resolve, reject) => {
@@ -19,7 +15,7 @@ function makeRequest(endpoint) {
       port: PORT,
       path: endpoint,
       method: 'GET',
-      timeout: 5000, // 5 second timeout
+      timeout: 5000 // 5 second timeout
     };
 
     const req = client.request(options, (res) => {
@@ -38,20 +34,12 @@ function makeRequest(endpoint) {
     });
 
     req.on('error', (error) => {
-      reject({
-        endpoint,
-        error: error.message,
-        success: false
-      });
+      reject(new Error(error.message));
     });
 
     req.on('timeout', () => {
       req.destroy();
-      reject({
-        endpoint,
-        error: 'Request timed out',
-        success: false
-      });
+      reject(new Error('Request timed out'));
     });
 
     req.end();
@@ -60,21 +48,23 @@ function makeRequest(endpoint) {
 
 async function runHealthCheck() {
   console.log(`Running health check on ${PROTOCOL}://${HOST}:${PORT}`);
-  
+
   let allChecksSuccessful = true;
-  
+
   try {
     const results = await Promise.all(
-      checkEndpoints.map(endpoint => 
-        makeRequest(endpoint).catch(error => error)
+      checkEndpoints.map((endpoint) =>
+        makeRequest(endpoint).catch((error) => error)
       )
     );
 
-    results.forEach(result => {
+    results.forEach((result) => {
       if (result.success) {
         console.log(`✅ ${result.endpoint} - OK (${result.statusCode})`);
       } else {
-        console.error(`❌ ${result.endpoint} - Failed: ${result.error || result.statusCode}`);
+        console.error(
+          `❌ ${result.endpoint} - Failed: ${result.error || result.statusCode}`
+        );
         allChecksSuccessful = false;
       }
     });
@@ -92,4 +82,4 @@ async function runHealthCheck() {
   }
 }
 
-runHealthCheck(); 
+runHealthCheck();
