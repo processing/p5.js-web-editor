@@ -204,6 +204,7 @@ class Editor extends React.Component {
       this._cm.on('keyup', this.handleKeyUp);
     }
 
+
     this._cm.on('keydown', (_cm, e) => {
       // Show hint
       const mode = this._cm.getOption('mode');
