@@ -184,6 +184,40 @@ class Editor extends React.Component {
       [`${metaKey}-.`]: 'toggleComment' // Note: most adblockers use the shortcut ctrl+.
     });
 
+
+    const rtfCopy = (_cm, e) => {
+      e.preventDefault();
+      const plaintext = _cm.doc.getSelection();
+      const selectedElementsArr = document.getElementsByClassName(
+        'CodeMirror-selectedtext'
+      );
+
+      let richText = plaintext[0] === '\n' ? '</br>' : '';
+      let plaintextcounter = plaintext[0] === '\n' ? 1 : 0;
+      for (let i = 0; i < selectedElementsArr.length; i += 1) {
+        const { color, fontWeight, fontSize } = window.getComputedStyle(
+          selectedElementsArr[i]
+        );
+        const cssToken = `color: ${color}; font-weight: ${fontWeight}; font-size: ${fontSize}`;
+        richText += `<span style='${cssToken}'>${selectedElementsArr[i].textContent}</span>`;
+        plaintextcounter += selectedElementsArr[i].textContent.length;
+        while (
+          plaintextcounter < plaintext.length &&
+          plaintext[plaintextcounter] === '\n'
+        ) {
+          richText += '<br/>';
+          plaintextcounter += 1;
+        }
+      }
+
+      try {
+        e.clipboardData.setData('text/html', richText);
+        e.clipboardData.setData('text/plain', plaintext);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
     this.initializeDocuments(this.props.files);
     this._cm.swapDoc(this._docs[this.props.file.id]);
 
@@ -204,6 +238,12 @@ class Editor extends React.Component {
       this._cm.on('keyup', this.handleKeyUp);
     }
 
+
+    this._cm.on('copy', rtfCopy);
+    this._cm.on('cut', (_em, e) => {
+      rtfCopy(_em, e);
+      _em.replaceSelection('');
+    });
 
     this._cm.on('keydown', (_cm, e) => {
       // Show hint
