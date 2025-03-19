@@ -126,6 +126,23 @@
 	}
 }
 
+.toolbar__username {
+	cursor: pointer;
+	@include themify() {
+	  color: getThemifyVariable('secondary-text-color');
+	  
+	  &:hover {
+		// Default hover color for light/dark theme
+		color: $p5-light-pink;
+  
+		// If the logo color is yellow, override the hover color
+		@if (getThemifyVariable('logo-color') == $yellow) {
+		  color: $yellow;
+		}
+	  }
+	}
+  }
+
 .toolbar__autorefresh-label {
 	cursor: pointer;
 	@include themify() {

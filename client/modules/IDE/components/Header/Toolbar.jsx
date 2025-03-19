@@ -61,7 +61,6 @@ const Toolbar = (props) => {
       </button>
       <button
         className={playButtonClass}
-        id="play-sketch"
         onClick={() => {
           props.syncFileContent();
           dispatch(startSketch());
@@ -104,7 +103,10 @@ const Toolbar = (props) => {
             return (
               <p className="toolbar__project-project.owner">
                 {t('Toolbar.By')}{' '}
-                <Link to={`/${project.owner.username}/sketches`}>
+                <Link
+                  className="toolbar__username"
+                  to={`/${project.owner.username}/sketches`}
+                >
                   {project.owner.username}
                 </Link>
               </p>
