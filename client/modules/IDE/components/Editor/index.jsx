@@ -184,21 +184,22 @@ class Editor extends React.Component {
       [`${metaKey}-.`]: 'toggleComment' // Note: most adblockers use the shortcut ctrl+.
     });
 
-
     const rtfCopy = (_cm, e) => {
       e.preventDefault();
       const plaintext = _cm.doc.getSelection();
       const selectedElementsArr = document.getElementsByClassName(
         'CodeMirror-selectedtext'
       );
-
       let richText = plaintext[0] === '\n' ? '</br>' : '';
       let plaintextcounter = plaintext[0] === '\n' ? 1 : 0;
       for (let i = 0; i < selectedElementsArr.length; i += 1) {
-        const { color, fontWeight, fontSize } = window.getComputedStyle(
-          selectedElementsArr[i]
-        );
-        const cssToken = `color: ${color}; font-weight: ${fontWeight}; font-size: ${fontSize}`;
+        const {
+          color,
+          fontWeight,
+          fontSize,
+          fontFamily
+        } = window.getComputedStyle(selectedElementsArr[i]);
+        const cssToken = `color: ${color}; font-weight: ${fontWeight}; font-size: ${fontSize}; font-family: ${fontFamily}`;
         richText += `<span style='${cssToken}'>${selectedElementsArr[i].textContent}</span>`;
         plaintextcounter += selectedElementsArr[i].textContent.length;
         while (
@@ -237,7 +238,6 @@ class Editor extends React.Component {
     if (this._cm) {
       this._cm.on('keyup', this.handleKeyUp);
     }
-
 
     this._cm.on('copy', rtfCopy);
     this._cm.on('cut', (_em, e) => {
