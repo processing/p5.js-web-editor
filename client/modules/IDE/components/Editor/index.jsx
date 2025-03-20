@@ -461,10 +461,10 @@ class Editor extends React.Component {
                   text: 'No results found',
                   render: (element) => {
                     element.textContent = 'No results found';
-                    element.style.backgroundColor = 'grey'; // White background
-                    element.style.color = 'white'; // Black text
-                    element.style.padding = '5px 10px'; // Add padding
-                    element.style.fontSize = '14px'; // Adjust font size
+                    element.style.backgroundColor = 'grey';
+                    element.style.color = 'white';
+                    element.style.padding = '5px 10px';
+                    element.style.fontSize = '14px';
                   }
                 }
               ],
