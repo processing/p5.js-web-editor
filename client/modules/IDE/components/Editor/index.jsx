@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import CodeMirror from 'codemirror';
 import { withTranslation } from 'react-i18next';
 import StackTrace from 'stacktrace-js';
 
@@ -36,7 +35,6 @@ import { FolderIcon } from '../../../../common/icons';
 import IconButton from '../../../../common/IconButton';
 
 import { hideHinter } from './hinter';
-import getFileMode from './utils';
 import tidyCode from './tidier';
 import useCodeMirror from './codemirror';
 import { useEffectWithComparison } from '../../hooks/custom-hooks';
@@ -50,7 +48,6 @@ function Editor({
   lineNumbers,
   closeProjectOptions,
   setSelectedFile,
-  unsavedChanges,
   setUnsavedChanges,
   lintMessages,
   lintWarning,
@@ -75,7 +72,6 @@ function Editor({
 }) {
   const [currentLine, setCurrentLine] = useState(1);
   const beep = useRef();
-  const docs = useRef();
 
   const updateLintingMessageAccessibility = debounce((annotations) => {
     clearLintMessage();
@@ -89,6 +85,8 @@ function Editor({
     }
   }, 2000);
 
+  // The useCodeMirror hook manages CodeMirror state and returns
+  // a reference to the actual CM instance.
   const {
     setupCodeMirrorOnContainerMounted,
     teardownCodeMirror,
@@ -105,6 +103,7 @@ function Editor({
     hideRuntimeErrorWarning,
     updateFileContent,
     file,
+    files,
     autorefresh,
     isPlaying,
     clearConsole,
@@ -124,22 +123,11 @@ function Editor({
     getContent
   });
 
-  const initializeDocuments = () => {
-    docs.current = {};
-    files.forEach((currentFile) => {
-      if (currentFile.name !== 'root') {
-        docs.current[currentFile.id] = CodeMirror.Doc(
-          currentFile.content,
-          getFileMode(currentFile.name)
-        );
-      }
-    });
-  };
-
-  // Component did mount
+  // When the CM container div mounts, we set up CodeMirror.
   const onContainerMounted = useCallback(setupCodeMirrorOnContainerMounted, []);
 
-  // Component did mount
+  // This is acting as a "componentDidMount" call where it runs once
+  // at the start and never again. It also provides a cleanup function.
   useEffect(() => {
     beep.current = new Audio(beepUrl);
 
@@ -155,43 +143,6 @@ function Editor({
       teardownCodeMirror();
     };
   }, []);
-
-  useEffect(() => {
-    initializeDocuments();
-  }, [files]);
-
-  useEffectWithComparison(
-    (_, prevProps) => {
-      const fileMode = getFileMode(file.name);
-      if (fileMode === 'javascript') {
-        // Define the new Emmet configuration based on the file mode
-        const emmetConfig = {
-          preview: ['html'],
-          markTagPairs: false,
-          autoRenameTags: true
-        };
-        cmInstance.current.setOption('emmet', emmetConfig);
-      }
-      const oldDoc = cmInstance.current.swapDoc(docs.current[file.id]);
-      if (prevProps?.file) {
-        docs.current[prevProps.file.id] = oldDoc;
-      }
-      cmInstance.current.focus();
-
-      if (!prevProps?.unsavedChanges) {
-        setTimeout(() => setUnsavedChanges(false), 400);
-      }
-
-      for (let i = 0; i < cmInstance.current.lineCount(); i += 1) {
-        cmInstance.current.removeLineClass(
-          i,
-          'background',
-          'line-runtime-error'
-        );
-      }
-    },
-    [file.id]
-  );
 
   useEffect(() => {
     // close the hinter window once the preference is turned off
@@ -358,7 +309,6 @@ Editor.propTypes = {
   autorefresh: PropTypes.bool.isRequired,
   isPlaying: PropTypes.bool.isRequired,
   theme: PropTypes.string.isRequired,
-  unsavedChanges: PropTypes.bool.isRequired,
   files: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,

@@ -27,9 +27,11 @@ import 'codemirror-colorpicker';
 import { debounce } from 'lodash';
 import emmet from '@emmetio/codemirror-plugin';
 
+import { useEffectWithComparison } from '../../hooks/custom-hooks';
 import { metaKey } from '../../../../utils/metaKey';
 import { showHint } from './hinter';
 import tidyCode from './tidier';
+import getFileMode from './utils';
 
 const INDENTATION_AMOUNT = 2;
 
@@ -45,6 +47,7 @@ export default function useCodeMirror({
   hideRuntimeErrorWarning,
   updateFileContent,
   file,
+  files,
   autorefresh,
   isPlaying,
   clearConsole,
@@ -54,6 +57,7 @@ export default function useCodeMirror({
   onUpdateLinting
 }) {
   const cmInstance = useRef();
+  const docs = useRef();
 
   function onKeyUp() {
     const lineNumber = parseInt(cmInstance.current.getCursor().line + 1, 10);
@@ -188,6 +192,55 @@ export default function useCodeMirror({
   useEffect(() => {
     cmInstance.current.setOption('autoCloseBrackets', autocloseBracketsQuotes);
   }, [autocloseBracketsQuotes]);
+
+  const initializeDocuments = () => {
+    docs.current = {};
+    files.forEach((currentFile) => {
+      if (currentFile.name !== 'root') {
+        docs.current[currentFile.id] = CodeMirror.Doc(
+          currentFile.content,
+          getFileMode(currentFile.name)
+        );
+      }
+    });
+  };
+
+  useEffect(() => {
+    initializeDocuments();
+  }, [files]);
+
+  useEffectWithComparison(
+    (_, prevProps) => {
+      const fileMode = getFileMode(file.name);
+      if (fileMode === 'javascript') {
+        // Define the new Emmet configuration based on the file mode
+        const emmetConfig = {
+          preview: ['html'],
+          markTagPairs: false,
+          autoRenameTags: true
+        };
+        cmInstance.current.setOption('emmet', emmetConfig);
+      }
+      const oldDoc = cmInstance.current.swapDoc(docs.current[file.id]);
+      if (prevProps?.file) {
+        docs.current[prevProps.file.id] = oldDoc;
+      }
+      cmInstance.current.focus();
+
+      if (!prevProps?.unsavedChanges) {
+        setTimeout(() => setUnsavedChanges(false), 400);
+      }
+
+      for (let i = 0; i < cmInstance.current.lineCount(); i += 1) {
+        cmInstance.current.removeLineClass(
+          i,
+          'background',
+          'line-runtime-error'
+        );
+      }
+    },
+    [file.id]
+  );
 
   function teardownCodeMirror() {
     cmInstance.current.off('keyup', onKeyUp);
