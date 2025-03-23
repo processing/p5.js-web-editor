@@ -39,7 +39,7 @@ import { hideHinter } from './hinter';
 import getFileMode from './utils';
 import tidyCode from './tidier';
 import useCodeMirror from './codemirror';
-import usePrevious from '../../../../utils/usePrevious';
+import { useEffectWithComparison } from '../../hooks/custom-hooks';
 
 function Editor({
   provideController,
@@ -76,7 +76,6 @@ function Editor({
   const [currentLine, setCurrentLine] = useState(1);
   const beep = useRef();
   const docs = useRef();
-  const previous = usePrevious({ file, unsavedChanges, consoleEvents });
 
   const updateLintingMessageAccessibility = debounce((annotations) => {
     clearLintMessage();
@@ -116,6 +115,15 @@ function Editor({
     setCurrentLine
   });
 
+  // Lets the parent component access file content-specific functionality...
+  // TODO(connie) - Revisit the logic here, can we wrap this in useCallback or something?
+  provideController({
+    tidyCode: () => tidyCode(cmInstance.current),
+    showFind,
+    showReplace,
+    getContent
+  });
+
   const initializeDocuments = () => {
     docs.current = {};
     files.forEach((currentFile) => {
@@ -152,40 +160,38 @@ function Editor({
     initializeDocuments();
   }, [files]);
 
-  useEffect(() => {
-    const fileMode = getFileMode(file.name);
-    if (fileMode === 'javascript') {
-      // Define the new Emmet configuration based on the file mode
-      const emmetConfig = {
-        preview: ['html'],
-        markTagPairs: false,
-        autoRenameTags: true
-      };
-      cmInstance.current.setOption('emmet', emmetConfig);
-    }
-    const oldDoc = cmInstance.current.swapDoc(docs.current[file.id]);
-    if (previous?.file) {
-      docs.current[previous.file.id] = oldDoc;
-    }
-    cmInstance.current.focus();
+  useEffectWithComparison(
+    (_, prevProps) => {
+      const fileMode = getFileMode(file.name);
+      if (fileMode === 'javascript') {
+        // Define the new Emmet configuration based on the file mode
+        const emmetConfig = {
+          preview: ['html'],
+          markTagPairs: false,
+          autoRenameTags: true
+        };
+        cmInstance.current.setOption('emmet', emmetConfig);
+      }
+      const oldDoc = cmInstance.current.swapDoc(docs.current[file.id]);
+      if (prevProps?.file) {
+        docs.current[prevProps.file.id] = oldDoc;
+      }
+      cmInstance.current.focus();
 
-    if (!previous?.unsavedChanges) {
-      setTimeout(() => setUnsavedChanges(false), 400);
-    }
+      if (!prevProps?.unsavedChanges) {
+        setTimeout(() => setUnsavedChanges(false), 400);
+      }
 
-    for (let i = 0; i < cmInstance.current.lineCount(); i += 1) {
-      cmInstance.current.removeLineClass(i, 'background', 'line-runtime-error');
-    }
-
-    // I think we only need to re-provide this if the content changes? idk
-    // TODO(connie) - Revisit the logic here
-    provideController({
-      tidyCode: () => tidyCode(cmInstance.current),
-      showFind,
-      showReplace,
-      getContent
-    });
-  }, [file.id]);
+      for (let i = 0; i < cmInstance.current.lineCount(); i += 1) {
+        cmInstance.current.removeLineClass(
+          i,
+          'background',
+          'line-runtime-error'
+        );
+      }
+    },
+    [file.id]
+  );
 
   useEffect(() => {
     // close the hinter window once the preference is turned off
@@ -193,46 +199,49 @@ function Editor({
   }, [autocompleteHinter]);
 
   // TODO: Should this be watching more deps?
-  useEffect(() => {
-    if (runtimeErrorWarningVisible) {
-      if (previous && consoleEvents.length !== previous.consoleEvents.length) {
-        consoleEvents.forEach((consoleEvent) => {
-          if (consoleEvent.method === 'error') {
-            // It doesn't work if you create a new Error, but this works
-            // LOL
-            const errorObj = { stack: consoleEvent.data[0].toString() };
-            StackTrace.fromError(errorObj).then((stackLines) => {
-              expandConsole();
-              const line = stackLines.find(
-                (l) => l.fileName && l.fileName.startsWith('/')
-              );
-              if (!line) return;
-              const fileNameArray = line.fileName.split('/');
-              const fileName = fileNameArray.slice(-1)[0];
-              const filePath = fileNameArray.slice(0, -1).join('/');
-              const fileWithError = files.find(
-                (f) => f.name === fileName && f.filePath === filePath
-              );
-              setSelectedFile(fileWithError.id);
-              cmInstance.current.addLineClass(
-                line.lineNumber - 1,
-                'background',
-                'line-runtime-error'
-              );
-            });
+  useEffectWithComparison(
+    (_, prevProps) => {
+      if (runtimeErrorWarningVisible) {
+        if (consoleEvents.length !== prevProps.consoleEvents.length) {
+          consoleEvents.forEach((consoleEvent) => {
+            if (consoleEvent.method === 'error') {
+              // It doesn't work if you create a new Error, but this works
+              // LOL
+              const errorObj = { stack: consoleEvent.data[0].toString() };
+              StackTrace.fromError(errorObj).then((stackLines) => {
+                expandConsole();
+                const line = stackLines.find(
+                  (l) => l.fileName && l.fileName.startsWith('/')
+                );
+                if (!line) return;
+                const fileNameArray = line.fileName.split('/');
+                const fileName = fileNameArray.slice(-1)[0];
+                const filePath = fileNameArray.slice(0, -1).join('/');
+                const fileWithError = files.find(
+                  (f) => f.name === fileName && f.filePath === filePath
+                );
+                setSelectedFile(fileWithError.id);
+                cmInstance.current.addLineClass(
+                  line.lineNumber - 1,
+                  'background',
+                  'line-runtime-error'
+                );
+              });
+            }
+          });
+        } else {
+          for (let i = 0; i < cmInstance.current.lineCount(); i += 1) {
+            cmInstance.current.removeLineClass(
+              i,
+              'background',
+              'line-runtime-error'
+            );
           }
-        });
-      } else {
-        for (let i = 0; i < cmInstance.current.lineCount(); i += 1) {
-          cmInstance.current.removeLineClass(
-            i,
-            'background',
-            'line-runtime-error'
-          );
         }
       }
-    }
-  }, [consoleEvents, runtimeErrorWarningVisible]);
+    },
+    [consoleEvents, runtimeErrorWarningVisible]
+  );
 
   const editorSectionClass = classNames({
     editor: true,
