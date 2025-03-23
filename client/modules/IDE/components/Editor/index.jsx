@@ -185,7 +185,7 @@ function Editor({
       showReplace,
       getContent
     });
-  }, [file]);
+  }, [file.id]);
 
   useEffect(() => {
     // close the hinter window once the preference is turned off
