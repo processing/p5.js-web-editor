@@ -56,13 +56,11 @@ export default function useCodeMirror({
   const cmInstance = useRef();
 
   function onKeyUp() {
-    console.log('keyup');
     const lineNumber = parseInt(cmInstance.current.getCursor().line + 1, 10);
     setCurrentLine(lineNumber);
   }
 
   function onKeyDown(_cm, e) {
-    console.log('keydown');
     // Show hint
     const mode = cmInstance.current.getOption('mode');
     if (/^[a-z]$/i.test(e.key) && (mode === 'css' || mode === 'javascript')) {
@@ -82,11 +80,15 @@ export default function useCodeMirror({
     }
   }
 
+  // We have to create a ref for the file ID, or else the debouncer
+  // will old onto an old version of the fileId and just overrwrite the initial file.
+  const fileId = useRef();
+  fileId.current = file.id;
+
   function onChange() {
-    console.log('change');
     setUnsavedChanges(true);
     hideRuntimeErrorWarning();
-    updateFileContent(file.id, cmInstance.current.getValue());
+    updateFileContent(fileId.current, cmInstance.current.getValue());
     if (autorefresh && isPlaying) {
       clearConsole();
       startSketch();
@@ -189,7 +191,7 @@ export default function useCodeMirror({
 
   function teardownCodeMirror() {
     cmInstance.current.off('keyup', onKeyUp);
-    cmInstance.current.off('change', onChange);
+    cmInstance.current.off('change', debouncedOnChange);
     cmInstance.current.off('keydown', onKeyDown);
   }
 
