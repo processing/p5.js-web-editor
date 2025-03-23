@@ -56,11 +56,13 @@ export default function useCodeMirror({
   const cmInstance = useRef();
 
   function onKeyUp() {
+    console.log('keyup');
     const lineNumber = parseInt(cmInstance.current.getCursor().line + 1, 10);
     setCurrentLine(lineNumber);
   }
 
   function onKeyDown(_cm, e) {
+    console.log('keydown');
     // Show hint
     const mode = cmInstance.current.getOption('mode');
     if (/^[a-z]$/i.test(e.key) && (mode === 'css' || mode === 'javascript')) {
@@ -81,16 +83,16 @@ export default function useCodeMirror({
   }
 
   function onChange() {
-    debounce(() => {
-      setUnsavedChanges(true);
-      hideRuntimeErrorWarning();
-      updateFileContent(file.id, cmInstance.current.getValue());
-      if (autorefresh && isPlaying) {
-        clearConsole();
-        startSketch();
-      }
-    }, 1000);
+    console.log('change');
+    setUnsavedChanges(true);
+    hideRuntimeErrorWarning();
+    updateFileContent(file.id, cmInstance.current.getValue());
+    if (autorefresh && isPlaying) {
+      clearConsole();
+      startSketch();
+    }
   }
+  const debouncedOnChange = debounce(onChange, 1000);
 
   function setupCodeMirrorOnContainerMounted(container) {
     cmInstance.current = CodeMirror(container, {
@@ -161,7 +163,8 @@ export default function useCodeMirror({
       [`${metaKey}-.`]: 'toggleComment' // Note: most adblockers use the shortcut ctrl+.
     });
 
-    cmInstance.current.on('change', onChange);
+    console.log('setting up change handlers??', cmInstance.current);
+    cmInstance.current.on('change', debouncedOnChange);
     cmInstance.current.on('keyup', onKeyUp);
     cmInstance.current.on('keydown', onKeyDown);
 
