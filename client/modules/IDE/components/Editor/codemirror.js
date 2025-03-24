@@ -169,7 +169,6 @@ export default function useCodeMirror({
       [`${metaKey}-.`]: 'toggleComment' // Note: most adblockers use the shortcut ctrl+.
     });
 
-    console.log('setting up change handlers??', cmInstance.current);
     cmInstance.current.on('change', debouncedOnChange);
     cmInstance.current.on('keyup', onKeyUp);
     cmInstance.current.on('keydown', onKeyDown);

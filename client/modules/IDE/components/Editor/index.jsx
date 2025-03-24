@@ -115,13 +115,14 @@ function Editor({
   });
 
   // Lets the parent component access file content-specific functionality...
-  // TODO(connie) - Revisit the logic here, can we wrap this in useCallback or something?
-  provideController({
-    tidyCode: () => tidyCode(cmInstance.current),
-    showFind,
-    showReplace,
-    getContent
-  });
+  useEffect(() => {
+    provideController({
+      tidyCode: () => tidyCode(cmInstance.current),
+      showFind,
+      showReplace,
+      getContent
+    });
+  }, [showFind, showReplace, getContent]);
 
   // When the CM container div mounts, we set up CodeMirror.
   const onContainerMounted = useCallback(setupCodeMirrorOnContainerMounted, []);
@@ -149,11 +150,14 @@ function Editor({
     if (!autocompleteHinter) hideHinter(cmInstance.current);
   }, [autocompleteHinter]);
 
-  // TODO: Should this be watching more deps?
+  // TODO: test this
   useEffectWithComparison(
     (_, prevProps) => {
       if (runtimeErrorWarningVisible) {
-        if (consoleEvents.length !== prevProps.consoleEvents.length) {
+        if (
+          prevProps.consoleEvents &&
+          consoleEvents.length !== prevProps.consoleEvents.length
+        ) {
           consoleEvents.forEach((consoleEvent) => {
             if (consoleEvent.method === 'error') {
               // It doesn't work if you create a new Error, but this works
