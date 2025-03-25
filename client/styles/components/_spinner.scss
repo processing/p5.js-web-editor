@@ -1,0 +1,21 @@
+@use "sass:math"; 
+
+.spinner {
+  display: inline-block;
+  width: #{math.div(40, $base-font-size)}rem;
+  height: #{math.div(40, $base-font-size)}rem;
+  border: #{math.div(4, $base-font-size)}rem solid;
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: spin 1s linear infinite;
+  
+  @include themify() {
+    border-color: getThemifyVariable('primary-text-color');
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -49,8 +49,14 @@ Route.propTypes = {
   component: PropTypes.elementType.isRequired
 };
 
+const Spinner = () => (
+  <div className="spinner-container">
+    <div className="spinner"></div>
+  </div>
+);
+
 const routes = (
-  <Suspense fallback={<div>Loading...</div>}>
+  <Suspense fallback={<Spinner />}>
     <Switch>
       <Route exact path="/" component={IDEView} />
       <Route path="/login" component={LoginView} />
