@@ -146,11 +146,11 @@ function Editor({
   }, []);
 
   useEffect(() => {
-    // close the hinter window once the preference is turned off
+    // Close the hinter window once the preference is turned off
     if (!autocompleteHinter) hideHinter(cmInstance.current);
   }, [autocompleteHinter]);
 
-  // TODO: test this
+  // Updates the error console.
   useEffectWithComparison(
     (_, prevProps) => {
       if (runtimeErrorWarningVisible) {

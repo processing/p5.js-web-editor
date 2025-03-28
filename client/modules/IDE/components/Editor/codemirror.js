@@ -37,6 +37,7 @@ const INDENTATION_AMOUNT = 2;
 
 emmet(CodeMirror);
 
+/** This is a custom React hook that manages CodeMirror state. */
 export default function useCodeMirror({
   theme,
   lineNumbers,
@@ -56,7 +57,9 @@ export default function useCodeMirror({
   fontSize,
   onUpdateLinting
 }) {
+  // The codemirror instance.
   const cmInstance = useRef();
+  // The current codemirror files.
   const docs = useRef();
 
   function onKeyUp() {
@@ -89,6 +92,7 @@ export default function useCodeMirror({
   const fileId = useRef();
   fileId.current = file.id;
 
+  // When the file changes, update the file content and save status.
   function onChange() {
     setUnsavedChanges(true);
     hideRuntimeErrorWarning();
@@ -100,6 +104,8 @@ export default function useCodeMirror({
   }
   const debouncedOnChange = debounce(onChange, 1000);
 
+  // When the container component enters the DOM, we want this function
+  // to be called so we can setup the CodeMirror instance with the container.
   function setupCodeMirrorOnContainerMounted(container) {
     cmInstance.current = CodeMirror(container, {
       theme: `p5-${theme}`,
@@ -169,6 +175,7 @@ export default function useCodeMirror({
       [`${metaKey}-.`]: 'toggleComment' // Note: most adblockers use the shortcut ctrl+.
     });
 
+    // Setup the event listeners on the CodeMirror instance.
     cmInstance.current.on('change', debouncedOnChange);
     cmInstance.current.on('keyup', onKeyUp);
     cmInstance.current.on('keydown', onKeyDown);
@@ -176,6 +183,7 @@ export default function useCodeMirror({
     cmInstance.current.getWrapperElement().style['font-size'] = `${fontSize}px`;
   }
 
+  // When settings change, we pass those changes into CodeMirror.
   useEffect(() => {
     cmInstance.current.getWrapperElement().style['font-size'] = `${fontSize}px`;
   }, [fontSize]);
@@ -192,7 +200,8 @@ export default function useCodeMirror({
     cmInstance.current.setOption('autoCloseBrackets', autocloseBracketsQuotes);
   }, [autocloseBracketsQuotes]);
 
-  const initializeDocuments = () => {
+  // Initializes the files as CodeMirror documents.
+  function initializeDocuments() {
     docs.current = {};
     files.forEach((currentFile) => {
       if (currentFile.name !== 'root') {
@@ -202,12 +211,13 @@ export default function useCodeMirror({
         );
       }
     });
-  };
+  }
 
-  useEffect(() => {
-    initializeDocuments();
-  }, [files]);
+  // When the files change, reinitialize the documents.
+  useEffect(initializeDocuments, [files]);
 
+  // When the file changes, we change the file mode and
+  // make the CodeMirror call to swap out the document.
   useEffectWithComparison(
     (_, prevProps) => {
       const fileMode = getFileMode(file.name);
@@ -226,10 +236,6 @@ export default function useCodeMirror({
       }
       cmInstance.current.focus();
 
-      if (!prevProps?.unsavedChanges) {
-        setTimeout(() => setUnsavedChanges(false), 400);
-      }
-
       for (let i = 0; i < cmInstance.current.lineCount(); i += 1) {
         cmInstance.current.removeLineClass(
           i,
@@ -241,6 +247,7 @@ export default function useCodeMirror({
     [file.id]
   );
 
+  // Remove the CM listeners on component teardown.
   function teardownCodeMirror() {
     cmInstance.current.off('keyup', onKeyUp);
     cmInstance.current.off('change', debouncedOnChange);
