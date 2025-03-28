@@ -256,11 +256,7 @@ function Editor({
               </span>
             </div>
             <section>
-              <EditorHolder
-                ref={(element) => {
-                  this.codemirrorContainer = element;
-                }}
-              />
+              <EditorHolder ref={onContainerMounted} />
               {file.url ? (
                 <AssetPreview url={file.url} name={file.name} />
               ) : null}
