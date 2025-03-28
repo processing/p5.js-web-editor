@@ -37,7 +37,10 @@ const INDENTATION_AMOUNT = 2;
 
 emmet(CodeMirror);
 
-/** This is a custom React hook that manages CodeMirror state. */
+/**
+ * This is a custom React hook that manages CodeMirror state.
+ * TODO(Connie Ye): Revisit the linting on file switch.
+ */
 export default function useCodeMirror({
   theme,
   lineNumbers,
