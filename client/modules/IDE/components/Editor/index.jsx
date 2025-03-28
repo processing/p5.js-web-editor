@@ -1,34 +1,7 @@
-// TODO: convert to functional component
-
 import PropTypes from 'prop-types';
-import React from 'react';
-import CodeMirror from 'codemirror';
-import emmet from '@emmetio/codemirror-plugin';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { withTranslation } from 'react-i18next';
 import StackTrace from 'stacktrace-js';
-import 'codemirror/mode/css/css';
-import 'codemirror/mode/clike/clike';
-import 'codemirror/addon/selection/active-line';
-import 'codemirror/addon/lint/lint';
-import 'codemirror/addon/lint/javascript-lint';
-import 'codemirror/addon/lint/css-lint';
-import 'codemirror/addon/lint/html-lint';
-import 'codemirror/addon/fold/brace-fold';
-import 'codemirror/addon/fold/comment-fold';
-import 'codemirror/addon/fold/foldcode';
-import 'codemirror/addon/fold/foldgutter';
-import 'codemirror/addon/fold/indent-fold';
-import 'codemirror/addon/fold/xml-fold';
-import 'codemirror/addon/comment/comment';
-import 'codemirror/keymap/sublime';
-import 'codemirror/addon/search/searchcursor';
-import 'codemirror/addon/search/matchesonscrollbar';
-import 'codemirror/addon/search/match-highlighter';
-import 'codemirror/addon/search/jump-to-line';
-import 'codemirror/addon/edit/matchbrackets';
-import 'codemirror/addon/edit/closebrackets';
-import 'codemirror/addon/selection/mark-selection';
-import 'codemirror-colorpicker';
 
 import classNames from 'classnames';
 import { debounce } from 'lodash';
@@ -37,7 +10,6 @@ import { bindActionCreators } from 'redux';
 import MediaQuery from 'react-responsive';
 import '../../../../utils/htmlmixed';
 import '../../../../utils/p5-javascript';
-import { metaKey } from '../../../../utils/metaKey';
 import '../../../../utils/codemirror-search';
 
 import beepUrl from '../../../../sounds/audioAlert.mp3';
@@ -62,395 +34,242 @@ import { EditorContainer, EditorHolder } from './MobileEditor';
 import { FolderIcon } from '../../../../common/icons';
 import IconButton from '../../../../common/IconButton';
 
-import { showHint, hideHinter } from './hinter';
-import getFileMode from './utils';
+import { hideHinter } from './hinter';
 import tidyCode from './tidier';
+import useCodeMirror from './codemirror';
+import { useEffectWithComparison } from '../../hooks/custom-hooks';
 
-emmet(CodeMirror);
+function Editor({
+  provideController,
+  files,
+  file,
+  theme,
+  linewrap,
+  lineNumbers,
+  closeProjectOptions,
+  setSelectedFile,
+  setUnsavedChanges,
+  lintMessages,
+  lintWarning,
+  clearLintMessage,
+  updateLintMessage,
+  updateFileContent,
+  autorefresh,
+  isPlaying,
+  clearConsole,
+  startSketch,
+  autocompleteHinter,
+  autocloseBracketsQuotes,
+  fontSize,
+  consoleEvents,
+  hideRuntimeErrorWarning,
+  runtimeErrorWarningVisible,
+  expandConsole,
+  isExpanded,
+  t,
+  collapseSidebar,
+  expandSidebar
+}) {
+  const [currentLine, setCurrentLine] = useState(1);
+  const beep = useRef();
 
-const INDENTATION_AMOUNT = 2;
+  const updateLintingMessageAccessibility = debounce((annotations) => {
+    clearLintMessage();
+    annotations.forEach((x) => {
+      if (x.from.line > -1) {
+        updateLintMessage(x.severity, x.from.line + 1, x.message);
+      }
+    });
+    if (lintMessages.length > 0 && lintWarning) {
+      beep.play();
+    }
+  }, 2000);
 
-class Editor extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      currentLine: 1
+  // The useCodeMirror hook manages CodeMirror state and returns
+  // a reference to the actual CM instance.
+  const {
+    setupCodeMirrorOnContainerMounted,
+    teardownCodeMirror,
+    cmInstance,
+    getContent,
+    showFind,
+    showReplace
+  } = useCodeMirror({
+    theme,
+    lineNumbers,
+    linewrap,
+    autocloseBracketsQuotes,
+    setUnsavedChanges,
+    hideRuntimeErrorWarning,
+    updateFileContent,
+    file,
+    files,
+    autorefresh,
+    isPlaying,
+    clearConsole,
+    startSketch,
+    autocompleteHinter,
+    fontSize,
+    updateLintingMessageAccessibility,
+    setCurrentLine
+  });
+
+  // Lets the parent component access file content-specific functionality...
+  useEffect(() => {
+    provideController({
+      tidyCode: () => tidyCode(cmInstance.current),
+      showFind,
+      showReplace,
+      getContent
+    });
+  }, [showFind, showReplace, getContent]);
+
+  // When the CM container div mounts, we set up CodeMirror.
+  const onContainerMounted = useCallback(setupCodeMirrorOnContainerMounted, []);
+
+  // This is acting as a "componentDidMount" call where it runs once
+  // at the start and never again. It also provides a cleanup function.
+  useEffect(() => {
+    beep.current = new Audio(beepUrl);
+
+    provideController({
+      tidyCode: () => tidyCode(cmInstance.current),
+      showFind,
+      showReplace,
+      getContent
+    });
+
+    return () => {
+      provideController(null);
+      teardownCodeMirror();
     };
-    this._cm = null;
+  }, []);
 
-    this.updateLintingMessageAccessibility = debounce((annotations) => {
-      this.props.clearLintMessage();
-      annotations.forEach((x) => {
-        if (x.from.line > -1) {
-          this.props.updateLintMessage(x.severity, x.from.line + 1, x.message);
-        }
-      });
-      if (this.props.lintMessages.length > 0 && this.props.lintWarning) {
-        this.beep.play();
-      }
-    }, 2000);
-    this.showFind = this.showFind.bind(this);
-    this.showReplace = this.showReplace.bind(this);
-    this.getContent = this.getContent.bind(this);
-  }
+  useEffect(() => {
+    // Close the hinter window once the preference is turned off
+    if (!autocompleteHinter) hideHinter(cmInstance.current);
+  }, [autocompleteHinter]);
 
-  componentDidMount() {
-    this.beep = new Audio(beepUrl);
-    // this.widgets = [];
-    this._cm = CodeMirror(this.codemirrorContainer, {
-      theme: `p5-${this.props.theme}`,
-      lineNumbers: this.props.lineNumbers,
-      styleActiveLine: true,
-      inputStyle: 'contenteditable',
-      lineWrapping: this.props.linewrap,
-      fixedGutter: false,
-      foldGutter: true,
-      foldOptions: { widget: '\u2026' },
-      gutters: ['CodeMirror-foldgutter', 'CodeMirror-lint-markers'],
-      keyMap: 'sublime',
-      highlightSelectionMatches: true, // highlight current search match
-      matchBrackets: true,
-      emmet: {
-        preview: ['html'],
-        markTagPairs: true,
-        autoRenameTags: true
-      },
-      autoCloseBrackets: this.props.autocloseBracketsQuotes,
-      styleSelectedText: true,
-      lint: {
-        onUpdateLinting: (annotations) => {
-          this.updateLintingMessageAccessibility(annotations);
-        },
-        options: {
-          asi: true,
-          eqeqeq: false,
-          '-W041': false,
-          esversion: 11
-        }
-      },
-      colorpicker: {
-        type: 'sketch',
-        mode: 'edit'
-      }
-    });
-
-    delete this._cm.options.lint.options.errors;
-
-    const replaceCommand =
-      metaKey === 'Ctrl' ? `${metaKey}-H` : `${metaKey}-Option-F`;
-    this._cm.setOption('extraKeys', {
-      Tab: (cm) => {
-        if (!cm.execCommand('emmetExpandAbbreviation')) return;
-        // might need to specify and indent more?
-        const selection = cm.doc.getSelection();
-        if (selection.length > 0) {
-          cm.execCommand('indentMore');
+  // Updates the error console.
+  useEffectWithComparison(
+    (_, prevProps) => {
+      if (runtimeErrorWarningVisible) {
+        if (
+          prevProps.consoleEvents &&
+          consoleEvents.length !== prevProps.consoleEvents.length
+        ) {
+          consoleEvents.forEach((consoleEvent) => {
+            if (consoleEvent.method === 'error') {
+              // It doesn't work if you create a new Error, but this works
+              // LOL
+              const errorObj = { stack: consoleEvent.data[0].toString() };
+              StackTrace.fromError(errorObj).then((stackLines) => {
+                expandConsole();
+                const line = stackLines.find(
+                  (l) => l.fileName && l.fileName.startsWith('/')
+                );
+                if (!line) return;
+                const fileNameArray = line.fileName.split('/');
+                const fileName = fileNameArray.slice(-1)[0];
+                const filePath = fileNameArray.slice(0, -1).join('/');
+                const fileWithError = files.find(
+                  (f) => f.name === fileName && f.filePath === filePath
+                );
+                setSelectedFile(fileWithError.id);
+                cmInstance.current.addLineClass(
+                  line.lineNumber - 1,
+                  'background',
+                  'line-runtime-error'
+                );
+              });
+            }
+          });
         } else {
-          cm.replaceSelection(' '.repeat(INDENTATION_AMOUNT));
-        }
-      },
-      Enter: 'emmetInsertLineBreak',
-      Esc: 'emmetResetAbbreviation',
-      [`Shift-Tab`]: false,
-      [`${metaKey}-Enter`]: () => null,
-      [`Shift-${metaKey}-Enter`]: () => null,
-      [`${metaKey}-F`]: 'findPersistent',
-      [`Shift-${metaKey}-F`]: () => tidyCode(this._cm),
-      [`${metaKey}-G`]: 'findPersistentNext',
-      [`Shift-${metaKey}-G`]: 'findPersistentPrev',
-      [replaceCommand]: 'replace',
-      // Cassie Tarakajian: If you don't set a default color, then when you
-      // choose a color, it deletes characters inline. This is a
-      // hack to prevent that.
-      [`${metaKey}-K`]: (cm, event) =>
-        cm.state.colorpicker.popup_color_picker({ length: 0 }),
-      [`${metaKey}-.`]: 'toggleComment' // Note: most adblockers use the shortcut ctrl+.
-    });
-
-    this.initializeDocuments(this.props.files);
-    this._cm.swapDoc(this._docs[this.props.file.id]);
-
-    this._cm.on(
-      'change',
-      debounce(() => {
-        this.props.setUnsavedChanges(true);
-        this.props.hideRuntimeErrorWarning();
-        this.props.updateFileContent(this.props.file.id, this._cm.getValue());
-        if (this.props.autorefresh && this.props.isPlaying) {
-          this.props.clearConsole();
-          this.props.startSketch();
-        }
-      }, 1000)
-    );
-
-    if (this._cm) {
-      this._cm.on('keyup', this.handleKeyUp);
-    }
-
-    this._cm.on('keydown', (_cm, e) => {
-      // Show hint
-      const mode = this._cm.getOption('mode');
-      if (/^[a-z]$/i.test(e.key) && (mode === 'css' || mode === 'javascript')) {
-        showHint(_cm, this.props.autocompleteHinter, this.props.fontSize);
-      }
-    });
-
-    this._cm.getWrapperElement().style[
-      'font-size'
-    ] = `${this.props.fontSize}px`;
-
-    this.props.provideController({
-      tidyCode: () => tidyCode(this._cm),
-      showFind: this.showFind,
-      showReplace: this.showReplace,
-      getContent: this.getContent
-    });
-  }
-
-  componentWillUpdate(nextProps) {
-    // check if files have changed
-    if (this.props.files[0].id !== nextProps.files[0].id) {
-      // then need to make CodeMirror documents
-      this.initializeDocuments(nextProps.files);
-    }
-    if (this.props.files.length !== nextProps.files.length) {
-      this.initializeDocuments(nextProps.files);
-    }
-  }
-
-  componentDidUpdate(prevProps) {
-    if (this.props.file.id !== prevProps.file.id) {
-      const fileMode = getFileMode(this.props.file.name);
-      if (fileMode === 'javascript') {
-        // Define the new Emmet configuration based on the file mode
-        const emmetConfig = {
-          preview: ['html'],
-          markTagPairs: false,
-          autoRenameTags: true
-        };
-        this._cm.setOption('emmet', emmetConfig);
-      }
-      const oldDoc = this._cm.swapDoc(this._docs[this.props.file.id]);
-      this._docs[prevProps.file.id] = oldDoc;
-      this._cm.focus();
-
-      if (!prevProps.unsavedChanges) {
-        setTimeout(() => this.props.setUnsavedChanges(false), 400);
-      }
-    }
-    if (this.props.fontSize !== prevProps.fontSize) {
-      this._cm.getWrapperElement().style[
-        'font-size'
-      ] = `${this.props.fontSize}px`;
-    }
-    if (this.props.linewrap !== prevProps.linewrap) {
-      this._cm.setOption('lineWrapping', this.props.linewrap);
-    }
-    if (this.props.theme !== prevProps.theme) {
-      this._cm.setOption('theme', `p5-${this.props.theme}`);
-    }
-    if (this.props.lineNumbers !== prevProps.lineNumbers) {
-      this._cm.setOption('lineNumbers', this.props.lineNumbers);
-    }
-    if (
-      this.props.autocloseBracketsQuotes !== prevProps.autocloseBracketsQuotes
-    ) {
-      this._cm.setOption(
-        'autoCloseBrackets',
-        this.props.autocloseBracketsQuotes
-      );
-    }
-    if (this.props.autocompleteHinter !== prevProps.autocompleteHinter) {
-      if (!this.props.autocompleteHinter) {
-        // close the hinter window once the preference is turned off
-        hideHinter(this._cm);
-      }
-    }
-
-    if (this.props.runtimeErrorWarningVisible) {
-      if (this.props.consoleEvents.length !== prevProps.consoleEvents.length) {
-        this.props.consoleEvents.forEach((consoleEvent) => {
-          if (consoleEvent.method === 'error') {
-            // It doesn't work if you create a new Error, but this works
-            // LOL
-            const errorObj = { stack: consoleEvent.data[0].toString() };
-            StackTrace.fromError(errorObj).then((stackLines) => {
-              this.props.expandConsole();
-              const line = stackLines.find(
-                (l) => l.fileName && l.fileName.startsWith('/')
-              );
-              if (!line) return;
-              const fileNameArray = line.fileName.split('/');
-              const fileName = fileNameArray.slice(-1)[0];
-              const filePath = fileNameArray.slice(0, -1).join('/');
-              const fileWithError = this.props.files.find(
-                (f) => f.name === fileName && f.filePath === filePath
-              );
-              this.props.setSelectedFile(fileWithError.id);
-              this._cm.addLineClass(
-                line.lineNumber - 1,
-                'background',
-                'line-runtime-error'
-              );
-            });
+          for (let i = 0; i < cmInstance.current.lineCount(); i += 1) {
+            cmInstance.current.removeLineClass(
+              i,
+              'background',
+              'line-runtime-error'
+            );
           }
-        });
-      } else {
-        for (let i = 0; i < this._cm.lineCount(); i += 1) {
-          this._cm.removeLineClass(i, 'background', 'line-runtime-error');
         }
       }
-    }
+    },
+    [consoleEvents, runtimeErrorWarningVisible]
+  );
 
-    if (this.props.file.id !== prevProps.file.id) {
-      for (let i = 0; i < this._cm.lineCount(); i += 1) {
-        this._cm.removeLineClass(i, 'background', 'line-runtime-error');
-      }
-    }
+  const editorSectionClass = classNames({
+    editor: true,
+    'sidebar--contracted': !isExpanded
+  });
 
-    this.props.provideController({
-      tidyCode: () => tidyCode(this._cm),
-      showFind: this.showFind,
-      showReplace: this.showReplace,
-      getContent: this.getContent
-    });
-  }
+  const editorHolderClass = classNames({
+    'editor-holder': true,
+    'editor-holder--hidden': file.fileType === 'folder' || file.url
+  });
 
-  componentWillUnmount() {
-    if (this._cm) {
-      this._cm.off('keyup', this.handleKeyUp);
-    }
-    this.props.provideController(null);
-  }
-
-  getContent() {
-    const content = this._cm.getValue();
-    const updatedFile = Object.assign({}, this.props.file, { content });
-    return updatedFile;
-  }
-
-  handleKeyUp = () => {
-    const lineNumber = parseInt(this._cm.getCursor().line + 1, 10);
-    this.setState({ currentLine: lineNumber });
-  };
-
-  showFind() {
-    this._cm.execCommand('findPersistent');
-  }
-
-  showReplace() {
-    this._cm.execCommand('replace');
-  }
-
-  initializeDocuments(files) {
-    this._docs = {};
-    files.forEach((file) => {
-      if (file.name !== 'root') {
-        this._docs[file.id] = CodeMirror.Doc(
-          file.content,
-          getFileMode(file.name)
-        ); // eslint-disable-line
-      }
-    });
-  }
-
-  render() {
-    const editorSectionClass = classNames({
-      editor: true,
-      'sidebar--contracted': !this.props.isExpanded
-    });
-
-    const editorHolderClass = classNames({
-      'editor-holder': true,
-      'editor-holder--hidden':
-        this.props.file.fileType === 'folder' || this.props.file.url
-    });
-
-    const { currentLine } = this.state;
-
-    return (
-      <MediaQuery minWidth={770}>
-        {(matches) =>
-          matches ? (
-            <section className={editorSectionClass}>
-              <div className="editor__header">
-                <button
-                  aria-label={this.props.t('Editor.OpenSketchARIA')}
-                  className="sidebar__contract"
-                  onClick={() => {
-                    this.props.collapseSidebar();
-                    this.props.closeProjectOptions();
-                  }}
-                >
-                  <LeftArrowIcon focusable="false" aria-hidden="true" />
-                </button>
-                <button
-                  aria-label={this.props.t('Editor.CloseSketchARIA')}
-                  className="sidebar__expand"
-                  onClick={this.props.expandSidebar}
-                >
-                  <RightArrowIcon focusable="false" aria-hidden="true" />
-                </button>
-                <div className="editor__file-name">
-                  <span>
-                    {this.props.file.name}
-                    <UnsavedChangesIndicator />
-                  </span>
-                  <Timer />
-                </div>
-              </div>
-              <article
-                ref={(element) => {
-                  this.codemirrorContainer = element;
+  return (
+    <MediaQuery minWidth={770}>
+      {(matches) =>
+        matches ? (
+          <section className={editorSectionClass}>
+            <div className="editor__header">
+              <button
+                aria-label={t('Editor.OpenSketchARIA')}
+                className="sidebar__contract"
+                onClick={() => {
+                  collapseSidebar();
+                  closeProjectOptions();
                 }}
-                className={editorHolderClass}
-              />
-              {this.props.file.url ? (
-                <AssetPreview
-                  url={this.props.file.url}
-                  name={this.props.file.name}
-                />
+              >
+                <LeftArrowIcon focusable="false" aria-hidden="true" />
+              </button>
+              <button
+                aria-label={t('Editor.CloseSketchARIA')}
+                className="sidebar__expand"
+                onClick={expandSidebar}
+              >
+                <RightArrowIcon focusable="false" aria-hidden="true" />
+              </button>
+              <div className="editor__file-name">
+                <span>
+                  {file.name}
+                  <UnsavedChangesIndicator />
+                </span>
+                <Timer />
+              </div>
+            </div>
+            <article ref={onContainerMounted} className={editorHolderClass} />
+            {file.url ? <AssetPreview url={file.url} name={file.name} /> : null}
+            <EditorAccessibility
+              lintMessages={lintMessages}
+              currentLine={currentLine}
+            />
+          </section>
+        ) : (
+          <EditorContainer expanded={isExpanded}>
+            <div>
+              <IconButton onClick={expandSidebar} icon={FolderIcon} />
+              <span>
+                {file.name}
+                <UnsavedChangesIndicator />
+              </span>
+            </div>
+            <section>
+              <EditorHolder ref={onContainerMounted} />
+              {file.url ? (
+                <AssetPreview url={file.url} name={file.name} />
               ) : null}
               <EditorAccessibility
-                lintMessages={this.props.lintMessages}
+                lintMessages={lintMessages}
                 currentLine={currentLine}
               />
             </section>
-          ) : (
-            <EditorContainer expanded={this.props.isExpanded}>
-              <div>
-                <IconButton
-                  onClick={this.props.expandSidebar}
-                  icon={FolderIcon}
-                />
-                <span>
-                  {this.props.file.name}
-                  <UnsavedChangesIndicator />
-                </span>
-              </div>
-              <section>
-                <EditorHolder
-                  ref={(element) => {
-                    this.codemirrorContainer = element;
-                  }}
-                />
-                {this.props.file.url ? (
-                  <AssetPreview
-                    url={this.props.file.url}
-                    name={this.props.file.name}
-                  />
-                ) : null}
-                <EditorAccessibility
-                  lintMessages={this.props.lintMessages}
-                  currentLine={currentLine}
-                />
-              </section>
-            </EditorContainer>
-          )
-        }
-      </MediaQuery>
-    );
-  }
+          </EditorContainer>
+        )
+      }
+    </MediaQuery>
+  );
 }
 
 Editor.propTypes = {
@@ -490,7 +309,6 @@ Editor.propTypes = {
   autorefresh: PropTypes.bool.isRequired,
   isPlaying: PropTypes.bool.isRequired,
   theme: PropTypes.string.isRequired,
-  unsavedChanges: PropTypes.bool.isRequired,
   files: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
