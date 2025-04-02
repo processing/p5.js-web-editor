@@ -181,7 +181,9 @@ class Editor extends React.Component {
       // hack to prevent that.
       [`${metaKey}-K`]: (cm, event) =>
         cm.state.colorpicker.popup_color_picker({ length: 0 }),
-      [`${metaKey}-.`]: 'toggleComment' // Note: most adblockers use the shortcut ctrl+.
+      [`${metaKey}-.`]: 'toggleComment', // Note: most adblockers use the shortcut ctrl+.
+      [`Alt-Up`]: () => this.moveLineUp(),
+      [`Alt-Down`]: () => this.moveLineDown()
     });
 
     this.initializeDocuments(this.props.files);
@@ -364,6 +366,79 @@ class Editor extends React.Component {
     const content = this._cm.getValue();
     const updatedFile = Object.assign({}, this.props.file, { content });
     return updatedFile;
+  }
+
+  moveLineUp() {
+    const cm = this._cm;
+    const selections = cm.listSelections();
+
+    cm.operation(() => {
+      selections.forEach(({ anchor, head }) => {
+        const fromLine = Math.min(anchor.line, head.line);
+        const toLine = Math.max(anchor.line, head.line);
+
+        if (fromLine > 0) {
+          const prevLine = cm.getLine(fromLine - 1);
+          const selectedLines = cm.getRange(
+            { line: fromLine, ch: 0 },
+            { line: toLine, ch: cm.getLine(toLine).length }
+          );
+
+          cm.replaceRange(
+            selectedLines,
+            { line: fromLine - 1, ch: 0 },
+            { line: toLine - 1, ch: prevLine.length }
+          );
+          cm.replaceRange(
+            prevLine,
+            { line: toLine, ch: 0 },
+            { line: toLine, ch: cm.getLine(toLine).length }
+          );
+
+          cm.setSelection(
+            { line: fromLine - 1, ch: anchor.ch },
+            { line: toLine - 1, ch: head.ch }
+          );
+        }
+      });
+    });
+  }
+
+  moveLineDown() {
+    const cm = this._cm;
+    const selections = cm.listSelections();
+
+    cm.operation(() => {
+      for (let i = selections.length - 1; i >= 0; i -= 1) {
+        const { anchor, head } = selections[i];
+        const fromLine = Math.min(anchor.line, head.line);
+        const toLine = Math.max(anchor.line, head.line);
+
+        if (toLine < cm.lastLine()) {
+          const nextLine = cm.getLine(toLine + 1);
+          const selectedLines = cm.getRange(
+            { line: fromLine, ch: 0 },
+            { line: toLine, ch: cm.getLine(toLine).length }
+          );
+
+          cm.replaceRange(
+            nextLine,
+            { line: fromLine, ch: 0 },
+            { line: toLine, ch: cm.getLine(toLine).length }
+          );
+          cm.replaceRange(
+            selectedLines,
+            { line: toLine + 1, ch: 0 },
+            { line: toLine + 1, ch: nextLine.length }
+          );
+
+          cm.setSelection(
+            { line: fromLine + 1, ch: anchor.ch },
+            { line: toLine + 1, ch: head.ch }
+          );
+        }
+      }
+    });
   }
 
   handleKeyUp = () => {
