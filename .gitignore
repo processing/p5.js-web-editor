@@ -1,5 +1,6 @@
 .DS_Store
 .env
+package-lock.json
 .env.production
 .env.staging
 .vscode/
