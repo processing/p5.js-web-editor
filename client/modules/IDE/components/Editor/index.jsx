@@ -153,36 +153,48 @@ class Editor extends React.Component {
 
     delete this._cm.options.lint.options.errors;
 
-    const replaceCommand =
-      metaKey === 'Ctrl' ? `${metaKey}-H` : `${metaKey}-Option-F`;
-    this._cm.setOption('extraKeys', {
-      Tab: (cm) => {
-        if (!cm.execCommand('emmetExpandAbbreviation')) return;
-        // might need to specify and indent more?
-        const selection = cm.doc.getSelection();
-        if (selection.length > 0) {
-          cm.execCommand('indentMore');
-        } else {
-          cm.replaceSelection(' '.repeat(INDENTATION_AMOUNT));
-        }
-      },
-      Enter: 'emmetInsertLineBreak',
-      Esc: 'emmetResetAbbreviation',
-      [`Shift-Tab`]: false,
-      [`${metaKey}-Enter`]: () => null,
-      [`Shift-${metaKey}-Enter`]: () => null,
-      [`${metaKey}-F`]: 'findPersistent',
-      [`Shift-${metaKey}-F`]: this.tidyCode,
-      [`${metaKey}-G`]: 'findPersistentNext',
-      [`Shift-${metaKey}-G`]: 'findPersistentPrev',
-      [replaceCommand]: 'replace',
-      // Cassie Tarakajian: If you don't set a default color, then when you
-      // choose a color, it deletes characters inline. This is a
-      // hack to prevent that.
-      [`${metaKey}-K`]: (cm, event) =>
-        cm.state.colorpicker.popup_color_picker({ length: 0 }),
-      [`${metaKey}-.`]: 'toggleComment' // Note: most adblockers use the shortcut ctrl+.
-    });
+ const replaceCommand =
+  metaKey === 'Ctrl' ? `${metaKey}-H` : `${metaKey}-Option-F`;
+this._cm.setOption('extraKeys', {
+  Tab: (cm) => {
+    if (!cm.execCommand('emmetExpandAbbreviation')) return;
+    // might need to specify and indent more?
+    const selection = cm.doc.getSelection();
+    if (selection.length > 0) {
+      cm.execCommand('indentMore');
+    } else {
+      cm.replaceSelection(' '.repeat(INDENTATION_AMOUNT));
+    }
+  },
+  Enter: 'emmetInsertLineBreak',
+  Esc: 'emmetResetAbbreviation',
+  [`Shift-Tab`]: false,
+  [`${metaKey}-Enter`]: () => null,
+  [`Shift-${metaKey}-Enter`]: () => null,
+  [`${metaKey}-F`]: (cm) => {
+    // Close any existing search dialog first
+    if (cm.state.search && cm.state.search.query) {
+      CodeMirror.commands.closeSearch(cm);
+    }
+    cm.execCommand('findPersistent');
+  },
+  [`Shift-${metaKey}-F`]: this.tidyCode,
+  [`${metaKey}-G`]: 'findPersistentNext',
+  [`Shift-${metaKey}-G`]: 'findPersistentPrev',
+  [replaceCommand]: (cm) => {
+    // Close any existing search dialog first
+    if (cm.state.search && cm.state.search.query) {
+      CodeMirror.commands.closeSearch(cm);
+    }
+    cm.execCommand('replace');
+  },
+  // Cassie Tarakajian: If you don't set a default color, then when you
+  // choose a color, it deletes characters inline. This is a
+  // hack to prevent that.
+  [`${metaKey}-K`]: (cm, event) =>
+    cm.state.colorpicker.popup_color_picker({ length: 0 }),
+  [`${metaKey}-.`]: 'toggleComment' 
+});
 
     this.initializeDocuments(this.props.files);
     this._cm.swapDoc(this._docs[this.props.file.id]);
@@ -372,8 +384,11 @@ class Editor extends React.Component {
   };
 
   showFind() {
-    this._cm.execCommand('findPersistent');
+  if (this._cm.state.search && this._cm.state.search.query) {
+    CodeMirror.commands.closeSearch(this._cm);
   }
+  this._cm.execCommand('findPersistent');
+}
 
   showHint(_cm) {
     if (!this.props.autocompleteHinter) {
@@ -469,8 +484,11 @@ class Editor extends React.Component {
   }
 
   showReplace() {
-    this._cm.execCommand('replace');
+  if (this._cm.state.search && this._cm.state.search.query) {
+    CodeMirror.commands.closeSearch(this._cm);
   }
+  this._cm.execCommand('replace');
+}
 
   prettierFormatWithCursor(parser, plugins) {
     try {
