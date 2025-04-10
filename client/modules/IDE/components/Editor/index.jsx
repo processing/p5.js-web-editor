@@ -72,6 +72,7 @@ import UnsavedChangesIndicator from '../UnsavedChangesIndicator';
 import { EditorContainer, EditorHolder } from './MobileEditor';
 import { FolderIcon } from '../../../../common/icons';
 import IconButton from '../../../../common/IconButton';
+import { EditorKeyMapsContext } from './contexts';
 
 emmet(CodeMirror);
 
@@ -104,6 +105,7 @@ class Editor extends React.Component {
     this.showFind = this.showFind.bind(this);
     this.showReplace = this.showReplace.bind(this);
     this.getContent = this.getContent.bind(this);
+    this.updateKeyMaps = this.updateKeyMaps.bind(this);
   }
 
   componentDidMount() {
@@ -153,36 +155,9 @@ class Editor extends React.Component {
 
     delete this._cm.options.lint.options.errors;
 
-    const replaceCommand =
-      metaKey === 'Ctrl' ? `${metaKey}-H` : `${metaKey}-Option-F`;
-    this._cm.setOption('extraKeys', {
-      Tab: (cm) => {
-        if (!cm.execCommand('emmetExpandAbbreviation')) return;
-        // might need to specify and indent more?
-        const selection = cm.doc.getSelection();
-        if (selection.length > 0) {
-          cm.execCommand('indentMore');
-        } else {
-          cm.replaceSelection(' '.repeat(INDENTATION_AMOUNT));
-        }
-      },
-      Enter: 'emmetInsertLineBreak',
-      Esc: 'emmetResetAbbreviation',
-      [`Shift-Tab`]: false,
-      [`${metaKey}-Enter`]: () => null,
-      [`Shift-${metaKey}-Enter`]: () => null,
-      [`${metaKey}-F`]: 'findPersistent',
-      [`Shift-${metaKey}-F`]: this.tidyCode,
-      [`${metaKey}-G`]: 'findPersistentNext',
-      [`Shift-${metaKey}-G`]: 'findPersistentPrev',
-      [replaceCommand]: 'replace',
-      // Cassie Tarakajian: If you don't set a default color, then when you
-      // choose a color, it deletes characters inline. This is a
-      // hack to prevent that.
-      [`${metaKey}-K`]: (cm, event) =>
-        cm.state.colorpicker.popup_color_picker({ length: 0 }),
-      [`${metaKey}-.`]: 'toggleComment' // Note: most adblockers use the shortcut ctrl+.
-    });
+    const { keyMaps } = this.context;
+
+    this.updateKeyMaps(keyMaps);
 
     this.initializeDocuments(this.props.files);
     this._cm.swapDoc(this._docs[this.props.file.id]);
@@ -236,6 +211,16 @@ class Editor extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
+    const currentKeyMaps = this.context?.keyMaps;
+    const prevKeyMaps = this.prevKeyMapsRef?.current;
+
+    if (
+      prevKeyMaps &&
+      JSON.stringify(currentKeyMaps) !== JSON.stringify(prevKeyMaps)
+    ) {
+      this.updateKeyMaps(currentKeyMaps);
+    }
+    this.prevKeyMapsRef = { current: currentKeyMaps };
     if (this.props.file.id !== prevProps.file.id) {
       const fileMode = this.getFileMode(this.props.file.name);
       if (fileMode === 'javascript') {
@@ -514,6 +499,42 @@ class Editor extends React.Component {
       }
     });
   }
+
+  updateKeyMaps(keyMaps) {
+    const replaceCommand =
+      metaKey === 'Ctrl' ? `${metaKey}-H` : `${metaKey}-Option-F`;
+
+    this._cm.setOption('extraKeys', {
+      Tab: (cm) => {
+        if (!cm.execCommand('emmetExpandAbbreviation')) return;
+        // might need to specify and indent more?
+        const selection = cm.doc.getSelection();
+        if (selection.length > 0) {
+          cm.execCommand('indentMore');
+        } else {
+          cm.replaceSelection(' '.repeat(INDENTATION_AMOUNT));
+        }
+      },
+      Enter: 'emmetInsertLineBreak',
+      Esc: 'emmetResetAbbreviation',
+      [`Shift-Tab`]: false,
+      [`${metaKey}-Enter`]: () => null,
+      [`Shift-${metaKey}-Enter`]: () => null,
+      [`${metaKey}-F`]: 'findPersistent',
+      [`${keyMaps.tidy}`]: this.tidyCode,
+      [`${metaKey}-G`]: 'findPersistentNext',
+      [`Shift-${metaKey}-G`]: 'findPersistentPrev',
+      [replaceCommand]: 'replace',
+      // Cassie Tarakajian: If you don't set a default color, then when you
+      // choose a color, it deletes characters inline. This is a
+      // hack to prevent that.
+      [`${metaKey}-K`]: (cm, event) =>
+        cm.state.colorpicker.popup_color_picker({ length: 0 }),
+      [`${metaKey}-.`]: 'toggleComment' // Note: most adblockers use the shortcut ctrl+.
+    });
+  }
+
+  static contextType = EditorKeyMapsContext;
 
   render() {
     const editorSectionClass = classNames({

@@ -1,9 +1,13 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { metaKeyName, metaKey } from '../../../utils/metaKey';
+import KeyboardShortcutItem from './KeyboardShortcutItem';
+import { useEditorKeyMap } from './Editor/contexts';
 
 function KeyboardShortcutModal() {
   const { t } = useTranslation();
+  const { keyMaps } = useEditorKeyMap();
+
   const replaceCommand =
     metaKey === 'Ctrl' ? `${metaKeyName} + H` : `${metaKeyName} + ⌥ + F`;
   const newFileCommand =
@@ -25,12 +29,10 @@ function KeyboardShortcutModal() {
         .
       </p>
       <ul className="keyboard-shortcuts__list">
-        <li className="keyboard-shortcut-item">
-          <span className="keyboard-shortcut__command">
-            {metaKeyName} + Shift + F
-          </span>
-          <span>{t('KeyboardShortcuts.CodeEditing.Tidy')}</span>
-        </li>
+        <KeyboardShortcutItem
+          shortcut={keyMaps.tidy}
+          desc={t('KeyboardShortcuts.CodeEditing.Tidy')}
+        />
         <li className="keyboard-shortcut-item">
           <span className="keyboard-shortcut__command">{metaKeyName} + F</span>
           <span>{t('KeyboardShortcuts.CodeEditing.FindText')}</span>
