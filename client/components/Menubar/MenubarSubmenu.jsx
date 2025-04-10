@@ -28,6 +28,26 @@ export function useMenuProps(id) {
 function MenubarTrigger({ id, title, role, hasPopup, ...props }) {
   const { isOpen, handlers } = useMenuProps(id);
 
+  // Navigate to menu-items using arrow_keys
+  handlers.onKeyDown = ({ key, target }) => {
+    const ul = target.nextSibling;
+    if (ul) {
+      const selector =
+        ul.getAttribute('role') === 'menu'
+          ? '[role="menuitem"]'
+          : '[role="option"]';
+      const nodes = ul.querySelectorAll(selector);
+
+      if (key === 'ArrowDown') {
+        const nextIdx = 0;
+        nodes[nextIdx]?.focus();
+      } else if (key === 'ArrowUp') {
+        const prevIdx = nodes.length - 1;
+        nodes[prevIdx]?.focus();
+      }
+    }
+  };
+
   return (
     <button
       {...handlers}
