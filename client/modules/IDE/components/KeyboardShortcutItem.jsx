@@ -2,26 +2,116 @@ import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useEditorKeyMap } from './Editor/contexts';
 
-function KeyboardShortcutItem({ shortcut, desc }) {
+function KeyboardShortcutItem({ desc, keyName }) {
   const [edit, setEdit] = useState(false);
   const pressedKeyCombination = useRef({});
   const inputRef = useRef(null);
-  const { updateKeyMap } = useEditorKeyMap();
+  const { updateKeyMap, keyMaps } = useEditorKeyMap();
 
-  const handleEdit = (state) => {
+  if (!Object.keys(keyMaps).includes(keyName)) {
+    return null;
+  }
+
+  const cancelEdit = () => {
+    setEdit(false);
+    pressedKeyCombination.current = {};
+    inputRef.current.innerText = keyMaps[keyName];
+  };
+
+  const handleEdit = (state, key) => {
     setEdit(state);
-    if (state) {
-      inputRef.current.focus();
-    } else {
-      inputRef.current.blur();
-      updateKeyMap('tidy', inputRef.current.innerText);
+    if (!state) {
+      updateKeyMap(key, inputRef.current.innerText);
+      cancelEdit();
     }
+  };
+
+  const handleKeyDown = (event) => {
+    if (!edit) return;
+    event.preventDefault();
+    event.stopPropagation();
+    let { key } = event;
+    if (key === 'Control') {
+      key = 'Ctrl';
+    }
+    if (key === ' ') {
+      key = 'Space';
+    }
+    if (key.length === 1 && key.match(/[a-z]/i)) {
+      key = key.toUpperCase();
+    }
+
+    pressedKeyCombination.current[key] = true;
+
+    const allKeys = Object.keys(pressedKeyCombination.current).filter(
+      (k) => !['Shift', 'Ctrl', 'Alt'].includes(k)
+    );
+
+    if (event.altKey) {
+      allKeys.unshift('Alt');
+    }
+    if (event.ctrlKey) {
+      allKeys.unshift('Ctrl');
+    }
+    if (event.shiftKey) {
+      allKeys.unshift('Shift');
+    }
+
+    event.currentTarget.innerText = allKeys.join('-');
+  };
+
+  const handleKeyUp = (event) => {
+    if (!edit) return;
+    event.preventDefault();
+    event.stopPropagation();
+    let { key } = event;
+    if (key === 'Control') {
+      key = 'Ctrl';
+    }
+    if (key === ' ') {
+      key = 'Space';
+    }
+    if (key.length === 1 && key.match(/[a-z]/i)) {
+      key = key.toUpperCase();
+    }
+
+    delete pressedKeyCombination.current[key];
   };
 
   return (
     <li className="keyboard-shortcut-item">
-      <button type="button" title="edit" onClick={() => handleEdit(!edit)}>
+      <button
+        type="button"
+        title="edit shortcut"
+        className="keyboard-shortcut__edit"
+        style={{
+          display: edit ? 'none' : 'block'
+        }}
+        onClick={() => handleEdit(true, keyName)}
+      >
         &#x270E;
+      </button>
+      <button
+        type="button"
+        title="cancel shortcut edit"
+        className="keyboard-shortcut__edit"
+        style={{
+          display: !edit ? 'none' : 'block'
+        }}
+        onClick={cancelEdit}
+      >
+        &#10799;
+      </button>
+      <button
+        type="button"
+        title="save shortcut"
+        className="keyboard-shortcut__edit"
+        style={{
+          display: !edit ? 'none' : 'block'
+        }}
+        onClick={() => handleEdit(false, keyName)}
+      >
+        &#10003;
       </button>
       <span
         className="keyboard-shortcut__command"
@@ -30,41 +120,10 @@ function KeyboardShortcutItem({ shortcut, desc }) {
         tabIndex={0}
         contentEditable={edit}
         suppressContentEditableWarning
-        onKeyDown={(event) => {
-          if (!edit) return;
-
-          event.preventDefault();
-          event.stopPropagation();
-          let { key } = event;
-          if (key === 'Control') {
-            key = 'Ctrl';
-          }
-          if (key === ' ') {
-            key = 'Space';
-          }
-
-          pressedKeyCombination.current[key] = true;
-
-          event.currentTarget.innerText = Object.keys(
-            pressedKeyCombination.current
-          ).join('-');
-        }}
-        onKeyUp={(event) => {
-          if (!edit) return;
-          event.preventDefault();
-          event.stopPropagation();
-          let { key } = event;
-          if (key === 'Control') {
-            key = 'Ctrl';
-          }
-          if (key === ' ') {
-            key = 'Space';
-          }
-
-          delete pressedKeyCombination.current[key];
-        }}
+        onKeyDown={handleKeyDown}
+        onKeyUp={handleKeyUp}
       >
-        {shortcut}
+        {keyMaps[keyName]}
       </span>
       <span>{desc}</span>
     </li>
@@ -72,8 +131,8 @@ function KeyboardShortcutItem({ shortcut, desc }) {
 }
 
 KeyboardShortcutItem.propTypes = {
-  shortcut: PropTypes.string.isRequired,
-  desc: PropTypes.string.isRequired
+  desc: PropTypes.string.isRequired,
+  keyName: PropTypes.string.isRequired
 };
 
 export default KeyboardShortcutItem;

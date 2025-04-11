@@ -520,15 +520,15 @@ class Editor extends React.Component {
       [`Shift-Tab`]: false,
       [`${metaKey}-Enter`]: () => null,
       [`Shift-${metaKey}-Enter`]: () => null,
-      [`${metaKey}-F`]: 'findPersistent',
+      [`${keyMaps.findPersistent}`]: 'findPersistent',
       [`${keyMaps.tidy}`]: this.tidyCode,
-      [`${metaKey}-G`]: 'findPersistentNext',
-      [`Shift-${metaKey}-G`]: 'findPersistentPrev',
+      [`${keyMaps.findPersistentNext}`]: 'findPersistentNext',
+      [`${keyMaps.findPersistentPrev}`]: 'findPersistentPrev',
       [replaceCommand]: 'replace',
       // Cassie Tarakajian: If you don't set a default color, then when you
       // choose a color, it deletes characters inline. This is a
       // hack to prevent that.
-      [`${metaKey}-K`]: (cm, event) =>
+      [`${keyMaps.colorPicker}`]: (cm, event) =>
         cm.state.colorpicker.popup_color_picker({ length: 0 }),
       [`${metaKey}-.`]: 'toggleComment' // Note: most adblockers use the shortcut ctrl+.
     });

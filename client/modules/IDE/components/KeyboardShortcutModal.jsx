@@ -2,11 +2,9 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { metaKeyName, metaKey } from '../../../utils/metaKey';
 import KeyboardShortcutItem from './KeyboardShortcutItem';
-import { useEditorKeyMap } from './Editor/contexts';
 
 function KeyboardShortcutModal() {
   const { t } = useTranslation();
-  const { keyMaps } = useEditorKeyMap();
 
   const replaceCommand =
     metaKey === 'Ctrl' ? `${metaKeyName} + H` : `${metaKeyName} + ⌥ + F`;
@@ -30,25 +28,21 @@ function KeyboardShortcutModal() {
       </p>
       <ul className="keyboard-shortcuts__list">
         <KeyboardShortcutItem
-          shortcut={keyMaps.tidy}
           desc={t('KeyboardShortcuts.CodeEditing.Tidy')}
+          keyName="tidy"
         />
-        <li className="keyboard-shortcut-item">
-          <span className="keyboard-shortcut__command">{metaKeyName} + F</span>
-          <span>{t('KeyboardShortcuts.CodeEditing.FindText')}</span>
-        </li>
-        <li className="keyboard-shortcut-item">
-          <span className="keyboard-shortcut__command">{metaKeyName} + G</span>
-          <span>{t('KeyboardShortcuts.CodeEditing.FindNextTextMatch')}</span>
-        </li>
-        <li className="keyboard-shortcut-item">
-          <span className="keyboard-shortcut__command">
-            {metaKeyName} + Shift + G
-          </span>
-          <span>
-            {t('KeyboardShortcuts.CodeEditing.FindPreviousTextMatch')}
-          </span>
-        </li>
+        <KeyboardShortcutItem
+          desc={t('KeyboardShortcuts.CodeEditing.FindText')}
+          keyName="findPersistent"
+        />
+        <KeyboardShortcutItem
+          desc={t('KeyboardShortcuts.CodeEditing.FindNextTextMatch')}
+          keyName="findPersistentNext"
+        />
+        <KeyboardShortcutItem
+          desc={t('KeyboardShortcuts.CodeEditing.FindPreviousTextMatch')}
+          keyName="findPersistentPrev"
+        />
         <li className="keyboard-shortcut-item">
           <span className="keyboard-shortcut__command">{replaceCommand}</span>
           <span>{t('KeyboardShortcuts.CodeEditing.ReplaceTextMatch')}</span>
@@ -69,10 +63,10 @@ function KeyboardShortcutModal() {
           <span className="keyboard-shortcut__command">{metaKeyName} + .</span>
           <span>{t('KeyboardShortcuts.CodeEditing.CommentLine')}</span>
         </li>
-        <li className="keyboard-shortcut-item">
-          <span className="keyboard-shortcut__command">{metaKeyName} + K</span>
-          <span>{t('KeyboardShortcuts.CodeEditing.ColorPicker')}</span>
-        </li>
+        <KeyboardShortcutItem
+          desc={t('KeyboardShortcuts.CodeEditing.ColorPicker')}
+          keyName="colorPicker"
+        />
         <li className="keyboard-shortcut-item">
           <span className="keyboard-shortcut__command">{newFileCommand}</span>
           <span>{t('KeyboardShortcuts.CodeEditing.CreateNewFile')}</span>
