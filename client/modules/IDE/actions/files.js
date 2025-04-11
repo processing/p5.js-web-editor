@@ -10,6 +10,28 @@ import {
 } from './ide';
 import { setProjectSavedTime } from './project';
 import { createError } from './ide';
+import {
+  updateFileContent,
+  setBlobURL,
+  newProject,
+  setProject,
+  resetProject,
+  createFile,
+  showFolderChildren,
+  hideFolderChildren,
+  DeleteFile
+} from '../reducers/files';
+
+export {
+  updateFileContent,
+  setBlobURL,
+  newProject,
+  setProject,
+  resetProject,
+  createFile,
+  showFolderChildren,
+  hideFolderChildren
+};
 
 export function appendToFilename(filename, string) {
   const dotIndex = filename.lastIndexOf('.');
@@ -35,22 +57,6 @@ export function createUniqueName(name, parentId, files) {
     existingName = siblingFiles.find((file) => testName === file.name); // eslint-disable-line
   }
   return testName;
-}
-
-export function updateFileContent(id, content) {
-  return {
-    type: ActionTypes.UPDATE_FILE_CONTENT,
-    id,
-    content
-  };
-}
-
-export function createFile(file, parentId) {
-  return {
-    type: ActionTypes.CREATE_FILE,
-    ...file,
-    parentId
-  };
 }
 
 export function submitFile(formProps, files, parentId, projectId) {
@@ -81,6 +87,17 @@ export function submitFile(formProps, files, parentId, projectId) {
   return Promise.resolve({
     file
   });
+}
+
+export function updateFileName(id, name) {
+  return (dispatch) => {
+    dispatch(setUnsavedChanges(true));
+    dispatch({
+      type: ActionTypes.UPDATE_FILE_NAME,
+      id,
+      name
+    });
+  };
 }
 
 export function handleCreateFile(formProps, setSelected = true) {
@@ -129,15 +146,17 @@ export function submitFolder(formProps, files, parentId, projectId) {
   }
   const id = objectID().toHexString();
   const file = {
-    type: ActionTypes.CREATE_FILE,
     name: createUniqueName(formProps.name, parentId, files),
     id,
     _id: id,
     content: '',
     // TODO pass parent id from File Tree
     fileType: 'folder',
+    parentId,
     children: []
   };
+
+  // Dispatch local folder creation
   return Promise.resolve({
     file
   });
@@ -153,7 +172,7 @@ export function handleCreateFolder(formProps) {
       submitFolder(formProps, files, parentId, projectId)
         .then((response) => {
           const { file, updatedAt } = response;
-          dispatch(createFile(file, parentId));
+          dispatch(createFile({ ...file, parentId }));
           if (updatedAt) dispatch(setProjectSavedTime(updatedAt));
           dispatch(closeNewFolderModal());
           dispatch(setUnsavedChanges(true));
@@ -164,17 +183,6 @@ export function handleCreateFolder(formProps) {
           dispatch(createError(response.data));
           resolve({ error });
         });
-    });
-  };
-}
-
-export function updateFileName(id, name) {
-  return (dispatch) => {
-    dispatch(setUnsavedChanges(true));
-    dispatch({
-      type: ActionTypes.UPDATE_FILE_NAME,
-      id,
-      name
     });
   };
 }
@@ -192,11 +200,7 @@ export function deleteFile(id, parentId) {
         .delete(`/projects/${state.project.id}/files/${id}`, deleteConfig)
         .then((response) => {
           dispatch(setProjectSavedTime(response.data.project.updatedAt));
-          dispatch({
-            type: ActionTypes.DELETE_FILE,
-            id,
-            parentId
-          });
+          dispatch(DeleteFile(id, parentId));
         })
         .catch((error) => {
           const { response } = error;
@@ -206,34 +210,8 @@ export function deleteFile(id, parentId) {
           });
         });
     } else {
-      dispatch({
-        type: ActionTypes.DELETE_FILE,
-        id,
-        parentId
-      });
+      dispatch(DeleteFile(id, parentId));
     }
-  };
-}
-
-export function showFolderChildren(id) {
-  return {
-    type: ActionTypes.SHOW_FOLDER_CHILDREN,
-    id
-  };
-}
-
-export function hideFolderChildren(id) {
-  return {
-    type: ActionTypes.HIDE_FOLDER_CHILDREN,
-    id
-  };
-}
-
-export function setBlobUrl(file, blobURL) {
-  return {
-    type: ActionTypes.SET_BLOB_URL,
-    id: file.id,
-    blobURL
   };
 }
 

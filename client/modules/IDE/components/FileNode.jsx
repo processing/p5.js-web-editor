@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import React, { useState, useRef } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
 import * as IDEActions from '../actions/ide';
@@ -62,40 +62,35 @@ FileName.propTypes = {
   name: PropTypes.string.isRequired
 };
 
-const FileNode = ({
-  id,
-  parentId,
-  children,
-  name,
-  fileType,
-  isSelectedFile,
-  isFolderClosed,
-  setSelectedFile,
-  deleteFile,
-  updateFileName,
-  resetSelectedFile,
-  newFile,
-  newFolder,
-  showFolderChildren,
-  hideFolderChildren,
-  canEdit,
-  openUploadFileModal,
-  authenticated,
-  onClickFile
-}) => {
+const FileNode = ({ id, canEdit, onClickFile }) => {
+  const dispatch = useDispatch();
+  const { t } = useTranslation();
+
+  const fileNode =
+    useSelector((state) => state.files.find((file) => file.id === id)) || {};
+  const authenticated = useSelector((state) => state.user.authenticated);
+
+  const {
+    name = '',
+    parentId = null,
+    children = [],
+    fileType = 'file',
+    isSelectedFile = false,
+    isFolderClosed = false
+  } = fileNode;
+
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
   const [isEditingName, setIsEditingName] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [updatedName, setUpdatedName] = useState(name);
 
-  const { t } = useTranslation();
   const fileNameInput = useRef(null);
   const fileOptionsRef = useRef(null);
 
   const handleFileClick = (event) => {
     event.stopPropagation();
     if (name !== 'root' && !isDeleting) {
-      setSelectedFile(id);
+      dispatch(IDEActions.setSelectedFile(id));
     }
     if (onClickFile) {
       onClickFile();
@@ -122,17 +117,17 @@ const FileNode = ({
   };
 
   const handleClickAddFile = () => {
-    newFile(id);
+    dispatch(IDEActions.newFile(id));
     setTimeout(() => hideFileOptions(), 0);
   };
 
   const handleClickAddFolder = () => {
-    newFolder(id);
+    dispatch(IDEActions.newFolder(id));
     setTimeout(() => hideFileOptions(), 0);
   };
 
   const handleClickUploadFile = () => {
-    openUploadFileModal(id);
+    dispatch(IDEActions.openUploadFileModal(id));
     setTimeout(hideFileOptions, 0);
   };
 
@@ -141,8 +136,8 @@ const FileNode = ({
 
     if (window.confirm(prompt)) {
       setIsDeleting(true);
-      resetSelectedFile(id);
-      setTimeout(() => deleteFile(id, parentId), 100);
+      dispatch(IDEActions.resetSelectedFile(id));
+      setTimeout(() => dispatch(FileActions.deleteFile(id, parentId), 100));
     }
   };
 
@@ -158,7 +153,7 @@ const FileNode = ({
 
   const saveUpdatedFileName = () => {
     if (updatedName !== name) {
-      updateFileName(id, updatedName);
+      dispatch(FileActions.updateFileName(id, updatedName));
     }
   };
 
@@ -243,7 +238,7 @@ const FileNode = ({
             <div className="sidebar__file-item--folder">
               <button
                 className="sidebar__file-item-closed"
-                onClick={() => showFolderChildren(id)}
+                onClick={() => dispatch(FileActions.showFolderChildren(id))}
                 aria-label={t('FileNode.OpenFolderARIA')}
                 title={t('FileNode.OpenFolderARIA')}
               >
@@ -255,7 +250,7 @@ const FileNode = ({
               </button>
               <button
                 className="sidebar__file-item-open"
-                onClick={() => hideFolderChildren(id)}
+                onClick={() => dispatch(FileActions.hideFolderChildren(id))}
                 aria-label={t('FileNode.CloseFolderARIA')}
                 title={t('FileNode.CloseFolderARIA')}
               >
@@ -292,7 +287,6 @@ const FileNode = ({
             ref={fileOptionsRef}
             tabIndex="0"
             onClick={toggleFileOptions}
-            onBlur={() => setTimeout(hideFileOptions, 200)}
           >
             <DownArrowIcon focusable="false" aria-hidden="true" />
           </button>
@@ -354,7 +348,7 @@ const FileNode = ({
         <ul className="file-item__children">
           {children.map((childId) => (
             <li key={childId}>
-              <ConnectedFileNode
+              <FileNode
                 id={childId}
                 parentId={id}
                 canEdit={canEdit}
@@ -370,50 +364,12 @@ const FileNode = ({
 
 FileNode.propTypes = {
   id: PropTypes.string.isRequired,
-  parentId: PropTypes.string,
-  children: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-  name: PropTypes.string.isRequired,
-  fileType: PropTypes.string.isRequired,
-  isSelectedFile: PropTypes.bool,
-  isFolderClosed: PropTypes.bool,
-  setSelectedFile: PropTypes.func.isRequired,
-  deleteFile: PropTypes.func.isRequired,
-  updateFileName: PropTypes.func.isRequired,
-  resetSelectedFile: PropTypes.func.isRequired,
-  newFile: PropTypes.func.isRequired,
-  newFolder: PropTypes.func.isRequired,
-  showFolderChildren: PropTypes.func.isRequired,
-  hideFolderChildren: PropTypes.func.isRequired,
   canEdit: PropTypes.bool.isRequired,
-  openUploadFileModal: PropTypes.func.isRequired,
-  authenticated: PropTypes.bool.isRequired,
   onClickFile: PropTypes.func
 };
 
 FileNode.defaultProps = {
-  onClickFile: null,
-  parentId: '0',
-  isSelectedFile: false,
-  isFolderClosed: false
+  onClickFile: null
 };
 
-function mapStateToProps(state, ownProps) {
-  // this is a hack, state is updated before ownProps
-  const fileNode = state.files.find((file) => file.id === ownProps.id) || {
-    name: 'test',
-    fileType: 'file'
-  };
-  return Object.assign({}, fileNode, {
-    authenticated: state.user.authenticated
-  });
-}
-
-const mapDispatchToProps = { ...FileActions, ...IDEActions };
-
-const ConnectedFileNode = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(FileNode);
-
-export { FileNode };
-export default ConnectedFileNode;
+export default FileNode;
