@@ -2,11 +2,17 @@
 
 Follow these instructions to set up your development environment, which you need to do before you start contributing code to this project.
 
+There are two ways to install the project locally:
+
+Manual Installation is great if you're comfortable managing dependencies like Node.js and MongoDB directly on your machine. It's more hands-on and gives you finer control, which can be helpful for debugging or learning how each part works.
+
+Docker Installation is ideal if you want a faster setup with all dependencies (Node, MongoDB, etc.) isolated in containers. This avoids version conflicts and works consistently across environments especially helpful if you're new to backend setup or don't want to alter your local setup.
+
 ## Manual Installation
 
 _Note_: The installation steps assume you are using a Unix-like shell. If you are using Windows, you will need to use `copy` instead of `cp`.
 
-1. Install Node.js. The recommended way is to Node through [nvm](https://github.com/nvm-sh/nvm). You can also install [node.js](https://nodejs.org/download/release/v16.14.2/) version 16.14.2 directly from the Node.js website.
+1. Install Node.js. The recommended way is to Node through [nvm](https://github.com/nvm-sh/nvm). You can also install [node.js](https://nodejs.org/download/release/v16.14.2/) version 16.14.2 directly from the Node.js website. To check if you already have Node installed on your computer, run `$ node -v`.
 2. [Fork](https://help.github.com/articles/fork-a-repo) the [p5.js Web Editor repository](https://github.com/processing/p5.js-web-editor) into your own GitHub account.
 3. [Clone](https://help.github.com/articles/cloning-a-repository/) your new fork of the repository from GitHub onto your local computer.
 
@@ -29,12 +35,12 @@ _Note_: The installation steps assume you are using a Unix-like shell. If you ar
 9. (Optional) Update `.env` with necessary keys to enable certain app behaviors, i.e. add Github ID and Github Secret if you want to be able to log in with Github.
    * See the [GitHub API Configuration](#github-api-configuration) section for information on how to authenticate with Github.
    * See the [S3 Bucket Configuration](#s3-bucket-configuration) section for information on how to set up an S3 bucket
-11. Run `$ npm run fetch-examples` to download the example sketches into a user called 'p5'. Note that you need to configure your GitHub Credentials, which you can do by following the [Github API Configuration](#github-api-configuration) section.
-12. Enable Prettier in your text editor by following [this guide](https://prettier.io/docs/en/editors.html).
-13. `$ npm start`
-14. Navigate to [http://localhost:8000](http://localhost:8000) in your browser
-15. Install the [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en)
-16. Open and close the Redux DevTools using `ctrl+h`, and move them with `ctrl+w`
+10. Run `$ npm run fetch-examples` to download the example sketches into a user called 'p5'. Note that you need to configure your GitHub Credentials, which you can do by following the [Github API Configuration](#github-api-configuration) section.
+11. Enable Prettier in your text editor by following [this guide](https://prettier.io/docs/en/editors.html).
+12. `$ npm start`
+13. Navigate to [http://localhost:8000](http://localhost:8000) in your browser
+14. Install the [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en)
+15. Open and close the Redux DevTools using `ctrl+h`, and move them with `ctrl+w`
 
 ## Docker Installation
 

@@ -70,7 +70,6 @@ function SignupForm() {
     setShowConfirmPassword(!showConfirmPassword);
 
   function onSubmit(formProps) {
-    console.log("it's happening");
     return dispatch(validateAndSignUpUser(formProps));
   }
 
@@ -78,10 +77,7 @@ function SignupForm() {
     <Form
       fields={['username', 'email', 'password', 'confirmPassword']}
       validate={validateSignup}
-      onSubmit={(values) => {
-        console.log('Form onSubmit triggered', values);
-        return onSubmit(values);
-      }}
+      onSubmit={onSubmit}
     >
       {({ handleSubmit, pristine, submitting, invalid, form }) => {
         formRef.current = form;

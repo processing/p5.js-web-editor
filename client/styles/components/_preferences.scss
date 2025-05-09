@@ -67,6 +67,25 @@
   margin-top: 0;
 }
 
+.preference__paragraph {
+  margin-bottom: #{math.div(10, $base-font-size)}rem;
+
+  & a {
+    @include themify() {
+      color: getThemifyVariable('button-background-hover-color');
+    }
+  }
+  & a:hover {
+    text-decoration: underline;
+  }
+}
+
+.preference__textarea {
+  font-family: Inconsolata, monospace;
+  width: 100%;
+  min-height: 8em;
+}
+
 .preference__value {
   @include themify() {
     border: #{math.div(1, $base-font-size)}rem solid
@@ -128,6 +147,14 @@
   }
 }
 
+.preference__warning {
+  @include themify() {
+    display: contents;
+    font-weight: bold;
+    color: getThemifyVariable("preferences-warning-color");
+  }
+}
+
 .preference__radio-button {
   @extend %hidden-element;
 }
@@ -163,8 +190,11 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .preference__options {
+  border: 0;
+  padding: 0;
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .preference__radio-button:checked + .preference__option {
