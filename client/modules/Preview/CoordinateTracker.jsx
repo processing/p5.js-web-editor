@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { remSize } from '../../theme';
 
@@ -23,59 +24,42 @@ const CoordContainer = styled.div`
   }
 `;
 
-const CoordinateTracker = (isPlaying) => {
+const CoordinateTracker = ({ isPlaying, sketchReloaded }) => {
   const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
-    console.log('we here');
-    let isListenerAttached = false;
-    let mouseMoveHandler;
     let canvas;
+    let mouseMoveHandler;
 
-    const waitForCanvas = () => {
+    const timeout = setTimeout(() => {
       const iFrame = document.getElementById('previewIframe0');
-      canvas = iFrame.contentWindow.document.getElementById('defaultCanvas0');
-      console.log('iframe: ', iFrame);
+      canvas = iFrame?.contentWindow?.document?.getElementById(
+        'defaultCanvas0'
+      );
 
-      if (canvas && !isListenerAttached) {
-        isListenerAttached = true;
-        console.log('Adding listener');
-
-        mouseMoveHandler = (event) => {
-          console.log('hellooooo');
-          const rect = canvas.getBoundingClientRect();
-          const x = event.clientX - rect.left;
-          const y = event.clientY - rect.top;
-
-          setCoordinates({ x, y });
-        };
-
-        console.log('mouseMoveHandler', mouseMoveHandler);
-        console.log('canvas', canvas);
-
-        document
-          .querySelector('#defaultCanvas0')
-          .addEventListener('mousemove', () => {
-            console.log('Button clicked!');
-            mouseMoveHandler();
-          });
-        // canvas.addEventListener('mousemove', mouseMoveHandler);
-      } else if (!canvas) {
-        setTimeout(waitForCanvas, 500);
+      if (!canvas) {
+        console.warn('Canvas not found.');
+        return;
       }
-    };
 
-    waitForCanvas();
+      mouseMoveHandler = (event) => {
+        const rect = canvas.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+        setCoordinates({ x, y });
+      };
+
+      canvas.addEventListener('mousemove', mouseMoveHandler);
+    }, 500);
 
     return () => {
-      if (canvas && isListenerAttached) {
-        console.log('Removing listener');
+      clearTimeout(timeout);
+
+      if (canvas && mouseMoveHandler) {
         canvas.removeEventListener('mousemove', mouseMoveHandler);
-        canvas = null;
-        isListenerAttached = false;
       }
     };
-  }, [isPlaying]);
+  }, [isPlaying, sketchReloaded]);
 
   return (
     <CoordContainer>
@@ -85,6 +69,11 @@ const CoordinateTracker = (isPlaying) => {
       </p>
     </CoordContainer>
   );
+};
+
+CoordinateTracker.propTypes = {
+  isPlaying: PropTypes.bool.isRequired,
+  sketchReloaded: PropTypes.bool.isRequired
 };
 
 export default CoordinateTracker;

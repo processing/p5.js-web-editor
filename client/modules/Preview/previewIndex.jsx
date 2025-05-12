@@ -28,6 +28,7 @@ const App = () => {
   const [gridOutput, setGridOutput] = useState(false);
   const [userTheme, setUserTheme] = useState('light');
   const [coordinatesVisible, setCoordinatesVisible] = useState(false);
+  const [sketchReloaded, setSketchReloaded] = useState(0);
 
   registerFrame(window.parent, getConfig('EDITOR_URL'));
 
@@ -42,6 +43,7 @@ const App = () => {
         setGridOutput(payload.gridOutput);
         setUserTheme(payload.userTheme);
         setCoordinatesVisible(payload.coordinates);
+        setSketchReloaded((prev) => prev + 1);
         break;
       case MessageTypes.START:
         console.log('starting');
@@ -94,7 +96,12 @@ const App = () => {
   return (
     <ThemeProvider theme={theme[userTheme]}>
       <GlobalStyle />
-      {coordinatesVisible && <CoordinateTracker isPlaying={isPlaying} />}
+      {coordinatesVisible && (
+        <CoordinateTracker
+          isPlaying={isPlaying}
+          sketchReloaded={sketchReloaded}
+        />
+      )}
       <EmbedFrame
         files={memoizedFiles}
         isPlaying={isPlaying}
