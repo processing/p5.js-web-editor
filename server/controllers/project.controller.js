@@ -2,6 +2,7 @@ import JSZip from 'jszip';
 import format from 'date-fns/format';
 import isUrl from 'is-url';
 import { JSDOM } from 'jsdom';
+import mime from 'mime';
 import isAfter from 'date-fns/isAfter';
 import axios from 'axios';
 import slugify from 'slugify';
@@ -125,7 +126,10 @@ export async function getProjectAsset(req, res) {
   if (!resolvedFile) {
     return res.status(404).send({ message: 'Asset does not exist' });
   }
+  const contentType =
+    mime.getType(resolvedFile.name) || 'application/octet-stream';
   if (!resolvedFile.url) {
+    res.set('Content-Type', contentType);
     return res.send(resolvedFile.content);
   }
 
@@ -133,6 +137,7 @@ export async function getProjectAsset(req, res) {
     const { data } = await axios.get(resolvedFile.url, {
       responseType: 'arraybuffer'
     });
+    res.set('Content-Type', contentType);
     return res.send(data);
   } catch (error) {
     return res.status(404).send({ message: 'Asset does not exist' });

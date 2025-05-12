@@ -62,8 +62,8 @@ export function validateSettings(formProps) {
 
 export function validateLogin(formProps) {
   const errors = {};
-  if (!formProps.email) {
-    errors.email = i18n.t('ReduxFormUtils.errorEmptyEmail');
+  if (!formProps.email && !formProps.username) {
+    errors.email = i18n.t('ReduxFormUtils.errorEmptyEmailorUserName');
   }
   if (!formProps.password) {
     errors.password = i18n.t('ReduxFormUtils.errorEmptyPassword');

@@ -86,6 +86,7 @@ $themes: (
     table-row-stripe-color-alternate: $medium-light,
     codefold-icon-open: url("../images/triangle-arrow-down.svg?byUrl"),
     codefold-icon-closed: url("../images/triangle-arrow-right.svg?byUrl"),
+    preferences-warning-color: $p5js-pink,
 
     table-button-color: $lightest,
     table-button-background-color: $middle-gray,
@@ -125,6 +126,10 @@ $themes: (
     hint-item-active-outline-offset: 0,
     hint-inline-text-color-light: $middle-light,
     hint-inline-text-color: $middle-gray,
+
+    admonition-border: #22C8ED,
+    admonition-background: #E4F8FF,
+    admonition-text: #075769,
   ),
   dark: (
     logo-color: $p5js-pink,
@@ -182,6 +187,7 @@ $themes: (
     table-row-stripe-color-alternate: $darker,
     codefold-icon-open: url("../images/triangle-arrow-down-white.svg?byUrl"),
     codefold-icon-closed: url("../images/triangle-arrow-right-white.svg?byUrl"),
+    preferences-warning-color: $yellow,
 
     table-button-color: $lightest,
     table-button-background-color: $middle-gray,
@@ -219,6 +225,10 @@ $themes: (
     hint-item-active-outline-offset: 0,
     hint-inline-text-color-light: $middle-gray,
     hint-inline-text-color: #cfcfcf,
+
+    admonition-border: #22C8ED,
+    admonition-background: #105A7F,
+    admonition-text: #FFFFFF,
   ),
   contrast: (
     logo-color: $yellow,
@@ -276,6 +286,7 @@ $themes: (
     table-row-stripe-color-alternate: $darker,
     codefold-icon-open: url("../images/triangle-arrow-down-white.svg?byUrl"),
     codefold-icon-closed: url("../images/triangle-arrow-right-white.svg?byUrl"),
+    preferences-warning-color: $yellow,
 
     table-button-color: $dark,
     table-button-background-color: $middle-gray,
@@ -313,6 +324,10 @@ $themes: (
     hint-item-active-outline-offset: -2px,
     hint-inline-text-color-light: $middle-gray,
     hint-inline-text-color: #cfcfcf,
+
+    admonition-border: #22C8ED,
+    admonition-background: #000000,
+    admonition-text: #ffffff,
   )
 );
 

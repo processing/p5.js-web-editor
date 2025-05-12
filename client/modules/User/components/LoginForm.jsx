@@ -101,7 +101,9 @@ function LoginForm() {
               )}
             </Field>
             {submitError && !modifiedSinceLastSubmit && (
-              <span className="form-error">{submitError}</span>
+              <span className="form-error">
+                {t('LoginForm.Errors.invalidCredentials')}
+              </span>
             )}
             <Button type="submit" disabled={submitting}>
               {t('LoginForm.Submit')}

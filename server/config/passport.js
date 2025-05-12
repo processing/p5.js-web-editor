@@ -54,6 +54,9 @@ passport.use(
         const isMatch = await user.comparePassword(password);
 
         if (isMatch) {
+          user.lastLoginTimestamp = Date.now();
+          await user.save();
+
           return done(null, user);
         } else { // eslint-disable-line
           return done(null, false, { msg: 'Invalid email or password' });
@@ -88,6 +91,8 @@ passport.use(
       }
 
       keyDocument.lastUsedAt = Date.now();
+      user.lastLoginTimestamp = Date.now();
+
       await user.save();
       return done(null, user);
     } catch (err) {
@@ -140,6 +145,9 @@ passport.use(
           } else if (existingUser.banned) {
             return done(null, false, { msg: accountSuspensionMessage });
           }
+          existingUser.lastLoginTimestamp = Date.now();
+          await existingUser.save();
+
           return done(null, existingUser);
         }
 
@@ -239,6 +247,9 @@ passport.use(
           } else if (existingUser.banned) {
             return done(null, false, { msg: accountSuspensionMessage });
           }
+          existingUser.lastLoginTimestamp = Date.now();
+          await existingUser.save();
+
           return done(null, existingUser);
         }
 

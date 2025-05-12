@@ -398,9 +398,23 @@ pre.CodeMirror-line {
   height: #{math.div(29, $base-font-size)}rem;
   padding-top: #{math.div(7, $base-font-size)}rem;
   padding-left: #{math.div(56, $base-font-size)}rem;
+  padding-right: #{math.div(168, $base-font-size)}rem;
   font-size: #{math.div(12, $base-font-size)}rem;
   display: flex;
   justify-content: space-between;
+}
+
+.editor__library-version {
+  @include themify() {
+    color: getThemifyVariable("primary-text-color");
+  }
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  justify-content: flex-end;
+  height: #{math.div(29, $base-font-size)}rem;
+  width: #{math.div(168, $base-font-size)}rem;
 }
 
 .editor__unsaved-changes {

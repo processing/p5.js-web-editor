@@ -101,6 +101,7 @@
   }
 
   & svg {
+    margin-left: #{math.div(5, $base-font-size)}rem;
     @include themify() {
       fill: getThemifyVariable("inactive-text-color");
     }

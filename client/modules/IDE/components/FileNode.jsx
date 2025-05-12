@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import React, { useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 
 import * as IDEActions from '../actions/ide';
 import * as FileActions from '../actions/files';
@@ -88,6 +89,24 @@ const FileNode = ({
   const [isDeleting, setIsDeleting] = useState(false);
   const [updatedName, setUpdatedName] = useState(name);
 
+  const files = useSelector((state) => state.files);
+
+  const checkDuplicate = (newName) => {
+    const parentFolder = files.find((f) => f.id === parentId);
+    if (!parentFolder) return false;
+
+    const siblingFiles = parentFolder.children
+      .map((childId) => files.find((f) => f.id === childId))
+      .filter(Boolean)
+      .filter((file) => file.id !== id);
+
+    const isDuplicate = siblingFiles.some(
+      (f) => f.name.trim().toLowerCase() === newName.trim().toLowerCase()
+    );
+
+    return isDuplicate;
+  };
+
   const { t } = useTranslation();
   const fileNameInput = useRef(null);
   const fileOptionsRef = useRef(null);
@@ -157,7 +176,7 @@ const FileNode = ({
   };
 
   const saveUpdatedFileName = () => {
-    if (updatedName !== name) {
+    if (!checkDuplicate(updatedName) && updatedName !== name) {
       updateFileName(id, updatedName);
     }
   };
@@ -198,8 +217,13 @@ const FileNode = ({
   };
 
   const handleFileNameBlur = () => {
-    validateFileName();
-    hideEditFileName();
+    if (!checkDuplicate(updatedName)) {
+      validateFileName();
+      hideEditFileName();
+    } else {
+      setUpdatedName(name);
+      hideEditFileName();
+    }
   };
 
   const toggleFileOptions = (event) => {
@@ -271,6 +295,7 @@ const FileNode = ({
             aria-label={updatedName}
             className="sidebar__file-item-name"
             onClick={handleFileClick}
+            onDoubleClick={handleClickRename}
             data-testid="file-name"
           >
             <FileName name={updatedName} />
