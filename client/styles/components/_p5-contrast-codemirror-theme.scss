@@ -25,7 +25,7 @@ $p5-contrast-pink: #FFA9D9;
 
 $p5-contrast-gutter: #454545;
 $p5-contrast-number: #FDFDFD;
-$p5-contrast-selected: rgba(45, 123, 182, 25);
+$p5-contrast-selected: $middle-dark;
 $p5-contrast-activeline: #999999;
 
 .cm-s-p5-contrast {
@@ -81,8 +81,11 @@ $p5-contrast-activeline: #999999;
   color: $p5-contrast-number;
 }
 
-.cm-s-p5-contrast div .CodeMirror-selected {
-  background-color: $p5-contrast-selected;
+.cm-s-p5-contrast {
+  .CodeMirror-selected { background: $p5-contrast-selected; }
+  .CodeMirror-focused .CodeMirror-selected { background: $p5-contrast-selected; }
+  .CodeMirror-line::selection, .CodeMirror-line > span::selection, .CodeMirror-line > span > span::selection { background: $p5-contrast-selected; }
+  .CodeMirror-line::-moz-selection, .CodeMirror-line > span::-moz-selection, .CodeMirror-line > span > span::-moz-selection { background: $p5-contrast-selected; } 
 }
 
 .cm-s-p5-contrast .CodeMirror-activeline-background {

@@ -26,7 +26,7 @@ $p5-dark-goldbrown: #b58318;
 
 $p5-dark-gutter: #f4f4f4;
 $p5-dark-number: #b5b5b5;
-$p5-dark-selected: rgba(45, 123, 182, 25);
+$p5-dark-selected: $medium-dark;
 $p5-dark-activeline: rgb(207, 207, 207);
 
 $p5-dark-error: #df3a3d;
@@ -84,8 +84,11 @@ $p5-dark-error: #df3a3d;
   color: $p5-dark-number;
 }
 
-.cm-s-p5-dark div.CodeMirror-selected {
-  background-color: $p5-dark-selected;
+.cm-s-p5-dark {
+  .CodeMirror-selected { background: $p5-dark-selected; }
+  .CodeMirror-focused .CodeMirror-selected { background: $p5-dark-selected; }
+  .CodeMirror-line::selection, .CodeMirror-line > span::selection, .CodeMirror-line > span > span::selection { background: $p5-dark-selected; }
+  .CodeMirror-line::-moz-selection, .CodeMirror-line > span::-moz-selection, .CodeMirror-line > span > span::-moz-selection { background: $p5-dark-selected; } 
 }
 
 .cm-s-p5-dark .CodeMirror-activeline-background {
@@ -146,8 +149,3 @@ $p5-dark-error: #df3a3d;
 .cm-s-p5-dark .cm-searching {
   background-color: $p5js-pink-opacity;
 }
-
-.cm-s-p5-dark .CodeMirror-selectedtext {
-  background-color: $medium-dark;
-}
-

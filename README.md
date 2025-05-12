@@ -16,6 +16,12 @@ Learn more about [our community](https://p5js.org/community/) and read our commu
 
 Make your first sketch in the [p5.js Editor](https://editor.p5js.org/)! Learn more about sketching with p5.js on the [Get Started](https://p5js.org/tutorials/get-started/) and find everything you can do in the [Reference](https://p5js.org/reference/). You can also look at [examples](https://editor.p5js.org/p5/sketches) and remix them in the p5.js Editor.
 
+## Contributing
+
+[Contributing to the p5.js Web Editor](https://github.com/processing/p5.js-web-editor/blob/develop/contributor_docs/README.md)
+
+[p5.js Community Statement](https://editor.p5js.org/code-of-conduct)
+
 
 ## Issues
 
@@ -23,18 +29,6 @@ If you have found a bug in the p5.js Web Editor, you can file it under the ["iss
 
 * p5.js library: [https://github.com/processing/p5.js/issues](https://github.com/processing/p5.js/issues)
 * p5.js website: [https://github.com/processing/p5.js-website/issues](https://github.com/processing/p5.js-website/issues)
-
-
-## References for Contributing to the p5.js Web Editor
-
-[Code of Conduct](https://editor.p5js.org/code-of-conduct)
-
-[Contribution Guidelines for p5.js](https://p5js.org/contributor-docs/#/)
-
-[Contribution Guidelines for the p5.js Web Editor](https://github.com/processing/p5.js-web-editor/tree/develop/contributor_docs)
-
-[p5.js Community Statement](https://p5js.org/community/)
-
 
 ## Acknowledgements
 

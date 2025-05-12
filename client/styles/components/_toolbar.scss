@@ -70,7 +70,6 @@
 			@extend %toolbar-button--selected;
 		}
 	}
-	margin-left: auto;
 	& span {
 		padding-left: #{math.div(1, $base-font-size)}rem;
 		display: flex;

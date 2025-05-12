@@ -171,7 +171,7 @@
       "PreviewSound": "Tester le son",
       "PreviewSoundARIA": "Tester le son",
       "AccessibleTextBasedCanvas": "Canvas textuel accessible",
-      "UsedScreenReader": "Utilisé avec un lecteur de text",
+      "UsedScreenReader": "Utilisé avec un lecteur de texte",
       "PlainText": "Texte brut",
       "TextOutputARIA": "sortie texte activée",
       "TableText": "Tableau de texte",
@@ -283,7 +283,7 @@
       "errorEmptyPassword": "Veuillez saisir un mot de passe",
       "errorShortPassword": "Le mot de passe doit comporter au moins 6 caractères",
       "errorConfirmPassword": "Veuillez saisir une confirmation de mot de passe",
-      "errorNewPasswordRepeat":"Your New Password must differ from the current one.",
+      "errorNewPasswordRepeat":"Votre nouveau mot de passe doit être différent du mot de passe actuel.",
       "errorNewPassword": "Veuillez saisir un nouveau mot de passe ou laisser le mot de passe actuel vide.",
       "errorEmptyUsername": "Veuillez saisir un nom d'utilisateur.",
       "errorLongUsername": "Le nom d'utilisateur doit comporter moins de 20 caractères.",
@@ -309,7 +309,7 @@
       "CurrentPasswordARIA": "Mot de passe actuel",
       "NewPassword": "Nouveau mot de passe",
       "NewPasswordARIA": "Nouveau mot de passe",
-      "SubmitSaveAllSettings": "Sauvegarder tous les paramrètres"
+      "SubmitSaveAllSettings": "Sauvegarder tous les paramètres"
     },
     "AccountView": {
       "SocialLogin": "Identification à l'aide des réseaux sociaux",
@@ -400,7 +400,7 @@
     "UploadFileModal": {
       "Title": "Téléverser un fichier",
       "CloseButtonARIA": "Fermer la boîte de dialogue de téléversement de fichiers",
-      "SizeLimitError": "Erreur: Vous ne pouvez plus téléverser de fichiers. Vosu avez atteint la limite de taille totale de {{sizeLimit}}.\n                If you would like to upload more, please remove the ones you aren't using anymore by\n                in your "
+      "SizeLimitError": "Erreur: Vous ne pouvez plus téléverser de fichiers. Vous avez atteint la limite de taille totale de {{sizeLimit}}.\n                If you would like to upload more, please remove the ones you aren't using anymore by\n                in your "
     },
     "FileUploader": {
       "DictDefaultMessage": "Déposez des fichiers ici ou cliquez pour utiliser le navigateur de fichiers"
@@ -461,7 +461,7 @@
       "FormLabel": "Nom de la collection",
       "FormLabelARIA": "nom",
       "NameRequired": "Le nom de la collection est requis",
-      "Description": "Description (optionel)",
+      "Description": "Description (optionnel)",
       "DescriptionARIA": "description",
       "DescriptionPlaceholder": "Mes croquis préférés",
       "SubmitCollectionCreate": "Créer la collection"
@@ -581,7 +581,7 @@
       "WordWrap": "Retour à la ligne automatique",
       "LineNumbers": "Numéros de ligne",
       "LintWarningSound": "Son d'alarme Lint",
-      "UsedScreenReader": "Utilisé avec un lecteur de text",
+      "UsedScreenReader": "Utilisé avec un lecteur de texte",
       "PlainText": "Text brut",
       "TableText": "Tableau de texte",
       "Sound": "Son"
@@ -597,7 +597,7 @@
       "Assets": "Ressources",
       "MyStuff": "Mes trucs",
       "CreateSketch": "Créer un croquis",
-      "CreateCollection": "Create une collection"
+      "CreateCollection": "Créer une collection"
     },
     "Explorer": {
       "Files": "Fichiers"
