@@ -33,7 +33,6 @@ const App = () => {
   registerFrame(window.parent, getConfig('EDITOR_URL'));
 
   function handleMessageEvent(message) {
-    console.log('message', message);
     const { type, payload } = message;
     switch (type) {
       case MessageTypes.SKETCH:
@@ -46,7 +45,6 @@ const App = () => {
         setSketchReloaded((prev) => prev + 1);
         break;
       case MessageTypes.START:
-        console.log('starting');
         setIsPlaying(true);
         break;
       case MessageTypes.STOP:
@@ -60,7 +58,6 @@ const App = () => {
         dispatchMessage(payload);
         break;
       case MessageTypes.COORDINATES_VISIBILITY:
-        console.log('coordinates visibility', payload);
         if (isPlaying) setCoordinatesVisible(payload);
         break;
       default:
