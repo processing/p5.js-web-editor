@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import { showReduxDevTools } from '../../store';
 import DevTools from './components/DevTools';
 import { setPreviousPath } from '../IDE/actions/ide';
@@ -50,11 +51,13 @@ const App = ({ children }) => {
   const hide = hideCookieConsent(location.pathname);
 
   return (
-    <div className="app">
-      <CookieConsent hide={hide} />
-      {isMounted && showReduxDevTools() && <DevTools />}
-      {children}
-    </div>
+    <HelmetProvider>
+      <div className="app">
+        <CookieConsent hide={hide} />
+        {isMounted && showReduxDevTools() && <DevTools />}
+        {children}
+      </div>
+    </HelmetProvider>
   );
 };
 
