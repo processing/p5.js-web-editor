@@ -258,7 +258,10 @@ describe('<Preferences />', () => {
   describe('testing theme switching', () => {
     describe('dark mode', () => {
       it('switch to light', () => {
-        subject({ theme: 'dark' });
+        const { store } = subject({ theme: 'dark' });
+
+        // Ensure the theme is actually set to dark in the Redux store
+        expect(store.getState().preferences.theme).toBe('dark');
 
         const themeRadioCurrent = screen.getByRole('radio', {
           name: /dark theme on/i

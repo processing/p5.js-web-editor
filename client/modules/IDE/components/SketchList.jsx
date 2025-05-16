@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import React, { useEffect, useState, useMemo, useCallback } from 'react';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { bindActionCreators } from 'redux';

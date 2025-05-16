@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useLocation, Prompt, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import SplitPane from 'react-split-pane';
 import IDEKeyHandlers from '../components/IDEKeyHandlers';
 import Sidebar from '../components/Sidebar';
