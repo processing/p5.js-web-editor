@@ -184,7 +184,7 @@ export function setGridOutput(value) {
   };
 }
 
-export function setTheme(value) {
+export function setTheme(value, { isSystemPreference = false } = {}) {
   // return {
   //   type: ActionTypes.SET_THEME,
   //   value
@@ -194,6 +194,13 @@ export function setTheme(value) {
       type: ActionTypes.SET_THEME,
       value
     });
+
+    // If this is a user-initiated theme change (not from system preference),
+    // mark that the user has explicitly set a theme
+    if (!isSystemPreference) {
+      localStorage.setItem('has_set_theme', 'true');
+    }
+
     const state = getState();
     if (state.user.authenticated) {
       const formParams = {

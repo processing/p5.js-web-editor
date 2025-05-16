@@ -256,9 +256,27 @@ describe('<Preferences />', () => {
   };
 
   describe('testing theme switching', () => {
+    beforeEach(() => {
+      // Mock localStorage for theme tests
+      Object.defineProperty(window, 'localStorage', {
+        value: {
+          getItem: jest.fn().mockImplementation((key) => {
+            if (key === 'has_set_theme') return 'true';
+            return null;
+          }),
+          setItem: jest.fn(),
+          removeItem: jest.fn()
+        },
+        writable: true
+      });
+    });
+
     describe('dark mode', () => {
       it('switch to light', () => {
-        subject({ theme: 'dark' });
+        const { store } = subject({ theme: 'dark' });
+
+        // Ensure the theme is actually set to dark in the Redux store
+        expect(store.getState().preferences.theme).toBe('dark');
 
         const themeRadioCurrent = screen.getByRole('radio', {
           name: /dark theme on/i

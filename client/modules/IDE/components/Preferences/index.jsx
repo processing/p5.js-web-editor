@@ -1,5 +1,5 @@
 import React, { useContext, useMemo, useRef, useState } from 'react';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { useDispatch, useSelector } from 'react-redux';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useTranslation } from 'react-i18next';
@@ -174,13 +174,39 @@ export default function Preferences() {
             <fieldset className="preference__options">
               <input
                 type="radio"
+                onChange={() => {
+                  localStorage.removeItem('has_set_theme');
+                  const prefersDarkMode =
+                    window.matchMedia &&
+                    window.matchMedia('(prefers-color-scheme: dark)').matches;
+                  dispatch(
+                    setTheme(prefersDarkMode ? 'dark' : 'light', {
+                      isSystemPreference: true
+                    })
+                  );
+                }}
+                aria-label={t('Preferences.SystemThemeARIA')}
+                name="system theme"
+                id="system-theme-on"
+                className="preference__radio-button"
+                value="system"
+                checked={localStorage.getItem('has_set_theme') !== 'true'}
+              />
+              <label htmlFor="system-theme-on" className="preference__option">
+                {t('Preferences.SystemTheme')}
+              </label>
+              <input
+                type="radio"
                 onChange={() => dispatch(setTheme('light'))}
                 aria-label={t('Preferences.LightThemeARIA')}
                 name="light theme"
                 id="light-theme-on"
                 className="preference__radio-button"
                 value="light"
-                checked={theme === 'light'}
+                checked={
+                  theme === 'light' &&
+                  localStorage.getItem('has_set_theme') === 'true'
+                }
               />
               <label htmlFor="light-theme-on" className="preference__option">
                 {t('Preferences.LightTheme')}
@@ -193,7 +219,10 @@ export default function Preferences() {
                 id="dark-theme-on"
                 className="preference__radio-button"
                 value="dark"
-                checked={theme === 'dark'}
+                checked={
+                  theme === 'dark' &&
+                  localStorage.getItem('has_set_theme') === 'true'
+                }
               />
               <label htmlFor="dark-theme-on" className="preference__option">
                 {t('Preferences.DarkTheme')}
@@ -206,7 +235,10 @@ export default function Preferences() {
                 id="high-contrast-theme-on"
                 className="preference__radio-button"
                 value="contrast"
-                checked={theme === 'contrast'}
+                checked={
+                  theme === 'contrast' &&
+                  localStorage.getItem('has_set_theme') === 'true'
+                }
               />
               <label
                 htmlFor="high-contrast-theme-on"

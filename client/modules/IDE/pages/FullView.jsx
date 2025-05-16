@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import PreviewFrame from '../components/PreviewFrame';
