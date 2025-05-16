@@ -1,6 +1,7 @@
 import * as ActionTypes from '../../../constants';
 
 export const initialState = {
+  tabIndex: 0,
   fontSize: 18,
   autosave: true,
   linewrap: true,
@@ -17,6 +18,10 @@ export const initialState = {
 
 const preferences = (state = initialState, action) => {
   switch (action.type) {
+    case ActionTypes.OPEN_PREFERENCES:
+      return Object.assign({}, state, { tabIndex: 0 });
+    case ActionTypes.SET_PREFERENCES_TAB:
+      return Object.assign({}, state, { tabIndex: action.value });
     case ActionTypes.SET_FONT_SIZE:
       return Object.assign({}, state, { fontSize: action.value });
     case ActionTypes.SET_AUTOSAVE:

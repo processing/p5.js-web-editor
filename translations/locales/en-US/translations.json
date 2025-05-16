@@ -156,7 +156,10 @@
     "StopSketchARIA": "Stop sketch",
     "EditSketchARIA": "Edit sketch name",
     "NewSketchNameARIA": "New sketch name",
-    "By": " by "
+    "By": " by ",
+    "CustomLibraryVersion": "Custom p5.js version",
+    "VersionPickerARIA": "Version picker",
+    "NewVersionPickerARIA": "Version picker"
   },
   "Console": {
     "Title": "Console",
@@ -169,8 +172,9 @@
   },
   "Preferences": {
     "Settings": "Settings",
-    "GeneralSettings": "General settings",
+    "GeneralSettings": "General Settings",
     "Accessibility": "Accessibility",
+    "LibraryManagement": "Library Management",
     "Theme": "Theme",
     "SystemTheme": "System Preference",
     "SystemThemeARIA": "use system theme preference",
@@ -214,7 +218,21 @@
     "PlainText": "Plain-text",
     "TextOutputARIA": "text output on",
     "TableText": "Table-text",
-    "TableOutputARIA": "table output on"
+    "TableOutputARIA": "table output on",
+    "LibraryVersion": "p5.js Version",
+    "LibraryVersionInfo": "There's a [new 2.0 release](https://github.com/processing/p5.js/releases/) of p5.js available! It will become default in August, 2026, so take this time to test it out and report bugs. Interested in transitioning sketches from 1.x to 2.0? Check out the [compatibility & transition resources.](https://github.com/processing/p5.js-compatibility)",
+    "CustomVersionTitle": "Managing your own libraries? Nice!",
+    "CustomVersionInfo": "The version of p5.js is currently being managed in the code of index.html. This means it can't be adjusted from this tab.",
+    "CustomVersionReset": "If you'd like to use the default libraries, you can replace the script tags in index.html with the following:",
+    "SoundAddon": "p5.sound.js Add-on Library",
+    "PreloadAddon": "p5.js 1.x Compatibility Add-on Library — Preload",
+    "ShapesAddon": "p5.js 1.x Compatibility Add-on Library — Shapes",
+    "DataAddon": "p5.js 1.x Compatibility Add-on Library — Data Structures",
+    "AddonOnARIA": "on",
+    "AddonOffARIA": "off",
+    "UndoSoundVersion": "Want to use p5.sound.js again? Turning it back on will restore the version you were using before.",
+    "CopyToClipboardSuccess": "Copied to clipboard!",
+    "CopyToClipboardFailure": "We weren't able to copy the text, try selecting it and copying it manually."
   },
   "KeyboardShortcuts": {
     "Title": " Keyboard Shortcuts",
@@ -318,6 +336,7 @@
   "ReduxFormUtils": {
     "errorInvalidEmail": "Please enter a valid email address",
     "errorEmptyEmail": "Please enter an email",
+    "errorEmptyEmailorUserName": "Please enter an email or username",
     "errorPasswordMismatch": "Passwords must match",
     "errorEmptyPassword": "Please enter a password",
     "errorShortPassword": "Password must be at least 6 characters",

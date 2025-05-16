@@ -14,6 +14,13 @@ function updatePreferences(formParams, dispatch) {
     });
 }
 
+export function setPreferencesTab(value) {
+  return {
+    type: ActionTypes.SET_PREFERENCES_TAB,
+    value
+  };
+}
+
 export function setFontSize(value) {
   return (dispatch, getState) => {
     // eslint-disable-line
