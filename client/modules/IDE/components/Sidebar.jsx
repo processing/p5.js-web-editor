@@ -8,7 +8,8 @@ import {
   newFile,
   newFolder,
   openProjectOptions,
-  openUploadFileModal
+  openUploadFileModal,
+  openUploadImageByUrlModal
 } from '../actions/ide';
 import { selectRootFile } from '../selectors/files';
 import { getAuthenticated, selectCanEditSketch } from '../selectors/users';
@@ -16,7 +17,7 @@ import { getAuthenticated, selectCanEditSketch } from '../selectors/users';
 import ConnectedFileNode from './FileNode';
 import { PlusIcon } from '../../../common/icons';
 import { FileDrawer } from './Editor/MobileEditor';
-
+import UploadMediaModal from './UploadMediaModal';
 // TODO: use a generic Dropdown UI component
 
 export default function SideBar() {
@@ -31,6 +32,9 @@ export default function SideBar() {
   const isExpanded = useSelector((state) => state.ide.sidebarIsExpanded);
   const canEditProject = useSelector(selectCanEditSketch);
   const isAuthenticated = useSelector(getAuthenticated);
+  const isUploadImageByUrlModalOpen = useSelector(
+    (state) => state.ide.uploadImageByUrlModalVisible
+  );
 
   const sidebarOptionsRef = useRef(null);
 
@@ -137,11 +141,42 @@ export default function SideBar() {
                     </button>
                   </li>
                 )}
+                {isAuthenticated && canEditProject && (
+                  <li>
+                    <button
+                      aria-label={t('Sidebar.UploadImageByUrlARIA')}
+                      onClick={() => {
+                        dispatch(openUploadImageByUrlModal(rootFile.id));
+                        setTimeout(() => dispatch(closeProjectOptions()), 300);
+                      }}
+                    >
+                      {t('Sidebar.UploadImageByUrl')}
+                    </button>
+                  </li>
+                )}
               </ul>
             )}
           </div>
         </header>
         <ConnectedFileNode id={rootFile.id} canEdit={canEditProject} />
+        {isUploadImageByUrlModalOpen && (
+          <UploadMediaModal
+            onUploadSuccess={(s3Url) => {
+              dispatch({
+                type: 'ADD_SKETCH_FILE',
+                payload: {
+                  name: `image-${Date.now()}.jpg`,
+                  url: s3Url,
+                  parentId: rootFile.id
+                }
+              });
+              dispatch({ type: 'CLOSE_UPLOAD_IMAGE_BY_URL_MODAL' });
+            }}
+            onClose={() =>
+              dispatch({ type: 'CLOSE_UPLOAD_IMAGE_BY_URL_MODAL' })
+            }
+          />
+        )}
       </section>
     </FileDrawer>
   );
