@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
-import { Helmet } from 'react-helmet-async';
+import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import ResetPasswordForm from '../components/ResetPasswordForm';
 import RootPage from '../../../components/RootPage';

@@ -9,20 +9,20 @@ async function updateHelmetImports(filePath) {
   try {
     const content = await readFile(filePath, 'utf8');
 
-    // Check if the file imports Helmet from react-helmet
+    // Check if the file imports Helmet from react-helmet-async
     if (
-      content.includes("import { Helmet } from 'react-helmet'") ||
-      content.includes("import Helmet from 'react-helmet'")
+      content.includes("import { Helmet } from 'react-helmet-async'") ||
+      content.includes("import { HelmetProvider } from 'react-helmet-async'")
     ) {
       // Replace the import statement
       const updatedContent = content
         .replace(
-          "import { Helmet } from 'react-helmet'",
-          "import { Helmet } from 'react-helmet-async'"
+          "import { Helmet } from 'react-helmet-async'",
+          "import { Helmet } from 'react-helmet'"
         )
         .replace(
-          "import Helmet from 'react-helmet'",
-          "import { Helmet } from 'react-helmet-async'"
+          "import { HelmetProvider } from 'react-helmet-async'",
+          "import Helmet from 'react-helmet'"
         );
 
       // Write the updated content back to the file

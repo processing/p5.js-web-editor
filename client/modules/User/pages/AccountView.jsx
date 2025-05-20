@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import { Helmet } from 'react-helmet-async';
+import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router-dom';
 import { parse } from 'query-string';

@@ -20,7 +20,6 @@ import { createMemoryHistory } from 'history';
 import { I18nextProvider } from 'react-i18next';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 import { Context as ResponsiveContext } from 'react-responsive';
-import { HelmetProvider } from 'react-helmet-async';
 
 import i18n from './i18n-test';
 import ThemeProvider from './modules/App/components/ThemeProvider';
@@ -56,15 +55,13 @@ ResponsiveProvider.defaultProps = {
 
 const Providers = ({ children, ...options }) => (
   // eslint-disable-next-line react/jsx-filename-extension
-  <HelmetProvider>
-    <StyledThemeProvider theme={{ ...theme[Theme.light] }}>
-      <I18nextProvider i18n={i18n}>
-        <ResponsiveProvider {...options}>
-          <Router history={history}>{children}</Router>
-        </ResponsiveProvider>
-      </I18nextProvider>
-    </StyledThemeProvider>
-  </HelmetProvider>
+  <StyledThemeProvider theme={{ ...theme[Theme.light] }}>
+    <I18nextProvider i18n={i18n}>
+      <ResponsiveProvider {...options}>
+        <Router history={history}>{children}</Router>
+      </ResponsiveProvider>
+    </I18nextProvider>
+  </StyledThemeProvider>
 );
 
 Providers.propTypes = {
@@ -101,17 +98,15 @@ function reduxRender(
 ) {
   function Wrapper({ children }) {
     return (
-      <HelmetProvider>
-        <I18nextProvider i18n={i18n}>
-          <Provider store={store}>
-            <ThemeProvider>
-              <ResponsiveProvider {...renderOptions}>
-                <Router history={history}>{children}</Router>
-              </ResponsiveProvider>
-            </ThemeProvider>
-          </Provider>
-        </I18nextProvider>
-      </HelmetProvider>
+      <I18nextProvider i18n={i18n}>
+        <Provider store={store}>
+          <ThemeProvider>
+            <ResponsiveProvider {...renderOptions}>
+              <Router history={history}>{children}</Router>
+            </ResponsiveProvider>
+          </ThemeProvider>
+        </Provider>
+      </I18nextProvider>
     );
   }
 

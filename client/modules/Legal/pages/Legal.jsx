@@ -1,7 +1,7 @@
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
+import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import RouterTab from '../../../common/RouterTab';

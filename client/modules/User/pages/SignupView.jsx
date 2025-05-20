@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
+import { Helmet } from 'react-helmet';
 import { useTranslation, Trans } from 'react-i18next';
 import SignupForm from '../components/SignupForm';
 import SocialAuthButton from '../components/SocialAuthButton';

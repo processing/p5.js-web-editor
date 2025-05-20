@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
+import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 

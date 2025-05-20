@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Helmet } from 'react-helmet-async';
+import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import * as CollectionsActions from '../../IDE/actions/collections';
