@@ -241,7 +241,7 @@
     "react-router": "^5.3.4",
     "react-router-dom": "^5.3.4",
     "react-split-pane": "^0.1.92",
-    "react-tabs": "^4.3.0",
+    "react-tabs": "^2.3.1",
     "react-transition-group": "^4.4.2",
     "redux": "^4.2.1",
     "redux-auth-wrapper": "^2.1.0",
