@@ -32,18 +32,19 @@ export default function useKeyDownHandlers(keyHandlers) {
     if (!e.key) return;
     const isMac = navigator.userAgent.toLowerCase().indexOf('mac') !== -1;
     const isCtrl = isMac ? e.metaKey : e.ctrlKey;
-    if (e.shiftKey && isCtrl && e.altKey && e.code === 'KeyN') {
+
+    if (isCtrl && e.shiftKey && e.altKey && e.code === 'KeyN') {
       // specifically for creating a new folder
       handlers.current[`ctrl-alt-shift-n`]?.(e);
+    } else if (isCtrl && e.altKey && e.code === 'KeyN') {
+      // specifically for creating a new file
+      handlers.current[`ctrl-alt-n`]?.(e);
     } else if (e.shiftKey && isCtrl) {
       handlers.current[
         `ctrl-shift-${
           /^\d+$/.test(e.code.at(-1)) ? e.code.at(-1) : e.key.toLowerCase()
         }`
       ]?.(e);
-    } else if (isCtrl && e.altKey && e.code === 'KeyN') {
-      // specifically for creating a new file
-      handlers.current[`ctrl-alt-n`]?.(e);
     } else if (isCtrl) {
       handlers.current[`ctrl-${e.key.toLowerCase()}`]?.(e);
     }
