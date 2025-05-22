@@ -32,7 +32,10 @@ export default function useKeyDownHandlers(keyHandlers) {
     if (!e.key) return;
     const isMac = navigator.userAgent.toLowerCase().indexOf('mac') !== -1;
     const isCtrl = isMac ? e.metaKey : e.ctrlKey;
-    if (e.shiftKey && isCtrl) {
+    if (e.shiftKey && isCtrl && e.altKey && e.code === 'KeyN') {
+      // specifically for creating a new folder
+      handlers.current[`ctrl-alt-shift-n`]?.(e);
+    } else if (e.shiftKey && isCtrl) {
       handlers.current[
         `ctrl-shift-${
           /^\d+$/.test(e.code.at(-1)) ? e.code.at(-1) : e.key.toLowerCase()
