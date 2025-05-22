@@ -249,7 +249,8 @@
       "FindPreviousTextMatch": "Find Previous Text Match",
       "CodeEditing": "Code Editing",
       "ColorPicker": "Show Inline Color Picker",
-      "CreateNewFile": "Create New File"
+      "CreateNewFile": "Create New File",
+      "CreateNewFolder": "Create New Folder"
     },
     "General": "General",
     "GeneralSelection": {
