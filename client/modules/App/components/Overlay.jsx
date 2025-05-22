@@ -20,6 +20,9 @@ const Overlay = ({
 
   const previousPath = useSelector((state) => state.ide.previousPath);
 
+  // for better ui in rtl
+  const direction = useSelector((state) => state.preferences.direction);
+
   const ref = useRef(null);
 
   const browserHistory = useHistory();
@@ -41,23 +44,49 @@ const Overlay = ({
 
   useModalClose(close, ref);
 
+  // for better ui in rtl
+  let classNames = {
+    overlay__is_fixed_height: 'overlay--is-fixed-height',
+    overlay__content: 'overlay__content',
+    overlay__body: 'overlay__body',
+    overlay__header: 'overlay__header',
+    overlay__title: 'overlay__title',
+    overlay__actions: 'overlay__actions',
+    overlay__close_button: 'overlay__close-button',
+    overlay__actions_mobile: 'overlay__actions-mobile'
+  };
+  if (direction === 'rtl') {
+    classNames = {
+      overlay__is_fixed_height: 'rtl-overlay--is-fixed-height',
+      overlay__content: 'rtl-overlay__content',
+      overlay__body: 'rtl-overlay__body',
+      overlay__header: 'rtl-overlay__header',
+      overlay__title: 'rtl-overlay__title',
+      overlay__actions: 'rtl-overlay__actions',
+      overlay__close_button: 'rtl-overlay__close-button',
+      overlay__actions_mobile: 'rtl-overlay__actions-mobile'
+    };
+  }
+
   return (
     <div
-      className={`overlay ${isFixedHeight ? 'overlay--is-fixed-height' : ''}`}
+      className={`overlay ${
+        isFixedHeight ? classNames.overlay__is_fixed_height : ''
+      }`}
     >
-      <div className="overlay__content">
+      <div className={classNames.overlay__content}>
         <section
           role="main"
-          aria-label={ariaLabel}
+          aria-label={classNames.ariaLabel}
           ref={ref}
-          className="overlay__body"
+          className={classNames.overlay__body}
         >
-          <header className="overlay__header">
-            <h2 className="overlay__title">{title}</h2>
-            <div className="overlay__actions">
+          <header className={classNames.overlay__header}>
+            <h2 className={classNames.overlay__title}>{title}</h2>
+            <div className={classNames.overlay__actions}>
               <MediaQuery minWidth={770}>{actions}</MediaQuery>
               <button
-                className="overlay__close-button"
+                className={classNames.overlay__close_button}
                 onClick={close}
                 aria-label={t('Overlay.AriaLabel', { title })}
               >
@@ -67,7 +96,9 @@ const Overlay = ({
           </header>
           <MediaQuery maxWidth={769}>
             {actions && (
-              <div className="overlay__actions-mobile">{actions}</div>
+              <div className={classNames.overlay__actions_mobile}>
+                {actions}
+              </div>
             )}
           </MediaQuery>
           {children}

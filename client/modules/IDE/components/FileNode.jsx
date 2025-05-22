@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import React, { useState, useRef } from 'react';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
@@ -240,7 +240,8 @@ const FileNode = ({
     'sidebar__file-item--selected': isSelectedFile,
     'sidebar__file-item--open': isOptionsOpen,
     'sidebar__file-item--editing': isEditingName,
-    'sidebar__file-item--closed': isFolderClosed
+    'sidebar__file-item--closed': isFolderClosed,
+    ltr: true // for better ui in rtl
   });
 
   const isFile = fileType === 'file';
@@ -248,6 +249,13 @@ const FileNode = ({
   const isRoot = name === 'root';
 
   const { extension } = parseFileName(name);
+
+  // for better ui in rtl
+  const direction = useSelector((state) => state.preferences.direction);
+  let sidebarFileItemOptionsClass = 'sidebar__file-item-options';
+  if (direction === 'rtl') {
+    sidebarFileItemOptionsClass = 'sidebar__file-item-options-rtl';
+  }
 
   return (
     <div className={itemClass}>
@@ -321,7 +329,7 @@ const FileNode = ({
           >
             <DownArrowIcon focusable="false" aria-hidden="true" />
           </button>
-          <div className="sidebar__file-item-options">
+          <div className={sidebarFileItemOptionsClass}>
             <ul title="file options">
               {isFolder && (
                 <>

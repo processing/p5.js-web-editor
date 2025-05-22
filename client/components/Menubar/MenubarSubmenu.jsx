@@ -3,6 +3,7 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, { useContext, useMemo } from 'react';
+import { useSelector } from 'react-redux';
 import TriangleIcon from '../../images/down-filled-triangle.svg';
 import { MenuOpenContext, MenubarContext, ParentMenuContext } from './contexts';
 
@@ -28,6 +29,19 @@ export function useMenuProps(id) {
 function MenubarTrigger({ id, title, role, hasPopup, ...props }) {
   const { isOpen, handlers } = useMenuProps(id);
 
+  // for better ui in rtl
+  const direction = useSelector((state) => state.preferences.direction);
+  let selectedClassNames = {
+    nav__item_header: 'nav__item-header',
+    nav__item_header_triangle: 'nav__item-header-triangle'
+  };
+  if (direction === 'rtl') {
+    selectedClassNames = {
+      nav__item_header: 'rtl-nav__item-header',
+      nav__item_header_triangle: 'rtl-nav__item-header-triangle'
+    };
+  }
+
   return (
     <button
       {...handlers}
@@ -36,9 +50,9 @@ function MenubarTrigger({ id, title, role, hasPopup, ...props }) {
       aria-haspopup={hasPopup}
       aria-expanded={isOpen}
     >
-      <span className="nav__item-header">{title}</span>
+      <span className={selectedClassNames.nav__item_header}>{title}</span>
       <TriangleIcon
-        className="nav__item-header-triangle"
+        className={selectedClassNames.nav__item_header_triangle}
         focusable="false"
         aria-hidden="true"
       />
@@ -63,8 +77,13 @@ MenubarTrigger.defaultProps = {
  * -----------------------------------------------------------------------------------------------*/
 
 function MenubarList({ id, children, role, ...props }) {
+  // change sub menu direction
+  let newClassName = 'nav__dropdown';
+  const direction = useSelector((state) => state.preferences.direction);
+  if (direction === 'rtl') newClassName = 'rtl-nav__dropdown';
+
   return (
-    <ul className="nav__dropdown" role={role} {...props}>
+    <ul className={newClassName} role={role} {...props}>
       <ParentMenuContext.Provider value={id}>
         {children}
       </ParentMenuContext.Provider>
@@ -102,8 +121,14 @@ function MenubarSubmenu({
 
   const hasPopup = listRole === 'listbox' ? 'listbox' : 'menu';
 
+  // change sub menu direction
+  let newClassName = classNames('nav__item', isOpen && 'nav__item--open');
+  const direction = useSelector((state) => state.preferences.direction);
+  if (direction === 'rtl')
+    newClassName = classNames('rtl-nav__item', isOpen && 'rtl-nav__item--open');
+
   return (
-    <li className={classNames('nav__item', isOpen && 'nav__item--open')}>
+    <li className={newClassName}>
       <MenubarTrigger
         id={id}
         title={title}

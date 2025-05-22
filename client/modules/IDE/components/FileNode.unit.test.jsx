@@ -134,7 +134,7 @@ describe('<FileNode />', () => {
       await waitFor(() =>
         expect(props.updateFileName).toHaveBeenCalledWith(props.id, newName)
       );
-      await expectFileNameToBe(props.name);
+      await expectFileNameToBe(newName);
     });
 
     it('cannot be just an extension', async () => {

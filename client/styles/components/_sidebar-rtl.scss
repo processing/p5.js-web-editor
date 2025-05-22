@@ -1,0 +1,25 @@
+@use "sass:math";
+
+.sidebar__project-options-rtl {
+  @extend %dropdown-open-right;
+  display: none;
+  width: 100%;
+  max-width: #{math.div(180, $base-font-size)}rem;
+  .sidebar--project-options & {
+    display: flex;
+  }
+}
+
+.sidebar__file-item-options-rtl {
+  @extend %dropdown-open-right;
+  display: none;
+  width: 100%;
+  max-width: #{math.div(180, $base-font-size)}rem;
+  .sidebar__file-item--open > .file-item__content & {
+    display: flex;
+  }
+}
+
+.sidebar__project-options-rtl button, .sidebar__file-item-options-rtl button {
+  text-align: right !important;
+}

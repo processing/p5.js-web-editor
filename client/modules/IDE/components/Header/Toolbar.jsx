@@ -32,23 +32,51 @@ const Toolbar = (props) => {
 
   const { t } = useTranslation();
 
-  const playButtonClass = classNames({
-    'toolbar__play-button': true,
-    'toolbar__play-button--selected': isPlaying
-  });
-  const stopButtonClass = classNames({
-    'toolbar__stop-button': true,
-    'toolbar__stop-button--selected': !isPlaying
-  });
-  const preferencesButtonClass = classNames({
-    'toolbar__preferences-button': true,
-    'toolbar__preferences-button--selected': preferencesIsVisible
-  });
+  // for better ui in rtl
+  const direction = useSelector((state) => state.preferences.direction);
+
+  const playButtonClass = classNames(
+    direction === 'rtl'
+      ? {
+          'rtl-toolbar__play-button': true,
+          'rtl-toolbar__play-button--selected': isPlaying
+        }
+      : {
+          'toolbar__play-button': true,
+          'toolbar__play-button--selected': isPlaying
+        }
+  );
+  const stopButtonClass = classNames(
+    direction === 'rtl'
+      ? {
+          'rtl-toolbar__stop-button': true,
+          'rtl-toolbar__stop-button--selected': !isPlaying
+        }
+      : {
+          'toolbar__stop-button': true,
+          'toolbar__stop-button--selected': !isPlaying
+        }
+  );
+  const preferencesButtonClass = classNames(
+    direction === 'rtl'
+      ? {
+          'rtl-toolbar__preferences-button': true,
+          'rtl-toolbar__preferences-button--selected': preferencesIsVisible
+        }
+      : {
+          'toolbar__preferences-button': true,
+          'toolbar__preferences-button--selected': preferencesIsVisible
+        }
+  );
 
   return (
-    <div className="toolbar">
+    <div className={direction === 'rtl' ? 'rtl-toolbar' : 'toolbar'}>
       <button
-        className="toolbar__play-sketch-button"
+        className={
+          direction === 'rtl'
+            ? 'rtl-toolbar__play-sketch-button'
+            : 'toolbar__play-sketch-button'
+        }
         onClick={() => {
           props.syncFileContent();
           dispatch(startAccessibleSketch());
@@ -81,10 +109,20 @@ const Toolbar = (props) => {
       >
         <StopIcon focusable="false" aria-hidden="true" />
       </button>
-      <div className="toolbar__autorefresh">
+      <div
+        className={
+          direction === 'rtl'
+            ? 'rtl-toolbar__autorefresh'
+            : 'toolbar__autorefresh'
+        }
+      >
         <input
           id="autorefresh"
-          className="checkbox__autorefresh"
+          className={
+            direction === 'rtl'
+              ? 'rtl-checkbox__autorefresh'
+              : 'checkbox__autorefresh'
+          }
           type="checkbox"
           checked={autorefresh}
           onChange={(event) => {
@@ -94,16 +132,35 @@ const Toolbar = (props) => {
             }
           }}
         />
-        <label htmlFor="autorefresh" className="toolbar__autorefresh-label">
+        <label
+          htmlFor="autorefresh"
+          className={
+            direction === 'rtl'
+              ? 'rtl-toolbar__autorefresh-label'
+              : 'toolbar__autorefresh-label'
+          }
+        >
           {t('Toolbar.Auto-refresh')}
         </label>
       </div>
-      <div className="toolbar__project-name-container">
+      <div
+        className={
+          direction === 'rtl'
+            ? 'rtl-toolbar__project-name-container'
+            : 'toolbar__project-name-container'
+        }
+      >
         <ProjectName />
         {(() => {
           if (project.owner) {
             return (
-              <p className="toolbar__project-project.owner">
+              <p
+                className={
+                  direction === 'rtl'
+                    ? 'rtl-toolbar__project-project.owner'
+                    : 'toolbar__project-project.owner'
+                }
+              >
                 {t('Toolbar.By')}{' '}
                 <Link to={`/${project.owner.username}/sketches`}>
                   {project.owner.username}

@@ -91,6 +91,7 @@ export const HIDE_TOAST = 'HIDE_TOAST';
 export const SET_TOAST_TEXT = 'SET_TOAST_TEXT';
 export const SET_THEME = 'SET_THEME';
 export const SET_LANGUAGE = 'SET_LANGUAGE';
+export const SET_DIRECTION = 'SET_DIRECTION';
 
 export const SET_UNSAVED_CHANGES = 'SET_UNSAVED_CHANGES';
 export const SET_AUTOREFRESH = 'SET_AUTOREFRESH';

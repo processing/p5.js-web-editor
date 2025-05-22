@@ -72,6 +72,13 @@ export default function SideBar() {
     'sidebar--cant-edit': !canEditProject
   });
 
+  // for better ui in rtl
+  const direction = useSelector((state) => state.preferences.direction);
+  let sidebarProjectOptionsClass = 'sidebar__project-options';
+  if (direction === 'rtl') {
+    sidebarProjectOptionsClass = 'sidebar__project-options-rtl';
+  }
+
   return (
     <FileDrawer>
       {ide.sidebarIsExpanded && (
@@ -101,7 +108,7 @@ export default function SideBar() {
               <PlusIcon focusable="false" aria-hidden="true" />
             </button>
             {projectOptionsVisible && (
-              <ul className="sidebar__project-options">
+              <ul className={sidebarProjectOptionsClass}>
                 <li>
                   <button
                     aria-label={t('Sidebar.AddFolderARIA')}
@@ -109,6 +116,7 @@ export default function SideBar() {
                       dispatch(newFolder(rootFile.id));
                       setTimeout(() => dispatch(closeProjectOptions()), 300);
                     }}
+                    onBlur={onBlurComponent}
                   >
                     {t('Sidebar.AddFolder')}
                   </button>
@@ -120,6 +128,7 @@ export default function SideBar() {
                       dispatch(newFile(rootFile.id));
                       setTimeout(() => dispatch(closeProjectOptions()), 300);
                     }}
+                    onBlur={onBlurComponent}
                   >
                     {t('Sidebar.AddFile')}
                   </button>

@@ -23,6 +23,18 @@ import {
 
 const fallbackLng = ['en-US'];
 
+export const rtlLanguageList = [
+  'ar', // Arabic (Standard)
+  'fa', // Persian (Farsi)
+  'ur', // Urdu
+  'he', // Hebrew
+  'ckb', // Kurdish (Sorani)
+  'ps', // Pashto
+  'sd', // Sindhi
+  'ug', // Uyghur
+  'dv' // Divehi (Dhivehi)
+];
+
 export const availableLanguages = [
   'be',
   'de',
