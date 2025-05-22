@@ -138,6 +138,7 @@
     "Settings": "Configuración",
     "GeneralSettings": "Configuración general",
     "Accessibility": "Accesibilidad",
+    "LibraryManagement": "Gestión de biblioteca",
     "Theme": "Modo de visualización",
     "LightTheme": "Claro",
     "LightThemeARIA": "Modo de visualización claro activado",
@@ -159,8 +160,8 @@
     "Off": "Desactivar",
     "AutosaveOffARIA": "Grabado automático desactivado",
     "WordWrap": "Ajuste automático de línea",
-    "LineWrapOnARIA": "Ajuste automático de línea activado",
-    "LineWrapOffARIA": "Ajuste automático de línea desactivado",
+    "WordWrapOnARIA": "Ajuste automático de línea activado",
+    "WordWrapOffARIA": "Ajuste automático de línea desactivado",
     "LineNumbers": "Número de línea",
     "LineNumbersOnARIA": "Número de línea activado",
     "LineNumbersOffARIA": "Número de línea desactivado",
@@ -174,7 +175,13 @@
     "PlainText": "Texto sin formato",
     "TextOutputARIA": "Salida de texto activado",
     "TableText": "Tablero de texto",
-    "TableOutputARIA": "Salida de tablero activado"
+    "TableOutputARIA": "Salida de tablero activado",
+    "LibraryVersion": "p5.js Versión",
+    "LibraryVersionInfo": "Aquí hay una [nueva versión 2.0](https://github.com/processing/p5.js/releases/) ¡Ya está disponible la versión p5.js! Se convertirá en la predeterminada en agosto de 2026, así que aprovecha este tiempo para probarla y reportar errores. ¿Te interesa migrar tus bocetos de la versión 1.x a la 2.0? Mira el [recursos de compatibilidad y transición.](https://github.com/processing/p5.js-compatibility)",
+    "SoundAddon": "p5.sound.js Add-on Biblioteca",
+    "PreloadAddon": "p5.js 1.x Compatibility Add-on Biblioteca — Precarga",
+    "ShapesAddon": "p5.js 1.x Compatibility Add-on Biblioteca — formas",
+    "DataAddon": "p5.js 1.x Compatibility Add-on Biblioteca — Estructuras de datos"
   },
   "KeyboardShortcuts": {
     "Title": " Atajos de teclado",
@@ -193,7 +200,7 @@
       "FindPreviousTextMatch": "Encontrar la ocurrencia previa de texto",
       "CodeEditing": "Editando Código"
     },
-    "General": {
+    "GeneralSelection": {
       "StartSketch": "Iniciar bosquejo",
       "StopSketch": "Detener bosquejo",
       "TurnOnAccessibleOutput": "Activar salida accesible",

@@ -145,8 +145,8 @@
     "AutocloseBracketsQuotesOnARIA": "괄호 및 따옴표 자동 닫기 켜기",
     "AutocloseBracketsQuotesOffARIA": "괄호 및 따옴표 자동 닫기 끄기",
     "WordWrap": "단어 자동 줄 바꿈",
-    "LineWrapOnARIA": "줄 바꿈 켜기",
-    "LineWrapOffARIA": "줄 바꿈 끄기",
+    "WordWrapOnARIA": "줄 바꿈 켜기",
+    "WordWrapOffARIA": "줄 바꿈 끄기",
     "LineNumbers": "줄 번호",
     "LineNumbersOnARIA": "줄 번호 켜기",
     "LineNumbersOffARIA": "줄 번호 끄기",
@@ -181,7 +181,7 @@
       "FindPreviousTextMatch": "이전 텍스트 일치 항목 찾기",
       "CodeEditing": "코드 편집"
     },
-    "General": {
+    "GeneralSelection": {
       "StartSketch": "스케치 시작",
       "StopSketch": "스케치 중지",
       "TurnOnAccessibleOutput": "접근 가능한 출력 활성화",
@@ -347,7 +347,8 @@
     "Description": "회원가입",
     "Or": "또는",
     "AlreadyHave": "이미 계정이 있나요?",
-    "Login": "로그인"
+    "Login": "로그인",
+    "Warning" : "가입하면 p5.js 편집기의 <0>이용 약관</0> 및 <1>개인정보 보호정책</1>에 동의하는 것입니다."
   },
   "EmailVerificationView": {
     "Title": "p5.js 웹에디터 | 이메일 확인",
@@ -355,7 +356,7 @@
     "InvalidTokenNull": "이 링크는 유효하지 않습니다.",
     "Checking": "Validating token, please wait...",
     "Verified": "All done, your email address has been verified.",
-    "InvalidState": "Something went wrong."
+    "InvalidState": "토큰이 유효하지 않거나 만료되었습니다."
   },
   "AssetList": {
     "Title": "p5.js Web Editor | My assets",

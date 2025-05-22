@@ -94,7 +94,8 @@ app.use(
     name: 'sessionId',
     cookie: {
       httpOnly: true,
-      secure: false
+      secure: false,
+      maxAge: 1000 * 60 * 60 * 24 * 28 // 4 weeks in milliseconds
     },
     store: new MongoStore({
       clientPromise,

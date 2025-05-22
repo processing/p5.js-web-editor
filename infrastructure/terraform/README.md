@@ -1,5 +1,7 @@
 #### Running Terraform
 
+**Note**: Make sure that you're within this directory before getting started with the commands below.
+
 1. Auth with GCP by running:
 ```
 $ gcloud auth application-default login

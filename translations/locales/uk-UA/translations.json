@@ -159,8 +159,8 @@
     "AutocloseBracketsQuotesOnARIA": "автоматично закривати дужки та лапки",
     "AutocloseBracketsQuotesOffARIA": "автоматично закривати дужки та лапки",
     "WordWrap": "Перенесення слів",
-    "LineWrapOnARIA": "перенесення рядків увімкнено",
-    "LineWrapOffARIA": "перенесення рядків вимкнено",
+    "WordWrapOnARIA": "перенесення рядків увімкнено",
+    "WordWrapOffARIA": "перенесення рядків вимкнено",
     "LineNumbers": "Номери рядків",
     "LineNumbersOnARIA": "номери рядків вимкнено",
     "LineNumbersOffARIA": "номери рядків вимкнено",
@@ -195,7 +195,7 @@
       "FindPreviousTextMatch": "Знайти попередній збіг тексту",
       "CodeEditing": "Редагування коду"
     },
-    "General": {
+    "GeneralSelection": {
       "StartSketch": "Запустити",
       "StopSketch": "Зупинити",
       "TurnOnAccessibleOutput": "Увімкнути доступне виведення",

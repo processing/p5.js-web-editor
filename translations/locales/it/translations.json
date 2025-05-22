@@ -138,6 +138,7 @@
     "Settings": "Impostazioni",
     "GeneralSettings": "Impostazioni generali",
     "Accessibility": "Accessibilità",
+    "LibraryManagement": "Gestione della libreria",
     "Theme": "Tema",
     "LightTheme": "Chiaro",
     "LightThemeARIA": "Tema chiaro attivo",
@@ -153,16 +154,16 @@
     "FontSize": "Dimensione carattere",
     "SetFontSize": "imposta dimensione carattere",
     "Autosave": "Auto-salvataggio",
-    "On": "On",
+    "On": "Acceso",
     "AutosaveOnARIA": "auto-salvataggio attivo",
-    "Off": "Off",
+    "Off": "Spento",
     "AutosaveOffARIA": "auto-salvataggio disabilitato",
     "AutocloseBracketsQuotes": "Auto-chiusura parentesi e virgolette",
     "AutocloseBracketsQuotesOnARIA": "Auto-chiusura parentesi e virgolette attivo",
     "AutocloseBracketsQuotesOffARIA": "Auto-chiusura parentesi e virgolette disabilitata",
     "WordWrap": "Dividi parole",
-    "LineWrapOnARIA": "dividi parole attivo",
-    "LineWrapOffARIA": "dividi parole disabilitato",
+    "WordWrapOnARIA": "dividi parole attivo",
+    "WordWrapOffARIA": "dividi parole disabilitato",
     "LineNumbers": "Numero linea",
     "LineNumbersOnARIA": "numero linea attivo",
     "LineNumbersOffARIA": "numero linea disabilitato",
@@ -176,7 +177,13 @@
     "PlainText": "Testo normale",
     "TextOutputARIA": "output di testo attivo",
     "TableText": "Testo in tabella",
-    "TableOutputARIA": "Testo in tabella attivo"
+    "TableOutputARIA": "Testo in tabella attivo",
+    "LibraryVersion": "Versione di p5.js",
+    "LibraryVersionInfo": "È disponibile una [nuova versione 2.0](https://github.com/processing/p5.js/releases/) di p5.js! Diventerà la versione predefinita ad agosto 2026, quindi approfitta di questo tempo per provarla e segnalare eventuali bug. Interessato a migrare gli schizzi da 1.x a 2.0? Consulta le [risorse di compatibilità e transizione.](https://github.com/processing/p5.js-compatibility)",
+    "SoundAddon": "p5.sound.js Add-on",
+    "PreloadAddon": "p5.js 1.x Compatibility Add-on Library — Precaricamento",
+    "ShapesAddon": "p5.js 1.x Compatibility Add-on Library — Forme",
+    "DataAddon": "p5.js 1.x Compatibility Add-on Library — Strutture di dati"
   },
   "KeyboardShortcuts": {
     "Title": " Scorciatoie tastiera",
@@ -196,7 +203,7 @@
       "CodeEditing": "Modifica del codice",
       "ColorPicker": "Mostra selettore colore in linea"
     },
-    "General": {
+    "GeneralSelection": {
       "StartSketch": "Avvia Sketch",
       "StopSketch": "Ferma Sketch",
       "TurnOnAccessibleOutput": "Attiva Output accessibile",

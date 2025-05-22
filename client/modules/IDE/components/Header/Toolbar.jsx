@@ -20,6 +20,7 @@ import PlayIcon from '../../../../images/play.svg';
 import StopIcon from '../../../../images/stop.svg';
 import PreferencesIcon from '../../../../images/preferences.svg';
 import ProjectName from './ProjectName';
+import VersionIndicator from '../VersionIndicator';
 
 const Toolbar = (props) => {
   const { isPlaying, infiniteLoop, preferencesIsVisible } = useSelector(
@@ -170,6 +171,8 @@ const Toolbar = (props) => {
           return null;
         })()}
       </div>
+      <VersionIndicator />
+      <div style={{ flex: 1 }} />
       <button
         className={preferencesButtonClass}
         onClick={() => dispatch(openPreferences())}

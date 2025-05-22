@@ -79,6 +79,7 @@ const baseThemes = {
     modalBorderColor: grays.middleLight,
     searchBackgroundColor: grays.lightest,
     tableRowStripeColor: grays.mediumLight,
+    notification: colors.dodgerblue,
 
     Button: {
       primary: {
@@ -170,6 +171,7 @@ const baseThemes = {
     modalBorderColor: grays.middleDark,
     searchBackgroundColor: grays.darker,
     tableRowStripeColor: grays.dark,
+    notification: colors.processingBlueLight,
 
     Button: {
       primary: {
@@ -257,6 +259,7 @@ export default {
   [Theme.contrast]: extend(baseThemes[Theme.dark], {
     inactiveTextColor: grays.light,
     logoColor: colors.yellow,
+    notification: colors.p5ContrastYellow,
 
     Button: {
       primary: {
