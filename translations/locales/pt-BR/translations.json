@@ -159,8 +159,8 @@
     "AutocloseBracketsQuotesOnARIA": "fechar automaticamente chaves e aspas ativado",
     "AutocloseBracketsQuotesOffARIA": "fechar automaticamente chaves e aspas desativado",
     "WordWrap": "Ajuste Automático de Linhas",
-    "LineWrapOnARIA": "ajuste automático de linhas ativado",
-    "LineWrapOffARIA": "ajuste automático de linhas desativado",
+    "WordWrapOnARIA": "ajuste automático de linhas ativado",
+    "WordWrapOffARIA": "ajuste automático de linhas desativado",
     "LineNumbers": "Número de linhas",
     "LineNumbersOnARIA": "número de linhas ativado",
     "LineNumbersOffARIA": "número de linhas desativado",
@@ -193,7 +193,7 @@
       "FindPreviousTextMatch": "Procurar ocorrência de texto anterior",
       "CodeEditing": "Code Editing"
     },
-    "General": {
+    "GeneralSelection": {
       "StartSketch": "Começar Esboço",
       "StopSketch": "Parar Esboço",
       "TurnOnAccessibleOutput": "Ativar Saída Acessível",
@@ -359,7 +359,8 @@
     "Description": "Criar Conta",
     "Or": "Ou",
     "AlreadyHave": "Já tem uma conta?",
-    "Login": "Entrar"
+    "Login": "Entrar",
+    "Warning" : "Ao se inscrever, você concorda com os <0>Termos de Uso</0> e a <1>Política de Privacidade</1> do editor p5.js."
   },
   "EmailVerificationView": {
     "Title": "Editor de Web p5.js | Verificação de Email",
@@ -367,7 +368,7 @@
     "InvalidTokenNull": "Link Inválido.",
     "Checking": "Validando token, aguarde...",
     "Verified": "Tudo pronto, seu endereço de email foi verificado!",
-    "InvalidState": "Algo deu errado."
+    "InvalidState": "O token é inválido ou expirou."
   },
   "AssetList": {
     "Title": "Editor de Web p5.js | Meus recursos",

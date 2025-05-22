@@ -8,7 +8,15 @@ import { DropdownWrapper } from '../Dropdown';
 
 const DropdownMenu = forwardRef(
   (
-    { children, anchor, 'aria-label': ariaLabel, align, className, classes },
+    {
+      children,
+      anchor,
+      'aria-label': ariaLabel,
+      align,
+      className,
+      classes,
+      maxHeight
+    },
     ref
   ) => {
     // Note: need to use a ref instead of a state to avoid stale closures.
@@ -32,7 +40,7 @@ const DropdownMenu = forwardRef(
       focusedRef.current = false;
       setTimeout(() => {
         if (!focusedRef.current) {
-          close();
+          // close();
         }
       }, 200);
     };
@@ -59,6 +67,7 @@ const DropdownMenu = forwardRef(
             }}
             onBlur={handleBlur}
             onFocus={handleFocus}
+            style={maxHeight && { maxHeight, overflowY: 'auto' }}
           >
             {children}
           </DropdownWrapper>
@@ -84,14 +93,16 @@ DropdownMenu.propTypes = {
   classes: PropTypes.shape({
     button: PropTypes.string,
     list: PropTypes.string
-  })
+  }),
+  maxHeight: PropTypes.string
 };
 
 DropdownMenu.defaultProps = {
   anchor: null,
   align: 'right',
   className: '',
-  classes: {}
+  classes: {},
+  maxHeight: undefined
 };
 
 export default DropdownMenu;

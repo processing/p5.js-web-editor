@@ -1,0 +1,20 @@
+.admonition {
+  @include themify() {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+    background: getThemifyVariable('admonition-background');
+    color: getThemifyVariable('admonition-text');
+    border: 1px solid getThemifyVariable('admonition-border');
+    border-left-width: 3px;
+  }
+}
+
+.admonition__icon {
+  margin-right: 0.5rem;
+}
+
+.admonition__title {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}

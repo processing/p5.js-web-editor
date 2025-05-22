@@ -9,21 +9,43 @@ import Button from '../../../common/Button';
 import apiClient from '../../../utils/apiClient';
 import useSyncFormTranslations from '../../../common/useSyncFormTranslations';
 
+const timeoutRef = { current: null };
+
 function asyncValidate(fieldToValidate, value) {
   if (!value || value.trim().length === 0) {
-    return '';
+    return Promise.resolve('');
   }
-  const queryParams = {};
-  queryParams[fieldToValidate] = value;
-  queryParams.check_type = fieldToValidate;
-  return apiClient
-    .get('/signup/duplicate_check', { params: queryParams })
-    .then((response) => {
-      if (response.data.exists) {
-        return response.data.message;
-      }
-      return '';
-    });
+
+  const queryParams = {
+    [fieldToValidate]: value,
+    check_type: fieldToValidate
+  };
+
+  return new Promise((resolve) => {
+    if (timeoutRef.current) {
+      timeoutRef.current();
+    }
+
+    const timerId = setTimeout(() => {
+      apiClient
+        .get('/signup/duplicate_check', { params: queryParams })
+        .then((response) => {
+          if (response.data.exists) {
+            resolve(response.data.message);
+          } else {
+            resolve('');
+          }
+        })
+        .catch(() => {
+          resolve('An error occurred while validating');
+        });
+    }, 300);
+
+    timeoutRef.current = () => {
+      clearTimeout(timerId);
+      resolve('');
+    };
+  });
 }
 
 function validateUsername(username) {
@@ -36,21 +58,20 @@ function validateEmail(email) {
 
 function SignupForm() {
   const { t, i18n } = useTranslation();
-
   const dispatch = useDispatch();
+  const formRef = useRef(null);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  useSyncFormTranslations(formRef, i18n.language);
+
+  const handleVisibility = () => setShowPassword(!showPassword);
+  const handleConfirmVisibility = () =>
+    setShowConfirmPassword(!showConfirmPassword);
+
   function onSubmit(formProps) {
     return dispatch(validateAndSignUpUser(formProps));
   }
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const formRef = useRef(null);
-  const handleVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-  const handleConfirmVisibility = () => {
-    setShowConfirmPassword(!showConfirmPassword);
-  };
-  useSyncFormTranslations(formRef, i18n.language);
 
   return (
     <Form

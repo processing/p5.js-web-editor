@@ -104,6 +104,7 @@ class Editor extends React.Component {
     this.showFind = this.showFind.bind(this);
     this.showReplace = this.showReplace.bind(this);
     this.getContent = this.getContent.bind(this);
+    this.updateFileContent = this.updateFileContent.bind(this);
   }
 
   componentDidMount() {
@@ -168,6 +169,7 @@ class Editor extends React.Component {
       },
       Enter: 'emmetInsertLineBreak',
       Esc: 'emmetResetAbbreviation',
+      [`Shift-Tab`]: false,
       [`${metaKey}-Enter`]: () => null,
       [`Shift-${metaKey}-Enter`]: () => null,
       [`${metaKey}-F`]: 'findPersistent',
@@ -209,10 +211,6 @@ class Editor extends React.Component {
       if (/^[a-z]$/i.test(e.key) && (mode === 'css' || mode === 'javascript')) {
         this.showHint(_cm);
       }
-      if (e.key === 'Escape') {
-        e.preventDefault();
-        this._cm.getInputField().blur();
-      }
     });
 
     this._cm.getWrapperElement().style[
@@ -223,7 +221,8 @@ class Editor extends React.Component {
       tidyCode: this.tidyCode,
       showFind: this.showFind,
       showReplace: this.showReplace,
-      getContent: this.getContent
+      getContent: this.getContent,
+      updateFileContent: this.updateFileContent
     });
   }
 
@@ -257,6 +256,9 @@ class Editor extends React.Component {
       if (!prevProps.unsavedChanges) {
         setTimeout(() => this.props.setUnsavedChanges(false), 400);
       }
+    } else if (this.getContent().content !== this.props.file.content) {
+      // TODO: make this not break regular edits!
+      // this._cm.setValue(this.props.file.content);
     }
     if (this.props.fontSize !== prevProps.fontSize) {
       this._cm.getWrapperElement().style[
@@ -332,7 +334,8 @@ class Editor extends React.Component {
       tidyCode: this.tidyCode,
       showFind: this.showFind,
       showReplace: this.showReplace,
-      getContent: this.getContent
+      getContent: this.getContent,
+      updateFileContent: this.updateFileContent
     });
   }
 
@@ -367,6 +370,16 @@ class Editor extends React.Component {
     const content = this._cm.getValue();
     const updatedFile = Object.assign({}, this.props.file, { content });
     return updatedFile;
+  }
+
+  updateFileContent(id, src) {
+    const file = this._docs[id];
+    if (file) {
+      this._docs[id] = CodeMirror.Doc(src, this._docs[id].modeOption);
+      if (id === this.props.file.id) {
+        this._cm.swapDoc(this._docs[id]);
+      }
+    }
   }
 
   handleKeyUp = () => {

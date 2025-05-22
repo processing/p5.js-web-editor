@@ -159,8 +159,8 @@
       "AutocompleteHinterOnARIA": "خودکار تکمیل اشارہ آن",
       "AutocompleteHinterOffARIA": "خود کار طریقے سے اشارہ بند",
       "WordWrap": "لفظ لفاف",
-      "LineWrapOnARIA": "لائن لپیٹنا",
-      "LineWrapOffARIA": "لائن لپیٹنا",
+      "WordWrapOnARIA": "لائن لپیٹنا",
+      "WordWrapOffARIA": "لائن لپیٹنا",
       "LineNumbers": "لائن نمبرز",
       "LineNumbersOnARIA": "لائن نمبر آن",
       "LineNumbersOffARIA": "لائن نمبر بند",
@@ -194,7 +194,7 @@
         "CodeEditing": "کوڈ ایڈیٹنگ",
         "ColorPicker": "ان لائن رنگ چنندہ دکھائیں۔"
       },
-      "General": {
+      "GeneralSelection": {
         "StartSketch": "خاکہ شروع کریں۔",
         "StopSketch": "خاکہ بند کریں",
         "TurnOnAccessibleOutput": "قابل رسائی آؤٹ پٹ کو آن کریں۔",

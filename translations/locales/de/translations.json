@@ -159,8 +159,8 @@
     "AutocloseBracketsQuotesOnARIA": "Klammern und Anführungszeichen automatisch schließen an",
     "AutocloseBracketsQuotesOffARIA": "Klammern und Anführungszeichen automatisch schließen aus",
     "WordWrap": "Wortumbruch",
-    "LineWrapOnARIA": "zeilenumbruch an",
-    "LineWrapOffARIA": "zeilenumbruch aus",
+    "WordWrapOnARIA": "zeilenumbruch an",
+    "WordWrapOffARIA": "zeilenumbruch aus",
     "LineNumbers": "Zeilennummerierung",
     "LineNumbersOnARIA": "Zeilennummerierung an",
     "LineNumbersOffARIA": "Zeilennummerierung aus",
@@ -193,7 +193,7 @@
       "FindPreviousTextMatch": "Vorherigen Text-Treffer finden",
       "CodeEditing": "Code editieren"
     },
-    "General": {
+    "GeneralSelection": {
       "StartSketch": "Sketch starten",
       "StopSketch": "Sketch stoppen",
       "TurnOnAccessibleOutput": "Barrierefreie Ausgabe einschalten",

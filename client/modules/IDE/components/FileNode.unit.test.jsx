@@ -1,6 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { store } from '../../../store';
+import configureStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
 
 import {
   fireEvent,
@@ -10,6 +11,8 @@ import {
   within
 } from '../../../test-utils';
 import { FileNode } from './FileNode';
+
+const mockStore = configureStore([thunk]);
 
 describe('<FileNode />', () => {
   const changeName = (newFileName) => {
@@ -34,6 +37,7 @@ describe('<FileNode />', () => {
       fileType,
       canEdit: true,
       children: [],
+      parentId: 'parent-folder-id',
       authenticated: false,
       setSelectedFile: jest.fn(),
       deleteFile: jest.fn(),
@@ -46,6 +50,35 @@ describe('<FileNode />', () => {
       openUploadFileModal: jest.fn(),
       setProjectName: jest.fn()
     };
+
+    const mockFiles = [
+      {
+        id: '0',
+        name: props.name,
+        parentId: 'parent-folder-id'
+      },
+      {
+        id: '1',
+        name: 'sketch.js',
+        parentId: '0',
+        isSelectedFile: true
+      },
+      {
+        id: 'parent-folder-id',
+        name: 'parent',
+        parentId: null,
+        children: ['0', 'some-other-file-id']
+      },
+      {
+        id: 'some-other-file-id',
+        name: 'duplicate.js',
+        parentId: 'parent-folder-id'
+      }
+    ];
+
+    const store = mockStore({
+      files: mockFiles
+    });
 
     render(
       <Provider store={store}>

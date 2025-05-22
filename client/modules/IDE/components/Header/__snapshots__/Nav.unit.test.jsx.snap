@@ -211,7 +211,7 @@ exports[`Nav renders dashboard version for mobile 1`] = `
   -ms-flex-direction: column;
   flex-direction: column;
   gap: 0.16666666666666666rem;
-  box-shadow: rgba(60,64,67,0.3) 0px 1px 2px 0px, rgba(60,64,67,0.15) 0px 1px 3px 1px;
+  box-shadow: rgba(60,64,67,0.3) 0px 1px 2px 0px,rgba(60,64,67,0.15) 0px 1px 3px 1px;
   min-width: 10rem;
   border-radius: 0.16666666666666666rem;
 }
@@ -324,7 +324,7 @@ exports[`Nav renders dashboard version for mobile 1`] = `
           >
             <test-file-stub
               aria-hidden="true"
-              classname="sc-fujyAs cSTVlM"
+              classname="icons__StyledIcon-sc-xmer15-0 dStXqm"
               focusable="false"
             />
           </button>
@@ -340,7 +340,7 @@ exports[`Nav renders dashboard version for mobile 1`] = `
         >
           <test-file-stub
             aria-hidden="true"
-            classname="sc-iqAclL iOZiVo"
+            classname="icons__StyledIcon-sc-xmer15-0 dStXqm"
             focusable="false"
           />
         </button>
@@ -912,7 +912,7 @@ exports[`Nav renders editor version for mobile 1`] = `
   -ms-flex-direction: column;
   flex-direction: column;
   gap: 0.16666666666666666rem;
-  box-shadow: rgba(60,64,67,0.3) 0px 1px 2px 0px, rgba(60,64,67,0.15) 0px 1px 3px 1px;
+  box-shadow: rgba(60,64,67,0.3) 0px 1px 2px 0px,rgba(60,64,67,0.15) 0px 1px 3px 1px;
   min-width: 10rem;
   border-radius: 0.16666666666666666rem;
 }
@@ -1025,7 +1025,7 @@ exports[`Nav renders editor version for mobile 1`] = `
           >
             <test-file-stub
               aria-hidden="true"
-              classname="sc-fujyAs cSTVlM"
+              classname="icons__StyledIcon-sc-xmer15-0 dStXqm"
               focusable="false"
             />
           </button>
@@ -1041,7 +1041,7 @@ exports[`Nav renders editor version for mobile 1`] = `
         >
           <test-file-stub
             aria-hidden="true"
-            classname="sc-iqAclL iOZiVo"
+            classname="icons__StyledIcon-sc-xmer15-0 dStXqm"
             focusable="false"
           />
         </button>
