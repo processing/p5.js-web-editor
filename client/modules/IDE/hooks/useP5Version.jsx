@@ -8,8 +8,11 @@ import PropTypes from 'prop-types';
 // JSON.stringify([...document.querySelectorAll('._132722c7')].map(n => n.innerText), null, 2)
 // TODO: use their API for this to grab these at build time?
 export const p5Versions = [
+  '2.0.2',
   '2.0.1',
   '2.0.0',
+  '1.11.7',
+  '1.11.6',
   '1.11.5',
   '1.11.4',
   '1.11.3',

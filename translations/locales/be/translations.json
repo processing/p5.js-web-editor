@@ -168,8 +168,8 @@
     "AutocompleteHinterOnARIA": "অটোকমপ্লিট হিন্টার চালু",
     "AutocompleteHinterOffARIA": "অটোকম",
     "WordWrap": "শব্দ বিন্যাস",
-    "LineWrapOnARIA": "লাইন বিন্যাস অন",
-    "LineWrapOffARIA": "লাইন বিন্যাস অফ",
+    "WordWrapOnARIA": "লাইন বিন্যাস অন",
+    "WordWrapOffARIA": "লাইন বিন্যাস অফ",
     "LineNumbers": "লাইন সংখ্যা",
     "LineNumbersOnARIA": "লাইন সংখ্যা অন",
     "LineNumbersOffARIA": "লাইন সংখ্যা অফ",
@@ -203,7 +203,7 @@
       "CodeEditing": "কোড এডিটিং",
       "ColorPicker": "ইনলাইন রঙ নির্বাচক দেখান"
     },
-    "General": {
+    "GeneralSelection": {
       "StartSketch": "স্কেচ শুরু",
       "StopSketch": "স্কেচ বন্ধ",
       "TurnOnAccessibleOutput": "ব্যবহারযোগ্য আউটপুট চালু করুন",

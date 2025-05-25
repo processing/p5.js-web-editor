@@ -38,7 +38,7 @@ export default function Preferences() {
     tabIndex,
     fontSize,
     autosave,
-    linewrap,
+    wordwrap,
     lineNumbers,
     lintWarning,
     textOutput,
@@ -386,27 +386,27 @@ export default function Preferences() {
               <input
                 type="radio"
                 onChange={() => dispatch(setLinewrap(true))}
-                aria-label={t('Preferences.LineWrapOnARIA')}
-                name="linewrap"
-                id="linewrap-on"
+                aria-label={t('Preferences.WordWrapOnARIA')}
+                name="wordwrap"
+                id="wordwrap-on"
                 className="preference__radio-button"
                 value="On"
-                checked={linewrap}
+                checked={wordwrap}
               />
-              <label htmlFor="linewrap-on" className="preference__option">
+              <label htmlFor="wordwrap-on" className="preference__option">
                 {t('Preferences.On')}
               </label>
               <input
                 type="radio"
                 onChange={() => dispatch(setLinewrap(false))}
-                aria-label={t('Preferences.LineWrapOffARIA')}
-                name="linewrap"
-                id="linewrap-off"
+                aria-label={t('Preferences.WordWrapOffARIA')}
+                name="wordwrap"
+                id="wordwrap-off"
                 className="preference__radio-button"
                 value="Off"
-                checked={!linewrap}
+                checked={!wordwrap}
               />
-              <label htmlFor="linewrap-off" className="preference__option">
+              <label htmlFor="wordwrap-off" className="preference__option">
                 {t('Preferences.Off')}
               </label>
             </fieldset>

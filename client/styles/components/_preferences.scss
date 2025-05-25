@@ -2,7 +2,7 @@
 
 .preferences {
   width: 100%;
-  width: #{math.div(640, $base-font-size)}rem;
+  width: #{math.div(720, $base-font-size)}rem;
   max-width: 100%;
   max-height: 100%;
   z-index: 9999;
@@ -21,7 +21,7 @@
   }
 
   @media (min-width: 770px) {
-    max-height: #{math.div(460, $base-font-size)}rem;
+    max-height: #{math.div(520, $base-font-size)}rem;
   }
 }
 
@@ -203,6 +203,12 @@ input[type="number"]::-webkit-outer-spin-button {
     color: map-get($theme-map, "heavy-text-color");
     font-weight: bold;
   }
+}
+.preference__radio-button:focus + .preference__option,
+.preference__radio-button:focus-visible + .preference__option {
+  outline: 2px solid $dodgerblue; 
+  outline-offset: 2px;
+  border-radius: 4px;
 }
 
 .preference--hidden {

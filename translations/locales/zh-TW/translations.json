@@ -162,8 +162,8 @@
     "AutocompleteHinterOnARIA": "加上補全提示",
     "AutocompleteHinterOffARIA": "不加上補全提示",
     "WordWrap": "折行",
-    "LineWrapOnARIA": "啟用自動折行",
-    "LineWrapOffARIA": "停用自動折行",
+    "WordWrapOnARIA": "啟用自動折行",
+    "WordWrapOffARIA": "停用自動折行",
     "LineNumbers": "行號",
     "LineNumbersOnARIA": "顯示行號",
     "LineNumbersOffARIA": "不顯示行號",
@@ -196,7 +196,7 @@
       "FindPreviousTextMatch": "尋找上一個相符的文字",
       "CodeEditing": "編輯程式碼"
     },
-    "General": {
+    "GeneralSelection": {
       "StartSketch": "執行草稿",
       "StopSketch": "停止草稿",
       "TurnOnAccessibleOutput": "啟用輔助輸出",

@@ -159,8 +159,8 @@
     "AutocloseBracketsQuotesOnARIA": "fechar automaticamente chaves e aspas ativado",
     "AutocloseBracketsQuotesOffARIA": "fechar automaticamente chaves e aspas desativado",
     "WordWrap": "Ajuste Automático de Linhas",
-    "LineWrapOnARIA": "ajuste automático de linhas ativado",
-    "LineWrapOffARIA": "ajuste automático de linhas desativado",
+    "WordWrapOnARIA": "ajuste automático de linhas ativado",
+    "WordWrapOffARIA": "ajuste automático de linhas desativado",
     "LineNumbers": "Número de linhas",
     "LineNumbersOnARIA": "número de linhas ativado",
     "LineNumbersOffARIA": "número de linhas desativado",
@@ -193,7 +193,7 @@
       "FindPreviousTextMatch": "Procurar ocorrência de texto anterior",
       "CodeEditing": "Code Editing"
     },
-    "General": {
+    "GeneralSelection": {
       "StartSketch": "Começar Esboço",
       "StopSketch": "Parar Esboço",
       "TurnOnAccessibleOutput": "Ativar Saída Acessível",

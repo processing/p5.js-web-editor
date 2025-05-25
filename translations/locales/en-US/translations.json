@@ -201,8 +201,8 @@
     "AutocompleteHinterOnARIA": "autocomplete hinter on",
     "AutocompleteHinterOffARIA": "autocomplete hinter off",
     "WordWrap": "Word Wrap",
-    "LineWrapOnARIA": "linewrap on",
-    "LineWrapOffARIA": "linewrap off",
+    "WordWrapOnARIA": "wordwrap on",
+    "WordWrapOffARIA": "wordwrap off",
     "LineNumbers": "Line numbers",
     "LineNumbersOnARIA": "line numbers on",
     "LineNumbersOffARIA": "line numbers off",
@@ -251,11 +251,13 @@
       "ColorPicker": "Show Inline Color Picker",
       "CreateNewFile": "Create New File"
     },
-    "General": {
+    "General": "General",
+    "GeneralSelection": {
       "StartSketch": "Start Sketch",
       "StopSketch": "Stop Sketch",
       "TurnOnAccessibleOutput": "Turn On Accessible Output",
-      "TurnOffAccessibleOutput": "Turn Off Accessible Output"
+      "TurnOffAccessibleOutput": "Turn Off Accessible Output",
+      "Reference": "Go to Reference for Selected Item in Hinter"
     }
   },
   "Sidebar": {
