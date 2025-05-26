@@ -343,16 +343,20 @@ const FileNode = ({
                       {t('FileNode.AddFile')}
                     </button>
                   </li>
-                  {authenticated && (
-                    <li>
-                      <button
-                        aria-label={t('FileNode.UploadFileARIA')}
-                        onClick={handleClickUploadFile}
-                      >
-                        {t('FileNode.UploadFile')}
-                      </button>
-                    </li>
-                  )}
+                  <li>
+                    <button
+                      disabled={!authenticated}
+                      className={!authenticated ? 'tooltipped-login' : ''}
+                      aria-label={
+                        !authenticated
+                          ? t('FileNode.UploadFileRequiresLogin')
+                          : t('FileNode.UploadFileARIA')
+                      }
+                      onClick={handleClickUploadFile}
+                    >
+                      {t('FileNode.UploadFile')}
+                    </button>
+                  </li>
                 </>
               )}
               <li>

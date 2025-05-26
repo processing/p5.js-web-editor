@@ -322,7 +322,6 @@
 .sidebar__file-item--closed .file-item__children {
   display: none;
 }
-
 .sidebar__project-options {
   @extend %dropdown-open-right;
   display: none;
@@ -332,3 +331,48 @@
     display: flex;
   }
 }
+
+// Custom tooltip for upload file when login is required
+.tooltipped-login {
+  position: relative;
+  
+  &::before,
+  &::after {
+    position: absolute;
+    z-index: 1000000;
+    display: none;
+    pointer-events: none;
+  }
+  
+  &::after {
+    padding: 5px 8px;
+    font-size: #{math.div(12, $base-font-size)}rem;
+    font-family: Montserrat, sans-serif;
+    content: attr(aria-label);
+    border-radius: 3px;
+    background-color: white !important;
+    color: black !important;
+    text-align: center;
+    white-space: pre;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  }
+  
+  &::before {
+    display: none;
+  }
+  
+  &:hover::after,
+  &:active::after,
+  &:focus::after {
+    display: inline-block;
+    text-decoration: none;
+  }
+  
+  &::after {
+    bottom: -35px;
+    right: auto;
+    left: 5px;
+    transform: none;
+  }
+}
+

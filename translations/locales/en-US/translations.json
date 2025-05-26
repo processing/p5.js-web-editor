@@ -268,7 +268,8 @@
     "AddFile": "Create file",
     "AddFileARIA": "add file",
     "UploadFile": "Upload file",
-    "UploadFileARIA": "upload file"
+    "UploadFileARIA": "upload file",
+    "UploadFileRequiresLogin": "You must log in to upload files"
   },
   "FileNode": {
     "OpenFolderARIA": "Open folder contents",
@@ -280,6 +281,7 @@
     "AddFileARIA": "add file",
     "UploadFile": "Upload file",
     "UploadFileARIA": "upload file",
+    "UploadFileRequiresLogin": "You must log in to upload files",
     "Rename": "Rename",
     "Delete": "Delete"
   },
