@@ -10,6 +10,7 @@ import PreviewFrame from '../components/PreviewFrame';
 import Console from '../components/Console';
 import Toast from '../components/Toast';
 import { updateFileContent } from '../actions/files';
+import { ConsoleProvider } from '../context/ConsoleContext';
 
 import {
   autosaveProject,
@@ -167,127 +168,130 @@ const IDEView = () => {
     : consoleCollapsedSize;
 
   return (
-    <RootPage>
-      <Helmet>
-        <title>{getTitle(project)}</title>
-      </Helmet>
-      <IDEKeyHandlers getContent={() => cmRef.current?.getContent()} />
-      <WarnIfUnsavedChanges />
-      <Toast />
-      <P5VersionProvider>
-        <CmControllerContext.Provider value={cmRef}>
-          <Header syncFileContent={syncFileContent} />
-        </CmControllerContext.Provider>
-        {isMobile ? (
-          <>
-            <FloatingActionButton
-              syncFileContent={syncFileContent}
-              offsetBottom={ide.isPlaying ? currentConsoleSize : 0}
-            />
-            <PreviewWrapper show={ide.isPlaying}>
-              <SplitPane
-                style={{ position: 'static' }}
-                split="horizontal"
-                primary="second"
-                size={currentConsoleSize}
-                minSize={consoleCollapsedSize}
-                onChange={(size) => {
-                  setConsoleSize(size);
-                  setIsOverlayVisible(true);
-                }}
-                onDragFinished={() => {
-                  setIsOverlayVisible(false);
-                }}
-                allowResize={ide.consoleIsExpanded}
-                className="editor-preview-subpanel"
-              >
-                <PreviewFrame
-                  fullView
-                  hide={!ide.isPlaying}
-                  cmController={cmRef.current}
-                  isOverlayVisible={isOverlayVisible}
-                />
-                <Console />
-              </SplitPane>
-            </PreviewWrapper>
-            <EditorSidebarWrapper show={!ide.isPlaying}>
-              <Sidebar />
-              <Editor
-                provideController={(ctl) => {
-                  cmRef.current = ctl;
-                }}
+    <ConsoleProvider>
+      <RootPage>
+        <Helmet>
+          <title>{getTitle(project)}</title>
+        </Helmet>
+        <IDEKeyHandlers getContent={() => cmRef.current?.getContent()} />
+        <WarnIfUnsavedChanges />
+        <Toast />
+        <P5VersionProvider>
+          <CmControllerContext.Provider value={cmRef}>
+            <Header syncFileContent={syncFileContent} />
+          </CmControllerContext.Provider>
+          {isMobile ? (
+            <>
+              <FloatingActionButton
+                syncFileContent={syncFileContent}
+                offsetBottom={ide.isPlaying ? currentConsoleSize : 0}
               />
-            </EditorSidebarWrapper>
-          </>
-        ) : (
-          <main className="editor-preview-container">
-            <SplitPane
-              split="vertical"
-              size={ide.sidebarIsExpanded ? sidebarSize : 20}
-              onChange={(size) => {
-                setSidebarSize(size);
-              }}
-              allowResize={ide.sidebarIsExpanded}
-              minSize={150}
-            >
-              <Sidebar />
-              <SplitPane
-                split="vertical"
-                maxSize={MaxSize * 0.965}
-                defaultSize="50%"
-                onChange={() => {
-                  setIsOverlayVisible(true);
-                }}
-                onDragFinished={() => {
-                  setIsOverlayVisible(false);
-                }}
-                resizerStyle={{
-                  borderLeftWidth: '2px',
-                  borderRightWidth: '2px',
-                  width: '2px',
-                  margin: '0px 0px'
-                }}
-              >
+              <PreviewWrapper show={ide.isPlaying}>
                 <SplitPane
+                  style={{ position: 'static' }}
                   split="horizontal"
                   primary="second"
                   size={currentConsoleSize}
                   minSize={consoleCollapsedSize}
                   onChange={(size) => {
                     setConsoleSize(size);
+                    setIsOverlayVisible(true);
+                  }}
+                  onDragFinished={() => {
+                    setIsOverlayVisible(false);
                   }}
                   allowResize={ide.consoleIsExpanded}
                   className="editor-preview-subpanel"
                 >
-                  <Editor
-                    provideController={(ctl) => {
-                      cmRef.current = ctl;
-                    }}
+                  <PreviewFrame
+                    fullView
+                    hide={!ide.isPlaying}
+                    cmController={cmRef.current}
+                    isOverlayVisible={isOverlayVisible}
                   />
                   <Console />
                 </SplitPane>
-                <section className="preview-frame-holder">
-                  <header className="preview-frame__header">
-                    <h2 className="preview-frame__title">
-                      {t('Toolbar.Preview')}
-                    </h2>
-                  </header>
-                  <div className="preview-frame__content">
-                    <PreviewFrame
-                      cmController={cmRef.current}
-                      isOverlayVisible={isOverlayVisible}
+              </PreviewWrapper>
+              <EditorSidebarWrapper show={!ide.isPlaying}>
+                <Sidebar />
+                <Editor
+                  provideController={(ctl) => {
+                    cmRef.current = ctl;
+                  }}
+                />
+              </EditorSidebarWrapper>
+            </>
+          ) : (
+            <main className="editor-preview-container">
+              <SplitPane
+                split="vertical"
+                size={ide.sidebarIsExpanded ? sidebarSize : 20}
+                onChange={(size) => {
+                  setSidebarSize(size);
+                }}
+                allowResize={ide.sidebarIsExpanded}
+                minSize={150}
+              >
+                <Sidebar />
+                <SplitPane
+                  split="vertical"
+                  maxSize={MaxSize * 0.965}
+                  defaultSize="50%"
+                  onChange={() => {
+                    setIsOverlayVisible(true);
+                  }}
+                  onDragFinished={() => {
+                    setIsOverlayVisible(false);
+                  }}
+                  resizerStyle={{
+                    borderLeftWidth: '2px',
+                    borderRightWidth: '2px',
+                    width: '2px',
+                    margin: '0px 0px'
+                  }}
+                >
+                  <SplitPane
+                    split="horizontal"
+                    primary="second"
+                    size={currentConsoleSize}
+                    minSize={consoleCollapsedSize}
+                    onChange={(size) => {
+                      setConsoleSize(size);
+                    }}
+                    allowResize={ide.consoleIsExpanded}
+                    className="editor-preview-subpanel"
+                  >
+                    <Editor
+                      provideController={(ctl) => {
+                        cmRef.current = ctl;
+                      }}
                     />
-                  </div>
-                </section>
+                    <Console />
+                  </SplitPane>
+                  <section className="preview-frame-holder">
+                    <header className="preview-frame__header">
+                      <h2 className="preview-frame__title">
+                        {t('Toolbar.Preview')}
+                      </h2>
+                    </header>
+                    <div className="preview-frame__content">
+                      <PreviewFrame
+                        cmController={cmRef.current}
+                        isOverlayVisible={isOverlayVisible}
+                      />
+                    </div>
+                  </section>
+                </SplitPane>
               </SplitPane>
-            </SplitPane>
-          </main>
-        )}
-        <CmControllerContext.Provider value={cmRef}>
-          <IDEOverlays />
-        </CmControllerContext.Provider>
-      </P5VersionProvider>
-    </RootPage>
+            </main>
+          )}
+          <CmControllerContext.Provider value={cmRef}>
+            <IDEOverlays />
+          </CmControllerContext.Provider>
+        </P5VersionProvider>
+        <Console />
+      </RootPage>
+    </ConsoleProvider>
   );
 };
 
