@@ -1,10 +1,11 @@
 import { useDispatch } from 'react-redux';
 import { Decode } from 'console-feed';
-import { dispatchConsoleEvent } from '../actions/console';
 import { stopSketch, expandConsole } from '../actions/ide';
+import { useConsole } from '../context/ConsoleContext';
 
 export default function useHandleMessageEvent() {
   const dispatch = useDispatch();
+  const { dispatchConsoleEvent } = useConsole();
 
   const safeStringify = (
     obj,
@@ -62,7 +63,7 @@ export default function useHandleMessageEvent() {
       return;
     }
 
-    dispatch(dispatchConsoleEvent(decodedMessages));
+    dispatchConsoleEvent(decodedMessages);
   };
 
   return handleMessageEvent;

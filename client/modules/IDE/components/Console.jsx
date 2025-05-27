@@ -10,15 +10,15 @@ import UpArrowIcon from '../../../images/up-arrow.svg';
 import DownArrowIcon from '../../../images/down-arrow.svg';
 
 import * as IDEActions from '../../IDE/actions/ide';
-import * as ConsoleActions from '../../IDE/actions/console';
 import { useDidUpdate } from '../hooks/custom-hooks';
 import useHandleMessageEvent from '../hooks/useHandleMessageEvent';
 import { listen } from '../../../utils/dispatcher';
 import getConsoleFeedStyle from '../utils/consoleStyles';
+import { useConsole } from '../context/ConsoleContext';
 
 const Console = () => {
   const { t } = useTranslation();
-  const consoleEvents = useSelector((state) => state.console);
+  const { consoleEvents, clearConsole: clearConsoleContext } = useConsole();
   const isExpanded = useSelector((state) => state.ide.consoleIsExpanded);
   const isPlaying = useSelector((state) => state.ide.isPlaying);
   const { theme, fontSize } = useSelector((state) => state.preferences);
@@ -44,7 +44,7 @@ const Console = () => {
     };
   });
 
-  const handleClearConsole = () => dispatch(ConsoleActions.clearConsole());
+  const handleClearConsole = () => clearConsoleContext();
   const handleCollapseConsole = () => dispatch(IDEActions.collapseConsole());
   const handleExpandConsole = () => dispatch(IDEActions.expandConsole());
 
