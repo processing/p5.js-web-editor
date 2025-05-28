@@ -200,7 +200,7 @@
       "FindPreviousTextMatch": "Encontrar la ocurrencia previa de texto",
       "CodeEditing": "Editando Código"
     },
-    "General": {
+    "GeneralSelection": {
       "StartSketch": "Iniciar bosquejo",
       "StopSketch": "Detener bosquejo",
       "TurnOnAccessibleOutput": "Activar salida accesible",

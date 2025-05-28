@@ -181,7 +181,7 @@
       "FindPreviousTextMatch": "이전 텍스트 일치 항목 찾기",
       "CodeEditing": "코드 편집"
     },
-    "General": {
+    "GeneralSelection": {
       "StartSketch": "스케치 시작",
       "StopSketch": "스케치 중지",
       "TurnOnAccessibleOutput": "접근 가능한 출력 활성화",

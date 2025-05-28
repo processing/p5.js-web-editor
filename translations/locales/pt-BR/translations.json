@@ -193,7 +193,7 @@
       "FindPreviousTextMatch": "Procurar ocorrência de texto anterior",
       "CodeEditing": "Code Editing"
     },
-    "General": {
+    "GeneralSelection": {
       "StartSketch": "Começar Esboço",
       "StopSketch": "Parar Esboço",
       "TurnOnAccessibleOutput": "Ativar Saída Acessível",

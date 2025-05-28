@@ -139,6 +139,7 @@
       "Settings": "Paramètres",
       "GeneralSettings": "Paramètres généraux",
       "Accessibility": "Accessibilité",
+      "LibraryManagement": "Gestion de bibliothèque",
       "Theme": "Thème",
       "LightTheme": "Clair",
       "LightThemeARIA": "Thème clair activé",
@@ -176,6 +177,12 @@
       "TextOutputARIA": "sortie texte activée",
       "TableText": "Tableau de texte",
       "TableOutputARIA": "sortie tableau de texte activée",
+      "LibraryVersion": "Version de p5.js",
+      "LibraryVersionInfo": "Une [nouvelle version 2.0](https://github.com/processing/p5.js/releases/) de p5.js est disponible ! Elle deviendra la version par défaut en août 2026, alors profitez de ce temps pour la tester et signaler les bogues. Intéressé à migrer vos esquisses de 1.x vers 2.0 ? Consultez les [ressources de compatibilité et de transition.](https://github.com/processing/p5.js-compatibility)",
+      "SoundAddon": "p5.sound.js Add-on Bibliothèque",
+      "PreloadAddon": "p5.js 1.x Compatibility Add-on Bibliothèque — Préchargement",
+      "ShapesAddon": "p5.js 1.x Compatibility Add-on Bibliothèque — Formes",
+      "DataAddon": "p5.js 1.x Compatibility Add-on Bibliothèque — Structures de données",
       "Sound": "Son",
       "SoundOutputARIA": "sortie son activée"
     },
@@ -196,7 +203,7 @@
         "FindPreviousTextMatch": "Correspondance texte précédente",
         "CodeEditing": "Édition de code"
       },
-      "General": {
+      "GeneralSelection": {
         "StartSketch": "Exécuter le croquis",
         "StopSketch": "Arrêter le croquis",
         "TurnOnAccessibleOutput": "Activer la sortie accessible",

@@ -196,7 +196,7 @@
       "FindPreviousTextMatch": "查找上一个符合的文字",
       "CodeEditing": "代码编辑"
     },
-    "General": {
+    "GeneralSelection": {
       "StartSketch": "运行项目",
       "StopSketch": "停止运行",
       "TurnOnAccessibleOutput": "打开无障碍输出",

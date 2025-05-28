@@ -195,7 +195,7 @@
       "FindPreviousTextMatch": "Знайти попередній збіг тексту",
       "CodeEditing": "Редагування коду"
     },
-    "General": {
+    "GeneralSelection": {
       "StartSketch": "Запустити",
       "StopSketch": "Зупинити",
       "TurnOnAccessibleOutput": "Увімкнути доступне виведення",

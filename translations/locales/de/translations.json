@@ -193,7 +193,7 @@
       "FindPreviousTextMatch": "Vorherigen Text-Treffer finden",
       "CodeEditing": "Code editieren"
     },
-    "General": {
+    "GeneralSelection": {
       "StartSketch": "Sketch starten",
       "StopSketch": "Sketch stoppen",
       "TurnOnAccessibleOutput": "Barrierefreie Ausgabe einschalten",

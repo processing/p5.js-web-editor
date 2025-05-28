@@ -196,7 +196,7 @@
       "FindPreviousTextMatch": "尋找上一個相符的文字",
       "CodeEditing": "編輯程式碼"
     },
-    "General": {
+    "GeneralSelection": {
       "StartSketch": "執行草稿",
       "StopSketch": "停止草稿",
       "TurnOnAccessibleOutput": "啟用輔助輸出",

@@ -193,7 +193,7 @@
         "FindPreviousTextMatch": "前の一致するテキストを検索",
         "CodeEditing": "コード編集"
       },
-      "General": {
+      "GeneralSelection": {
         "StartSketch": "スケッチを実行",
         "StopSketch": "スケッチを停止",
         "TurnOnAccessibleOutput": "アクセシビリティ出力を有効にする",

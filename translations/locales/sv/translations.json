@@ -193,7 +193,7 @@
       "FindPreviousTextMatch": "Sök föregående textmatchning",
       "CodeEditing": "kodredigering"
     },
-    "General": {
+    "GeneralSelection": {
       "StartSketch": "Kör sketch",
       "StopSketch": "Stoppa sketch",
       "TurnOnAccessibleOutput": "Sätt på tillgänglig output",

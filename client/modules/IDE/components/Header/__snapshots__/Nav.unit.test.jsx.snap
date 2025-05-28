@@ -6,42 +6,52 @@ exports[`Nav renders dashboard version for desktop 1`] = `
     class="nav__header"
   >
     <div
+      class="nav__item-logo"
+    >
+      <a
+        href="https://p5js.org"
+      >
+        <test-file-stub
+          aria-label="p5.js Logo"
+          classname="svg__logo"
+          focusable="true"
+          role="img"
+        />
+      </a>
+    </div>
+    <nav
       class="nav"
     >
       <ul
-        class="nav__items-left"
+        class="nav__menubar"
+        role="menubar"
       >
-        <li
-          class="nav__item-logo"
+        <ul
+          class="nav__items-left"
+          role="group"
         >
-          <test-file-stub
-            aria-label="p5.js Logo"
-            classname="svg__logo"
-            focusable="false"
-            role="img"
-          />
-        </li>
-        <li
-          class="nav__item nav__item--no-icon"
-        >
-          <a
-            class="nav__back-link"
-            href="/"
+          <li
+            class="nav__item nav__item--no-icon"
           >
-            <test-file-stub
-              aria-hidden="true"
-              classname="nav__back-icon"
-              focusable="false"
-            />
-            <span
-              class="nav__item-header"
+            <a
+              class="nav__back-link"
+              href="/"
             >
-              Back to Editor
-            </span>
-          </a>
-        </li>
+              <test-file-stub
+                aria-hidden="true"
+                classname="nav__back-icon"
+                focusable="false"
+              />
+              <span
+                class="nav__item-header"
+              >
+                Back to Editor
+              </span>
+            </a>
+          </li>
+        </ul>
       </ul>
-    </div>
+    </nav>
   </header>
 </DocumentFragment>
 `;
@@ -267,8 +277,9 @@ exports[`Nav renders dashboard version for mobile 1`] = `
   color: #FFF;
 }
 
-<div
+<ul
     class="c0"
+    role="menubar"
   >
     <div
       class="c1"
@@ -350,30 +361,24 @@ exports[`Nav renders dashboard version for mobile 1`] = `
           <b>
             File
           </b>
-          <li
-            class="nav__dropdown-item"
-          >
+          <li>
             <button
-              role="menuitem"
+              aria-disabled="false"
             >
               New
             </button>
           </li>
-          <li
-            class="nav__dropdown-item"
-          >
+          <li>
             <button
-              role="menuitem"
+              aria-disabled="false"
             >
               Save
             </button>
           </li>
-          <li
-            class="nav__dropdown-item"
-          >
+          <li>
             <a
+              aria-disabled="false"
               href="/p5/sketches"
-              role="menuitem"
             >
               Examples
             </a>
@@ -381,20 +386,16 @@ exports[`Nav renders dashboard version for mobile 1`] = `
           <b>
             Edit
           </b>
-          <li
-            class="nav__dropdown-item"
-          >
+          <li>
             <button
-              role="menuitem"
+              aria-disabled="false"
             >
               Tidy Code
             </button>
           </li>
-          <li
-            class="nav__dropdown-item"
-          >
+          <li>
             <button
-              role="menuitem"
+              aria-disabled="false"
             >
               Find
             </button>
@@ -402,20 +403,16 @@ exports[`Nav renders dashboard version for mobile 1`] = `
           <b>
             Sketch
           </b>
-          <li
-            class="nav__dropdown-item"
-          >
+          <li>
             <button
-              role="menuitem"
+              aria-disabled="false"
             >
               Add File
             </button>
           </li>
-          <li
-            class="nav__dropdown-item"
-          >
+          <li>
             <button
-              role="menuitem"
+              aria-disabled="false"
             >
               Add Folder
             </button>
@@ -423,20 +420,16 @@ exports[`Nav renders dashboard version for mobile 1`] = `
           <b>
             Settings
           </b>
-          <li
-            class="nav__dropdown-item"
-          >
+          <li>
             <button
-              role="menuitem"
+              aria-disabled="false"
             >
               Preferences
             </button>
           </li>
-          <li
-            class="nav__dropdown-item"
-          >
+          <li>
             <button
-              role="menuitem"
+              aria-disabled="false"
             >
               Language
             </button>
@@ -444,33 +437,27 @@ exports[`Nav renders dashboard version for mobile 1`] = `
           <b>
             Help
           </b>
-          <li
-            class="nav__dropdown-item"
-          >
+          <li>
             <button
-              role="menuitem"
+              aria-disabled="false"
             >
               Keyboard Shortcuts
             </button>
           </li>
-          <li
-            class="nav__dropdown-item"
-          >
+          <li>
             <a
+              aria-disabled="false"
               href="https://p5js.org/reference/"
               rel="noopener noreferrer"
-              role="menuitem"
               target="_blank"
             >
               Reference
             </a>
           </li>
-          <li
-            class="nav__dropdown-item"
-          >
+          <li>
             <a
+              aria-disabled="false"
               href="/about"
-              role="menuitem"
             >
               About
             </a>
@@ -478,7 +465,7 @@ exports[`Nav renders dashboard version for mobile 1`] = `
         </ul>
       </div>
     </div>
-  </div>
+  </ul>
 </DocumentFragment>
 `;
 
@@ -488,261 +475,178 @@ exports[`Nav renders editor version for desktop 1`] = `
     class="nav__header"
   >
     <div
+      class="nav__item-logo"
+    >
+      <a
+        href="https://p5js.org"
+      >
+        <test-file-stub
+          aria-label="p5.js Logo"
+          classname="svg__logo"
+          focusable="true"
+          role="img"
+        />
+      </a>
+    </div>
+    <nav
       class="nav"
     >
       <ul
-        class="nav__items-left"
+        class="nav__menubar"
         role="menubar"
       >
-        <li
-          class="nav__item-logo"
+        <ul
+          class="nav__items-left"
+          role="group"
         >
-          <a
-            href="https://p5js.org"
-          >
-            <test-file-stub
-              aria-label="p5.js Logo"
-              classname="svg__logo"
-              focusable="false"
-              role="img"
-            />
-          </a>
-        </li>
-        <li
-          class="nav__item"
-        >
-          <button
-            aria-expanded="false"
-            aria-haspopup="menu"
-            role="menuitem"
+          <li
+            class="nav__item"
           >
             <span
-              class="nav__item-header"
+              role="menuitem"
             >
               File
             </span>
-            <test-file-stub
-              aria-hidden="true"
-              classname="nav__item-header-triangle"
-              focusable="false"
-            />
-          </button>
-          <ul
-            class="nav__dropdown"
-            role="menu"
-          >
-            <li
-              class="nav__dropdown-item"
+            <ul
+              aria-label="File menu"
+              role="menu"
             >
-              <button
-                role="menuitem"
-              >
+              <li>
                 New
-              </button>
-            </li>
-          </ul>
-        </li>
-        <li
-          class="nav__item"
-        >
-          <button
-            aria-expanded="false"
-            aria-haspopup="menu"
-            role="menuitem"
+              </li>
+              <li>
+                Save
+                <span
+                  class="nav__keyboard-shortcut"
+                >
+                  Ctrl+S
+                </span>
+              </li>
+              <li>
+                Duplicate
+              </li>
+              <li>
+                Share
+              </li>
+              <li>
+                Download
+              </li>
+              <li>
+                Open
+              </li>
+              <li>
+                Add to Collection
+              </li>
+              <li>
+                Examples
+              </li>
+            </ul>
+          </li>
+          <li
+            class="nav__item"
           >
             <span
-              class="nav__item-header"
+              role="menuitem"
             >
               Edit
             </span>
-            <test-file-stub
-              aria-hidden="true"
-              classname="nav__item-header-triangle"
-              focusable="false"
-            />
-          </button>
-          <ul
-            class="nav__dropdown"
-            role="menu"
-          >
-            <li
-              class="nav__dropdown-item"
+            <ul
+              aria-label="Edit menu"
+              role="menu"
             >
-              <button
-                role="menuitem"
-              >
+              <li>
                 Tidy Code
                 <span
                   class="nav__keyboard-shortcut"
                 >
                   Ctrl+Shift+F
                 </span>
-              </button>
-            </li>
-            <li
-              class="nav__dropdown-item"
-            >
-              <button
-                role="menuitem"
-              >
+              </li>
+              <li>
                 Find
                 <span
                   class="nav__keyboard-shortcut"
                 >
                   Ctrl+F
                 </span>
-              </button>
-            </li>
-            <li
-              class="nav__dropdown-item"
-            >
-              <button
-                role="menuitem"
-              >
+              </li>
+              <li>
                 Replace
                 <span
                   class="nav__keyboard-shortcut"
                 >
                   Ctrl+H
                 </span>
-              </button>
-            </li>
-          </ul>
-        </li>
-        <li
-          class="nav__item"
-        >
-          <button
-            aria-expanded="false"
-            aria-haspopup="menu"
-            role="menuitem"
+              </li>
+            </ul>
+          </li>
+          <li
+            class="nav__item"
           >
             <span
-              class="nav__item-header"
+              role="menuitem"
             >
               Sketch
             </span>
-            <test-file-stub
-              aria-hidden="true"
-              classname="nav__item-header-triangle"
-              focusable="false"
-            />
-          </button>
-          <ul
-            class="nav__dropdown"
-            role="menu"
-          >
-            <li
-              class="nav__dropdown-item"
+            <ul
+              aria-label="Sketch menu"
+              role="menu"
             >
-              <button
-                role="menuitem"
-              >
+              <li>
                 Add File
                 <span
                   class="nav__keyboard-shortcut"
                 >
                   Ctrl+Alt+N
                 </span>
-              </button>
-            </li>
-            <li
-              class="nav__dropdown-item"
-            >
-              <button
-                role="menuitem"
-              >
+              </li>
+              <li>
                 Add Folder
-              </button>
-            </li>
-            <li
-              class="nav__dropdown-item"
-            >
-              <button
-                role="menuitem"
-              >
+              </li>
+              <li>
                 Run
                 <span
                   class="nav__keyboard-shortcut"
                 >
                   Ctrl+Enter
                 </span>
-              </button>
-            </li>
-            <li
-              class="nav__dropdown-item"
-            >
-              <button
-                role="menuitem"
-              >
+              </li>
+              <li>
                 Stop
                 <span
                   class="nav__keyboard-shortcut"
                 >
                   Shift+Ctrl+Enter
                 </span>
-              </button>
-            </li>
-          </ul>
-        </li>
-        <li
-          class="nav__item"
-        >
-          <button
-            aria-expanded="false"
-            aria-haspopup="menu"
-            role="menuitem"
+              </li>
+            </ul>
+          </li>
+          <li
+            class="nav__item"
           >
             <span
-              class="nav__item-header"
+              role="menuitem"
             >
               Help
             </span>
-            <test-file-stub
-              aria-hidden="true"
-              classname="nav__item-header-triangle"
-              focusable="false"
-            />
-          </button>
-          <ul
-            class="nav__dropdown"
-            role="menu"
-          >
-            <li
-              class="nav__dropdown-item"
+            <ul
+              aria-label="Help menu"
+              role="menu"
             >
-              <button
-                role="menuitem"
-              >
+              <li>
                 Keyboard Shortcuts
-              </button>
-            </li>
-            <li
-              class="nav__dropdown-item"
-            >
-              <a
-                href="https://p5js.org/reference/"
-                rel="noopener noreferrer"
-                role="menuitem"
-                target="_blank"
-              >
+              </li>
+              <li>
                 Reference
-              </a>
-            </li>
-            <li
-              class="nav__dropdown-item"
-            >
-              <a
-                href="/about"
-                role="menuitem"
-              >
+              </li>
+              <li>
                 About
-              </a>
-            </li>
-          </ul>
-        </li>
+              </li>
+            </ul>
+          </li>
+        </ul>
       </ul>
-    </div>
+    </nav>
   </header>
 </DocumentFragment>
 `;
@@ -968,8 +872,9 @@ exports[`Nav renders editor version for mobile 1`] = `
   color: #FFF;
 }
 
-<div
+<ul
     class="c0"
+    role="menubar"
   >
     <div
       class="c1"
@@ -1051,30 +956,24 @@ exports[`Nav renders editor version for mobile 1`] = `
           <b>
             File
           </b>
-          <li
-            class="nav__dropdown-item"
-          >
+          <li>
             <button
-              role="menuitem"
+              aria-disabled="false"
             >
               New
             </button>
           </li>
-          <li
-            class="nav__dropdown-item"
-          >
+          <li>
             <button
-              role="menuitem"
+              aria-disabled="false"
             >
               Save
             </button>
           </li>
-          <li
-            class="nav__dropdown-item"
-          >
+          <li>
             <a
+              aria-disabled="false"
               href="/p5/sketches"
-              role="menuitem"
             >
               Examples
             </a>
@@ -1082,20 +981,16 @@ exports[`Nav renders editor version for mobile 1`] = `
           <b>
             Edit
           </b>
-          <li
-            class="nav__dropdown-item"
-          >
+          <li>
             <button
-              role="menuitem"
+              aria-disabled="false"
             >
               Tidy Code
             </button>
           </li>
-          <li
-            class="nav__dropdown-item"
-          >
+          <li>
             <button
-              role="menuitem"
+              aria-disabled="false"
             >
               Find
             </button>
@@ -1103,20 +998,16 @@ exports[`Nav renders editor version for mobile 1`] = `
           <b>
             Sketch
           </b>
-          <li
-            class="nav__dropdown-item"
-          >
+          <li>
             <button
-              role="menuitem"
+              aria-disabled="false"
             >
               Add File
             </button>
           </li>
-          <li
-            class="nav__dropdown-item"
-          >
+          <li>
             <button
-              role="menuitem"
+              aria-disabled="false"
             >
               Add Folder
             </button>
@@ -1124,20 +1015,16 @@ exports[`Nav renders editor version for mobile 1`] = `
           <b>
             Settings
           </b>
-          <li
-            class="nav__dropdown-item"
-          >
+          <li>
             <button
-              role="menuitem"
+              aria-disabled="false"
             >
               Preferences
             </button>
           </li>
-          <li
-            class="nav__dropdown-item"
-          >
+          <li>
             <button
-              role="menuitem"
+              aria-disabled="false"
             >
               Language
             </button>
@@ -1145,33 +1032,27 @@ exports[`Nav renders editor version for mobile 1`] = `
           <b>
             Help
           </b>
-          <li
-            class="nav__dropdown-item"
-          >
+          <li>
             <button
-              role="menuitem"
+              aria-disabled="false"
             >
               Keyboard Shortcuts
             </button>
           </li>
-          <li
-            class="nav__dropdown-item"
-          >
+          <li>
             <a
+              aria-disabled="false"
               href="https://p5js.org/reference/"
               rel="noopener noreferrer"
-              role="menuitem"
               target="_blank"
             >
               Reference
             </a>
           </li>
-          <li
-            class="nav__dropdown-item"
-          >
+          <li>
             <a
+              aria-disabled="false"
               href="/about"
-              role="menuitem"
             >
               About
             </a>
@@ -1179,6 +1060,6 @@ exports[`Nav renders editor version for mobile 1`] = `
         </ul>
       </div>
     </div>
-  </div>
+  </ul>
 </DocumentFragment>
 `;
