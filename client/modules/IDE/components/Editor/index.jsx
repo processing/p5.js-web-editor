@@ -31,7 +31,7 @@ import { EditorContainer, EditorHolder } from './MobileEditor';
 import { FolderIcon } from '../../../../common/icons';
 import IconButton from '../../../../common/IconButton';
 
-import useCodeMirror from './codeMirror';
+import useCodeMirror from './codemirror';
 import { useEffectWithComparison } from '../../hooks/custom-hooks';
 
 function Editor({
