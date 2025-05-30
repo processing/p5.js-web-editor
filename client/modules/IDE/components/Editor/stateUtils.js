@@ -56,7 +56,7 @@ import tidyCodeWithPrettier from './tidier';
 // - add docstrings for all exported functions
 
 /** Detects what mode the file is based on the name. */
-function getFileMode(fileName) {
+export function getFileMode(fileName) {
   let mode;
   if (fileName.match(/.+\.js$/i)) {
     mode = 'javascript';
