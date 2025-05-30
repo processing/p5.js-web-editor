@@ -1,8 +1,17 @@
-# Preparing a pull request
+# Preparing a Pull Request
 
 Copied and updated from the [p5.js repository](https://github.com/processing/p5.js).
 
-Pull-requests are easier when your code is up to date! You can use git rebase to update your code to incorporate changes from other contributors. Here's how.
+Pull-requests are easier when your code is up to date! 
+
+## Before Submitting a Pull Request
+Before submitting a pull request, make sure that:
+
+- Your work is related to an issue. **Pull requests that do not have an associated issue will not be accepted.** 
+- Your work adheres to the style guidelines and fits in with the rest of the codebase.
+- You ran the project locally and tested your changes. Pay special attention to any specific areas of the p5.js editor that may be affected by your changes. Does everything still work as before? Great!
+
+Once that's done, you can use git rebase to update your code to incorporate changes from other contributors. Here's how.
 
 ## Save and Update
 
@@ -39,6 +48,9 @@ Then ask git about the latest changes.
 
 ### Verifies what git will be committing  
     git status       
+
+## Pull Request Templates
+Once you've opened your pull request, please ensure that you follow the guidelines and 
 
 ## CONFLICTS
 You may have some conflicts! It's okay. Feel free to ask for help. If merging with the latest upstream `develop` branch causes conflicts, you can always make a pull request with the upstream repository, which makes the merge conflicts public.

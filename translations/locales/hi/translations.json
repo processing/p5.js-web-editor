@@ -92,14 +92,13 @@
     "About": {
       "Title": "के बारे में",
       "TitleHelmet": "p5.js वेब एडिटर | के बारे में",
+      "Headline": "p5.js एडिटर के साथ p5.js स्केच बनाएं, शेयर करें और रीमिक्स करें।",
+      "IntroDescription1": "p5.js एक मुफ्त, ओपन-सोर्स जावास्क्रिप्ट लाइब्रेरी है जिससे कोडिंग सीखने और कला बनाने में मदद मिलती है। p5.js एडिटर का उपयोग करके, आप बिना कुछ भी डाउनलोड या कॉन्फ़िगर किए p5.js स्केच बना सकते हैं, शेयर कर सकते हैं और रीमिक्स कर सकते हैं।",
+      "IntroDescription2": "हमारा मानना है कि सॉफ़्टवेयर और इसे सीखने के उपकरण यथासंभव खुले और समावेशी होने चाहिए। आप प्रोसेसिंग फाउंडेशन को दान करके इस कार्य का समर्थन कर सकते हैं, जो संगठन p5.js का समर्थन करता है। आपका दान p5.js के लिए सॉफ़्टवेयर विकास, कोड उदाहरण और ट्यूटोरियल जैसे शिक्षा संसाधन, फेलोशिप और सामुदायिक कार्यक्रमों का समर्थन करता है।",
       "Contribute": "योगदान",
       "NewP5": "p5.js पर नये?",
       "Report": "बग रिपोर्ट",
       "Learn": "सीखें",
-      "Twitter": "ट्विटर",
-      "Home": "होम",
-      "Instagram": "इंस्टाग्राम",
-      "Discord": "डिस्कॉर्ड",
       "WebEditor": "वेब संपादक",
       "Resources": "साधन",
       "Libraries": "लाइब्रेरीज़",
@@ -111,7 +110,29 @@
       "Discord": "डिस्कॉर्ड",
       "PrivacyPolicy": "गोपनीयता नीति",
       "TermsOfUse": "उपयोग की शर्तें",
-      "CodeOfConduct": "आचार संहिता"
+      "CodeOfConduct": "आचार संहिता",
+      "DiscordCTA": "डिस्कॉर्ड से जुड़ें",
+      "ForumCTA": "समूह से जुड़ें",
+      "Socials": "सोशल मीडिया",
+      "Email": "ईमेल",
+      "Youtube": "यूट्यूब",
+      "Github": "गिटहब",
+      "Reference": "रेफरेंस",
+      "Donate": "दान करें",
+      "GetInvolved": "शामिल हों",
+      "X": "एक्स",
+      "LinkDescriptions": {
+        "Home": "p5.js और हमारे समुदाय के बारे में अधिक जानें।",
+        "Examples": "संक्षिप्त उदाहरणों के साथ p5.js की संभावनाओं का पता लगाएं।",
+        "CodeOfConduct": "हमारी सामुदायिक स्थिति और आचार संहिता पढ़ें।",
+        "Libraries": "समुदाय द्वारा बनाई गई लाइब्रेरीज़ के साथ p5.js की संभावनाओं का विस्तार करें।",
+        "Reference": "p5.js कोड के हर हिस्से के लिए आसान व्याख्याएं खोजें।",
+        "Donate": "प्रोसेसिंग फाउंडेशन को दान देकर इस काम का समर्थन करें।",
+        "Contribute": "गिटहब पर ओपन-सोर्स p5.js एडिटर में योगदान दें।",
+        "Report": "p5.js एडिटर के साथ टूटे या गलत व्यवहार की रिपोर्ट करें।",
+        "Forum": "समुदाय द्वारा बनाई गई लाइब्रेरीज़ के साथ p5.js की संभावनाओं का विस्तार करें।",
+        "Discord": "समुदाय द्वारा बनाई गई लाइब्रेरीज़ के साथ p5.js की संभावनाओं का विस्तार करें।"
+      }
     },
     "Toast": {
       "OpenedNewSketch": "नया स्केच खोला",
@@ -135,7 +156,10 @@
       "StopSketchARIA": "स्केच बंद करे",
       "EditSketchARIA": "स्केच का नाम संपादित करें",
       "NewSketchNameARIA": "नया स्केच नाम",
-      "By": " द्वारा "
+      "By": " द्वारा ",
+      "CustomLibraryVersion": "कस्टम p5.js संस्करण",
+      "VersionPickerARIA": "संस्करण चयनकर्ता",
+      "NewVersionPickerARIA": "संस्करण चयनकर्ता"
     },
     "Console": {
       "Title": "कंसोल",
@@ -150,6 +174,7 @@
       "Settings": "सेटिंग्स",
       "GeneralSettings": "सामान्य सेटिंग्स",
       "Accessibility": "ऐक्सेसबिलिटी",
+      "LibraryManagement": "लाइब्रेरी प्रबंधन",
       "Theme": "थीम",
       "LightTheme": "लाइट",
       "LightThemeARIA": "लाइट थीम चालू",
@@ -176,8 +201,8 @@
       "AutocompleteHinterOnARIA": "ऑटोकम्प्लीट हिंटर चालू",
       "AutocompleteHinterOffARIA": "ऑटोकम्प्लीट हिंटर बंद",
       "WordWrap": "वर्ड रैप",
-      "LineWrapOnARIA": "लाइनरैप चालू",
-      "LineWrapOffARIA": "लाइनरैप बंद",
+      "WordWrapOnARIA": "वर्डरैप चालू",
+      "WordWrapOffARIA": "वर्डरैप बंद",
       "LineNumbers": "लाइन नम्बर्ज़",
       "LineNumbersOnARIA": "लाइन नम्बर्ज़ चालू",
       "LineNumbersOffARIA": "लाइन नम्बर्ज़ बंद",
@@ -191,7 +216,13 @@
       "PlainText": "प्लेन-टेक्स्ट",
       "TextOutputARIA": "टेक्स्ट आउटपुट चालू",
       "TableText": "टेबल-टेक्स्ट",
-      "TableOutputARIA": "टेबल आउटपुट चालू"
+      "TableOutputARIA": "टेबल आउटपुट चालू",
+      "LibraryVersion": "p5.js संस्करण",
+      "LibraryVersionInfo": "p5.js का एक [नया 2.0 संस्करण](https://github.com/processing/p5.js/releases/) उपलब्ध है! यह अगस्त 2026 में डिफ़ॉल्ट बन जाएगा, इसलिए इस समय का उपयोग इसे आज़माने और बग्स की रिपोर्ट करने के लिए करें। क्या आप 1.x से 2.0 में स्केच को स्थानांतरित करने में रुचि रखते हैं? [संगतता और स्थानांतरण संसाधनों](https://github.com/processing/p5.js-compatibility) को देखें।",
+      "SoundAddon": "p5.sound.js Add-on लाइब्रेरी",
+      "PreloadAddon": "p5.js 1.x Compatibility Add-on लाइब्रेरी — प्रीलोड",
+      "ShapesAddon": "p5.js 1.x Compatibility Add-on लाइब्रेरी — आकार",
+      "DataAddon": "p5.js 1.x Compatibility Add-on लाइब्रेरी — डेटा संरचनाएँ"
     },
     "KeyboardShortcuts": {
       "Title": " कीबोर्ड शॉर्टकट",
@@ -209,14 +240,17 @@
         "FindNextTextMatch": "अगला शब्द मिलान खोजें",
         "FindPreviousTextMatch": "पिछला शब्द मिलान खोजें",
         "CodeEditing": "कोड संपादन",
-        "ColorPicker": "इनलाइन कलर पिकर दिखाएँ"
+        "ColorPicker": "इनलाइन कलर पिकर दिखाएँ",
+        "CreateNewFile": "नया फ़ाइल बनाएँ"
 
       },
-      "General": {
+      "General": "सामान्य",
+      "GeneralSelection": {
         "StartSketch": "स्केच शुरू करें",
         "StopSketch": "स्केच रोकें",
-        "TurnOnAccessibleOutput": "Accessibile आउटपुट चालू करें",
-        "TurnOffAccessibleOutput": "Accessibile आउटपुट बंद करें"
+        "TurnOnAccessibleOutput": "सुलभ आउटपुट चालू करें",
+        "TurnOffAccessibleOutput": "सुलभ आउटपुट बंद करें",
+        "Reference": "हिंटर में चुने गए आइटम के लिए रेफरेंस जाएँ"
       }
     },
     "Sidebar": {
@@ -630,6 +664,7 @@
       "PrivacyPolicy": "गोपनीयता नीति",
       "TermsOfUse": "उपयोग की शर्तें",
       "CodeOfConduct": "आचार संहिता"
-    }
+    },
+    "Contact": "संपर्क"
   }
  

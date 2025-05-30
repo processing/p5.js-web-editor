@@ -145,8 +145,8 @@
     "AutocloseBracketsQuotesOnARIA": "괄호 및 따옴표 자동 닫기 켜기",
     "AutocloseBracketsQuotesOffARIA": "괄호 및 따옴표 자동 닫기 끄기",
     "WordWrap": "단어 자동 줄 바꿈",
-    "LineWrapOnARIA": "줄 바꿈 켜기",
-    "LineWrapOffARIA": "줄 바꿈 끄기",
+    "WordWrapOnARIA": "줄 바꿈 켜기",
+    "WordWrapOffARIA": "줄 바꿈 끄기",
     "LineNumbers": "줄 번호",
     "LineNumbersOnARIA": "줄 번호 켜기",
     "LineNumbersOffARIA": "줄 번호 끄기",
@@ -181,7 +181,7 @@
       "FindPreviousTextMatch": "이전 텍스트 일치 항목 찾기",
       "CodeEditing": "코드 편집"
     },
-    "General": {
+    "GeneralSelection": {
       "StartSketch": "스케치 시작",
       "StopSketch": "스케치 중지",
       "TurnOnAccessibleOutput": "접근 가능한 출력 활성화",

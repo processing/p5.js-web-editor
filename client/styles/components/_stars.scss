@@ -1,0 +1,28 @@
+@keyframes starburst {
+  from {
+    transform: translate(0, 0) scale(0) rotate(0);
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.stars {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9000;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.stars__star {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-origin: 50% 50%;
+  animation: starburst 1.5s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+}

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import slugify from 'slugify';
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -31,10 +31,15 @@ const SketchListRowBase = ({
   const [renameValue, setRenameValue] = useState(sketch.name);
   const renameInput = useRef(null);
 
+  useEffect(() => {
+    if (renameOpen && renameInput.current) {
+      renameInput.current.focus();
+    }
+  }, [renameOpen]);
+
   const openRename = useCallback(() => {
     setRenameOpen(true);
     setRenameValue(sketch.name);
-    renameInput.current.focus();
   }, [sketch.name]);
 
   const closeRename = () => setRenameOpen(false);

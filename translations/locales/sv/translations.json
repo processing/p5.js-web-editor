@@ -159,8 +159,8 @@
     "AutocloseBracketsQuotesOnARIA": "automatisk stängnging av parenteser och citattecken på",
     "AutocloseBracketsQuotesOffARIA": "automatisk stängnging av parenteser och citattecken av",
     "WordWrap": "Radbrytning",
-    "LineWrapOnARIA": "radbrytning på",
-    "LineWrapOffARIA": "radbrytning av",
+    "WordWrapOnARIA": "radbrytning på",
+    "WordWrapOffARIA": "radbrytning av",
     "LineNumbers": "Radnummer",
     "LineNumbersOnARIA": "radnummer på",
     "LineNumbersOffARIA": "radnummer av",
@@ -193,7 +193,7 @@
       "FindPreviousTextMatch": "Sök föregående textmatchning",
       "CodeEditing": "kodredigering"
     },
-    "General": {
+    "GeneralSelection": {
       "StartSketch": "Kör sketch",
       "StopSketch": "Stoppa sketch",
       "TurnOnAccessibleOutput": "Sätt på tillgänglig output",

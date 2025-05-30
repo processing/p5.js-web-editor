@@ -1,6 +1,6 @@
 name: 🐛 Found a Bug
 description: Report p5.js web editor bugs (broken or incorrect behaviour).
-labels: [ Bug ]
+labels: [ Bug, Awaiting Maintainer Approval ]
 body:
   - type: markdown
     attributes:
