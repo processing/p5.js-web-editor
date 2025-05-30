@@ -25,15 +25,13 @@ import tidyCodeWithPrettier from './tidier';
 // - p5-javascript
 // - search, find & replace
 // - color themes
+// - any features lost in the p5 conversion git merge
 // - javascript color picker (extension works for css but needs to be forked for js)
 // - revisit keymap differences, esp around sublime
 // - emmet doesn't trigger if text is copy pasted in
 // - need to re-implement emmet auto rename tag
 // - color picker should be triggered by metakey cmd k
 // - clike addon
-// ----- QUESTIONS -----
-// do we want shift tab to indent less? existing behavior is explicitly turned off but i think its nice to have
-// do we want any extra emmet functionality? https://www.npmjs.com/package/@emmetio/codemirror6-plugin
 
 /** This is a custom React hook that manages CodeMirror state. */
 export default function useCodeMirror({
