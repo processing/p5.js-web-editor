@@ -19,6 +19,8 @@ import { useEffectWithComparison } from '../../hooks/custom-hooks';
 import tidyCodeWithPrettier from './tidier';
 
 // ----- GENERAL TODOS (in order of priority) -----
+// - CAN'T SCROLL????
+// - ConsoleInput
 // - autocomplete (hinter)
 // - p5-javascript
 // - search, find & replace
