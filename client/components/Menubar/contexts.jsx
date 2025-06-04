@@ -9,3 +9,5 @@ export const MenubarContext = createContext({
   createMenuItemHandlers: () => ({}),
   toggleMenuOpen: () => {}
 });
+
+export const SubmenuContext = createContext({});

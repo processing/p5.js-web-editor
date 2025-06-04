@@ -367,13 +367,13 @@
     "CurrentPasswordARIA": "Current Password",
     "NewPassword": "New Password",
     "NewPasswordARIA": "New Password",
-    "SubmitSaveAllSettings": "Save All Settings"
+    "SaveAccountDetails": "Save Account Details"
   },
   "AccountView": {
     "SocialLogin": "Social Login",
     "SocialLoginDescription": "Use your GitHub or Google account to log into the p5.js Web Editor.",
     "Title": "p5.js Web Editor | Account Settings",
-    "Settings": "Account Settings",
+    "Settings": "My Account",
     "AccountTab": "Account",
     "AccessTokensTab": "Access Tokens"
   },

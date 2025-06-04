@@ -13,7 +13,7 @@ describe('ButtonOrLink', () => {
     render(<ButtonOrLink onClick={clickHandler}>Text</ButtonOrLink>);
     const button = screen.getByRole('button');
     expect(button).toBeInstanceOf(HTMLButtonElement);
-    expect(button).toContainHTML('<button>Text</button>');
+    expect(button).toContainHTML('<button aria-disabled="false">Text</button>');
     fireEvent.click(button);
     expect(clickHandler).toHaveBeenCalled();
   });

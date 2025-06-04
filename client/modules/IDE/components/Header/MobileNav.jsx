@@ -8,7 +8,7 @@ import classNames from 'classnames';
 import { ParentMenuContext } from '../../../../components/Menubar/contexts';
 import Menubar from '../../../../components/Menubar/Menubar';
 import { useMenuProps } from '../../../../components/Menubar/MenubarSubmenu';
-import NavMenuItem from '../../../../components/Menubar/MenubarItem';
+import ButtonOrLink from '../../../../common/ButtonOrLink';
 import { prop, remSize } from '../../../../theme';
 import AsteriskIcon from '../../../../images/p5-asterisk.svg';
 import IconButton from '../../../../common/IconButton';
@@ -200,6 +200,15 @@ const LanguageSelect = styled.div`
   }
 `;
 
+// TO DO: replace with a more robust component for mobile menu items; this is a temp fix
+// because of context-related errors when using MenubarItem in mobile configurations
+// eslint-disable-next-line react/prop-types
+const MobileMenuItem = ({ children, ...props }) => (
+  <li>
+    <ButtonOrLink {...props}>{children}</ButtonOrLink>
+  </li>
+);
+
 const MobileNav = () => {
   const project = useSelector((state) => state.project);
   const user = useSelector((state) => state.user);
@@ -294,12 +303,12 @@ const StuffMenu = () => {
       <IconButton icon={AddIcon} {...handlers} />
       <ul className={isOpen ? 'opened' : ''}>
         <ParentMenuContext.Provider value="stuff">
-          <NavMenuItem onClick={() => newSketch()}>
+          <MobileMenuItem onClick={() => newSketch()}>
             {t('DashboardView.NewSketch')}
-          </NavMenuItem>
-          <NavMenuItem onClick={() => setCreateCollectionVisible(true)}>
+          </MobileMenuItem>
+          <MobileMenuItem onClick={() => setCreateCollectionVisible(true)}>
             {t('DashboardView.CreateCollection')}
-          </NavMenuItem>
+          </MobileMenuItem>
         </ParentMenuContext.Provider>
       </ul>
       {createCollectionVisible && (
@@ -326,13 +335,13 @@ const AccountMenu = () => {
       <ul className={isOpen ? 'opened' : ''}>
         <ParentMenuContext.Provider value="account">
           <li className="user">{user.username}</li>
-          <NavMenuItem href={`/${user.username}/sketches`}>
+          <MobileMenuItem href={`/${user.username}/sketches`}>
             My Stuff
-          </NavMenuItem>
-          <NavMenuItem href="/account">Settings</NavMenuItem>
-          <NavMenuItem onClick={() => dispatch(logoutUser())}>
+          </MobileMenuItem>
+          <MobileMenuItem href="/account">Settings</MobileMenuItem>
+          <MobileMenuItem onClick={() => dispatch(logoutUser())}>
             Log Out
-          </NavMenuItem>
+          </MobileMenuItem>
         </ParentMenuContext.Provider>
       </ul>
     </div>
@@ -397,48 +406,50 @@ const MoreMenu = () => {
       <ul className={isOpen ? 'opened' : ''}>
         <ParentMenuContext.Provider value="more">
           <b>{t('Nav.File.Title')}</b>
-          <NavMenuItem onClick={newSketch}>{t('Nav.File.New')}</NavMenuItem>
+          <MobileMenuItem onClick={newSketch}>
+            {t('Nav.File.New')}
+          </MobileMenuItem>
 
-          <NavMenuItem onClick={() => saveSketch(cmRef.current)}>
+          <MobileMenuItem onClick={() => saveSketch(cmRef.current)}>
             {t('Common.Save')}
-          </NavMenuItem>
-          <NavMenuItem href="/p5/sketches">
+          </MobileMenuItem>
+          <MobileMenuItem href="/p5/sketches">
             {t('Nav.File.Examples')}
-          </NavMenuItem>
+          </MobileMenuItem>
           <b>{t('Nav.Edit.Title')}</b>
-          <NavMenuItem onClick={cmRef.current?.tidyCode}>
+          <MobileMenuItem onClick={cmRef.current?.tidyCode}>
             {t('Nav.Edit.TidyCode')}
-          </NavMenuItem>
-          <NavMenuItem onClick={cmRef.current?.showFind}>
+          </MobileMenuItem>
+          <MobileMenuItem onClick={cmRef.current?.showFind}>
             {t('Nav.Edit.Find')}
-          </NavMenuItem>
+          </MobileMenuItem>
           <b>{t('Nav.Sketch.Title')}</b>
-          <NavMenuItem onClick={() => dispatch(newFile(rootFile.id))}>
+          <MobileMenuItem onClick={() => dispatch(newFile(rootFile.id))}>
             {t('Nav.Sketch.AddFile')}
-          </NavMenuItem>
-          <NavMenuItem onClick={() => dispatch(newFolder(rootFile.id))}>
+          </MobileMenuItem>
+          <MobileMenuItem onClick={() => dispatch(newFolder(rootFile.id))}>
             {t('Nav.Sketch.AddFolder')}
-          </NavMenuItem>
+          </MobileMenuItem>
           {/* TODO: Add Translations */}
           <b>Settings</b>
-          <NavMenuItem
+          <MobileMenuItem
             onClick={() => {
               dispatch(openPreferences());
             }}
           >
             Preferences
-          </NavMenuItem>
-          <NavMenuItem onClick={() => setIsLanguageModalVisible(true)}>
+          </MobileMenuItem>
+          <MobileMenuItem onClick={() => setIsLanguageModalVisible(true)}>
             Language
-          </NavMenuItem>
+          </MobileMenuItem>
           <b>{t('Nav.Help.Title')}</b>
-          <NavMenuItem onClick={() => dispatch(showKeyboardShortcutModal())}>
+          <MobileMenuItem onClick={() => dispatch(showKeyboardShortcutModal())}>
             {t('Nav.Help.KeyboardShortcuts')}
-          </NavMenuItem>
-          <NavMenuItem href="https://p5js.org/reference/">
+          </MobileMenuItem>
+          <MobileMenuItem href="https://p5js.org/reference/">
             {t('Nav.Help.Reference')}
-          </NavMenuItem>
-          <NavMenuItem href="/about">{t('Nav.Help.About')}</NavMenuItem>
+          </MobileMenuItem>
+          <MobileMenuItem href="/about">{t('Nav.Help.About')}</MobileMenuItem>
         </ParentMenuContext.Provider>
       </ul>
     </div>
