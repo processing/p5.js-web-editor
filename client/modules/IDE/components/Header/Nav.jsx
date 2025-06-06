@@ -203,6 +203,9 @@ const ProjectMenu = () => {
           id="file-download"
           isDisabled={isUnsaved}
           onClick={downloadSketch}
+          title={
+            !user.authenticated ? t('Nav.File.LoginToDownload') : undefined
+          }
         >
           {t('Nav.File.Download')}
         </MenubarItem>
