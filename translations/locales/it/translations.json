@@ -311,11 +311,11 @@
     "EmailSent": "Conferma inviata, controlla la tua email.",
     "Resend": "Reinvia email di conferma",
     "UserName": "Nome utente",
-    "UserNameARIA": "nome utente",
+    "UserNameARIA": "Nome utente",
     "CurrentPassword": "Password attuale",
-    "CurrentPasswordARIA": "password attuale",
+    "CurrentPasswordARIA": "Password attuale",
     "NewPassword": "Nuova password",
-    "NewPasswordARIA": "nuova password",
+    "NewPasswordARIA": "Nuova password",
     "SaveAccountDetails": "Salva dettagli account"
   },
   "AccountView": {
