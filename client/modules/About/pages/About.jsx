@@ -130,10 +130,24 @@ const About = () => {
             <Link to="/code-of-conduct">{t('About.CodeOfConduct')}</Link>
           </div>
           <p>
-            {t('About.WebEditor')}: <span>v{packageData?.version}</span>
+            {t('About.WebEditor')}:{' '}
+            <a
+              href="https://github.com/processing/p5.js-web-editor/releases"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span>v{packageData?.version}</span>
+            </a>
           </p>
           <p>
-            p5.js: <span>v{p5version}</span>
+            p5.js:{' '}
+            <a
+              href="https://github.com/processing/p5.js/releases"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span>v{p5version}</span>
+            </a>
           </p>
         </Footer>
       </AboutPageContent>
