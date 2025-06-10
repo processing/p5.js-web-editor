@@ -41,12 +41,16 @@ export const fileExtensionsArray = [
   'bin',
   'xml',
   'stl',
-  'mtl'
+  'mtl',
+  'gltf',
+  'glb',
+  'fbx'
 ];
 
 export const mimeTypes = `image/*,audio/*,text/javascript,text/html,text/css,
 application/json,application/x-font-ttf,application/x-font-truetype,text/plain,
-text/csv,.obj,video/webm,video/ogg,video/quicktime,video/mp4,application/xml,.stl`;
+text/csv,.obj,video/webm,video/ogg,video/quicktime,video/mp4,application/xml,.stl,
+model/gltf-binary,model/gltf+json,application/x-fbx`;
 
 export const fileExtensions = fileExtensionsArray
   .map((ext) => `.${ext}`)
