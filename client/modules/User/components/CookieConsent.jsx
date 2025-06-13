@@ -159,7 +159,7 @@ function CookieConsent({ hide }) {
     }
   }, [cookieConsent]);
 
-  if (hide) return null;
+  if (hide || cookieConsent !== 'none') return null;
 
   return (
     <Transition in={inProp} timeout={500}>
