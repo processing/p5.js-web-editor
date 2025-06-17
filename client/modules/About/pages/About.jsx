@@ -58,7 +58,7 @@ const About = () => {
   return (
     <RootPage>
       <Helmet>
-        <title> {t('About.TitleHelmet')} </title>
+        <title>{t('About.TitleHelmet')}</title>
       </Helmet>
 
       <Nav layout="dashboard" />
@@ -66,6 +66,7 @@ const About = () => {
       <AboutPageContent>
         <Intro>
           <h1>{t('About.Title')}</h1>
+
           <IntroHeadline>
             <LogoIcon
               role="img"
@@ -76,10 +77,12 @@ const About = () => {
               <p>{t('About.Headline')}</p>
             </div>
           </IntroHeadline>
+
           <IntroDescription>
             <p>{t('About.IntroDescription1')}</p>
             <p>{t('About.IntroDescription2')}</p>
           </IntroDescription>
+
           <a
             href="https://p5js.org/donate/"
             target="_blank"
@@ -95,12 +98,12 @@ const About = () => {
         ))}
 
         <Contact>
-          <h2>{t('Contact')}</h2>
+          <h2>{t('About.ContactTitle')}</h2>
           <div>
-            <ContactTitle>{t('About.Email')}</ContactTitle>
+            <ContactTitle>{t('About.EmailLabel')}</ContactTitle>
             <ContactHandles>
               <a
-                href={t('About.EmailAddress')}
+                href={`mailto:${t('About.EmailAddress')}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -109,7 +112,7 @@ const About = () => {
             </ContactHandles>
           </div>
           <div>
-            <ContactTitle>{t('About.Socials')}</ContactTitle>
+            <ContactTitle>{t('About.SocialsLabel')}</ContactTitle>
             <ContactHandles>
               {ContactSectionLinks.map((item, index, array) => (
                 <React.Fragment key={item.href}>
@@ -135,16 +138,16 @@ const About = () => {
               target="_blank"
               rel="noreferrer"
             >
-              {t('About.WebEditor')}: <span>v{packageData?.version}</span>
+              {t('About.WebEditorLabel')}: <span>v{packageData?.version}</span>
             </a>
           </p>
           <p>
             <a
               href="https://github.com/processing/p5.js/releases"
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
             >
-              p5.js: <span>v{p5version}</span>
+              {t('About.P5JSLabel')}: <span>v{p5version}</span>
             </a>
           </p>
         </Footer>
