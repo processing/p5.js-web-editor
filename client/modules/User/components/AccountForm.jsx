@@ -176,7 +176,7 @@ function AccountForm() {
             </Field>
           )}
           <Button type="submit" disabled={submitting || invalid}>
-            {t('AccountForm.SubmitSaveAllSettings')}
+            {t('AccountForm.SaveAccountDetails')}
           </Button>
         </form>
       )}

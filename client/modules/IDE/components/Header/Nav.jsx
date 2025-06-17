@@ -378,7 +378,7 @@ const AuthenticatedUserMenu = () => {
           {t('Nav.Auth.MyAssets')}
         </MenubarItem>
         <MenubarItem id="account-settings" href="/account">
-          {t('Preferences.Settings')}
+          {t('Nav.Auth.MyAccount')}
         </MenubarItem>
         <MenubarItem id="account-logout" onClick={() => dispatch(logoutUser())}>
           {t('Nav.Auth.LogOut')}
