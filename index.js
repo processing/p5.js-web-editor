@@ -1,28 +1,20 @@
-// index.js
-
 if (process.env.NODE_ENV === 'production') {
-  // In production: use pre-built bundles
-  process.env.webpackAssets = JSON.stringify(
-    require('./dist/static/manifest.json')
-  );
+  process.env.webpackAssets = JSON.stringify(require('./dist/static/manifest.json'));
   require('./dist/server.bundle.js');
   require('./dist/previewServer.bundle.js');
 } else {
-  // In development: load environment, enable Babel on the fly
-
-  // Load .env file (development mode)
-  const parsed = require('dotenv').config();
-
-  // Transpile on the fly with Babel
+  let parsed = require('dotenv').config();
   require('@babel/register')({
-    presets: ['@babel/preset-env'],
+    presets: ["@babel/preset-env"]
   });
-
-  // Enable async/await support
   require('regenerator-runtime/runtime');
-
-
-  // Start development servers
+  //// in development, let .env values override those in the environment already (i.e. in docker-compose.yml)
+  // so commenting this out makes the docker container work.
+  // if (process.env.NODE_ENV === 'development') {
+  //   for (let key in parsed) {
+  //     process.env[key] = parsed[key];
+  //   }
+  // }
   require('./server/server');
   require('./server/previewServer');
 }
