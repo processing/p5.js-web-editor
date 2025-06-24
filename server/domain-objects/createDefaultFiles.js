@@ -1,3 +1,5 @@
+import { currentP5Version } from '../../common/p5Versions';
+
 export const defaultSketch = `function setup() {
   createCanvas(400, 400);
 }
@@ -9,8 +11,8 @@ function draw() {
 export const defaultHTML = `<!DOCTYPE html>
 <html lang="en">
   <head>
-    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.7/lib/p5.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.7/lib/addons/p5.sound.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/p5@${currentP5Version}/lib/p5.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/p5@${currentP5Version}/lib/addons/p5.sound.min.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css">
     <meta charset="utf-8" />
 

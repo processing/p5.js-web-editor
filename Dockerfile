@@ -14,6 +14,7 @@ COPY .babelrc index.js nodemon.json ./
 COPY ./webpack ./webpack
 COPY client ./client
 COPY server ./server
+COPY common ./common
 COPY translations/locales ./translations/locales
 COPY public ./public
 CMD ["npm", "start"]

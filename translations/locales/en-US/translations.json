@@ -228,7 +228,7 @@
     "DataAddon": "p5.js 1.x Compatibility Add-on Library — Data Structures",
     "AddonOnARIA": "on",
     "AddonOffARIA": "off",
-    "UndoSoundVersion": "Want to use p5.sound.js again? Turning it back on will restore the version you were using before.",
+    "SoundReference": "View the reference for p5.sound compatible with p5.js $VERSION",
     "CopyToClipboardSuccess": "Copied to clipboard!",
     "CopyToClipboardFailure": "We weren't able to copy the text, try selecting it and copying it manually."
   },
