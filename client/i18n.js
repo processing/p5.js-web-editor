@@ -21,6 +21,8 @@ import {
   enIN
 } from 'date-fns/locale';
 
+import getPreferredLanguage from './utils/language-utils';
+
 const fallbackLng = ['en-US'];
 
 export const availableLanguages = [
@@ -41,6 +43,21 @@ export const availableLanguages = [
   'tr',
   'ur'
 ];
+
+const detectedLanguage = getPreferredLanguage(
+  availableLanguages,
+  fallbackLng[0]
+);
+
+let initialLanguage = detectedLanguage;
+
+// if user has a saved preference (e.g., from redux or window.__INITIAL_STATE__), use that
+if (
+  window.__INITIAL_STATE__?.preferences?.language &&
+  availableLanguages.includes(window.__INITIAL_STATE__.preferences.language)
+) {
+  initialLanguage = window.__INITIAL_STATE__.preferences.language;
+}
 
 export function languageKeyToLabel(lang) {
   const languageMap = {
@@ -104,7 +121,7 @@ i18n
   // .use(LanguageDetector)// to detect the language from currentBrowser
   .use(Backend) // to fetch the data from server
   .init({
-    lng: 'en-US',
+    lng: initialLanguage,
     fallbackLng, // if user computer language is not on the list of available languages, than we will be using the fallback language specified earlier
     debug: false,
     backend: options,

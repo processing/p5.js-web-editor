@@ -1,4 +1,5 @@
 import * as ActionTypes from '../../../constants';
+import i18n from '../../../i18n';
 
 export const initialState = {
   tabIndex: 0,
@@ -11,7 +12,7 @@ export const initialState = {
   gridOutput: false,
   theme: 'light',
   autorefresh: false,
-  language: 'en-US',
+  language: i18n.language,
   autocloseBracketsQuotes: true,
   autocompleteHinter: false
 };

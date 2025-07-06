@@ -487,7 +487,7 @@ describe('<Preferences />', () => {
   });
 
   describe('can toggle between general settings and accessibility tabs successfully', () => {
-    it('can toggle sucessfully', () => {
+    it('can toggle successfully', () => {
       // render the component with lineNumbers prop set to false
       subject({ lineNumbers: false });
 

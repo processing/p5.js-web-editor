@@ -215,7 +215,7 @@ function Editor({
           <section className={editorSectionClass}>
             <div className="editor__header">
               <button
-                aria-label={t('Editor.OpenSketchARIA')}
+                aria-label={t('Editor.CloseSketchARIA')}
                 className="sidebar__contract"
                 onClick={() => {
                   collapseSidebar();
@@ -225,7 +225,7 @@ function Editor({
                 <LeftArrowIcon focusable="false" aria-hidden="true" />
               </button>
               <button
-                aria-label={t('Editor.CloseSketchARIA')}
+                aria-label={t('Editor.OpenSketchARIA')}
                 className="sidebar__expand"
                 onClick={expandSidebar}
               >
