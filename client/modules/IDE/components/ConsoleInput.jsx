@@ -54,7 +54,6 @@ function ConsoleInput({ theme, fontSize }) {
         view.dispatch({
           changes: { from: 0, to: view.state.doc.length, insert: '' }
         });
-        console.log('Command history:', commandHistory.current);
         commandHistory.current.unshift(value);
         commandCursor.current = -1;
         return true;
