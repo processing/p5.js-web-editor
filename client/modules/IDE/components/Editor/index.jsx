@@ -84,6 +84,7 @@ function Editor({
   // a reference to the actual CM instance.
   const {
     setupCodeMirrorOnContainerMounted,
+    teardownCodeMirror,
     // cmInstance,
     getContent,
     tidyCode
@@ -130,6 +131,7 @@ function Editor({
 
     return () => {
       provideController(null);
+      teardownCodeMirror();
     };
   }, []);
 

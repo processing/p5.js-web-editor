@@ -94,6 +94,14 @@ export default function useCodeMirror({
     });
   }
 
+  //  When the component unmounts, we want to clean up the CodeMirror instance.
+  function teardownCodeMirror() {
+    if (cmView.current) {
+      cmView.current.destroy();
+      cmView.current = null;
+    }
+  }
+
   // When settings change, we pass those changes into CodeMirror.
   // TODO: There should be a useEffect hook for when the theme changes.
   useEffect(() => {
@@ -201,6 +209,7 @@ export default function useCodeMirror({
 
   return {
     setupCodeMirrorOnContainerMounted,
+    teardownCodeMirror,
     getContent,
     tidyCode
     // showFind,
