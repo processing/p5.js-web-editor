@@ -3,34 +3,33 @@ import babelParser from 'prettier/parser-babel';
 import htmlParser from 'prettier/parser-html';
 import cssParser from 'prettier/parser-postcss';
 
-function prettierFormatWithCursor(parser, plugins, cmInstance) {
-  try {
-    const { formatted, cursorOffset } = prettier.formatWithCursor(
-      cmInstance.doc.getValue(),
-      {
-        cursorOffset: cmInstance.doc.indexFromPos(cmInstance.doc.getCursor()),
-        parser,
-        plugins
-      }
-    );
-    const { left, top } = cmInstance.getScrollInfo();
-    cmInstance.doc.setValue(formatted);
-    cmInstance.focus();
-    cmInstance.doc.setCursor(cmInstance.doc.posFromIndex(cursorOffset));
-    cmInstance.scrollTo(left, top);
-  } catch (error) {
-    console.error(error);
-  }
+function prettierFormatWithCursor(parser, plugins, cmView) {
+  const { doc } = cmView.state;
+  const cursorOffset = cmView.state.selection.main.head;
+  const {
+    formatted,
+    cursorOffset: newCursorOffset
+  } = prettier.formatWithCursor(doc.toString(), {
+    cursorOffset,
+    parser,
+    plugins
+  });
+
+  cmView.dispatch({
+    changes: { from: 0, to: doc.length, insert: formatted },
+    selection: { anchor: newCursorOffset }
+  });
+
+  cmView.focus();
 }
 
 /** Runs prettier on the codemirror instance, depending on the mode. */
-export default function tidyCode(cmInstance) {
-  const mode = cmInstance.getOption('mode');
+export default function tidyCodeWithPrettier(cmView, mode) {
   if (mode === 'javascript') {
-    prettierFormatWithCursor('babel', [babelParser], cmInstance);
+    prettierFormatWithCursor('babel', [babelParser], cmView);
   } else if (mode === 'css') {
-    prettierFormatWithCursor('css', [cssParser], cmInstance);
-  } else if (mode === 'htmlmixed') {
-    prettierFormatWithCursor('html', [htmlParser], cmInstance);
+    prettierFormatWithCursor('css', [cssParser], cmView);
+  } else if (mode === 'html') {
+    prettierFormatWithCursor('html', [htmlParser], cmView);
   }
 }

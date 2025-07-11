@@ -8,9 +8,6 @@ import { debounce } from 'lodash';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import MediaQuery from 'react-responsive';
-import '../../../../utils/htmlmixed';
-import '../../../../utils/p5-javascript';
-import '../../../../utils/codemirror-search';
 
 import beepUrl from '../../../../sounds/audioAlert.mp3';
 import RightArrowIcon from '../../../../images/right-arrow.svg';
@@ -34,8 +31,6 @@ import { EditorContainer, EditorHolder } from './MobileEditor';
 import { FolderIcon } from '../../../../common/icons';
 import IconButton from '../../../../common/IconButton';
 
-import { hideHinter } from './hinter';
-import tidyCode from './tidier';
 import useCodeMirror from './codemirror';
 import { useEffectWithComparison } from '../../hooks/custom-hooks';
 
@@ -90,10 +85,11 @@ function Editor({
   const {
     setupCodeMirrorOnContainerMounted,
     teardownCodeMirror,
-    cmInstance,
+    // cmInstance,
     getContent,
-    showFind,
-    showReplace
+    tidyCode
+    // showFind,
+    // showReplace
   } = useCodeMirror({
     theme,
     lineNumbers,
@@ -117,12 +113,13 @@ function Editor({
   // Lets the parent component access file content-specific functionality...
   useEffect(() => {
     provideController({
-      tidyCode: () => tidyCode(cmInstance.current),
-      showFind,
-      showReplace,
-      getContent
+      tidyCode,
+      getContent,
+      // TODO: Reimplement these.
+      showFind: () => {},
+      showReplace: () => {}
     });
-  }, [showFind, showReplace, getContent]);
+  }, [getContent]);
 
   // When the CM container div mounts, we set up CodeMirror.
   const onContainerMounted = useCallback(setupCodeMirrorOnContainerMounted, []);
@@ -132,25 +129,14 @@ function Editor({
   useEffect(() => {
     beep.current = new Audio(beepUrl);
 
-    provideController({
-      tidyCode: () => tidyCode(cmInstance.current),
-      showFind,
-      showReplace,
-      getContent
-    });
-
     return () => {
       provideController(null);
       teardownCodeMirror();
     };
   }, []);
 
-  useEffect(() => {
-    // Close the hinter window once the preference is turned off
-    if (!autocompleteHinter) hideHinter(cmInstance.current);
-  }, [autocompleteHinter]);
-
   // Updates the error console.
+  // TODO: Need to revisit this functionality for v6.
   useEffectWithComparison(
     (_, prevProps) => {
       if (runtimeErrorWarningVisible) {
@@ -176,22 +162,22 @@ function Editor({
                   (f) => f.name === fileName && f.filePath === filePath
                 );
                 setSelectedFile(fileWithError.id);
-                cmInstance.current.addLineClass(
-                  line.lineNumber - 1,
-                  'background',
-                  'line-runtime-error'
-                );
+                // cmInstance.current.addLineClass(
+                //   line.lineNumber - 1,
+                //   'background',
+                //   'line-runtime-error'
+                // );
               });
             }
           });
         } else {
-          for (let i = 0; i < cmInstance.current.lineCount(); i += 1) {
-            cmInstance.current.removeLineClass(
-              i,
-              'background',
-              'line-runtime-error'
-            );
-          }
+          // for (let i = 0; i < cmInstance.current.lineCount(); i += 1) {
+          //   cmInstance.current.removeLineClass(
+          //     i,
+          //     'background',
+          //     'line-runtime-error'
+          //   );
+          // }
         }
       }
     },
