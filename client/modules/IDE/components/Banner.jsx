@@ -28,7 +28,7 @@ const Banner = ({ onClose }) => {
     <>
       We’re accepting p5.js sketches for a special curation exploring mental
       health and the newest features in p5.js 2.0!{' '}
-      <span style={{ fontWeight: 600 }}>Submit by July 13!</span>
+      <span style={{ fontWeight: 600 }}>Submit by July 20!</span>
     </>
   );
 
