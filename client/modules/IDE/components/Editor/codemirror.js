@@ -1,6 +1,6 @@
 import { useRef, useEffect } from 'react';
 import { EditorView, lineNumbers as lineNumbersExt } from '@codemirror/view';
-import { closeBrackets } from '@codemirror/autocomplete';
+import { autocompletion, closeBrackets } from '@codemirror/autocomplete';
 
 // TODO: Check what the v6 variants of these addons are.
 // import 'codemirror/addon/search/searchcursor';
@@ -141,6 +141,18 @@ export default function useCodeMirror({
       reconfigureEffect
     });
   }, [autocloseBracketsQuotes]);
+  useEffect(() => {
+    const reconfigureEffect = (fileState) =>
+      fileState.autocompleteCpt.reconfigure(
+        autocompleteHinter ? autocompletion() : []
+      );
+    updateFileStates({
+      fileStates: fileStates.current,
+      cmView: cmView.current,
+      file,
+      reconfigureEffect
+    });
+  }, [autocompleteHinter]);
 
   // Initializes the files as CodeMirror states.
   function initializeDocuments() {
@@ -160,6 +172,7 @@ export default function useCodeMirror({
             linewrap,
             lineNumbers,
             autocloseBracketsQuotes,
+            autocomplete: autocompleteHinter,
             onUpdateLinting,
             onViewUpdate
           }

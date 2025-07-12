@@ -21,7 +21,11 @@ import {
   defaultHighlightStyle
 } from '@codemirror/language';
 import { highlightSelectionMatches } from '@codemirror/search';
-import { closeBrackets, closeBracketsKeymap } from '@codemirror/autocomplete';
+import {
+  autocompletion,
+  closeBrackets,
+  closeBracketsKeymap
+} from '@codemirror/autocomplete';
 import {
   defaultKeymap,
   history,
@@ -265,6 +269,7 @@ export function createNewFileState(filename, document, settings) {
   const {
     linewrap,
     lineNumbers,
+    autocomplete,
     autocloseBracketsQuotes,
     onUpdateLinting,
     onViewUpdate
@@ -272,6 +277,7 @@ export function createNewFileState(filename, document, settings) {
   const lineNumbersCpt = new Compartment();
   const lineWrappingCpt = new Compartment();
   const closeBracketsCpt = new Compartment();
+  const autocompleteCpt = new Compartment();
 
   // Depending on the file mode, we have a different tidier function.
   const mode = getFileMode(filename);
@@ -294,6 +300,7 @@ export function createNewFileState(filename, document, settings) {
     lineNumbersCpt.of(lineNumbers ? lineNumbersExt() : []),
     lineWrappingCpt.of(linewrap ? EditorView.lineWrapping : []),
     closeBracketsCpt.of(autocloseBracketsQuotes ? closeBrackets() : []),
+    autocompleteCpt.of(autocomplete ? autocompletion() : []),
 
     // Everything below here should always be on.
     history(),
@@ -352,7 +359,13 @@ export function createNewFileState(filename, document, settings) {
   }
 
   const cmState = EditorState.create(stateOptions);
-  return { cmState, lineNumbersCpt, lineWrappingCpt, closeBracketsCpt };
+  return {
+    cmState,
+    lineNumbersCpt,
+    lineWrappingCpt,
+    closeBracketsCpt,
+    autocompleteCpt
+  };
 }
 
 /**
