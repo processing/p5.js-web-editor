@@ -72,6 +72,9 @@ function SignupForm() {
   function onSubmit(formProps) {
     return dispatch(validateAndSignUpUser(formProps));
   }
+  function shouldShowError(meta) {
+    return (meta.touched || meta.submitFailed) && meta.error;
+  }
 
   return (
     <Form
@@ -102,7 +105,7 @@ function SignupForm() {
                     autoCapitalize="none"
                     {...field.input}
                   />
-                  {field.meta.touched && field.meta.error && (
+                  {shouldShowError(field.meta) && (
                     <span className="form-error" aria-live="polite">
                       {field.meta.error}
                     </span>
@@ -124,7 +127,7 @@ function SignupForm() {
                     autoComplete="email"
                     {...field.input}
                   />
-                  {field.meta.touched && field.meta.error && (
+                  {shouldShowError(field.meta) && (
                     <span className="form-error" aria-live="polite">
                       {field.meta.error}
                     </span>
@@ -160,7 +163,7 @@ function SignupForm() {
                       )}
                     </button>
                   </div>
-                  {field.meta.touched && field.meta.error && (
+                  {shouldShowError(field.meta) && (
                     <span className="form-error" aria-live="polite">
                       {field.meta.error}
                     </span>
@@ -196,7 +199,7 @@ function SignupForm() {
                       )}
                     </button>
                   </div>
-                  {field.meta.touched && field.meta.error && (
+                  {shouldShowError(field.meta) && (
                     <span className="form-error" aria-live="polite">
                       {field.meta.error}
                     </span>
