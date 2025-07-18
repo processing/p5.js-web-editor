@@ -40,7 +40,6 @@ import {
   abbreviationTracker
 } from '@emmetio/codemirror6-plugin';
 
-import { javascript } from '@codemirror/lang-javascript';
 import { css } from '@codemirror/lang-css';
 import { html } from '@codemirror/lang-html';
 import { json } from '@codemirror/lang-json';
@@ -51,6 +50,7 @@ import { HTMLHint } from 'htmlhint';
 import { CSSLint } from 'csslint';
 import { emmetConfig } from '@emmetio/codemirror6-plugin';
 
+import p5JavaScript from './p5Javascript';
 import tidyCodeWithPrettier from './tidier';
 
 // ----- TODOS -----
@@ -87,7 +87,7 @@ function getFileLanguage(fileName) {
 
   switch (fileMode) {
     case 'javascript':
-      return javascript;
+      return p5JavaScript;
     case 'css':
       return css;
     case 'html':
