@@ -18,7 +18,7 @@ function asyncValidate(fieldToValidate, value) {
 
   const queryParams = {
     [fieldToValidate]: value,
-    check_type: fieldToValidate
+    check_type: fieldToValidate,
   };
 
   return new Promise((resolve) => {
@@ -66,8 +66,7 @@ function SignupForm() {
   useSyncFormTranslations(formRef, i18n.language);
 
   const handleVisibility = () => setShowPassword(!showPassword);
-  const handleConfirmVisibility = () =>
-    setShowConfirmPassword(!showConfirmPassword);
+  const handleConfirmVisibility = () => setShowConfirmPassword(!showConfirmPassword);
 
   function onSubmit(formProps) {
     return dispatch(validateAndSignUpUser(formProps));
@@ -86,7 +85,7 @@ function SignupForm() {
             <Field
               name="username"
               validate={validateUsername}
-              validateFields={[]}
+              // Removed validateFields to keep username error persistent on other fields' changes
             >
               {(field) => (
                 <div className="form__field">
@@ -110,7 +109,11 @@ function SignupForm() {
                 </div>
               )}
             </Field>
-            <Field name="email" validate={validateEmail} validateFields={[]}>
+            <Field
+              name="email"
+              validate={validateEmail}
+              // Removed validateFields to keep email error persistent on other fields' changes
+            >
               {(field) => (
                 <div className="form__field">
                   <label htmlFor="email" className="form__label">
@@ -153,11 +156,7 @@ function SignupForm() {
                       onClick={handleVisibility}
                       aria-hidden="true"
                     >
-                      {showPassword ? (
-                        <AiOutlineEyeInvisible />
-                      ) : (
-                        <AiOutlineEye />
-                      )}
+                      {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
                     </button>
                   </div>
                   {field.meta.touched && field.meta.error && (
@@ -179,7 +178,7 @@ function SignupForm() {
                       className="form__input"
                       type={showConfirmPassword ? 'text' : 'password'}
                       aria-label={t('SignupForm.ConfirmPasswordARIA')}
-                      id="confirmPassword" // Match the id with htmlFor
+                      id="confirmPassword"
                       autoComplete="new-password"
                       {...field.input}
                     />
@@ -189,11 +188,7 @@ function SignupForm() {
                       onClick={handleConfirmVisibility}
                       aria-hidden="true"
                     >
-                      {showConfirmPassword ? (
-                        <AiOutlineEyeInvisible />
-                      ) : (
-                        <AiOutlineEye />
-                      )}
+                      {showConfirmPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
                     </button>
                   </div>
                   {field.meta.touched && field.meta.error && (

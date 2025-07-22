@@ -1,5 +1,6 @@
 /* eslint-disable */
 import i18n from 'i18next';
+
 export const domOnlyProps = ({
   initialValue,
   autofill,
@@ -23,20 +24,20 @@ const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))
 
 function validateNameEmail(formProps, errors) {
   if (!formProps.username) {
-    errors.username = i18n.t('ReduxFormUtils.errorEmptyUsername');
+    errors.username = errors.username || i18n.t('ReduxFormUtils.errorEmptyUsername');
   } else if (!formProps.username.match(/^.{1,20}$/)) {
-    errors.username = i18n.t('ReduxFormUtils.errorLongUsername');
+    errors.username = errors.username || i18n.t('ReduxFormUtils.errorLongUsername');
   } else if (!formProps.username.match(/^[a-zA-Z0-9._-]{1,20}$/)) {
-    errors.username = i18n.t('ReduxFormUtils.errorValidUsername');
+    errors.username = errors.username || i18n.t('ReduxFormUtils.errorValidUsername');
   }
 
   if (!formProps.email) {
-    errors.email = i18n.t('ReduxFormUtils.errorEmptyEmail');
+    errors.email = errors.email || i18n.t('ReduxFormUtils.errorEmptyEmail');
   } else if (
     // eslint-disable-next-line max-len
     !formProps.email.match(EMAIL_REGEX)
   ) {
-    errors.email = i18n.t('ReduxFormUtils.errorInvalidEmail');
+    errors.email = errors.email || i18n.t('ReduxFormUtils.errorInvalidEmail');
   }
 }
 
@@ -96,14 +97,16 @@ export function validateNewPassword(formProps) {
   return errors;
 }
 
-export function validateSignup(formProps) {
-  const errors = {};
+export function validateSignup(formProps, existingErrors = {}) {
+  // Merge existing errors (could be from async validation) to preserve them
+  const errors = { ...existingErrors };
 
   validateNameEmail(formProps, errors);
   validatePasswords(formProps, errors);
 
   return errors;
 }
+
 export function validateResetPassword(formProps) {
   const errors = {};
   if (!formProps.email) {
