@@ -106,7 +106,7 @@ const IDEView = () => {
   const [sidebarSize, setSidebarSize] = useState(160);
   const [isOverlayVisible, setIsOverlayVisible] = useState(false);
   const [MaxSize, setMaxSize] = useState(window.innerWidth);
-  const [displayBanner, setDisplayBanner] = useState(true);
+  const [displayBanner, setDisplayBanner] = useState(false);
 
   const cmRef = useRef({});
 

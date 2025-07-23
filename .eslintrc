@@ -85,7 +85,12 @@
   },
   "overrides": [
     {
-      "files": ["*.stories.jsx"],
+      "files": ["*.ts", "*.tsx"],
+      "parser": "@typescript-eslint/parser",
+      "plugins": ["@typescript-eslint"]
+    },
+    {
+      "files": ["*.stories.@(js|jsx|ts|tsx)"],
       "rules": {
         "import/no-extraneous-dependencies": "off"
       }
