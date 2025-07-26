@@ -6,22 +6,22 @@ on:
 
 jobs:
   assign-or-unassign:
-    if: contains(fromJSON('["/assign", "/unassign"]'), github.event.comment.body)
+    if: |
+      contains(github.event.comment.body, '/assign') || 
+      contains(github.event.comment.body, '/unassign')
     runs-on: ubuntu-latest
-
     permissions:
       issues: write
-
     steps:
       - name: Assign if /assign
-        if: github.event.comment.body == '/assign'
+        if: contains(github.event.comment.body, '/assign')
         uses: actions-ecosystem/action-add-assignees@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           assignees: ${{ github.actor }}
-
+          
       - name: Unassign if /unassign
-        if: github.event.comment.body == '/unassign'
+        if: contains(github.event.comment.body, '/unassign')
         uses: actions-ecosystem/action-remove-assignees@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
