@@ -1,20 +1,28 @@
-name: Auto Assign on /assign
+name: Assign or Unassign via Comment
 
 on:
   issue_comment:
     types: [created]
 
 jobs:
-  assign:
-    if: github.event.comment.body == '/assign'
+  assign-or-unassign:
+    if: contains(fromJSON('["/assign", "/unassign"]'), github.event.comment.body)
     runs-on: ubuntu-latest
 
     permissions:
       issues: write
 
     steps:
-      - name: Assign issue
+      - name: Assign if /assign
+        if: github.event.comment.body == '/assign'
         uses: actions-ecosystem/action-add-assignees@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          assignees: ${{ github.actor }}
+
+      - name: Unassign if /unassign
+        if: github.event.comment.body == '/unassign'
+        uses: actions-ecosystem/action-remove-assignees@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           assignees: ${{ github.actor }}
