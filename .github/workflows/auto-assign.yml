@@ -1,0 +1,20 @@
+name: Auto Assign on /assign
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  assign:
+    if: github.event.comment.body == '/assign'
+    runs-on: ubuntu-latest
+
+    permissions:
+      issues: write
+
+    steps:
+      - name: Assign issue
+        uses: actions-ecosystem/action-add-assignees@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          assignees: ${{ github.actor }}
