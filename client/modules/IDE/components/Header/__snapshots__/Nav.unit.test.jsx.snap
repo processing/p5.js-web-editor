@@ -335,7 +335,7 @@ exports[`Nav renders dashboard version for mobile 1`] = `
           >
             <test-file-stub
               aria-hidden="true"
-              classname="icons__StyledIcon-sc-xmer15-0 dStXqm"
+              classname="icons__StyledIcon-sc-xmer15-0 kjSZIe"
               focusable="false"
             />
           </button>
@@ -351,7 +351,7 @@ exports[`Nav renders dashboard version for mobile 1`] = `
         >
           <test-file-stub
             aria-hidden="true"
-            classname="icons__StyledIcon-sc-xmer15-0 dStXqm"
+            classname="icons__StyledIcon-sc-xmer15-0 kjSZIe"
             focusable="false"
           />
         </button>
@@ -930,7 +930,7 @@ exports[`Nav renders editor version for mobile 1`] = `
           >
             <test-file-stub
               aria-hidden="true"
-              classname="icons__StyledIcon-sc-xmer15-0 dStXqm"
+              classname="icons__StyledIcon-sc-xmer15-0 kjSZIe"
               focusable="false"
             />
           </button>
@@ -946,7 +946,7 @@ exports[`Nav renders editor version for mobile 1`] = `
         >
           <test-file-stub
             aria-hidden="true"
-            classname="icons__StyledIcon-sc-xmer15-0 dStXqm"
+            classname="icons__StyledIcon-sc-xmer15-0 kjSZIe"
             focusable="false"
           />
         </button>

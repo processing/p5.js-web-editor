@@ -11,12 +11,15 @@ const PolicyContainerMain = styled.main`
   margin: 0 auto;
   padding: ${remSize(10)};
   line-height: 1.5em;
+  word-break: break-word;
+  overflow-wrap: anywhere;
   & p {
     margin-bottom: ${remSize(10)};
   }
   font-size: ${remSize(16)};
   & h1 {
     font-size: 2em;
+    line-height: 1.2em;
   }
   & h2 {
     font-size: 1.5em;

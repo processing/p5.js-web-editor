@@ -360,13 +360,13 @@
       "CurrentPasswordARIA": "वर्तमान पासवर्ड",
       "NewPassword": "नया पासवर्ड",
       "NewPasswordARIA": "नया पासवर्ड",
-      "SubmitSaveAllSettings": "सभी सेटिंग्स सेव करें"
+      "SaveAccountDetails": "खाता विवरण सहेजें"
     },
     "AccountView": {
       "SocialLogin": "सामाजिक लॉग इन",
       "SocialLoginDescription": "p5.js वेब संपादक में लॉग इन करने के लिए अपने GitHub या Google खाते का उपयोग करें।",
       "Title": "p5.js वेब संपादक | खाता सेटिंग्स",
-      "Settings": "खाता सेटिंग्स",
+      "Settings": "मेरा खाता",
       "AccountTab": "खाता",
       "AccessTokensTab": "टोकन का उपयोग"
     },

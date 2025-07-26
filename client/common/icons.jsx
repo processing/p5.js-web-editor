@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { prop } from '../theme';
 import SortArrowUp from '../images/sort-arrow-up.svg';
 import SortArrowDown from '../images/sort-arrow-down.svg';
 import Github from '../images/github.svg';
@@ -35,20 +34,20 @@ import Copy from '../images/copy.svg';
 function withLabel(SvgComponent) {
   const StyledIcon = styled(SvgComponent)`
     &&& {
-      color: ${prop('Icon.default')};
+      color: ${(props) => props.Icon?.default};
       & g,
       & path,
       & polygon {
         opacity: 1;
-        fill: ${prop('Icon.default')};
+        fill: ${(props) => props.Icon?.default};
       }
       &:hover {
-        color: ${prop('Icon.hover')};
+        color: ${(props) => props.Icon?.hover};
         & g,
         & path,
         & polygon {
           opacity: 1;
-          fill: ${prop('Icon.hover')};
+          fill: ${(props) => props.Icon?.hover};
         }
       }
     }

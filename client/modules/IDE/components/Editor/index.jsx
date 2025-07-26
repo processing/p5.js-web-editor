@@ -169,6 +169,9 @@ class Editor extends React.Component {
       },
       Enter: 'emmetInsertLineBreak',
       Esc: 'emmetResetAbbreviation',
+      [`Shift-${metaKey}-E`]: (cm) => {
+        cm.getInputField().blur();
+      },
       [`Shift-Tab`]: false,
       [`${metaKey}-Enter`]: () => null,
       [`Shift-${metaKey}-Enter`]: () => null,
@@ -552,7 +555,7 @@ class Editor extends React.Component {
             <section className={editorSectionClass}>
               <div className="editor__header">
                 <button
-                  aria-label={this.props.t('Editor.OpenSketchARIA')}
+                  aria-label={this.props.t('Editor.CloseSketchARIA')}
                   className="sidebar__contract"
                   onClick={() => {
                     this.props.collapseSidebar();
@@ -562,7 +565,7 @@ class Editor extends React.Component {
                   <LeftArrowIcon focusable="false" aria-hidden="true" />
                 </button>
                 <button
-                  aria-label={this.props.t('Editor.CloseSketchARIA')}
+                  aria-label={this.props.t('Editor.OpenSketchARIA')}
                   className="sidebar__expand"
                   onClick={this.props.expandSidebar}
                 >

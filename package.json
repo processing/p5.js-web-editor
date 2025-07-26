@@ -1,18 +1,19 @@
 {
   "name": "p5.js-web-editor",
-  "version": "2.16.5",
+  "version": "2.16.12",
   "description": "The web editor for p5.js.",
   "scripts": {
     "clean": "rimraf dist",
     "start": "cross-env BABEL_DISABLE_CACHE=1 NODE_ENV=development nodemon index.js",
     "start:prod": "cross-env NODE_ENV=production node index.js",
-    "lint": "eslint client server --ext .jsx --ext .js",
-    "lint-fix": "eslint client server --ext .jsx --ext .js --fix",
+    "lint": "eslint client server --ext .jsx --ext .js --ext .tsx --ext .ts",
+    "lint-fix": "eslint client server --ext .jsx --ext .js --ext .tsx --ext .ts --fix",
     "build": "npm run build:client && npm run build:server && npm run build:examples",
     "build:client": "cross-env NODE_ENV=production webpack --config webpack/config.prod.js",
     "build:server": "cross-env NODE_ENV=production webpack --config webpack/config.server.js",
     "build:examples": "cross-env NODE_ENV=production webpack --config webpack/config.examples.js",
     "test": "NODE_ENV=test jest",
+    "test:watch": "NODE_ENV=test jest --watch",
     "test:ci": "npm run lint && npm run test",
     "fetch-examples": "cross-env NODE_ENV=development node ./server/scripts/fetch-examples.js",
     "fetch-examples-gg": "cross-env NODE_ENV=development node ./server/scripts/fetch-examples-gg.js",
@@ -25,15 +26,17 @@
     "heroku-postbuild": "touch .env; npm run build",
     "storybook:build:css": "sass client/styles/main.scss client/styles/storybook.css",
     "storybook": "npm run storybook:build:css && storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "typecheck": "npm run typecheck:client",
+    "typecheck:client": "npx tsc --noEmit -p ./client/tsconfig.json"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "npm run typecheck && lint-staged"
     }
   },
   "lint-staged": {
-    "*.{js,jsx}": [
+    "*.{js,jsx,ts,tsx}": [
       "npm run lint-fix"
     ]
   },
@@ -96,6 +99,7 @@
     "@babel/plugin-transform-react-inline-elements": "^7.14.5",
     "@babel/preset-env": "^7.14.7",
     "@babel/preset-react": "^7.14.5",
+    "@babel/preset-typescript": "^7.27.1",
     "@storybook/addon-actions": "^7.6.8",
     "@storybook/addon-docs": "^7.6.8",
     "@storybook/addon-essentials": "^7.6.8",
@@ -110,6 +114,12 @@
     "@svgr/webpack": "^6.2.1",
     "@testing-library/jest-dom": "^5.15.0",
     "@testing-library/react": "^12.1.2",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^16.18.126",
+    "@types/react": "^16.14.0",
+    "@types/react-dom": "^16.9.25",
+    "@typescript-eslint/eslint-plugin": "^5.62.0",
+    "@typescript-eslint/parser": "^5.62.0",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^29.7.0",
     "babel-loader": "^8.2.5",
@@ -148,6 +158,7 @@
     "storybook-addon-theme-playground": "^3.1.0",
     "style-loader": "^3.3.1",
     "terser-webpack-plugin": "^5.3.1",
+    "typescript": "^5.8.3",
     "webpack-cli": "^4.9.2",
     "webpack-manifest-plugin": "^5.0.0",
     "webpack-node-externals": "^3.0.0"
