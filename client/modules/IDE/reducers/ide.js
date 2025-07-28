@@ -10,6 +10,7 @@ const initialState = {
   projectOptionsVisible: false,
   newFolderModalVisible: false,
   uploadFileModalVisible: false,
+  uploadImageByUrlModalVisible: false,
   shareModalVisible: false,
   shareModalProjectId: 'abcd',
   shareModalProjectName: 'My Cute Sketch',
@@ -122,6 +123,13 @@ const ide = (state = initialState, action) => {
       });
     case ActionTypes.CLOSE_UPLOAD_FILE_MODAL:
       return Object.assign({}, state, { uploadFileModalVisible: false });
+    case ActionTypes.OPEN_UPLOAD_IMAGE_BY_URL_MODAL:
+      return Object.assign({}, state, {
+        uploadImageByUrlModalVisible: true,
+        parentId: action.parentId
+      });
+    case ActionTypes.CLOSE_UPLOAD_IMAGE_BY_URL_MODAL:
+      return Object.assign({}, state, { uploadImageByUrlModalVisible: false });
     default:
       return state;
   }

@@ -214,6 +214,38 @@ const files = (state, action) => {
         return file;
       });
     }
+    case ActionTypes.ADD_SKETCH_FILE: {
+      const parentFile = state.find(
+        (file) => file.id === action.payload.parentId
+      );
+      const filePath =
+        parentFile.name === 'root'
+          ? ''
+          : `${parentFile.filePath}/${parentFile.name}`;
+      const newId = objectID().toHexString();
+      const newState = [
+        ...updateParent(state, {
+          parentId: action.payload.parentId,
+          id: newId
+        }),
+        {
+          name: action.payload.name,
+          id: newId,
+          _id: newId,
+          url: action.payload.url,
+          content: '',
+          children: [],
+          fileType: 'file',
+          filePath
+        }
+      ];
+      return newState.map((file) => {
+        if (file.id === action.payload.parentId) {
+          file.children = sortedChildrenId(newState, file.children);
+        }
+        return file;
+      });
+    }
     case ActionTypes.UPDATE_FILE_NAME: {
       const newState = renameFile(state, action);
       const updatedFile = newState.find((file) => file.id === action.id);

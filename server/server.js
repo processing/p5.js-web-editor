@@ -76,6 +76,10 @@ app.use(cookieParser());
 
 mongoose.set('strictQuery', true);
 
+const mediaRoutes = require('./routes/media.routes');
+
+app.use('/api/media', mediaRoutes);
+
 const clientPromise = mongoose
   .connect(mongoConnectionString, {
     useNewUrlParser: true,

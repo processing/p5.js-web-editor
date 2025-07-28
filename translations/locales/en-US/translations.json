@@ -268,7 +268,9 @@
     "AddFile": "Create file",
     "AddFileARIA": "add file",
     "UploadFile": "Upload file",
-    "UploadFileARIA": "upload file"
+    "UploadFileARIA": "upload file",
+    "UploadImageByUrl":"Upload Image by URL",
+    "UploadImageByUrlARIA":"Upload Image by URL"
   },
   "FileNode": {
     "OpenFolderARIA": "Open folder contents",

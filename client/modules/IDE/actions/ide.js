@@ -91,6 +91,19 @@ export function closeUploadFileModal() {
   };
 }
 
+export function openUploadImageByUrlModal(parentId) {
+  return {
+    type: ActionTypes.OPEN_UPLOAD_IMAGE_BY_URL_MODAL,
+    parentId
+  };
+}
+
+export function closeUploadImageByUrlModal() {
+  return {
+    type: ActionTypes.CLOSE_UPLOAD_IMAGE_BY_URL_MODAL
+  };
+}
+
 export function expandSidebar() {
   return {
     type: ActionTypes.EXPAND_SIDEBAR
