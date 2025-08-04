@@ -2,13 +2,15 @@ import styled from 'styled-components';
 import { remSize, prop } from '../../theme';
 
 export const AboutPageContent = styled.div`
-  margin: ${remSize(42)} ${remSize(295)};
+  padding: ${remSize(42)} ${remSize(295)};
+  background-color: ${prop('sectionBackground')};
 
   @media (max-width: 1279px) {
     margin: ${remSize(20)};
     width: 95%;
     overflow: hidden auto;
     flex-direction: column;
+    background-color: ${prop('sectionBackground')};
   }
 `;
 
@@ -82,6 +84,7 @@ export const IntroDescription = styled.div`
 
 export const Section = styled.div`
   margin: ${remSize(50)} 0;
+  background-color: ${prop('sectionBackground')};
 
   & h2 {
     font-size: ${remSize(24)};

@@ -80,6 +80,7 @@ const baseThemes = {
     searchBackgroundColor: grays.lightest,
     tableRowStripeColor: grays.mediumLight,
     notification: colors.dodgerblue,
+    sectionBackground: grays.lightest,
 
     Button: {
       primary: {
@@ -172,6 +173,7 @@ const baseThemes = {
     searchBackgroundColor: grays.darker,
     tableRowStripeColor: grays.dark,
     notification: colors.processingBlueLight,
+    sectionBackground: grays.darker,
 
     Button: {
       primary: {
@@ -260,6 +262,7 @@ export default {
     inactiveTextColor: grays.light,
     logoColor: colors.yellow,
     notification: colors.p5ContrastYellow,
+    sectionBackground: grays.darkest,
 
     Button: {
       primary: {
