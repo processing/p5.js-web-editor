@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import {
+  GlobalStyle,
   AboutPageContent,
   Intro,
   IntroHeadline,
@@ -20,6 +21,7 @@ import {
 } from '../About.styles';
 
 import { ContactSectionLinks, AboutSectionInfo } from '../statics/aboutData';
+
 import Nav from '../../IDE/components/Header/Nav';
 import RootPage from '../../../components/RootPage';
 import packageData from '../../../../package.json';
@@ -57,8 +59,10 @@ const About = () => {
 
   return (
     <RootPage>
+      <GlobalStyle />
+
       <Helmet>
-        <title> {t('About.TitleHelmet')} </title>
+        <title>{t('About.TitleHelmet')}</title>
       </Helmet>
 
       <Nav layout="dashboard" />
