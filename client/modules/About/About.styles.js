@@ -1,7 +1,7 @@
 import styled, { createGlobalStyle } from 'styled-components';
 import { remSize, prop } from '../../theme';
 
-// 1. Global style for the full page background
+
 export const GlobalStyle = createGlobalStyle`
   html, body, #root {
     background-color: ${prop('backgroundColor')};
@@ -15,7 +15,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 `;
 
-// 2. Page Content wrapper
+
 export const AboutPageContent = styled.div`
   margin: ${remSize(42)} ${remSize(295)};
   background-color: ${prop('backgroundColor')};
@@ -30,7 +30,7 @@ export const AboutPageContent = styled.div`
   }
 `;
 
-// 3. Intro section
+
 export const Intro = styled.div`
   background-color: ${prop('backgroundColor')};
   color: ${prop('primaryTextColor')};
@@ -65,7 +65,7 @@ export const Intro = styled.div`
   }
 `;
 
-// 4. Intro Headline
+
 export const IntroHeadline = styled.div`
   display: flex;
   align-items: center;
@@ -95,7 +95,7 @@ export const IntroHeadline = styled.div`
   }
 `;
 
-// 5. Intro Description
+
 export const IntroDescription = styled.div`
   line-height: ${remSize(27)};
   font-size: ${remSize(16)};
@@ -109,7 +109,7 @@ export const IntroDescription = styled.div`
   }
 `;
 
-// 6. Section Wrapper
+
 export const Section = styled.div`
   margin: ${remSize(50)} 0;
   background-color: ${prop('backgroundColor')};
@@ -127,7 +127,7 @@ export const Section = styled.div`
   }
 `;
 
-// 7. SectionContainer
+
 export const SectionContainer = styled.div`
   display: flex;
   justify-content: row;
@@ -143,7 +143,7 @@ export const SectionContainer = styled.div`
   }
 `;
 
-// 8. SectionItem
+
 export const SectionItem = styled.div`
   width: 33%;
   display: flex;
@@ -191,7 +191,7 @@ export const SectionItem = styled.div`
   }
 `;
 
-// 9. Contact Section
+
 export const Contact = styled.div`
   margin-bottom: ${remSize(50)};
   background-color: ${prop('backgroundColor')};
@@ -212,7 +212,7 @@ export const Contact = styled.div`
   }
 `;
 
-// 10. ContactTitle
+
 export const ContactTitle = styled.p`
   width: 50%;
   color: ${prop('primaryTextColor')};
@@ -222,7 +222,7 @@ export const ContactTitle = styled.p`
   }
 `;
 
-// 11. ContactHandles
+
 export const ContactHandles = styled.p`
   width: 50%;
   color: ${prop('primaryTextColor')};
@@ -242,7 +242,7 @@ export const ContactHandles = styled.p`
   }
 `;
 
-// 12. Footer
+
 export const Footer = styled.div`
   border-top: 0.1rem dashed ${prop('primaryTextColor')};
   padding: 0 ${remSize(20)} ${remSize(70)} 0;
