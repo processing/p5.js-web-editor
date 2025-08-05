@@ -263,7 +263,6 @@ export const Footer = styled.div`
     text-decoration: underline;
 
     &:hover {
-      text-decoration: underline;
       text-decoration-thickness: 0.1em;
       color: ${prop('logoColor')};
     }
