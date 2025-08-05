@@ -1,7 +1,6 @@
 import styled, { createGlobalStyle } from 'styled-components';
 import { remSize, prop } from '../../theme';
 
-
 export const GlobalStyle = createGlobalStyle`
   html, body, #root {
     background-color: ${prop('backgroundColor')};
@@ -15,12 +14,10 @@ export const GlobalStyle = createGlobalStyle`
   }
 `;
 
-
 export const AboutPageContent = styled.div`
   margin: ${remSize(42)} ${remSize(295)};
-  background-color: ${prop('backgroundColor')};
   color: ${prop('primaryTextColor')};
-  min-height: 100vh;
+  background-color: ${prop('backgroundColor')};
 
   @media (max-width: 1279px) {
     margin: ${remSize(20)};
@@ -30,11 +27,7 @@ export const AboutPageContent = styled.div`
   }
 `;
 
-
 export const Intro = styled.div`
-  background-color: ${prop('backgroundColor')};
-  color: ${prop('primaryTextColor')};
-
   & h1 {
     font-size: ${remSize(32)};
     font-weight: 700;
@@ -50,7 +43,7 @@ export const Intro = styled.div`
     width: ${remSize(110)};
     justify-content: space-evenly;
     color: ${prop('primaryTextColor')};
-    background-color: ${prop('backgroundColor')};
+    text-decoration: none;
 
     &:hover {
       color: ${prop('Button.primary.default.background')};
@@ -58,19 +51,18 @@ export const Intro = styled.div`
       border-color: ${prop('Button.primary.hover.border')};
       text-decoration: none;
 
-      svg path {
-        fill: ${prop('Button.primary.default.background')};
+      & svg {
+        & path {
+          fill: ${prop('Button.primary.default.background')};
+        }
       }
     }
   }
 `;
 
-
 export const IntroHeadline = styled.div`
   display: flex;
   align-items: center;
-  background-color: ${prop('backgroundColor')};
-  color: ${prop('primaryTextColor')};
 
   & div {
     height: 100%;
@@ -81,8 +73,10 @@ export const IntroHeadline = styled.div`
     color: ${prop('primaryTextColor')};
   }
 
-  & svg path {
-    fill: ${prop('logoColor')};
+  & svg {
+    & path {
+      fill: ${prop('logoColor')};
+    }
   }
 
   @media (max-width: 769px) {
@@ -95,12 +89,10 @@ export const IntroHeadline = styled.div`
   }
 `;
 
-
 export const IntroDescription = styled.div`
   line-height: ${remSize(27)};
   font-size: ${remSize(16)};
   margin: ${remSize(24)} 0;
-  background-color: ${prop('backgroundColor')};
   color: ${prop('primaryTextColor')};
 
   p {
@@ -109,11 +101,8 @@ export const IntroDescription = styled.div`
   }
 `;
 
-
 export const Section = styled.div`
   margin: ${remSize(50)} 0;
-  background-color: ${prop('backgroundColor')};
-  color: ${prop('primaryTextColor')};
 
   & h2 {
     font-size: ${remSize(24)};
@@ -127,7 +116,6 @@ export const Section = styled.div`
   }
 `;
 
-
 export const SectionContainer = styled.div`
   display: flex;
   justify-content: row;
@@ -135,14 +123,11 @@ export const SectionContainer = styled.div`
   font-size: ${remSize(16)};
   width: 100%;
   flex-wrap: wrap;
-  background-color: ${prop('backgroundColor')};
-  color: ${prop('primaryTextColor')};
 
   @media (max-width: 769px) {
     display: grid;
   }
 `;
-
 
 export const SectionItem = styled.div`
   width: 33%;
@@ -150,8 +135,6 @@ export const SectionItem = styled.div`
   line-height: ${remSize(19.5)};
   font-size: ${remSize(14)};
   padding: 0 ${remSize(30)} ${remSize(30)} 0;
-  background-color: ${prop('backgroundColor')};
-  color: ${prop('primaryTextColor')};
 
   & p {
     margin-top: ${remSize(7)};
@@ -167,7 +150,7 @@ export const SectionItem = styled.div`
     &:hover {
       text-decoration: underline;
       text-decoration-thickness: 0.1em;
-      color: ${prop('primaryTextColor')};
+      color: ${prop('Button.primary.hover.background')};
     }
   }
 
@@ -191,11 +174,8 @@ export const SectionItem = styled.div`
   }
 `;
 
-
 export const Contact = styled.div`
   margin-bottom: ${remSize(50)};
-  background-color: ${prop('backgroundColor')};
-  color: ${prop('primaryTextColor')};
 
   & h2 {
     font-size: ${remSize(24)};
@@ -208,10 +188,8 @@ export const Contact = styled.div`
     width: 100%;
     margin: ${remSize(20)} 0;
     font-size: ${remSize(16)};
-    color: ${prop('primaryTextColor')};
   }
 `;
-
 
 export const ContactTitle = styled.p`
   width: 50%;
@@ -221,7 +199,6 @@ export const ContactTitle = styled.p`
     width: 30%;
   }
 `;
-
 
 export const ContactHandles = styled.p`
   width: 50%;
@@ -233,7 +210,7 @@ export const ContactHandles = styled.p`
 
     &:hover {
       text-decoration: underline;
-      color: ${prop('logoColor')};
+      color: ${prop('Button.primary.hover.background')};
     }
   }
 
@@ -242,14 +219,11 @@ export const ContactHandles = styled.p`
   }
 `;
 
-
 export const Footer = styled.div`
   border-top: 0.1rem dashed ${prop('primaryTextColor')};
   padding: 0 ${remSize(20)} ${remSize(70)} 0;
   width: 100%;
   font-size: ${remSize(16)};
-  background-color: ${prop('backgroundColor')};
-  color: ${prop('primaryTextColor')};
 
   & div {
     display: flex;
@@ -263,8 +237,9 @@ export const Footer = styled.div`
     text-decoration: underline;
 
     &:hover {
+      text-decoration: underline;
       text-decoration-thickness: 0.1em;
-      color: ${prop('logoColor')};
+      color: ${prop('Button.primary.hover.background')};
     }
   }
 
