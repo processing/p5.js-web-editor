@@ -1,6 +1,6 @@
 import { LanguageSupport } from '@codemirror/language';
 import { javascript } from '@codemirror/lang-javascript';
-import { p5Hinter } from '../../../../utils/p5-hinter-cm6';
+import { p5Hinter } from '../../../../utils/p5-hinter';
 
 function testCompletions(context) {
   const word = context.matchBefore(/\w*/);
