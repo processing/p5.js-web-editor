@@ -10,6 +10,8 @@ function testCompletions(context) {
     const itemCopy = { ...item };
 
     if (item.p5DocPath) {
+      // TODO: Use the option below to add the p5 link for *all* hints.
+      // https://codemirror.net/docs/ref/#autocomplete.autocompletion^config.addToOptions
       itemCopy.info = () => {
         const domNode = document.createElement('a');
         domNode.href = `https://p5js.org/reference/p5/${item.p5DocPath}`;

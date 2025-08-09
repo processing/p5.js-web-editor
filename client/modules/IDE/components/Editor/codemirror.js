@@ -13,7 +13,8 @@ import { debounce } from 'lodash';
 import {
   getFileMode,
   createNewFileState,
-  updateFileStates
+  updateFileStates,
+  AUTOCOMPLETE_OPTIONS
 } from './stateUtils';
 import { useEffectWithComparison } from '../../hooks/custom-hooks';
 import tidyCodeWithPrettier from './tidier';
@@ -143,7 +144,9 @@ export default function useCodeMirror({
   }, [autocloseBracketsQuotes]);
   useEffect(() => {
     const reconfigureEffect = (fileState) =>
-      fileState.autocompleteCpt.reconfigure(true ? autocompletion() : []);
+      fileState.autocompleteCpt.reconfigure(
+        autocompleteHinter ? autocompletion(AUTOCOMPLETE_OPTIONS) : []
+      );
     updateFileStates({
       fileStates: fileStates.current,
       cmView: cmView.current,
@@ -170,7 +173,7 @@ export default function useCodeMirror({
             linewrap,
             lineNumbers,
             autocloseBracketsQuotes,
-            autocomplete: true,
+            autocomplete: autocompleteHinter,
             onUpdateLinting,
             onViewUpdate
           }

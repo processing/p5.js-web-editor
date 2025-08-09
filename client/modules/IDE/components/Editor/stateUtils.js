@@ -259,6 +259,12 @@ function getFileEmmetConfig(fileName) {
 const extraKeymaps = [{ key: 'Tab', run: insertTab, shift: indentLess }];
 const emmetKeymaps = [{ key: 'Tab', run: expandAbbreviation }];
 
+export const AUTOCOMPLETE_OPTIONS = {
+  tooltipClass: () => 'CodeMirror-hints',
+  optionClass: () => 'CodeMirror-hint',
+  closeOnBlur: false
+};
+
 /**
  * Creates a new CodeMirror editor state with configurations,
  * extensions, and keymaps tailored to the file type and settings.
@@ -300,7 +306,9 @@ export function createNewFileState(filename, document, settings) {
     lineNumbersCpt.of(lineNumbers ? lineNumbersExt() : []),
     lineWrappingCpt.of(linewrap ? EditorView.lineWrapping : []),
     closeBracketsCpt.of(autocloseBracketsQuotes ? closeBrackets() : []),
-    autocompleteCpt.of(autocomplete ? autocompletion() : []),
+    autocompleteCpt.of(
+      autocomplete ? autocompletion(AUTOCOMPLETE_OPTIONS) : []
+    ),
 
     // Everything below here should always be on.
     history(),

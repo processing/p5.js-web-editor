@@ -2,6 +2,9 @@ const fs = require('fs');
 const process = require('process');
 const axios = require('axios');
 
+// TODO: Currently this makes duplicate entries because
+// the default Javascript hinter also has these,
+// but should we keep them around for the p5 reference links?
 const reservedKeywords = [
   { name: 'await', p5DocPath: undefined },
   { name: 'class', p5DocPath: 'class' },
