@@ -143,9 +143,7 @@ export default function useCodeMirror({
   }, [autocloseBracketsQuotes]);
   useEffect(() => {
     const reconfigureEffect = (fileState) =>
-      fileState.autocompleteCpt.reconfigure(
-        autocompleteHinter ? autocompletion() : []
-      );
+      fileState.autocompleteCpt.reconfigure(true ? autocompletion() : []);
     updateFileStates({
       fileStates: fileStates.current,
       cmView: cmView.current,
@@ -172,7 +170,7 @@ export default function useCodeMirror({
             linewrap,
             lineNumbers,
             autocloseBracketsQuotes,
-            autocomplete: autocompleteHinter,
+            autocomplete: true,
             onUpdateLinting,
             onViewUpdate
           }
