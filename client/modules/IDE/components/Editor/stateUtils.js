@@ -50,7 +50,7 @@ import { HTMLHint } from 'htmlhint';
 import { CSSLint } from 'csslint';
 import { emmetConfig } from '@emmetio/codemirror6-plugin';
 
-import p5JavaScript from './p5Javascript';
+import p5JavaScript from './p5JavaScript';
 import tidyCodeWithPrettier from './tidier';
 
 // ----- TODOS -----
