@@ -4,6 +4,12 @@ import * as ActionTypes from '../../../constants';
 import { startLoader, stopLoader } from '../reducers/loading';
 import { setToastText, showToast } from './toast';
 
+import {
+  setCollections,
+  delCollection,
+  updateCollection
+} from '../reducers/collections';
+
 const TOAST_DISPLAY_TIME_MS = 1500;
 
 export function getCollections(username) {
@@ -18,10 +24,7 @@ export function getCollections(username) {
     return apiClient
       .get(url)
       .then((response) => {
-        dispatch({
-          type: ActionTypes.SET_COLLECTIONS,
-          collections: response.data
-        });
+        dispatch(setCollections(response.data));
         dispatch(stopLoader());
       })
       .catch((error) => {
@@ -72,10 +75,7 @@ export function addToCollection(collectionId, projectId) {
     return apiClient
       .post(url)
       .then((response) => {
-        dispatch({
-          type: ActionTypes.ADD_TO_COLLECTION,
-          payload: response.data
-        });
+        dispatch(updateCollection(response.data));
         dispatch(stopLoader());
 
         const collectionName = response.data.name;
@@ -102,10 +102,7 @@ export function removeFromCollection(collectionId, projectId) {
     return apiClient
       .delete(url)
       .then((response) => {
-        dispatch({
-          type: ActionTypes.REMOVE_FROM_COLLECTION,
-          payload: response.data
-        });
+        dispatch(updateCollection(response.data));
         dispatch(stopLoader());
 
         const collectionName = response.data.name;
@@ -131,10 +128,7 @@ export function editCollection(collectionId, { name, description }) {
     return apiClient
       .patch(url, { name, description })
       .then((response) => {
-        dispatch({
-          type: ActionTypes.EDIT_COLLECTION,
-          payload: response.data
-        });
+        dispatch(updateCollection(response.data));
         return response.data;
       })
       .catch((error) => {
@@ -152,11 +146,7 @@ export function deleteCollection(collectionId) {
     return apiClient
       .delete(url)
       .then((response) => {
-        dispatch({
-          type: ActionTypes.DELETE_COLLECTION,
-          payload: response.data,
-          collectionId
-        });
+        dispatch(delCollection(collectionId));
         return response.data;
       })
       .catch((error) => {
