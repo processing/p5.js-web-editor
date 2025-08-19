@@ -1,22 +1,28 @@
-import * as ActionTypes from '../../../constants';
+import { createSlice } from '@reduxjs/toolkit';
 
-const sketches = (state = [], action) => {
-  switch (action.type) {
-    case ActionTypes.SET_PROJECTS:
-      return action.projects;
-    case ActionTypes.DELETE_PROJECT:
-      return state.filter((sketch) => sketch.id !== action.id);
-    case ActionTypes.RENAME_PROJECT: {
-      return state.map((sketch) => {
-        if (sketch.id === action.payload.id) {
-          return { ...sketch, name: action.payload.name };
-        }
-        return { ...sketch };
-      });
+const sketchesSlice = createSlice({
+  name: 'sketches',
+  initialState: [],
+  reducers: {
+    setProjects(state, action) {
+      return action.payload;
+    },
+    deleteProject(state, action) {
+      return state.filter((sketch) => sketch.id !== action.payload.id);
+    },
+    renameProject(state, action) {
+      const { id, name } = action.payload;
+      return state.map((sketch) =>
+        sketch.id === id ? { ...sketch, name } : { ...sketch }
+      );
     }
-    default:
-      return state;
   }
-};
+});
 
-export default sketches;
+export const {
+  setProjects,
+  deleteProject,
+  renameProject
+} = sketchesSlice.actions;
+
+export default sketchesSlice.reducer;
