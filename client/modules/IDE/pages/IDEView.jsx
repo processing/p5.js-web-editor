@@ -10,7 +10,6 @@ import PreviewFrame from '../components/PreviewFrame';
 import Console from '../components/Console';
 import Toast from '../components/Toast';
 import { updateFileContent } from '../actions/files';
-
 import {
   autosaveProject,
   clearPersistedState,
@@ -98,6 +97,7 @@ const IDEView = () => {
   const project = useSelector((state) => state.project);
   const isUserOwner = useSelector(getIsUserOwner);
   const dispatch = useDispatch();
+
   const { t } = useTranslation();
 
   const params = useParams();

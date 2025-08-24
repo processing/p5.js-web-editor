@@ -1,5 +1,58 @@
 @use "sass:math";
 
+.sketch-visibility__title {
+  @include themify() {
+    color: getThemifyVariable('hint-arrow-background-color');
+  }
+}
+
+.sketch-visibility__icons {
+  height: 30px;
+  width: 30px;
+  display: flex;
+  gap: 5px;
+}
+
+.sketch-visibility {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sketch-visibility hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(to right, transparent, white, transparent);
+}
+
+.sketch-visibility_ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  margin-bottom: 7px;
+}
+
+.sketch-visibility_ul li {
+  margin-bottom: 7px;
+  display: flex;
+  align-items: center;
+}
+
+.sketch-visibility_ul li::before {
+  content: "\2022";
+
+  @include themify() {
+    color: getThemifyVariable('hint-arrow-background-color');
+  }
+
+  font-size: 34px;
+  margin-right: 10px;
+}
+
+
+
+
 .sketches-table-container {
   overflow-y: auto;
   max-width: 100%;
@@ -26,6 +79,8 @@
         flex-direction: column;
         gap: #{math.div(12, $base-font-size)}rem;
 
+
+
         .sketches-table__row {
           margin: 0;
           position: relative;
@@ -40,14 +95,15 @@
             background-color: getThemifyVariable("search-background-color") !important;
           }
 
-          > th {
-            padding-left: 0;
-            width: 100%;
+          .sketches-table_name {
+            display: flex;
+            gap: 5px;
             font-weight: bold;
-            margin-bottom: #{math.div(6, $base-font-size)}rem;
+            align-items: center;
           }
 
-          > td {
+
+          >td {
             padding-left: 0;
             width: 30%;
             font-size: #{math.div(14, $base-font-size)}rem;
@@ -55,6 +111,13 @@
             @include themify() {
               color: getThemifyVariable("modal-border-color");
             }
+          }
+
+          .sketches-table__rowname {
+            display: flex;
+            gap: 5px;
+            justify-content: center;
+            align-items: center;
           }
 
           .sketch-list__dropdown-column {
@@ -75,6 +138,7 @@
 
   max-height: 100%;
   border-spacing: 0;
+
   & .sketch-list__dropdown-column {
     width: #{math.div(60, $base-font-size)}rem;
     position: relative;
@@ -86,6 +150,7 @@
   position: sticky;
   top: 0;
   z-index: 1;
+
   @include themify() {
     background-color: getThemifyVariable("background-color");
   }
@@ -111,6 +176,7 @@
 .sketches-table__header {
   border-bottom: 2px dashed transparent;
   padding: #{math.div(3, $base-font-size)}rem 0;
+
   @include themify() {
     color: getThemifyVariable("inactive-text-color");
   }
@@ -138,11 +204,11 @@
   }
 }
 
-.sketches-table__row > th:nth-child(1) {
+.sketches-table__row>th:nth-child(1) {
   padding-left: #{math.div(12, $base-font-size)}rem;
 }
 
-.sketches-table__row > td {
+.sketches-table__row>td {
   padding-left: #{math.div(8, $base-font-size)}rem;
 }
 
@@ -154,12 +220,13 @@
   
 }
 
-.sketches-table__row.is-deleted > * {
+.sketches-table__row.is-deleted-or-private>* {
   font-style: italic;
 }
 
 .sketches-table thead {
   font-size: #{math.div(12, $base-font-size)}rem;
+
   @include themify() {
     color: getThemifyVariable("inactive-text-color");
   }

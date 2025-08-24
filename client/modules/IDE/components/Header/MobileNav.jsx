@@ -75,6 +75,13 @@ const Title = styled.div`
     margin: 0;
   }
 
+  > section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+  }
+
   > h5 {
     font-size: ${remSize(13)};
     font-weight: normal;
@@ -237,21 +244,21 @@ const MobileNav = () => {
   }
 
   const title = useMemo(resolveTitle, [pageName, project.name]);
-
+  const userIsOwner = user?.username === project.owner?.username;
   const Logo = AsteriskIcon;
+
+  const showOwner = project?.owner && title === project.name && !userIsOwner;
+
   return (
     <Nav>
       <LogoContainer>
         <Logo />
       </LogoContainer>
       <Title>
-        <h1>{title === project.name ? <ProjectName /> : title}</h1>
-        {project?.owner && title === project.name && (
-          <Link to={`/${project.owner.username}/sketches`}>
-            by {project?.owner?.username}
-          </Link>
-        )}
+        <h1>{title === project?.name ? <ProjectName /> : title}</h1>
+        {showOwner && <h5>by {project?.owner?.username}</h5>}
       </Title>
+
       {/* check if the user is in login page */}
       {pageName === 'login' || pageName === 'signup' ? (
         // showing the CrossIcon

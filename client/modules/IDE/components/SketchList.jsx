@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import React, { useEffect, useState, useMemo, useCallback } from 'react';
@@ -13,9 +14,9 @@ import getSortedSketches from '../selectors/projects';
 import Loader from '../../App/components/loader';
 import Overlay from '../../App/components/Overlay';
 import AddToCollectionList from './AddToCollectionList';
-import SketchListRowBase from './SketchListRowBase';
 import ArrowUpIcon from '../../../images/sort-arrow-up.svg';
 import ArrowDownIcon from '../../../images/sort-arrow-down.svg';
+import SketchListRowBase from './SketchListRowBase';
 
 const SketchList = ({
   user,
@@ -118,6 +119,8 @@ const SketchList = ({
     [sorting, getButtonLabel, toggleDirectionForField, t]
   );
 
+  const userIsOwner = user.username === username;
+
   return (
     <article className="sketches-table-container">
       <Helmet>
@@ -145,6 +148,7 @@ const SketchList = ({
                   context: mobile ? 'mobile' : ''
                 })
               )}
+              {userIsOwner && renderFieldHeader('visibility', 'Visibility')}
               <th scope="col"></th>
             </tr>
           </thead>
@@ -187,7 +191,8 @@ SketchList.propTypes = {
       id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
       createdAt: PropTypes.string.isRequired,
-      updatedAt: PropTypes.string.isRequired
+      updatedAt: PropTypes.string.isRequired,
+      visibility: PropTypes.string
     })
   ).isRequired,
   username: PropTypes.string,

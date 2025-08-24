@@ -162,6 +162,22 @@ exports[`Nav renders dashboard version for mobile 1`] = `
   margin: 0;
 }
 
+.c2 > section {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  gap: 5px;
+}
+
 .c2 > h5 {
   font-size: 1.0833333333333333rem;
   font-weight: normal;
@@ -755,6 +771,22 @@ exports[`Nav renders editor version for mobile 1`] = `
 .c2 * {
   padding: 0;
   margin: 0;
+}
+
+.c2 > section {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  gap: 5px;
 }
 
 .c2 > h5 {

@@ -281,3 +281,40 @@ export async function downloadProjectAsZip(req, res) {
   // save project to some path
   buildZip(project, req, res);
 }
+
+export async function changeProjectVisibility(req, res) {
+  try {
+    const { projectId, visibility: newVisibility } = req.body;
+
+    const project = await Project.findOne({
+      $or: [{ _id: projectId }, { slug: projectId }]
+    });
+
+    if (!project) {
+      return res
+        .status(404)
+        .json({ success: false, message: 'No project found.' });
+    }
+
+    if (newVisibility !== 'Private' && newVisibility !== 'Public') {
+      return res.status(400).json({ success: false, message: 'Invalid data.' });
+    }
+
+    const updatedProject = await Project.findByIdAndUpdate(
+      projectId,
+      {
+        visibility: newVisibility
+      },
+      {
+        new: true,
+        runValidators: true
+      }
+    )
+      .populate('user', 'username')
+      .exec();
+
+    return res.status(200).json(updatedProject);
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+}

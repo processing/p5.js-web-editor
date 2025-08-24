@@ -26,6 +26,13 @@ The p5.js Editor is a collaborative project created by many individuals, mostly 
 
 3. [All Contributors list on the p5.js repository](https://github.com/processing/p5.js?tab=readme-ov-file#contributors) - Explore the All Contributors list to see the wide range of contributions by our amazing community!
 
+> **TypeScript Migration:** 
+> As of July 2025, we are working on migrating the repo to TypeScript as part of the **[p5.js Web Editor pr05 Grant](https://github.com/processing/pr05-grant/wiki/2025-pr05-Program-Page)**.  
+> This migration will occur in two phases:
+> 1. **Grant Work (July – October 31, 2025)** – Setting up TypeScript configuration, tooling, and starting partial migration. Contributions will be **closed** during this period.
+> 2. **Open Contribution (After October 31, 2025)** – TypeScript migration tasks will **open** to all contributors, with guidelines and tutorials available.  
+>
+> For full details, see [TypeScript Migration Plan](./contributor_docs/typescript-migration.md).
 
 ## Acknowledgements 🙏
 

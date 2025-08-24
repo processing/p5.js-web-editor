@@ -24,7 +24,8 @@ export function setProject(project) {
     type: ActionTypes.SET_PROJECT,
     project,
     files: project.files,
-    owner: project.user
+    owner: project.user,
+    visibility: project.visibility
   };
 }
 
@@ -407,6 +408,53 @@ export function deleteProject(id) {
             error: response.data
           });
         }
+      });
+  };
+}
+export function changeVisibility(projectId, projectName, visibility) {
+  return (dispatch, getState) => {
+    const state = getState();
+
+    apiClient
+      .patch('/project/visibility', { projectId, visibility })
+      .then((response) => {
+        if (response.status === 200) {
+          const { visibility: newVisibility, updatedAt } = response.data;
+
+          dispatch({
+            type: ActionTypes.CHANGE_VISIBILITY,
+            payload: {
+              id: response.data.id,
+              visibility: newVisibility
+            }
+          });
+
+          if (state.project.id === response.data.id) {
+            dispatch({
+              type: ActionTypes.SET_PROJECT_VISIBILITY,
+              visibility: newVisibility,
+              updatedAt
+            });
+
+            dispatch({
+              type: ActionTypes.SET_PROJECT_NAME,
+              name: response.data.name
+            });
+
+            dispatch(
+              setToastText(
+                `${projectName} is now ${newVisibility.toLowerCase()}`
+              )
+            );
+            dispatch(showToast(2000));
+          }
+        }
+      })
+      .catch((error) => {
+        dispatch({
+          type: ActionTypes.ERROR,
+          error: error?.response?.data
+        });
       });
   };
 }
