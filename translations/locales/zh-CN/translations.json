@@ -104,7 +104,7 @@
     "Examples": "范例",
     "PrivacyPolicy": "隐私政策",
     "TermsOfUse": "使用条款",
-   "CodeOfConduct": "行为准则"
+    "CodeOfConduct": "行为准则"
   },
   "Toast": {
     "OpenedNewSketch": "打开了新项目。",
@@ -238,9 +238,9 @@
     "SubmitFeedback": "提交反馈",
     "SubmitFeedbackARIA": "提交反馈",
     "AddCollectionTitle": "添加到集合",
-    "AddCollectionARIA":"添加到集合",
+    "AddCollectionARIA": "添加到集合",
     "ShareTitle": "分享",
-    "ShareARIA":"分享"
+    "ShareARIA": "分享"
   },
   "NewFileModal": {
     "Title": "新建文件",
@@ -284,7 +284,7 @@
     "errorShortPassword": "密码至少六位",
     "errorConfirmPassword": "请再次输入密码以确认",
     "errorNewPassword": "请输入一个新密码或保持当前密码为空",
-    "errorNewPasswordRepeat":"Your New Password must differ from the current one.",
+    "errorNewPasswordRepeat": "Your New Password must differ from the current one.",
     "errorEmptyUsername": "请输入一个用户名",
     "errorLongUsername": "用户名至多20位",
     "errorValidUsername": "用户名只能含有数字，字母，和某些标点符号（. - _）。"
@@ -309,13 +309,13 @@
     "CurrentPasswordARIA": "当前密码",
     "NewPassword": "新密码",
     "NewPasswordARIA": "新密码",
-    "SubmitSaveAllSettings": "保存所有设置"
+    "SaveAccountDetails": "保存账户详情"
   },
   "AccountView": {
     "SocialLogin": "第三方登陆",
     "SocialLoginDescription": "使用您的 GitHub 或谷歌账号登陆 p5.js 在线编辑器。",
     "Title": "p5.js 在线编辑器 ｜ 账号设置",
-    "Settings": "账号设置",
+      "Settings": "我的账户",
     "AccountTab": "账号",
     "AccessTokensTab": "访问令牌"
   },
@@ -438,7 +438,7 @@
     "Description": "描述",
     "NumSketches": "{{count}} 个项目",
     "NumSketches_plural": "{{count}} 个项目",
-    "By":"集合创建者 ",
+    "By": "集合创建者 ",
     "NoSketches": "集合中没有项目",
     "TableSummary": "包含所有集合的表格",
     "HeaderName": "名称",
@@ -502,7 +502,7 @@
   "Overlay": {
     "AriaLabel": "关闭 {{title}} 覆盖"
   },
-  "QuickAddList":{
+  "QuickAddList": {
     "ButtonRemoveARIA": "从集合中移除",
     "ButtonAddToCollectionARIA": "添加到集合",
     "View": "查看"

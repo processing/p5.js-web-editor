@@ -245,9 +245,9 @@
     "SubmitFeedback": "Invia Feedback",
     "SubmitFeedbackARIA": "invia-feedback",
     "AddCollectionTitle": "Aggiungi a collezione",
-    "AddCollectionARIA":"aggiungi a collezione",
+    "AddCollectionARIA": "aggiungi a collezione",
     "ShareTitle": "Condividi",
-    "ShareARIA":"condividi"
+    "ShareARIA": "condividi"
   },
   "NewFileModal": {
     "Title": "Crea File",
@@ -291,7 +291,7 @@
     "errorShortPassword": "La password dev'essere di almeno 6 caratteri",
     "errorConfirmPassword": "Per favore inserisci la password di conferma",
     "errorNewPassword": "Per favore inserisci una nuova password o lascia la password corrente vuota.",
-    "errorNewPasswordRepeat":"Your New Password must differ from the current one.",
+    "errorNewPasswordRepeat": "Your New Password must differ from the current one.",
     "errorEmptyUsername": "Per favore inserisci un nome utente.",
     "errorLongUsername": "Il nome utente deve avere meno di 20 caratteri.",
     "errorValidUsername": "Il nome utente dev'essere composto solo da numeri, lettere, must only consist of numbers, letters, punti, trattini e trattini bassi."
@@ -316,13 +316,13 @@
     "CurrentPasswordARIA": "Password attuale",
     "NewPassword": "Nuova Password",
     "NewPasswordARIA": "Nuova Password",
-    "SubmitSaveAllSettings": "Salva tutte le impostazioni"
+    "SaveAccountDetails": "Salva dettagli account"
   },
   "AccountView": {
     "SocialLogin": "Accesso ai social",
     "SocialLoginDescription": "Usa il tuo account GitHub o Google per accedere al redattore web p5.js.",
     "Title": "p5.js redattore web | Impostazioni account",
-    "Settings": "Impostazioni Account",
+    "Settings": "Il mio account",
     "AccountTab": "Account",
     "AccessTokensTab": "Codici di accesso"
   },
@@ -445,7 +445,7 @@
     "Description": "descrizione",
     "NumSketches": "{{count}} sketch",
     "NumSketches_plural": "{{count}} sketch",
-    "By":"Collezione da ",
+    "By": "Collezione da ",
     "NoSketches": "Nessuno sketch nella collezione",
     "TableSummary": "pagina contenente tutte le collezioni",
     "HeaderName": "Nome",
@@ -509,7 +509,7 @@
   "Overlay": {
     "AriaLabel": "Chiudi {{title}} sovrapposizione"
   },
-  "QuickAddList":{
+  "QuickAddList": {
     "ButtonRemoveARIA": "Rimuovi dalla collezione",
     "ButtonAddToCollectionARIA": "Aggiungi alla collezione",
     "View": "Vista"

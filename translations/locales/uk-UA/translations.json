@@ -68,9 +68,9 @@
     "Password": "Пароль",
     "PasswordARIA": "Пароль",
     "Submit": "Увійти",
-     "Errors": {
-     "invalidCredentials": "Неправильна електронна пошта або пароль."
-     }
+    "Errors": {
+      "invalidCredentials": "Неправильна електронна пошта або пароль."
+    }
   },
   "LoginView": {
     "Title": "p5.js вебредактор | Вхід",
@@ -92,11 +92,11 @@
   "About": {
     "Title": "Про редактор",
     "TitleHelmet": "p5.js вебредактор | Про редактор",
-	"Headline": "Створюй, поширюй та реміксуй скетчі p5.js за допомогою редактора p5.js.",
+    "Headline": "Створюй, поширюй та реміксуй скетчі p5.js за допомогою редактора p5.js.",
     "Contribute": "Внесок",
-	"IntroDescription1": "p5.js — це безплатна бібліотека JavaScript з відкритим кодом для навчання програмуванню та створення мистецтва. За допомогою редактора p5.js ви можете створювати, поширювати та реміксувати скетчі p5.js без потреби щось завантажувати чи налаштовувати.",
+    "IntroDescription1": "p5.js — це безплатна бібліотека JavaScript з відкритим кодом для навчання програмуванню та створення мистецтва. За допомогою редактора p5.js ви можете створювати, поширювати та реміксувати скетчі p5.js без потреби щось завантажувати чи налаштовувати.",
     "IntroDescription2": "Ми хочемо, щоб програмування та інструменти для його вивчення були відкритими й доступними. Підтримайте p5.js, зробивши внесок на користь Processing Foundation — це допоможе розвивати бібліотеку, створювати навчальні матеріали та проводити події для спільноти.",
-	"Donate": "Підтримати",
+    "Donate": "Підтримати",
     "NewP5": "Початківець в p5.js?",
     "Report": "Повідомити про помилку",
     "Learn": "Посібники",
@@ -104,25 +104,25 @@
     "Home": "Головна",
     "Instagram": "Instagram",
     "Discord": "Discord",
-	"DiscordCTA": "Доєднуйтесь у Discord",
-	"Youtube": "Youtube",
+    "DiscordCTA": "Доєднуйтесь у Discord",
+    "Youtube": "Youtube",
     "Github": "Github",
     "GetInvolved": "Долучитися",
     "WebEditor": "Вебредактор",
     "Resources": "Ресурси",
-	"Reference": "Довідка",
+    "Reference": "Довідка",
     "Libraries": "Бібліотеки",
     "Forum": "Форум",
-	"ForumCTA": "Приєднатися до форуму",
+    "ForumCTA": "Приєднатися до форуму",
     "Examples": "Приклади",
     "PrivacyPolicy": "Політика конфіденційності",
     "TermsOfUse": "Умови використання",
     "CodeOfConduct": "Кодекс поведінки",
-	"Email": "Електронна пошта",
+    "Email": "Електронна пошта",
     "EmailAddress": "hello@p5js.org",
     "Socials": "Соціальні мережі",
     "LinkDescriptions": {
-      "Home": "Дізнайтеся більше про p5.js та нашу спільноту.", 
+      "Home": "Дізнайтеся більше про p5.js та нашу спільноту.",
       "Examples": "Дослідіть можливості p5.js за допомогою коротких прикладів.",
       "CodeOfConduct": "Читайте наш Статут спільноти та Кодекс поведінки.",
       "Libraries": "Розширте можливості p5.js за допомогою бібліотек, створених спільнотою.",
@@ -141,9 +141,9 @@
     "AutosaveEnabled": "Автозбереження увімкнено.",
     "LangChange": "Мова змінена",
     "SettingsSaved": "Налаштування збережено.",
-	"EmptyCurrentPass": "Ви не ввели пароль.",
+    "EmptyCurrentPass": "Ви не ввели пароль.",
     "IncorrectCurrentPass": "Поточний пароль неправильний",
-    "DefaultError":"Щось пішло не так",
+    "DefaultError": "Щось пішло не так",
     "UserNotFound": "Користувача не знайдено",
     "NetworkError": "Помилка мережі"
   },
@@ -157,7 +157,7 @@
     "EditSketchARIA": "Редагувати ім'я скетча",
     "NewSketchNameARIA": "Нове ім'я скетча",
     "By": " користувачем ",
-	"CustomLibraryVersion": "Вибрана версія p5.js",
+    "CustomLibraryVersion": "Вибрана версія p5.js",
     "VersionPickerARIA": "Вибір версії",
     "NewVersionPickerARIA": "Вибір версії"
   },
@@ -174,7 +174,7 @@
     "Settings": "Налаштування",
     "GeneralSettings": "Загальні налаштування",
     "Accessibility": "Інші параметри",
-	"LibraryManagement": "Управління бібліотекою",
+    "LibraryManagement": "Управління бібліотекою",
     "Theme": "Тема",
     "LightTheme": "Світла",
     "LightThemeARIA": "світла тема на",
@@ -187,7 +187,7 @@
     "DecreaseFontARIA": "зменшити розмір шрифту",
     "IncreaseFont": "Збільшити",
     "IncreaseFontARIA": "збільшити розмір шрифту",
-	"FontSize": "Розмір шрифту",
+    "FontSize": "Розмір шрифту",
     "SetFontSize": "встановити розмір шрифту",
     "Autosave": "Автозбереження",
     "On": "Так",
@@ -197,7 +197,7 @@
     "AutocloseBracketsQuotes": "Автоматичне закриття дужок та лапок",
     "AutocloseBracketsQuotesOnARIA": "автоматично закривати дужки та лапки",
     "AutocloseBracketsQuotesOffARIA": "автоматично закривати дужки та лапки",
-	"AutocompleteHinter": "Автозаповнення коду",
+    "AutocompleteHinter": "Автозаповнення коду",
     "AutocompleteHinterOnARIA": "автозаповнення коду увімкено",
     "AutocompleteHinterOffARIA": "автозаповнення коду вимкнено",
     "WordWrap": "Перенесення слів",
@@ -217,12 +217,12 @@
     "TextOutputARIA": "текст виводиться на",
     "TableText": "Таблиця",
     "TableOutputARIA": "виведення таблиці на",
-	"LibraryVersion": "Версія p5.js",
+    "LibraryVersion": "Версія p5.js",
     "LibraryVersionInfo": "Доступний [новий реліз 2.0](https://github.com/processing/p5.js/releases/) p5.js! Він стане стандартним у серпні 2026 року, тож скористайтеся цим часом, щоб протестувати його та повідомити про помилки. Зацікавлені в переході скетчів з 1.x на 2.0? Перегляньте [ресурсів сумісності та переходу.](https://github.com/processing/p5.js-compatibility)",
     "CustomVersionTitle": "Керувати власними бібліотеками? Чудово!",
     "CustomVersionInfo": "Версія p5.js наразі керується у коді файлу index.html. Це означає, що її не можна змінити з цієї вкладки.",
     "CustomVersionReset": "Якщо ви хочете використовувати стандартні бібліотеки, замініть теги <script> у файлі index.html на наступні:",
-	"SoundAddon": "p5.sound.js Add-on Library",
+    "SoundAddon": "p5.sound.js Add-on Library",
     "PreloadAddon": "p5.js 1.x Compatibility Add-on Library — Preload",
     "ShapesAddon": "p5.js 1.x Compatibility Add-on Library — Shapes",
     "DataAddon": "p5.js 1.x Compatibility Add-on Library — Data Structures",
@@ -248,16 +248,16 @@
       "FindNextTextMatch": "Знайти наступний збіг тексту",
       "FindPreviousTextMatch": "Знайти попередній збіг тексту",
       "CodeEditing": "Редагування коду",
-	  "ColorPicker": "Вибір кольору",
+      "ColorPicker": "Вибір кольору",
       "CreateNewFile": "Створити новий файл"
     },
-	"General": "Загальне",
+    "General": "Загальне",
     "GeneralSelection": {
       "StartSketch": "Запустити",
       "StopSketch": "Зупинити",
       "TurnOnAccessibleOutput": "Увімкнути доступне виведення",
       "TurnOffAccessibleOutput": "Вимкнути доступне виведення",
-	  "Reference": "Перейти до довідки для обраного елемента"
+      "Reference": "Перейти до довідки для обраного елемента"
     }
   },
   "Sidebar": {
@@ -295,9 +295,9 @@
     "SubmitFeedback": "Надіслати відгук",
     "SubmitFeedbackARIA": "надіслати відгук",
     "AddCollectionTitle": "Додати у колекцію",
-    "AddCollectionARIA":"додати у колекцію",
+    "AddCollectionARIA": "додати у колекцію",
     "ShareTitle": "Поширити",
-    "ShareARIA":"поширити"
+    "ShareARIA": "поширити"
   },
   "NewFileModal": {
     "Title": "Додати файл",
@@ -336,13 +336,13 @@
   "ReduxFormUtils": {
     "errorInvalidEmail": "Будь ласка, введіть дійсну адресу електронної пошти",
     "errorEmptyEmail": "Введіть адресу електронної пошти",
-	"errorEmptyEmailorUserName": "Будь ласка, введіть електронну пошту або ім'я користувача",
+    "errorEmptyEmailorUserName": "Будь ласка, введіть електронну пошту або ім'я користувача",
     "errorPasswordMismatch": "Паролі повинні збігатися",
     "errorEmptyPassword": "Введіть пароль",
     "errorShortPassword": "Пароль повинен містити щонайменше 6 символів",
     "errorConfirmPassword": "Введіть підтвердження пароля",
     "errorNewPassword": "Введіть новий пароль або залиште поточний пароль порожнім.",
-    "errorNewPasswordRepeat":"Your New Password must differ from the current one.",
+    "errorNewPasswordRepeat": "Your New Password must differ from the current one.",
     "errorEmptyUsername": "Введіть ім'я користувача.",
     "errorLongUsername": "Ім'я користувача має містити менше 20 символів.",
     "errorValidUsername": "Ім'я користувача має складатися лише з цифр, літер, крапок, тире та символа підкреслення."
@@ -367,13 +367,13 @@
     "CurrentPasswordARIA": "Поточний пароль",
     "NewPassword": "Новий пароль",
     "NewPasswordARIA": "Новий пароль",
-    "SubmitSaveAllSettings": "Зберегти всі налаштування"
+    "SaveAccountDetails": "Зберегти дані облікового запису"
   },
   "AccountView": {
     "SocialLogin": "Увійти через соціальну мережу",
     "SocialLoginDescription": "Використовуйте свій обліковий запис GitHub або Google, щоб увійти у p5.js вебредактор.",
     "Title": "p5.js вебредактор | Налаштування акаунта",
-    "Settings": "Налаштування акаунта",
+   "Settings": "Мій обліковий запис",
     "AccountTab": "Акаунт",
     "AccessTokensTab": "Ключі"
   },
@@ -421,7 +421,7 @@
     "Or": "Або",
     "AlreadyHave": "Ви вже маєте акаунт? ",
     "Login": "Увійти",
-	"Warning": "Реєструючись, ви погоджуєтеся з <0>Умовами використання</0> та <1>Політикою конфіденційності редактора p5.js.</1>"
+    "Warning": "Реєструючись, ви погоджуєтеся з <0>Умовами використання</0> та <1>Політикою конфіденційності редактора p5.js.</1>"
   },
   "EmailVerificationView": {
     "Title": "p5.js вебредактор | Підтвердження електронної пошти",
@@ -497,7 +497,7 @@
     "Description": "опис",
     "NumSketches": "{{count}} скетч",
     "NumSketches_plural": "{{count}} скетчів",
-    "By":"Колекція від ",
+    "By": "Колекція від ",
     "NoSketches": "Немає скетчів у колекції",
     "TableSummary": "таблиця, що містить усі колекції",
     "HeaderName": "Ім'я",
@@ -561,7 +561,7 @@
   "Overlay": {
     "AriaLabel": "Закрити {{title}}"
   },
-  "QuickAddList":{
+  "QuickAddList": {
     "ButtonRemoveARIA": "Видалити з колекції",
     "ButtonAddToCollectionARIA": "Додати у колекцію",
     "View": "Перегляд"
@@ -636,7 +636,7 @@
     "DarkTheme": "Темна",
     "HighContrastTheme": "Високий контраст",
     "Autosave": "Автозбереження",
-	"AutocompleteHinter": "Автозаповнення коду",
+    "AutocompleteHinter": "Автозаповнення коду",
     "WordWrap": "Переноси слів",
     "LineNumbers": "Номери рядків",
     "LintWarningSound": "Звук попередження",

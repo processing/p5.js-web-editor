@@ -238,9 +238,9 @@
     "SubmitFeedback": "提交回饋資訊",
     "SubmitFeedbackARIA": "提交回饋資訊",
     "AddCollectionTitle": "加入作品集",
-    "AddCollectionARIA":"加入作品即",
+    "AddCollectionARIA": "加入作品即",
     "ShareTitle": "分享",
-    "ShareARIA":"分享"
+    "ShareARIA": "分享"
   },
   "NewFileModal": {
     "Title": "建立檔案",
@@ -284,7 +284,7 @@
     "errorShortPassword": "密碼至少要有 6 個字元",
     "errorConfirmPassword": "請再輸入一次密碼確認正確性",
     "errorNewPassword": "請輸入新密碼或讓目前密碼欄位留空",
-    "errorNewPasswordRepeat":"Your New Password must differ from the current one.",
+    "errorNewPasswordRepeat": "Your New Password must differ from the current one.",
     "errorEmptyUsername": "請輸入使用者名稱",
     "errorLongUsername": "使用者名稱最多只能 20 個字元",
     "errorValidUsername": "使用者名稱只能有數字、字母、英文句點、減號以及底線符號"
@@ -309,13 +309,13 @@
     "CurrentPasswordARIA": "目前密碼",
     "NewPassword": "新密碼",
     "NewPasswordARIA": "新密碼",
-    "SubmitSaveAllSettings": "儲存所有設定"
+    "SaveAccountDetails": "儲存帳戶詳細資料"
   },
   "AccountView": {
     "SocialLogin": "以社群帳號登入",
     "SocialLoginDescription": "使用你的 GitHub 或 Google 帳號登入 p5.js 網頁編輯器.",
     "Title": "p5.js 網頁編輯器 | 帳號設定",
-    "Settings": "帳號設定",
+    "Settings": "我的帳戶",
     "AccountTab": "帳號",
     "AccessTokensTab": "存取權杖"
   },
@@ -438,7 +438,7 @@
     "Description": "說明",
     "NumSketches": "{{count}} 個草稿",
     "NumSketches_plural": "{{count}} 個草稿",
-    "By":"作品集作者：",
+    "By": "作品集作者：",
     "NoSketches": "作品集中沒有草稿",
     "TableSummary": "作品集彙總表",
     "HeaderName": "名稱",
@@ -502,7 +502,7 @@
   "Overlay": {
     "AriaLabel": "關閉 {{title}} 重疊"
   },
-  "QuickAddList":{
+  "QuickAddList": {
     "ButtonRemoveARIA": "從作品集中移除",
     "ButtonAddToCollectionARIA": "加入作品集",
     "View": "檢視"
