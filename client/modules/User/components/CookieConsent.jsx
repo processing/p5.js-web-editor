@@ -161,7 +161,8 @@ function CookieConsent({ hide }) {
     }
   }, [cookieConsent]);
 
-  if (hide || cookieConsent !== 'none') return null;
+  if (hide || cookieConsent === 'all' || cookieConsent === 'essential')
+    return null;
 
   return (
     <Transition in={inProp} timeout={500}>
