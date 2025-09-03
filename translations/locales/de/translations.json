@@ -87,7 +87,7 @@
     "LogoARIA": "{{serviceauth}} logo"
   },
   "About": {
-    "Title": "Über",  
+    "Title": "Über",
     "TitleHelmet": "p5.js Web Editor | Über",
     "Contribute": "Mitwirken",
     "NewP5": "Neu bei p5.js?",
@@ -280,7 +280,7 @@
     "errorEmptyPassword": "Gib bitte ein Passwort ein",
     "errorShortPassword": "Das Passwort muss mindestens aus 6 Zeichen bestehen",
     "errorConfirmPassword": "Gib bitte das Passwort erneut ein",
-    "errorNewPasswordRepeat":"Your New Password must differ from the current one.",
+    "errorNewPasswordRepeat": "Your New Password must differ from the current one.",
     "errorNewPassword": "Gib bitte ein neues Passwort ein oder lass dieses Feld frei.",
     "errorEmptyUsername": "Gib bitte einen Nutzernamen ein.",
     "errorLongUsername": "Der Nutzername muss weniger als 20 Zeichen haben.",
@@ -306,13 +306,13 @@
     "CurrentPasswordARIA": "aktuelles passwort",
     "NewPassword": "Neues Passwort",
     "NewPasswordARIA": "neues passwort",
-    "SubmitSaveAllSettings": "Alle Einstellungen speichern"
+    "SaveAccountDetails": "Kontodaten speichern"
   },
   "AccountView": {
     "SocialLogin": "Social Login",
     "SocialLoginDescription": "Nutze Deinen GitHub oder Google Account um dich beim p5.js Web Editor anzumelden.",
     "Title": "p5.js Web Editor | Account Einstellungen",
-    "Settings": "Account Einstellungen",
+    "Settings": "Mein Konto",
     "AccountTab": "Account",
     "AccessTokensTab": "Zugangstokens"
   },
@@ -588,8 +588,8 @@
     "Off": "Aus"
   },
   "MobileDashboardView": {
-    "Examples":  "Beispiele",
-    "Sketches":  "Sketche",
+    "Examples": "Beispiele",
+    "Sketches": "Sketche",
     "Collections": "Sammlungen",
     "Assets": "Assets",
     "MyStuff": "Mein Zeug",
@@ -600,4 +600,3 @@
     "Files": "Dateien"
   }
 }
-
