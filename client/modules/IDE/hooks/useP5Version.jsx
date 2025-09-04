@@ -62,9 +62,14 @@ export function P5VersionProvider(props) {
         if (!match) return null;
 
         // See if this is a version we recognize
-        if (p5Versions.includes(match[1])) {
-          return { version: match[1], minified: !!match[2], scriptNode };
+        if (p5Versions.some((v) => v.version === match[1])) {
+          return {
+            version: match[1],
+            minified: !!match[2],
+            scriptNode
+          };
         }
+
         return null;
       })
       .filter((version) => version !== null);
