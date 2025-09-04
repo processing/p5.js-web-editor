@@ -34,6 +34,31 @@ const script = document.createElement('script');
 script.src = 'https://foundation-donate-banner.netlify.app/static/js/main.js';
 document.body.appendChild(script);
 
+if (window.location.href.indexOf('full') === -1) {
+  const buttonScript = document.createElement('script');
+  buttonScript.type = 'text/javascript';
+  buttonScript.defer = true;
+  buttonScript.id = 'donorbox-popup-button-installer';
+  buttonScript.src = 'https://donorbox.org/install-popup-button.js';
+
+  buttonScript.setAttribute(
+    'data-href',
+    'https://donorbox.org/back-to-school-805292'
+  );
+  buttonScript.setAttribute(
+    'data-style',
+    // eslint-disable-next-line max-len
+    'background: #f1678e; color: #fff; text-decoration: none; font-family: Verdana, sans-serif; display: flex; gap: 8px; width: fit-content; font-size: 16px; border-radius: 0 0 5px 5px; line-height: 24px; position: fixed; top: 50%; transform-origin: center; z-index: 9999; overflow: hidden; padding: 8px 22px 8px 18px; right: 20px; left: auto; transform: translate(50%, -50%) rotate(90deg)'
+  );
+  buttonScript.setAttribute('data-button-cta', 'Donate');
+  buttonScript.setAttribute(
+    'data-img-src',
+    'https://donorbox.org/images/white_logo.svg'
+  );
+
+  document.body.appendChild(buttonScript);
+}
+
 const App = () => (
   <div>
     <Router history={browserHistory}>

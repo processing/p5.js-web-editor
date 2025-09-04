@@ -5,6 +5,7 @@ export const currentP5Version = '1.11.10'; // Don't update to 2.x until 2026
 // JSON.stringify([...document.querySelectorAll('._132722c7')].map(n => n.innerText), null, 2)
 // TODO: use their API for this to grab these at build time?
 export const p5Versions = [
+  '2.0.5',
   '2.0.4',
   '2.0.3',
   '2.0.2',
