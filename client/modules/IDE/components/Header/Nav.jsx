@@ -144,6 +144,9 @@ const DashboardMenu = () => {
           <span className="nav__item-header">{t('Nav.BackEditor')}</span>
         </Link>
       </li>
+      <li className="nav__item">
+        {getConfig('TRANSLATIONS_ENABLED') && <LanguageMenu />}
+      </li>
     </ul>
   );
 };
