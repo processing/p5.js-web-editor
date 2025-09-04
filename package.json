@@ -73,9 +73,16 @@
           "^.+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)(|\\?byContent|\\?byUrl)$": "<rootDir>/client/__mocks__/fileMock.js",
           "\\.(css|less|scss)$": "<rootDir>/client/__mocks__/styleMock.js"
         },
-        "transformIgnorePatterns": ["<rootDir>/node_modules/(?!colors-named|colors-named-hex|hsl-matcher|@emmetio/)"],
+        "transformIgnorePatterns": [
+          "<rootDir>/node_modules/(?!colors-named|colors-named-hex|hsl-matcher|@emmetio/)"
+        ],
         "transform": {
-            "\\.[jt]sx?$": ["babel-jest", { "configFile": "./.babelrc" }]
+          "\\.[jt]sx?$": [
+            "babel-jest",
+            {
+              "configFile": "./.babelrc"
+            }
+          ]
         },
         "testMatch": [
           "<rootDir>/client/**/*.test.(js|jsx|ts|tsx)"
@@ -199,7 +206,7 @@
     "@codemirror/lang-xml": "^6.1.0",
     "@codemirror/language": "^6.11.0",
     "@codemirror/lint": "^6.8.5",
-    "@codemirror/search": "^6.5.10",
+    "@codemirror/search": "^6.5.11",
     "@codemirror/state": "^6.5.2",
     "@codemirror/view": "^6.36.5",
     "@emmetio/codemirror6-plugin": "^0.4.0",

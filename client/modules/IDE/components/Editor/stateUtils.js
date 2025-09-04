@@ -20,12 +20,16 @@ import {
   syntaxHighlighting,
   defaultHighlightStyle
 } from '@codemirror/language';
-import { highlightSelectionMatches } from '@codemirror/search';
 import {
   autocompletion,
   closeBrackets,
   closeBracketsKeymap
 } from '@codemirror/autocomplete';
+import {
+  highlightSelectionMatches,
+  search,
+  searchKeymap
+} from '@codemirror/search';
 import {
   defaultKeymap,
   history,
@@ -297,7 +301,8 @@ export function createNewFileState(filename, document, settings) {
     closeBracketsKeymap,
     defaultKeymap,
     historyKeymap,
-    foldKeymap
+    foldKeymap,
+    searchKeymap
   ];
 
   // https://github.com/codemirror/basic-setup/blob/main/src/codemirror.ts
@@ -312,6 +317,7 @@ export function createNewFileState(filename, document, settings) {
 
     // Everything below here should always be on.
     history(),
+    search(),
     // Highlight extensions
     highlightActiveLine(),
     highlightActiveLineGutter(),
