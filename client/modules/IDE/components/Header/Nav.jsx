@@ -169,8 +169,6 @@ const ProjectMenu = () => {
     shareSketch
   } = useSketchActions();
 
-  const replaceCommand =
-    metaKey === 'Ctrl' ? `${metaKeyName}+H` : `${metaKeyName}+⌥+F`;
   const newFileCommand =
     metaKey === 'Ctrl' ? `${metaKeyName}+Alt+N` : `${metaKeyName}+⌥+N`;
 
@@ -242,13 +240,9 @@ const ProjectMenu = () => {
           {t('Nav.Edit.TidyCode')}
           <span className="nav__keyboard-shortcut">{metaKeyName}+Shift+F</span>
         </MenubarItem>
-        <MenubarItem id="edit-find" onClick={cmRef.current?.showFind}>
+        <MenubarItem id="edit-find" onClick={cmRef.current?.showSearch}>
           {t('Nav.Edit.Find')}
           <span className="nav__keyboard-shortcut">{metaKeyName}+F</span>
-        </MenubarItem>
-        <MenubarItem id="edit-replace" onClick={cmRef.current?.showReplace}>
-          {t('Nav.Edit.Replace')}
-          <span className="nav__keyboard-shortcut">{replaceCommand}</span>
         </MenubarItem>
       </MenubarSubmenu>
       <MenubarSubmenu id="sketch" title={t('Nav.Sketch.Title')}>

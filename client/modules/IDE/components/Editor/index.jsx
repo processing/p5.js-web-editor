@@ -87,9 +87,8 @@ function Editor({
     teardownCodeMirror,
     // cmInstance,
     getContent,
-    tidyCode
-    // showFind,
-    // showReplace
+    tidyCode,
+    showSearch
   } = useCodeMirror({
     theme,
     lineNumbers,
@@ -115,9 +114,7 @@ function Editor({
     provideController({
       tidyCode,
       getContent,
-      // TODO: Reimplement these.
-      showFind: () => {},
-      showReplace: () => {}
+      showSearch
     });
   }, [getContent]);
 
