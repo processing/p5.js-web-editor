@@ -1,7 +1,8 @@
 $base-font-size: 12;
 
-//colors
+
 $p5js-pink: #ed225d;
+$p5js-pink-text: #C11245; 
 $p5js-pink-opacity: #ed225d80;
 $p5js-active-pink: #f10046;
 $white: #fff;
@@ -12,17 +13,17 @@ $p5-contrast-pink: #FFA9D9;
 
 $outline-color: #0F9DD7;
 
-// Grayscale values
-$lightest: #FFF; // primary
+
+$lightest: #FFF; 
 $lighter: #FBFBFB;
 
-$light: #F0F0F0; // primary
+$light: #F0F0F0; 
 $medium-light: #D9D9D9;
 $middle-light: #A6A6A6;
 
-// $middle-gray: #7D7D7D; // primary
-$middle-gray: #747474; // primary
-$middle-dark: #666;
+
+$middle-gray: #747474;
+$middle-dark: #666; 
 $medium-dark: #4D4D4D;
 
 $dark: #333; // primary
@@ -42,7 +43,7 @@ $themes: (
     button-background-color: $light,
     button-secondary-background-color: $medium-light,
     button-color: $black,
-    button-border-color: $middle-light,
+    button-border-color: $middle-dark, 
     toolbar-button-color: $dark,
     toolbar-button-background-color: $medium-light,
     button-background-hover-color: $p5js-pink,
@@ -52,7 +53,7 @@ $themes: (
     button-active-color: $lightest,
     modal-background-color: $light,
     preferences-button-background-color: $medium-light,
-    modal-border-color: $middle-light,
+    modal-border-color: $middle-dark, 
     icon-color: $middle-gray,
     icon-hover-color: $darker,
     icon-toast-hover-color: $lightest,
@@ -64,7 +65,7 @@ $themes: (
     console-active-arrow-color: #0071AD,
     console-header-background-color: $medium-light,
     console-header-color: $darker,
-    ide-border-color: $medium-light,
+    ide-border-color: $middle-dark, 
     editor-gutter-color: $lighter,
     file-hover-color: $light,
     file-selected-color: $medium-light,
@@ -73,14 +74,14 @@ $themes: (
     input-secondary-background-color: $lightest,
     input-selection-text-color: $dark,
     input-selection-background-color: $medium-light,
-    input-border-color: $middle-light,
+    input-border-color: $middle-dark, 
     search-background-color: $lightest,
     search-clear-background-color: $light,
     search-hover-text-color: $lightest,
     search-hover-background-color: $medium-dark,
     keyboard-shortcut-color: $middle-gray,
     nav-hover-color: $p5js-pink,
-    nav-border-color: $middle-light,
+    nav-border-color: $middle-dark, 
     error-color: $p5js-pink,
     table-row-stripe-color: $medium-light,
     table-row-stripe-color-alternate: $medium-light,
@@ -95,8 +96,8 @@ $themes: (
     table-button-hover-color: $lightest,
     table-button-background-hover-color: $p5js-pink,
 
-    progress-bar-background-color: $middle-gray,
-    progress-bar-active-color: $p5js-active-pink,
+    progress-bar-background-color: $light, 
+    progress-bar-active-color: $p5js-pink, 
 
     form-title-color: rgba(51, 51, 51, 0.87),
     form-secondary-title-color: $medium-dark,
@@ -174,7 +175,7 @@ $themes: (
     input-secondary-background-color: $medium-dark,
     input-selection-text-color: $darkest,
     input-selection-background-color: $lightest,
-    input-border-color: $middle-dark,
+    input-border-color: $light, // Improved from $middle-dark for better contrast in dark theme
     search-background-color: $darker,
     search-clear-background-color: $medium-dark,
     search-hover-text-color: $lightest,
