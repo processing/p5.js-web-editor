@@ -21,7 +21,11 @@ import {
   defaultHighlightStyle
 } from '@codemirror/language';
 import { highlightSelectionMatches } from '@codemirror/search';
-import { closeBrackets, closeBracketsKeymap } from '@codemirror/autocomplete';
+import {
+  autocompletion,
+  closeBrackets,
+  closeBracketsKeymap
+} from '@codemirror/autocomplete';
 import {
   defaultKeymap,
   history,
@@ -36,7 +40,6 @@ import {
   abbreviationTracker
 } from '@emmetio/codemirror6-plugin';
 
-import { javascript } from '@codemirror/lang-javascript';
 import { css } from '@codemirror/lang-css';
 import { html } from '@codemirror/lang-html';
 import { json } from '@codemirror/lang-json';
@@ -47,6 +50,7 @@ import { HTMLHint } from 'htmlhint';
 import { CSSLint } from 'csslint';
 import { emmetConfig } from '@emmetio/codemirror6-plugin';
 
+import p5JavaScript from './p5JavaScript';
 import tidyCodeWithPrettier from './tidier';
 
 // ----- TODOS -----
@@ -83,7 +87,7 @@ function getFileLanguage(fileName) {
 
   switch (fileMode) {
     case 'javascript':
-      return javascript;
+      return p5JavaScript;
     case 'css':
       return css;
     case 'html':
@@ -255,6 +259,12 @@ function getFileEmmetConfig(fileName) {
 const extraKeymaps = [{ key: 'Tab', run: insertTab, shift: indentLess }];
 const emmetKeymaps = [{ key: 'Tab', run: expandAbbreviation }];
 
+export const AUTOCOMPLETE_OPTIONS = {
+  tooltipClass: () => 'CodeMirror-hints',
+  optionClass: () => 'CodeMirror-hint',
+  closeOnBlur: false
+};
+
 /**
  * Creates a new CodeMirror editor state with configurations,
  * extensions, and keymaps tailored to the file type and settings.
@@ -265,6 +275,7 @@ export function createNewFileState(filename, document, settings) {
   const {
     linewrap,
     lineNumbers,
+    autocomplete,
     autocloseBracketsQuotes,
     onUpdateLinting,
     onViewUpdate
@@ -272,6 +283,7 @@ export function createNewFileState(filename, document, settings) {
   const lineNumbersCpt = new Compartment();
   const lineWrappingCpt = new Compartment();
   const closeBracketsCpt = new Compartment();
+  const autocompleteCpt = new Compartment();
 
   // Depending on the file mode, we have a different tidier function.
   const mode = getFileMode(filename);
@@ -294,6 +306,9 @@ export function createNewFileState(filename, document, settings) {
     lineNumbersCpt.of(lineNumbers ? lineNumbersExt() : []),
     lineWrappingCpt.of(linewrap ? EditorView.lineWrapping : []),
     closeBracketsCpt.of(autocloseBracketsQuotes ? closeBrackets() : []),
+    autocompleteCpt.of(
+      autocomplete ? autocompletion(AUTOCOMPLETE_OPTIONS) : []
+    ),
 
     // Everything below here should always be on.
     history(),
@@ -352,7 +367,13 @@ export function createNewFileState(filename, document, settings) {
   }
 
   const cmState = EditorState.create(stateOptions);
-  return { cmState, lineNumbersCpt, lineWrappingCpt, closeBracketsCpt };
+  return {
+    cmState,
+    lineNumbersCpt,
+    lineWrappingCpt,
+    closeBracketsCpt,
+    autocompleteCpt
+  };
 }
 
 /**
