@@ -586,14 +586,6 @@ exports[`Nav renders editor version for desktop 1`] = `
                   Ctrl+F
                 </span>
               </li>
-              <li>
-                Replace
-                <span
-                  class="nav__keyboard-shortcut"
-                >
-                  Ctrl+H
-                </span>
-              </li>
             </ul>
           </li>
           <li
