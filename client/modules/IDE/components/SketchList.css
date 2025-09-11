@@ -1,0 +1,18 @@
+/* SketchList.css */
+.skeleton-row {
+  background-color: #e2e2e2;
+  border-radius: 4px;
+  height: 24px;
+  animation: shimmer 1.5s infinite linear;
+  background: linear-gradient(to right, #e2e2e2 0%, #f5f5f5 50%, #e2e2e2 100%);
+  background-size: 1000px 100%;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -500px 0;
+  }
+  100% {
+    background-position: 500px 0;
+  }
+}

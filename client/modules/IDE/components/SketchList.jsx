@@ -6,6 +6,7 @@ import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { bindActionCreators } from 'redux';
+import { v4 as uuidv4 } from 'uuid';
 import * as ProjectsActions from '../actions/projects';
 import * as CollectionsActions from '../actions/collections';
 import * as ToastActions from '../actions/toast';
@@ -17,6 +18,7 @@ import AddToCollectionList from './AddToCollectionList';
 import ArrowUpIcon from '../../../images/sort-arrow-up.svg';
 import ArrowDownIcon from '../../../images/sort-arrow-down.svg';
 import SketchListRowBase from './SketchListRowBase';
+import './SketchList.css';
 
 const SketchList = ({
   user,
@@ -29,7 +31,6 @@ const SketchList = ({
   resetSorting,
   mobile
 }) => {
-  const [isInitialDataLoad, setIsInitialDataLoad] = useState(true);
   const [sketchToAddToCollection, setSketchToAddToCollection] = useState(null);
   const { t } = useTranslation();
 
@@ -37,12 +38,6 @@ const SketchList = ({
     getProjects(username);
     resetSorting();
   }, [getProjects, username, resetSorting]);
-
-  useEffect(() => {
-    if (Array.isArray(sketches)) {
-      setIsInitialDataLoad(false);
-    }
-  }, [sketches]);
 
   const getSketchesTitle = useMemo(
     () =>
@@ -52,19 +47,19 @@ const SketchList = ({
     [username, user.username, t]
   );
 
-  const isLoading = () => loading && isInitialDataLoad;
+  const hasSketches = () => sketches.length > 0;
 
-  const hasSketches = () => !isLoading() && sketches.length > 0;
-
-  const renderLoader = () => isLoading() && <Loader />;
-
-  const renderEmptyTable = () => {
-    if (!isLoading() && sketches.length === 0) {
-      return (
-        <p className="sketches-table__empty">{t('SketchList.NoSketches')}</p>
-      );
-    }
-    return null;
+  // Render skeleton loader rows with unique keys
+  const renderSkeletonRows = () => {
+    if (!loading) return null;
+    return Array.from({ length: 5 }).map(() => (
+      <tr key={uuidv4()}>
+        <td
+          className="skeleton-row"
+          colSpan={user.username === username ? 5 : 4}
+        />
+      </tr>
+    ));
   };
 
   const getButtonLabel = useCallback(
@@ -119,6 +114,22 @@ const SketchList = ({
     [sorting, getButtonLabel, toggleDirectionForField, t]
   );
 
+  const renderedRows = useMemo(
+    () =>
+      sketches.map((sketch) => (
+        <SketchListRowBase
+          mobile={mobile}
+          key={sketch.id}
+          sketch={sketch}
+          user={user}
+          username={username}
+          onAddToCollection={() => setSketchToAddToCollection(sketch)}
+          t={t}
+        />
+      )),
+    [sketches, mobile, user, username, t]
+  );
+
   const userIsOwner = user.username === username;
 
   return (
@@ -126,9 +137,13 @@ const SketchList = ({
       <Helmet>
         <title>{getSketchesTitle}</title>
       </Helmet>
-      {renderLoader()}
-      {renderEmptyTable()}
-      {hasSketches() && (
+
+      {!hasSketches() && loading && <Loader />}
+      {!hasSketches() && !loading && (
+        <p className="sketches-table__empty">{t('SketchList.NoSketches')}</p>
+      )}
+
+      {(hasSketches() || loading) && (
         <table
           className="sketches-table"
           summary={t('SketchList.TableSummary')}
@@ -153,20 +168,12 @@ const SketchList = ({
             </tr>
           </thead>
           <tbody>
-            {sketches.map((sketch) => (
-              <SketchListRowBase
-                mobile={mobile}
-                key={sketch.id}
-                sketch={sketch}
-                user={user}
-                username={username}
-                onAddToCollection={() => setSketchToAddToCollection(sketch)}
-                t={t}
-              />
-            ))}
+            {loading && renderSkeletonRows()}
+            {!loading && renderedRows}
           </tbody>
         </table>
       )}
+
       {sketchToAddToCollection && (
         <Overlay
           isFixedHeight
