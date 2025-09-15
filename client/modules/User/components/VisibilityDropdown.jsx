@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 import LockIcon from '../../../images/lock.svg';
 import EarthIcon from '../../../images/earth.svg';
 import CheckmarkIcon from '../../../images/checkmark.svg';
@@ -8,18 +9,20 @@ const VisibilityDropdown = ({ sketch, onVisibilityChange, location }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
+  const { t } = useTranslation();
+
   const visibilityOptions = [
     {
       value: 'Public',
-      label: 'Public',
+      label: t('Visibility.Public.Label'),
       icon: <EarthIcon className="visibility-icon" />,
-      description: 'Anyone can see this sketch'
+      description: t('Visibility.Public.Description')
     },
     {
       value: 'Private',
-      label: 'Private',
+      label: t('Visibility.Private.Label'),
       icon: <LockIcon className="visibility-icon" />,
-      description: 'Only you can see this sketch'
+      description: t('Visibility.Private.Description')
     }
   ];
 

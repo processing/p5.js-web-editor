@@ -437,17 +437,16 @@ const MoreMenu = () => {
           <MobileMenuItem onClick={() => dispatch(newFolder(rootFile.id))}>
             {t('Nav.Sketch.AddFolder')}
           </MobileMenuItem>
-          {/* TODO: Add Translations */}
-          <b>Settings</b>
+          <b>{t('MobilePreferences.Settings')}</b>
           <MobileMenuItem
             onClick={() => {
               dispatch(openPreferences());
             }}
           >
-            Preferences
+            {t('MobilePreferences.Preferences')}
           </MobileMenuItem>
           <MobileMenuItem onClick={() => setIsLanguageModalVisible(true)}>
-            Language
+            {t('MobilePreferences.Language')}
           </MobileMenuItem>
           <b>{t('Nav.Help.Title')}</b>
           <MobileMenuItem onClick={() => dispatch(showKeyboardShortcutModal())}>

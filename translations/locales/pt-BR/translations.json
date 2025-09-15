@@ -589,6 +589,11 @@
     "EditSketchARIA": "Editar esboço",
     "ByUser": "por"
   },
+  "MobilePreferences": {
+    "Settings": "Configurações",
+    "Preferences": "Preferências",
+    "Language": "Idioma"
+  },
   "PreferenceCreators": {
     "On": "Ligado",
     "Off": "Desligado"
@@ -606,5 +611,16 @@
   },
   "SkipLink": {
     "PlaySketch": "Pule para reproduzir o esboço"
+  },
+  "Visibility": {
+    "Label": "Visibilidade",
+    "Public": {
+      "Description": "Qualquer um pode ver este esboço.",
+      "Label": "Público"
+    },
+    "Private": {
+      "Description": "Apenas você pode ver este esboço.",
+      "Label": "Privado"
+    }
   }
 }
