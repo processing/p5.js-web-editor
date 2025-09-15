@@ -11,9 +11,9 @@
     "forceConsistentCasingInFileNames": true,
 
     // From https://www.typescriptlang.org/docs/handbook/babel-with-typescript.html to use Babel for transpiling, tsc for types
-    // Ensure that .d.ts files are created by tsc, but not .js files
-    "declaration": true,
-    "emitDeclarationOnly": true,
+    // Those docs recommend emitting declaration files, but we avoid emitting altogether for now 
+    // and just use typescript for type checking.
+    "noEmit": true,
     // Ensure that Babel can safely transpile files in the TypeScript project
     "isolatedModules": true
   },
