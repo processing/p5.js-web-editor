@@ -1,7 +1,7 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
 
-import Button from './Button';
+import { Button, ButtonDisplays, ButtonKinds, ButtonTypes } from './Button';
 import { GithubIcon, DropdownArrowIcon, PlusIcon } from './icons';
 
 export default {
@@ -15,13 +15,13 @@ export default {
 };
 
 export const AllFeatures = (args) => (
-  <Button disabled={args.disabled} type="submit" label={args.label}>
+  <Button disabled={args.disabled} type={ButtonTypes.SUBMIT} label={args.label}>
     {args.children}
   </Button>
 );
 
 export const SubmitButton = () => (
-  <Button type="submit" label="submit">
+  <Button type={ButtonTypes.SUBMIT} label="submit">
     This is a submit button
   </Button>
 );
@@ -59,7 +59,7 @@ export const ButtonWithIconAfter = () => (
 );
 
 export const InlineButtonWithIconAfter = () => (
-  <Button iconAfter={<DropdownArrowIcon />} display={Button.displays.inline}>
+  <Button iconAfter={<DropdownArrowIcon />} display={ButtonDisplays.INLINE}>
     File name
   </Button>
 );
@@ -68,6 +68,6 @@ export const InlineIconOnlyButton = () => (
   <Button
     aria-label="Add to collection"
     iconBefore={<PlusIcon />}
-    display={Button.displays.inline}
+    display={ButtonDisplays.INLINE}
   />
 );

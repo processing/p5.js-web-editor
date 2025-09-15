@@ -18,93 +18,74 @@ function generateApiKey() {
   });
 }
 
-export function createApiKey(req, res) {
-  return new Promise((resolve, reject) => {
-    function sendFailure(code, error) {
-      res.status(code).json({ error });
-      resolve();
+export async function createApiKey(req, res) {
+  function sendFailure(code, error) {
+    res.status(code).json({ error });
+  }
+
+  try {
+    const user = await User.findById(req.user.id);
+
+    if (!user) {
+      sendFailure(404, 'User not found');
+      return;
     }
 
-    User.findById(req.user.id, async (err, user) => {
-      if (!user) {
-        sendFailure(404, 'User not found');
-        return;
-      }
+    if (!req.body.label) {
+      sendFailure(
+        400,
+        "Expected field 'label' was not present in request body"
+      );
+      return;
+    }
 
-      if (!req.body.label) {
-        sendFailure(
-          400,
-          "Expected field 'label' was not present in request body"
-        );
-        return;
-      }
+    const keyToBeHashed = await generateApiKey();
 
-      const keyToBeHashed = await generateApiKey();
-
-      const addedApiKeyIndex = user.apiKeys.push({
-        label: req.body.label,
-        hashedKey: keyToBeHashed
-      });
-
-      user.save((saveErr) => {
-        if (saveErr) {
-          sendFailure(500, saveErr);
-          return;
-        }
-
-        const apiKeys = user.apiKeys.map((apiKey, index) => {
-          const fields = apiKey.toObject();
-          const shouldIncludeToken = index === addedApiKeyIndex - 1;
-
-          return shouldIncludeToken
-            ? { ...fields, token: keyToBeHashed }
-            : fields;
-        });
-
-        res.json({ apiKeys });
-        resolve();
-      });
+    const addedApiKeyIndex = user.apiKeys.push({
+      label: req.body.label,
+      hashedKey: keyToBeHashed
     });
-  });
+
+    await user.save();
+
+    const apiKeys = user.apiKeys.map((apiKey, index) => {
+      const fields = apiKey.toObject();
+      const shouldIncludeToken = index === addedApiKeyIndex - 1;
+
+      return shouldIncludeToken ? { ...fields, token: keyToBeHashed } : fields;
+    });
+
+    res.json({ apiKeys });
+  } catch (err) {
+    sendFailure(500, err.message || 'Internal server error');
+  }
 }
 
-export function removeApiKey(req, res) {
-  return new Promise((resolve, reject) => {
-    function sendFailure(code, error) {
-      res.status(code).json({ error });
-      resolve();
+export async function removeApiKey(req, res) {
+  function sendFailure(code, error) {
+    res.status(code).json({ error });
+  }
+
+  try {
+    const user = await User.findById(req.user.id);
+
+    if (!user) {
+      sendFailure(404, 'User not found');
+      return;
     }
 
-    User.findById(req.user.id, (err, user) => {
-      if (err) {
-        sendFailure(500, err);
-        return;
-      }
+    const keyToDelete = user.apiKeys.find((key) => key.id === req.params.keyId);
 
-      if (!user) {
-        sendFailure(404, 'User not found');
-        return;
-      }
+    if (!keyToDelete) {
+      sendFailure(404, 'Key does not exist for user');
+      return;
+    }
 
-      const keyToDelete = user.apiKeys.find(
-        (key) => key.id === req.params.keyId
-      );
-      if (!keyToDelete) {
-        sendFailure(404, 'Key does not exist for user');
-        return;
-      }
+    user.apiKeys.pull({ _id: req.params.keyId });
+    await user.save();
 
-      user.apiKeys.pull({ _id: req.params.keyId });
-
-      user.save((saveErr) => {
-        if (saveErr) {
-          sendFailure(500, saveErr);
-          return;
-        }
-
-        res.status(200).json({ apiKeys: user.apiKeys });
-        resolve();
-      });
-    });
-  });
+    res.status(200).json({ apiKeys: user.apiKeys });
+  } catch (err) {
+    sendFailure(500, err.message || 'Internal server error');
+  }
 }

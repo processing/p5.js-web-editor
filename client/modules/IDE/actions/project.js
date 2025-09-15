@@ -2,8 +2,8 @@ import objectID from 'bson-objectid';
 import each from 'async/each';
 import { isEqual } from 'lodash';
 import browserHistory from '../../../browserHistory';
-import apiClient from '../../../utils/apiClient';
-import getConfig from '../../../utils/getConfig';
+import { apiClient } from '../../../utils/apiClient';
+import { getConfig } from '../../../utils/getConfig';
 import * as ActionTypes from '../../../constants';
 import { showToast, setToastText } from './toast';
 import {
@@ -24,7 +24,8 @@ export function setProject(project) {
     type: ActionTypes.SET_PROJECT,
     project,
     files: project.files,
-    owner: project.user
+    owner: project.user,
+    visibility: project.visibility
   };
 }
 
@@ -307,6 +308,8 @@ export function cloneProject(project) {
       (file, callback) => {
         if (
           file.url &&
+          S3_BUCKET &&
+          S3_BUCKET_URL_BASE &&
           (file.url.includes(S3_BUCKET_URL_BASE) ||
             file.url.includes(S3_BUCKET))
         ) {
@@ -407,6 +410,53 @@ export function deleteProject(id) {
             error: response.data
           });
         }
+      });
+  };
+}
+export function changeVisibility(projectId, projectName, visibility) {
+  return (dispatch, getState) => {
+    const state = getState();
+
+    apiClient
+      .patch('/project/visibility', { projectId, visibility })
+      .then((response) => {
+        if (response.status === 200) {
+          const { visibility: newVisibility, updatedAt } = response.data;
+
+          dispatch({
+            type: ActionTypes.CHANGE_VISIBILITY,
+            payload: {
+              id: response.data.id,
+              visibility: newVisibility
+            }
+          });
+
+          if (state.project.id === response.data.id) {
+            dispatch({
+              type: ActionTypes.SET_PROJECT_VISIBILITY,
+              visibility: newVisibility,
+              updatedAt
+            });
+
+            dispatch({
+              type: ActionTypes.SET_PROJECT_NAME,
+              name: response.data.name
+            });
+
+            dispatch(
+              setToastText(
+                `${projectName} is now ${newVisibility.toLowerCase()}`
+              )
+            );
+            dispatch(showToast(2000));
+          }
+        }
+      })
+      .catch((error) => {
+        dispatch({
+          type: ActionTypes.ERROR,
+          error: error?.response?.data
+        });
       });
   };
 }

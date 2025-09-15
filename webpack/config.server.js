@@ -3,16 +3,19 @@ const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
-
   entry: {
-    server:
-      ['regenerator-runtime/runtime', path.resolve(__dirname, '../server/server.js')],
-    previewServer:
-      ['regenerator-runtime/runtime', path.resolve(__dirname, '../server/previewServer.js')],
+    server: [
+      'regenerator-runtime/runtime',
+      path.resolve(__dirname, '../server/server.js')
+    ],
+    previewServer: [
+      'regenerator-runtime/runtime',
+      path.resolve(__dirname, '../server/previewServer.js')
+    ]
   },
   output: {
     path: path.resolve(__dirname, '../dist/'),
-    filename: '[name].bundle.js',
+    filename: '[name].bundle.js'
   },
 
   target: 'node',
@@ -20,31 +23,29 @@ module.exports = {
 
   node: {
     __filename: true,
-    __dirname: true,
+    __dirname: true
   },
   externals: [nodeExternals()],
 
   resolve: {
-    extensions: ['*', '.js', '.jsx'],
-    modules: [
-      'client',
-      'node_modules',
-    ],
+    extensions: ['*', '.js', '.jsx', '.ts', '.tsx'],
+    modules: ['client', 'node_modules']
   },
 
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.[jt]s$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
         options: {
           babelrc: true
         }
-      }, {
-        test: /\.json$/,
-        loader: 'json-loader',
       },
-    ],
-  },
+      {
+        test: /\.json$/,
+        loader: 'json-loader'
+      }
+    ]
+  }
 };

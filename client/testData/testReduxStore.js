@@ -8,7 +8,8 @@ const mockProjects = [
     updatedAt: '2021-02-26T04:58:29',
     files: [],
     createdAt: '2021-02-26T04:58:14',
-    id: 'testid1'
+    id: 'testid1',
+    visibility: 'Public'
   },
   {
     name: 'testsketch2',
@@ -16,7 +17,8 @@ const mockProjects = [
     updatedAt: '2021-02-23T17:40:43',
     files: [],
     createdAt: '2021-02-23T17:40:43',
-    id: 'testid2'
+    id: 'testid2',
+    visibility: 'Public'
   }
 ];
 

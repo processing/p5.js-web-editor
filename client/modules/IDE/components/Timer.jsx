@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
-import dates from '../../../utils/formatDate';
+import { distanceInWordsToNow } from '../../../utils/formatDate';
 import useInterval from '../hooks/useInterval';
 import { getIsUserOwner } from '../selectors/users';
 
@@ -17,16 +17,14 @@ const Timer = () => {
 
   // Update immediately upon saving.
   useEffect(() => {
-    setTimeAgo(
-      projectSavedTime ? dates.distanceInWordsToNow(projectSavedTime) : ''
-    );
+    setTimeAgo(projectSavedTime ? distanceInWordsToNow(projectSavedTime) : '');
   }, [projectSavedTime]);
 
   // Update every 10 seconds.
   useInterval(
     () =>
       setTimeAgo(
-        projectSavedTime ? dates.distanceInWordsToNow(projectSavedTime) : ''
+        projectSavedTime ? distanceInWordsToNow(projectSavedTime) : ''
       ),
     10000
   );

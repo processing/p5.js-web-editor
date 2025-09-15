@@ -196,6 +196,7 @@ export function P5VersionProvider(props) {
     return null;
   }, [indexSrc]);
 
+  // eslint-disable-next-line react/jsx-no-constructed-context-values
   const value = { indexID, versionInfo };
 
   return (

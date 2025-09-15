@@ -23,7 +23,9 @@ jest.mock('../actions', () => ({
   )
 }));
 
-jest.mock('../../../common/useSyncFormTranslations', () => jest.fn());
+jest.mock('../../../common/useSyncFormTranslations', () => ({
+  useSyncFormTranslations: jest.fn()
+}));
 
 const subject = () => {
   reduxRender(<LoginForm />, {

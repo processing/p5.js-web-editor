@@ -467,7 +467,7 @@ function getp5User() {
       // if there are already some sketches, delete them
       console.log('Deleting old projects...');
       projects.forEach((project) => {
-        Project.remove({ _id: project._id }, (removeErr) => {
+        Project.deleteOne({ _id: project._id }, (removeErr) => {
           if (removeErr) throw removeErr;
         });
       });

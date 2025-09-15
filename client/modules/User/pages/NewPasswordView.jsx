@@ -7,7 +7,7 @@ import { useParams } from 'react-router-dom';
 import NewPasswordForm from '../components/NewPasswordForm';
 import { validateResetPasswordToken } from '../actions';
 import Nav from '../../IDE/components/Header/Nav';
-import RootPage from '../../../components/RootPage';
+import { RootPage } from '../../../components/RootPage';
 
 function NewPasswordView() {
   const { t } = useTranslation();

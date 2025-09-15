@@ -5,7 +5,7 @@ import { Request, Response } from 'jest-express';
 
 import Project from '../../../models/project';
 import User from '../../../models/user';
-import deleteProject from '../../project.controller/deleteProject';
+import deleteProject from '../deleteProject';
 import { deleteObjectsFromS3 } from '../../aws.controller';
 
 jest.mock('../../../models/project');
@@ -21,11 +21,13 @@ describe('project.controller', () => {
     request = new Request();
     response = new Response();
     Project.findById = jest.fn();
+    jest.spyOn(console, 'error').mockImplementation(() => {});
   });
 
   afterEach(() => {
     request.resetMocked();
     response.resetMocked();
+    console.error.mockRestore();
   });
 
   it('returns 403 if project is not owned by authenticated user', async () => {
@@ -64,7 +66,8 @@ describe('project.controller', () => {
     const user = new User();
     const project = new Project();
     project.user = user;
-    project.remove = jest.fn().mockResolvedValue();
+    project.files = [];
+    project.deleteOne = jest.fn().mockResolvedValue();
 
     request.setParams({ project_id: project._id });
     request.user = { _id: user._id };
@@ -72,10 +75,13 @@ describe('project.controller', () => {
     Project.findById.mockResolvedValue(project);
     deleteObjectsFromS3.mockResolvedValue();
 
+    response.end = jest.fn();
+
     await deleteProject(request, response);
 
     expect(deleteObjectsFromS3).toHaveBeenCalled();
-    expect(project.remove).toHaveBeenCalled();
+    expect(project.deleteOne).toHaveBeenCalled();
     expect(response.status).toHaveBeenCalledWith(200);
+    expect(response.end).toHaveBeenCalled();
   });
 });

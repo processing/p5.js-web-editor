@@ -6,7 +6,7 @@ import loopProtect from 'loop-protect';
 import { JSHINT } from 'jshint';
 import decomment from 'decomment';
 import { resolvePathToFile } from '../../../server/utils/filePath';
-import getConfig from '../../utils/getConfig';
+import { getConfig } from '../../utils/getConfig';
 import {
   MEDIA_FILE_QUOTED_REGEX,
   STRING_REGEX,
@@ -232,9 +232,9 @@ p5.prototype.registerMethod('afterSetup', p5.prototype.ensureAccessibleCanvas);`
   }
 
   const previewScripts = sketchDoc.createElement('script');
-  previewScripts.src = `${window.location.origin}${getConfig(
-    'PREVIEW_SCRIPTS_URL'
-  )}`;
+  previewScripts.src = `${
+    window.location.origin
+  }${getConfig('PREVIEW_SCRIPTS_URL', { nullishString: true })}`;
   previewScripts.setAttribute('crossorigin', '');
   sketchDoc.head.appendChild(previewScripts);
 

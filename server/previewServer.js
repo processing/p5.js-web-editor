@@ -16,30 +16,27 @@ const app = new Express();
 // but i have no idea why
 const mongoConnectionString = process.env.MONGO_URL;
 
-// Connect to MongoDB
 const connectToMongoDB = async () => {
   try {
     mongoose.set('strictQuery', true);
 
     await mongoose.connect(mongoConnectionString, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      serverSelectionTimeoutMS: 30000, // 30 seconds timeout
-      socketTimeoutMS: 45000 // 45 seconds timeout
+      serverSelectionTimeoutMS: 30000,
+      socketTimeoutMS: 45000
     });
   } catch (error) {
-    console.error('Failed to connect to MongoDB: ', error);
+    console.error('Failed to connect to MongoDB:', error);
     process.exit(1);
   }
 };
 
 connectToMongoDB();
 
-mongoose.connection.on('error', () => {
+mongoose.connection.on('error', (err) => {
   console.error(
-    'MongoDB Connection Error. Please make sure that MongoDB is running.'
+    'MongoDB Connection Error. Please make sure that MongoDB is running.',
+    err
   );
-  process.exit(1);
 });
 
 const allowedCorsOrigins = [

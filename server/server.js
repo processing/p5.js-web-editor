@@ -4,7 +4,7 @@ import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import session from 'express-session';
-import connectMongo from 'connect-mongo';
+import MongoStore from 'connect-mongo';
 import passport from 'passport';
 import path from 'path';
 import basicAuth from 'express-basic-auth';
@@ -32,7 +32,6 @@ import { renderIndex } from './views/index';
 import { get404Sketch } from './views/404Page';
 
 const app = new Express();
-const MongoStore = connectMongo(session);
 
 app.get('/health', (req, res) => res.json({ success: true }));
 
@@ -76,14 +75,12 @@ app.use(cookieParser());
 
 mongoose.set('strictQuery', true);
 
-const clientPromise = mongoose
-  .connect(mongoConnectionString, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    serverSelectionTimeoutMS: 30000, // 30 seconds timeout
-    socketTimeoutMS: 45000 // 45 seconds timeout
-  })
-  .then((m) => m.connection.getClient());
+// TODO: update mongodb connection for other scripts
+
+mongoose.connect(mongoConnectionString, {
+  serverSelectionTimeoutMS: 30000, // 30 seconds timeout
+  socketTimeoutMS: 45000 // 45 seconds timeout
+});
 
 app.use(
   session({
@@ -97,9 +94,9 @@ app.use(
       secure: false,
       maxAge: 1000 * 60 * 60 * 24 * 28 // 4 weeks in milliseconds
     },
-    store: new MongoStore({
-      clientPromise,
-      autoReconnect: true
+    store: MongoStore.create({
+      mongoUrl: mongoConnectionString,
+      ttl: 1000 * 60 * 60 * 24 * 28 // 4 weeks in milliseconds to match cookie maxAge
     })
   })
 );

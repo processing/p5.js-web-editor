@@ -160,14 +160,6 @@ const getConsoleFeedStyle = (theme, fontSize) => {
   };
 
   switch (theme) {
-    case 'light':
-    default:
-      return Object.assign(
-        CONSOLE_FEED_LIGHT_STYLES || {},
-        CONSOLE_FEED_LIGHT_ICONS,
-        CONSOLE_FEED_SIZES,
-        style
-      );
     case 'dark':
       return Object.assign(
         CONSOLE_FEED_DARK_STYLES || {},
@@ -179,6 +171,14 @@ const getConsoleFeedStyle = (theme, fontSize) => {
       return Object.assign(
         CONSOLE_FEED_CONTRAST_STYLES || {},
         CONSOLE_FEED_CONTRAST_ICONS,
+        CONSOLE_FEED_SIZES,
+        style
+      );
+    case 'light':
+    default:
+      return Object.assign(
+        CONSOLE_FEED_LIGHT_STYLES || {},
+        CONSOLE_FEED_LIGHT_ICONS,
         CONSOLE_FEED_SIZES,
         style
       );

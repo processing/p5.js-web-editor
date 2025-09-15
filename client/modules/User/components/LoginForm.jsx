@@ -3,10 +3,10 @@ import { useTranslation } from 'react-i18next';
 import { Form, Field } from 'react-final-form';
 import { useDispatch } from 'react-redux';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
-import Button from '../../../common/Button';
+import { Button, ButtonTypes } from '../../../common/Button';
 import { validateLogin } from '../../../utils/reduxFormUtils';
 import { validateAndLoginUser } from '../actions';
-import useSyncFormTranslations from '../../../common/useSyncFormTranslations';
+import { useSyncFormTranslations } from '../../../common/useSyncFormTranslations';
 
 function LoginForm() {
   const { t, i18n } = useTranslation();
@@ -105,7 +105,7 @@ function LoginForm() {
                 {t('LoginForm.Errors.invalidCredentials')}
               </span>
             )}
-            <Button type="submit" disabled={submitting}>
+            <Button type={ButtonTypes.SUBMIT} disabled={submitting}>
               {t('LoginForm.Submit')}
             </Button>
           </form>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
@@ -15,22 +15,26 @@ import {
   setGridOutput,
   setTextOutput
 } from '../../actions/preferences';
-
 import PlayIcon from '../../../../images/play.svg';
 import StopIcon from '../../../../images/stop.svg';
 import PreferencesIcon from '../../../../images/preferences.svg';
 import ProjectName from './ProjectName';
 import VersionIndicator from '../VersionIndicator';
+import VisibilityDropdown from '../../../User/components/VisibilityDropdown';
+import { changeVisibility } from '../../actions/project';
 
 const Toolbar = (props) => {
   const { isPlaying, infiniteLoop, preferencesIsVisible } = useSelector(
     (state) => state.ide
   );
   const project = useSelector((state) => state.project);
+  const user = useSelector((state) => state.user);
   const autorefresh = useSelector((state) => state.preferences.autorefresh);
   const dispatch = useDispatch();
-
   const { t } = useTranslation();
+  const userIsOwner = user?.username === project.owner?.username;
+
+  const showVisibilityDropdown = project?.owner && userIsOwner;
 
   const playButtonClass = classNames({
     'toolbar__play-button': true,
@@ -44,6 +48,13 @@ const Toolbar = (props) => {
     'toolbar__preferences-button': true,
     'toolbar__preferences-button--selected': preferencesIsVisible
   });
+
+  const handleVisibilityChange = useCallback(
+    (sketchId, sketchName, newVisibility) => {
+      dispatch(changeVisibility(sketchId, sketchName, newVisibility));
+    },
+    [changeVisibility]
+  );
 
   return (
     <div className="toolbar">
@@ -81,6 +92,7 @@ const Toolbar = (props) => {
       >
         <StopIcon focusable="false" aria-hidden="true" />
       </button>
+
       <div className="toolbar__autorefresh">
         <input
           id="autorefresh"
@@ -98,24 +110,34 @@ const Toolbar = (props) => {
           {t('Toolbar.Auto-refresh')}
         </label>
       </div>
+
       <div className="toolbar__project-name-container">
         <ProjectName />
-        {(() => {
-          if (project.owner) {
-            return (
-              <p className="toolbar__project-project.owner">
-                {t('Toolbar.By')}{' '}
-                <Link to={`/${project.owner.username}/sketches`}>
-                  {project.owner.username}
-                </Link>
-              </p>
-            );
-          }
-          return null;
-        })()}
+        {/* Still show owner if not you */}
+        {project?.owner && !userIsOwner && (
+          <p className="toolbar__project-owner">
+            {t('Toolbar.By')}{' '}
+            <Link to={`/${project.owner.username}/sketches`}>
+              {project.owner.username}
+            </Link>
+          </p>
+        )}
       </div>
-      <VersionIndicator />
+
       <div style={{ flex: 1 }} />
+
+      {showVisibilityDropdown && (
+        <div className="toolbar__visibility">
+          <VisibilityDropdown
+            sketch={project}
+            onVisibilityChange={handleVisibilityChange}
+            location="toolbar"
+          />
+        </div>
+      )}
+
+      <VersionIndicator />
+
       <button
         className={preferencesButtonClass}
         onClick={() => dispatch(openPreferences())}

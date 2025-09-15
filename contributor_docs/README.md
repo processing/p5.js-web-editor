@@ -1,4 +1,4 @@
-# Contributor Documentatation
+# Contributor Documentation
 This folder contains guides for contributing to the p5.js Web Editor. You don't need to know everything to get started—explore at your own pace! To begin, we highly recommend starting with the [Contribution Guide](https://github.com/processing/p5.js-web-editor/blob/develop/.github/CONTRIBUTING.md)!
 
 These guides aren't exhaustive, and do not cover all the possible ways you can contribute to a project. If you have an idea for how you'd like to help and don't see a guide for it here, you're welcome to add it to the "Documents to Create" list below by opening an issue!
@@ -15,6 +15,7 @@ These guides aren't exhaustive, and do not cover all the possible ways you can c
 * [Translations Guidelines](translations.md) - Guidelines for translating the p5.js editor. 
 * [Deployment](deployment.md) - A guide to production deployment, and all platforms that are being used.
 * [Release](./release.md) - A guide to creating a production release.
+* [Typescript Migration](./typescript_migration.md) - About the Typescript Migration project.
 
 
 ## Documents to Create

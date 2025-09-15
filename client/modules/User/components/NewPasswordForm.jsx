@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { validateNewPassword } from '../../../utils/reduxFormUtils';
 import { updatePassword } from '../actions';
-import Button from '../../../common/Button';
+import { Button, ButtonTypes } from '../../../common/Button';
 
 function NewPasswordForm(props) {
   const { resetPasswordToken } = props;
@@ -64,7 +64,10 @@ function NewPasswordForm(props) {
               </p>
             )}
           </Field>
-          <Button type="submit" disabled={submitting || invalid || pristine}>
+          <Button
+            type={ButtonTypes.SUBMIT}
+            disabled={submitting || invalid || pristine}
+          >
             {t('NewPasswordForm.SubmitSetNewPassword')}
           </Button>
         </form>

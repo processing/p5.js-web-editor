@@ -5,7 +5,10 @@ import { useTranslation } from 'react-i18next';
 
 import { APIKeyPropType } from './APIKeyForm';
 
-import dates from '../../../utils/formatDate';
+import {
+  distanceInWordsToNow,
+  formatDateToString
+} from '../../../utils/formatDate';
 import TrashCanIcon from '../../../images/trash-can.svg';
 
 function APIKeyList({ apiKeys, onRemove }) {
@@ -23,13 +26,13 @@ function APIKeyList({ apiKeys, onRemove }) {
       <tbody>
         {orderBy(apiKeys, ['createdAt'], ['desc']).map((key) => {
           const lastUsed = key.lastUsedAt
-            ? dates.distanceInWordsToNow(new Date(key.lastUsedAt))
+            ? distanceInWordsToNow(new Date(key.lastUsedAt))
             : t('APIKeyList.Never');
 
           return (
             <tr key={key.id}>
               <td>{key.label}</td>
-              <td>{dates.format(key.createdAt)}</td>
+              <td>{formatDateToString(key.createdAt)}</td>
               <td>{lastUsed}</td>
               <td className="api-key-list__action">
                 <button

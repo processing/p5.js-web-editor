@@ -19,6 +19,7 @@ import AccountView from './modules/User/pages/AccountView';
 import CollectionView from './modules/User/pages/CollectionView';
 import DashboardView from './modules/User/pages/DashboardView';
 import { getUser } from './modules/User/actions';
+import ProtectedSketchRoute from './protected-route';
 
 /**
  *  `params` is no longer a top-level route component prop in v4.
@@ -45,7 +46,7 @@ Route.propTypes = {
 
 const routes = (
   <Switch>
-    <Route exact path="/" component={IDEView} />
+    <ProtectedSketchRoute exact path="/" component={IDEView} />
     <Route path="/login" component={LoginView} />
     <Route path="/signup" component={SignupView} />
     <Route
@@ -55,15 +56,21 @@ const routes = (
     <Route path="/reset-password" component={ResetPasswordView} />
     <Route path="/verify" component={EmailVerificationView} />
     <Route path="/projects/:project_id" component={IDEView} />
-    <Route path="/:username/full/:project_id" component={FullView} />
-    <Route path="/full/:project_id" component={FullView} />
+    <ProtectedSketchRoute
+      path="/:username/full/:project_id"
+      component={FullView}
+    />
+    <ProtectedSketchRoute path="/full/:project_id" component={FullView} />
 
     <Route path="/:username/assets" component={DashboardView} />
     <Route
       path="/:username/sketches/:project_id/add-to-collection"
       component={IDEView}
     />
-    <Route path="/:username/sketches/:project_id" component={IDEView} />
+    <ProtectedSketchRoute
+      path="/:username/sketches/:project_id"
+      component={IDEView}
+    />
     <Route path="/:username/sketches" component={DashboardView} />
     <Route
       path="/:username/collections/:collection_id"

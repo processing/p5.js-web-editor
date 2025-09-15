@@ -14,7 +14,7 @@ export const ContactSectionLinks = [
   { label: 'About.X', href: 'https://x.com/p5xjs' },
   {
     label: 'About.Discord',
-    href: 'https://discord.gg/SHQ8dH25r9'
+    href: 'https://discord.gg/esmGA6H6wm'
   },
   {
     label: 'About.Forum',
@@ -82,7 +82,7 @@ export const AboutSectionInfo = [
         description: 'About.LinkDescriptions.Forum'
       },
       {
-        url: 'https://discord.com/invite/SHQ8dH25r9',
+        url: 'https://discord.com/invite/esmGA6H6wm',
         title: 'About.DiscordCTA',
         description: 'About.LinkDescriptions.Discord'
       }

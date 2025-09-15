@@ -21,7 +21,7 @@ import {
 
 import { ContactSectionLinks, AboutSectionInfo } from '../statics/aboutData';
 import Nav from '../../IDE/components/Header/Nav';
-import RootPage from '../../../components/RootPage';
+import { RootPage } from '../../../components/RootPage';
 import packageData from '../../../../package.json';
 
 import HeartIcon from '../../../images/heart.svg';

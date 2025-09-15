@@ -10,6 +10,14 @@ We are a community of, and in solidarity with, people from every gender identity
 
 Learn more about [our community](https://p5js.org/community/) and read our [Community Statement and Code of Conduct](./.github/CODE_OF_CONDUCT.md). You can directly support our work with p5.js by [donating to the Processing Foundation](https://processingfoundation.org/support).
 
+Stay in touch with Processing Foundation across other platforms: 
+- [Instagram](https://www.instagram.com/p5xjs)
+- [Youtube](https://www.youtube.com/@ProcessingFoundation)
+- [X](https://x.com/p5xjs)
+- [Discord](https://discord.com/invite/esmGA6H6wm)
+- [Forum](https://discourse.processing.org)
+
+
 ## Using the p5.js Editor 🤔
 
 Make your first sketch in the [p5.js Editor](https://editor.p5js.org/)! Learn more about sketching with p5.js on the [Get Started](https://p5js.org/tutorials/get-started/) and find everything you can do in the [Reference](https://p5js.org/reference/). You can also look at [examples](https://editor.p5js.org/p5/sketches) and remix them in the p5.js Editor. 
@@ -26,6 +34,13 @@ The p5.js Editor is a collaborative project created by many individuals, mostly 
 
 3. [All Contributors list on the p5.js repository](https://github.com/processing/p5.js?tab=readme-ov-file#contributors) - Explore the All Contributors list to see the wide range of contributions by our amazing community!
 
+> **TypeScript Migration:** 
+> As of July 2025, we are working on migrating the repo to TypeScript as part of the **[p5.js Web Editor pr05 Grant](https://github.com/processing/pr05-grant/wiki/2025-pr05-Program-Page)**.  
+> This migration will occur in two phases:
+> 1. **Grant Work (July – October 31, 2025)** – Setting up TypeScript configuration, tooling, and starting partial migration. Contributions will be **closed** during this period.
+> 2. **Open Contribution (After October 31, 2025)** – TypeScript migration tasks will **open** to all contributors, with guidelines and tutorials available.  
+>
+> For full details, see [TypeScript Migration Plan](./contributor_docs/typescript-migration.md).
 
 ## Acknowledgements 🙏
 

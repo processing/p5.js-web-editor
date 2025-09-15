@@ -1,5 +1,5 @@
-import { resolvePathToFile } from '../utils/filePath';
-import { resolvePathsForElementsWithAttribute } from '../utils/resolveUtils';
+import { resolvePathToFile } from './filePath';
+import { resolvePathsForElementsWithAttribute } from './resolveUtils';
 
 import {
   STRING_REGEX,

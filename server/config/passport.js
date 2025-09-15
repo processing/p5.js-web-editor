@@ -29,10 +29,13 @@ passport.serializeUser((user, done) => {
   }
 });
 
-passport.deserializeUser((id, done) => {
-  User.findById(id, (err, user) => {
-    done(err, user);
-  });
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await User.findById(id).exec();
+    done(null, user);
+  } catch (err) {
+    done(err);
+  }
 });
 
 /**
@@ -160,7 +163,7 @@ passport.use(
             req.user.tokens.push({ kind: 'github', accessToken });
             req.user.verified = User.EmailConfirmation.Verified;
           }
-          req.user.save();
+          await req.user.save();
           return done(null, req.user);
         }
 
@@ -190,7 +193,8 @@ passport.use(
           existingEmailUser.name =
             existingEmailUser.name || profile.displayName;
           existingEmailUser.verified = User.EmailConfirmation.Verified;
-          existingEmailUser.save();
+
+          await existingEmailUser.save();
           return done(null, existingEmailUser);
         }
 
@@ -261,7 +265,7 @@ passport.use(
             req.user.tokens.push({ kind: 'google', accessToken });
             req.user.verified = User.EmailConfirmation.Verified;
           }
-          req.user.save();
+          await req.user.save();
           return done(null, req.user);
         }
         let username = profile._json.emails[0].value.split('@')[0];

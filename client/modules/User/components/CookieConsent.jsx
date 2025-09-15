@@ -7,10 +7,10 @@ import { Transition } from 'react-transition-group';
 import { Link } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
-import getConfig from '../../../utils/getConfig';
+import { getConfig } from '../../../utils/getConfig';
 import { setUserCookieConsent } from '../actions';
 import { remSize, prop, device } from '../../../theme';
-import Button from '../../../common/Button';
+import { Button, ButtonKinds } from '../../../common/Button';
 
 const CookieConsentContainer = styled.div`
   position: fixed;
@@ -77,6 +77,8 @@ const CookieConsentButtons = styled.div`
   }
 `;
 
+const GOOGLE_ANALYTICS_ID = getConfig('GA_MEASUREMENT_ID');
+
 function CookieConsent({ hide }) {
   const user = useSelector((state) => state.user);
   const [cookieConsent, setBrowserCookieConsent] = useState('none');
@@ -133,15 +135,15 @@ function CookieConsent({ hide }) {
       initializeCookieConsent();
     }
 
-    if (getConfig('GA_MEASUREMENT_ID')) {
+    if (GOOGLE_ANALYTICS_ID) {
       if (p5CookieConsent === 'essential') {
-        ReactGA.initialize(getConfig('GA_MEASUREMENT_ID'), {
+        ReactGA.initialize(GOOGLE_ANALYTICS_ID, {
           gaOptions: {
             storage: 'none'
           }
         });
       } else {
-        ReactGA.initialize(getConfig('GA_MEASUREMENT_ID'));
+        ReactGA.initialize(GOOGLE_ANALYTICS_ID);
       }
       ReactGA.pageview(window.location.pathname + window.location.search);
     }
@@ -175,10 +177,7 @@ function CookieConsent({ hide }) {
                 />
               </CookieConsentCopy>
               <CookieConsentButtons>
-                <Button
-                  kind={Button.kinds.secondary}
-                  onClick={acceptAllCookies}
-                >
+                <Button kind={ButtonKinds.SECONDARY} onClick={acceptAllCookies}>
                   {t('Cookies.AllowAll')}
                 </Button>
                 <Button onClick={acceptEssentialCookies}>

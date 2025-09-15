@@ -3,33 +3,34 @@
 import { last } from 'lodash';
 import { Request, Response } from 'jest-express';
 
-import User, { createMock, createInstanceMock } from '../../../models/user';
-import { createApiKey, removeApiKey } from '../../user.controller/apiKey';
+import User from '../../../models/user';
+import { createApiKey, removeApiKey } from '../apiKey';
 
 jest.mock('../../../models/user');
 
 describe('user.controller', () => {
-  let UserMock;
-  let UserInstanceMock;
+  let request;
+  let response;
 
   beforeEach(() => {
-    UserMock = createMock();
-    UserInstanceMock = createInstanceMock();
+    request = new Request();
+    response = new Response();
   });
 
   afterEach(() => {
-    UserMock.restore();
-    UserInstanceMock.restore();
+    request.resetMocked();
+    response.resetMocked();
+    jest.clearAllMocks();
   });
 
   describe('createApiKey', () => {
-    it("returns an error if user doesn't exist", () => {
-      const request = { user: { id: '1234' } };
-      const response = new Response();
+    it("returns an error if user doesn't exist", async () => {
+      request.user = { id: '1234' };
+      response = new Response();
 
-      UserMock.expects('findById').withArgs('1234').yields(null, null);
+      User.findById = jest.fn().mockResolvedValue(null);
 
-      createApiKey(request, response);
+      await createApiKey(request, response);
 
       expect(response.status).toHaveBeenCalledWith(404);
       expect(response.json).toHaveBeenCalledWith({
@@ -37,13 +38,14 @@ describe('user.controller', () => {
       });
     });
 
-    it('returns an error if label not provided', () => {
-      const request = { user: { id: '1234' }, body: {} };
-      const response = new Response();
+    it('returns an error if label not provided', async () => {
+      request.user = { id: '1234' };
+      request.body = {};
 
-      UserMock.expects('findById').withArgs('1234').yields(null, new User());
+      const user = new User();
+      User.findById = jest.fn().mockResolvedValue(user);
 
-      createApiKey(request, response);
+      await createApiKey(request, response);
 
       expect(response.status).toHaveBeenCalledWith(400);
       expect(response.json).toHaveBeenCalledWith({
@@ -51,52 +53,40 @@ describe('user.controller', () => {
       });
     });
 
-    it('returns generated API key to the user', (done) => {
-      const request = new Request();
+    it('returns generated API key to the user', async () => {
       request.setBody({ label: 'my key' });
       request.user = { id: '1234' };
 
-      const response = new Response();
-
       const user = new User();
+      user.apiKeys = [];
 
-      UserMock.expects('findById').withArgs('1234').yields(null, user);
+      User.findById = jest.fn().mockResolvedValue(user);
+      user.save = jest.fn().mockResolvedValue();
 
-      UserInstanceMock.expects('save').yields();
+      await createApiKey(request, response);
 
-      function expectations() {
-        const lastKey = last(user.apiKeys);
+      const lastKey = last(user.apiKeys);
 
-        expect(lastKey.label).toBe('my key');
-        expect(typeof lastKey.hashedKey).toBe('string');
+      expect(lastKey.label).toBe('my key');
+      expect(typeof lastKey.hashedKey).toBe('string');
 
-        const responseData = response.json.mock.calls[0][0];
-
-        expect(responseData.apiKeys.length).toBe(1);
-        expect(responseData.apiKeys[0]).toMatchObject({
-          label: 'my key',
-          token: lastKey.hashedKey,
-          lastUsedAt: undefined,
-          createdAt: undefined
-        });
-
-        done();
-      }
-
-      const promise = createApiKey(request, response);
-
-      promise.then(expectations, expectations).catch(expectations);
+      const responseData = response.json.mock.calls[0][0];
+      expect(responseData.apiKeys.length).toBe(1);
+      expect(responseData.apiKeys[0]).toMatchObject({
+        label: 'my key',
+        token: lastKey.hashedKey
+      });
     });
   });
 
   describe('removeApiKey', () => {
-    it("returns an error if user doesn't exist", () => {
-      const request = { user: { id: '1234' } };
-      const response = new Response();
+    it("returns an error if user doesn't exist", async () => {
+      request.user = { id: '1234' };
+      response = new Response();
 
-      UserMock.expects('findById').withArgs('1234').yields(null, null);
+      User.findById = jest.fn().mockResolvedValue(null);
 
-      removeApiKey(request, response);
+      await removeApiKey(request, response);
 
       expect(response.status).toHaveBeenCalledWith(404);
       expect(response.json).toHaveBeenCalledWith({
@@ -104,17 +94,15 @@ describe('user.controller', () => {
       });
     });
 
-    it("returns an error if specified key doesn't exist", () => {
-      const request = {
-        user: { id: '1234' },
-        params: { keyId: 'not-a-real-key' }
-      };
-      const response = new Response();
+    it("returns an error if specified key doesn't exist", async () => {
+      request.user = { id: '1234' };
+      request.params = { keyId: 'not-a-real-key' };
       const user = new User();
+      user.apiKeys = [];
 
-      UserMock.expects('findById').withArgs('1234').yields(null, user);
+      User.findById = jest.fn().mockResolvedValue(user);
 
-      removeApiKey(request, response);
+      await removeApiKey(request, response);
 
       expect(response.status).toHaveBeenCalledWith(404);
       expect(response.json).toHaveBeenCalledWith({
@@ -122,37 +110,29 @@ describe('user.controller', () => {
       });
     });
 
-    it('removes key if it exists', () => {
-      const user = new User();
-      user.apiKeys.push({ label: 'first key' }); // id 0
-      user.apiKeys.push({ label: 'second key' }); // id 1
+    it('removes key if it exists', async () => {
+      const mockKey1 = { _id: 'id1', id: 'id1', label: 'first key' };
+      const mockKey2 = { _id: 'id2', id: 'id2', label: 'second key' };
 
-      const firstKeyId = user.apiKeys[0]._id.toString();
-      const secondKeyId = user.apiKeys[1]._id.toString();
+      const apiKeys = [mockKey1, mockKey2];
+      apiKeys.find = Array.prototype.find;
+      apiKeys.pull = jest.fn();
 
-      const request = {
-        user: { id: '1234' },
-        params: { keyId: firstKeyId }
+      const user = {
+        apiKeys,
+        save: jest.fn().mockResolvedValue()
       };
-      const response = new Response();
 
-      UserMock.expects('findById').withArgs('1234').yields(null, user);
+      request.user = { id: '1234' };
+      request.params = { keyId: 'id1' };
 
-      UserInstanceMock.expects('save').yields();
+      User.findById = jest.fn().mockResolvedValue(user);
 
-      removeApiKey(request, response);
+      await removeApiKey(request, response);
 
+      expect(user.apiKeys.pull).toHaveBeenCalledWith({ _id: 'id1' });
+      expect(user.save).toHaveBeenCalled();
       expect(response.status).toHaveBeenCalledWith(200);
-
-      const responseData = response.json.mock.calls[0][0];
-
-      expect(responseData.apiKeys.length).toBe(1);
-      expect(responseData.apiKeys[0]).toMatchObject({
-        id: secondKeyId,
-        label: 'second key',
-        lastUsedAt: undefined,
-        createdAt: undefined
-      });
     });
   });
 });

@@ -30,9 +30,9 @@ class Mail {
 
   async send(data) {
     const mailOptions = {
+      from: this.sendOptions.from,
       to: data.to,
       subject: data.subject,
-      from: this.sendOptions.from,
       html: data.html
     };
 

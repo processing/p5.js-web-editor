@@ -8,8 +8,9 @@ import {
   DeleteObjectsCommand
 } from '@aws-sdk/client-s3';
 import mongoose from 'mongoose';
-import { getProjectsForUserId } from './project.controller';
+
 import User from '../models/user';
+import Project from '../models/project';
 
 const { ObjectId } = mongoose.Types;
 
@@ -194,7 +195,7 @@ export async function listObjectsInS3ForUser(userId) {
       size: object.Size
     }));
 
-    const projects = await getProjectsForUserId(userId);
+    const projects = await Project.getProjectsForUserId(userId);
     const projectAssets = [];
     let totalSize = 0;
 
@@ -208,12 +209,10 @@ export async function listObjectsInS3ForUser(userId) {
       };
       totalSize += asset.size;
 
-      projects.some((project) => {
-        let found = false;
+      const wasMatched = projects.some((project) =>
         project.files.some((file) => {
           if (!file.url) return false;
           if (file.url.includes(asset.key)) {
-            found = true;
             foundAsset.name = file.name;
             foundAsset.sketchName = project.name;
             foundAsset.sketchId = project.id;
@@ -221,10 +220,12 @@ export async function listObjectsInS3ForUser(userId) {
             return true;
           }
           return false;
-        });
-        return found;
-      });
-      projectAssets.push(foundAsset);
+        })
+      );
+
+      if (wasMatched) {
+        projectAssets.push(foundAsset);
+      }
     });
 
     return { assets: projectAssets, totalSize };

@@ -5,9 +5,9 @@ import { useDispatch } from 'react-redux';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import { validateSignup } from '../../../utils/reduxFormUtils';
 import { validateAndSignUpUser } from '../actions';
-import Button from '../../../common/Button';
-import apiClient from '../../../utils/apiClient';
-import useSyncFormTranslations from '../../../common/useSyncFormTranslations';
+import { Button, ButtonTypes } from '../../../common/Button';
+import { apiClient } from '../../../utils/apiClient';
+import { useSyncFormTranslations } from '../../../common/useSyncFormTranslations';
 
 const timeoutRef = { current: null };
 
@@ -204,7 +204,10 @@ function SignupForm() {
                 </div>
               )}
             </Field>
-            <Button type="submit" disabled={submitting || invalid || pristine}>
+            <Button
+              type={ButtonTypes.SUBMIT}
+              disabled={submitting || invalid || pristine}
+            >
               {t('SignupForm.SubmitSignup')}
             </Button>
           </form>

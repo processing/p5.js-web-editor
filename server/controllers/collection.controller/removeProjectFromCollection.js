@@ -26,7 +26,7 @@ export default function removeProjectFromCollection(req, res) {
     const project = collection.items.find((p) => p.projectId === projectId);
 
     if (project != null) {
-      project.remove();
+      project.deleteOne();
       return collection.save();
     }
 
@@ -41,7 +41,7 @@ export default function removeProjectFromCollection(req, res) {
       { path: 'owner', select: ['id', 'username'] },
       {
         path: 'items.project',
-        select: ['id', 'name', 'slug'],
+        select: ['id', 'name', 'slug', 'visibility'],
         populate: {
           path: 'user',
           select: ['username']

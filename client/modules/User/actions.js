@@ -1,7 +1,7 @@
 import { FORM_ERROR } from 'final-form';
 import * as ActionTypes from '../../constants';
 import browserHistory from '../../browserHistory';
-import apiClient from '../../utils/apiClient';
+import { apiClient } from '../../utils/apiClient';
 import { showErrorModal, justOpenedProject } from '../IDE/actions/ide';
 import { setLanguage } from '../IDE/actions/preferences';
 import { showToast, setToastText } from '../IDE/actions/toast';

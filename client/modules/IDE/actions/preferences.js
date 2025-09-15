@@ -1,5 +1,5 @@
 import i18next from 'i18next';
-import apiClient from '../../../utils/apiClient';
+import { apiClient } from '../../../utils/apiClient';
 import * as ActionTypes from '../../../constants';
 
 function updatePreferences(formParams, dispatch) {

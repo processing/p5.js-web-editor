@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
-import useModalClose from '../../../common/useModalClose';
+import { useModalClose } from '../../../common/useModalClose';
 import ExitIcon from '../../../images/exit.svg';
 
 // Common logic from NewFolderModal, NewFileModal, UploadFileModal

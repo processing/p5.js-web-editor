@@ -120,6 +120,7 @@ export default function Preferences() {
   };
 
   const markdownComponents = useMemo(() => {
+    // eslint-disable-next-line react/no-unstable-nested-components
     const ExternalLink = ({ children, ...props }) => (
       <a {...props} target="_blank">
         {children}
@@ -132,6 +133,7 @@ export default function Preferences() {
       children: undefined
     };
 
+    // eslint-disable-next-line react/no-unstable-nested-components
     const Paragraph = ({ children, ...props }) => (
       <p className="preference__paragraph" {...props}>
         {children}

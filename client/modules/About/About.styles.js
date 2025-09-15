@@ -121,9 +121,11 @@ export const SectionItem = styled.div`
   & a {
     font-weight: 700;
     font-size: ${remSize(16)};
+    text-decoration: underline;
 
     &:hover {
       text-decoration: underline;
+      text-decoration-thickness: 0.1em;
     }
   }
 
@@ -176,6 +178,7 @@ export const ContactHandles = styled.p`
 
   & a {
     color: ${prop('logoColor')};
+    text-decoration: underline;
 
     &:hover {
       text-decoration: underline;
@@ -202,9 +205,11 @@ export const Footer = styled.div`
   & a {
     margin: ${remSize(20)} 9.5% 0 0;
     color: ${prop('logoColor')};
+    text-decoration: underline;
 
     &:hover {
       text-decoration: underline;
+      text-decoration-thickness: 0.1em;
     }
   }
 
