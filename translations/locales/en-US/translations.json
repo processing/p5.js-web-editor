@@ -588,7 +588,10 @@
     "HeaderCreatedAt_mobile": "Created",
     "HeaderUpdatedAt": "Date Updated",
     "HeaderUpdatedAt_mobile": "Updated",
-    "NoSketches": "No sketches."
+    "NoSketches": "No sketches.",
+    "LoadError": "Failed to load sketches: {{error}}",
+    "RetryButton": "Retry",
+    "RetryButtonARIA": "Retry loading sketches"
   },
   "AddToCollectionSketchList": {
     "Title": "p5.js Web Editor | My sketches",

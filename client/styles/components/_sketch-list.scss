@@ -251,6 +251,49 @@
   font-size: #{math.div(16, $base-font-size)}rem;
   padding: #{math.div(42, $base-font-size)}rem 0;
 }
+
+.sketches-table__error {
+  text-align: center;
+  padding: #{math.div(42, $base-font-size)}rem 0;
+  
+  .sketches-table__error-message {
+    font-size: #{math.div(16, $base-font-size)}rem;
+    margin-bottom: #{math.div(16, $base-font-size)}rem;
+    @include themify() {
+      color: getThemifyVariable("error-color");
+    }
+  }
+  
+  .sketches-table__retry-button {
+    background: none;
+    border: 2px solid;
+    border-radius: 4px;
+    padding: #{math.div(8, $base-font-size)}rem #{math.div(16, $base-font-size)}rem;
+    font-size: #{math.div(14, $base-font-size)}rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    
+    @include themify() {
+      color: getThemifyVariable("logo-color");
+      border-color: getThemifyVariable("logo-color");
+    }
+    
+    &:hover {
+      @include themify() {
+        background-color: getThemifyVariable("logo-color");
+        color: getThemifyVariable("background-color");
+      }
+    }
+    
+    &:focus {
+      outline: 2px solid;
+      outline-offset: 2px;
+      @include themify() {
+        outline-color: getThemifyVariable("logo-color");
+      }
+    }
+  }
+}
 .sketches-table__row a:hover{
   @include themify() {
     color: getThemifyVariable("logo-color");

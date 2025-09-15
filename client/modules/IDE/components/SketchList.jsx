@@ -10,6 +10,7 @@ import * as ProjectsActions from '../actions/projects';
 import * as CollectionsActions from '../actions/collections';
 import * as ToastActions from '../actions/toast';
 import * as SortingActions from '../actions/sorting';
+import { clearError as clearLoadingError } from '../reducers/loading';
 import getSortedSketches from '../selectors/projects';
 import Loader from '../../App/components/loader';
 import Overlay from '../../App/components/Overlay';
@@ -27,16 +28,19 @@ const SketchList = ({
   sorting,
   toggleDirectionForField,
   resetSorting,
-  mobile
+  mobile,
+  clearError
 }) => {
   const [isInitialDataLoad, setIsInitialDataLoad] = useState(true);
   const [sketchToAddToCollection, setSketchToAddToCollection] = useState(null);
   const { t } = useTranslation();
 
   useEffect(() => {
+    setIsInitialDataLoad(true);
+    clearError();
     getProjects(username);
     resetSorting();
-  }, [getProjects, username, resetSorting]);
+  }, [getProjects, username, resetSorting, clearError]);
 
   useEffect(() => {
     if (Array.isArray(sketches)) {
@@ -52,14 +56,38 @@ const SketchList = ({
     [username, user.username, t]
   );
 
-  const isLoading = () => loading && isInitialDataLoad;
-
-  const hasSketches = () => !isLoading() && sketches.length > 0;
+  const isLoading = () => isInitialDataLoad || loading.isLoading;
+  const hasError = () => loading.error && !loading.isLoading;
+  const hasSketches = () => !isLoading() && !hasError() && sketches.length > 0;
+  const isEmpty = () => !isLoading() && !hasError() && sketches.length === 0;
 
   const renderLoader = () => isLoading() && <Loader />;
 
+  const renderError = () => {
+    if (hasError()) {
+      return (
+        <div className="sketches-table__error" role="alert" aria-live="polite">
+          <p className="sketches-table__error-message">
+            {t('SketchList.LoadError', { error: loading.error })}
+          </p>
+          <button
+            className="sketches-table__retry-button"
+            onClick={() => {
+              clearError();
+              getProjects(username);
+            }}
+            aria-label={t('SketchList.RetryButtonARIA')}
+          >
+            {t('SketchList.RetryButton')}
+          </button>
+        </div>
+      );
+    }
+    return null;
+  };
+
   const renderEmptyTable = () => {
-    if (!isLoading() && sketches.length === 0) {
+    if (isEmpty()) {
       return (
         <p className="sketches-table__empty">{t('SketchList.NoSketches')}</p>
       );
@@ -127,6 +155,7 @@ const SketchList = ({
         <title>{getSketchesTitle}</title>
       </Helmet>
       {renderLoader()}
+      {renderError()}
       {renderEmptyTable()}
       {hasSketches() && (
         <table
@@ -196,14 +225,18 @@ SketchList.propTypes = {
     })
   ).isRequired,
   username: PropTypes.string,
-  loading: PropTypes.bool.isRequired,
+  loading: PropTypes.shape({
+    isLoading: PropTypes.bool.isRequired,
+    error: PropTypes.string
+  }).isRequired,
   toggleDirectionForField: PropTypes.func.isRequired,
   resetSorting: PropTypes.func.isRequired,
   sorting: PropTypes.shape({
     field: PropTypes.string.isRequired,
     direction: PropTypes.string.isRequired
   }).isRequired,
-  mobile: PropTypes.bool
+  mobile: PropTypes.bool,
+  clearError: PropTypes.func.isRequired
 };
 
 SketchList.defaultProps = {
@@ -228,7 +261,8 @@ function mapDispatchToProps(dispatch) {
       ProjectsActions,
       CollectionsActions,
       ToastActions,
-      SortingActions
+      SortingActions,
+      { clearError: clearLoadingError }
     ),
     dispatch
   );
