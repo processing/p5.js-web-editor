@@ -9,6 +9,7 @@ import { autocompletion, closeBrackets } from '@codemirror/autocomplete';
 // import 'codemirror/addon/search/jump-to-line';
 
 import { debounce } from 'lodash';
+import { openSearchPanel } from '@codemirror/search';
 
 import {
   getFileMode,
@@ -20,9 +21,6 @@ import { useEffectWithComparison } from '../../hooks/custom-hooks';
 import tidyCodeWithPrettier from './tidier';
 
 // ----- GENERAL TODOS (in order of priority) -----
-// - autocomplete (hinter)
-// - p5-javascript
-// - search, find & replace
 // - color themes
 // - any features lost in the p5 conversion git merge
 // - javascript color picker (extension works for css but needs to be forked for js)
@@ -208,13 +206,9 @@ export default function useCodeMirror({
     return updatedFile;
   };
 
-  // TODO: Add find and replace functionality.
-  // const showFind = () => {
-  //   cmInstance.current.execCommand('findPersistent');
-  // };
-  // const showReplace = () => {
-  //   cmInstance.current.execCommand('replace');
-  // };
+  const showSearch = () => {
+    openSearchPanel(cmView.current);
+  };
 
   const tidyCode = () => {
     const fileMode = getFileMode(file.name);
@@ -225,8 +219,7 @@ export default function useCodeMirror({
     setupCodeMirrorOnContainerMounted,
     teardownCodeMirror,
     getContent,
-    tidyCode
-    // showFind,
-    // showReplace
+    tidyCode,
+    showSearch
   };
 }
