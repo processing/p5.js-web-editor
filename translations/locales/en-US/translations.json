@@ -124,14 +124,14 @@
     "LinkDescriptions": {
       "Home": "Learn more about p5.js and our community.",
       "Examples": "Explore the possibilities of p5.js with short examples.",
-      "CodeOfConduct": "Read our Community State and Code of Conduct.",
+      "CodeOfConduct": "Read our Community Statement and Code of Conduct.",
       "Libraries": "Expand the possibilities of p5.js with community-created libraries.",
       "Reference": "Find easy explanations for every piece of p5.js code.",
       "Donate": "Support this work with a donation to the Processing Foundation.",
       "Contribute": "Contribute to the open-source p5.js Editor on Github.",
       "Report": "Report broken or incorrect behavior with the p5.js Editor.",
-      "Forum": "Expand the possibilities of p5.js with community-created libraries.",
-      "Discord": "Expand the possibilities of p5.js with community-created libraries."
+      "Forum": "Ask questions, share sketches, and get help from the p5.js community.",
+      "Discord": "Chat with the p5.js community and get quick help."
     }
   },
   "Toast": {
