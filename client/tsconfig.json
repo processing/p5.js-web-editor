@@ -6,4 +6,6 @@
     "lib": ["DOM", "ESNext"],
     "jsx": "react",
   },
+  "include": ["./**/*"],
+  "exclude": ["../node_modules", "../server"]
 }

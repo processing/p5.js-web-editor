@@ -7,7 +7,7 @@ interface RootPageProps {
 
 export const RootPage = styled.div<RootPageProps>`
   min-height: 100vh;
-  height: ${({ fixedHeight }) => fixedHeight || '100vh'};
+  height: ${({ fixedHeight }) => fixedHeight || 'auto'};
   display: flex;
   justify-content: flex-start;
   flex-direction: column;

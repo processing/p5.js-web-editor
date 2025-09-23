@@ -2,7 +2,7 @@ import { Router } from 'express';
 
 const editorUrl = process.env.EDITOR_URL;
 
-const router = new Router();
+const router = Router();
 
 // CAT redirecting these temporarily to editor URLS to prevent phishing
 // router.get('/:username/embed/:project_id', EmbedController.serveProject);
@@ -21,4 +21,5 @@ router.get('/embed/:project_id', (req, res) => {
   res.redirect(301, `${editorUrl}/full/${projectId}`);
 });
 
+// eslint-disable-next-line import/no-default-export
 export default router;

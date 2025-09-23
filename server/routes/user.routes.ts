@@ -2,7 +2,7 @@ import { Router } from 'express';
 import * as UserController from '../controllers/user.controller';
 import isAuthenticated from '../utils/isAuthenticated';
 
-const router = new Router();
+const router = Router();
 
 router.post('/signup', UserController.createUser);
 
@@ -39,4 +39,5 @@ router.get('/verify', UserController.verifyEmail);
 router.delete('/auth/github', UserController.unlinkGithub);
 router.delete('/auth/google', UserController.unlinkGoogle);
 
+// eslint-disable-next-line import/no-default-export
 export default router;

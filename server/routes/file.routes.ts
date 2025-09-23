@@ -2,7 +2,7 @@ import { Router } from 'express';
 import * as FileController from '../controllers/file.controller';
 import isAuthenticated from '../utils/isAuthenticated';
 
-const router = new Router();
+const router = Router();
 
 router.post(
   '/projects/:project_id/files',
@@ -15,4 +15,5 @@ router.delete(
   FileController.deleteFile
 );
 
+// eslint-disable-next-line import/no-default-export
 export default router;

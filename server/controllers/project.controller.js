@@ -9,7 +9,7 @@ import slugify from 'slugify';
 import Project from '../models/project';
 import User from '../models/user';
 import { resolvePathToFile } from '../utils/filePath';
-import generateFileSystemSafeName from '../utils/generateFileSystemSafeName';
+import { generateFileSystemSafeName } from '../utils/generateFileSystemSafeName';
 
 export {
   default as createProject,

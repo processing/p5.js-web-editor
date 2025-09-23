@@ -29,7 +29,7 @@ module.exports = {
 
   resolve: {
     extensions: ['*', '.js', '.jsx', '.ts', '.tsx'],
-    modules: ['client', 'node_modules']
+    modules: ['server', 'client', 'node_modules']
   },
 
   module: {

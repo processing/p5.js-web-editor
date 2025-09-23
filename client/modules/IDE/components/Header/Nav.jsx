@@ -289,6 +289,24 @@ const ProjectMenu = () => {
         <MenubarItem id="help-about" href="/about">
           {t('Nav.Help.About')}
         </MenubarItem>
+        <MenubarItem
+          id="help-report-bug"
+          href="https://github.com/processing/p5.js-web-editor/issues/new/choose"
+        >
+          {t('Nav.Help.ReportBug')}
+        </MenubarItem>
+        <MenubarItem
+          id="help-discord"
+          href="https://discord.com/invite/SHQ8dH25r9"
+        >
+          {t('Nav.Help.ChatOnDiscord')}
+        </MenubarItem>
+        <MenubarItem
+          id="help-forum"
+          href="https://discourse.processing.org/c/p5js/10"
+        >
+          {t('Nav.Help.PostOnTheForum')}
+        </MenubarItem>
       </MenubarSubmenu>
       {getConfig('TRANSLATIONS_ENABLED') && <LanguageMenu />}
     </ul>

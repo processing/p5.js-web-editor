@@ -2,7 +2,7 @@ import { Router } from 'express';
 import * as CollectionController from '../controllers/collection.controller';
 import isAuthenticated from '../utils/isAuthenticated';
 
-const router = new Router();
+const router = Router();
 
 // List collections
 router.get(
@@ -41,4 +41,5 @@ router.delete(
   CollectionController.removeProjectFromCollection
 );
 
+// eslint-disable-next-line import/no-default-export
 export default router;

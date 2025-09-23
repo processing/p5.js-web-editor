@@ -1,4 +1,4 @@
-function renderPreviewIndex() {
+export function renderPreviewIndex() {
   const assetsManifest =
     process.env.webpackAssets && JSON.parse(process.env.webpackAssets);
   return `
@@ -34,5 +34,3 @@ function renderPreviewIndex() {
     </html>
   `;
 }
-
-export default renderPreviewIndex;

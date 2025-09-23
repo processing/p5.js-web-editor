@@ -2,7 +2,7 @@ import { Router } from 'express';
 import passport from 'passport';
 import * as ProjectController from '../controllers/project.controller';
 
-const router = new Router();
+const router = Router();
 
 router.get(
   '/:username/sketches',
@@ -24,4 +24,5 @@ router.delete(
   ProjectController.deleteProject
 );
 
+// eslint-disable-next-line import/no-default-export
 export default router;

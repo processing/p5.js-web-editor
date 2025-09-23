@@ -27,8 +27,9 @@
     "storybook:build:css": "sass client/styles/main.scss client/styles/storybook.css",
     "storybook": "npm run storybook:build:css && storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "typecheck": "npm run typecheck:client",
-    "typecheck:client": "npx tsc --noEmit -p ./client/tsconfig.json"
+    "typecheck": "npm run typecheck:client && npm run typecheck:server",
+    "typecheck:client": "npx tsc --noEmit -p ./client/tsconfig.json",
+    "typecheck:server": "npx tsc --noEmit -p ./server/tsconfig.json"
   },
   "husky": {
     "hooks": {
@@ -45,6 +46,15 @@
       {
         "displayName": "server",
         "testEnvironment": "node",
+        "transform": {
+          "^.+\\.[jt]sx?$": "babel-jest"
+        },
+        "moduleFileExtensions": [
+          "ts",
+          "js",
+          "json",
+          "node"
+        ],
         "setupFilesAfterEnv": [
           "<rootDir>/server/jest.setup.js"
         ],
@@ -128,6 +138,7 @@
     "@types/friendly-words": "^1.2.2",
     "@types/jest": "^29.5.14",
     "@types/node": "^16.18.126",
+    "@types/passport": "^1.0.17",
     "@types/react": "^16.14.0",
     "@types/react-dom": "^16.9.25",
     "@types/react-router-dom": "^5.3.3",
@@ -194,7 +205,7 @@
     "@redux-devtools/log-monitor": "^4.0.2",
     "@reduxjs/toolkit": "^1.9.3",
     "async": "^3.2.3",
-    "axios": "^1.8.2",
+    "axios": "^1.12.1",
     "babel-plugin-styled-components": "^1.13.2",
     "bcryptjs": "^2.4.3",
     "blob-util": "^1.2.1",

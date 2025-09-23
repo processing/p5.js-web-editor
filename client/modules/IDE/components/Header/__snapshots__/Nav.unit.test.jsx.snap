@@ -658,6 +658,15 @@ exports[`Nav renders editor version for desktop 1`] = `
               <li>
                 About
               </li>
+              <li>
+                Report a Bug
+              </li>
+              <li>
+                Chat On Discord
+              </li>
+              <li>
+                Post on the Forum
+              </li>
             </ul>
           </li>
         </ul>

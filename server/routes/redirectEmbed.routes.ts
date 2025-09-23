@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-const router = new Router();
+const router = Router();
 
 router.get('/:username/embed/:project_id', (req, res) => {
   const { username, project_id: projectId } = req.params;
@@ -23,4 +23,5 @@ router.get('/embed/:project_id', (req, res) => {
   res.redirect(301, `/full/${projectId}`);
 });
 
+// eslint-disable-next-line import/no-default-export
 export default router;
