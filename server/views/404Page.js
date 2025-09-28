@@ -14,31 +14,38 @@ const insertErrorMessage = (htmlFile) => {
     <style>
       .header {
         position: fixed;
-        height: 200px;
-        width: 100%;
-        z-index: 1;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        left: 50%;
+        width: 600px; /* keeps it neat on larger screens */
         background: white;
         color: #ed225d;
         font-family: Montserrat, sans-serif;
         text-align: center;
-        display: table;
+        padding: 20px;
+        box-sizing: border-box;
+        border-radius: 8px;
+        max-width: 90%;
       }
+
       .message-container {
-        display: table-cell;
-        vertical-align: middle;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        display: flex;
       }
       .message {
+        margin: 10px 0;
         color: #6b6b6b;
-        margin: 10px;
       }
       .home-link {
-        color: #b5b5b5;
         text-decoration: none;
+        color: #b5b5b5;
       }
       canvas {
-        position: fixed;
         width: 100% !important;
         height: 100% !important;
+        position: fixed;
       }
     </style>
     <link href='https://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>
