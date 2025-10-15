@@ -1,12 +1,13 @@
 import { createSelector } from '@reduxjs/toolkit';
-import getConfig from '../../../utils/getConfig';
+import { getConfig } from '../../../utils/getConfig';
+import { parseNumber } from '../../../utils/parseStringToType';
 
 export const getAuthenticated = (state) => state.user.authenticated;
 const getTotalSize = (state) => state.user.totalSize;
 const getAssetsTotalSize = (state) => state.assets.totalSize;
 export const getSketchOwner = (state) => state.project.owner;
 const getUserId = (state) => state.user.id;
-const limit = getConfig('UPLOAD_LIMIT') || 250000000;
+const limit = parseNumber(getConfig('UPLOAD_LIMIT')) || 250000000;
 
 export const getCanUploadMedia = createSelector(
   getAuthenticated,

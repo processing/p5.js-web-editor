@@ -2,7 +2,7 @@
 
 .preferences {
   width: 100%;
-  width: #{math.div(640, $base-font-size)}rem;
+  width: #{math.div(720, $base-font-size)}rem;
   max-width: 100%;
   max-height: 100%;
   z-index: 9999;
@@ -21,7 +21,7 @@
   }
 
   @media (min-width: 770px) {
-    max-height: #{math.div(460, $base-font-size)}rem;
+    max-height: #{math.div(520, $base-font-size)}rem;
   }
 }
 
@@ -65,6 +65,27 @@
   width: 100%;
   margin-bottom: #{math.div(10, $base-font-size)}rem;
   margin-top: 0;
+}
+
+.preference__paragraph {
+  margin-bottom: #{math.div(10, $base-font-size)}rem;
+
+  & a {
+    text-decoration: underline;
+    @include themify() {
+      color: getThemifyVariable('button-background-hover-color');
+    }
+  }
+  & a:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 0.1em;
+  }
+}
+
+.preference__textarea {
+  font-family: Inconsolata, monospace;
+  width: 100%;
+  min-height: 8em;
 }
 
 .preference__value {
@@ -128,6 +149,20 @@
   }
 }
 
+.preference__warning {
+  @include themify() {
+    display: contents;
+    & a {
+      text-decoration: underline;
+      color: getThemifyVariable('button-background-hover-color');
+    }
+    & a:hover {
+      text-decoration: underline;
+      text-decoration-thickness: 0.1em;
+    }
+  }
+}
+
 .preference__radio-button {
   @extend %hidden-element;
 }
@@ -163,8 +198,11 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .preference__options {
+  border: 0;
+  padding: 0;
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .preference__radio-button:checked + .preference__option {
@@ -173,6 +211,12 @@ input[type="number"]::-webkit-outer-spin-button {
     color: map-get($theme-map, "heavy-text-color");
     font-weight: bold;
   }
+}
+.preference__radio-button:focus + .preference__option,
+.preference__radio-button:focus-visible + .preference__option {
+  outline: 2px solid $dodgerblue; 
+  outline-offset: 2px;
+  border-radius: 4px;
 }
 
 .preference--hidden {

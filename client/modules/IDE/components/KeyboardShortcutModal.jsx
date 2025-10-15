@@ -8,6 +8,7 @@ function KeyboardShortcutModal() {
     metaKey === 'Ctrl' ? `${metaKeyName} + H` : `${metaKeyName} + ⌥ + F`;
   const newFileCommand =
     metaKey === 'Ctrl' ? `${metaKeyName} + Alt + N` : `${metaKeyName} + ⌥ + N`;
+  const renameCommand = metaKey === 'Ctrl' ? 'F2' : 'Ctrl + F2';
   return (
     <div className="keyboard-shortcuts">
       <h3 className="keyboard-shortcuts__title">
@@ -75,8 +76,14 @@ function KeyboardShortcutModal() {
           <span className="keyboard-shortcut__command">{newFileCommand}</span>
           <span>{t('KeyboardShortcuts.CodeEditing.CreateNewFile')}</span>
         </li>
+        <li className="keyboard-shortcut-item">
+          <span className="keyboard-shortcut__command">{renameCommand}</span>
+          <span>{t('KeyboardShortcuts.CodeEditing.RenameVariable')}</span>
+        </li>
       </ul>
-      <h3 className="keyboard-shortcuts__title">General</h3>
+      <h3 className="keyboard-shortcuts__title">
+        {t('KeyboardShortcuts.General')}
+      </h3>
       <ul className="keyboard-shortcuts__list">
         <li className="keyboard-shortcut-item">
           <span className="keyboard-shortcut__command">{metaKeyName} + S</span>
@@ -86,29 +93,33 @@ function KeyboardShortcutModal() {
           <span className="keyboard-shortcut__command">
             {metaKeyName} + Enter
           </span>
-          <span>{t('KeyboardShortcuts.General.StartSketch')}</span>
+          <span>{t('KeyboardShortcuts.GeneralSelection.StartSketch')}</span>
         </li>
         <li className="keyboard-shortcut-item">
           <span className="keyboard-shortcut__command">
             {metaKeyName} + Shift + Enter
           </span>
-          <span>{t('KeyboardShortcuts.General.StopSketch')}</span>
+          <span>{t('KeyboardShortcuts.GeneralSelection.StopSketch')}</span>
         </li>
         <li className="keyboard-shortcut-item">
           <span className="keyboard-shortcut__command">
             {metaKeyName} + Shift + 1
           </span>
-          <span>{t('KeyboardShortcuts.General.TurnOnAccessibleOutput')}</span>
+          <span>
+            {t('KeyboardShortcuts.GeneralSelection.TurnOnAccessibleOutput')}
+          </span>
         </li>
         <li className="keyboard-shortcut-item">
           <span className="keyboard-shortcut__command">
             {metaKeyName} + Shift + 2
           </span>
-          <span>{t('KeyboardShortcuts.General.TurnOffAccessibleOutput')}</span>
+          <span>
+            {t('KeyboardShortcuts.GeneralSelection.TurnOffAccessibleOutput')}
+          </span>
         </li>
         <li className="keyboard-shortcut-item">
           <span className="keyboard-shortcut__command">Shift + Right</span>
-          <span>Go to Reference for Selected Item in Hinter</span>
+          <span>{t('KeyboardShortcuts.GeneralSelection.Reference')}</span>
         </li>
       </ul>
     </div>

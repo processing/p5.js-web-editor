@@ -1,9 +1,9 @@
 # Release
 
-A guide for creating a release.
+A guide for deploying a release to the production environment.
 
 ## Background
-This project release guide is based on 
+This project's release guide is based on:
 * [git-flow](https://nvie.com/posts/a-successful-git-branching-model/)
 * [Semantic Versioning (semver)](https://semver.org/)
 * [npm-version](https://docs.npmjs.com/cli/version)
@@ -50,3 +50,4 @@ Sometimes you might need to push a release for an isolated and small bug fix wit
 4. `git checkout -b <descriptive-branch-name>`
 5. `git cherry-pick <every sha in PR branch>`
 6. Make a new PR that merges into `release` (has a base branch `release`)
+7. Done!

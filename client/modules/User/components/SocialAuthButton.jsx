@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 
 import { remSize } from '../../../theme';
 import { GithubIcon, GoogleIcon } from '../../../common/icons';
-import Button from '../../../common/Button';
+import { Button } from '../../../common/Button';
 import { unlinkService } from '../actions';
 import { persistState } from '../../IDE/actions/project';
 

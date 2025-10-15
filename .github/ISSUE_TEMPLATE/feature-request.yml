@@ -1,6 +1,6 @@
 name: 🌱 New Feature Request
 description: Request a new feature be added.
-labels: [ Feature Request ]
+labels: [ Feature Request, Awaiting Maintainer Approval ]
 body:
   - type: textarea
     attributes:

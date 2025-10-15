@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import Nav from '../../IDE/components/Header/Nav';
-import RootPage from '../../../components/RootPage';
+import { RootPage } from '../../../components/RootPage';
 import Collection from '../components/Collection';
 
 const CollectionView = () => {

@@ -1,7 +1,7 @@
 import crypto from 'crypto';
 
-import User from '../models/user';
-import mail from '../utils/mail';
+import { User } from '../models/user';
+import { mailerService } from '../utils/mail';
 import { renderEmailConfirmation, renderResetPassword } from '../views/mail';
 
 export * from './user.controller/apiKey';
@@ -59,7 +59,7 @@ export async function createUser(req, res) {
       username,
       email: emailLowerCase,
       password,
-      verified: User.EmailConfirmation.Sent,
+      verified: User.EmailConfirmation().Sent,
       verifiedToken: token,
       verifiedTokenExpires: EMAIL_VERIFY_TOKEN_EXPIRY_TIME
     });
@@ -83,7 +83,7 @@ export async function createUser(req, res) {
       });
 
       try {
-        await mail.send(mailOptions);
+        await mailerService.send(mailOptions);
         res.json(userResponse(user));
       } catch (mailErr) {
         console.error(mailErr);
@@ -155,7 +155,7 @@ export async function resetPasswordInitiate(req, res) {
       to: user.email
     });
 
-    await mail.send(mailOptions);
+    await mailerService.send(mailOptions);
     res.json({
       success: true,
       message:
@@ -190,7 +190,7 @@ export async function emailVerificationInitiate(req, res) {
       res.status(404).json({ error: 'User not found' });
       return;
     }
-    if (user.verified === User.EmailConfirmation.Verified) {
+    if (user.verified === User.EmailConfirmation().Verified) {
       res.status(409).json({ error: 'Email already verified' });
       return;
     }
@@ -203,13 +203,13 @@ export async function emailVerificationInitiate(req, res) {
       to: user.email
     });
     try {
-      await mail.send(mailOptions);
+      await mailerService.send(mailOptions);
     } catch (mailErr) {
       res.status(500).send({ error: 'Error sending mail' });
       return;
     }
     const EMAIL_VERIFY_TOKEN_EXPIRY_TIME = Date.now() + 3600000 * 24; // 24 hours
-    user.verified = User.EmailConfirmation.Resent;
+    user.verified = User.EmailConfirmation().Resent;
     user.verifiedToken = token;
     user.verifiedTokenExpires = EMAIL_VERIFY_TOKEN_EXPIRY_TIME; // 24 hours
     await user.save();
@@ -233,7 +233,7 @@ export async function verifyEmail(req, res) {
     });
     return;
   }
-  user.verified = User.EmailConfirmation.Verified;
+  user.verified = User.EmailConfirmation().Verified;
   user.verifiedToken = null;
   user.verifiedTokenExpires = null;
   await user.save();
@@ -315,7 +315,7 @@ export async function updateSettings(req, res) {
       await saveUser(res, user);
     } else if (user.email !== req.body.email) {
       const EMAIL_VERIFY_TOKEN_EXPIRY_TIME = Date.now() + 3600000 * 24; // 24 hours
-      user.verified = User.EmailConfirmation.Sent;
+      user.verified = User.EmailConfirmation().Sent;
 
       user.email = req.body.email;
 
@@ -334,7 +334,7 @@ export async function updateSettings(req, res) {
         to: user.email
       });
 
-      await mail.send(mailOptions);
+      await mailerService.send(mailOptions);
     } else {
       await saveUser(res, user);
     }

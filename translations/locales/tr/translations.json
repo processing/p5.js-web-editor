@@ -161,8 +161,8 @@
     "AutocloseBracketsQuotesOnARIA": "parantez ve tırnakları otomatik kapatma açık",
     "AutocloseBracketsQuotesOffARIA": "parantez ve tırnakları otomatik kapatma kapalı",
     "WordWrap": "Sözcük Kaydırma",
-    "LineWrapOnARIA": "satır kaydırma açık",
-    "LineWrapOffARIA": "satır kaydırma kapalı",
+    "WordWrapOnARIA": "satır kaydırma açık",
+    "WordWrapOffARIA": "satır kaydırma kapalı",
     "LineNumbers": "Satır Numaraları",
     "LineNumbersOnARIA": "satır numaraları açık",
     "LineNumbersOffARIA": "satır numaraları kapalı",
@@ -196,7 +196,7 @@
       "CodeEditing": "Kod Düzenleme",
       "ColorPicker": "Satır İçi Renk Seçiciyi Göster"
     },
-    "General": {
+    "GeneralSelection": {
       "StartSketch": "Eskizi Başlat",
       "StopSketch": "Eskizi Durdur",
       "TurnOnAccessibleOutput": "Erişilebilir Çıktıyı Aç",

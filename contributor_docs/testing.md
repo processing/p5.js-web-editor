@@ -107,7 +107,7 @@ You can save a snapshot of what the HTML looks like when the component is render
 - Many of the existing components don't have tests yet, and you could write one :-) You can find a few suggested files to start with [in this section](#Files-to-start-with).
 - They are a good place to start if you're learning the codebase.
 - It benefits all future contributors by allowing them to check their changes for errors.
-- It increases usage: most code with only ever have a single invocation point, but this means that code might not be particularly robust and lead to bugs if a different developer reuses it in a different context. Writing tests increases the usage of the code in question and may improve the long-term durability, along with leading developers to refactor their code to be more usable. [[3]](#References)
+- It increases usage: most code will only ever have a single invocation point, but this means that code might not be particularly robust and lead to bugs if a different developer reuses it in a different context. Writing tests increases the usage of the code in question and may improve the long-term durability, along with leading developers to refactor their code to be more usable. [[3]](#References)
 - Testing lets you check your own work and feel more comfortable submitting PRs.
 - It catches easy-to-miss errors.
 - It is good practice for large projects.
@@ -366,7 +366,7 @@ When testing redux, the general guidance [[1]](#References) seems to suggest spl
 2. reducers
 3. connected components
 
-Testing reducers and action creators is covered pretty well in [Redux's documentation](https://redux.js.org/recipes/writing-tests). An example of testing an action creator can be found at [projects.test.js](../client/modules/IDE/components/actions/__tests__/projects.test.jsx)
+Testing reducers and action creators is covered pretty well in [Redux's documentation](https://redux.js.org/recipes/writing-tests). An example of testing an action creator can be found at [projects.unit.test.js](../client/modules/IDE/actions/projects.unit.test.js)
 
 ### Connected Components
 

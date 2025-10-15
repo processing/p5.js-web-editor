@@ -159,8 +159,8 @@
       "AutocloseBracketsQuotesOnARIA": "括弧を自動的に閉じる オン",
       "AutocloseBracketsQuotesOffARIA": "括弧を自動的に閉じる オフ",
       "WordWrap": "ワードラップ",
-      "LineWrapOnARIA": "ラインラップ オン",
-      "LineWrapOffARIA": "ラインラップ オフ",
+      "WordWrapOnARIA": "ラインラップ オン",
+      "WordWrapOffARIA": "ラインラップ オフ",
       "LineNumbers": "行番号",
       "LineNumbersOnARIA": "行番号 表示",
       "LineNumbersOffARIA": "行番号 非表示",
@@ -193,7 +193,7 @@
         "FindPreviousTextMatch": "前の一致するテキストを検索",
         "CodeEditing": "コード編集"
       },
-      "General": {
+      "GeneralSelection": {
         "StartSketch": "スケッチを実行",
         "StopSketch": "スケッチを停止",
         "TurnOnAccessibleOutput": "アクセシビリティ出力を有効にする",

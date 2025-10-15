@@ -1,13 +1,16 @@
 # Translations Guidelines
 
+Translations are a great way to get started with contributing, and plays a big role in making the p5.js editor and its documentation more accessible. 
 
-*How to contribute with Translations for p5 web editor*
- 
-## General rules of thumb for translations
+Below are some general rules of thumb to keep in mind when contributing translations: 
 
-In order to simplify the translations process the following rules of thumb were used:
+## What Can I Translate? 
+If you're interested in translations, here's how to get started: 
+- Please only translate languages **you speak fluently or natively**.
+- At this time, we do not accept machine-generated translations (i.e from Google Translate), as they often lack context or accuracy.
+- You can also start with reviewing or improving existing translations in languages you're familiar with as well!
 
-## Technical Part
+## How Can I Add Translations in the Codebase? 
 
 * There is only one file to translate all the texts in any specific language, which is located under the directory, in the respective locale [subdirectory](https://github.com/processing/p5.js-web-editor/tree/develop/translations/locales)
 * The new language code must be added to [client/i18n.js](https://github.com/processing/p5.js-web-editor/blob/edae248eede21d7ad7702945929efbcdfeb4d9ea/client/i18n.js#L22)
@@ -55,7 +58,7 @@ export function languageKeyToLabel(lang) {
 }
 ```
 
-## Translations
+## Handling Translations Files
 
 * Every component should introduce its own subset of keys inside a dictionary named after the component. 
    For instance: If you want to translate AssetList.jsx you need to introduce the following namespace in translations.json :
@@ -92,5 +95,5 @@ Did you want to know the context?
 
 Thanks! 
 
-P5.js Web Editor Community
+p5.js Editor Community
 

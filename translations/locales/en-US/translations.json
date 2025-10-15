@@ -27,7 +27,10 @@
       "Title": "Help",
       "KeyboardShortcuts": "Keyboard Shortcuts",
       "Reference": "Reference",
-      "About": "About"
+      "About": "About",
+      "ReportBug": "Report a Bug",
+      "ChatOnDiscord": "Chat On Discord",
+      "PostOnTheForum": "Post on the Forum"
     },
     "Lang": "Language",
     "BackEditor": "Back to Editor",
@@ -67,7 +70,10 @@
     "UsernameOrEmailARIA": "Email or Username",
     "Password": "Password",
     "PasswordARIA": "Password",
-    "Submit": "Log In"
+    "Submit": "Log In",
+    "Errors": {
+      "invalidCredentials": "Invalid email or password."
+    }
   },
   "LoginView": {
     "Title": "p5.js Web Editor | Login",
@@ -89,27 +95,47 @@
   "About": {
     "Title": "About",
     "TitleHelmet": "p5.js Web Editor | About",
+    "Headline": "Create, share, and remix p5.js sketches with the p5.js Editor.",
     "Contribute": "Contribute",
+    "IntroDescription1": "p5.js is a free, open-source JavaScript library for learning to code and make art. Using the p5.js Editor, you can create, share, and remix p5.js sketches without needing to download or configure anything.",
+    "IntroDescription2": "We believe software the tools to learn it, should be as open and inclusive as possible. You can support this work by making a donation to the Processing Foundation, the organization that supports p5.js. Your donation supports software development for p5.js, education resources like code examples and tutorials, fellowships, and community events.",
+    "Donate": "Donate",
     "NewP5": "New to p5.js?",
-    "Report": "Report a bug",
+    "Report": "Report a Bug",
     "Learn": "Learn",
-    "Twitter": "Twitter",
-    "Home": "Home",
+    "X": "X",
+    "Home": "p5.js Home",
     "Instagram": "Instagram",
     "Discord": "Discord",
+    "DiscordCTA": "Join the Discord",
+    "Youtube": "Youtube",
+    "Github": "Github",
+    "GetInvolved": "Get Involved",
     "WebEditor": "Web Editor",
     "Resources": "Resources",
+    "Reference": "Reference",
     "Libraries": "Libraries",
     "Forum": "Forum",
+    "ForumCTA": "Join the Forum",
     "Examples": "Examples",
-    "Home": "Home",
-    "Twitter": "Twitter",
-    "Instagram": "Instagram",
-    "Discord": "Discord",
     "PrivacyPolicy": "Privacy Policy",
     "TermsOfUse": "Terms of Use",
     "CodeOfConduct": "Code of Conduct",
-    "WebEditor": "Web Editor"
+    "Email": "Email",
+    "EmailAddress": "hello@p5js.org",
+    "Socials": "Socials",
+    "LinkDescriptions": {
+      "Home": "Learn more about p5.js and our community.",
+      "Examples": "Explore the possibilities of p5.js with short examples.",
+      "CodeOfConduct": "Read our Community Statement and Code of Conduct.",
+      "Libraries": "Expand the possibilities of p5.js with community-created libraries.",
+      "Reference": "Find easy explanations for every piece of p5.js code.",
+      "Donate": "Support this work with a donation to the Processing Foundation.",
+      "Contribute": "Contribute to the open-source p5.js Editor on Github.",
+      "Report": "Report broken or incorrect behavior with the p5.js Editor.",
+      "Forum": "Ask questions, share sketches, and get help from the p5.js community.",
+      "Discord": "Chat with the p5.js community and get quick help."
+    }
   },
   "Toast": {
     "OpenedNewSketch": "Opened new sketch.",
@@ -120,7 +146,7 @@
     "SettingsSaved": "Settings saved.",
     "EmptyCurrentPass": "Current password field is empty",
     "IncorrectCurrentPass": "Current password is incorrect",
-    "DefaultError":"Something went wrong",
+    "DefaultError": "Something went wrong",
     "UserNotFound": "User not found",
     "NetworkError": "Network error"
   },
@@ -133,7 +159,10 @@
     "StopSketchARIA": "Stop sketch",
     "EditSketchARIA": "Edit sketch name",
     "NewSketchNameARIA": "New sketch name",
-    "By": " by "
+    "By": " by ",
+    "CustomLibraryVersion": "Custom p5.js version",
+    "VersionPickerARIA": "Version picker",
+    "NewVersionPickerARIA": "Version picker"
   },
   "Console": {
     "Title": "Console",
@@ -146,8 +175,9 @@
   },
   "Preferences": {
     "Settings": "Settings",
-    "GeneralSettings": "General settings",
+    "GeneralSettings": "General Settings",
     "Accessibility": "Accessibility",
+    "LibraryManagement": "Library Management",
     "Theme": "Theme",
     "LightTheme": "Light",
     "LightThemeARIA": "light theme on",
@@ -174,8 +204,8 @@
     "AutocompleteHinterOnARIA": "autocomplete hinter on",
     "AutocompleteHinterOffARIA": "autocomplete hinter off",
     "WordWrap": "Word Wrap",
-    "LineWrapOnARIA": "linewrap on",
-    "LineWrapOffARIA": "linewrap off",
+    "WordWrapOnARIA": "wordwrap on",
+    "WordWrapOffARIA": "wordwrap off",
     "LineNumbers": "Line numbers",
     "LineNumbersOnARIA": "line numbers on",
     "LineNumbersOffARIA": "line numbers off",
@@ -189,7 +219,21 @@
     "PlainText": "Plain-text",
     "TextOutputARIA": "text output on",
     "TableText": "Table-text",
-    "TableOutputARIA": "table output on"
+    "TableOutputARIA": "table output on",
+    "LibraryVersion": "p5.js Version",
+    "LibraryVersionInfo": "There's a [new 2.0 release](https://github.com/processing/p5.js/releases/) of p5.js available! It will become default in August, 2026, so take this time to test it out and report bugs. Interested in transitioning sketches from 1.x to 2.0? Check out the [compatibility & transition resources.](https://github.com/processing/p5.js-compatibility)",
+    "CustomVersionTitle": "Managing your own libraries? Nice!",
+    "CustomVersionInfo": "The version of p5.js is currently being managed in the code of index.html. This means it can't be adjusted from this tab.",
+    "CustomVersionReset": "If you'd like to use the default libraries, you can replace the script tags in index.html with the following:",
+    "SoundAddon": "p5.sound.js Add-on Library",
+    "PreloadAddon": "p5.js 1.x Compatibility Add-on Library — Preload",
+    "ShapesAddon": "p5.js 1.x Compatibility Add-on Library — Shapes",
+    "DataAddon": "p5.js 1.x Compatibility Add-on Library — Data & Events",
+    "AddonOnARIA": "on",
+    "AddonOffARIA": "off",
+    "SoundReference": "View the reference for p5.sound compatible with p5.js $VERSION",
+    "CopyToClipboardSuccess": "Copied to clipboard!",
+    "CopyToClipboardFailure": "We weren't able to copy the text, try selecting it and copying it manually."
   },
   "KeyboardShortcuts": {
     "Title": " Keyboard Shortcuts",
@@ -208,13 +252,16 @@
       "FindPreviousTextMatch": "Find Previous Text Match",
       "CodeEditing": "Code Editing",
       "ColorPicker": "Show Inline Color Picker",
-      "CreateNewFile": "Create New File"
+      "CreateNewFile": "Create New File",
+      "RenameVariable": "Rename Variable"
     },
-    "General": {
+    "General": "General",
+    "GeneralSelection": {
       "StartSketch": "Start Sketch",
       "StopSketch": "Stop Sketch",
       "TurnOnAccessibleOutput": "Turn On Accessible Output",
-      "TurnOffAccessibleOutput": "Turn Off Accessible Output"
+      "TurnOffAccessibleOutput": "Turn Off Accessible Output",
+      "Reference": "Go to Reference for Selected Item in Hinter"
     }
   },
   "Sidebar": {
@@ -252,9 +299,9 @@
     "SubmitFeedback": "Submit Feedback",
     "SubmitFeedbackARIA": "submit-feedback",
     "AddCollectionTitle": "Add to collection",
-    "AddCollectionARIA":"add to collection",
+    "AddCollectionARIA": "add to collection",
     "ShareTitle": "Share",
-    "ShareARIA":"share"
+    "ShareARIA": "share"
   },
   "NewFileModal": {
     "Title": "Create File",
@@ -293,12 +340,13 @@
   "ReduxFormUtils": {
     "errorInvalidEmail": "Please enter a valid email address",
     "errorEmptyEmail": "Please enter an email",
+    "errorEmptyEmailorUserName": "Please enter an email or username",
     "errorPasswordMismatch": "Passwords must match",
     "errorEmptyPassword": "Please enter a password",
     "errorShortPassword": "Password must be at least 6 characters",
     "errorConfirmPassword": "Please confirm your password",
     "errorNewPassword": "Please enter a new password or leave the current password empty.",
-    "errorNewPasswordRepeat":"Your New Password must differ from the current one.",
+    "errorNewPasswordRepeat": "Your New Password must differ from the current one.",
     "errorEmptyUsername": "Please enter a username.",
     "errorLongUsername": "Username must be less than 20 characters.",
     "errorValidUsername": "Username must only consist of numbers, letters, periods, dashes, and underscores."
@@ -323,13 +371,13 @@
     "CurrentPasswordARIA": "Current Password",
     "NewPassword": "New Password",
     "NewPasswordARIA": "New Password",
-    "SubmitSaveAllSettings": "Save All Settings"
+    "SaveAccountDetails": "Save Account Details"
   },
   "AccountView": {
     "SocialLogin": "Social Login",
     "SocialLoginDescription": "Use your GitHub or Google account to log into the p5.js Web Editor.",
     "Title": "p5.js Web Editor | Account Settings",
-    "Settings": "Account Settings",
+    "Settings": "My Account",
     "AccountTab": "Account",
     "AccessTokensTab": "Access Tokens"
   },
@@ -385,7 +433,7 @@
     "InvalidTokenNull": "That link is invalid.",
     "Checking": "Validating token, please wait...",
     "Verified": "All done, your email address has been verified.",
-    "InvalidState": "Something went wrong."
+    "InvalidState": "Token is invalid or expired."
   },
   "AssetList": {
     "Title": "p5.js Web Editor | My assets",
@@ -395,7 +443,8 @@
     "NoUploadedAssets": "No uploaded assets.",
     "HeaderName": "Name",
     "HeaderSize": "Size",
-    "HeaderSketch": "Sketch"
+    "HeaderSketch": "Sketch",
+    "maximum": "Maximum"
   },
   "Feedback": {
     "Title": "p5.js Web Editor | Feedback",
@@ -431,10 +480,10 @@
     "LinkMessage": "There was a problem linking your {{serviceauth}} account to your p5.js Web Editor account. Your {{serviceauth}} account has already been linked to another p5.js Web Editor account."
   },
   "ShareModal": {
-    "Embed": "Embed",
+    "Embed": "Embed Sketch",
     "Present": "Present",
-    "Fullscreen": "Fullscreen",
-    "Edit": "Edit"
+    "Fullscreen": "Share Sketch As View-Only",
+    "Edit": "Share Sketch and Allow Editing"
   },
   "CollectionView": {
     "TitleCreate": "Create collection",
@@ -453,7 +502,7 @@
     "Description": "description",
     "NumSketches": "{{count}} sketch",
     "NumSketches_plural": "{{count}} sketches",
-    "By":"Collection by ",
+    "By": "Collection by ",
     "NoSketches": "No sketches in collection",
     "TableSummary": "table containing all collections",
     "HeaderName": "Name",
@@ -517,7 +566,7 @@
   "Overlay": {
     "AriaLabel": "Close {{title}} overlay"
   },
-  "QuickAddList":{
+  "QuickAddList": {
     "ButtonRemoveARIA": "Remove from collection",
     "ButtonAddToCollectionARIA": "Add to collection",
     "View": "View"
@@ -599,7 +648,9 @@
     "UsedScreenReader": "Used with screen reader",
     "PlainText": "Plain-text",
     "TableText": "Table-text",
-    "Sound": "Sound"
+    "Sound": "Sound",
+    "Preferences": "Preferences",
+    "Language": "Language"
   },
   "PreferenceCreators": {
     "On": "On",
@@ -630,5 +681,17 @@
   },
   "SkipLink": {
     "PlaySketch": "Skip to Play Sketch"
+  },
+  "Visibility": {
+    "Label": "Visibility",
+    "Public": {
+      "Description": "Anyone can see this sketch.",
+      "Label": "Public"
+    },
+    "Private": {
+      "Description": "Only you can see this sketch.",
+      "Label": "Private"
+    },
+    "Changed": "'{{projectName}}' is now {{newVisibility}}..."
   }
 }

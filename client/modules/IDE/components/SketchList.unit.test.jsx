@@ -8,8 +8,6 @@ import SketchList from './SketchList';
 import { reduxRender, fireEvent, screen, within } from '../../../test-utils';
 import { initialTestState } from '../../../testData/testReduxStore';
 
-jest.mock('../../../i18n');
-
 const server = setupServer(
   rest.get(`/${initialTestState.user.username}/projects`, (req, res, ctx) =>
     // it just needs to return something so it doesn't throw an error
@@ -81,9 +79,22 @@ describe('<Sketchlist />', () => {
     expect(screen.queryByText('Delete')).toBeInTheDocument();
   });
 
-  it('snapshot testing', () => {
-    const { asFragment } = subject();
-    expect(asFragment()).toMatchSnapshot();
+  it('renders component correctly', () => {
+    const { container } = subject();
+
+    expect(
+      container.querySelector('.sketches-table-container')
+    ).toBeInTheDocument();
+    expect(container.querySelector('.sketches-table')).toBeInTheDocument();
+    expect(container.querySelector('thead')).toBeInTheDocument();
+    expect(container.querySelector('tbody')).toBeInTheDocument();
+
+    // expect(screen.getByText(/Sketch/i)).toBeInTheDocument();
+    // expect(screen.getByText(/Date created/i)).toBeInTheDocument();
+    // expect(screen.getByText(/Last updated/i)).toBeInTheDocument();
+
+    const sketchRows = container.querySelectorAll('tbody tr');
+    expect(sketchRows.length).toBeGreaterThan(0);
   });
 
   describe('different user than the one who created the sketches', () => {

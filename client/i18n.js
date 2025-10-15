@@ -3,7 +3,7 @@ import { initReactI18next } from 'react-i18next';
 import Backend from 'i18next-http-backend';
 
 import {
-  be,
+  bn,
   enUS,
   es,
   ja,
@@ -21,10 +21,12 @@ import {
   enIN
 } from 'date-fns/locale';
 
+import { getPreferredLanguage } from './utils/language-utils';
+
 const fallbackLng = ['en-US'];
 
 export const availableLanguages = [
-  'be',
+  'bn',
   'de',
   'en-US',
   'es-419',
@@ -42,9 +44,24 @@ export const availableLanguages = [
   'ur'
 ];
 
+const detectedLanguage = getPreferredLanguage(
+  availableLanguages,
+  fallbackLng[0]
+);
+
+let initialLanguage = detectedLanguage;
+
+// if user has a saved preference (e.g., from redux or window.__INITIAL_STATE__), use that
+if (
+  window.__INITIAL_STATE__?.preferences?.language &&
+  availableLanguages.includes(window.__INITIAL_STATE__.preferences.language)
+) {
+  initialLanguage = window.__INITIAL_STATE__.preferences.language;
+}
+
 export function languageKeyToLabel(lang) {
   const languageMap = {
-    be: 'বাংলা',
+    bn: 'বাংলা',
     de: 'Deutsch',
     'en-US': 'English',
     'es-419': 'Español',
@@ -53,7 +70,7 @@ export function languageKeyToLabel(lang) {
     it: 'Italiano',
     ja: '日本語',
     ko: '한국어',
-    'pt-BR': 'Português',
+    'pt-BR': 'Português do Brasil',
     sv: 'Svenska',
     'uk-UA': 'Українська',
     'zh-CN': '简体中文',
@@ -66,7 +83,7 @@ export function languageKeyToLabel(lang) {
 
 export function languageKeyToDateLocale(lang) {
   const languageMap = {
-    be,
+    bn,
     de,
     'en-US': enUS,
     'es-419': es,
@@ -104,7 +121,7 @@ i18n
   // .use(LanguageDetector)// to detect the language from currentBrowser
   .use(Backend) // to fetch the data from server
   .init({
-    lng: 'en-US',
+    lng: initialLanguage,
     fallbackLng, // if user computer language is not on the list of available languages, than we will be using the fallback language specified earlier
     debug: false,
     backend: options,

@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import getConfig from '../../../utils/getConfig';
+import { getConfig } from '../../../utils/getConfig';
 import { registerFrame } from '../../../utils/dispatcher';
 
 const Frame = styled.iframe`

@@ -22,3 +22,5 @@ storybook-static
 duplicates.json
 
 coverage
+
+*.tsbuildinfo

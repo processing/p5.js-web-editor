@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import LoginForm from '../components/LoginForm';
 import SocialAuthButton from '../components/SocialAuthButton';
 import Nav from '../../IDE/components/Header/Nav';
-import RootPage from '../../../components/RootPage';
+import { RootPage } from '../../../components/RootPage';
 
 function LoginView() {
   const { t } = useTranslation();

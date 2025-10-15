@@ -9,7 +9,7 @@ import {
 } from '../../utils/dispatcher';
 import { filesReducer, setFiles } from './filesReducer';
 import EmbedFrame from './EmbedFrame';
-import getConfig from '../../utils/getConfig';
+import { getConfig } from '../../utils/getConfig';
 import { initialState } from '../IDE/reducers/files';
 
 const GlobalStyle = createGlobalStyle`
@@ -52,6 +52,19 @@ const App = () => {
     }
   }
 
+  function addCacheBustingToAssets(files) {
+    const timestamp = new Date().getTime();
+    return files.map((file) => {
+      if (file.url && !file.url.endsWith('obj') && !file.url.endsWith('stl')) {
+        return {
+          ...file,
+          url: `${file.url}?v=${timestamp}`
+        };
+      }
+      return file;
+    });
+  }
+
   useEffect(() => {
     const unsubscribe = listen(handleMessageEvent);
     return function cleanup() {
@@ -62,7 +75,7 @@ const App = () => {
     <React.Fragment>
       <GlobalStyle />
       <EmbedFrame
-        files={state}
+        files={addCacheBustingToAssets(state)}
         isPlaying={isPlaying}
         basePath={basePath}
         gridOutput={gridOutput}

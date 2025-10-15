@@ -21,12 +21,12 @@ export default function createCollection(req, res) {
       return null;
     }
 
-    return collection.remove();
+    return collection.deleteOne();
   }
 
   function findCollection() {
     // Only returned if owner matches current user
-    return Collection.findOne({ _id: collectionId, owner });
+    return Collection.findOne({ _id: collectionId, owner }).exec();
   }
 
   return findCollection()

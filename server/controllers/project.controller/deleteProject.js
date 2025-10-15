@@ -65,7 +65,7 @@ export default async function deleteProject(req, res) {
     }
 
     await deleteFilesFromS3(project.files);
-    await project.remove();
+    await project.deleteOne();
     res.status(200).end();
   } catch (error) {
     if (error.name === 'CastError' && error.kind === 'ObjectId') {

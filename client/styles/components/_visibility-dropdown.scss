@@ -1,0 +1,172 @@
+@use "sass:math";
+
+.visibility-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.visibility-dropdown__trigger {
+  display: flex;
+  align-items: center;
+  gap: #{math.div(3, $base-font-size)}rem;
+  margin-right: 0.5rem;
+  padding: 0.5rem 0.7rem;
+  border-radius: #{math.div(15, $base-font-size)}rem;
+  cursor: pointer;
+  font-size: #{math.div(14, $base-font-size)}rem;
+  transition: all 0.2s ease;
+}
+
+.visibility-dropdown__trigger-toolbar {
+  @include themify() {
+    color: getThemifyVariable("toolbar-button-color");
+    background-color: getThemifyVariable("toolbar-button-background-color");
+
+    & g,
+    & path {
+      fill: getThemifyVariable('toolbar-button-color');
+    }
+  }
+
+  &:hover {
+    @include themify() {
+      background-color: getThemifyVariable("button-background-hover-color") !important;
+      color: getThemifyVariable("button-hover-color") !important;
+
+    & g,
+      & path {
+        fill: getThemifyVariable('button-hover-color') !important;
+      }
+    }
+  }
+}
+
+.visibility-dropdown__menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 10000000;
+  margin-top: #{math.div(4, $base-font-size)}rem;
+  min-width: #{math.div(233, $base-font-size)}rem;
+  overflow: hidden;
+  border-radius: #{math.div(6, $base-font-size)}rem;
+
+  @include themify() {
+    border: 1px solid getThemifyVariable("modal-border-color");
+    color: getThemifyVariable("primary-text-color");
+    background-color: getThemifyVariable("modal-background-color");
+  }
+}
+
+.visibility-dropdown__option {
+  padding: #{math.div(14, $base-font-size)}rem #{math.div(20, $base-font-size)}rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  display: flex;
+  flex-direction: column;
+
+  @include themify() {
+    border-bottom: 1px solid getThemifyVariable("modal-border-color");
+    background-color: getThemifyVariable("modal-background-color");
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:hover {
+    @include themify() {
+      background-color: getThemifyVariable("button-background-hover-color") !important;
+      color: getThemifyVariable("button-hover-color") !important;
+
+    & g {
+        fill: getThemifyVariable('button-hover-color') !important;
+      }
+    }
+  }
+
+  &.selected {
+    @include themify() {
+      background-color: getThemifyVariable("table-row-stripe-color");
+    }
+  }
+}
+
+.visibility-option__main {
+  display: flex;
+  align-items: center;
+  gap: #{math.div(8, $base-font-size)}rem;
+  margin-bottom: #{math.div(4, $base-font-size)}rem;
+}
+
+.visibility-option__label {
+  flex: 1;
+  font-weight: 500;
+  font-size: #{math.div(14, $base-font-size)}rem;
+}
+
+.visibility-option__description {
+  font-size: #{math.div(12, $base-font-size)}rem;
+  margin-left: #{math.div(20, $base-font-size)}rem;
+}
+
+.visibility-icon {
+  width: #{math.div(16, $base-font-size)}rem;
+  height: #{math.div(16, $base-font-size)}rem;
+  flex-shrink: 0;
+  padding-bottom: 1px;
+}
+
+.dropdown-arrow {
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+
+  @include themify() {
+    stroke: getThemifyVariable("inactive-text-color");
+  }
+}
+
+.checkmark {
+  flex-shrink: 0;
+  width: #{math.div(16, $base-font-size)}rem;
+  height: #{math.div(16, $base-font-size)}rem;
+
+  @include themify() {
+    stroke: getThemifyVariable("logo-color");
+  }
+}
+
+.visibility-display {
+  display: flex;
+  align-items: center;
+  gap: #{math.div(8, $base-font-size)}rem;
+  padding: #{math.div(8, $base-font-size)}rem #{math.div(12, $base-font-size)}rem;
+  font-size: #{math.div(14, $base-font-size)}rem;
+
+  @include themify() {
+    color: getThemifyVariable("inactive-text-color");
+  }
+}
+
+@media (max-width: 770px) {
+  .visibility-dropdown__trigger {
+    min-width: #{math.div(100, $base-font-size)}rem;
+    padding: #{math.div(6, $base-font-size)}rem #{math.div(10, $base-font-size)}rem;
+    font-size: #{math.div(12, $base-font-size)}rem;
+  }
+
+  .visibility-dropdown__menu {
+    left: auto;
+    right: 0;
+    min-width: #{math.div(180, $base-font-size)}rem;
+  }
+}
+
+.toolbar .visibility-dropdown__trigger {
+  font-size: 1rem; 
+}
+
+.toolbar .visibility-icon {
+  width: #{math.div(14, $base-font-size)}rem;
+  height: #{math.div(14, $base-font-size)}rem;
+}

@@ -61,8 +61,8 @@ describe('<AccountForm />', () => {
   it('handles form submission and calls updateSettings', async () => {
     subject();
 
-    const saveAllSettingsButton = screen.getByRole('button', {
-      name: /save all settings/i
+    const saveAccountDetailsButton = screen.getByRole('button', {
+      name: /save account details/i
     });
 
     const currentPasswordElement = screen.getByLabelText(/current password/i);
@@ -81,7 +81,7 @@ describe('<AccountForm />', () => {
     });
 
     await act(async () => {
-      fireEvent.click(saveAllSettingsButton);
+      fireEvent.click(saveAccountDetailsButton);
     });
 
     await waitFor(() => {
@@ -92,8 +92,8 @@ describe('<AccountForm />', () => {
   it('Save all setting button should get disabled while submitting and enable when not submitting', async () => {
     subject();
 
-    const saveAllSettingsButton = screen.getByRole('button', {
-      name: /save all settings/i
+    const saveAccountDetailsButton = screen.getByRole('button', {
+      name: /save account details/i
     });
 
     const currentPasswordElement = screen.getByLabelText(/current password/i);
@@ -110,12 +110,12 @@ describe('<AccountForm />', () => {
         value: 'newPassword'
       }
     });
-    expect(saveAllSettingsButton).not.toHaveAttribute('disabled');
+    expect(saveAccountDetailsButton).not.toHaveAttribute('disabled');
 
     await act(async () => {
-      fireEvent.click(saveAllSettingsButton);
+      fireEvent.click(saveAccountDetailsButton);
       await waitFor(() => {
-        expect(saveAllSettingsButton).toHaveAttribute('disabled');
+        expect(saveAccountDetailsButton).toHaveAttribute('disabled');
       });
     });
   });

@@ -1,8 +1,10 @@
-import React, { useRef, useState } from 'react';
+import React, { useContext, useMemo, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useDispatch, useSelector } from 'react-redux';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useTranslation } from 'react-i18next';
+import ReactMarkdown from 'react-markdown';
+import PropTypes from 'prop-types';
 import PlusIcon from '../../../../images/plus.svg';
 import MinusIcon from '../../../../images/minus.svg';
 import beepUrl from '../../../../sounds/audioAlert.mp3';
@@ -16,8 +18,21 @@ import {
   setLintWarning,
   setAutocloseBracketsQuotes,
   setAutocompleteHinter,
-  setLinewrap
+  setLinewrap,
+  setPreferencesTab
 } from '../../actions/preferences';
+import {
+  majorVersion,
+  p5SoundURL,
+  p5URL,
+  useP5Version
+} from '../../hooks/useP5Version';
+import VersionPicker from '../VersionPicker';
+import { updateFileContent } from '../../actions/files';
+import { CmControllerContext } from '../../pages/IDEView';
+import Stars from '../Stars';
+import Admonition from '../Admonition';
+import TextArea from '../TextArea';
 
 export default function Preferences() {
   const { t } = useTranslation();
@@ -25,6 +40,7 @@ export default function Preferences() {
   const dispatch = useDispatch();
 
   const {
+    tabIndex,
     fontSize,
     autosave,
     linewrap,
@@ -38,6 +54,20 @@ export default function Preferences() {
   } = useSelector((state) => state.preferences);
 
   const [state, setState] = useState({ fontSize });
+  const { versionInfo, indexID } = useP5Version();
+  const cmRef = useContext(CmControllerContext);
+  const [showStars, setShowStars] = useState(null);
+  const timerRef = useRef(null);
+  const pickerRef = useRef(null);
+  const onChangeVersion = (version) => {
+    const shouldShowStars = majorVersion(version) === '2';
+    const box = pickerRef.current?.getBoundingClientRect();
+    if (shouldShowStars) {
+      setShowStars({ left: box?.left || 0, top: box?.top || 0 });
+      clearTimeout(timerRef.current);
+      timerRef.current = setTimeout(() => setShowStars(null), 3000);
+    }
+  };
 
   function onFontInputChange(event) {
     const INTEGER_REGEX = /^[0-9\b]+$/;
@@ -78,14 +108,56 @@ export default function Preferences() {
     handleFontSize(newValue);
   }
 
+  function changeTab(index) {
+    dispatch(setPreferencesTab(index));
+  }
+
   const fontSizeInputRef = useRef(null);
+
+  const updateHTML = (src) => {
+    dispatch(updateFileContent(indexID, src));
+    cmRef.current?.updateFileContent(indexID, src);
+  };
+
+  const markdownComponents = useMemo(() => {
+    // eslint-disable-next-line react/no-unstable-nested-components
+    const ExternalLink = ({ children, ...props }) => (
+      <a {...props} target="_blank">
+        {children}
+      </a>
+    );
+    ExternalLink.propTypes = {
+      children: PropTypes.node
+    };
+    ExternalLink.defaultProps = {
+      children: undefined
+    };
+
+    // eslint-disable-next-line react/no-unstable-nested-components
+    const Paragraph = ({ children, ...props }) => (
+      <p className="preference__paragraph" {...props}>
+        {children}
+      </p>
+    );
+    Paragraph.propTypes = {
+      children: PropTypes.node
+    };
+    Paragraph.defaultProps = {
+      children: undefined
+    };
+
+    return {
+      a: ExternalLink,
+      p: Paragraph
+    };
+  }, []);
 
   return (
     <section className="preferences">
       <Helmet>
         <title>p5.js Web Editor | Preferences</title>
       </Helmet>
-      <Tabs>
+      <Tabs selectedIndex={tabIndex} onSelect={changeTab}>
         <TabList>
           <div className="tabs__titles">
             <Tab>
@@ -96,12 +168,17 @@ export default function Preferences() {
             <Tab>
               <h4 className="tabs__title">{t('Preferences.Accessibility')}</h4>
             </Tab>
+            <Tab>
+              <h4 className="tabs__title">
+                {t('Preferences.LibraryManagement')}
+              </h4>
+            </Tab>
           </div>
         </TabList>
         <TabPanel>
           <div className="preference">
             <h4 className="preference__title">{t('Preferences.Theme')}</h4>
-            <div className="preference__options">
+            <fieldset className="preference__options">
               <input
                 type="radio"
                 onChange={() => dispatch(setTheme('light'))}
@@ -144,7 +221,7 @@ export default function Preferences() {
               >
                 {t('Preferences.HighContrastTheme')}
               </label>
-            </div>
+            </fieldset>
           </div>
           <div className="preference">
             <h4 className="preference__title">{t('Preferences.TextSize')}</h4>
@@ -179,6 +256,13 @@ export default function Preferences() {
                 onClick={() => {
                   fontSizeInputRef.current?.select();
                 }}
+                onKeyDown={(event) => {
+                  if (event.key === 'ArrowUp') {
+                    increaseFontSize();
+                  } else if (event.key === 'ArrowDown') {
+                    decreaseFontSize();
+                  }
+                }}
               />
             </form>
             <button
@@ -196,7 +280,7 @@ export default function Preferences() {
           </div>
           <div className="preference">
             <h4 className="preference__title">{t('Preferences.Autosave')}</h4>
-            <div className="preference__options">
+            <fieldset className="preference__options">
               <input
                 type="radio"
                 onChange={() => dispatch(setAutosave(true))}
@@ -223,13 +307,13 @@ export default function Preferences() {
               <label htmlFor="autosave-off" className="preference__option">
                 {t('Preferences.Off')}
               </label>
-            </div>
+            </fieldset>
           </div>
           <div className="preference">
             <h4 className="preference__title">
               {t('Preferences.AutocloseBracketsQuotes')}
             </h4>
-            <div className="preference__options">
+            <fieldset className="preference__options">
               <input
                 type="radio"
                 onChange={() => dispatch(setAutocloseBracketsQuotes(true))}
@@ -262,13 +346,13 @@ export default function Preferences() {
               >
                 {t('Preferences.Off')}
               </label>
-            </div>
+            </fieldset>
           </div>
           <div className="preference">
             <h4 className="preference__title">
               {t('Preferences.AutocompleteHinter')}
             </h4>
-            <div className="preference__options">
+            <fieldset className="preference__options">
               <input
                 type="radio"
                 onChange={() => dispatch(setAutocompleteHinter(true))}
@@ -301,38 +385,38 @@ export default function Preferences() {
               >
                 {t('Preferences.Off')}
               </label>
-            </div>
+            </fieldset>
           </div>
           <div className="preference">
             <h4 className="preference__title">{t('Preferences.WordWrap')}</h4>
-            <div className="preference__options">
+            <fieldset className="preference__options">
               <input
                 type="radio"
                 onChange={() => dispatch(setLinewrap(true))}
-                aria-label={t('Preferences.LineWrapOnARIA')}
-                name="linewrap"
-                id="linewrap-on"
+                aria-label={t('Preferences.WordWrapOnARIA')}
+                name="wordwrap"
+                id="wordwrap-on"
                 className="preference__radio-button"
                 value="On"
                 checked={linewrap}
               />
-              <label htmlFor="linewrap-on" className="preference__option">
+              <label htmlFor="wordwrap-on" className="preference__option">
                 {t('Preferences.On')}
               </label>
               <input
                 type="radio"
                 onChange={() => dispatch(setLinewrap(false))}
-                aria-label={t('Preferences.LineWrapOffARIA')}
-                name="linewrap"
-                id="linewrap-off"
+                aria-label={t('Preferences.WordWrapOffARIA')}
+                name="wordwrap"
+                id="wordwrap-off"
                 className="preference__radio-button"
                 value="Off"
                 checked={!linewrap}
               />
-              <label htmlFor="linewrap-off" className="preference__option">
+              <label htmlFor="wordwrap-off" className="preference__option">
                 {t('Preferences.Off')}
               </label>
-            </div>
+            </fieldset>
           </div>
         </TabPanel>
         <TabPanel>
@@ -340,7 +424,7 @@ export default function Preferences() {
             <h4 className="preference__title">
               {t('Preferences.LineNumbers')}
             </h4>
-            <div className="preference__options">
+            <fieldset className="preference__options">
               <input
                 type="radio"
                 onChange={() => dispatch(setLineNumbers(true))}
@@ -367,13 +451,13 @@ export default function Preferences() {
               <label htmlFor="line-numbers-off" className="preference__option">
                 {t('Preferences.Off')}
               </label>
-            </div>
+            </fieldset>
           </div>
           <div className="preference">
             <h4 className="preference__title">
               {t('Preferences.LintWarningSound')}
             </h4>
-            <div className="preference__options">
+            <fieldset className="preference__options">
               <input
                 type="radio"
                 onChange={() => dispatch(setLintWarning(true))}
@@ -407,7 +491,7 @@ export default function Preferences() {
               >
                 {t('Preferences.PreviewSound')}
               </button>
-            </div>
+            </fieldset>
           </div>
           <div className="preference">
             <h4 className="preference__title">
@@ -417,7 +501,7 @@ export default function Preferences() {
               {t('Preferences.UsedScreenReader')}
             </h6>
 
-            <div className="preference__options">
+            <fieldset className="preference__options">
               <input
                 type="checkbox"
                 onChange={(event) => {
@@ -452,8 +536,242 @@ export default function Preferences() {
               >
                 {t('Preferences.TableText')}
               </label>
-            </div>
+            </fieldset>
           </div>
+        </TabPanel>
+        <TabPanel>
+          <div className="preference">
+            {showStars && <Stars top={showStars.top} left={showStars.left} />}
+            {versionInfo && indexID ? (
+              <>
+                <h4 className="preference__title">
+                  {t('Preferences.LibraryVersion')}
+                </h4>
+                <div>
+                  <VersionPicker
+                    ref={pickerRef}
+                    onChangeVersion={onChangeVersion}
+                  />
+                  <ReactMarkdown components={markdownComponents}>
+                    {t('Preferences.LibraryVersionInfo')}
+                  </ReactMarkdown>
+                </div>
+              </>
+            ) : (
+              <div>
+                <Admonition title={t('Preferences.CustomVersionTitle')}>
+                  <p>{t('Preferences.CustomVersionInfo')}</p>
+                </Admonition>
+                <p className="preference__paragraph">
+                  {t('Preferences.CustomVersionReset')}
+                </p>
+                <TextArea
+                  className="preference__textarea"
+                  src={
+                    `<script src="${p5URL}"></script>\n` +
+                    `<script src="${p5SoundURL}"></script>`
+                  }
+                />
+              </div>
+            )}
+          </div>
+          {versionInfo && indexID && (
+            <>
+              <div className="preference">
+                <h4 className="preference__title">
+                  {t('Preferences.SoundAddon')}
+                </h4>
+                <fieldset className="preference__options">
+                  <input
+                    type="radio"
+                    onChange={() => {
+                      updateHTML(versionInfo.setP5Sound(true));
+                    }}
+                    aria-label={`${t('Preferences.SoundAddon')} ${t(
+                      'Preferences.AddonOn'
+                    )}`}
+                    name="soundaddon"
+                    id="soundaddon-on"
+                    className="preference__radio-button"
+                    value="On"
+                    checked={versionInfo.p5Sound}
+                  />
+                  <label htmlFor="soundaddon-on" className="preference__option">
+                    {t('Preferences.On')}
+                  </label>
+                  <input
+                    type="radio"
+                    onChange={() => {
+                      updateHTML(versionInfo.setP5Sound(false));
+                    }}
+                    aria-label={`${t('Preferences.SoundAddon')} ${t(
+                      'Preferences.AddonOff'
+                    )}`}
+                    name="soundaddon"
+                    id="soundaddon-off"
+                    className="preference__radio-button"
+                    value="Off"
+                    checked={!versionInfo.p5Sound}
+                  />
+                  <label
+                    htmlFor="soundaddon-off"
+                    className="preference__option"
+                  >
+                    {t('Preferences.Off')}
+                  </label>
+                  <legend className="preference__warning">
+                    <a
+                      target="_blank"
+                      rel="noreferrer"
+                      href={`https://${
+                        versionInfo.isVersion2 ? 'beta.' : ''
+                      }p5js.org/reference/p5.sound`}
+                    >
+                      {t('Preferences.SoundReference').replace(
+                        '$VERSION',
+                        versionInfo.version
+                      )}
+                    </a>
+                  </legend>
+                </fieldset>
+              </div>
+              <div className="preference">
+                <h4 className="preference__title">
+                  {t('Preferences.PreloadAddon')}
+                </h4>
+                <fieldset className="preference__options">
+                  <input
+                    type="radio"
+                    onChange={() =>
+                      updateHTML(versionInfo.setP5PreloadAddon(true))
+                    }
+                    aria-label={`${t('Preferences.PreloadAddon')} ${t(
+                      'Preferences.AddonOn'
+                    )}`}
+                    name="preloadaddon"
+                    id="preloadaddon-on"
+                    className="preference__radio-button"
+                    value="On"
+                    checked={versionInfo.p5PreloadAddon}
+                  />
+                  <label
+                    htmlFor="preloadaddon-on"
+                    className="preference__option"
+                  >
+                    {t('Preferences.On')}
+                  </label>
+                  <input
+                    type="radio"
+                    onChange={() =>
+                      updateHTML(versionInfo.setP5PreloadAddon(false))
+                    }
+                    aria-label={`${t('Preferences.PreloadAddon')} ${t(
+                      'Preferences.AddonOff'
+                    )}`}
+                    name="preloadaddon"
+                    id="preloadaddon-off"
+                    className="preference__radio-button"
+                    value="Off"
+                    checked={!versionInfo.p5PreloadAddon}
+                  />
+                  <label
+                    htmlFor="preloadaddon-off"
+                    className="preference__option"
+                  >
+                    {t('Preferences.Off')}
+                  </label>
+                </fieldset>
+              </div>
+              <div className="preference">
+                <h4 className="preference__title">
+                  {t('Preferences.ShapesAddon')}
+                </h4>
+                <fieldset className="preference__options">
+                  <input
+                    type="radio"
+                    onChange={() =>
+                      updateHTML(versionInfo.setP5ShapesAddon(true))
+                    }
+                    aria-label={`${t('Preferences.ShapesAddon')} ${t(
+                      'Preferences.AddonOn'
+                    )}`}
+                    name="shapesaddon"
+                    id="shapesaddon-on"
+                    className="preference__radio-button"
+                    value="On"
+                    checked={versionInfo.p5ShapesAddon}
+                  />
+                  <label
+                    htmlFor="shapesaddon-on"
+                    className="preference__option"
+                  >
+                    {t('Preferences.On')}
+                  </label>
+                  <input
+                    type="radio"
+                    onChange={() =>
+                      updateHTML(versionInfo.setP5ShapesAddon(false))
+                    }
+                    aria-label={`${t('Preferences.ShapesAddon')} ${t(
+                      'Preferences.AddonOff'
+                    )}`}
+                    name="shapesaddon"
+                    id="shapesaddon-off"
+                    className="preference__radio-button"
+                    value="Off"
+                    checked={!versionInfo.p5ShapesAddon}
+                  />
+                  <label
+                    htmlFor="shapesaddon-off"
+                    className="preference__option"
+                  >
+                    {t('Preferences.Off')}
+                  </label>
+                </fieldset>
+              </div>
+              <div className="preference">
+                <h4 className="preference__title">
+                  {t('Preferences.DataAddon')}
+                </h4>
+                <fieldset className="preference__options">
+                  <input
+                    type="radio"
+                    onChange={() =>
+                      updateHTML(versionInfo.setP5DataAddon(true))
+                    }
+                    aria-label={`${t('Preferences.DataAddon')} ${t(
+                      'Preferences.AddonOn'
+                    )}`}
+                    name="dataaddon"
+                    id="dataaddon-on"
+                    className="preference__radio-button"
+                    value="On"
+                    checked={versionInfo.p5DataAddon}
+                  />
+                  <label htmlFor="dataaddon-on" className="preference__option">
+                    {t('Preferences.On')}
+                  </label>
+                  <input
+                    type="radio"
+                    onChange={() =>
+                      updateHTML(versionInfo.setP5DataAddon(false))
+                    }
+                    aria-label={`${t('Preferences.DataAddon')} ${t(
+                      'Preferences.AddonOff'
+                    )}`}
+                    name="dataaddon"
+                    id="dataaddon-off"
+                    className="preference__radio-button"
+                    value="Off"
+                    checked={!versionInfo.p5DataAddon}
+                  />
+                  <label htmlFor="dataaddon-off" className="preference__option">
+                    {t('Preferences.Off')}
+                  </label>
+                </fieldset>
+              </div>
+            </>
+          )}
         </TabPanel>
       </Tabs>
     </section>

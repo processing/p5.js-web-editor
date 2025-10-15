@@ -3,16 +3,32 @@
 .nav {
   height: #{math.div(42, $base-font-size)}rem;
   display: flex;
+  width: 100%;
   flex-direction: row;
   justify-content: space-between;
-
-  @include themify() {
-    border-bottom: 1px dashed map-get($theme-map, 'nav-border-color');
-  }
 
   & button {
     padding: 0;
   }
+}
+
+.nav__header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  @include themify() {
+    border-bottom: 1px dashed map-get($theme-map, 'nav-border-color');
+  }
+  // padding-left: #{math.div(20, $base-font-size)}rem;
+}
+
+.nav__menubar {
+  display: flex;
+  flex-direction: row;
+  width:100%;
+  justify-content: space-between;
 }
 
 .nav__items-left,
@@ -20,23 +36,13 @@
   list-style: none;
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
-  height: 100%;
   align-items: center;
+  height: 100%;
 }
 
 .preview-nav__editor-svg {
   @include icon();
 }
-
-// .nav__items-left,
-// .nav__items-right {
-//   & button, & a {
-//     @include themify() {
-//       color: getThemifyVariable('primary-text-color');
-//     }
-//   }
-// }
 
 .nav__item {
   position: relative;
@@ -47,6 +53,60 @@
 
   & button {
     padding: #{math.div(12, $base-font-size)}rem #{math.div(10, $base-font-size)}rem;
+  }
+}
+
+// base focus styles
+.nav__item button:focus {  
+  @include themify() {
+    background-color: getThemifyVariable('nav-hover-color');
+  }
+  
+  .nav__item-header {
+    @include themify() {
+      color: getThemifyVariable('button-hover-color');
+    }
+  }
+
+  .nav__item-header-triangle polygon,
+  .nav__item-header-triangle path {
+    @include themify() {
+      fill: getThemifyVariable('button-hover-color');
+    }
+  }  
+}
+
+
+.nav__dropdown-item {
+  & button:focus,
+  & a:focus {
+    @include themify() {
+      color: getThemifyVariable('button-hover-color');
+      background-color: getThemifyVariable('nav-hover-color');
+    }
+  }
+  & button:focus .nav__keyboard-shortcut,
+  & a:focus .nav__keyboard-shortcut {
+    @include themify() {
+      color: getThemifyVariable('button-hover-color');
+    }
+  }
+
+  &.nav__dropdown-item--disabled {
+    & button,
+    & a,
+    & button:hover,
+    & a:hover {
+      @include themify() {
+        color: getThemifyVariable('button-nav-inactive-color');
+      }
+
+      & .nav__keyboard-shortcut {
+        @include themify() {
+          color: getThemifyVariable('button-nav-inactive-color');
+        }
+      }
+    }
   }
 }
 
@@ -62,9 +122,13 @@
 }
 
 .nav__item:hover {
+  @include themify() {
+    background-color: getThemifyVariable('nav-hover-color');
+  }
+
   .nav__item-header {
     @include themify() {
-      color: getThemifyVariable('nav-hover-color');
+      color: getThemifyVariable('button-hover-color');
     }
   }
   
@@ -77,7 +141,7 @@
   .nav__item-header-triangle polygon,
   .nav__item-header-triangle path {
     @include themify() {
-      fill: getThemifyVariable('nav-hover-color');
+      fill: getThemifyVariable('button-hover-color');
     }
   }
 }

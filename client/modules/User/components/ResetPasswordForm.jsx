@@ -4,7 +4,7 @@ import { Form, Field } from 'react-final-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { validateResetPassword } from '../../../utils/reduxFormUtils';
 import { initiateResetPassword } from '../actions';
-import Button from '../../../common/Button';
+import { Button, ButtonTypes } from '../../../common/Button';
 
 function ResetPasswordForm(props) {
   const { t } = useTranslation();
@@ -45,7 +45,7 @@ function ResetPasswordForm(props) {
             )}
           </Field>
           <Button
-            type="submit"
+            type={ButtonTypes.SUBMIT}
             disabled={
               submitting || invalid || pristine || resetPasswordInitiate
             }

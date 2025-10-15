@@ -162,8 +162,8 @@
     "AutocompleteHinterOnARIA": "打开补全提示",
     "AutocompleteHinterOffARIA": "关闭补全提示",
     "WordWrap": "自动提行",
-    "LineWrapOnARIA": "打开自动提行",
-    "LineWrapOffARIA": "关闭自动提行",
+    "WordWrapOnARIA": "打开自动提行",
+    "WordWrapOffARIA": "关闭自动提行",
     "LineNumbers": "行号",
     "LineNumbersOnARIA": "打开行号",
     "LineNumbersOffARIA": "关闭行号",
@@ -196,7 +196,7 @@
       "FindPreviousTextMatch": "查找上一个符合的文字",
       "CodeEditing": "代码编辑"
     },
-    "General": {
+    "GeneralSelection": {
       "StartSketch": "运行项目",
       "StopSketch": "停止运行",
       "TurnOnAccessibleOutput": "打开无障碍输出",

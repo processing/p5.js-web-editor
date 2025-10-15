@@ -5,7 +5,7 @@ import { useTranslation, Trans } from 'react-i18next';
 import SignupForm from '../components/SignupForm';
 import SocialAuthButton from '../components/SocialAuthButton';
 import Nav from '../../IDE/components/Header/Nav';
-import RootPage from '../../../components/RootPage';
+import { RootPage } from '../../../components/RootPage';
 
 function SignupView() {
   const { t } = useTranslation();

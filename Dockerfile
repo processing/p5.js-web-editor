@@ -1,4 +1,4 @@
-FROM node:16.14.2 AS base
+FROM node:18.20.8 AS base
 ENV APP_HOME=/usr/src/app \
   TERM=xterm
 RUN mkdir -p $APP_HOME
@@ -14,6 +14,7 @@ COPY .babelrc index.js nodemon.json ./
 COPY ./webpack ./webpack
 COPY client ./client
 COPY server ./server
+COPY common ./common
 COPY translations/locales ./translations/locales
 COPY public ./public
 CMD ["npm", "start"]

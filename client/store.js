@@ -3,7 +3,7 @@ import listenerMiddleware from './middleware';
 import DevTools from './modules/App/components/DevTools';
 import rootReducer from './reducers';
 import { clearState, loadState } from './persistState';
-import getConfig from './utils/getConfig';
+import { getConfig } from './utils/getConfig';
 
 // Enable DevTools only when rendering on client and during development.
 // Display the dock monitor only if no browser extension is found.

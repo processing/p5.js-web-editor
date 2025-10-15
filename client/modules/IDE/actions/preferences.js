@@ -1,5 +1,5 @@
 import i18next from 'i18next';
-import apiClient from '../../../utils/apiClient';
+import { apiClient } from '../../../utils/apiClient';
 import * as ActionTypes from '../../../constants';
 
 function updatePreferences(formParams, dispatch) {
@@ -12,6 +12,13 @@ function updatePreferences(formParams, dispatch) {
         error: error?.response?.data
       });
     });
+}
+
+export function setPreferencesTab(value) {
+  return {
+    type: ActionTypes.SET_PREFERENCES_TAB,
+    value
+  };
 }
 
 export function setFontSize(value) {

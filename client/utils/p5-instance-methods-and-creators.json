@@ -1,0 +1,661 @@
+{
+  "p5.Color": {
+    "createMethods": [
+      "color",
+      "p5.Color"
+    ],
+    "methods": [
+      "setAlpha",
+      "setBlue",
+      "setGreen",
+      "setRed",
+      "toString"
+    ]
+  },
+  "p5.Geometry": {
+    "createMethods": [
+      "beginGeometry",
+      "buildGeometry",
+      "endGeometry",
+      "freeGeometry",
+      "loadModel"
+    ],
+    "methods": [
+      "calculateBoundingBox",
+      "clearColors",
+      "computeFaces",
+      "computeNormals",
+      "faces",
+      "flipU",
+      "flipV",
+      "normalize",
+      "saveObj",
+      "saveStl",
+      "uvs",
+      "vertexNormals",
+      "vertices"
+    ]
+  },
+  "p5.MediaElement": {
+    "createMethods": [
+      "createAudio",
+      "createCapture",
+      "createVideo",
+      "p5.MediaElement"
+    ],
+    "methods": [
+      "addCue",
+      "autoplay",
+      "clearCues",
+      "connect",
+      "disconnect",
+      "duration",
+      "hideControls",
+      "loop",
+      "noLoop",
+      "onended",
+      "pause",
+      "play",
+      "removeCue",
+      "showControls",
+      "speed",
+      "src",
+      "stop",
+      "time",
+      "volume"
+    ]
+  },
+  "p5.Camera": {
+    "createMethods": [
+      "createCamera",
+      "p5.Camera"
+    ],
+    "methods": [
+      "camera",
+      "centerX",
+      "centerY",
+      "centerZ",
+      "eyeX",
+      "eyeY",
+      "eyeZ",
+      "frustum",
+      "lookAt",
+      "move",
+      "ortho",
+      "pan",
+      "perspective",
+      "roll",
+      "set",
+      "setPosition",
+      "slerp",
+      "tilt",
+      "upX",
+      "upY",
+      "upZ"
+    ]
+  },
+  "p5.Element": {
+    "createMethods": [
+      "createCheckbox",
+      "createColorPicker",
+      "createElement",
+      "createImg",
+      "createRadio",
+      "createSelect",
+      "p5.Element",
+      "select",
+      "selectAll"
+    ],
+    "methods": [
+      "addClass",
+      "attribute",
+      "center",
+      "child",
+      "class",
+      "doubleClicked",
+      "dragLeave",
+      "dragOver",
+      "draggable",
+      "drop",
+      "elt",
+      "hasClass",
+      "height",
+      "hide",
+      "html",
+      "id",
+      "mouseClicked",
+      "mouseMoved",
+      "mouseOut",
+      "mouseOver",
+      "mousePressed",
+      "mouseReleased",
+      "mouseWheel",
+      "parent",
+      "position",
+      "remove",
+      "removeAttribute",
+      "removeClass",
+      "show",
+      "size",
+      "style",
+      "toggleClass",
+      "touchEnded",
+      "touchMoved",
+      "touchStarted",
+      "value",
+      "width"
+    ]
+  },
+  "p5.File": {
+    "createMethods": [
+      "createFileInput",
+      "p5.File"
+    ],
+    "methods": [
+      "data",
+      "file",
+      "name",
+      "size",
+      "subtype",
+      "type"
+    ]
+  },
+  "p5.Shader": {
+    "createMethods": [
+      "createFilterShader",
+      "createShader",
+      "loadShader",
+      "p5.Shader",
+      "shader"
+    ],
+    "methods": [
+      "copyToContext",
+      "inspectHooks",
+      "modify",
+      "setUniform"
+    ]
+  },
+  "p5.Framebuffer": {
+    "createMethods": [
+      "createFramebuffer",
+      "p5.Framebuffer"
+    ],
+    "methods": [
+      "autoSized",
+      "begin",
+      "color",
+      "createCamera",
+      "depth",
+      "draw",
+      "end",
+      "get",
+      "loadPixels",
+      "pixelDensity",
+      "pixels",
+      "remove",
+      "resize",
+      "updatePixels"
+    ]
+  },
+  "p5.Graphics": {
+    "createMethods": [
+      "createGraphics",
+      "p5.Graphics"
+    ],
+    "methods": [
+      "createFramebuffer",
+      "remove",
+      "reset"
+    ]
+  },
+  "p5.Image": {
+    "createMethods": [
+      "createImage",
+      "get",
+      "loadImage",
+      "p5.Image"
+    ],
+    "methods": [
+      "blend",
+      "copy",
+      "delay",
+      "filter",
+      "get",
+      "getCurrentFrame",
+      "height",
+      "loadPixels",
+      "mask",
+      "numFrames",
+      "pause",
+      "pixelDensity",
+      "pixels",
+      "play",
+      "reset",
+      "resize",
+      "save",
+      "set",
+      "setFrame",
+      "updatePixels",
+      "width"
+    ]
+  },
+  "p5.NumberDict": {
+    "createMethods": [
+      "createNumberDict"
+    ],
+    "methods": [
+      "add",
+      "div",
+      "maxKey",
+      "maxValue",
+      "minKey",
+      "minValue",
+      "mult",
+      "sub"
+    ]
+  },
+  "p5.StringDict": {
+    "createMethods": [
+      "createStringDict"
+    ],
+    "methods": []
+  },
+  "p5.Vector": {
+    "createMethods": [
+      "createVector",
+      "p5.Vector"
+    ],
+    "methods": [
+      "add",
+      "angleBetween",
+      "array",
+      "clampToZero",
+      "copy",
+      "cross",
+      "dist",
+      "div",
+      "dot",
+      "equals",
+      "fromAngle",
+      "fromAngles",
+      "heading",
+      "lerp",
+      "limit",
+      "mag",
+      "magSq",
+      "mult",
+      "normalize",
+      "random2D",
+      "random3D",
+      "reflect",
+      "rem",
+      "rotate",
+      "set",
+      "setHeading",
+      "setMag",
+      "slerp",
+      "sub",
+      "toString",
+      "x",
+      "y",
+      "z"
+    ]
+  },
+  "p5.PrintWriter": {
+    "createMethods": [
+      "createWriter",
+      "p5.PrintWriter"
+    ],
+    "methods": [
+      "clear",
+      "close",
+      "print",
+      "write"
+    ]
+  },
+  "p5.Font": {
+    "createMethods": [
+      "loadFont"
+    ],
+    "methods": [
+      "font",
+      "textBounds",
+      "textToPoints"
+    ]
+  },
+  "p5.Table": {
+    "createMethods": [
+      "loadTable"
+    ],
+    "methods": [
+      "addColumn",
+      "addRow",
+      "clearRows",
+      "columns",
+      "findRow",
+      "findRows",
+      "get",
+      "getArray",
+      "getColumn",
+      "getColumnCount",
+      "getNum",
+      "getObject",
+      "getRow",
+      "getRowCount",
+      "getRows",
+      "getString",
+      "matchRow",
+      "matchRows",
+      "removeColumn",
+      "removeRow",
+      "removeTokens",
+      "rows",
+      "set",
+      "setNum",
+      "setString",
+      "trim"
+    ]
+  },
+  "p5.XML": {
+    "createMethods": [
+      "loadXML"
+    ],
+    "methods": [
+      "addChild",
+      "getAttributeCount",
+      "getChild",
+      "getChildren",
+      "getContent",
+      "getName",
+      "getNum",
+      "getParent",
+      "getString",
+      "hasAttribute",
+      "hasChildren",
+      "listAttributes",
+      "listChildren",
+      "removeChild",
+      "serialize",
+      "setAttribute",
+      "setContent",
+      "setName"
+    ]
+  },
+  "p5.Envelope": {
+    "createMethods": [],
+    "methods": [
+      "add",
+      "attackLevel",
+      "attackTime",
+      "decayLevel",
+      "decayTime",
+      "mult",
+      "play",
+      "ramp",
+      "releaseLevel",
+      "releaseTime",
+      "scale",
+      "set",
+      "setADSR",
+      "setExp",
+      "setInput",
+      "setRange",
+      "triggerAttack",
+      "triggerRelease"
+    ]
+  },
+  "p5.FFT": {
+    "createMethods": [],
+    "methods": [
+      "analyze",
+      "getCentroid",
+      "getEnergy",
+      "getOctaveBands",
+      "linAverages",
+      "logAverages",
+      "setInput",
+      "smooth",
+      "waveform"
+    ]
+  },
+  "p5.Filter": {
+    "createMethods": [],
+    "methods": [
+      "biquadFilter",
+      "freq",
+      "gain",
+      "process",
+      "res",
+      "set",
+      "setType",
+      "toggle"
+    ]
+  },
+  "p5.Gain": {
+    "createMethods": [],
+    "methods": [
+      "amp",
+      "connect",
+      "disconnect",
+      "setInput"
+    ]
+  },
+  "p5.MonoSynth": {
+    "createMethods": [],
+    "methods": [
+      "amp",
+      "attack",
+      "connect",
+      "disconnect",
+      "dispose",
+      "play",
+      "setADSR",
+      "triggerAttack",
+      "triggerRelease"
+    ]
+  },
+  "p5.Noise": {
+    "createMethods": [],
+    "methods": [
+      "setType"
+    ]
+  },
+  "p5.Oscillator": {
+    "createMethods": [],
+    "methods": [
+      "add",
+      "amp",
+      "connect",
+      "disconnect",
+      "freq",
+      "getAmp",
+      "getFreq",
+      "getPan",
+      "getType",
+      "mult",
+      "pan",
+      "phase",
+      "scale",
+      "setType",
+      "start",
+      "stop"
+    ]
+  },
+  "p5.Panner3D": {
+    "createMethods": [],
+    "methods": [
+      "maxDist",
+      "orient",
+      "orientX",
+      "orientY",
+      "orientZ",
+      "panner",
+      "positionX",
+      "positionY",
+      "positionZ",
+      "process",
+      "rollof",
+      "set",
+      "setFalloff"
+    ]
+  },
+  "p5.Part": {
+    "createMethods": [],
+    "methods": [
+      "addPhrase",
+      "getBPM",
+      "getPhrase",
+      "loop",
+      "noLoop",
+      "onStep",
+      "pause",
+      "removePhrase",
+      "replaceSequence",
+      "setBPM",
+      "start",
+      "stop"
+    ]
+  },
+  "p5.PeakDetect": {
+    "createMethods": [],
+    "methods": [
+      "onPeak",
+      "update"
+    ]
+  },
+  "p5.Phrase": {
+    "createMethods": [],
+    "methods": [
+      "sequence"
+    ]
+  },
+  "p5.PolySynth": {
+    "createMethods": [],
+    "methods": [
+      "AudioVoice",
+      "connect",
+      "disconnect",
+      "dispose",
+      "noteADSR",
+      "noteAttack",
+      "noteRelease",
+      "notes",
+      "play",
+      "polyvalue",
+      "setADSR"
+    ]
+  },
+  "p5.Pulse": {
+    "createMethods": [],
+    "methods": [
+      "width"
+    ]
+  },
+  "p5.Reverb": {
+    "createMethods": [],
+    "methods": [
+      "amp",
+      "connect",
+      "disconnect",
+      "process",
+      "set"
+    ]
+  },
+  "p5.Score": {
+    "createMethods": [],
+    "methods": [
+      "loop",
+      "noLoop",
+      "pause",
+      "setBPM",
+      "start",
+      "stop"
+    ]
+  },
+  "p5.SoundFile": {
+    "createMethods": [],
+    "methods": [
+      "addCue",
+      "channels",
+      "clearCues",
+      "connect",
+      "currentTime",
+      "disconnect",
+      "duration",
+      "frames",
+      "getBlob",
+      "getPan",
+      "getPeaks",
+      "isLoaded",
+      "isLooping",
+      "isPaused",
+      "isPlaying",
+      "jump",
+      "loop",
+      "onended",
+      "pan",
+      "pause",
+      "play",
+      "playMode",
+      "rate",
+      "removeCue",
+      "reverseBuffer",
+      "sampleRate",
+      "save",
+      "setBuffer",
+      "setLoop",
+      "setPath",
+      "setVolume",
+      "stop"
+    ]
+  },
+  "p5.SoundLoop": {
+    "createMethods": [],
+    "methods": [
+      "bpm",
+      "interval",
+      "iterations",
+      "maxIterations",
+      "musicalTimeMode",
+      "pause",
+      "start",
+      "stop",
+      "syncedStart",
+      "timeSignature"
+    ]
+  },
+  "p5.SoundRecorder": {
+    "createMethods": [],
+    "methods": [
+      "record",
+      "setInput",
+      "stop"
+    ]
+  },
+  "p5.TableRow": {
+    "createMethods": [],
+    "methods": [
+      "get",
+      "getNum",
+      "getString",
+      "set",
+      "setNum",
+      "setString"
+    ]
+  },
+  "p5.TypedDict": {
+    "createMethods": [],
+    "methods": [
+      "clear",
+      "create",
+      "get",
+      "hasKey",
+      "print",
+      "remove",
+      "saveJSON",
+      "saveTable",
+      "set",
+      "size"
+    ]
+  }
+}

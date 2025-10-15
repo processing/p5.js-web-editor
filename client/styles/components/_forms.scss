@@ -75,14 +75,18 @@
 
 .form__field__password {
   position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .form__eye__icon {
-  font-size: 28px;
+  font-size: #{math.div(30, $base-font-size)}rem;
   position: absolute;
   right: 0px;
-  top: 4px;
-  vertical-align: middle;
+  
+  & svg {
+    transform: translateY(10%);
+  }
 }
 
 
@@ -104,6 +108,9 @@
 .form__context {
   text-align: left;
   margin-top: #{math.div(15, $base-font-size)}rem;
+}
+.form__resend-button {
+  margin-top: #{math.div(8, $base-font-size)}rem;
 }
 
 .form__status {

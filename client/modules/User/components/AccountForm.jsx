@@ -2,10 +2,10 @@ import React from 'react';
 import { Form, Field } from 'react-final-form';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import Button from '../../../common/Button';
+import { Button, ButtonTypes } from '../../../common/Button';
 import { validateSettings } from '../../../utils/reduxFormUtils';
 import { updateSettings, initiateVerification } from '../actions';
-import apiClient from '../../../utils/apiClient';
+import { apiClient } from '../../../utils/apiClient';
 
 function asyncValidate(fieldToValidate, value) {
   if (!value || value.trim().length === 0) {
@@ -97,7 +97,10 @@ function AccountForm() {
                   {t('AccountForm.EmailSent')}
                 </span>
               ) : (
-                <Button onClick={handleInitiateVerification}>
+                <Button
+                  onClick={handleInitiateVerification}
+                  className="form__resend-button"
+                >
                   {t('AccountForm.Resend')}
                 </Button>
               )}
@@ -172,8 +175,8 @@ function AccountForm() {
               )}
             </Field>
           )}
-          <Button type="submit" disabled={submitting || invalid}>
-            {t('AccountForm.SubmitSaveAllSettings')}
+          <Button type={ButtonTypes.SUBMIT} disabled={submitting || invalid}>
+            {t('AccountForm.SaveAccountDetails')}
           </Button>
         </form>
       )}

@@ -26,7 +26,7 @@ resource "google_container_node_pool" "primary" {
   location   = var.region
   cluster    = google_container_cluster.primary.name
   version    = var.gke_version
-  node_count = 1
+  node_count = 3
 
   node_config {
     disk_size_gb = 100

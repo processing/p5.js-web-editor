@@ -4,7 +4,7 @@ import { useLocation, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { verifyEmailConfirmation } from '../actions';
-import RootPage from '../../../components/RootPage';
+import { RootPage } from '../../../components/RootPage';
 import Nav from '../../IDE/components/Header/Nav';
 
 const EmailVerificationView = () => {

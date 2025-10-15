@@ -79,6 +79,10 @@ const baseThemes = {
     modalBorderColor: grays.middleLight,
     searchBackgroundColor: grays.lightest,
     tableRowStripeColor: grays.mediumLight,
+    notification: colors.dodgerblue,
+    toolbarTextColor: grays.dark,
+    toolbarBackgroundColor: grays.mediumLight,
+    toolbarTextHoverColor: grays.lightest,
 
     Button: {
       primary: {
@@ -170,6 +174,10 @@ const baseThemes = {
     modalBorderColor: grays.middleDark,
     searchBackgroundColor: grays.darker,
     tableRowStripeColor: grays.dark,
+    notification: colors.processingBlueLight,
+    toolbarTextColor: grays.lightest,
+    toolbarBackgroundColor: grays.mediumDark,
+    toolbarTextHoverColor: grays.lightest,
 
     Button: {
       primary: {
@@ -257,6 +265,10 @@ export default {
   [Theme.contrast]: extend(baseThemes[Theme.dark], {
     inactiveTextColor: grays.light,
     logoColor: colors.yellow,
+    notification: colors.p5ContrastYellow,
+    toolbarTextColor: grays.dark,
+    toolbarBackgroundColor: grays.light,
+    toolbarTextHoverColor: grays.dark,
 
     Button: {
       primary: {

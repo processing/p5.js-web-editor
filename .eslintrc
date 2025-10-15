@@ -16,13 +16,36 @@
     "import/no-unresolved": 0,
     "import/no-named-as-default": 0,
     "import/no-named-as-default-member": 0,
+    "import/no-useless-path-segments": 1,
+    "import/no-cycle":0, //temporarily off
+    "import/no-import-module-exports": 0, //temporarily off
+    "import/extensions": [ // override airbnb setting to allow imports of js, jsx, ts, and tsx files to auto-resolve instead of error
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
+    ],
+    "import/prefer-default-export": "off",
+    "react/jsx-filename-extension": [1, { "extensions": [".jsx", ".tsx"] }],
     "comma-dangle": 0,  // not sure why airbnb turned this on. gross!
+    "default-param-last": 0,
+    "no-else-return" :0,
     "indent": 0,
     "no-console": 0,
     "no-alert": 0,
+    "no-import-assign": 2,
+    "no-promise-executor-return": 0, //temporarily off
+    "no-restricted-exports": 1,
     "no-underscore-dangle": 0,
     "no-useless-catch": 2,
+    "no-plusplus": "off",
+    "prefer-object-spread": 0,
     "max-len": [1, 120, 2, {"ignoreComments": true, "ignoreTemplateLiterals": true}],
+    "max-classes-per-file": 0,
     "quote-props": [1, "as-needed"],
     "no-unused-vars": [1, {"vars": "local", "args": "none"}],
     "consistent-return": ["error", { "treatUndefinedAsUnspecified": true }],
@@ -36,7 +59,19 @@
       { "ignorePureComponents": true
     }],
     "class-methods-use-this": 0,
-    "react/jsx-no-bind": [2, {"allowBind": true, "allowArrowFunctions": true}],
+    "react/button-has-type": 0,
+    "react/destructuring-assignment":0,
+    "react/function-component-definition": 0,
+    "react/jsx-curly-newline":0,
+    "react/jsx-fragments":0,
+    "react/jsx-no-useless-fragment":0, // temporarily off
+    "react/jsx-one-expression-per-line": 0,
+    "react/jsx-props-no-spreading": 0,
+    "react/jsx-wrap-multilines": 0,
+    "react/jsx-no-bind": [2, {"allowBind": true, "allowArrowFunctions": true, "allowFunctions": true}],
+    "react/no-deprecated": 0, //temporarily off
+    "react/no-unused-class-component-methods": 1,
+    "react/sort-comp": 0,
     "no-return-assign": [2, "except-parens"],
     "jsx-a11y/anchor-is-valid": [
       "error",
@@ -49,6 +84,8 @@
         ]
       }
     ],
+    "jsx-a11y/control-has-associated-label": 0, //temporarily off
+    "jsx-a11y/label-has-associated-control": 0, //temporarily off
     "jsx-a11y/label-has-for": [
       2,
       {
@@ -72,6 +109,11 @@
   ],
   "settings": {
     "import/parser": "@babel/eslint-parser",
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    },
     "import/resolve": {
       "moduleDirectory": ["node_modules"]
     }
@@ -85,7 +127,22 @@
   },
   "overrides": [
     {
-      "files": ["*.stories.jsx"],
+      "files": ["*.ts", "*.tsx"],
+      "parser": "@typescript-eslint/parser",
+      "plugins": ["@typescript-eslint"],
+      "rules": {
+        "no-use-before-define": "off",
+        "import/no-extraneous-dependencies": "off",
+        "no-unused-vars": "off",
+        "import/no-default-export": "warn",
+        "no-underscore-dangle": "off",
+        "react/require-default-props": "off",
+        "no-shadow": "off",
+        "@typescript-eslint/no-shadow": "error"
+      }
+    },
+    {
+      "files": ["*.stories.@(js|jsx|ts|tsx)"],
       "rules": {
         "import/no-extraneous-dependencies": "off"
       }

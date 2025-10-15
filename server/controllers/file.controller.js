@@ -8,50 +8,47 @@ import { deleteObjectsFromS3, getObjectKey } from './aws.controller';
 // Bug -> timestamps don't get created, but it seems like this will
 // be fixed in mongoose soon
 // https://github.com/Automattic/mongoose/issues/4049
-export function createFile(req, res) {
-  Project.findOneAndUpdate(
-    {
-      _id: req.params.project_id,
-      user: req.user._id
-    },
-    {
-      $push: {
-        files: req.body
-      }
-    },
-    {
-      new: true
-    },
-    (err, updatedProject) => {
-      if (err || !updatedProject) {
-        console.log(err);
-        res.status(403).send({
-          success: false,
-          message: 'Project does not exist, or user does not match owner.'
-        });
-        return;
-      }
-      const newFile = updatedProject.files[updatedProject.files.length - 1];
-      updatedProject.files.id(req.body.parentId).children.push(newFile.id);
-      updatedProject.save((innerErr, savedProject) => {
-        if (innerErr) {
-          console.log(innerErr);
-          res.json({ success: false });
-          return;
+export async function createFile(req, res) {
+  try {
+    const updatedProject = await Project.findOneAndUpdate(
+      {
+        _id: req.params.project_id,
+        user: req.user._id
+      },
+      {
+        $push: {
+          files: req.body
         }
-        savedProject.populate(
-          { path: 'user', select: 'username' },
-          (_, populatedProject) => {
-            res.json({
-              updatedFile:
-                updatedProject.files[updatedProject.files.length - 1],
-              project: populatedProject
-            });
-          }
-        );
+      },
+      {
+        new: true
+      }
+    ).exec();
+
+    if (!updatedProject) {
+      return res.status(403).send({
+        success: false,
+        message: 'Project does not exist, or user does not match owner.'
       });
     }
-  );
+
+    const newFile = updatedProject.files[updatedProject.files.length - 1];
+    updatedProject.files.id(req.body.parentId).children.push(newFile.id);
+
+    const savedProject = await updatedProject.save();
+    const populatedProject = await savedProject.populate({
+      path: 'user',
+      select: 'username'
+    });
+
+    return res.json({
+      updatedFile: newFile,
+      project: populatedProject
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ success: false });
+  }
 }
 
 function getAllDescendantIds(files, nodeId) {
@@ -82,7 +79,7 @@ function deleteMany(files, ids) {
           objectKeys.push(objectKey);
         }
       }
-      files.id(id).remove();
+      files.id(id).deleteOne();
       cb();
     },
     (err) => {
@@ -102,58 +99,71 @@ function deleteChild(files, parentId, id) {
 }
 
 export function deleteFile(req, res) {
-  Project.findById(req.params.project_id, (err, project) => {
-    if (!project) {
-      res
-        .status(404)
-        .send({ success: false, message: 'Project does not exist.' });
-    }
-    if (!project.user.equals(req.user._id)) {
-      res.status(403).send({
-        success: false,
-        message: 'Session does not match owner of project.'
+  Project.findById(req.params.project_id)
+    .then((project) => {
+      if (!project) {
+        return res.status(404).send({
+          success: false,
+          message: 'Project does not exist.'
+        });
+      }
+
+      if (!project.user.equals(req.user._id)) {
+        return res.status(403).send({
+          success: false,
+          message: 'Session does not match owner of project.'
+        });
+      }
+
+      const fileToDelete = project.files.find(
+        (file) => file.id === req.params.file_id
+      );
+
+      if (!fileToDelete) {
+        return res.status(404).send({
+          success: false,
+          message: 'File does not exist in project.'
+        });
+      }
+
+      const idsToDelete = getAllDescendantIds(
+        project.files,
+        req.params.file_id
+      );
+      deleteMany(project.files, [req.params.file_id, ...idsToDelete]);
+
+      project.files = deleteChild(
+        project.files,
+        req.query.parentId,
+        req.params.file_id
+      );
+
+      return project.save().then((savedProject) => {
+        res.json({ project: savedProject });
       });
-      return;
-    }
-
-    // make sure file exists for project
-    const fileToDelete = project.files.find(
-      (file) => file.id === req.params.file_id
-    );
-    if (!fileToDelete) {
-      res
-        .status(404)
-        .send({ success: false, message: 'File does not exist in project.' });
-      return;
-    }
-
-    const idsToDelete = getAllDescendantIds(project.files, req.params.file_id);
-    deleteMany(project.files, [req.params.file_id, ...idsToDelete]);
-    project.files = deleteChild(
-      project.files,
-      req.query.parentId,
-      req.params.file_id
-    );
-    project.save((innerErr, savedProject) => {
-      res.json({ project: savedProject });
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(500).json({ message: 'Failed to process deletion' });
     });
-  });
 }
 
 export function getFileContent(req, res) {
   const projectId = req.params.project_id;
-  Project.findOne(
-    { $or: [{ _id: projectId }, { slug: projectId }] },
-    (err, project) => {
-      if (err || project === null) {
+
+  Project.findOne({ $or: [{ _id: projectId }, { slug: projectId }] })
+    .then((project) => {
+      if (!project) {
         res.status(404).send({
           success: false,
           message: 'Project with that id does not exist.'
         });
         return;
       }
+
       const filePath = req.params[0];
       const resolvedFile = resolvePathToFile(filePath, project.files);
+
       if (!resolvedFile) {
         res.status(404).send({
           success: false,
@@ -161,10 +171,16 @@ export function getFileContent(req, res) {
         });
         return;
       }
+
       const contentType =
         mime.getType(resolvedFile.name) || 'application/octet-stream';
       res.set('Content-Type', contentType);
       res.send(resolvedFile.content);
-    }
-  );
+    })
+    .catch((err) => {
+      console.error(err);
+      res
+        .status(500)
+        .send({ success: false, message: 'Internal server error' });
+    });
 }

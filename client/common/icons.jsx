@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { prop } from '../theme';
 import SortArrowUp from '../images/sort-arrow-up.svg';
 import SortArrowDown from '../images/sort-arrow-down.svg';
 import Github from '../images/github.svg';
@@ -25,6 +24,7 @@ import CircleInfo from '../images/circle-info.svg';
 import Add from '../images/add.svg';
 import Filter from '../images/filter.svg';
 import Cross from '../images/cross.svg';
+import Copy from '../images/copy.svg';
 
 // HOC that adds the right web accessibility props
 // https://www.scottohara.me/blog/2019/05/22/contextual-images-svgs-and-a11y.html
@@ -34,20 +34,20 @@ import Cross from '../images/cross.svg';
 function withLabel(SvgComponent) {
   const StyledIcon = styled(SvgComponent)`
     &&& {
-      color: ${prop('Icon.default')};
+      color: ${(props) => props.Icon?.default};
       & g,
       & path,
       & polygon {
         opacity: 1;
-        fill: ${prop('Icon.default')};
+        fill: ${(props) => props.Icon?.default};
       }
       &:hover {
-        color: ${prop('Icon.hover')};
+        color: ${(props) => props.Icon?.hover};
         & g,
         & path,
         & polygon {
           opacity: 1;
-          fill: ${prop('Icon.hover')};
+          fill: ${(props) => props.Icon?.hover};
         }
       }
     }
@@ -102,3 +102,4 @@ export const CircleFolderIcon = withLabel(CircleFolder);
 export const CircleInfoIcon = withLabel(CircleInfo);
 export const AddIcon = withLabel(Add);
 export const FilterIcon = withLabel(Filter);
+export const CopyIcon = withLabel(Copy);
