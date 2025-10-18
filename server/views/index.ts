@@ -99,13 +99,15 @@ export function renderProjectIndex(username: string, projectName: string) {
       <meta property="og:title" content="${projectName} by ${username} - p5.js Web Editor" />
       <meta property="og:description" content="A web editor for p5.js, a JavaScript library with the goal of making coding accessible to artists, designers, educators, and beginners." />
       <meta property="og:image" content="https://editor.p5js.org/p5js-square-logo.png" />
-      <meta property="og:url" content="https://editor.p5js.org/${username}/${projectName}" />
+      <meta property="og:url" content="https://editor.p5js.org/${encodeURIComponent(
+        username
+      )}/${encodeURIComponent(projectName)}" />
       <meta property="og:type" content="website" />
       <meta name="twitter:card" content="summary" />
       <meta name="twitter:title" content="${projectName} by ${username} - p5.js Web Editor" />
       <meta name="twitter:description" content="A web editor for p5.js, a JavaScript library with the goal of making coding accessible to artists, designers, educators, and beginners." />
       <meta name="twitter:image" content="https://editor.p5js.org/p5js-square-logo.png" />
-      <title>${`${projectName} by ${username} -`}p5.js Web Editor</title>
+      <title>${projectName} by ${username} - p5.js Web Editor</title>
       ${
         process.env.NODE_ENV === 'production'
           ? `<link rel='stylesheet' href='${assetsManifest['/app.css']}' />`
