@@ -1,5 +1,6 @@
 import { initialState as initialFilesState } from '../modules/IDE/reducers/files';
 import { initialState as initialPrefState } from '../modules/IDE/reducers/preferences';
+import { RootState } from '../reducers';
 
 const mockProjects = [
   {
@@ -22,7 +23,7 @@ const mockProjects = [
   }
 ];
 
-const initialTestState = {
+const initialTestState: RootState = {
   ide: {
     isPlaying: false,
     isAccessibleOutputPlaying: false,

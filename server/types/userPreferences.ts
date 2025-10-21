@@ -1,3 +1,5 @@
+import { Error } from './express';
+
 export enum AppThemeOptions {
   LIGHT = 'light',
   DARK = 'dark',
@@ -25,4 +27,18 @@ export enum CookieConsentOptions {
   NONE = 'none',
   ESSENTIAL = 'essential',
   ALL = 'all'
+}
+
+// -------- API --------
+/** user.controller.updatePreferences - Request */
+export interface UpdatePreferencesRequestBody {
+  preferences: Partial<UserPreferences>;
+}
+
+/** userController.updatePreferences - Response */
+export type UpdatePreferencesResponseBody = UserPreferences | Error;
+
+/** user.controller.updateCookieConsent - Request */
+export interface UpdateCookieConsentRequestBody {
+  cookieConsent: CookieConsentOptions;
 }

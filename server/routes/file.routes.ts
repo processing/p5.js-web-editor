@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import * as FileController from '../controllers/file.controller';
-import isAuthenticated from '../utils/isAuthenticated';
+import { isAuthenticated } from '../middleware/isAuthenticated';
 
 const router = Router();
 

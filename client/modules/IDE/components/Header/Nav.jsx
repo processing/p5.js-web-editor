@@ -287,7 +287,7 @@ const ProjectMenu = () => {
           {t('Nav.Help.Reference')}
         </MenubarItem>
         <MenubarItem id="help-about" href="/about">
-          {t('Nav.Help.About')}
+          {t('About.Title')}
         </MenubarItem>
         <MenubarItem
           id="help-report-bug"

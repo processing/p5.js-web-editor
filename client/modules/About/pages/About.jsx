@@ -95,7 +95,7 @@ const About = () => {
         ))}
 
         <Contact>
-          <h2>{t('Contact')}</h2>
+          <h2>{t('About.Contact')}</h2>
           <div>
             <ContactTitle>{t('About.Email')}</ContactTitle>
             <ContactHandles>

@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import * as CollectionController from '../controllers/collection.controller';
-import isAuthenticated from '../utils/isAuthenticated';
+import { isAuthenticated } from '../middleware/isAuthenticated';
 
 const router = Router();
 

@@ -1,8 +1,30 @@
 import i18next from 'i18next';
+import { UpdatePreferencesRequestBody } from '../../../../common/types';
 import { apiClient } from '../../../utils/apiClient';
 import * as ActionTypes from '../../../constants';
+import type {
+  UpdatePreferencesDispatch,
+  SetPreferencesTabValue,
+  SetFontSizeValue,
+  GetRootState,
+  SetLineNumbersValue,
+  SetAutocloseBracketsQuotesValue,
+  SetAutocompleteHinterValue,
+  SetAutosaveValue,
+  SetLinewrapValue,
+  SetLintWarningValue,
+  SetTextOutputValue,
+  SetAllAccessibleOutputValue,
+  SetAutorefreshValue,
+  SetGridOutputValue,
+  SetLanguageValue,
+  SetThemeValue
+} from './preferences.types';
 
-function updatePreferences(formParams, dispatch) {
+function updatePreferences(
+  formParams: UpdatePreferencesRequestBody,
+  dispatch: UpdatePreferencesDispatch
+) {
   apiClient
     .put('/preferences', formParams)
     .then(() => {})
@@ -14,15 +36,15 @@ function updatePreferences(formParams, dispatch) {
     });
 }
 
-export function setPreferencesTab(value) {
+export function setPreferencesTab(value: SetPreferencesTabValue) {
   return {
     type: ActionTypes.SET_PREFERENCES_TAB,
     value
   };
 }
 
-export function setFontSize(value) {
-  return (dispatch, getState) => {
+export function setFontSize(value: SetFontSizeValue) {
+  return (dispatch: UpdatePreferencesDispatch, getState: GetRootState) => {
     // eslint-disable-line
     dispatch({
       type: ActionTypes.SET_FONT_SIZE,
@@ -40,8 +62,8 @@ export function setFontSize(value) {
   };
 }
 
-export function setLineNumbers(value) {
-  return (dispatch, getState) => {
+export function setLineNumbers(value: SetLineNumbersValue) {
+  return (dispatch: UpdatePreferencesDispatch, getState: GetRootState) => {
     dispatch({
       type: ActionTypes.SET_LINE_NUMBERS,
       value
@@ -58,8 +80,10 @@ export function setLineNumbers(value) {
   };
 }
 
-export function setAutocloseBracketsQuotes(value) {
-  return (dispatch, getState) => {
+export function setAutocloseBracketsQuotes(
+  value: SetAutocloseBracketsQuotesValue
+) {
+  return (dispatch: UpdatePreferencesDispatch, getState: GetRootState) => {
     dispatch({
       type: ActionTypes.SET_AUTOCLOSE_BRACKETS_QUOTES,
       value
@@ -76,8 +100,8 @@ export function setAutocloseBracketsQuotes(value) {
   };
 }
 
-export function setAutocompleteHinter(value) {
-  return (dispatch, getState) => {
+export function setAutocompleteHinter(value: SetAutocompleteHinterValue) {
+  return (dispatch: UpdatePreferencesDispatch, getState: GetRootState) => {
     dispatch({
       type: ActionTypes.SET_AUTOCOMPLETE_HINTER,
       value
@@ -94,8 +118,8 @@ export function setAutocompleteHinter(value) {
   };
 }
 
-export function setAutosave(value) {
-  return (dispatch, getState) => {
+export function setAutosave(value: SetAutosaveValue) {
+  return (dispatch: UpdatePreferencesDispatch, getState: GetRootState) => {
     dispatch({
       type: ActionTypes.SET_AUTOSAVE,
       value
@@ -112,8 +136,8 @@ export function setAutosave(value) {
   };
 }
 
-export function setLinewrap(value) {
-  return (dispatch, getState) => {
+export function setLinewrap(value: SetLinewrapValue) {
+  return (dispatch: UpdatePreferencesDispatch, getState: GetRootState) => {
     dispatch({
       type: ActionTypes.SET_LINEWRAP,
       value
@@ -130,8 +154,8 @@ export function setLinewrap(value) {
   };
 }
 
-export function setLintWarning(value) {
-  return (dispatch, getState) => {
+export function setLintWarning(value: SetLintWarningValue) {
+  return (dispatch: UpdatePreferencesDispatch, getState: GetRootState) => {
     dispatch({
       type: ActionTypes.SET_LINT_WARNING,
       value
@@ -148,8 +172,8 @@ export function setLintWarning(value) {
   };
 }
 
-export function setTextOutput(value) {
-  return (dispatch, getState) => {
+export function setTextOutput(value: SetTextOutputValue) {
+  return (dispatch: UpdatePreferencesDispatch, getState: GetRootState) => {
     dispatch({
       type: ActionTypes.SET_TEXT_OUTPUT,
       value
@@ -166,8 +190,8 @@ export function setTextOutput(value) {
   };
 }
 
-export function setGridOutput(value) {
-  return (dispatch, getState) => {
+export function setGridOutput(value: SetGridOutputValue) {
+  return (dispatch: UpdatePreferencesDispatch, getState: GetRootState) => {
     dispatch({
       type: ActionTypes.SET_GRID_OUTPUT,
       value
@@ -184,12 +208,8 @@ export function setGridOutput(value) {
   };
 }
 
-export function setTheme(value) {
-  // return {
-  //   type: ActionTypes.SET_THEME,
-  //   value
-  // };
-  return (dispatch, getState) => {
+export function setTheme(value: SetThemeValue) {
+  return (dispatch: UpdatePreferencesDispatch, getState: GetRootState) => {
     dispatch({
       type: ActionTypes.SET_THEME,
       value
@@ -206,12 +226,8 @@ export function setTheme(value) {
   };
 }
 
-export function setAutorefresh(value) {
-  // return {
-  //   type: ActionTypes.SET_AUTOREFRESH,
-  //   value
-  // };
-  return (dispatch, getState) => {
+export function setAutorefresh(value: SetAutorefreshValue) {
+  return (dispatch: UpdatePreferencesDispatch, getState: GetRootState) => {
     dispatch({
       type: ActionTypes.SET_AUTOREFRESH,
       value
@@ -228,15 +244,18 @@ export function setAutorefresh(value) {
   };
 }
 
-export function setAllAccessibleOutput(value) {
-  return (dispatch) => {
+export function setAllAccessibleOutput(value: SetAllAccessibleOutputValue) {
+  return (dispatch: UpdatePreferencesDispatch, getState: GetRootState) => {
     dispatch(setTextOutput(value));
     dispatch(setGridOutput(value));
   };
 }
 
-export function setLanguage(value, { persistPreference = true } = {}) {
-  return (dispatch, getState) => {
+export function setLanguage(
+  value: SetLanguageValue,
+  { persistPreference = true } = {}
+) {
+  return (dispatch: UpdatePreferencesDispatch, getState: GetRootState) => {
     i18next.changeLanguage(value);
     dispatch({
       type: ActionTypes.SET_LANGUAGE,
