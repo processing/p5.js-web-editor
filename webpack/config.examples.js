@@ -22,7 +22,7 @@ module.exports = [
     module: {
       rules: [
         {
-          test: /\.js$/,
+          test: /\.[jt]s$/,
           exclude: /node_modules/,
           loader: 'babel-loader',
           options: {

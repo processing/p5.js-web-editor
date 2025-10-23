@@ -38,7 +38,8 @@ module.exports = {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
     modules: ['client', 'server', 'node_modules'],
     fallback: {
-      os: require.resolve('os-browserify/browser')
+      os: require.resolve('os-browserify/browser'),
+      assert: require.resolve('assert/')
     }
   },
   module: {
