@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import listenerMiddleware from './middleware';
 import DevTools from './modules/App/components/DevTools';
 import rootReducer from './reducers';
+import type { RootState } from './reducers';
 import { clearState, loadState } from './persistState';
 import { getConfig } from './utils/getConfig';
 
@@ -15,7 +16,7 @@ export function showReduxDevTools() {
   );
 }
 
-export default function setupStore(initialState) {
+export function setupStore(initialState: RootState) {
   const savedState = loadState();
   clearState();
 

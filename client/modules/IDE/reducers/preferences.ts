@@ -1,7 +1,17 @@
+import {
+  UserPreferences as Preferences,
+  AppThemeOptions
+} from '../../../../common/types';
 import * as ActionTypes from '../../../constants';
 import i18n from '../../../i18n';
+import type { PreferencesAction } from '../actions/preferences.types';
 
-export const initialState = {
+export interface PreferencesState
+  extends Omit<Preferences, 'indentationAmount' | 'isTabIndent'> {
+  tabIndex: number;
+}
+
+export const initialState: PreferencesState = {
   tabIndex: 0,
   fontSize: 18,
   autosave: true,
@@ -10,14 +20,17 @@ export const initialState = {
   lintWarning: false,
   textOutput: false,
   gridOutput: false,
-  theme: 'light',
+  theme: AppThemeOptions.LIGHT,
   autorefresh: false,
   language: i18n.language,
   autocloseBracketsQuotes: true,
   autocompleteHinter: false
 };
 
-const preferences = (state = initialState, action) => {
+export const preferences = (
+  state: PreferencesState = initialState,
+  action: PreferencesAction
+) => {
   switch (action.type) {
     case ActionTypes.OPEN_PREFERENCES:
       return Object.assign({}, state, { tabIndex: 0 });
@@ -57,5 +70,3 @@ const preferences = (state = initialState, action) => {
       return state;
   }
 };
-
-export default preferences;

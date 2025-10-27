@@ -1,5 +1,6 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import passport from 'passport';
+import { UserDocument } from '../types';
 
 const router = Router();
 
@@ -11,7 +12,7 @@ const authenticateOAuth = (service: string) => (
   passport.authenticate(
     service,
     { failureRedirect: '/login' },
-    (err: any, user: any) => {
+    (err: unknown, user: UserDocument) => {
       if (err) {
         // use query string param to show error;
         res.redirect(`/account?error=${service}`);

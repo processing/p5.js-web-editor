@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import files from './modules/IDE/reducers/files';
 import ide from './modules/IDE/reducers/ide';
-import preferences from './modules/IDE/reducers/preferences';
+import { preferences } from './modules/IDE/reducers/preferences';
 import project from './modules/IDE/reducers/project';
 import editorAccessibility from './modules/IDE/reducers/editorAccessibility';
 import user from './modules/User/reducers';
@@ -31,4 +31,8 @@ const rootReducer = combineReducers({
   collections
 });
 
+// Type for entire redux state
+export type RootState = ReturnType<typeof rootReducer>;
+
+// eslint-disable-next-line import/no-default-export
 export default rootReducer;

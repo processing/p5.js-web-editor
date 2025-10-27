@@ -213,6 +213,7 @@
     "@redux-devtools/dock-monitor": "^3.0.1",
     "@redux-devtools/log-monitor": "^4.0.2",
     "@reduxjs/toolkit": "^1.9.3",
+    "@types/express": "^5.0.3",
     "acorn": "^8.14.1",
     "acorn-walk": "^8.3.4",
     "async": "^3.2.3",
