@@ -262,7 +262,7 @@
     "mjml": "^4.14.1",
     "mongodb-memory-server": "^10.2.1",
     "mongoose": "^8.16.3",
-    "nodemailer": "^6.7.3",
+    "nodemailer": "^7.0.7",
     "nodemailer-mailgun-transport": "^2.1.5",
     "passport": "^0.6.0",
     "passport-github2": "^0.1.12",
