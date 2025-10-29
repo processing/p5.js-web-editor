@@ -309,7 +309,7 @@
     "CurrentPasswordARIA": "当前密码",
     "NewPassword": "新密码",
     "NewPasswordARIA": "新密码",
-    "SubmitSaveAllSettings": "保存所有设置"
+    "": "保存所有设置"
   },
   "AccountView": {
     "SocialLogin": "第三方登陆",

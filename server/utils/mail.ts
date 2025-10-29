@@ -3,7 +3,7 @@ import mg from 'nodemailer-mailgun-transport';
 import { RenderedMailerData } from '../types/email';
 
 if (!process.env.MAILGUN_KEY) {
-  throw new Error('Mailgun key missing');
+  console.warn("Mailgun key missing - email features disabled");
 }
 
 const auth = {

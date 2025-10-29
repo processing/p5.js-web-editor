@@ -27,6 +27,9 @@
       "Title": "Ayuda",
       "KeyboardShortcuts": "Atajos",
       "Reference": "Referencia",
+      "ReportBug": "Reportar un error",
+      "ChatOnDiscord": "Chatear en Discord",
+      "PostOnTheForum": "Publicar en el Foro",
       "About": "Acerca de"
     },
     "Lang": "Lenguaje",
@@ -67,10 +70,13 @@
     "UsernameOrEmailARIA": "Introduce Correo o Identificación",
     "Password": "Contraseña",
     "PasswordARIA": "Contraseña",
-    "Submit": "Ingresa"
+    "Submit": "Ingresa",
+    "Errors": {
+      "invalidCredentials": "Correo o contraseña inválidos."
+    }
   },
   "LoginView": {
-    "Title": " Editor Web p5.js  | Ingreso",
+    "Title": "Editor Web p5.js | Ingreso",
     "Login": "Ingresa",
     "LoginOr": "o",
     "SignUp": "Registráte",
@@ -89,22 +95,48 @@
   "About": {
     "Title": "Acerca de",
     "TitleHelmet": "Editor Web p5.js | Acerca de",
+    "Headline": "Crea, comparte y remezcla bosquejos de p5.js con el Editor de p5.js.",
     "Contribute": "Contribuir",
+    "IntroDescription1": "p5.js es una biblioteca de JavaScript gratuita y de código abierto para aprender a programar y crear arte. Usando el Editor de p5.js, puedes crear, compartir y remezclar bosquejos de p5.js sin necesidad de descargar o configurar nada.",
+    "IntroDescription2": "Creemos que el software y las herramientas para aprenderlo deben ser lo más abiertos e inclusivos posible. Puedes apoyar este trabajo haciendo una donación a la Processing Foundation, la organización que respalda p5.js. Tu donación apoya el desarrollo de software para p5.js, recursos educativos como ejemplos de código y tutoriales, becas y eventos comunitarios.",
+    "Donate": "Donar",
     "NewP5": "¿Empezando con p5.js?",
     "Report": "Reporta un error",
     "Learn": "Aprender",
-    "Twitter": "Twitter",
-    "Home": "Inicio",
+    "X": "X",
+    "Home": "Inicio p5.js",
     "Instagram": "Instagram",
     "Discord": "Discord",
+    "DiscordCTA": "Únete a Discord",
+    "Youtube": "Youtube",
+    "Github": "Github",
+    "GetInvolved": "Involúcrate",
     "WebEditor": "Editor web",
     "Resources": "Recursos",
+    "Reference": "Referencia",
     "Libraries": "Bibliotecas",
     "Forum": "Foro",
+    "ForumCTA": "Únete al Foro",
     "Examples": "Ejemplos",
     "PrivacyPolicy": "Política de privacidad",
     "TermsOfUse": "Términos de uso",
-    "CodeOfConduct": "Código de conducta"
+    "CodeOfConduct": "Código de conducta",
+    "Email": "Correo",
+    "EmailAddress": "hello@p5js.org",
+    "Socials": "Redes sociales",
+    "LinkDescriptions": {
+      "Home": "Aprende más sobre p5.js y nuestra comunidad.",
+      "Examples": "Explora las posibilidades de p5.js con ejemplos cortos.",
+      "CodeOfConduct": "Lee nuestra Declaración Comunitaria y Código de Conducta.",
+      "Libraries": "Expande las posibilidades de p5.js con bibliotecas creadas por la comunidad.",
+      "Reference": "Encuentra explicaciones fáciles para cada pieza de código de p5.js.",
+      "Donate": "Apoya este trabajo con una donación a la Processing Foundation.",
+      "Contribute": "Contribuye al Editor de p5.js de código abierto en Github.",
+      "Report": "Reporta comportamientos rotos o incorrectos con el Editor de p5.js.",
+      "Forum": "Haz preguntas, comparte bosquejos y obtén ayuda de la comunidad de p5.js.",
+      "Discord": "Chatea con la comunidad de p5.js y obtén ayuda rápida."
+    },
+    "Contact": "Contáctanos"
   },
   "Toast": {
     "OpenedNewSketch": "Abriste un nuevo bosquejo.",
@@ -112,7 +144,12 @@
     "SketchFailedSave": "Fallo al guardar el bosquejo.",
     "AutosaveEnabled": "Grabado automático activado.",
     "LangChange": "Lenguaje cambiado",
-    "SettingsSaved": "Configuración guardada."
+    "SettingsSaved": "Configuración guardada.",
+    "EmptyCurrentPass": "El campo de contraseña actual está vacío",
+    "IncorrectCurrentPass": "La contraseña actual es incorrecta",
+    "DefaultError": "Algo salió mal",
+    "UserNotFound": "Usuario no encontrado",
+    "NetworkError": "Error de red"
   },
   "Toolbar": {
     "Preview": "Vista previa",
@@ -123,7 +160,10 @@
     "StopSketchARIA": "Detener bosquejo",
     "EditSketchARIA": "Editar nombre de bosquejo",
     "NewSketchNameARIA": "Nuevo nombre de bosquejo",
-    "By": " de "
+    "By": " de ",
+    "CustomLibraryVersion": "Versión personalizada de p5.js",
+    "VersionPickerARIA": "Selector de versión",
+    "NewVersionPickerARIA": "Selector de versión"
   },
   "Console": {
     "Title": "Consola",
@@ -151,14 +191,19 @@
     "DecreaseFontARIA": "Disminuir tamaño del texto",
     "IncreaseFont": "Aumentar",
     "IncreaseFontARIA": "Aumentar tamaño del texto",
+    "FontSize": "Tamaño de fuente",
+    "SetFontSize": "establecer tamaño de fuente",
     "Autosave": "Grabar automáticamente",
     "On": "Activar",
     "AutosaveOnARIA": "Grabado automático activado",
+    "Off": "Desactivar",
+    "AutosaveOffARIA": "Grabado automático desactivado",
     "AutocloseBracketsQuotes": "Cerrar automáticamente llaves y comillas",
     "AutocloseBracketsQuotesOnARIA": "Activar cierre automático de llaves y comillas",
     "AutocloseBracketsQuotesOffARIA": "Desactivar cierre automático de llaves y comillas",
-    "Off": "Desactivar",
-    "AutosaveOffARIA": "Grabado automático desactivado",
+    "AutocompleteHinter": "Sugerencia de autocompletado",
+    "AutocompleteHinterOnARIA": "sugerencia de autocompletado activada",
+    "AutocompleteHinterOffARIA": "sugerencia de autocompletado desactivada",
     "WordWrap": "Ajuste automático de línea",
     "WordWrapOnARIA": "Ajuste automático de línea activado",
     "WordWrapOffARIA": "Ajuste automático de línea desactivado",
@@ -176,12 +221,20 @@
     "TextOutputARIA": "Salida de texto activado",
     "TableText": "Tablero de texto",
     "TableOutputARIA": "Salida de tablero activado",
-    "LibraryVersion": "p5.js Versión",
-    "LibraryVersionInfo": "Aquí hay una [nueva versión 2.0](https://github.com/processing/p5.js/releases/) ¡Ya está disponible la versión p5.js! Se convertirá en la predeterminada en agosto de 2026, así que aprovecha este tiempo para probarla y reportar errores. ¿Te interesa migrar tus bocetos de la versión 1.x a la 2.0? Mira el [recursos de compatibilidad y transición.](https://github.com/processing/p5.js-compatibility)",
-    "SoundAddon": "p5.sound.js Add-on Biblioteca",
-    "PreloadAddon": "p5.js 1.x Compatibility Add-on Biblioteca — Precarga",
-    "ShapesAddon": "p5.js 1.x Compatibility Add-on Biblioteca — formas",
-    "DataAddon": "p5.js 1.x Compatibility Add-on Biblioteca — Estructuras de datos"
+    "LibraryVersion": "Versión p5.js",
+    "LibraryVersionInfo": "¡Hay un [nuevo lanzamiento 2.0](https://github.com/processing/p5.js/releases/) de p5.js disponible! Se convertirá en predeterminado en agosto de 2026, así que aprovecha este tiempo para probarlo y reportar errores. ¿Te interesa migrar tus bocetos de 1.x a 2.0? Consulta los [recursos de compatibilidad y transición.](https://github.com/processing/p5.js-compatibility)",
+    "CustomVersionTitle": "¿Gestionando tus propias bibliotecas? ¡Genial!",
+    "CustomVersionInfo": "La versión de p5.js está siendo gestionada actualmente en el código de index.html. Esto significa que no se puede ajustar desde esta pestaña.",
+    "CustomVersionReset": "Si deseas usar las bibliotecas predeterminadas, puedes reemplazar las etiquetas de script en index.html con lo siguiente:",
+    "SoundAddon": "Biblioteca adicional p5.sound.js",
+    "PreloadAddon": "Biblioteca de compatibilidad p5.js 1.x — Precarga",
+    "ShapesAddon": "Biblioteca de compatibilidad p5.js 1.x — Formas",
+    "DataAddon": "Biblioteca de compatibilidad p5.js 1.x — Datos y Eventos",
+    "AddonOnARIA": "activado",
+    "AddonOffARIA": "desactivado",
+    "SoundReference": "Ver la referencia para p5.sound compatible con p5.js {{version}}",
+    "CopyToClipboardSuccess": "¡Copiado al portapapeles!",
+    "CopyToClipboardFailure": "No pudimos copiar el texto, intenta seleccionarlo y copiarlo manualmente."
   },
   "KeyboardShortcuts": {
     "Title": " Atajos de teclado",
@@ -198,13 +251,18 @@
       "CommentLine": "Comentar línea de código",
       "FindNextTextMatch": "Encontrar la siguiente ocurrencia de texto",
       "FindPreviousTextMatch": "Encontrar la ocurrencia previa de texto",
-      "CodeEditing": "Editando Código"
+      "CodeEditing": "Editando Código",
+      "ColorPicker": "Mostrar selector de color en línea",
+      "CreateNewFile": "Crear nuevo archivo",
+      "RenameVariable": "Renombrar variable"
     },
+    "General": "General",
     "GeneralSelection": {
       "StartSketch": "Iniciar bosquejo",
       "StopSketch": "Detener bosquejo",
       "TurnOnAccessibleOutput": "Activar salida accesible",
-      "TurnOffAccessibleOutput": "Desactivar salida accesible"
+      "TurnOffAccessibleOutput": "Desactivar salida accesible",
+      "Reference": "Ir a la Referencia para el Elemento Seleccionado en el Sugeridor"
     }
   },
   "Sidebar": {
@@ -275,7 +333,7 @@
   "ResetPasswordView": {
     "Title": "Editor Web p5.js | Regenerar Contraseña",
     "Reset": "Regenerar Contraseña",
-    "Submitted": "Tu correo para regenerar la contraseña debe llegar pronto. Si no lo ves, revisa\n tu carpeta de spam puesto que algunas veces puede terminar ahí.",
+    "Submitted": "Tu correo para regenerar la contraseña debe llegar pronto. Si no lo ves, revisa tu carpeta de spam puesto que algunas veces puede terminar ahí.",
     "Login": "Ingresa",
     "LoginOr": "o",
     "SignUp": "Registráte"
@@ -283,12 +341,13 @@
   "ReduxFormUtils": {
     "errorInvalidEmail": "Por favor introduce un correo electrónico válido",
     "errorEmptyEmail": "Por favor introduce un correo electrónico",
+    "errorEmptyEmailorUserName": "Por favor introduce un correo electrónico o identificación",
     "errorPasswordMismatch": "Las contraseñas deben coincidir",
     "errorEmptyPassword": "Por favor introduce una contraseña",
     "errorShortPassword": "La contraseña debe tener al menos 6 caracteres",
     "errorConfirmPassword": "Por favor confirma una contraseña",
     "errorNewPassword": "Por favor introduce una nueva contraseña o deja la actual contraseña vacía",
-    "errorNewPasswordRepeat":"Your New Password must differ from the current one.",
+    "errorNewPasswordRepeat": "Tu Nueva Contraseña debe ser diferente a la actual.",
     "errorEmptyUsername": "Por favor introduce tu identificación",
     "errorLongUsername": "La identificación debe ser menor a 20 caracteres.",
     "errorValidUsername": "La identificación debe consistir solamente de números, letras, puntos, guiones y guiones bajos."
@@ -313,26 +372,26 @@
     "CurrentPasswordARIA": "Contraseña Actual",
     "NewPassword": "Nueva Contraseña",
     "NewPasswordARIA": "Nueva Contraseña",
-    "SubmitSaveAllSettings": "Guardar Todas Las Configuraciones"
+    "SaveAccountDetails": "Guardar Detalles de la Cuenta"
   },
   "AccountView": {
     "SocialLogin": "Identificacion usando redes sociales",
     "SocialLoginDescription": "Usa tu cuenta de GitHub o Google para acceder al Editor Web de p5.js .",
     "Title": "Editor Web p5.js | Configuración Cuenta",
-    "Settings": "Configuración de la Cuenta",
+    "Settings": "Mi Cuenta",
     "AccountTab": "Cuenta",
     "AccessTokensTab": "Tokens de acceso"
   },
   "APIKeyForm": {
     "ConfirmDelete": "¿Estás seguro que quieres borrar {{key_label}}?",
-    "Summary": " Los Tokens de acceso personal actuan como tu contraseña para permitir\n  a scripts automáticos acceder al  API del Editor. Crea un token por cada script \n que necesite acceso.",
+    "Summary": " Los Tokens de acceso personal actuan como tu contraseña para permitir a scripts automáticos acceder al  API del Editor. Crea un token por cada script que necesite acceso.",
     "CreateToken": "Crear nuevo token",
     "TokenLabel": "¿Para que es este token?",
     "TokenPlaceholder": "¿Para que es este token? p.e. Ejemplo para Importar un Archivo",
     "CreateTokenSubmit": "Crear",
     "NoTokens": "No tienes tokens.",
     "NewTokenTitle": "Tu nuevo token de acceso",
-    "NewTokenInfo": "Asegurate de copiar tu token ahora mismo.\n ¡No podras verlo de nuevo!",
+    "NewTokenInfo": "Asegurate de copiar tu token ahora mismo. ¡No podras verlo de nuevo!",
     "ExistingTokensTitle": "Tokens existentes"
   },
   "APIKeyList": {
@@ -366,7 +425,8 @@
     "Description": "Registráte",
     "Or": "o",
     "AlreadyHave": "¿Ya tienes cuenta? ",
-    "Login": "Ingresa"
+    "Login": "Ingresa",
+    "Warning": "Al registrarte, aceptas los <0>Términos de Uso</0> y la <1>Política de Privacidad</1> del Editor de p5.js."
   },
   "EmailVerificationView": {
     "Title": "Editor Web p5.js | Correo de Verificación",
@@ -374,7 +434,7 @@
     "InvalidTokenNull": "La liga es inválida.",
     "Checking": "Validando token, por favor espera...",
     "Verified": "Concluido, tu correo electrónico ha sido verificado.",
-    "InvalidState": "Algo salió mal."
+    "InvalidState": "Token inválido o expirado."
   },
   "AssetList": {
     "Title": "Editor Web p5.js | Mis recursos",
@@ -384,7 +444,8 @@
     "NoUploadedAssets": "No has subido recursos.",
     "HeaderName": "Nombre",
     "HeaderSize": "Tamaño",
-    "HeaderSketch": "Bosquejo"
+    "HeaderSketch": "Bosquejo",
+    "maximum": "Máximo"
   },
   "Feedback": {
     "Title": "Editor Web p5.js | Retroalimentación",
@@ -403,7 +464,7 @@
   "UploadFileModal": {
     "Title": "Subir Archivo",
     "CloseButtonARIA": "Cerrar diálogo para subir archivo",
-    "SizeLimitError": "Error: No puedes subir archivos. Has alcanzado el limite de tamaño total de {{sizeLimit}}.\n         Si quieres agregar más,por favor remueve alugnos que no estes usando en tus "
+    "SizeLimitError": "Error: No puedes subir archivos. Has alcanzado el limite de tamaño total de {{sizeLimit}}. Si quieres agregar más,por favor remueve alugnos que no estes usando en tus "
   },
   "FileUploader": {
     "DictDefaultMessage": "Deposita los archivos aquí o haz click para usar el navegador de archivos"
@@ -415,22 +476,22 @@
     "SignUp": "Registráte",
     "MessageLoggedOut": "Parece que has salido de tu cuenta. Por favor ",
     "LogIn": "ingresa",
-    "SavedDifferentWindow": " El proyecto que has intentado guardar ha sido guardado desde otra ventana.\n  Por favor refresca la página para ver la versión más actual.",
+    "SavedDifferentWindow": " El proyecto que has intentado guardar ha sido guardado desde otra ventana. Por favor refresca la página para ver la versión más actual.",
     "LinkTitle": "Error Vinculando Cuenta",
     "LinkMessage": "Hubo un problema vinculando tu cuenta de {{serviceauth}} con tu cuenta del Editor Web p5.js. Tu cuenta de {{serviceauth}} había sido vinculada previamente con otra cuenta del Editor Web p5.js."
   },
   "ShareModal": {
-    "Embed": "Incrustar",
+    "Embed": "Incrustar Bosquejo",
     "Present": "Presentar",
-    "Fullscreen": "Pantalla Completa",
-    "Edit": "Editar"
+    "Fullscreen": "Compartir Bosquejo Como Solo Lectura",
+    "Edit": "Compartir Bosquejo y Permitir Edición"
   },
   "CollectionView": {
     "TitleCreate": "Crear colección",
     "TitleDefault": "colección"
   },
   "Collection": {
-    "Title": "p5.js Web Editor | Mis colecciones",
+    "Title": "Editor Web p5.js | Mis colecciones",
     "AnothersTitle": "Editor Web p5.js | Colecciones de {{anotheruser}}",
     "Share": "Compartir",
     "URLLink": "Liga a la Colección",
@@ -454,7 +515,7 @@
     "ButtonLabelDescendingARIA": "Ordenar por {{displayName}} descendente."
   },
   "AddToCollectionList": {
-    "Title": "p5.js Web Editor | Mis colecciones",
+    "Title": "Editor Web p5.js | Mis colecciones",
     "AnothersTitle": "Editor Web p5.js | Colecciones de {{anotheruser}}",
     "Empty": "No hay colecciones"
   },
@@ -480,7 +541,7 @@
     "Assets": "Recursos"
   },
   "CollectionList": {
-    "Title": "p5.js Web Editor | Mis colecciones",
+    "Title": "Editor Web p5.js | Mis colecciones",
     "AnothersTitle": "Editor Web p5.js | Colecciones de {{anotheruser}}",
     "NoCollections": "No hay colecciones.",
     "TableSummary": "la tabla contiene todas las colecciones",
@@ -513,7 +574,7 @@
   },
   "SketchList": {
     "View": "Ver",
-    "Title": "p5.js Web Editor | Mis bosquejos",
+    "Title": "Editor Web p5.js | Mis bosquejos",
     "AnothersTitle": "Editor Web p5.js | Bosquejos de {{anotheruser}}",
     "ToggleLabelARIA": "Alternar Abrir/Cerrar Opciones de Bosquejo",
     "DropdownRename": "Renombrar",
@@ -535,7 +596,7 @@
     "NoSketches": "No hay bosquejos."
   },
   "AddToCollectionSketchList": {
-    "Title": "p5.js Web Editor | Mis bosquejos",
+    "Title": "Editor Web p5.js | Mis bosquejos",
     "AnothersTitle": "Editor Web p5.js | Bosquejos de {{anotheruser}}",
     "NoCollections": "No hay colecciones."
   },
@@ -581,13 +642,16 @@
     "DarkTheme": "Oscuro",
     "HighContrastTheme": "Alto contraste",
     "Autosave": "Grabar automáticamente",
+    "AutocompleteHinter": "Sugerencia de autocompletado",
     "WordWrap": "Ajuste automático de línea",
     "LineNumbers": "Número de línea",
     "LintWarningSound": "Sonido de alarma Lint",
     "UsedScreenReader": "Uso con screen reader",
     "PlainText": "Texto sin formato",
     "TableText": "Tablero de texto",
-    "Sound": "Sonido"
+    "Sound": "Sonido",
+    "Preferences": "Preferencias",
+    "Language": "Lenguaje"
   },
   "PreferenceCreators": {
     "On": "Activar",
@@ -597,12 +661,38 @@
     "Examples": "Ejemplos",
     "Sketches": "Bosquejos",
     "Collections": "Colecciones",
-    "Assets": "Assets",
+    "Assets": "Recursos",
     "MyStuff": "Mis cosas",
     "CreateSketch": "Crear bosquejo",
     "CreateCollection": "Crear colección"
   },
   "Explorer": {
     "Files": "Archivos"
+  },
+  "Cookies": {
+    "Header": "Cookies",
+    "Body": "El Editor de p5.js usa cookies. Algunas son esenciales para la funcionalidad del sitio web y te permiten gestionar una cuenta y preferencias. Otras no son esenciales: se utilizan para análisis y nos permiten aprender más sobre nuestra comunidad. <strong> Nunca vendemos estos datos ni los usamos para publicidad. </strong> Puedes decidir qué cookies deseas permitir y obtener más información en nuestra <0>Política de Privacidad<0>.",
+    "AllowAll": "Permitir Todas",
+    "AllowEssential": "Permitir Esenciales"
+  },
+  "Legal": {
+    "PrivacyPolicy": "Política de Privacidad",
+    "TermsOfUse": "Términos de Uso",
+    "CodeOfConduct": "Código de Conducta"
+  },
+  "SkipLink": {
+    "PlaySketch": "Saltar a Ejecutar Bosquejo"
+  },
+  "Visibility": {
+    "Label": "Visibilidad",
+    "Public": {
+      "Description": "Cualquiera puede ver este bosquejo.",
+      "Label": "Público"
+    },
+    "Private": {
+      "Description": "Solo tú puedes ver este bosquejo.",
+      "Label": "Privado"
+    },
+    "Changed": "'{{projectName}}' ahora es {{newVisibility}}..."
   }
 }

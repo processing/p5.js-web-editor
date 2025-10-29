@@ -27,7 +27,9 @@
       "Title": "Yardım",
       "KeyboardShortcuts": "Klavye Kısayolları",
       "Reference": "Referans",
-      "About": "Hakkında"
+      "ReportBug": "Hata Bildir",
+      "ChatOnDiscord": "Discord'ta Sohbet Et",
+      "PostOnTheForum": "Foruma Gönderi Yap"
     },
     "Lang": "Dil",
     "BackEditor": "Editöre Dön",
@@ -56,7 +58,7 @@
     "ReplacePlaceholder": "Değiştirilecek metin",
     "Regex": "Düzenli ifade",
     "CaseSensitive": "Büyük/Küçük Harf Duyarlı",
-    "WholeWords": "Tüm Kelimeler",
+    "WholeWords": "Tam Kelimeler",
     "Previous": "Önceki",
     "Next": "Sonraki",
     "NoResults": "Sonuç Yok",
@@ -67,7 +69,10 @@
     "UsernameOrEmailARIA": "E-posta veya Kullanıcı Adı",
     "Password": "Parola",
     "PasswordARIA": "Parola",
-    "Submit": "Giriş Yap"
+    "Submit": "Giriş Yap",
+    "Errors": {
+      "invalidCredentials": "Geçersiz e-posta veya parola."
+    }
   },
   "LoginView": {
     "Title": "p5.js Web Editör | Giriş",
@@ -89,22 +94,48 @@
   "About": {
     "Title": "Hakkında",
     "TitleHelmet": "p5.js Web Editör | Hakkında",
+    "Headline": "p5.js Editörü ile p5.js eskizleri oluşturun, paylaşın ve yeniden düzenleyin.",
     "Contribute": "Katkıda Bulun",
+    "IntroDescription1": "p5.js, kod öğrenmek ve sanat yapmak için ücretsiz, açık kaynaklı bir JavaScript kütüphanesidir. p5.js Editörü'nü kullanarak, herhangi bir şey indirmenize veya yapılandırmanıza gerek kalmadan p5.js eskizleri oluşturabilir, paylaşabilir ve yeniden düzenleyebilirsiniz.",
+    "IntroDescription2": "Yazılımın ve onu öğrenme araçlarının mümkün olduğunca açık ve kapsayıcı olması gerektiğine inanıyoruz. p5.js'i destekleyen kuruluş olan Processing Foundation'a bağış yaparak bu çalışmayı destekleyebilirsiniz. Bağışınız, p5.js için yazılım geliştirme, kod örnekleri ve eğitimler gibi eğitim kaynakları, burslar ve topluluk etkinliklerini destekler.",
+    "Donate": "Bağış Yap",
     "NewP5": "p5.js'e yeni misiniz?",
-    "Report": "Bir hata bildir",
+    "Report": "Hata Bildir",
     "Learn": "Öğren",
-    "Twitter": "Twitter",
-    "Home": "Ana Sayfa",
+    "X": "X",
+    "Home": "p5.js Ana Sayfa",
     "Instagram": "Instagram",
     "Discord": "Discord",
+    "DiscordCTA": "Discord'a Katıl",
+    "Youtube": "Youtube",
+    "Github": "Github",
+    "GetInvolved": "Katılın",
     "WebEditor": "Web Editörü",
     "Resources": "Kaynaklar",
+    "Reference": "Referans",
     "Libraries": "Kütüphaneler",
     "Forum": "Forum",
+    "ForumCTA": "Foruma Katıl",
     "Examples": "Örnekler",
     "PrivacyPolicy": "Gizlilik Politikası",
     "TermsOfUse": "Kullanım Şartları",
-    "CodeOfConduct": "Davranış Kuralları"
+    "CodeOfConduct": "Davranış Kuralları",
+    "Email": "E-posta",
+    "EmailAddress": "hello@p5js.org",
+    "Socials": "Sosyal Medya",
+    "LinkDescriptions": {
+      "Home": "p5.js ve topluluğumuz hakkında daha fazla bilgi edinin.",
+      "Examples": "Kısa örneklerle p5.js'in olanaklarını keşfedin.",
+      "CodeOfConduct": "Topluluk Bildirimimizi ve Davranış Kurallarımızı okuyun.",
+      "Libraries": "Topluluk tarafından oluşturulan kütüphanelerle p5.js'in olanaklarını genişletin.",
+      "Reference": "Her p5.js kod parçası için kolay açıklamalar bulun.",
+      "Donate": "Processing Foundation'a bağış yaparak bu çalışmayı destekleyin.",
+      "Contribute": "Github'da açık kaynak p5.js Editörü'ne katkıda bulunun.",
+      "Report": "p5.js Editörü'ndeki bozuk veya yanlış davranışları bildirin.",
+      "Forum": "p5.js topluluğundan sorular sorun, eskizlerinizi paylaşın ve yardım alın.",
+      "Discord": "p5.js topluluğuyla sohbet edin ve hızlı yardım alın."
+    },
+    "Contact": "Bize Ulaşın"
   },
   "Toast": {
     "OpenedNewSketch": "Yeni eskiz açıldı.",
@@ -112,7 +143,12 @@
     "SketchFailedSave": "Eskiz kaydedilemedi.",
     "AutosaveEnabled": "Otomatik kaydetme etkin.",
     "LangChange": "Dil değiştirildi",
-    "SettingsSaved": "Ayarlar kaydedildi."
+    "SettingsSaved": "Ayarlar kaydedildi.",
+    "EmptyCurrentPass": "Mevcut parola alanı boş",
+    "IncorrectCurrentPass": "Mevcut parola yanlış",
+    "DefaultError": "Bir şeyler yanlış gitti",
+    "UserNotFound": "Kullanıcı bulunamadı",
+    "NetworkError": "Ağ hatası"
   },
   "Toolbar": {
     "Preview": "Önizleme",
@@ -123,7 +159,10 @@
     "StopSketchARIA": "Eskizi Durdur",
     "EditSketchARIA": "Eskiz Adını Düzenle",
     "NewSketchNameARIA": "Yeni Eskiz Adı",
-    "By": " tarafından "
+    "By": " tarafından ",
+    "CustomLibraryVersion": "Özel p5.js sürümü",
+    "VersionPickerARIA": "Sürüm seçici",
+    "NewVersionPickerARIA": "Sürüm seçici"
   },
   "Console": {
     "Title": "Konsol",
@@ -138,11 +177,12 @@
     "Settings": "Ayarlar",
     "GeneralSettings": "Genel Ayarlar",
     "Accessibility": "Erişilebilirlik",
+    "LibraryManagement": "Kütüphane Yönetimi",
     "Theme": "Tema",
-    "LightTheme": "Aydınlık",
-    "LightThemeARIA": "Aydınlık tema açık",
-    "DarkTheme": "Karanlık",
-    "DarkThemeARIA": "Karanlık tema açık",
+    "LightTheme": "Açık",
+    "LightThemeARIA": "açık tema açık",
+    "DarkTheme": "Koyu",
+    "DarkThemeARIA": "koyu tema açık",
     "HighContrastTheme": "Yüksek Kontrast",
     "HighContrastThemeARIA": "yüksek kontrast tema açık",
     "TextSize": "Yazı Boyutu",
@@ -160,9 +200,12 @@
     "AutocloseBracketsQuotes": "Parantez ve Tırnakları Otomatik Kapat",
     "AutocloseBracketsQuotesOnARIA": "parantez ve tırnakları otomatik kapatma açık",
     "AutocloseBracketsQuotesOffARIA": "parantez ve tırnakları otomatik kapatma kapalı",
+    "AutocompleteHinter": "Otomatik Tamamlama İpucu",
+    "AutocompleteHinterOnARIA": "otomatik tamamlama ipucu açık",
+    "AutocompleteHinterOffARIA": "otomatik tamamlama ipucu kapalı",
     "WordWrap": "Sözcük Kaydırma",
-    "WordWrapOnARIA": "satır kaydırma açık",
-    "WordWrapOffARIA": "satır kaydırma kapalı",
+    "WordWrapOnARIA": "sözcük kaydırma açık",
+    "WordWrapOffARIA": "sözcük kaydırma kapalı",
     "LineNumbers": "Satır Numaraları",
     "LineNumbersOnARIA": "satır numaraları açık",
     "LineNumbersOffARIA": "satır numaraları kapalı",
@@ -176,7 +219,21 @@
     "PlainText": "Düz Metin",
     "TextOutputARIA": "metin çıktısı açık",
     "TableText": "Tablo Metni",
-    "TableOutputARIA": "tablo çıktısı açık"
+    "TableOutputARIA": "tablo çıktısı açık",
+    "LibraryVersion": "p5.js Sürümü",
+    "LibraryVersionInfo": "p5.js'in [yeni 2.0 sürümü](https://github.com/processing/p5.js/releases/) mevcut! Ağustos 2026'da varsayılan olacak, bu yüzden test etmek ve hataları bildirmek için bu zamanı kullanın. Eskizleri 1.x'ten 2.0'a geçirmekle ilgileniyor musunuz? [Uyumluluk ve geçiş kaynaklarına](https://github.com/processing/p5.js-compatibility) göz atın.",
+    "CustomVersionTitle": "Kendi kütüphanelerinizi mi yönetiyorsunuz? Harika!",
+    "CustomVersionInfo": "p5.js sürümü şu anda index.html kodunda yönetiliyor. Bu, bu sekmeden ayarlanamayacağı anlamına gelir.",
+    "CustomVersionReset": "Varsayılan kütüphaneleri kullanmak isterseniz, index.html'deki script etiketlerini aşağıdakilerle değiştirebilirsiniz:",
+    "SoundAddon": "p5.sound.js Eklenti Kütüphanesi",
+    "PreloadAddon": "p5.js 1.x Uyumluluk Eklenti Kütüphanesi — Ön Yükleme",
+    "ShapesAddon": "p5.js 1.x Uyumluluk Eklenti Kütüphanesi — Şekiller",
+    "DataAddon": "p5.js 1.x Uyumluluk Eklenti Kütüphanesi — Veri ve Etkinlikler",
+    "AddonOnARIA": "açık",
+    "AddonOffARIA": "kapalı",
+    "SoundReference": "p5.js {{version}} ile uyumlu p5.sound referansını görüntüle",
+    "CopyToClipboardSuccess": "Panoya kopyalandı!",
+    "CopyToClipboardFailure": "Metni kopyalayamadık, seçip manuel olarak kopyalamayı deneyin."
   },
   "KeyboardShortcuts": {
     "Title": " Klavye Kısayolları",
@@ -194,23 +251,27 @@
       "FindNextTextMatch": "Sonraki Metin Eşleşmesini Bul",
       "FindPreviousTextMatch": "Önceki Metin Eşleşmesini Bul",
       "CodeEditing": "Kod Düzenleme",
-      "ColorPicker": "Satır İçi Renk Seçiciyi Göster"
+      "ColorPicker": "Satır İçi Renk Seçiciyi Göster",
+      "CreateNewFile": "Yeni Dosya Oluştur",
+      "RenameVariable": "Değişkeni Yeniden Adlandır"
     },
+    "General": "Genel",
     "GeneralSelection": {
       "StartSketch": "Eskizi Başlat",
       "StopSketch": "Eskizi Durdur",
       "TurnOnAccessibleOutput": "Erişilebilir Çıktıyı Aç",
-      "TurnOffAccessibleOutput": "Erişilebilir Çıktıyı Kapat"
+      "TurnOffAccessibleOutput": "Erişilebilir Çıktıyı Kapat",
+      "Reference": "İpucundaki Seçili Öğe için Referansa Git"
     }
   },
   "Sidebar": {
     "Title": "Eskiz Dosyaları",
     "ToggleARIA": "Eskiz dosya seçeneklerini aç/kapat",
-    "AddFolder": "Klasör Oluştur",
+    "AddFolder": "Klasör oluştur",
     "AddFolderARIA": "klasör ekle",
-    "AddFile": "Dosya Oluştur",
+    "AddFile": "Dosya oluştur",
     "AddFileARIA": "dosya ekle",
-    "UploadFile": "Dosya Yükle",
+    "UploadFile": "Dosya yükle",
     "UploadFileARIA": "dosya yükle"
   },
   "FileNode": {
@@ -246,7 +307,7 @@
     "Title": "Dosya Oluştur",
     "CloseButtonARIA": "Yeni Dosya Modalını Kapat",
     "EnterName": "Lütfen bir isim girin",
-    "InvalidType": "Geçersiz dosya türü. Geçerli uzantılar .js, .css, .json, .xml, .txt, .csv, .tsv, .frag ve .vert'tir."
+    "InvalidType": "Geçersiz dosya türü. Geçerli uzantılar .js, .css, .json, .xml, .stl, .txt, .csv, .tsv, .mtl, .frag ve .vert'tir."
   },
   "NewFileForm": {
     "AddFileSubmit": "Dosya Ekle",
@@ -279,12 +340,13 @@
   "ReduxFormUtils": {
     "errorInvalidEmail": "Lütfen geçerli bir e-posta adresi girin",
     "errorEmptyEmail": "Lütfen bir e-posta adresi girin",
+    "errorEmptyEmailorUserName": "Lütfen bir e-posta veya kullanıcı adı girin",
     "errorPasswordMismatch": "Şifreler eşleşmiyor",
     "errorEmptyPassword": "Lütfen bir şifre girin",
     "errorShortPassword": "Şifre en az 6 karakter olmalıdır",
     "errorConfirmPassword": "Lütfen şifrenizi doğrulayın",
     "errorNewPassword": "Lütfen yeni bir şifre girin veya mevcut şifreyi boş bırakın.",
-    "errorNewPasswordRepeat":"Your New Password must differ from the current one.",
+    "errorNewPasswordRepeat": "Yeni Şifreniz mevcut olandan farklı olmalıdır.",
     "errorEmptyUsername": "Lütfen bir kullanıcı adı girin.",
     "errorLongUsername": "Kullanıcı adı 20 karakterden az olmalıdır.",
     "errorValidUsername": "Kullanıcı adı sadece sayılar, harfler, noktalar, tireler ve alt çizgilerden oluşmalıdır."
@@ -309,19 +371,19 @@
     "CurrentPasswordARIA": "Mevcut Şifre",
     "NewPassword": "Yeni Şifre",
     "NewPasswordARIA": "Yeni Şifre",
-    "SubmitSaveAllSettings": "Tüm Ayarları Kaydet"
+    "SaveAccountDetails": "Hesap Ayrıntılarını Kaydet"
   },
   "AccountView": {
     "SocialLogin": "Sosyal Giriş",
     "SocialLoginDescription": "GitHub veya Google hesabınızı kullanarak p5.js Web Düzenleyici'ne giriş yapın.",
     "Title": "p5.js Web Düzenleyici | Hesap Ayarları",
-    "Settings": "Hesap Ayarları",
+    "Settings": "Hesabım",
     "AccountTab": "Hesap",
     "AccessTokensTab": "Erişim Anahtarları"
   },
   "APIKeyForm": {
     "ConfirmDelete": "{{key_label}} silmek istediğinizden emin misiniz?",
-    "Summary": "Kişisel Erişim Anahtarları, otomatik komutların Editör API'sine erişim sağlamak için şifreniz gibi davranır. Her otomatik komut için yeni bir anahtar oluşturun.",
+    "Summary": "Kişisel Erişim Anahtarları, otomatik komut dosyalarının Editör API'sine erişim sağlamak için şifreniz gibi davranır. Erişim gerektiren her komut dosyası için bir anahtar oluşturun.",
     "CreateToken": "Yeni anahtar oluştur",
     "TokenLabel": "Bu anahtar ne için?",
     "TokenPlaceholder": "Bu anahtar ne için? Örn. Örnek içe aktarma betiği",
@@ -363,7 +425,7 @@
     "Or": "Veya",
     "AlreadyHave": "Zaten bir hesabın var mı?",
     "Login": "Giriş yap",
-    "Warning":"Kaydolarak p5.js Editörün Kullanım <0>Koşullarını</0> ve <1>Gizlilik Politikasını</1> kabul etmiş olursunuz."
+    "Warning": "Kaydolarak p5.js Editörün <0>Kullanım Koşullarını</0> ve <1>Gizlilik Politikasını</1> kabul etmiş olursunuz."
   },
   "EmailVerificationView": {
     "Title": "p5.js Web Düzenleyicisi | E-posta Doğrulama",
@@ -371,36 +433,37 @@
     "InvalidTokenNull": "Bağlantı geçersiz.",
     "Checking": "Bağlantı doğrulanıyor, lütfen bekleyin...",
     "Verified": "E-posta adresiniz doğrulandı.",
-    "InvalidState": "Bir şeyler yanlış gitti."
+    "InvalidState": "Bağlantı geçersiz veya süresi dolmuş."
   },
   "AssetList": {
-    "Title": "p5.js Web Düzenleyicisi | Benim varlıklarım",
+    "Title": "p5.js Web Düzenleyicisi | Varlıklarım",
     "ToggleOpenCloseARIA": "Varlık seçeneklerini aç/kapat",
     "Delete": "Sil",
     "OpenNewTab": "Yeni Sekmede Aç",
     "NoUploadedAssets": "Yüklenen varlık yok.",
-    "HeaderName": "Adı",
-    "HeaderSize": "Boyutu",
-    "HeaderSketch": "Eskiz"
+    "HeaderName": "Ad",
+    "HeaderSize": "Boyut",
+    "HeaderSketch": "Eskiz",
+    "maximum": "Maksimum"
   },
   "Feedback": {
     "Title": "p5.js Web Düzenleyicisi | Geri Bildirim",
-    "ViaGithubHeader": "Github Hataları ile",
-    "ViaGithubDescription": "Github'a aşina iseniz, geri bildirimlerinizi ve hata raporlarınızı buradan gönderebilirsiniz.",
+    "ViaGithubHeader": "Github Üzerinden",
+    "ViaGithubDescription": "Eğer Github'a aşina iseniz, hata raporları ve geri bildirimler için tercih ettiğimiz yöntem budur.",
     "GoToGithub": "Github'a Git",
-    "ViaGoogleHeader": "Google Formu ile",
-    "ViaGoogleDescription": "Ayrıca bu hızlı formu doldurarak da geri bildirim gönderebilirsiniz.",
+    "ViaGoogleHeader": "Google Form Üzerinden",
+    "ViaGoogleDescription": "Bu hızlı formu da doldurabilirsiniz.",
     "GoToForm": "Form'a Git"
   },
   "Searchbar": {
-    "SearchSketch": "Eskizleri Ara...",
-    "SearchCollection": "Koleksiyonları Ara...",
-    "ClearTerm": "Temizle"
+    "SearchSketch": "Eskizleri ara...",
+    "SearchCollection": "Koleksiyonları ara...",
+    "ClearTerm": "temizle"
   },
   "UploadFileModal": {
     "Title": "Dosya Yükle",
     "CloseButtonARIA": "Dosya yükleme penceresini kapat",
-    "SizeLimitError": "Hata: Daha fazla dosya yükleyemezsiniz. Toplam boyut sınırına ulaştınız. \n Yüklemek isterseniz, lütfen artık kullanmadıklarınızı kaldırın. \n "
+    "SizeLimitError": "Hata: Daha fazla dosya yükleyemezsiniz. {{sizeLimit}} toplam boyut sınırına ulaştınız.\n Daha fazla yüklemek isterseniz, lütfen artık kullanmadıklarınızı\n "
   },
   "FileUploader": {
     "DictDefaultMessage": "Dosyaları buraya bırakın veya dosya tarayıcısını kullanmak için tıklayın"
@@ -411,47 +474,47 @@
     "LoginOr": " veya ",
     "SignUp": "Kayıt Ol",
     "MessageLoggedOut": "Çıkış yaptığınız görünüyor. Lütfen ",
-    "LogIn": "Giriş Yap",
+    "LogIn": "giriş yapın",
     "SavedDifferentWindow": "Kaydetmeye çalıştığınız proje başka bir pencereden kaydedilmiş.\n Lütfen en son sürümü görmek için sayfayı yenileyin.",
     "LinkTitle": "Hesap Bağlantı Hatası",
     "LinkMessage": "{{serviceauth}} hesabınızı p5.js Web Editor hesabınıza bağlama sorunu yaşandı. {{serviceauth}} hesabınız zaten başka bir p5.js Web Editor hesabına bağlı."
   },
   "ShareModal": {
-    "Embed": "Gömülü",
-    "Present": "Sunum",
-    "Fullscreen": "Tam Ekran",
-    "Edit": "Düzenle"
+    "Embed": "Eskizi Yerleştir",
+    "Present": "Sun",
+    "Fullscreen": "Eskizi Salt Görüntüleme Olarak Paylaş",
+    "Edit": "Eskizi Paylaş ve Düzenlemeye İzin Ver"
   },
   "CollectionView": {
-    "TitleCreate": "Koleksiyon Oluştur",
+    "TitleCreate": "Koleksiyon oluştur",
     "TitleDefault": "koleksiyon"
   },
   "Collection": {
-    "Title": "p5.js Web Editor | Benim koleksiyonlarım",
-    "AnothersTitle": "p5.js Web Editor | {{anotheruser}}'ın koleksiyonları",
+    "Title": "p5.js Web Düzenleyici | Koleksiyonlarım",
+    "AnothersTitle": "p5.js Web Düzenleyici | {{anotheruser}}'ın koleksiyonları",
     "Share": "Paylaş",
-    "URLLink": "Koleksiyonun bağlantısı",
-    "AddSketch": "Eskiz ekle",
-    "DeleteFromCollection": "{{name_sketch}} eskizini koleksiyondan kaldırmak istediğinizden emin misiniz?",
+    "URLLink": "Koleksiyon Bağlantısı",
+    "AddSketch": "Eskiz Ekle",
+    "DeleteFromCollection": "{{name_sketch}} eskizini bu koleksiyondan kaldırmak istediğinizden emin misiniz?",
     "SketchDeleted": "Eskiz silindi",
-    "SketchRemoveARIA": "Eskiz koleksiyondan kaldır",
+    "SketchRemoveARIA": "Eskizi koleksiyondan kaldır",
     "DescriptionPlaceholder": "Açıklama ekle",
     "Description": "açıklama",
-    "NumSketches": "{{count}} çizim",
-    "NumSketches_plural": "{{count}} çizimler",
-    "By": "Tarafından ",
+    "NumSketches": "{{count}} eskiz",
+    "NumSketches_plural": "{{count}} eskiz",
+    "By": "Koleksiyon sahibi: ",
     "NoSketches": "Koleksiyonda eskiz yok",
     "TableSummary": "tüm koleksiyonları içeren tablo",
-    "HeaderName": "İsim",
+    "HeaderName": "Ad",
     "HeaderCreatedAt": "Eklenme Tarihi",
-    "HeaderUser": "Sahibi",
-    "DirectionAscendingARIA": "Artan sıralama",
-    "DirectionDescendingARIA": "Azalan sıralama",
+    "HeaderUser": "Sahip",
+    "DirectionAscendingARIA": "Artan",
+    "DirectionDescendingARIA": "Azalan",
     "ButtonLabelAscendingARIA": "{{displayName}} artan sıralama.",
     "ButtonLabelDescendingARIA": "{{displayName}} azalan sıralama."
   },
   "AddToCollectionList": {
-    "Title": "p5.js Web Düzenleyicisi | Benim koleksiyonlarım",
+    "Title": "p5.js Web Düzenleyicisi | Koleksiyonlarım",
     "AnothersTitle": "p5.js Web Düzenleyicisi | {{anotheruser}}'ın koleksiyonları",
     "Empty": "Koleksiyon yok"
   },
@@ -477,7 +540,7 @@
     "Assets": "Varlıklar"
   },
   "CollectionList": {
-    "Title": "p5.js Web Düzenleyicisi | Benim koleksiyonlarım",
+    "Title": "p5.js Web Düzenleyicisi | Koleksiyonlarım",
     "AnothersTitle": "p5.js Web Düzenleyicisi | {{anotheruser}}'ın koleksiyonları",
     "NoCollections": "Koleksiyon yok.",
     "TableSummary": "tüm koleksiyonları içeren tablo",
@@ -486,13 +549,13 @@
     "HeaderCreatedAt_mobile": "Oluşturulma",
     "HeaderUpdatedAt": "Güncelleme Tarihi",
     "HeaderUpdatedAt_mobile": "Güncelleme",
-    "HeaderNumItems": "# eskizler",
-    "HeaderNumItems_mobile": "# eskizler",
-    "DirectionAscendingARIA": "Artan sıralama",
-    "DirectionDescendingARIA": "Azalan sıralama",
+    "HeaderNumItems": "# eskiz",
+    "HeaderNumItems_mobile": "# eskiz",
+    "DirectionAscendingARIA": "Artan",
+    "DirectionDescendingARIA": "Azalan",
     "ButtonLabelAscendingARIA": "{{displayName}} artan sıralama.",
     "ButtonLabelDescendingARIA": "{{displayName}} azalan sıralama.",
-    "AddSketch": "Eskiz ekle"
+    "AddSketch": "Eskiz Ekle"
   },
   "CollectionListRow": {
     "ToggleCollectionOptionsARIA": "Koleksiyon seçeneklerini aç/kapat",
@@ -501,7 +564,7 @@
     "Rename": "Yeniden adlandır"
   },
   "Overlay": {
-    "AriaLabel": "{{title}} kapama penceresi"
+    "AriaLabel": "{{title}} penceresini kapat"
   },
   "QuickAddList": {
     "ButtonRemoveARIA": "Koleksiyondan kaldır",
@@ -509,9 +572,9 @@
     "View": "Görüntüle"
   },
   "SketchList": {
-    "View": "Görünüm",
-    "Title": "p5.js Web Editörü | Benim eskizlerim",
-    "AnothersTitle": "p5.js Web Editörü | {{anotheruser}}'in eskizleri",
+    "View": "Görüntüle",
+    "Title": "p5.js Web Editörü | Eskizlerim",
+    "AnothersTitle": "p5.js Web Editörü | {{anotheruser}}'ın eskizleri",
     "ToggleLabelARIA": "Eskiz Seçeneklerini Aç/Kapa",
     "DropdownRename": "Yeniden Adlandır",
     "DropdownDownload": "İndir",
@@ -522,8 +585,8 @@
     "DirectionDescendingARIA": "Azalan",
     "ButtonLabelAscendingARIA": "{{displayName}}'e göre artan sıralama.",
     "ButtonLabelDescendingARIA": "{{displayName}}'e göre azalan sıralama.",
-    "AddToCollectionOverlayTitle": "Koleksiyona Ekle",
-    "TableSummary": "Tüm kaydedilmiş projeleri içeren tablo",
+    "AddToCollectionOverlayTitle": "Koleksiyona ekle",
+    "TableSummary": "tüm kaydedilmiş projeleri içeren tablo",
     "HeaderName": "Eskiz",
     "HeaderCreatedAt": "Oluşturma Tarihi",
     "HeaderCreatedAt_mobile": "Oluşturulma",
@@ -532,19 +595,19 @@
     "NoSketches": "Eskiz yok."
   },
   "AddToCollectionSketchList": {
-    "Title": "p5.js Web Editörü | Benim eskizlerim",
-    "AnothersTitle": "p5.js Web Editörü | {{anotheruser}}'in eskizleri",
+    "Title": "p5.js Web Editörü | Eskizlerim",
+    "AnothersTitle": "p5.js Web Editörü | {{anotheruser}}'ın eskizleri",
     "NoCollections": "Koleksiyon yok."
   },
   "Editor": {
     "OpenSketchARIA": "Eskiz dosyaları gezintisini aç",
     "CloseSketchARIA": "Eskiz dosyaları gezintisini kapat",
     "UnsavedChangesARIA": "Eskiz kaydedilmemiş değişiklikler içeriyor",
-    "KeyUpLineNumber": "{{lineNumber}}. satır"
+    "KeyUpLineNumber": "satır {{lineNumber}}"
   },
   "EditorAccessibility": {
     "NoLintMessages": "Lint mesajı yok",
-    "CurrentLine": "Şu anki satır"
+    "CurrentLine": "Mevcut satır"
   },
   "Timer": {
     "SavedAgo": "Kaydedildi: {{timeAgo}}"
@@ -558,7 +621,7 @@
   },
   "CopyableInput": {
     "CopiedARIA": "Panoya kopyalandı!",
-    "OpenViewTabARIA": "Yeni sekmede {{label}} görünümünü aç"
+    "OpenViewTabARIA": "{{label}} görünümünü yeni sekmede aç"
   },
   "EditableInput": {
     "EditValue": "{{display}} değerini düzenle",
@@ -574,17 +637,20 @@
     "Accessibility": "Erişilebilirlik",
     "AccessibleOutput": "Erişilebilir Çıktı",
     "Theme": "Tema",
-    "LightTheme": "Aydınlık",
-    "DarkTheme": "Karanlık",
+    "LightTheme": "Açık",
+    "DarkTheme": "Koyu",
     "HighContrastTheme": "Yüksek Kontrast",
     "Autosave": "Otomatik Kaydet",
-    "WordWrap": "Satır Kaydırma",
+    "AutocompleteHinter": "Otomatik Tamamlama İpucu",
+    "WordWrap": "Sözcük Kaydırma",
     "LineNumbers": "Satır Numaraları",
-    "LintWarningSound": "Lint Uyarı Sesleri",
+    "LintWarningSound": "Lint Uyarı Sesi",
     "UsedScreenReader": "Ekran Okuyucu ile kullanıldı",
     "PlainText": "Düz Metin",
     "TableText": "Tablo Metni",
-    "Sound": "Ses"
+    "Sound": "Ses",
+    "Preferences": "Tercihler",
+    "Language": "Dil"
   },
   "PreferenceCreators": {
     "On": "Açık",
@@ -595,7 +661,7 @@
     "Sketches": "Eskizler",
     "Collections": "Koleksiyonlar",
     "Assets": "Varlıklar",
-    "MyStuff": "Benim Şeylerim",
+    "MyStuff": "Benim Eşyalarım",
     "CreateSketch": "Eskiz Oluştur",
     "CreateCollection": "Koleksiyon Oluştur"
   },
@@ -606,11 +672,26 @@
     "Header": "Çerezler",
     "Body": "p5.js Editörü çerezleri kullanır. Bazıları web sitesi işlevselliği için önemlidir ve hesabınızı ve tercihlerinizi yönetmenize olanak tanır. Diğerleri önemli değildir - analiz için kullanılırlar ve topluluğumuz hakkında daha fazla bilgi edinmemizi sağlarlar. <strong> Bu verileri asla satmıyoruz veya reklam için kullanmıyoruz. </strong> Hangi çerezlere izin vermek istediğinize karar verebilirsiniz ve <0>Gizlilik Politikamızda<0> daha fazla bilgi edinebilirsiniz.",
     "AllowAll": "Tümüne İzin Ver",
-    "AllowEssential": "Önemli Olanlara İzin Ver"
+    "AllowEssential": "Sadece Gerekli Olanlara İzin Ver"
   },
   "Legal": {
     "PrivacyPolicy": "Gizlilik Politikası",
     "TermsOfUse": "Kullanım Koşulları",
     "CodeOfConduct": "Davranış Kuralları"
+  },
+  "SkipLink": {
+    "PlaySketch": "Eskizi Çalıştır'a Atla"
+  },
+  "Visibility": {
+    "Label": "Görünürlük",
+    "Public": {
+      "Description": "Bu eskizi herkes görebilir.",
+      "Label": "Herkese Açık"
+    },
+    "Private": {
+      "Description": "Bu eskizi sadece siz görebilirsiniz.",
+      "Label": "Gizli"
+    },
+    "Changed": "'{{projectName}}' artık {{newVisibility}}..."
   }
 }

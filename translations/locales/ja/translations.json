@@ -1,613 +1,697 @@
 {
-    "Nav": {
-      "File": {
-        "Title": "ファイル",
-        "New": "新規作成",
-        "Share": "共有",
-        "Duplicate": "別名で保存",
-        "Open": "開く",
-        "Download": "ダウンロード",
-        "AddToCollection": "コレクションへ追加",
-        "Examples": "サンプルを開く"
-      },
-      "Edit": {
-        "Title": "編集",
-        "TidyCode": "コード整形",
-        "Find": "検索",
-        "Replace": "置換"
-      },
-      "Sketch": {
-        "Title": "スケッチ",
-        "AddFile": "ファイルを追加",
-        "AddFolder": "フォルダを追加",
-        "Run": "実行",
-        "Stop": "停止"
-      },
-      "Help": {
-        "Title": "ヘルプ",
-        "KeyboardShortcuts": "キーボードショートカット",
-        "Reference": "リファレンス（英語）",
-        "About": "ウェブエディタについて"
-      },
-      "Lang": "言語",
-      "BackEditor": "エディタに戻る",
-      "WarningUnsavedChanges": "このページを離れてもよろしいですか？未保存の変更があります。",
-      "Login": "ログイン",
-      "LoginOr": "もしくは",
-      "SignUp": "アカウント作成",
-      "Auth": {
-        "Welcome": "ようこそ",
-        "Hello": "こんにちは",
-        "MyAccount": "マイアカウント",
-        "My": "My",
-        "MySketches": "マイスケッチ",
-        "MyCollections": "マイコレクション",
-        "Asset": "アセット",
-        "MyAssets": "マイアセット",
-        "LogOut": "ログアウト"
-      }
-    },
-    "CodemirrorFindAndReplace": {
-      "ToggleReplace": "置換の切り替え",
-      "Find": "検索",
-      "FindPlaceholder": "ファイル内検索",
-      "Replace": "置換",
-      "ReplaceAll": "全て置換",
-      "ReplacePlaceholder": "置換するテキスト",
-      "Regex": "正規表現",
-      "CaseSensitive": "大文字小文字を区別する",
-      "WholeWords": "全単語",
-      "Previous": "前へ",
-      "Next": "次へ",
-      "NoResults": "該当なし",
-      "Close": "閉じる"
-    },
-    "LoginForm": {
-      "UsernameOrEmail": "メールアドレスもしくはユーザー名",
-      "UsernameOrEmailARIA": "メールアドレスもしくはユーザー名",
-      "Password": "パスワード",
-      "PasswordARIA": "パスワード",
-      "Submit": "ログイン"
-    },
-    "LoginView": {
-      "Title": "p5.js ウェブエディタ | ログイン",
-      "Login": "ログイン",
-      "LoginOr": "もしくは",
-      "SignUp": "アカウントを作成してください",
-      "Email": "メールアドレス",
-      "Username": "ユーザー名",
-      "DontHaveAccount": "ユーザー登録してない場合",
-      "ForgotPassword": "パスワードを忘れた場合",
-      "ResetPassword": "パスワードを再設定してください"
-    },
-    "SocialAuthButton": {
-      "Connect": "{{serviceauth}} アカウントへ接続",
-      "Unlink": "{{serviceauth}} アカウントへの接続解除",
-      "Login": "{{serviceauth}} でログイン",
-      "LogoARIA": "{{serviceauth}} ロゴ"
-    },
-    "About": {
-      "Title": "ウェブエディタについて",
-      "TitleHelmet": "p5.js ウェブエディター | ウェブエディタについて",
-      "Contribute": "コントリビュート",
-      "NewP5": "p5.jsは初めてですか?",
-      "Report": "バグレポート",
-      "Learn": "p5.jsを学ぶ",
-      "Twitter": "Twitter",
-      "Home": "ホーム",
-      "Instagram": "Instagram",
-      "Discord": "Discord",
-      "WebEditor": "ウェブエディタ",
-      "Resources": "参考資料",
-      "Libraries": "ライブラリ",
-      "Forum": "フォーラム",
-      "Examples": "サンプルを開く",
-      "PrivacyPolicy": "プライバシーポリシー",
-      "TermsOfUse": "利用規約",
-      "CodeOfConduct": "行動規範"
-    },
-    "Toast": {
-      "OpenedNewSketch": "新しいスケッチを開きました",
-      "SketchSaved": "スケッチを保存しました",
-      "SketchFailedSave": "スケッチの保存に失敗しました",
-      "AutosaveEnabled": "自動保存を有効にしました",
-      "LangChange": "言語を変更しました",
-      "SettingsSaved": "設定を保存しました"
-    },
-    "Toolbar": {
-      "Preview": "プレビュー",
-      "Auto-refresh": "自動更新",
-      "OpenPreferencesARIA": "設定を開く",
-      "PlaySketchARIA": "スケッチを実行",
-      "PlayOnlyVisualSketchARIA": "ビジュアルスケッチのみ実行",
-      "StopSketchARIA": "スケッチを停止",
-      "EditSketchARIA": "スケッチ名を編集",
-      "NewSketchNameARIA": "新しいスケッチ名",
-      "By": " by "
-    },
-    "Console": {
-      "Title": "コンソール",
-      "Clear": "クリア",
-      "ClearARIA": "コンソールをクリア",
-      "Close": "閉じる",
-      "CloseARIA": "コンソールを閉じる",
-      "Open": "開く",
-      "OpenARIA": "コンソールを開く"
-    },
-    "Preferences": {
-      "Settings": "設定",
-      "GeneralSettings": "一般設定",
-      "Accessibility": "アクセシビリティ",
-      "Theme": "テーマ",
-      "LightTheme": "ライト",
-      "LightThemeARIA": "ライトテーマ オン",
-      "DarkTheme": "ダーク",
-      "DarkThemeARIA": "ダークテーマ オン",
-      "HighContrastTheme": "ハイコントラスト",
-      "HighContrastThemeARIA": "ハイコントラストテーマ オン",
-      "TextSize": "フォントサイズ",
-      "DecreaseFont": "小さく",
-      "DecreaseFontARIA": "フォントサイズを小さくする",
-      "IncreaseFont": "大きく",
-      "IncreaseFontARIA": "フォントサイズを大きくする",
-      "Autosave": "自動保存",
-      "On": "オン",
-      "AutosaveOnARIA": "自動保存 オン",
-      "Off": "オフ",
-      "AutosaveOffARIA": "自動保存 オフ",
-      "AutocloseBracketsQuotes": "括弧を自動的に閉じる",
-      "AutocloseBracketsQuotesOnARIA": "括弧を自動的に閉じる オン",
-      "AutocloseBracketsQuotesOffARIA": "括弧を自動的に閉じる オフ",
-      "WordWrap": "ワードラップ",
-      "WordWrapOnARIA": "ラインラップ オン",
-      "WordWrapOffARIA": "ラインラップ オフ",
-      "LineNumbers": "行番号",
-      "LineNumbersOnARIA": "行番号 表示",
-      "LineNumbersOffARIA": "行番号 非表示",
-      "LintWarningSound": "リント警告音",
-      "LintWarningOnARIA": "リント オン",
-      "LintWarningOffARIA": "リント オフ",
-      "PreviewSound": "プレビューサウンド",
-      "PreviewSoundARIA": "プレビューサウンド",
-      "AccessibleTextBasedCanvas": "アクセシビリティ用テキストベースのキャンバス",
-      "UsedScreenReader": "スクリーンリーダーと併用",
-      "PlainText": "プレーンテキスト",
-      "TextOutputARIA": "テキスト出力 オン",
-      "TableText": "テーブルテキスト",
-      "TableOutputARIA": "テーブルテキスト出力 オン"
-    },
-    "KeyboardShortcuts": {
-      "Title": " キーボードショートカット",
-      "ShortcutsFollow": "エディタのショートカットは以下の通りです",
-      "SublimeText": "Sublime Text ショートカット",
-      "CodeEditing": {
-        "Tidy": "整形",
-        "FindText": "テキスト検索",
-        "FindNextMatch": "次の一致を検索",
-        "FindPrevMatch": "前の一致を検索",
-        "ReplaceTextMatch": "一致するテキストの置換",
-        "IndentCodeLeft": "インデント左揃え",
-        "IndentCodeRight": "インデント右揃え",
-        "CommentLine": "コメントアウト",
-        "FindNextTextMatch": "次の一致するテキストを検索",
-        "FindPreviousTextMatch": "前の一致するテキストを検索",
-        "CodeEditing": "コード編集"
-      },
-      "GeneralSelection": {
-        "StartSketch": "スケッチを実行",
-        "StopSketch": "スケッチを停止",
-        "TurnOnAccessibleOutput": "アクセシビリティ出力を有効にする",
-        "TurnOffAccessibleOutput": "アクセシビリティ出力を無効にする"
-      }
-    },
-    "Sidebar": {
-      "Title": "スケッチファイル",
-      "ToggleARIA": "スケッチファイルオプションの開く/閉じるを切り替える",
-      "AddFolder": "フォルダを作成",
-      "AddFolderARIA": "フォルダを追加",
-      "AddFile": "ファイルを作成",
-      "AddFileARIA": "ファイルを追加",
-      "UploadFile": "ファイルアップロード",
-      "UploadFileARIA": "ファイルアップロード"
-    },
-    "FileNode": {
-      "OpenFolderARIA": "フォルダ内のコンテンツを開く",
-      "CloseFolderARIA": "フォルダ内のコンテンツを閉じる",
-      "ToggleFileOptionsARIA": "ファイルオプションの開く/閉じるを切り替える",
-      "AddFolder": "フォルダを作成",
-      "AddFolderARIA": "フォルダを追加",
-      "AddFile": "ファイル作成",
-      "AddFileARIA": "ファイルを追加",
-      "UploadFile": "ファイルアップロード",
-      "UploadFileARIA": "ファイルアップロード",
-      "Rename": "名前を変更",
-      "Delete": "削除"
-    },
-    "Common": {
-      "SiteName": "p5.js Web Editor",
-      "Error": "エラー",
-      "ErrorARIA": "エラー",
-      "Save": "保存",
-      "p5logoARIA": "p5.js ロゴ",
-      "DeleteConfirmation": "{{name}}を削除してもよろしいですか？"
-    },
-    "IDEView": {
-      "SubmitFeedback": "フィードバック送信",
-      "SubmitFeedbackARIA": "フィードバックを送信",
-      "AddCollectionTitle": "コレクション追加",
-      "AddCollectionARIA":"コレクションに追加する",
-      "ShareTitle": "共有",
-      "ShareARIA":"共有する"
-    },
-    "NewFileModal": {
-      "Title": "ファイル作成",
-      "CloseButtonARIA": "新規ファイルモーダルを閉じる",
-      "EnterName": "ファイル名を入力してください",
-      "InvalidType": "ファイルタイプが無効です。有効な拡張子は、.js、.css、.json、.xml、.stl、.txt、.csv、.tsv、.mtl、.frag、.vertです。"
-    },
-    "NewFileForm": {
-      "AddFileSubmit": "ファイルを追加",
-      "Placeholder": "ファイル名"
-    },
-    "NewFolderModal": {
-      "Title": "フォルダ作成",
-      "CloseButtonARIA": "新しいフォルダモーダルを閉じる",
-      "EnterName": "フォルダ名を入力してください",
-      "EmptyName": "スペースのみのフォルダ名は無効です",
-      "InvalidExtension": "フォルダ名に拡張子を含めることはできません"
-    },
-    "NewFolderForm": {
-      "AddFolderSubmit": "フォルダを追加",
-      "Placeholder": "フォルダ名"
-    },
-    "ResetPasswordForm": {
-      "Email": "登録に使用したメールアドレス",
-      "EmailARIA": "メールアドレス",
-      "Submit": "パスワードリセットのメールを送信する"
-    },
-    "ResetPasswordView": {
-      "Title": "p5.js ウェブエディター | パスワードリセット",
-      "Reset": "パスワードをリセットする",
-      "Submitted": "パスワードリセットのメールを送信しました。もし、見当たらない場合は\n            迷惑メールフォルダに入っている可能性がありますので、確認してください。",
-      "Login": "ログイン",
-      "LoginOr": "もしくは",
-      "SignUp": "アカウントを作成する"
-    },
-    "ReduxFormUtils": {
-      "errorInvalidEmail": "無効なメールアドレスを入力してください",
-      "errorEmptyEmail": "メールアドレスを入力してください",
-      "errorPasswordMismatch": "パスワードが一致しません",
-      "errorEmptyPassword": "パスワードを入力してください",
-      "errorShortPassword": "パスワードは6文字以上にしてください",
-      "errorConfirmPassword": "確認用のパスワードを入力してください",
-      "errorNewPassword": "新しいパスワードを入力するか、現在のパスワードを空欄のままにしてください。",
-      "errorNewPasswordRepeat":"Your New Password must differ from the current one.",
-      "errorEmptyUsername": "ユーザー名を入力してください。",
-      "errorLongUsername": "ユーザー名は20文字以内にしてください。",
-      "errorValidUsername": "ユーザー名は、英数字、ピリオド(.)、ダッシュ(-)、アンダースコア(_)のみで構成されている必要があります。"
-    },
-    "NewPasswordView": {
-      "Title": "p5.js ウェブエディター | 新しいパスワード",
-      "Description": "新しいパスワードの設定",
-      "TokenInvalidOrExpired": "パスワードリセットトークンが無効か、有効期限が切れています。",
-      "EmptyPassword": "パスワードを入力してください",
-      "PasswordConfirmation": "確認用のパスワードを入力してください",
-      "PasswordMismatch": "パスワードは一致している必要があります"
-    },
-    "AccountForm": {
-      "Email": "メールアドレス",
-      "EmailARIA": "メールアドレス",
-      "Unconfirmed": "未確認。",
-      "EmailSent": "確認メールが送信されましたので、メールを確認してください。",
-      "Resend": "確認メールを再送する",
-      "UserName": "ユーザー名",
-      "UserNameARIA": "ユーザー名",
-      "CurrentPassword": "現在のパスワード",
-      "CurrentPasswordARIA": "現在のパスワード",
-      "NewPassword": "新しいパスワード",
-      "NewPasswordARIA": "新しいパスワード",
-      "SubmitSaveAllSettings": "すべての設定を保存"
-    },
-    "AccountView": {
-      "SocialLogin": "ソーシャルログイン",
-      "SocialLoginDescription": "GitHubやGoogleアカウントを使って、p5.js ウェブエディターにログインできます。",
-      "Title": "p5.js ウェブエディター | アカウント設定",
-      "Settings": "アカウント設定",
-      "AccountTab": "アカウント",
-      "AccessTokensTab": "アクセストークン"
-    },
-    "APIKeyForm": {
-      "ConfirmDelete": "本当に{{key_label}}を削除しますか?",
-      "Summary": "パーソナルアクセストークンは、自動スクリプトがエディタAPIにアクセスできるようにするための\n          パスワードのような役割を果たします。\n          アクセスを必要とするスクリプトごとにトークンを作成します。",
-      "CreateToken": "新しいトークンを作成",
-      "TokenLabel": "このトークンはなんのため?",
-      "TokenPlaceholder": "このトークンはなんのため?  例：インポートスクリプト",
-      "CreateTokenSubmit": "作成",
-      "NoTokens": "既存のトークンはありません。",
-      "NewTokenTitle": "新しいアクセストークン",
-      "NewTokenInfo": "新しいパーソナルアクセストークンをコピーしてください。\n                  トークンをもう1度と見ることはできません!",
-      "ExistingTokensTitle": "既存のトークン"
-    },
-    "APIKeyList": {
-      "Name": "名前",
-      "Created": "作成日時",
-      "LastUsed": "最後に使用した日時",
-      "Actions": "アクション",
-      "Never": "一度も使用されていません",
-      "DeleteARIA": "APIキーを削除"
-    },
-    "NewPasswordForm": {
-      "Title": "パスワード",
-      "TitleARIA": "パスワード",
-      "ConfirmPassword": "確認用パスワード",
-      "ConfirmPasswordARIA": "確認用パスワード",
-      "SubmitSetNewPassword": "新しいパスワードを設定"
-    },
-    "SignupForm": {
-      "Title": "ユーザー名",
-      "TitleARIA": "ユーザー名",
-      "Email": "メールアドレス",
-      "EmailARIA": "メールアドレス",
-      "Password": "パスワード",
-      "PasswordARIA": "パスワード",
-      "ConfirmPassword": "確認用パスワード",
-      "ConfirmPasswordARIA": "確認用パスワード",
-      "SubmitSignup": "アカウント作成"
-    },
-    "SignupView": {
-      "Title": "p5.js ウェブエディター | ユーザー登録",
-      "Description": "ユーザー登録",
-      "Or": "もしくは",
-      "AlreadyHave": "既にアカウントをお持ちですか？",
-      "Login": "ログイン",
-      "Warning": "アカウント作成をすると、p5.js エディターの <0>利用規約</0> と <1>プライバシー ポリシー</1> に同意したことになります。"
-    },
-    "EmailVerificationView": {
-      "Title": "p5.js ウェブエディター | メールアドレス認証",
-      "Verify": "メールアドレスを確認してください",
-      "InvalidTokenNull": "そのリンクは無効です。",
-      "Checking": "トークンを検証中です、お待ちください...",
-      "Verified": "すべて完了しました、あなたのメールアドレスは確認されました。",
-      "InvalidState": "何か問題が発生しました。"
-    },
-    "AssetList": {
-      "Title": "p5.js ウェブエディター | マイアセット",
-      "ToggleOpenCloseARIA": "アセットオプションの開閉を切り替え",
-      "Delete": "削除",
-      "OpenNewTab": "新しいタブで開く",
-      "NoUploadedAssets": "アップロードされたアセットはありません。",
-      "HeaderName": "Name",
-      "HeaderSize": "サイズ",
-      "HeaderSketch": "スケッチ"
-    },
-    "Feedback": {
-      "Title": "p5.js ウェブエディター | フィードバック",
-      "ViaGithubHeader": "Github Issuesを利用",
-      "ViaGithubDescription": "Githubに詳しい方は、バグレポートやフィードバックのために、こちらからお願いします。",
-      "GoToGithub": "Githubへアクセスする",
-      "ViaGoogleHeader": "Google Formを利用",
-      "ViaGoogleDescription": "こちらのフォームから報告することもできます。",
-      "GoToForm": "フォームへアクセスする"
-    },
-    "Searchbar": {
-      "SearchSketch": "スケッチを検索...",
-      "SearchCollection": "コレクションを検索...",
-      "ClearTerm": "clear"
-    },
-    "UploadFileModal": {
-      "Title": "アップロードファイル",
-      "CloseButtonARIA": "アップロードファイルモーダルを閉じる",
-      "SizeLimitError": "エラー: これ以上ファイルをアップロードすることはできません。{{sizeLimit}}の合計サイズの上限に達しました。\n                もっとアップロードしたい場合は、もう使っていないものを削除してください。 "
-    },
-    "FileUploader": {
-      "DictDefaultMessage": "ここにファイルをドロップするか、クリックしてファイルブラウザを使用してください"
-    },
-    "ErrorModal": {
-      "MessageLogin": "スケッチを保存するにはログインが必要です。ログインしてください。 ",
-      "Login": "ログイン",
-      "LoginOr": " もしくは ",
-      "SignUp": "アカウントを作成してください",
-      "MessageLoggedOut": "ログアウトされたようです。ログインしてください。 ",
-      "LogIn": "ログイン",
-      "SavedDifferentWindow": "保存しようとしたプロジェクトが別のウィンドウから保存されました。\n        最新版をご覧になるにはページを更新してください。",
-      "LinkTitle": "アカウント接続エラー",
-      "LinkMessage": "あなたの {{serviceauth}} アカウントとp5.js ウェブエディターアカウントの接続に問題がありました。 あなたの {{serviceauth}} アカウントは、すでに別のp5.js ウェブエディターアカウントに接続されています。"
-    },
-    "ShareModal": {
-      "Embed": "埋め込み",
-      "Present": "プレゼンモード",
-      "Fullscreen": "フルスクリーン",
-      "Edit": "共同編集"
-    },
-    "CollectionView": {
-      "TitleCreate": "コレクション作成",
-      "TitleDefault": "コレクション"
-    },
-    "Collection": {
-      "Title": "p5.js ウェブエディター | マイコレクション",
-      "AnothersTitle": "p5.js ウェブエディター | {{anotheruser}} のコレクション",
+  "Nav": {
+    "File": {
+      "Title": "ファイル",
+      "New": "新規作成",
       "Share": "共有",
-      "URLLink": "コレクションのリンク",
-      "AddSketch": "スケッチを追加する",
-      "DeleteFromCollection": "このコレクションから {{name_sketch}} を削除してもよろしいですか？",
-      "SketchDeleted": "スケッチが削除されました",
-      "SketchRemoveARIA": "コレクションからスケッチを削除する",
-      "DescriptionPlaceholder": "スケッチについて記述する",
-      "Description": "コレクションについて",
-      "NumSketches": "{{count}} スケッチ",
-      "NumSketches_plural": "{{count}} スケッチ",
-      "By":"作成者 ",
-      "NoSketches": "コレクション内にスケッチがありません",
-      "TableSummary": "全コレクションのテーブル",
-      "HeaderName": "名前",
-      "HeaderCreatedAt": "追加日時",
-      "HeaderUser": "所有者",
-      "DirectionAscendingARIA": "昇順",
-      "DirectionDescendingARIA": "降順",
-      "ButtonLabelAscendingARIA": "昇順に{{displayName}}で並び替えます。",
-      "ButtonLabelDescendingARIA": "降順に{{displayName}}で並び替えます。"
+      "Duplicate": "複製",
+      "Open": "開く",
+      "Download": "ダウンロード",
+      "AddToCollection": "コレクションへ追加",
+      "Examples": "サンプル"
     },
-    "AddToCollectionList": {
-      "Title": "p5.js ウェブエディター | マイコレクション",
-      "AnothersTitle": "p5.js ウェブエディター | {{anotheruser}}のコレクション",
-      "Empty": "コレクションは空です"
+    "Edit": {
+      "Title": "編集",
+      "TidyCode": "コード整形",
+      "Find": "検索",
+      "Replace": "置換"
     },
-    "CollectionCreate": {
-      "Title": "p5.js ウェブエディター | コレクション作成",
-      "FormError": "コレクションを作成することが出来ませんでした",
-      "FormLabel": "コレクション名",
-      "FormLabelARIA": "名前",
-      "NameRequired": "コレクション名は必須です",
-      "Description": "コレクションについて (任意)",
-      "DescriptionARIA": "スケッチについて",
-      "DescriptionPlaceholder": "お気に入りスケッチ",
-      "SubmitCollectionCreate": "コレクションを作成"
+    "Sketch": {
+      "Title": "スケッチ",
+      "AddFile": "ファイルを追加",
+      "AddFolder": "フォルダを追加",
+      "Run": "実行",
+      "Stop": "停止"
     },
-    "DashboardView": {
-      "CreateCollection": "コレクションを作成",
-      "NewSketch": "新しいスケッチ",
-      "CreateCollectionOverlay": "コレクションを作成"
+    "Help": {
+      "Title": "ヘルプ",
+      "KeyboardShortcuts": "キーボードショートカット",
+      "Reference": "リファレンス",
+      "ReportBug": "バグを報告",
+      "ChatOnDiscord": "Discordでチャット",
+      "PostOnTheForum": "フォーラムに投稿"
     },
-    "DashboardTabSwitcher": {
-      "Sketches": "スケッチ",
-      "Collections": "コレクション",
-      "Assets": "アセット"
+    "Lang": "言語",
+    "BackEditor": "エディタに戻る",
+    "WarningUnsavedChanges": "このページを離れてもよろしいですか？未保存の変更があります。",
+    "Login": "ログイン",
+    "LoginOr": "または",
+    "SignUp": "サインアップ",
+    "Auth": {
+      "Welcome": "ようこそ",
+      "Hello": "こんにちは",
+      "MyAccount": "マイアカウント",
+      "My": "マイ",
+      "MySketches": "マイスケッチ",
+      "MyCollections": "マイコレクション",
+      "Asset": "アセット",
+      "MyAssets": "マイアセット",
+      "LogOut": "ログアウト"
+    }
+  },
+  "CodemirrorFindAndReplace": {
+    "ToggleReplace": "置換の切り替え",
+    "Find": "検索",
+    "FindPlaceholder": "ファイル内検索",
+    "Replace": "置換",
+    "ReplaceAll": "すべて置換",
+    "ReplacePlaceholder": "置換するテキスト",
+    "Regex": "正規表現",
+    "CaseSensitive": "大文字小文字を区別",
+    "WholeWords": "単語全体",
+    "Previous": "前へ",
+    "Next": "次へ",
+    "NoResults": "結果なし",
+    "Close": "閉じる"
+  },
+  "LoginForm": {
+    "UsernameOrEmail": "メールアドレスまたはユーザー名",
+    "UsernameOrEmailARIA": "メールアドレスまたはユーザー名",
+    "Password": "パスワード",
+    "PasswordARIA": "パスワード",
+    "Submit": "ログイン",
+    "Errors": {
+      "invalidCredentials": "メールアドレスまたはパスワードが無効です。"
+    }
+  },
+  "LoginView": {
+    "Title": "p5.js Web Editor | ログイン",
+    "Login": "ログイン",
+    "LoginOr": "または",
+    "SignUp": "サインアップ",
+    "Email": "メールアドレス",
+    "Username": "ユーザー名",
+    "DontHaveAccount": "アカウントをお持ちでないですか？ ",
+    "ForgotPassword": "パスワードをお忘れですか？ ",
+    "ResetPassword": "パスワードをリセット"
+  },
+  "SocialAuthButton": {
+    "Connect": "{{serviceauth}}アカウントを接続",
+    "Unlink": "{{serviceauth}}アカウントの接続を解除",
+    "Login": "{{serviceauth}}でログイン",
+    "LogoARIA": "{{serviceauth}}ロゴ"
+  },
+  "About": {
+    "Title": "About",
+    "TitleHelmet": "p5.js Web Editor | About",
+    "Headline": "p5.js Editorでp5.jsスケッチを作成、共有、リミックスしましょう。",
+    "Contribute": "貢献する",
+    "IntroDescription1": "p5.jsは、コーディングを学び、アートを作成するための無料のオープンソースJavaScriptライブラリです。p5.js Editorを使用すると、何もダウンロードしたり設定したりする必要なく、p5.jsスケッチを作成、共有、リミックスできます。",
+    "IntroDescription2": "私たちは、ソフトウェアとそれを学ぶためのツールは、可能な限りオープンで包括的であるべきだと信じています。p5.jsをサポートする組織であるProcessing Foundationへの寄付によって、この活動を支援できます。あなたの寄付は、p5.jsのソフトウェア開発、コード例やチュートリアルなどの教育リソース、フェローシップ、コミュニティイベントを支援します。",
+    "Donate": "寄付する",
+    "NewP5": "p5.jsは初めてですか？",
+    "Report": "バグを報告",
+    "Learn": "学ぶ",
+    "X": "X",
+    "Home": "p5.jsホーム",
+    "Instagram": "Instagram",
+    "Discord": "Discord",
+    "DiscordCTA": "Discordに参加",
+    "Youtube": "YouTube",
+    "Github": "GitHub",
+    "GetInvolved": "参加する",
+    "WebEditor": "Web Editor",
+    "Resources": "リソース",
+    "Reference": "リファレンス",
+    "Libraries": "ライブラリ",
+    "Forum": "フォーラム",
+    "ForumCTA": "フォーラムに参加",
+    "Examples": "サンプル",
+    "PrivacyPolicy": "プライバシーポリシー",
+    "TermsOfUse": "利用規約",
+    "CodeOfConduct": "行動規範",
+    "Email": "メール",
+    "EmailAddress": "hello@p5js.org",
+    "Socials": "ソーシャル",
+    "LinkDescriptions": {
+      "Home": "p5.jsと私たちのコミュニティについて詳しく学びましょう。",
+      "Examples": "短いサンプルでp5.jsの可能性を探求しましょう。",
+      "CodeOfConduct": "私たちのコミュニティステートメントと行動規範をお読みください。",
+      "Libraries": "コミュニティ作成のライブラリでp5.jsの可能性を広げましょう。",
+      "Reference": "p5.jsコードのすべての部分について簡単な説明を見つけましょう。",
+      "Donate": "Processing Foundationへの寄付でこの活動を支援しましょう。",
+      "Contribute": "GitHubでオープンソースのp5.js Editorに貢献しましょう。",
+      "Report": "p5.js Editorの不具合や誤った動作を報告しましょう。",
+      "Forum": "p5.jsコミュニティに質問を投げかけ、スケッチを共有し、助けを得ましょう。",
+      "Discord": "p5.jsコミュニティとチャットし、素早い助けを得ましょう。"
     },
-    "CollectionList": {
-      "Title": "p5.js ウェブエディター | マイコレクション",
-      "AnothersTitle": "p5.js ウェブエディター | {{anotheruser}}のコレクション",
-      "NoCollections": "コレクションがありません。",
-      "TableSummary": "全コレクションのテーブル",
-      "HeaderName": "名前",
-      "HeaderCreatedAt": "作成日",
-      "HeaderCreatedAt_mobile": "作成",
-      "HeaderUpdatedAt": "更新日",
-      "HeaderUpdatedAt_mobile": "更新",
-      "HeaderNumItems": "スケッチ No.",
-      "HeaderNumItems_mobile": "スケッチ No.",
-      "DirectionAscendingARIA": "昇順",
-      "DirectionDescendingARIA": "降順",
-      "ButtonLabelAscendingARIA": "昇順に{{displayName}}で並び替えます。",
-      "ButtonLabelDescendingARIA": "降順に{{displayName}}で並び替えます。",
-      "AddSketch": "スケッチを追加"
+    "Contact": "お問い合わせ"
+  },
+  "Toast": {
+    "OpenedNewSketch": "新しいスケッチを開きました。",
+    "SketchSaved": "スケッチを保存しました。",
+    "SketchFailedSave": "スケッチの保存に失敗しました。",
+    "AutosaveEnabled": "自動保存を有効にしました。",
+    "LangChange": "言語を変更しました",
+    "SettingsSaved": "設定を保存しました。",
+    "EmptyCurrentPass": "現在のパスワードフィールドが空です",
+    "IncorrectCurrentPass": "現在のパスワードが正しくありません",
+    "DefaultError": "問題が発生しました",
+    "UserNotFound": "ユーザーが見つかりません",
+    "NetworkError": "ネットワークエラー"
+  },
+  "Toolbar": {
+    "Preview": "プレビュー",
+    "Auto-refresh": "自動更新",
+    "OpenPreferencesARIA": "設定を開く",
+    "PlaySketchARIA": "スケッチを実行",
+    "PlayOnlyVisualSketchARIA": "ビジュアルスケッチのみ実行",
+    "StopSketchARIA": "スケッチを停止",
+    "EditSketchARIA": "スケッチ名を編集",
+    "NewSketchNameARIA": "新しいスケッチ名",
+    "By": " 作成者: ",
+    "CustomLibraryVersion": "カスタムp5.jsバージョン",
+    "VersionPickerARIA": "バージョンピッカー",
+    "NewVersionPickerARIA": "バージョンピッカー"
+  },
+  "Console": {
+    "Title": "コンソール",
+    "Clear": "クリア",
+    "ClearARIA": "コンソールをクリア",
+    "Close": "閉じる",
+    "CloseARIA": "コンソールを閉じる",
+    "Open": "開く",
+    "OpenARIA": "コンソールを開く"
+  },
+  "Preferences": {
+    "Settings": "設定",
+    "GeneralSettings": "一般設定",
+    "Accessibility": "アクセシビリティ",
+    "LibraryManagement": "ライブラリ管理",
+    "Theme": "テーマ",
+    "LightTheme": "ライト",
+    "LightThemeARIA": "ライトテーマオン",
+    "DarkTheme": "ダーク",
+    "DarkThemeARIA": "ダークテーマオン",
+    "HighContrastTheme": "ハイコントラスト",
+    "HighContrastThemeARIA": "ハイコントラストテーマオン",
+    "TextSize": "文字サイズ",
+    "DecreaseFont": "小さく",
+    "DecreaseFontARIA": "フォントサイズを小さく",
+    "IncreaseFont": "大きく",
+    "IncreaseFontARIA": "フォントサイズを大きく",
+    "FontSize": "フォントサイズ",
+    "SetFontSize": "フォントサイズを設定",
+    "Autosave": "自動保存",
+    "On": "オン",
+    "AutosaveOnARIA": "自動保存オン",
+    "Off": "オフ",
+    "AutosaveOffARIA": "自動保存オフ",
+    "AutocloseBracketsQuotes": "括弧と引用符を自動閉じ",
+    "AutocloseBracketsQuotesOnARIA": "括弧と引用符の自動閉じオン",
+    "AutocloseBracketsQuotesOffARIA": "括弧と引用符の自動閉じオフ",
+    "AutocompleteHinter": "オートコンプリートヒント",
+    "AutocompleteHinterOnARIA": "オートコンプリートヒントオン",
+    "AutocompleteHinterOffARIA": "オートコンプリートヒントオフ",
+    "WordWrap": "ワードラップ",
+    "WordWrapOnARIA": "ワードラップオン",
+    "WordWrapOffARIA": "ワードラップオフ",
+    "LineNumbers": "行番号",
+    "LineNumbersOnARIA": "行番号オン",
+    "LineNumbersOffARIA": "行番号オフ",
+    "LintWarningSound": "リント警告音",
+    "LintWarningOnARIA": "リント警告オン",
+    "LintWarningOffARIA": "リント警告オフ",
+    "PreviewSound": "プレビュー音",
+    "PreviewSoundARIA": "プレビュー音",
+    "AccessibleTextBasedCanvas": "アクセシブルなテキストベースキャンバス",
+    "UsedScreenReader": "スクリーンリーダー使用",
+    "PlainText": "プレーンテキスト",
+    "TextOutputARIA": "テキスト出力オン",
+    "TableText": "テーブルテキスト",
+    "TableOutputARIA": "テーブル出力オン",
+    "LibraryVersion": "p5.jsバージョン",
+    "LibraryVersionInfo": "p5.jsの[新しい2.0リリース](https://github.com/processing/p5.js/releases/)が利用可能です！2026年8月にデフォルトになるため、この機会にテストしてバグを報告してください。1.xから2.0へのスケッチ移行に興味がありますか？[互換性＆移行リソース](https://github.com/processing/p5.js-compatibility)をチェックしてください。",
+    "CustomVersionTitle": "独自のライブラリを管理していますか？素晴らしい！",
+    "CustomVersionInfo": "p5.jsのバージョンは現在、index.htmlのコードで管理されています。これはこのタブから調整できないことを意味します。",
+    "CustomVersionReset": "デフォルトのライブラリを使用したい場合は、index.htmlのスクリプトタグを以下に置き換えることができます：",
+    "SoundAddon": "p5.sound.jsアドオンライブラリ",
+    "PreloadAddon": "p5.js 1.x 互換性アドオンライブラリ — プリロード",
+    "ShapesAddon": "p5.js 1.x 互換性アドオンライブラリ — シェイプ",
+    "DataAddon": "p5.js 1.x 互換性アドオンライブラリ — データ＆イベント",
+    "AddonOnARIA": "オン",
+    "AddonOffARIA": "オフ",
+    "SoundReference": "p5.js {{version}}と互換性のあるp5.soundのリファレンスを表示",
+    "CopyToClipboardSuccess": "クリップボードにコピーしました！",
+    "CopyToClipboardFailure": "テキストをコピーできませんでした。選択して手動でコピーしてみてください。"
+  },
+  "KeyboardShortcuts": {
+    "Title": "キーボードショートカット",
+    "ShortcutsFollow": "コード編集キーボードショートカットは以下に従います",
+    "SublimeText": "Sublime Textショートカット",
+    "CodeEditing": {
+      "Tidy": "整形",
+      "FindText": "テキスト検索",
+      "FindNextMatch": "次の一致を検索",
+      "FindPrevMatch": "前の一致を検索",
+      "ReplaceTextMatch": "テキスト一致を置換",
+      "IndentCodeLeft": "コードを左にインデント",
+      "IndentCodeRight": "コードを右にインデント",
+      "CommentLine": "行をコメント化",
+      "FindNextTextMatch": "次のテキスト一致を検索",
+      "FindPreviousTextMatch": "前のテキスト一致を検索",
+      "CodeEditing": "コード編集",
+      "ColorPicker": "インラインカラーピッカーを表示",
+      "CreateNewFile": "新規ファイルを作成",
+      "RenameVariable": "変数名を変更"
     },
-    "CollectionListRow": {
-      "ToggleCollectionOptionsARIA": "開く/閉じるコレクションのオプションを切り替え",
-      "AddSketch": "スケッチを追加",
-      "Delete": "削除",
-      "Rename": "名前を変更"
-    },
-    "Overlay": {
-      "AriaLabel": "{{title}} オーバーレイを閉じる"
-    },
-    "QuickAddList":{
-      "ButtonRemoveARIA": "コレクションから削除",
-      "ButtonAddToCollectionARIA": "コレクションへ追加",
-      "View": "表示"
-    },
-    "SketchList": {
-      "View": "表示",
-      "Title": "p5.js ウェブエディター | マイスケッチ",
-      "AnothersTitle": "p5.js ウェブエディター | {{anotheruser}} のスケッチ",
-      "ToggleLabelARIA": "開く/閉じるスケッチ オプションの切り替え",
-      "DropdownRename": "名前変更",
-      "DropdownDownload": "ダウンロード",
-      "DropdownDuplicate": "別名で保存",
-      "DropdownAddToCollection": "コレクションへ追加",
-      "DropdownDelete": "削除",
-      "DirectionAscendingARIA": "昇順",
-      "DirectionDescendingARIA": "降順",
-      "ButtonLabelAscendingARIA": "昇順に{{displayName}}で並び替えます。",
-      "ButtonLabelDescendingARIA": "降順に{{displayName}}で並び替えます。",
-      "AddToCollectionOverlayTitle": "コレクションへ追加",
-      "TableSummary": "保存されたすべてのプロジェクトを含むテーブル",
-      "HeaderName": "スケッチ",
-      "HeaderCreatedAt": "作成日",
-      "HeaderCreatedAt_mobile": "作成",
-      "HeaderUpdatedAt": "更新日",
-      "HeaderUpdatedAt_mobile": "更新",
-      "NoSketches": "スケッチがありません"
-    },
-    "AddToCollectionSketchList": {
-      "Title": "p5.js ウェブエディター | マイスケッチ",
-      "AnothersTitle": "p5.js ウェブエディター | {{anotheruser}} のスケッチ",
-      "NoCollections": "コレクションがありません。"
-    },
-    "Editor": {
-      "OpenSketchARIA": "スケッチファイルのナビゲーションを開く",
-      "CloseSketchARIA": "スケッチファイルのナビゲーションを閉じる",
-      "UnsavedChangesARIA": "スケッチに未保存の変更があります",
-      "KeyUpLineNumber": "{{lineNumber}} 行"
-    },
-    "EditorAccessibility": {
-      "NoLintMessages": "リントメッセージはありません",
-      "CurrentLine": "現在の行"
-    },
-    "Timer": {
-      "SavedAgo": "保存されました: {{timeAgo}}"
-    },
-    "formatDate": {
-      "JustNow": "たった今",
-      "15Seconds": "15秒前",
-      "25Seconds": "25秒前",
-      "35Seconds": "35秒前",
-      "Ago": "{{timeAgo}}前"
-    },
-    "CopyableInput": {
-      "CopiedARIA": "クリップボードへコピーしました！",
-      "OpenViewTabARIA": "新しいタブで {{label}} ビューを開く"
-    },
-    "EditableInput": {
-      "EditValue": "{{display}} 値を編集",
-      "EmptyPlaceholder": "値がありません"
-    },
-    "PreviewNav": {
-      "EditSketchARIA": "スケッチを編集する",
-      "ByUser": "によって"
-    },
-    "MobilePreferences": {
-      "Settings": "設定",
-      "GeneralSettings": "一般設定",
-      "Accessibility": "アクセシビリティ",
-      "AccessibleOutput": "アクセシビリティ出力",
-      "Theme": "テーマ",
-      "LightTheme": "ライト",
-      "DarkTheme": "ダーク",
-      "HighContrastTheme": "ハイコントラスト",
-      "Autosave": "自動保存",
-      "WordWrap": "ワードラップ",
-      "LineNumbers": "行番号",
-      "LintWarningSound": "リント警告音",
-      "UsedScreenReader": "スクリーンリーダーと併用",
-      "PlainText": "プレーンテキスト",
-      "TableText": "テーブルテキスト",
-      "Sound": "サウンド"
-    },
-    "PreferenceCreators": {
-      "On": "オン",
-      "Off": "オフ"
-    },
-    "MobileDashboardView": {
-      "Examples": "サンプル",
-      "Sketches": "スケッチ",
-      "Collections": "コレクション",
-      "Assets": "アセット",
-      "MyStuff": "マイスタッフ",
-      "CreateSketch": "スケッチ作成",
-      "CreateCollection": "コレクション作成"
-    },
-    "Explorer": {
-      "Files": "ファイル"
-    },
-    "Cookies": {
-    "Header": "Cookies",
-    "Body": "p5.jsエディターはクッキーを使用しています。 いくつかの項目はウェブサイトの機能に不可欠であり、アカウントとプリファレンスを管理することが可能です。 そのほかの項目は不可欠ではありません—それらは分析され、私たちのコミュニティについてより理解するために利用されます。 <strong> 私たちがこのデータを販売したり、広告に使用したりすることは決してありません。 </strong> あなたはどのcookiesの利用を許可するか決めることができます。詳細については私たちの<0>プライバシーポリシー<0>をご参照ください。",
+    "General": "一般",
+    "GeneralSelection": {
+      "StartSketch": "スケッチ開始",
+      "StopSketch": "スケッチ停止",
+      "TurnOnAccessibleOutput": "アクセシブル出力をオン",
+      "TurnOffAccessibleOutput": "アクセシブル出力をオフ",
+      "Reference": "ヒントの選択項目のリファレンスに移動"
+    }
+  },
+  "Sidebar": {
+    "Title": "スケッチファイル",
+    "ToggleARIA": "スケッチファイルオプションの開閉を切り替え",
+    "AddFolder": "フォルダを作成",
+    "AddFolderARIA": "フォルダを追加",
+    "AddFile": "ファイルを作成",
+    "AddFileARIA": "ファイルを追加",
+    "UploadFile": "ファイルをアップロード",
+    "UploadFileARIA": "ファイルをアップロード"
+  },
+  "FileNode": {
+    "OpenFolderARIA": "フォルダ内容を開く",
+    "CloseFolderARIA": "フォルダ内容を閉じる",
+    "ToggleFileOptionsARIA": "ファイルオプションの開閉を切り替え",
+    "AddFolder": "フォルダを作成",
+    "AddFolderARIA": "フォルダを追加",
+    "AddFile": "ファイルを作成",
+    "AddFileARIA": "ファイルを追加",
+    "UploadFile": "ファイルをアップロード",
+    "UploadFileARIA": "ファイルをアップロード",
+    "Rename": "名前変更",
+    "Delete": "削除"
+  },
+  "Common": {
+    "SiteName": "p5.js Web Editor",
+    "Error": "エラー",
+    "ErrorARIA": "エラー",
+    "Save": "保存",
+    "p5logoARIA": "p5.jsロゴ",
+    "DeleteConfirmation": "{{name}}を削除してもよろしいですか？"
+  },
+  "IDEView": {
+    "SubmitFeedback": "フィードバックを送信",
+    "SubmitFeedbackARIA": "フィードバックを送信",
+    "AddCollectionTitle": "コレクションに追加",
+    "AddCollectionARIA": "コレクションに追加",
+    "ShareTitle": "共有",
+    "ShareARIA": "共有"
+  },
+  "NewFileModal": {
+    "Title": "ファイルを作成",
+    "CloseButtonARIA": "新規ファイルモーダルを閉じる",
+    "EnterName": "名前を入力してください",
+    "InvalidType": "無効なファイルタイプです。有効な拡張子は.js、.css、.json、.xml、.stl、.txt、.csv、.tsv、.mtl、.frag、.vertです。"
+  },
+  "NewFileForm": {
+    "AddFileSubmit": "ファイルを追加",
+    "Placeholder": "名前"
+  },
+  "NewFolderModal": {
+    "Title": "フォルダを作成",
+    "CloseButtonARIA": "新規フォルダモーダルを閉じる",
+    "EnterName": "名前を入力してください",
+    "EmptyName": "フォルダ名はスペースのみではいけません",
+    "InvalidExtension": "フォルダ名に拡張子を含めることはできません"
+  },
+  "NewFolderForm": {
+    "AddFolderSubmit": "フォルダを追加",
+    "Placeholder": "名前"
+  },
+  "ResetPasswordForm": {
+    "Email": "登録に使用したメールアドレス",
+    "EmailARIA": "メールアドレス",
+    "Submit": "パスワードリセットメールを送信"
+  },
+  "ResetPasswordView": {
+    "Title": "p5.js Web Editor | パスワードリセット",
+    "Reset": "パスワードをリセット",
+    "Submitted": "パスワードリセットメールはまもなく届きます。届かない場合は、スパムフォルダを確認してください。時々そこに入ってしまうことがあります。",
+    "Login": "ログイン",
+    "LoginOr": "または",
+    "SignUp": "サインアップ"
+  },
+  "ReduxFormUtils": {
+    "errorInvalidEmail": "有効なメールアドレスを入力してください",
+    "errorEmptyEmail": "メールアドレスを入力してください",
+    "errorEmptyEmailorUserName": "メールアドレスまたはユーザー名を入力してください",
+    "errorPasswordMismatch": "パスワードが一致する必要があります",
+    "errorEmptyPassword": "パスワードを入力してください",
+    "errorShortPassword": "パスワードは6文字以上である必要があります",
+    "errorConfirmPassword": "パスワードを確認してください",
+    "errorNewPassword": "新しいパスワードを入力するか、現在のパスワードを空のままにしてください。",
+    "errorNewPasswordRepeat": "新しいパスワードは現在のものと異なる必要があります。",
+    "errorEmptyUsername": "ユーザー名を入力してください。",
+    "errorLongUsername": "ユーザー名は20文字未満である必要があります。",
+    "errorValidUsername": "ユーザー名は数字、文字、ピリオド、ダッシュ、アンダースコアのみで構成されている必要があります。"
+  },
+  "NewPasswordView": {
+    "Title": "p5.js Web Editor | 新しいパスワード",
+    "Description": "新しいパスワードを設定",
+    "TokenInvalidOrExpired": "パスワードリセットトークンが無効か期限切れです。",
+    "EmptyPassword": "パスワードを入力してください",
+    "PasswordConfirmation": "パスワードを確認してください",
+    "PasswordMismatch": "パスワードが一致する必要があります"
+  },
+  "AccountForm": {
+    "Email": "メールアドレス",
+    "EmailARIA": "メールアドレス",
+    "Unconfirmed": "未確認。",
+    "EmailSent": "確認メールを送信しました、メールを確認してください。",
+    "Resend": "確認メールを再送信",
+    "UserName": "ユーザー名",
+    "UserNameARIA": "ユーザー名",
+    "CurrentPassword": "現在のパスワード",
+    "CurrentPasswordARIA": "現在のパスワード",
+    "NewPassword": "新しいパスワード",
+    "NewPasswordARIA": "新しいパスワード",
+    "SaveAccountDetails": "アカウント詳細を保存"
+  },
+  "AccountView": {
+    "SocialLogin": "ソーシャルログイン",
+    "SocialLoginDescription": "GitHubまたはGoogleアカウントを使用してp5.js Web Editorにログインします。",
+    "Title": "p5.js Web Editor | アカウント設定",
+    "Settings": "マイアカウント",
+    "AccountTab": "アカウント",
+    "AccessTokensTab": "アクセストークン"
+  },
+  "APIKeyForm": {
+    "ConfirmDelete": "{{key_label}}を削除してもよろしいですか？",
+    "Summary": "パーソナルアクセストークンは、自動化スクリプトがEditor APIにアクセスできるようにするパスワードのような役割を果たします。アクセスを必要とする各スクリプトに対してトークンを作成します。",
+    "CreateToken": "新しいトークンを作成",
+    "TokenLabel": "このトークンは何のためですか？",
+    "TokenPlaceholder": "このトークンは何のためですか？例：サンプルインポートスクリプト",
+    "CreateTokenSubmit": "作成",
+    "NoTokens": "既存のトークンはありません。",
+    "NewTokenTitle": "新しいアクセストークン",
+    "NewTokenInfo": "新しいパーソナルアクセストークンを今コピーしてください。再度表示されることはありません！",
+    "ExistingTokensTitle": "既存のトークン"
+  },
+  "APIKeyList": {
+    "Name": "名前",
+    "Created": "作成日",
+    "LastUsed": "最終使用日",
+    "Actions": "操作",
+    "Never": "なし",
+    "DeleteARIA": "APIキーを削除"
+  },
+  "NewPasswordForm": {
+    "Title": "パスワード",
+    "TitleARIA": "パスワード",
+    "ConfirmPassword": "パスワード確認",
+    "ConfirmPasswordARIA": "パスワード確認",
+    "SubmitSetNewPassword": "新しいパスワードを設定"
+  },
+  "SignupForm": {
+    "Title": "ユーザー名",
+    "TitleARIA": "ユーザー名",
+    "Email": "メールアドレス",
+    "EmailARIA": "メールアドレス",
+    "Password": "パスワード",
+    "PasswordARIA": "パスワード",
+    "ConfirmPassword": "パスワード確認",
+    "ConfirmPasswordARIA": "パスワード確認",
+    "SubmitSignup": "サインアップ"
+  },
+  "SignupView": {
+    "Title": "p5.js Web Editor | サインアップ",
+    "Description": "サインアップ",
+    "Or": "または",
+    "AlreadyHave": "既にアカウントをお持ちですか？",
+    "Login": "ログイン",
+    "Warning": "サインアップすることにより、p5.js Editorの<0>利用規約</0>と<1>プライバシーポリシー</1>に同意したものとみなされます。"
+  },
+  "EmailVerificationView": {
+    "Title": "p5.js Web Editor | メール確認",
+    "Verify": "メールアドレスを確認",
+    "InvalidTokenNull": "そのリンクは無効です。",
+    "Checking": "トークンを検証中、お待ちください...",
+    "Verified": "すべて完了しました、メールアドレスが確認されました。",
+    "InvalidState": "トークンが無効か期限切れです。"
+  },
+  "AssetList": {
+    "Title": "p5.js Web Editor | マイアセット",
+    "ToggleOpenCloseARIA": "アセットオプションの開閉を切り替え",
+    "Delete": "削除",
+    "OpenNewTab": "新しいタブで開く",
+    "NoUploadedAssets": "アップロードされたアセットはありません。",
+    "HeaderName": "名前",
+    "HeaderSize": "サイズ",
+    "HeaderSketch": "スケッチ",
+    "maximum": "最大"
+  },
+  "Feedback": {
+    "Title": "p5.js Web Editor | フィードバック",
+    "ViaGithubHeader": "GitHub Issues経由",
+    "ViaGithubDescription": "GitHubに慣れている場合、これはバグ報告とフィードバックを受けるための推奨方法です。",
+    "GoToGithub": "GitHubへ移動",
+    "ViaGoogleHeader": "Googleフォーム経由",
+    "ViaGoogleDescription": "この簡単なフォームも送信できます。",
+    "GoToForm": "フォームへ移動"
+  },
+  "Searchbar": {
+    "SearchSketch": "スケッチを検索...",
+    "SearchCollection": "コレクションを検索...",
+    "ClearTerm": "クリア"
+  },
+  "UploadFileModal": {
+    "Title": "ファイルをアップロード",
+    "CloseButtonARIA": "ファイルアップロードモーダルを閉じる",
+    "SizeLimitError": "エラー：これ以上ファイルをアップロードできません。{{sizeLimit}}の合計サイズ制限に達しました。\n                さらにアップロードしたい場合は、もう使用していないファイルを削除してください。"
+  },
+  "FileUploader": {
+    "DictDefaultMessage": "ファイルをここにドロップするか、クリックしてファイルブラウザを使用"
+  },
+  "ErrorModal": {
+    "MessageLogin": "スケッチを保存するには、ログインする必要があります。 ",
+    "Login": "ログイン",
+    "LoginOr": " または ",
+    "SignUp": "サインアップ",
+    "MessageLoggedOut": "ログアウトされたようです。 ",
+    "LogIn": "ログイン",
+    "SavedDifferentWindow": "保存しようとしたプロジェクトは別のウィンドウから保存されました。\n        最新バージョンを表示するにはページを更新してください。",
+    "LinkTitle": "アカウントリンクエラー",
+    "LinkMessage": "{{serviceauth}}アカウントをp5.js Web Editorアカウントにリンクする際に問題が発生しました。あなたの{{serviceauth}}アカウントは既に別のp5.js Web Editorアカウントにリンクされています。"
+  },
+  "ShareModal": {
+    "Embed": "スケッチを埋め込み",
+    "Present": "プレゼント",
+    "Fullscreen": "閲覧専用としてスケッチを共有",
+    "Edit": "スケッチを共有して編集を許可"
+  },
+  "CollectionView": {
+    "TitleCreate": "コレクションを作成",
+    "TitleDefault": "コレクション"
+  },
+  "Collection": {
+    "Title": "p5.js Web Editor | マイコレクション",
+    "AnothersTitle": "p5.js Web Editor | {{anotheruser}}のコレクション",
+    "Share": "共有",
+    "URLLink": "コレクションへのリンク",
+    "AddSketch": "スケッチを追加",
+    "DeleteFromCollection": "このコレクションから{{name_sketch}}を削除してもよろしいですか？",
+    "SketchDeleted": "スケッチを削除しました",
+    "SketchRemoveARIA": "コレクションからスケッチを削除",
+    "DescriptionPlaceholder": "説明を追加",
+    "Description": "説明",
+    "NumSketches": "{{count}}スケッチ",
+    "NumSketches_plural": "{{count}}スケッチ",
+    "By": "コレクション作成者: ",
+    "NoSketches": "コレクションにスケッチがありません",
+    "TableSummary": "すべてのコレクションを含むテーブル",
+    "HeaderName": "名前",
+    "HeaderCreatedAt": "追加日",
+    "HeaderUser": "所有者",
+    "DirectionAscendingARIA": "昇順",
+    "DirectionDescendingARIA": "降順",
+    "ButtonLabelAscendingARIA": "{{displayName}}で昇順に並べ替え。",
+    "ButtonLabelDescendingARIA": "{{displayName}}で降順に並べ替え。"
+  },
+  "AddToCollectionList": {
+    "Title": "p5.js Web Editor | マイコレクション",
+    "AnothersTitle": "p5.js Web Editor | {{anotheruser}}のコレクション",
+    "Empty": "コレクションがありません"
+  },
+  "CollectionCreate": {
+    "Title": "p5.js Web Editor | コレクションを作成",
+    "FormError": "コレクションを作成できませんでした",
+    "FormLabel": "コレクション名",
+    "FormLabelARIA": "名前",
+    "NameRequired": "コレクション名は必須です",
+    "Description": "説明（オプション）",
+    "DescriptionARIA": "説明",
+    "DescriptionPlaceholder": "お気に入りのスケッチ",
+    "SubmitCollectionCreate": "コレクションを作成"
+  },
+  "DashboardView": {
+    "CreateCollection": "コレクションを作成",
+    "NewSketch": "新しいスケッチ",
+    "CreateCollectionOverlay": "コレクションを作成"
+  },
+  "DashboardTabSwitcher": {
+    "Sketches": "スケッチ",
+    "Collections": "コレクション",
+    "Assets": "アセット"
+  },
+  "CollectionList": {
+    "Title": "p5.js Web Editor | マイコレクション",
+    "AnothersTitle": "p5.js Web Editor | {{anotheruser}}のコレクション",
+    "NoCollections": "コレクションがありません。",
+    "TableSummary": "すべてのコレクションを含むテーブル",
+    "HeaderName": "名前",
+    "HeaderCreatedAt": "作成日",
+    "HeaderCreatedAt_mobile": "作成",
+    "HeaderUpdatedAt": "更新日",
+    "HeaderUpdatedAt_mobile": "更新",
+    "HeaderNumItems": "# スケッチ",
+    "HeaderNumItems_mobile": "# スケッチ",
+    "DirectionAscendingARIA": "昇順",
+    "DirectionDescendingARIA": "降順",
+    "ButtonLabelAscendingARIA": "{{displayName}}で昇順に並べ替え。",
+    "ButtonLabelDescendingARIA": "{{displayName}}で降順に並べ替え。",
+    "AddSketch": "スケッチを追加"
+  },
+  "CollectionListRow": {
+    "ToggleCollectionOptionsARIA": "コレクションオプションの開閉を切り替え",
+    "AddSketch": "スケッチを追加",
+    "Delete": "削除",
+    "Rename": "名前変更"
+  },
+  "Overlay": {
+    "AriaLabel": "{{title}}オーバーレイを閉じる"
+  },
+  "QuickAddList": {
+    "ButtonRemoveARIA": "コレクションから削除",
+    "ButtonAddToCollectionARIA": "コレクションに追加",
+    "View": "表示"
+  },
+  "SketchList": {
+    "View": "表示",
+    "Title": "p5.js Web Editor | マイスケッチ",
+    "AnothersTitle": "p5.js Web Editor | {{anotheruser}}のスケッチ",
+    "ToggleLabelARIA": "スケッチオプションの開閉を切り替え",
+    "DropdownRename": "名前変更",
+    "DropdownDownload": "ダウンロード",
+    "DropdownDuplicate": "複製",
+    "DropdownAddToCollection": "コレクションに追加",
+    "DropdownDelete": "削除",
+    "DirectionAscendingARIA": "昇順",
+    "DirectionDescendingARIA": "降順",
+    "ButtonLabelAscendingARIA": "{{displayName}}で昇順に並べ替え。",
+    "ButtonLabelDescendingARIA": "{{displayName}}で降順に並べ替え。",
+    "AddToCollectionOverlayTitle": "コレクションに追加",
+    "TableSummary": "すべての保存されたプロジェクトを含むテーブル",
+    "HeaderName": "スケッチ",
+    "HeaderCreatedAt": "作成日",
+    "HeaderCreatedAt_mobile": "作成",
+    "HeaderUpdatedAt": "更新日",
+    "HeaderUpdatedAt_mobile": "更新",
+    "NoSketches": "スケッチがありません。"
+  },
+  "AddToCollectionSketchList": {
+    "Title": "p5.js Web Editor | マイスケッチ",
+    "AnothersTitle": "p5.js Web Editor | {{anotheruser}}のスケッチ",
+    "NoCollections": "コレクションがありません。"
+  },
+  "Editor": {
+    "OpenSketchARIA": "スケッチファイルナビゲーションを開く",
+    "CloseSketchARIA": "スケッチファイルナビゲーションを閉じる",
+    "UnsavedChangesARIA": "スケッチに未保存の変更があります",
+    "KeyUpLineNumber": "行 {{lineNumber}}"
+  },
+  "EditorAccessibility": {
+    "NoLintMessages": "リントメッセージはありません",
+    "CurrentLine": "現在の行"
+  },
+  "Timer": {
+    "SavedAgo": "保存: {{timeAgo}}"
+  },
+  "formatDate": {
+    "JustNow": "たった今",
+    "15Seconds": "15秒前",
+    "25Seconds": "25秒前",
+    "35Seconds": "35秒前",
+    "Ago": "{{timeAgo}}前"
+  },
+  "CopyableInput": {
+    "CopiedARIA": "クリップボードにコピーしました！",
+    "OpenViewTabARIA": "新しいタブで{{label}}ビューを開く"
+  },
+  "EditableInput": {
+    "EditValue": "{{display}}値を編集",
+    "EmptyPlaceholder": "値なし"
+  },
+  "PreviewNav": {
+    "EditSketchARIA": "スケッチを編集",
+    "ByUser": "作成者:"
+  },
+  "MobilePreferences": {
+    "Settings": "設定",
+    "GeneralSettings": "一般設定",
+    "Accessibility": "アクセシビリティ",
+    "AccessibleOutput": "アクセシブル出力",
+    "Theme": "テーマ",
+    "LightTheme": "ライト",
+    "DarkTheme": "ダーク",
+    "HighContrastTheme": "ハイコントラスト",
+    "Autosave": "自動保存",
+    "AutocompleteHinter": "オートコンプリートヒント",
+    "WordWrap": "ワードラップ",
+    "LineNumbers": "行番号",
+    "LintWarningSound": "リント警告音",
+    "UsedScreenReader": "スクリーンリーダー使用",
+    "PlainText": "プレーンテキスト",
+    "TableText": "テーブルテキスト",
+    "Sound": "サウンド",
+    "Preferences": "設定",
+    "Language": "言語"
+  },
+  "PreferenceCreators": {
+    "On": "オン",
+    "Off": "オフ"
+  },
+  "MobileDashboardView": {
+    "Examples": "サンプル",
+    "Sketches": "スケッチ",
+    "Collections": "コレクション",
+    "Assets": "アセット",
+    "MyStuff": "マイスタッフ",
+    "CreateSketch": "スケッチを作成",
+    "CreateCollection": "コレクションを作成"
+  },
+  "Explorer": {
+    "Files": "ファイル"
+  },
+  "Cookies": {
+    "Header": "クッキー",
+    "Body": "p5.js Editorはクッキーを使用します。いくつかはウェブサイトの機能に不可欠であり、アカウントと設定を管理できるようにします。その他は不可欠ではありません—これらは分析に使用され、私たちのコミュニティについてより詳しく学ぶことができます。<strong>私たちはこのデータを販売したり広告に使用したりすることは決してありません。</strong>どのクッキーを許可するかを決定でき、詳細は<0>プライバシーポリシー</0>で学ぶことができます。",
     "AllowAll": "すべて許可",
-    "AllowEssential": "必須項目を許可"
+    "AllowEssential": "必須のみ許可"
   },
   "Legal": {
     "PrivacyPolicy": "プライバシーポリシー",
     "TermsOfUse": "利用規約",
     "CodeOfConduct": "行動規範"
+  },
+  "SkipLink": {
+    "PlaySketch": "スケッチ実行にスキップ"
+  },
+  "Visibility": {
+    "Label": "公開範囲",
+    "Public": {
+      "Description": "誰でもこのスケッチを見ることができます。",
+      "Label": "公開"
+    },
+    "Private": {
+      "Description": "あなただけがこのスケッチを見ることができます。",
+      "Label": "非公開"
+    },
+    "Changed": "'{{projectName}}'は現在{{newVisibility}}です..."
   }
 }

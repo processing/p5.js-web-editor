@@ -31,32 +31,37 @@
       "ChatOnDiscord": "Conversar no Discord",
       "PostOnTheForum": "Postar no Fórum"
     },
+    "Lang": "Idioma",
     "BackEditor": "Voltar ao Editor",
-    "WarningUnsavedChanges": "Realmente quer sair da página? Há mudanças não salvas.",
+    "WarningUnsavedChanges": "Tem certeza que deseja sair desta página? Você tem alterações não salvas.",
     "Login": "Entrar",
     "LoginOr": "ou",
     "SignUp": "Registrar-se",
     "Auth": {
+      "Welcome": "Bem-vindo",
       "Hello": "Olá",
       "MyAccount": "Minha Conta",
+      "My": "Meu",
       "MySketches": "Meus Esboços",
       "MyCollections": "Minhas Coleções",
+      "Asset": "Ativo",
       "MyAssets": "Meus Ativos",
       "LogOut": "Sair"
     }
   },
   "CodemirrorFindAndReplace": {
-    "ToggleReplace": "Alternar entre localizar/substituir",
+    "ToggleReplace": "Alternar Substituição",
+    "Find": "Localizar",
     "FindPlaceholder": "Localizar em arquivos",
     "Replace": "Substituir",
-    "ReplaceAll": "Substituir tudo",
-    "ReplacePlaceholder": "Texto a ser substituído",
+    "ReplaceAll": "Substituir Tudo",
+    "ReplacePlaceholder": "Texto a substituir",
     "Regex": "Expressão regular",
-    "CaseSensitive": "Diferenciar maiúsculas e minúsculas",
-    "WholeWords": "Apenas palavras completas",
+    "CaseSensitive": "Diferenciar maiúsculas/minúsculas",
+    "WholeWords": "Palavras inteiras",
     "Previous": "Anterior",
     "Next": "Próximo",
-    "NoResults": "Não há resultados",
+    "NoResults": "Nenhum resultado",
     "Close": "Fechar"
   },
   "LoginForm": {
@@ -74,60 +79,63 @@
     "Login": "Entrar",
     "LoginOr": "ou",
     "SignUp": "Registrar-se",
+    "Email": "email",
+    "Username": "nome de usuário",
     "DontHaveAccount": "Não tem uma conta? ",
     "ForgotPassword": "Esqueceu sua senha? ",
-    "ResetPassword": "Recuperar sua senha"
+    "ResetPassword": "Redefinir sua senha"
   },
   "SocialAuthButton": {
-    "Connect": "Conectar conta {{serviceauth}}",
-    "Unlink": "Desvincular conta {{serviceauth}}",
+    "Connect": "Conectar Conta {{serviceauth}}",
+    "Unlink": "Desvincular Conta {{serviceauth}}",
     "Login": "Entrar com {{serviceauth}}",
-    "LogoARIA": "Logo {{serviceauth}}"
+    "LogoARIA": "logo {{serviceauth}}"
   },
   "About": {
     "Title": "Sobre",
     "TitleHelmet": "Editor Web p5.js | Sobre",
-    "Contribute": "Contribua",
-    "NewP5": "Novo ao p5.js?",
-    "Report": "Reporte um erro",
-    "Home": "Página Inicial",
+    "Headline": "Crie, compartilhe e remixe esboços p5.js com o Editor p5.js.",
+    "Contribute": "Contribuir",
+    "IntroDescription1": "p5.js é uma biblioteca JavaScript gratuita e de código aberto para aprender a programar e criar arte. Usando o Editor p5.js, você pode criar, compartilhar e remixar esboços p5.js sem precisar baixar ou configurar nada.",
+    "IntroDescription2": "Acreditamos que o software e as ferramentas para aprendê-lo devem ser o mais abertas e inclusivas possível. Você pode apoiar este trabalho fazendo uma doação para a Processing Foundation, a organização que apoia o p5.js. Sua doação apoia o desenvolvimento de software para o p5.js, recursos educacionais como exemplos de código e tutoriais, bolsas de estudo e eventos comunitários.",
+    "Donate": "Doar",
+    "NewP5": "Novo no p5.js?",
+    "Report": "Reportar um Erro",
+    "Learn": "Aprender",
+    "X": "X",
+    "Home": "Página Inicial p5.js",
     "Instagram": "Instagram",
     "Discord": "Discord",
-    "WebEditor": "Editor Web",
-    "Resources": "Recursos",
-    "Libraries": "Bibliotecas",
-    "Forum": "Fórum",
-    "Examples": "Exemplos",
-    "PrivacyPolicy": "Política de Privacidade",
-    "TermsOfUse": "Termos de Uso",
-    "CodeOfConduct": "Código de Conduta",
-    "Headline": "Crie, compartilhe e remixe projetos p5.js com o Editor p5.js.",
-    "IntroDescription1": "p5.js é uma biblioteca JavaScript gratuita e de código aberto para aprender a programar e fazer arte. Usando o Editor p5.js, você pode criar, compartilhar e remixar projetos p5.js sem precisar baixar ou configurar nada.",
-    "IntroDescription2": "Acreditamos que o software e as ferramentas para aprendê-lo devem ser o mais abertas e inclusivas possível. Você pode apoiar este trabalho fazendo uma doação para a Processing Foundation, a organização que apoia o p5.js. Sua doação apoia o desenvolvimento de software para o p5.js, recursos educacionais como exemplos de código e tutoriais, bolsas de estudo e eventos comunitários.",
-    "Donate": "Doe",
-    "X": "X",
     "DiscordCTA": "Junte-se ao Discord",
     "Youtube": "Youtube",
     "Github": "Github",
     "GetInvolved": "Envolva-se",
+    "WebEditor": "Editor Web",
+    "Resources": "Recursos",
     "Reference": "Referência",
-    "ForumCTA": "Junte-se ao fórum",
+    "Libraries": "Bibliotecas",
+    "Forum": "Fórum",
+    "ForumCTA": "Junte-se ao Fórum",
+    "Examples": "Exemplos",
+    "PrivacyPolicy": "Política de Privacidade",
+    "TermsOfUse": "Termos de Uso",
+    "CodeOfConduct": "Código de Conduta",
     "Email": "Email",
     "EmailAddress": "hello@p5js.org",
     "Socials": "Redes Sociais",
     "LinkDescriptions": {
-      "Home": "Aprenda mais sobre p5.js e nossa comunidade.",
+      "Home": "Saiba mais sobre p5.js e nossa comunidade.",
       "Examples": "Explore as possibilidades do p5.js com exemplos curtos.",
-      "CodeOfConduct": "Leia nosso Estado da Comunidade e Código de Conduta.",
+      "CodeOfConduct": "Leia nossa Declaração da Comunidade e Código de Conduta.",
       "Libraries": "Expanda as possibilidades do p5.js com bibliotecas criadas pela comunidade.",
       "Reference": "Encontre explicações fáceis para cada parte do código p5.js.",
       "Donate": "Apoie este trabalho com uma doação para a Processing Foundation.",
       "Contribute": "Contribua para o Editor p5.js de código aberto no Github.",
-      "Report": "Reporte um erro ou comportamento incorreto com o Editor p5.js.",
-      "Forum": "Expanda as possibilidades do p5.js com bibliotecas criadas pela comunidade.",
-      "Discord": "Expanda as possibilidades do p5.js com bibliotecas criadas pela comunidade."
+      "Report": "Reporte comportamento quebrado ou incorreto com o Editor p5.js.",
+      "Forum": "Faça perguntas, compartilhe esboços e obtenha ajuda da comunidade p5.js.",
+      "Discord": "Converse com a comunidade p5.js e obtenha ajuda rápida."
     },
-    "Contact": "Entre em Contato"
+    "Contact": "Contate-nos"
   },
   "Toast": {
     "OpenedNewSketch": "Novo esboço aberto.",
@@ -145,132 +153,139 @@
   "Toolbar": {
     "Preview": "Pré-visualização",
     "Auto-refresh": "Auto-atualizar",
-    "OpenPreferencesARIA": "Abrir preferências",
+    "OpenPreferencesARIA": "Abrir Preferências",
     "PlaySketchARIA": "Executar esboço",
-    "PlayOnlyVisualSketchARIA": "Executar somente o esboço visual",
+    "PlayOnlyVisualSketchARIA": "Executar apenas esboço visual",
     "StopSketchARIA": "Parar esboço",
-    "EditSketchARIA": "Mudar nome do esboço",
+    "EditSketchARIA": "Editar nome do esboço",
     "NewSketchNameARIA": "Novo nome de esboço",
     "By": " por ",
     "CustomLibraryVersion": "Versão personalizada do p5.js",
-    "VersionPickerARIA": "Selecionador de versão",
-    "NewVersionPickerARIA": "Novo selecionador de versão"
+    "VersionPickerARIA": "Seletor de versão",
+    "NewVersionPickerARIA": "Seletor de versão"
   },
   "Console": {
-    "Title": "Terminal",
+    "Title": "Console",
     "Clear": "Limpar",
-    "ClearARIA": "Limpar terminal",
-    "CloseARIA": "Fechar terminal",
-    "OpenARIA": "Abrir terminal"
+    "ClearARIA": "Limpar console",
+    "Close": "Fechar",
+    "CloseARIA": "Fechar console",
+    "Open": "Abrir",
+    "OpenARIA": "Abrir console"
   },
   "Preferences": {
     "Settings": "Configurações",
-    "GeneralSettings": "Configurações gerais",
+    "GeneralSettings": "Configurações Gerais",
     "Accessibility": "Acessibilidade",
+    "LibraryManagement": "Gerenciamento de Bibliotecas",
     "Theme": "Tema",
     "LightTheme": "Claro",
     "LightThemeARIA": "tema claro ativado",
     "DarkTheme": "Escuro",
     "DarkThemeARIA": "tema escuro ativado",
-    "HighContrastTheme": "Alto contraste",
-    "HighContrastThemeARIA": "alto contraste ativado",
-    "TextSize": "Tamanho do texto",
+    "HighContrastTheme": "Alto Contraste",
+    "HighContrastThemeARIA": "tema de alto contraste ativado",
+    "TextSize": "Tamanho do Texto",
     "DecreaseFont": "Diminuir",
     "DecreaseFontARIA": "diminuir tamanho da fonte",
     "IncreaseFont": "Aumentar",
     "IncreaseFontARIA": "aumentar tamanho da fonte",
-    "Autosave": "Salvamento automático",
-    "On": "Ligado",
-    "AutosaveOnARIA": "Salvamento automático ativado",
-    "Off": "Desligado",
-    "AutosaveOffARIA": "Salvamento automático desativado",
-    "AutocloseBracketsQuotes": "Fechamento automático de chaves e aspas",
-    "AutocloseBracketsQuotesOnARIA": "fechamento automático de chaves e aspas ativado",
-    "AutocloseBracketsQuotesOffARIA": "fechamento automático de chaves e aspas desativado",
-    "WordWrap": "Quebra automática de linhas",
-    "WordWrapOnARIA": "quebra automática de linhas ativada",
-    "WordWrapOffARIA": "quebra automática de linhas desativada",
-    "LineNumbers": "Números de linha",
-    "LineNumbersOnARIA": "números de linha ativado",
-    "LineNumbersOffARIA": "números de linha desativado",
-    "LintWarningSound": "Som de aviso do Lint",
-    "LintWarningOnARIA": "Som de aviso do Lint ativado",
-    "LintWarningOffARIA": "Som de aviso do Lint desativado",
-    "PreviewSound": "Prévia do Som",
-    "PreviewSoundARIA": "prever som",
-    "AccessibleTextBasedCanvas": "Tela acessível por texto",
-    "UsedScreenReader": "Uso com Leitor de Tela",
-    "PlainText": "Texto sem formatação",
-    "TextOutputARIA": "Saída de texto ativada",
-    "TableText": "Tabela de texto",
-    "TableOutputARIA": "tabela de texto ativada",
-    "LibraryManagement": "Gestão de Bibliotecas",
     "FontSize": "Tamanho da Fonte",
     "SetFontSize": "definir tamanho da fonte",
-    "AutocompleteHinter": "Geração de dicas de Autocompleter",
-    "AutocompleteHinterOnARIA": "Geração de dicas do Autocompleter ativada",
-    "AutocompleteHinterOffARIA": "Geração de dicas do Autocompleter desativada",
+    "Autosave": "Salvamento Automático",
+    "On": "Ligado",
+    "AutosaveOnARIA": "salvamento automático ativado",
+    "Off": "Desligado",
+    "AutosaveOffARIA": "salvamento automático desativado",
+    "AutocloseBracketsQuotes": "Fechar Automaticamente Colchetes e Aspas",
+    "AutocloseBracketsQuotesOnARIA": "fechamento automático de colchetes e aspas ativado",
+    "AutocloseBracketsQuotesOffARIA": "fechamento automático de colchetes e aspas desativado",
+    "AutocompleteHinter": "Sugestões de Auto-completar",
+    "AutocompleteHinterOnARIA": "sugestões de auto-completar ativadas",
+    "AutocompleteHinterOffARIA": "sugestões de auto-completar desativadas",
+    "WordWrap": "Quebra de Linha",
+    "WordWrapOnARIA": "quebra de linha ativada",
+    "WordWrapOffARIA": "quebra de linha desativada",
+    "LineNumbers": "Números de linha",
+    "LineNumbersOnARIA": "números de linha ativados",
+    "LineNumbersOffARIA": "números de linha desativados",
+    "LintWarningSound": "Som de aviso do Lint",
+    "LintWarningOnARIA": "som de aviso do lint ativado",
+    "LintWarningOffARIA": "som de aviso do lint desativado",
+    "PreviewSound": "Som de pré-visualização",
+    "PreviewSoundARIA": "som de pré-visualização",
+    "AccessibleTextBasedCanvas": "Canvas baseado em texto acessível",
+    "UsedScreenReader": "Usado com leitor de tela",
+    "PlainText": "Texto simples",
+    "TextOutputARIA": "saída de texto ativada",
+    "TableText": "Texto em tabela",
+    "TableOutputARIA": "saída em tabela ativada",
     "LibraryVersion": "Versão do p5.js",
-    "LibraryVersionInfo": "Há uma [nova versão 2.0](https://github.com/processing/p5.js/releases/) do p5.js disponível! Ela se tornará padrão em agosto de 2026, então aproveite este tempo para testá-la e relatar erros. Está interessado em migrar esboços de 1.x para 2.0? Confira os [recursos de compatibilidade e migração.](https://github.com/processing/p5.js-compatibility)",
+    "LibraryVersionInfo": "Há um [novo lançamento 2.0](https://github.com/processing/p5.js/releases/) do p5.js disponível! Ele se tornará padrão em agosto de 2026, então aproveite este tempo para testá-lo e reportar erros. Interessado em transicionar esboços de 1.x para 2.0? Confira os [recursos de compatibilidade e transição.](https://github.com/processing/p5.js-compatibility)",
     "CustomVersionTitle": "Gerenciando suas próprias bibliotecas? Legal!",
     "CustomVersionInfo": "A versão do p5.js está atualmente sendo gerenciada no código do index.html. Isso significa que não pode ser ajustada a partir desta aba.",
     "CustomVersionReset": "Se você gostaria de usar as bibliotecas padrão, pode substituir as tags de script no index.html pelo seguinte:",
-    "SoundAddon": "Biblioteca adicional p5.sound.js",
-    "PreloadAddon": "Biblioteca adicional de Compatibilidade p5.js 1.x — Pré-carregamento",
-    "ShapesAddon": "Biblioteca adicional de Compatibilidade p5.js 1.x — Formas",
-    "DataAddon": "Biblioteca adicional de Compatibilidade p5.js 1.x — Estruturas de Dados",
+    "SoundAddon": "Biblioteca Adicional p5.sound.js",
+    "PreloadAddon": "Biblioteca Adicional de Compatibilidade p5.js 1.x — Pré-carregamento",
+    "ShapesAddon": "Biblioteca Adicional de Compatibilidade p5.js 1.x — Formas",
+    "DataAddon": "Biblioteca Adicional de Compatibilidade p5.js 1.x — Dados & Eventos",
+    "AddonOnARIA": "ativado",
+    "AddonOffARIA": "desativado",
     "SoundReference": "Ver a referência para p5.sound compatível com p5.js {{version}}",
     "CopyToClipboardSuccess": "Copiado para a área de transferência!",
     "CopyToClipboardFailure": "Não conseguimos copiar o texto, tente selecioná-lo e copiá-lo manualmente."
   },
   "KeyboardShortcuts": {
     "Title": " Atalhos de Teclado",
-    "ShortcutsFollow": "Os atalhos para edição de código seguem",
-    "SublimeText": "os atalhos do SublimeText",
+    "ShortcutsFollow": "Os atalhos de teclado para edição de código seguem",
+    "SublimeText": "os atalhos do Sublime Text",
     "CodeEditing": {
-      "Tidy": "Reformatar código",
-      "FindText": "Localizar texto",
-      "ReplaceTextMatch": "Substituir texto encontrado",
-      "IndentCodeLeft": "Indentar código à esquerda",
-      "IndentCodeRight": "Indentar código à direita",
-      "CommentLine": "Comentar linhas",
-      "FindNextTextMatch": "Localizar próxima ocorrência de texto",
-      "FindPreviousTextMatch": "Localizar ocorrência de texto anterior",
-      "CodeEditing": "Edição de código",
-      "ColorPicker": "Mostrar ferramenta seletora de cores",
-      "CreateNewFile": "Criar novo arquivo"
+      "Tidy": "Organizar",
+      "FindText": "Localizar Texto",
+      "FindNextMatch": "Localizar Próxima Ocorrência",
+      "FindPrevMatch": "Localizar Ocorrência Anterior",
+      "ReplaceTextMatch": "Substituir Ocorrência de Texto",
+      "IndentCodeLeft": "Recuar Código à Esquerda",
+      "IndentCodeRight": "Recuar Código à Direita",
+      "CommentLine": "Comentar Linha",
+      "FindNextTextMatch": "Localizar Próxima Ocorrência de Texto",
+      "FindPreviousTextMatch": "Localizar Ocorrência de Texto Anterior",
+      "CodeEditing": "Edição de Código",
+      "ColorPicker": "Mostrar Seletor de Cores Embutido",
+      "CreateNewFile": "Criar Novo Arquivo",
+      "RenameVariable": "Renomear Variável"
     },
+    "General": "Geral",
     "GeneralSelection": {
-      "StartSketch": "Começar esboço",
-      "StopSketch": "Parar esboço",
-      "TurnOnAccessibleOutput": "Ativar saída acessível",
-      "TurnOffAccessibleOutput": "Desativar saída acessível",
-      "Reference": "Ir para referência do item selecionado no gerador de dicas"
-    },
-    "General": "Geral"
+      "StartSketch": "Iniciar Esboço",
+      "StopSketch": "Parar Esboço",
+      "TurnOnAccessibleOutput": "Ativar Saída Acessível",
+      "TurnOffAccessibleOutput": "Desativar Saída Acessível",
+      "Reference": "Ir para Referência do Item Selecionado no Sugestor"
+    }
   },
   "Sidebar": {
-    "Title": "Arquivos do esboço",
-    "ToggleARIA": "Alternar entre abrir/fechar opções do arquivo",
+    "Title": "Arquivos do Esboço",
+    "ToggleARIA": "Alternar abrir/fechar opções de arquivo do esboço",
     "AddFolder": "Criar pasta",
-    "AddFolderARIA": "Adicionar pasta",
+    "AddFolderARIA": "adicionar pasta",
     "AddFile": "Criar arquivo",
     "AddFileARIA": "adicionar arquivo",
     "UploadFile": "Carregar arquivo",
     "UploadFileARIA": "carregar arquivo"
   },
   "FileNode": {
-    "OpenFolderARIA": "Abrir conteúdos da pasta",
+    "OpenFolderARIA": "Abrir conteúdo da pasta",
     "CloseFolderARIA": "Fechar conteúdo da pasta",
-    "ToggleFileOptionsARIA": "Alternar entre abrir/fechar opções do arquivo",
+    "ToggleFileOptionsARIA": "Alternar abrir/fechar opções de arquivo",
     "AddFolder": "Criar pasta",
-    "AddFolderARIA": "Adicionar pasta",
+    "AddFolderARIA": "adicionar pasta",
     "AddFile": "Criar arquivo",
     "AddFileARIA": "adicionar arquivo",
     "UploadFile": "Carregar arquivo",
     "UploadFileARIA": "carregar arquivo",
     "Rename": "Renomear",
-    "Delete": "Remover"
+    "Delete": "Excluir"
   },
   "Common": {
     "SiteName": "Editor Web p5.js",
@@ -278,7 +293,7 @@
     "ErrorARIA": "Erro",
     "Save": "Salvar",
     "p5logoARIA": "Logo p5.js",
-    "DeleteConfirmation": "Realmente quer remover {{name}}?"
+    "DeleteConfirmation": "Tem certeza que deseja excluir {{name}}?"
   },
   "IDEView": {
     "SubmitFeedback": "Enviar Feedback",
@@ -289,106 +304,109 @@
     "ShareARIA": "compartilhar"
   },
   "NewFileModal": {
-    "Title": "Criar Arquivos",
-    "CloseButtonARIA": "Fechar módulo de criação de arquivos",
-    "EnterName": "Por favor coloque um nome",
-    "InvalidType": "Tipo de arquivo inválido. Extensões válidas são .js, .css, .json, .xml, .txt, .csv, .tsv, .frag e .vert."
+    "Title": "Criar Arquivo",
+    "CloseButtonARIA": "Fechar Modal de Novo Arquivo",
+    "EnterName": "Por favor, insira um nome",
+    "InvalidType": "Tipo de arquivo inválido. Extensões válidas são .js, .css, .json, .xml, .stl, .txt, .csv, .tsv, .mtl, .frag e .vert."
   },
   "NewFileForm": {
-    "AddFileSubmit": "Adicionar arquivo",
+    "AddFileSubmit": "Adicionar Arquivo",
     "Placeholder": "Nome"
   },
   "NewFolderModal": {
-    "Title": "Criar",
-    "CloseButtonARIA": "Fechar módulo de criação de pasta",
-    "EnterName": "Por favor coloque um nome",
-    "EmptyName": "Nomes de pastas não podem conter apenas espaços",
-    "InvalidExtension": "Nomes de pastas não podem conter extensões"
+    "Title": "Criar Pasta",
+    "CloseButtonARIA": "Fechar Modal de Nova Pasta",
+    "EnterName": "Por favor, insira um nome",
+    "EmptyName": "O nome da pasta não pode conter apenas espaços",
+    "InvalidExtension": "O nome da pasta não pode conter uma extensão"
   },
   "NewFolderForm": {
-    "AddFolderSubmit": "Adicionar pasta",
+    "AddFolderSubmit": "Adicionar Pasta",
     "Placeholder": "Nome"
   },
   "ResetPasswordForm": {
-    "Email": "Email usado para a conta",
+    "Email": "Email usado para registro",
     "EmailARIA": "email",
-    "Submit": "Enviar email para recuperar senha"
+    "Submit": "Enviar Email de Redefinição de Senha"
   },
   "ResetPasswordView": {
-    "Title": "Editor Web p5.js | Recuperar Senha",
-    "Reset": "Recuperar Sua Senha",
-    "Submitted": "Seu email com a senha nova deve chegar em breve. Se não o encontrar, olhe \n em sua pasta de Spam, já que às vezes pode chegar por lá.",
+    "Title": "Editor Web p5.js | Redefinir Senha",
+    "Reset": "Redefinir Sua Senha",
+    "Submitted": "Seu email de redefinição de senha deve chegar em breve. Se você não o vir, verifique\n            sua pasta de spam, pois às vezes ele pode acabar lá.",
     "Login": "Entrar",
     "LoginOr": "ou",
     "SignUp": "Registrar-se"
   },
   "ReduxFormUtils": {
-    "errorInvalidEmail": "Por favor coloque um endereço de email válido",
-    "errorEmptyEmail": "Por favor coloque um endereço de email",
+    "errorInvalidEmail": "Por favor, insira um endereço de email válido",
+    "errorEmptyEmail": "Por favor, insira um email",
+    "errorEmptyEmailorUserName": "Por favor, insira um email ou nome de usuário",
     "errorPasswordMismatch": "As senhas devem coincidir",
-    "errorEmptyPassword": "Por favor coloque sua senha",
-    "errorShortPassword": "A senha deve ter no mínimo 6 caracteres",
-    "errorConfirmPassword": "Por favor coloque a senha de confirmação",
-    "errorNewPassword": "Por favor adicione uma senha nova ou deixe a atual em branco.",
-    "errorNewPasswordRepeat": "Sua nova senha precisa ser distinta da senha atual.",
-    "errorEmptyUsername": "Por favor coloque um nome de usuário",
+    "errorEmptyPassword": "Por favor, insira uma senha",
+    "errorShortPassword": "A senha deve ter pelo menos 6 caracteres",
+    "errorConfirmPassword": "Por favor, confirme sua senha",
+    "errorNewPassword": "Por favor, insira uma nova senha ou deixe a senha atual vazia.",
+    "errorNewPasswordRepeat": "Sua Nova Senha deve ser diferente da atual.",
+    "errorEmptyUsername": "Por favor, insira um nome de usuário.",
     "errorLongUsername": "O nome de usuário deve ter menos de 20 caracteres.",
-    "errorValidUsername": "O nome de usuário deve conter apenas números, letras, pontos, hífens e underscores.",
-    "errorEmptyEmailorUserName": "Por favor insira um email ou nome de usuário"
+    "errorValidUsername": "O nome de usuário deve consistir apenas em números, letras, pontos, traços e sublinhados."
   },
   "NewPasswordView": {
     "Title": "Editor Web p5.js | Nova Senha",
-    "Description": "Definir a Nova Senha",
-    "TokenInvalidOrExpired": "O token de recuperação de senha é inválido ou expirou."
+    "Description": "Definir uma Nova Senha",
+    "TokenInvalidOrExpired": "O token de redefinição de senha é inválido ou expirou.",
+    "EmptyPassword": "Por favor, insira uma senha",
+    "PasswordConfirmation": "Por favor, confirme sua senha",
+    "PasswordMismatch": "As senhas devem coincidir"
   },
   "AccountForm": {
     "Email": "Email",
     "EmailARIA": "email",
     "Unconfirmed": "Não confirmado.",
     "EmailSent": "Confirmação enviada, verifique seu email.",
-    "Resend": "Reenviar confirmação de email",
-    "UserName": "Nome de usuário",
+    "Resend": "Reenviar email de confirmação",
+    "UserName": "Nome de Usuário",
     "UserNameARIA": "Nome de usuário",
-    "CurrentPassword": "Senha atual",
-    "CurrentPasswordARIA": "Senha atual",
-    "NewPassword": "Nova senha",
-    "NewPasswordARIA": "Nova senha",
-    "SaveAccountDetails": "Salvar detalhes da conta"
+    "CurrentPassword": "Senha Atual",
+    "CurrentPasswordARIA": "Senha Atual",
+    "NewPassword": "Nova Senha",
+    "NewPasswordARIA": "Nova Senha",
+    "SaveAccountDetails": "Salvar Detalhes da Conta"
   },
   "AccountView": {
-    "SocialLogin": "Login usando redes sociais",
-    "SocialLoginDescription": "Use seu GitHub ou sua conta do Google para entrar no Editor Web p5.js.",
-    "Title": "Editor Web p5.js | Configurações de Conta",
-    "Settings": "Configurações de Conta",
+    "SocialLogin": "Login Social",
+    "SocialLoginDescription": "Use sua conta GitHub ou Google para entrar no Editor Web p5.js.",
+    "Title": "Editor Web p5.js | Configurações da Conta",
+    "Settings": "Minha Conta",
     "AccountTab": "Conta",
     "AccessTokensTab": "Tokens de Acesso"
   },
   "APIKeyForm": {
-    "ConfirmDelete": "Realmente quer remover {{key_label}}?",
-    "Summary": "Tokens de Acesso Pessoal atuam como sua senha para permitir que scripts automáticos\n acessem a API do editor. Crie um token para cada script \n que necessite acesso.",
+    "ConfirmDelete": "Tem certeza que deseja excluir {{key_label}}?",
+    "Summary": "Tokens de Acesso Pessoal atuam como sua senha para permitir que scripts\n          automatizados acessem a API do Editor. Crie um token para cada script\n          que precise de acesso.",
     "CreateToken": "Criar novo token",
-    "TokenLabel": "Para que este token será utilizado?",
-    "TokenPlaceholder": "Para que este token será utilizado? Por exemplo, para importar um arquivo",
+    "TokenLabel": "Para que é este token?",
+    "TokenPlaceholder": "Para que é este token? ex: Script de importação de exemplo",
     "CreateTokenSubmit": "Criar",
-    "NoTokens": "Não há tokens existentes.",
+    "NoTokens": "Você não tem tokens existentes.",
     "NewTokenTitle": "Seu novo token de acesso",
-    "NewTokenInfo": "Lembre-se de copiar seu novo token de acesso pessoal agora.\nVocê não será capaz de vê-lo novamente!",
+    "NewTokenInfo": "Certifique-se de copiar seu novo token de acesso pessoal agora.\n                  Você não poderá vê-lo novamente!",
     "ExistingTokensTitle": "Tokens existentes"
   },
   "APIKeyList": {
     "Name": "Nome",
     "Created": "Criado em",
-    "LastUsed": "Usado por último",
+    "LastUsed": "Último uso",
     "Actions": "Ações",
     "Never": "Nunca",
-    "DeleteARIA": "Excluir chave de API"
+    "DeleteARIA": "Excluir Chave API"
   },
   "NewPasswordForm": {
     "Title": "Senha",
     "TitleARIA": "Senha",
-    "ConfirmPassword": "Confirme Senha",
-    "ConfirmPasswordARIA": "Confirme Senha",
-    "SubmitSetNewPassword": "Defina uma nova senha"
+    "ConfirmPassword": "Confirmar Senha",
+    "ConfirmPasswordARIA": "Confirmar Senha",
+    "SubmitSetNewPassword": "Definir Nova Senha"
   },
   "SignupForm": {
     "Title": "Nome de Usuário",
@@ -398,86 +416,98 @@
     "Password": "Senha",
     "PasswordARIA": "senha",
     "ConfirmPassword": "Confirmar Senha",
-    "ConfirmPasswordARIA": "Confirmar Senha",
-    "SubmitSignup": "Entrar"
+    "ConfirmPasswordARIA": "Confirmar senha",
+    "SubmitSignup": "Registrar-se"
   },
   "SignupView": {
-    "Title": "Editor Web p5.js | Criar Conta",
-    "Description": "Criar Conta",
+    "Title": "Editor Web p5.js | Cadastro",
+    "Description": "Cadastrar-se",
     "Or": "Ou",
     "AlreadyHave": "Já tem uma conta?",
     "Login": "Entrar",
-    "Warning": "Ao se inscrever, você concorda com os <0>Termos de Uso</0> e a <1>Política de Privacidade</1> do editor p5.js."
+    "Warning": "Ao se cadastrar, você concorda com os <0>Termos de Uso</0> e a <1>Política de Privacidade</1> do Editor p5.js."
   },
   "EmailVerificationView": {
     "Title": "Editor Web p5.js | Verificação de Email",
     "Verify": "Verifique seu email",
-    "InvalidTokenNull": "Link Inválido.",
-    "Checking": "Validando token, aguarde...",
-    "Verified": "Tudo pronto, seu endereço de email foi verificado!",
+    "InvalidTokenNull": "Esse link é inválido.",
+    "Checking": "Validando token, por favor aguarde...",
+    "Verified": "Tudo pronto, seu endereço de email foi verificado.",
     "InvalidState": "O token é inválido ou expirou."
   },
   "AssetList": {
     "Title": "Editor Web p5.js | Meus ativos",
-    "ToggleOpenCloseARIA": "Alternar entre abrir/fechar opções de ativos",
-    "Delete": "Remover",
-    "OpenNewTab": "Abrir em nova aba",
-    "NoUploadedAssets": "Nenhum ativo foi carregado.",
+    "ToggleOpenCloseARIA": "Alternar Abrir/Fechar Opções de Ativo",
+    "Delete": "Excluir",
+    "OpenNewTab": "Abrir em Nova Aba",
+    "NoUploadedAssets": "Nenhum ativo carregado.",
     "HeaderName": "Nome",
     "HeaderSize": "Tamanho",
     "HeaderSketch": "Esboço",
     "maximum": "Máximo"
   },
   "Feedback": {
-    "Title": "Editor Web p5.js | Feedback"
+    "Title": "Editor Web p5.js | Feedback",
+    "ViaGithubHeader": "Via Issues do Github",
+    "ViaGithubDescription": "Se você está familiarizado com o Github, este é nosso método preferido para receber relatórios de erros e feedback.",
+    "GoToGithub": "Ir para o Github",
+    "ViaGoogleHeader": "Via Formulário do Google",
+    "ViaGoogleDescription": "Você também pode enviar este formulário rápido.",
+    "GoToForm": "Ir para o Formulário"
   },
   "Searchbar": {
-    "SearchSketch": "Localizar esboços...",
-    "SearchCollection": "Localizar coleções...",
-    "ClearTerm": "Limpar"
+    "SearchSketch": "Pesquisar esboços...",
+    "SearchCollection": "Pesquisar coleções...",
+    "ClearTerm": "limpar"
   },
   "UploadFileModal": {
-    "Title": "Carregar Arquivos",
-    "CloseButtonARIA": "Fechar módulo de carregamento de arquivos",
-    "SizeLimitError": "Erro: Você não pode carregar mais arquivos. Você alcançou o tamanho limite de {{sizeLimit}}.\nSe quiser carregar mais arquivos, por favor apague os que não estão sendo utilizados\n                em seu "
+    "Title": "Carregar Arquivo",
+    "CloseButtonARIA": "Fechar modal de carregamento de arquivo",
+    "SizeLimitError": "Erro: Você não pode carregar mais arquivos. Você atingiu o limite total de tamanho de {{sizeLimit}}.\n                Se você gostaria de carregar mais, por favor remova os que não está mais usando\n                em seu "
   },
   "FileUploader": {
-    "DictDefaultMessage": "Arraste e solte arquivos aqui ou clique para usar o navegador de arquivos"
+    "DictDefaultMessage": "Solte arquivos aqui ou clique para usar o navegador de arquivos"
   },
   "ErrorModal": {
-    "MessageLogin": "Para salvar esboços, você deve entrar em sua conta. Por favor ",
+    "MessageLogin": "Para salvar esboços, você deve estar logado. Por favor ",
     "Login": "Entrar",
     "LoginOr": " ou ",
     "SignUp": "Registrar-se",
-    "MessageLoggedOut": "Parece que você saiu. Por favor ",
-    "LogIn": "entrar",
-    "SavedDifferentWindow": "O projeto que você tentou salvar foi salvo em outra janela.\n Por favor recarregue a página para ver a última versão.",
-    "LinkTitle": "Erro ao Conectar Conta",
-    "LinkMessage": "Ocorreu um problema ao conectar sua conta {{serviceauth}} com sua conta do Editor Web p5.js. Sua conta {{serviceauth}} já foi conectada com outra conta do Editor Web p5.js."
+    "MessageLoggedOut": "Parece que você foi desconectado. Por favor ",
+    "LogIn": "entre",
+    "SavedDifferentWindow": "O projeto que você tentou salvar foi salvo de outra janela.\n        Por favor, atualize a página para ver a versão mais recente.",
+    "LinkTitle": "Erro ao Vincular Conta",
+    "LinkMessage": "Houve um problema ao vincular sua conta {{serviceauth}} à sua conta do Editor Web p5.js. Sua conta {{serviceauth}} já foi vinculada a outra conta do Editor Web p5.js."
   },
   "ShareModal": {
-    "Embed": "Embutir",
+    "Embed": "Incorporar Esboço",
     "Present": "Apresentar",
-    "Fullscreen": "Tela Cheia",
-    "Edit": "Editar"
+    "Fullscreen": "Compartilhar Esboço Como Somente Visualização",
+    "Edit": "Compartilhar Esboço e Permitir Edição"
+  },
+  "CollectionView": {
+    "TitleCreate": "Criar coleção",
+    "TitleDefault": "coleção"
   },
   "Collection": {
     "Title": "Editor Web p5.js | Minhas coleções",
-    "AnothersTitle": "Editor Web p5.js | Coleção de {{anotheruser}}",
+    "AnothersTitle": "Editor Web p5.js | Coleções de {{anotheruser}}",
     "Share": "Compartilhar",
-    "URLLink": "Conectar à Coleção",
+    "URLLink": "Link para Coleção",
     "AddSketch": "Adicionar Esboço",
-    "DeleteFromCollection": "Realmente quer remover {{name_sketch}} dessa coleção?",
-    "SketchDeleted": "Esboço apagado",
+    "DeleteFromCollection": "Tem certeza que deseja remover {{name_sketch}} desta coleção?",
+    "SketchDeleted": "Esboço excluído",
     "SketchRemoveARIA": "Remover esboço da coleção",
     "DescriptionPlaceholder": "Adicionar descrição",
-    "NumSketches": "{{count}} esboço(s)",
+    "Description": "descrição",
+    "NumSketches": "{{count}} esboço",
+    "NumSketches_plural": "{{count}} esboços",
     "By": "Coleção por ",
-    "NoSketches": "Não há esboços na coleção",
+    "NoSketches": "Nenhum esboço na coleção",
     "TableSummary": "tabela contendo todas as coleções",
     "HeaderName": "Nome",
-    "HeaderCreatedAt": "Data adicionada",
-    "HeaderUser": "Dono(a)",
+    "HeaderCreatedAt": "Data Adicionada",
+    "HeaderUser": "Proprietário",
     "DirectionAscendingARIA": "Ascendente",
     "DirectionDescendingARIA": "Descendente",
     "ButtonLabelAscendingARIA": "Ordenar por {{displayName}} ascendente.",
@@ -485,14 +515,15 @@
   },
   "AddToCollectionList": {
     "Title": "Editor Web p5.js | Minhas coleções",
-    "Empty": "Não há coleções"
+    "AnothersTitle": "Editor Web p5.js | Coleções de {{anotheruser}}",
+    "Empty": "Nenhuma coleção"
   },
   "CollectionCreate": {
     "Title": "Editor Web p5.js | Criar coleção",
     "FormError": "Não foi possível criar coleção",
     "FormLabel": "Nome da coleção",
-    "FormLabelARIA": "nome da coleção",
-    "NameRequired": "É preciso um nome da coleção",
+    "FormLabelARIA": "nome",
+    "NameRequired": "O nome da coleção é obrigatório",
     "Description": "Descrição (opcional)",
     "DescriptionARIA": "descrição",
     "DescriptionPlaceholder": "Meus esboços favoritos",
@@ -511,41 +542,45 @@
   "CollectionList": {
     "Title": "Editor Web p5.js | Minhas coleções",
     "AnothersTitle": "Editor Web p5.js | Coleções de {{anotheruser}}",
-    "NoCollections": "Nenhuma coleção foi encontrada.",
+    "NoCollections": "Nenhuma coleção.",
     "TableSummary": "tabela contendo todas as coleções",
     "HeaderName": "Nome",
-    "HeaderCreatedAt": "Data adicionada",
-    "HeaderUpdatedAt": "Data atualizada",
-    "HeaderNumItems": "# de esboços",
+    "HeaderCreatedAt": "Data de Criação",
+    "HeaderCreatedAt_mobile": "Criado",
+    "HeaderUpdatedAt": "Data de Atualização",
+    "HeaderUpdatedAt_mobile": "Atualizado",
+    "HeaderNumItems": "# esboços",
+    "HeaderNumItems_mobile": "# esboços",
     "DirectionAscendingARIA": "Ascendente",
     "DirectionDescendingARIA": "Descendente",
     "ButtonLabelAscendingARIA": "Ordenar por {{displayName}} ascendente.",
     "ButtonLabelDescendingARIA": "Ordenar por {{displayName}} descendente.",
-    "AddSketch": "Adicionar esboço"
+    "AddSketch": "Adicionar Esboço"
   },
   "CollectionListRow": {
-    "ToggleCollectionOptionsARIA": "Alternar entre abrir/fechar opções das coleções",
+    "ToggleCollectionOptionsARIA": "Alternar Abrir/Fechar opções de coleção",
     "AddSketch": "Adicionar esboço",
-    "Delete": "Remover",
+    "Delete": "Excluir",
     "Rename": "Renomear"
   },
   "Overlay": {
-    "AriaLabel": "Fechar capa de {{title}}"
+    "AriaLabel": "Fechar sobreposição {{title}}"
   },
   "QuickAddList": {
     "ButtonRemoveARIA": "Remover da coleção",
     "ButtonAddToCollectionARIA": "Adicionar à coleção",
-    "View": "Ver"
+    "View": "Visualizar"
   },
   "SketchList": {
+    "View": "Visualizar",
     "Title": "Editor Web p5.js | Meus esboços",
     "AnothersTitle": "Editor Web p5.js | Esboços de {{anotheruser}}",
-    "ToggleLabelARIA": "Alternar entre abrir/fechar opções do esboço",
+    "ToggleLabelARIA": "Alternar Abrir/Fechar Opções de Esboço",
     "DropdownRename": "Renomear",
     "DropdownDownload": "Baixar",
     "DropdownDuplicate": "Duplicar",
     "DropdownAddToCollection": "Adicionar à coleção",
-    "DropdownDelete": "Remover",
+    "DropdownDelete": "Excluir",
     "DirectionAscendingARIA": "Ascendente",
     "DirectionDescendingARIA": "Descendente",
     "ButtonLabelAscendingARIA": "Ordenar por {{displayName}} ascendente.",
@@ -553,47 +588,67 @@
     "AddToCollectionOverlayTitle": "Adicionar à coleção",
     "TableSummary": "tabela contendo todos os projetos salvos",
     "HeaderName": "Esboço",
-    "HeaderCreatedAt": "Data adicionada",
-    "HeaderUpdatedAt": "Data atualizada",
-    "NoSketches": "Nenhum esboço foi encontrado."
+    "HeaderCreatedAt": "Data de Criação",
+    "HeaderCreatedAt_mobile": "Criado",
+    "HeaderUpdatedAt": "Data de Atualização",
+    "HeaderUpdatedAt_mobile": "Atualizado",
+    "NoSketches": "Nenhum esboço."
   },
   "AddToCollectionSketchList": {
     "Title": "Editor Web p5.js | Meus esboços",
-    "NoCollections": "Nenhuma coleção foi encontrada."
+    "AnothersTitle": "Editor Web p5.js | Esboços de {{anotheruser}}",
+    "NoCollections": "Nenhuma coleção."
   },
   "Editor": {
-    "OpenSketchARIA": "Abrir navegação de arquivos do esboço",
-    "CloseSketchARIA": "Fechar navegação de arquivos do esboço",
-    "UnsavedChangesARIA": "Esboço tem mudanças não salvas",
+    "OpenSketchARIA": "Abrir navegação de arquivos do Esboço",
+    "CloseSketchARIA": "Fechar navegação de arquivos do Esboço",
+    "UnsavedChangesARIA": "Esboço tem alterações não salvas",
     "KeyUpLineNumber": "linha {{lineNumber}}"
   },
   "EditorAccessibility": {
-    "NoLintMessages": "Não há mensagens do Lint",
+    "NoLintMessages": "Não há mensagens de lint",
     "CurrentLine": "Linha atual"
   },
   "Timer": {
     "SavedAgo": "Salvo: {{timeAgo}}"
   },
   "formatDate": {
-    "JustNow": "agora",
+    "JustNow": "agora mesmo",
     "15Seconds": "15 segundos atrás",
     "25Seconds": "25 segundos atrás",
     "35Seconds": "35 segundos atrás",
     "Ago": "{{timeAgo}} atrás"
   },
   "CopyableInput": {
-    "CopiedARIA": "Copiado para a Área de Transferência!"
+    "CopiedARIA": "Copiado para a Área de Transferência!",
+    "OpenViewTabARIA": "Abrir visualização {{label}} em nova aba"
   },
   "EditableInput": {
-    "EditValue": "Editar valor de {{display}}",
-    "EmptyPlaceholder": "Não há valor"
+    "EditValue": "Editar valor {{display}}",
+    "EmptyPlaceholder": "Nenhum valor"
   },
   "PreviewNav": {
-    "EditSketchARIA": "Editar esboço",
+    "EditSketchARIA": "Editar Esboço",
     "ByUser": "por"
   },
   "MobilePreferences": {
     "Settings": "Configurações",
+    "GeneralSettings": "Configurações gerais",
+    "Accessibility": "Acessibilidade",
+    "AccessibleOutput": "Saída Acessível",
+    "Theme": "Tema",
+    "LightTheme": "Claro",
+    "DarkTheme": "Escuro",
+    "HighContrastTheme": "Alto Contraste",
+    "Autosave": "Salvamento Automático",
+    "AutocompleteHinter": "Sugestões de Auto-completar",
+    "WordWrap": "Quebra de Linha",
+    "LineNumbers": "Números de linha",
+    "LintWarningSound": "Som de aviso do Lint",
+    "UsedScreenReader": "Usado com leitor de tela",
+    "PlainText": "Texto simples",
+    "TableText": "Texto em tabela",
+    "Sound": "Som",
     "Preferences": "Preferências",
     "Language": "Idioma"
   },
@@ -601,11 +656,23 @@
     "On": "Ligado",
     "Off": "Desligado"
   },
+  "MobileDashboardView": {
+    "Examples": "Exemplos",
+    "Sketches": "Esboços",
+    "Collections": "Coleções",
+    "Assets": "Ativos",
+    "MyStuff": "Minhas Coisas",
+    "CreateSketch": "Criar Esboço",
+    "CreateCollection": "Criar Coleção"
+  },
+  "Explorer": {
+    "Files": "Arquivos"
+  },
   "Cookies": {
     "Header": "Cookies",
-    "Body": "O editor p5.js usa cookies. Alguns são essenciais para a funcionalidade do site e permitem que você gerencie uma conta e preferências. Outros não são essenciais - são usados para análises e nos permitem aprender mais sobre nossa comunidade. <strong> Nunca vendemos esses dados ou os usamos para publicidade. </strong> Você pode decidir quais cookies gostaria de permitir e saber mais em nossa <0>Política de Privacidade</0>.",
-    "AllowAll": "Permitir todos",
-    "AllowEssential": "Permitir essenciais"
+    "Body": "O Editor p5.js usa cookies. Alguns são essenciais para a funcionalidade do site e permitem que você gerencie uma conta e preferências. Outros não são essenciais — são usados para análises e nos permitem aprender mais sobre nossa comunidade. <strong> Nunca vendemos esses dados ou os usamos para publicidade. </strong> Você pode decidir quais cookies gostaria de permitir e saber mais em nossa <0>Política de Privacidade</0>.",
+    "AllowAll": "Permitir Todos",
+    "AllowEssential": "Permitir Essenciais"
   },
   "Legal": {
     "PrivacyPolicy": "Política de Privacidade",
@@ -613,18 +680,18 @@
     "CodeOfConduct": "Código de Conduta"
   },
   "SkipLink": {
-    "PlaySketch": "Pule para reproduzir o esboço"
+    "PlaySketch": "Pular para Executar Esboço"
   },
   "Visibility": {
     "Label": "Visibilidade",
     "Public": {
-      "Description": "Qualquer um pode ver este esboço.",
+      "Description": "Qualquer pessoa pode ver este esboço.",
       "Label": "Público"
     },
     "Private": {
       "Description": "Apenas você pode ver este esboço.",
       "Label": "Privado"
     },
-    "Changed": "'{{projectName}}' agora é {{newVisibility}}..."
+    "Changed": "'{{projectName}}' agora está {{newVisibility}}..."
   }
 }

@@ -27,11 +27,13 @@
       "Title": "說明",
       "KeyboardShortcuts": "快捷鍵",
       "Reference": "參考文件",
-      "About": "關於"
+      "ReportBug": "回報臭蟲",
+      "ChatOnDiscord": "在 Discord 聊天",
+      "PostOnTheForum": "在論壇發文"
     },
     "Lang": "語言",
     "BackEditor": "回到編輯器",
-    "WarningUnsavedChanges": "有尚未儲存的修改, 確定要離開此頁面嗎？",
+    "WarningUnsavedChanges": "有尚未儲存的修改，確定要離開此頁面嗎？",
     "Login": "登入",
     "LoginOr": "或是",
     "SignUp": "註冊帳號",
@@ -67,7 +69,10 @@
     "UsernameOrEmailARIA": "電子郵件或使用者名稱",
     "Password": "密碼",
     "PasswordARIA": "密碼",
-    "Submit": "登入"
+    "Submit": "登入",
+    "Errors": {
+      "invalidCredentials": "電子郵件或密碼錯誤。"
+    }
   },
   "LoginView": {
     "Title": "p5.js 網頁編輯器 | 登入",
@@ -89,41 +94,75 @@
   "About": {
     "Title": "關於",
     "TitleHelmet": "p5.js 網頁編輯器 | 關於",
+    "Headline": "使用 p5.js 編輯器創建、分享和重新混合 p5.js 草稿。",
     "Contribute": "貢獻",
+    "IntroDescription1": "p5.js 是一個免費、開源的 JavaScript 函式庫，用於學習編程和創作藝術。使用 p5.js 編輯器，您無需下載或配置任何內容即可創建、分享和重新混合 p5.js 草稿。",
+    "IntroDescription2": "我們相信軟體及其學習工具應盡可能開放和包容。您可以通過向支持 p5.js 的組織 Processing Foundation 捐款來支持這項工作。您的捐款支持 p5.js 的軟體開發、教育資源（如代碼範例和教程）、獎學金和社區活動。",
+    "Donate": "捐款",
     "NewP5": "p5.js 新手？",
     "Report": "回報臭蟲",
     "Learn": "學習",
-    "Twitter": "Twitter",
-    "Home": "首頁",
+    "X": "X",
+    "Home": "p5.js 首頁",
     "Instagram": "Instagram",
     "Discord": "Discord",
-    "WebEditor": "Web 編輯器",
+    "DiscordCTA": "加入 Discord",
+    "Youtube": "Youtube",
+    "Github": "Github",
+    "GetInvolved": "參與貢獻",
+    "WebEditor": "網頁編輯器",
     "Resources": "資源",
+    "Reference": "參考文件",
     "Libraries": "程式庫",
     "Forum": "論壇",
+    "ForumCTA": "加入論壇",
     "Examples": "範例",
     "PrivacyPolicy": "隱私政策",
     "TermsOfUse": "使用條款",
-    "CodeOfConduct": "行為準則"
+    "CodeOfConduct": "行為準則",
+    "Email": "電子郵件",
+    "EmailAddress": "hello@p5js.org",
+    "Socials": "社群媒體",
+    "LinkDescriptions": {
+      "Home": "了解更多關於 p5.js 和我們的社區。",
+      "Examples": "通過簡短範例探索 p5.js 的可能性。",
+      "CodeOfConduct": "閱讀我們的社區聲明和行為準則。",
+      "Libraries": "使用社區創建的程式庫擴展 p5.js 的可能性。",
+      "Reference": "查找每段 p5.js 代碼的簡單解釋。",
+      "Donate": "通過向 Processing Foundation 捐款來支持這項工作。",
+      "Contribute": "在 Github 上為開源的 p5.js 編輯器做出貢獻。",
+      "Report": "報告 p5.js 編輯器的錯誤或不正確行為。",
+      "Forum": "向 p5.js 社區提問、分享草稿並獲得幫助。",
+      "Discord": "與 p5.js 社區聊天並獲得快速幫助。"
+    },
+    "Contact": "聯繫我們"
   },
   "Toast": {
-    "OpenedNewSketch": "已開啟新草稿",
-    "SketchSaved": "草稿已儲存",
-    "SketchFailedSave": "草稿儲存失敗",
-    "AutosaveEnabled": "已啟用自動儲存",
-    "LangChange": "已變更語系",
-    "SettingsSaved": "已儲存設定"
+    "OpenedNewSketch": "已開啟新草稿。",
+    "SketchSaved": "草稿已儲存。",
+    "SketchFailedSave": "草稿儲存失敗。",
+    "AutosaveEnabled": "已啟用自動儲存。",
+    "LangChange": "語言已變更",
+    "SettingsSaved": "設定已儲存。",
+    "EmptyCurrentPass": "目前密碼欄位為空",
+    "IncorrectCurrentPass": "目前密碼不正確",
+    "DefaultError": "出了點問題",
+    "UserNotFound": "找不到使用者",
+    "NetworkError": "網路錯誤"
   },
   "Toolbar": {
     "Preview": "預覽",
     "Auto-refresh": "自動重新整理",
     "OpenPreferencesARIA": "開啟偏好設定",
-    "PlaySketchARIA": "執行",
-    "PlayOnlyVisualSketchARIA": "Play only visual sketch",
-    "StopSketchARIA": "停止",
+    "PlaySketchARIA": "執行草稿",
+    "PlayOnlyVisualSketchARIA": "僅執行視覺草稿",
+    "StopSketchARIA": "停止草稿",
     "EditSketchARIA": "編輯草稿名稱",
     "NewSketchNameARIA": "新草稿名稱",
-    "By": " 作者： "
+    "By": " 作者：",
+    "CustomLibraryVersion": "自訂 p5.js 版本",
+    "VersionPickerARIA": "版本選擇器",
+    "NewVersionPickerARIA": "版本選擇器"
   },
   "Console": {
     "Title": "主控台",
@@ -131,13 +170,14 @@
     "ClearARIA": "清除主控台內容",
     "Close": "關閉",
     "CloseARIA": "關閉主控台",
-    "Open": "Open",
-    "OpenARIA": "Open console"
+    "Open": "開啟",
+    "OpenARIA": "開啟主控台"
   },
   "Preferences": {
     "Settings": "設定",
     "GeneralSettings": "一般設定",
     "Accessibility": "協助工具",
+    "LibraryManagement": "程式庫管理",
     "Theme": "主題",
     "LightTheme": "亮色",
     "LightThemeARIA": "啟用亮色主題",
@@ -150,6 +190,8 @@
     "DecreaseFontARIA": "將字體變小",
     "IncreaseFont": "變大",
     "IncreaseFontARIA": "將字體變大",
+    "FontSize": "字型大小",
+    "SetFontSize": "設定字型大小",
     "Autosave": "自動儲存",
     "On": "啟用",
     "AutosaveOnARIA": "自動儲存",
@@ -177,7 +219,21 @@
     "PlainText": "純文字",
     "TextOutputARIA": "讀出文字輸出",
     "TableText": "表格文字",
-    "TableOutputARIA": "讀出表格文字"
+    "TableOutputARIA": "讀出表格文字",
+    "LibraryVersion": "p5.js 版本",
+    "LibraryVersionInfo": "p5.js 有一個[新的 2.0 版本](https://github.com/processing/p5.js/releases/)可用！它將於 2026 年 8 月成為預設版本，因此請利用這段時間進行測試並報告錯誤。有興趣將草稿從 1.x 過渡到 2.0 嗎？查看[兼容性與過渡資源。](https://github.com/processing/p5.js-compatibility)",
+    "CustomVersionTitle": "自己管理程式庫？很好！",
+    "CustomVersionInfo": "p5.js 的版本目前是在 index.html 的代碼中管理的。這意味著無法從此選項卡調整。",
+    "CustomVersionReset": "如果您想使用預設程式庫，可以將 index.html 中的 script 標籤替換為以下內容：",
+    "SoundAddon": "p5.sound.js 附加程式庫",
+    "PreloadAddon": "p5.js 1.x 兼容性附加程式庫 — 預加載",
+    "ShapesAddon": "p5.js 1.x 兼容性附加程式庫 — 形狀",
+    "DataAddon": "p5.js 1.x 兼容性附加程式庫 — 數據與事件",
+    "AddonOnARIA": "啟用",
+    "AddonOffARIA": "停用",
+    "SoundReference": "查看與 p5.js {{version}} 兼容的 p5.sound 參考文件",
+    "CopyToClipboardSuccess": "已複製到剪貼簿！",
+    "CopyToClipboardFailure": "我們無法複製文本，請嘗試選擇它並手動複製。"
   },
   "KeyboardShortcuts": {
     "Title": " 鍵盤快捷鍵",
@@ -194,13 +250,18 @@
       "CommentLine": "將此行變成註解",
       "FindNextTextMatch": "尋找下一個相符的文字",
       "FindPreviousTextMatch": "尋找上一個相符的文字",
-      "CodeEditing": "編輯程式碼"
+      "CodeEditing": "編輯程式碼",
+      "ColorPicker": "顯示內嵌顏色選擇器",
+      "CreateNewFile": "建立新檔案",
+      "RenameVariable": "重新命名變數"
     },
+    "General": "一般",
     "GeneralSelection": {
       "StartSketch": "執行草稿",
       "StopSketch": "停止草稿",
       "TurnOnAccessibleOutput": "啟用輔助輸出",
-      "TurnOffAccessibleOutput": "停用輔助輸出"
+      "TurnOffAccessibleOutput": "停用輔助輸出",
+      "Reference": "前往提示器中選定項目的參考文件"
     }
   },
   "Sidebar": {
@@ -227,7 +288,7 @@
     "Delete": "刪除"
   },
   "Common": {
-    "SiteName": "p5.js Web Editor",
+    "SiteName": "p5.js 網頁編輯器",
     "Error": "錯誤",
     "ErrorARIA": "錯誤",
     "Save": "儲存",
@@ -238,15 +299,15 @@
     "SubmitFeedback": "提交回饋資訊",
     "SubmitFeedbackARIA": "提交回饋資訊",
     "AddCollectionTitle": "加入作品集",
-    "AddCollectionARIA":"加入作品即",
+    "AddCollectionARIA": "加入作品集",
     "ShareTitle": "分享",
-    "ShareARIA":"分享"
+    "ShareARIA": "分享"
   },
   "NewFileModal": {
     "Title": "建立檔案",
     "CloseButtonARIA": "關閉建立檔案交談窗",
     "EnterName": "請輸入檔名",
-    "InvalidType": "檔案類型錯誤, 只能接受 .js, .css, .json, .xml, .txt, .csv, .tsv, .frag, 或是 .vert 副檔名"
+    "InvalidType": "檔案類型錯誤，只能接受 .js、.css、.json、.xml、.stl、.txt、.csv、.tsv、.mtl、.frag 或 .vert 副檔名"
   },
   "NewFileForm": {
     "AddFileSubmit": "建立新檔案",
@@ -271,7 +332,7 @@
   "ResetPasswordView": {
     "Title": "p5.js 網頁編輯器 | 重設密碼",
     "Reset": "重設密碼",
-    "Submitted": "重設密碼郵件稍後寄到, 若沒收到\n            請檢查是否被丟到垃圾郵件資料夾",
+    "Submitted": "重設密碼郵件稍後寄到，若沒收到請檢查是否被丟到垃圾郵件資料夾。",
     "Login": "登入",
     "LoginOr": "或是",
     "SignUp": "註冊"
@@ -279,12 +340,13 @@
   "ReduxFormUtils": {
     "errorInvalidEmail": "請輸入正確的電子郵件信箱",
     "errorEmptyEmail": "請輸入電子郵件信箱",
+    "errorEmptyEmailorUserName": "請輸入電子郵件或使用者名稱",
     "errorPasswordMismatch": "密碼必須相符",
     "errorEmptyPassword": "請輸入密碼",
     "errorShortPassword": "密碼至少要有 6 個字元",
     "errorConfirmPassword": "請再輸入一次密碼確認正確性",
     "errorNewPassword": "請輸入新密碼或讓目前密碼欄位留空",
-    "errorNewPasswordRepeat":"Your New Password must differ from the current one.",
+    "errorNewPasswordRepeat": "您的新密碼必須與目前密碼不同",
     "errorEmptyUsername": "請輸入使用者名稱",
     "errorLongUsername": "使用者名稱最多只能 20 個字元",
     "errorValidUsername": "使用者名稱只能有數字、字母、英文句點、減號以及底線符號"
@@ -301,7 +363,7 @@
     "Email": "電子郵件",
     "EmailARIA": "電子郵件",
     "Unconfirmed": "尚未確認",
-    "EmailSent": "已寄送確認信, 請檢查你的信箱",
+    "EmailSent": "已寄送確認信，請檢查你的信箱",
     "Resend": "重新寄送確認信",
     "UserName": "使用者名稱",
     "UserNameARIA": "使用者名稱",
@@ -309,26 +371,26 @@
     "CurrentPasswordARIA": "目前密碼",
     "NewPassword": "新密碼",
     "NewPasswordARIA": "新密碼",
-    "SubmitSaveAllSettings": "儲存所有設定"
+    "SaveAccountDetails": "儲存帳號詳細資訊"
   },
   "AccountView": {
     "SocialLogin": "以社群帳號登入",
-    "SocialLoginDescription": "使用你的 GitHub 或 Google 帳號登入 p5.js 網頁編輯器.",
+    "SocialLoginDescription": "使用你的 GitHub 或 Google 帳號登入 p5.js 網頁編輯器。",
     "Title": "p5.js 網頁編輯器 | 帳號設定",
-    "Settings": "帳號設定",
+    "Settings": "我的帳號",
     "AccountTab": "帳號",
     "AccessTokensTab": "存取權杖"
   },
   "APIKeyForm": {
     "ConfirmDelete": "確定要刪除 {{key_label}}？",
-    "Summary": "個人存取權杖用起來就像是你的密碼, 可讓\n          自動化腳本存取編輯器的 API, 請為個別的自動化腳本建立\n          專屬的權杖",
+    "Summary": "個人存取權杖用起來就像是你的密碼，可讓自動化腳本存取編輯器的 API。請為個別的自動化腳本建立專屬的權杖。",
     "CreateToken": "建立新權杖",
     "TokenLabel": "此權杖的用途？",
     "TokenPlaceholder": "此權杖的用途？例如匯入範例的自動化腳本",
     "CreateTokenSubmit": "建立",
     "NoTokens": "你沒有任何權杖",
     "NewTokenTitle": "你的新存取權杖",
-    "NewTokenInfo": "請記得複製新個人存取權杖\n                  之後就不會再看到它了！",
+    "NewTokenInfo": "請記得複製新個人存取權杖，之後就不會再看到它了！",
     "ExistingTokensTitle": "既有的權杖"
   },
   "APIKeyList": {
@@ -362,15 +424,16 @@
     "Description": "註冊",
     "Or": "或是",
     "AlreadyHave": "已經有帳號？",
-    "Login": "登入"
+    "Login": "登入",
+    "Warning": "註冊即表示您同意 p5.js 編輯器的 <0>使用條款</0> 和 <1>隱私政策</1>。"
   },
   "EmailVerificationView": {
     "Title": "p5.js 網頁編輯器 | 驗證電子郵件",
     "Verify": "驗證你的電子郵件",
     "InvalidTokenNull": "連結無效",
-    "Checking": "驗證權杖中, 請稍後...",
-    "Verified": "完成, 你的電子郵件已經通過驗證",
-    "InvalidState": "有地方出錯了"
+    "Checking": "驗證權杖中，請稍後...",
+    "Verified": "完成，你的電子郵件已經通過驗證",
+    "InvalidState": "權杖無效或已過期"
   },
   "AssetList": {
     "Title": "p5.js 網頁編輯器 | 我的資產",
@@ -380,12 +443,13 @@
     "NoUploadedAssets": "尚未上傳資產",
     "HeaderName": "名稱",
     "HeaderSize": "大小",
-    "HeaderSketch": "草稿"
+    "HeaderSketch": "草稿",
+    "maximum": "最大"
   },
   "Feedback": {
     "Title": "p5.js 網頁編輯器 | 回饋",
     "ViaGithubHeader": "透過 Github Issues",
-    "ViaGithubDescription": "如果你熟悉 Github, 這是我們接受臭蟲報告與回饋的偏好方式",
+    "ViaGithubDescription": "如果你熟悉 Github，這是我們接受臭蟲報告與回饋的偏好方式",
     "GoToGithub": "前往 Github",
     "ViaGoogleHeader": "透過 Google 表單",
     "ViaGoogleDescription": "你也可以利用表單回饋資訊",
@@ -399,10 +463,10 @@
   "UploadFileModal": {
     "Title": "上傳檔案",
     "CloseButtonARIA": "關閉上傳表單的交談窗",
-    "SizeLimitError": "錯誤：無法再上傳檔案, 已到限制總量 {{sizeLimit}}。\n                若要再上傳檔案, 請先移除不再需要使用的檔案"
+    "SizeLimitError": "錯誤：無法再上傳檔案，已到限制總量 {{sizeLimit}}。若要再上傳檔案，請先移除不再需要使用的檔案"
   },
   "FileUploader": {
-    "DictDefaultMessage": "拖放檔案到這裡或按一下使用檔案瀏瀏覽器"
+    "DictDefaultMessage": "拖放檔案到這裡或按一下使用檔案瀏覽器"
   },
   "ErrorModal": {
     "MessageLogin": "請先登入才能儲存草稿",
@@ -411,15 +475,15 @@
     "SignUp": "註冊",
     "MessageLoggedOut": "你似乎已經登出",
     "LogIn": "登入",
-    "SavedDifferentWindow": "你想儲存的專案已經在另一個視窗儲存過, \n        請重新整理頁面載入最新的內容",
+    "SavedDifferentWindow": "你想儲存的專案已經在另一個視窗儲存過，請重新整理頁面載入最新的內容",
     "LinkTitle": "錯誤連結的帳號",
-    "LinkMessage": "連結你的 {{serviceauth}} 帳號到 p5.js 網頁編輯器 帳號時發生問題, 你的 {{serviceauth}} 帳號已經連結到另一個 p5.js 網頁編輯器 帳號了"
+    "LinkMessage": "連結你的 {{serviceauth}} 帳號到 p5.js 網頁編輯器 帳號時發生問題，你的 {{serviceauth}} 帳號已經連結到另一個 p5.js 網頁編輯器 帳號了"
   },
   "ShareModal": {
-    "Embed": "內嵌",
+    "Embed": "內嵌草稿",
     "Present": "展示",
-    "Fullscreen": "全螢幕",
-    "Edit": "編輯"
+    "Fullscreen": "以唯讀方式分享草稿",
+    "Edit": "分享草稿並允許編輯"
   },
   "CollectionView": {
     "TitleCreate": "建立作品集",
@@ -438,11 +502,11 @@
     "Description": "說明",
     "NumSketches": "{{count}} 個草稿",
     "NumSketches_plural": "{{count}} 個草稿",
-    "By":"作品集作者：",
+    "By": "作品集作者：",
     "NoSketches": "作品集中沒有草稿",
     "TableSummary": "作品集彙總表",
     "HeaderName": "名稱",
-    "HeaderCreatedAt": "建立日期",
+    "HeaderCreatedAt": "加入日期",
     "HeaderUser": "作者",
     "DirectionAscendingARIA": "升序",
     "DirectionDescendingARIA": "降序",
@@ -500,9 +564,9 @@
     "Rename": "重新命名"
   },
   "Overlay": {
-    "AriaLabel": "關閉 {{title}} 重疊"
+    "AriaLabel": "關閉 {{title}} 重疊視窗"
   },
-  "QuickAddList":{
+  "QuickAddList": {
     "ButtonRemoveARIA": "從作品集中移除",
     "ButtonAddToCollectionARIA": "加入作品集",
     "View": "檢視"
@@ -556,8 +620,8 @@
     "Ago": "{{timeAgo}} 前"
   },
   "CopyableInput": {
-    "CopiedARIA": "複製到剪貼簿",
-    "OpenViewTabARIA": "在新分頁中檢視 {{label}}"
+    "CopiedARIA": "已複製到剪貼簿！",
+    "OpenViewTabARIA": "在新分頁中開啟 {{label}} 檢視"
   },
   "EditableInput": {
     "EditValue": "編輯 {{display}} 值",
@@ -584,7 +648,9 @@
     "UsedScreenReader": "搭配螢幕報讀軟體使用",
     "PlainText": "純文字",
     "TableText": "表格文字",
-    "Sound": "聲"
+    "Sound": "聲音",
+    "Preferences": "偏好設定",
+    "Language": "語言"
   },
   "PreferenceCreators": {
     "On": "啟用",
@@ -601,5 +667,31 @@
   },
   "Explorer": {
     "Files": "檔案"
+  },
+  "Cookies": {
+    "Header": "Cookies",
+    "Body": "p5.js 編輯器使用 cookies。有些對網站功能至關重要，並允許您管理帳戶和偏好設置。其他則非必需 — 它們用於分析，使我們能夠更多地了解我們的社區。<strong>我們絕不出售這些數據或用於廣告。</strong>您可以決定允許哪些 cookies，並在我們的<0>隱私政策</0>中了解更多信息。",
+    "AllowAll": "允許全部",
+    "AllowEssential": "僅允許必要"
+  },
+  "Legal": {
+    "PrivacyPolicy": "隱私政策",
+    "TermsOfUse": "使用條款",
+    "CodeOfConduct": "行為準則"
+  },
+  "SkipLink": {
+    "PlaySketch": "跳至執行草稿"
+  },
+  "Visibility": {
+    "Label": "可見性",
+    "Public": {
+      "Description": "任何人都可以看到此草稿。",
+      "Label": "公開"
+    },
+    "Private": {
+      "Description": "只有您可以看到此草稿。",
+      "Label": "私人"
+    },
+    "Changed": "'{{projectName}}' 現在是 {{newVisibility}}..."
   }
 }

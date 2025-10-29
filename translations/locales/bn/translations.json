@@ -11,8 +11,8 @@
       "Examples": "উদাহরণ সমূহ"
     },
     "Edit": {
-      "Title": "এডিট",
-      "TidyCode": "কোড শোধন করুন",
+      "Title": "সম্পাদনা",
+      "TidyCode": "কোড টাইডি করুন",
       "Find": "খুঁজুন",
       "Replace": "প্রতিস্থাপন করুন"
     },
@@ -21,29 +21,32 @@
       "AddFile": "ফাইল যোগ করুন",
       "AddFolder": "ফোল্ডার যোগ করুন",
       "Run": "চালান",
-      "Stop": "বন্ধ"
+      "Stop": "বন্ধ করুন"
     },
     "Help": {
       "Title": "সাহায্য",
       "KeyboardShortcuts": "কীবোর্ড শর্টকাট",
       "Reference": "রেফারেন্স",
+      "ReportBug": "বাগ রিপোর্ট করুন",
+      "ChatOnDiscord": "ডিসকর্ডে চ্যাট করুন",
+      "PostOnTheForum": "ফোরামে পোস্ট করুন",
       "About": "আমাদের সম্পর্কে"
     },
     "Lang": "ভাষা",
     "BackEditor": "এডিটরে ফিরুন",
-    "WarningUnsavedChanges": "আপনি কি এই পেইজ ছাড়তে চান? আপনি ফাইল সেইভ করেননি।",
+    "WarningUnsavedChanges": "আপনি কি এই পৃষ্ঠা ছাড়তে চান? আপনার সংরক্ষণ না করা পরিবর্তন রয়েছে।",
     "Login": "লগ ইন",
     "LoginOr": "অথবা",
     "SignUp": "সাইন আপ করুন",
     "Auth": {
-      "Welcome": "স্বাগত",
+      "Welcome": "স্বাগতম",
       "Hello": "হ্যালো",
       "MyAccount": "আমার অ্যাকাউন্ট",
       "My": "আমার",
-      "MySketches": "আমার স্কেচ",
-      "MyCollections": "আমার সংগ্রহ",
-      "Asset": "সম্পদ",
-      "MyAssets": "আমার সম্পদ",
+      "MySketches": "আমার স্কেচসমূহ",
+      "MyCollections": "আমার সংগ্রহসমূহ",
+      "Asset": "অ্যাসেট",
+      "MyAssets": "আমার অ্যাসেটসমূহ",
       "LogOut": "লগ আউট"
     }
   },
@@ -60,16 +63,16 @@
     "Previous": "পূর্ববর্তী",
     "Next": "পরবর্তী",
     "NoResults": "কোন ফলাফল নেই",
-    "Close": "বন্ধ"
+    "Close": "বন্ধ করুন"
   },
   "LoginForm": {
-    "UsernameOrEmail": "ই-মেইল অথবা ব্যবহারকারীর নাম",
-    "UsernameOrEmailARIA": "ই-মেইল অথবা ব্যবহারকারীর নাম",
+    "UsernameOrEmail": "ইমেইল বা ব্যবহারকারীর নাম",
+    "UsernameOrEmailARIA": "ইমেইল বা ব্যবহারকারীর নাম",
     "Password": "পাসওয়ার্ড",
     "PasswordARIA": "পাসওয়ার্ড",
     "Submit": "লগ ইন করুন",
     "Errors": {
-      "invalidCredentials": "ভুল ই-মেইল বা পাসওয়ার্ড।"
+      "invalidCredentials": "ভুল ইমেইল বা পাসওয়ার্ড।"
     }
   },
   "LoginView": {
@@ -77,142 +80,198 @@
     "Login": "লগ ইন করুন",
     "LoginOr": "অথবা",
     "SignUp": "সাইন আপ করুন",
-    "Email": "ই-মেইল",
+    "Email": "ইমেইল",
     "Username": "ব্যবহারকারীর নাম",
-    "DontHaveAccount": " অ্যাকাউন্ট নেই? ",
-    "ForgotPassword": "আপনি কি পাসওয়ার্ড ভুলে গিয়েছেন? ",
+    "DontHaveAccount": "অ্যাকাউন্ট নেই? ",
+    "ForgotPassword": "পাসওয়ার্ড ভুলে গেছেন? ",
     "ResetPassword": "আপনার পাসওয়ার্ড রিসেট করুন"
   },
   "SocialAuthButton": {
-    "Connect": "{{serviceauth}} সাথে যোগাযোগ করুন",
-    "ConnectWith": "{{serviceauth}} সাথে যোগাযোগ করুন",
-    "SignUpWith": "{{serviceauth}} সাথে সাইন আপ করুন",
-    "LoginWith": "{{serviceauth}} সাথে লগ ইন করুন",
-    "ContinueWith": "{{serviceauth}} সাথে চলুন"
+    "Connect": "{{serviceauth}} অ্যাকাউন্ট সংযোগ করুন",
+    "Unlink": "{{serviceauth}} অ্যাকাউন্ট সংযোগ বিচ্ছিন্ন করুন",
+    "Login": "{{serviceauth}} দিয়ে লগ ইন করুন",
+    "LogoARIA": "{{serviceauth}} লোগো",
+    "ConnectWith": "{{serviceauth}} সাথে সংযোগ করুন",
+    "SignUpWith": "{{serviceauth}} দিয়ে সাইন আপ করুন",
+    "LoginWith": "{{serviceauth}} দিয়ে লগ ইন করুন",
+    "ContinueWith": "{{serviceauth}} দিয়ে চালিয়ে যান"
   },
   "About": {
     "Title": "সম্পর্কে",
     "TitleHelmet": "p5.js ওয়েব এডিটর | সম্পর্কে",
+    "Headline": "p5.js এডিটর দিয়ে p5.js স্কেচ তৈরি, শেয়ার এবং রিমিক্স করুন।",
     "Contribute": "অবদান রাখুন",
-    "NewP5": "p5.js এ নতুন?",
-    "Report": "একটি বাগ রিপোর্ট করুন",
-    "Learn": "শেখা",
-    "Twitter": "টুইটারে",
-    "Home": "হোম",
+    "IntroDescription1": "p5.js হল কোড শেখার এবং শিল্প তৈরি করার জন্য একটি বিনামূল্যের ওপেন-সোর্স জাভাস্ক্রিপ্ট লাইব্রেরি। p5.js এডিটর ব্যবহার করে, আপনি কিছু ডাউনলোড বা কনফিগার করার প্রয়োজন ছাড়াই p5.js স্কেচ তৈরি, শেয়ার এবং রিমিক্স করতে পারেন।",
+    "IntroDescription2": "আমরা বিশ্বাস করি যে সফ্টওয়্যার এবং এটি শেখার সরঞ্জামগুলি যতটা সম্ভব উন্মুক্ত এবং অন্তর্ভুক্তিমূলক হওয়া উচিত। p5.js সমর্থনকারী সংস্থা প্রসেসিং ফাউন্ডেশনে দান করে আপনি এই কাজটি সমর্থন করতে পারেন। আপনার দান p5.js-এর জন্য সফ্টওয়্যার ডেভেলপমেন্ট, কোড উদাহরণ এবং টিউটোরিয়ালের মতো শিক্ষার সম্পদ, ফেলোশিপ এবং সম্প্রদায়ের ইভেন্টগুলিকে সমর্থন করে।",
+    "Donate": "দান করুন",
+    "NewP5": "p5.js-এ নতুন?",
+    "Report": "বাগ রিপোর্ট করুন",
+    "Learn": "শিখুন",
+    "X": "X",
+    "Home": "p5.js হোম",
     "Instagram": "ইনস্টাগ্রাম",
     "Discord": "ডিসকর্ড",
+    "DiscordCTA": "ডিসকর্ডে যোগ দিন",
+    "Youtube": "ইউটিউব",
+    "Github": "গিটহাব",
+    "GetInvolved": "জড়িত হন",
     "WebEditor": "ওয়েব এডিটর",
-    "Resources": "রিসোর্সসমূহ",
+    "Resources": "সম্পদসমূহ",
+    "Reference": "রেফারেন্স",
     "Libraries": "লাইব্রেরিসমূহ",
     "Forum": "ফোরাম",
+    "ForumCTA": "ফোরামে যোগ দিন",
     "Examples": "উদাহরণসমূহ",
     "PrivacyPolicy": "গোপনীয়তা নীতি",
     "TermsOfUse": "ব্যবহারের শর্তাবলী",
-    "CodeOfConduct": "আচরণবিধি"
+    "CodeOfConduct": "আচরণবিধি",
+    "Email": "ইমেইল",
+    "EmailAddress": "hello@p5js.org",
+    "Socials": "সোশ্যাল মিডিয়া",
+    "LinkDescriptions": {
+      "Home": "p5.js এবং আমাদের সম্প্রদায় সম্পর্কে আরও জানুন।",
+      "Examples": "সংক্ষিপ্ত উদাহরণ দিয়ে p5.js-এর সম্ভাবনাগুলি অন্বেষণ করুন।",
+      "CodeOfConduct": "আমাদের সম্প্রদায় বিবৃতি এবং আচরণবিধি পড়ুন।",
+      "Libraries": "সম্প্রদায়-তৈরি লাইব্রেরি দিয়ে p5.js-এর সম্ভাবনাগুলি প্রসারিত করুন।",
+      "Reference": "p5.js কোডের প্রতিটি অংশের জন্য সহজ ব্যাখ্যা খুঁজুন।",
+      "Donate": "প্রসেসিং ফাউন্ডেশনে দান করে এই কাজটি সমর্থন করুন।",
+      "Contribute": "গিটহাবে ওপেন-সোর্স p5.js এডিটরে অবদান রাখুন।",
+      "Report": "p5.js এডিটরের ভাঙা বা ভুল আচরণ রিপোর্ট করুন।",
+      "Forum": "p5.js সম্প্রদায়ের কাছে প্রশ্ন জিজ্ঞাসা করুন, স্কেচ শেয়ার করুন এবং সাহায্য পান।",
+      "Discord": "p5.js সম্প্রদায়ের সাথে চ্যাট করুন এবং দ্রুত সাহায্য পান।"
+    },
+    "Contact": "যোগাযোগ করুন"
   },
   "Toast": {
     "OpenedNewSketch": "নতুন স্কেচ খোলা হয়েছে।",
-    "SketchSaved": "স্কেচ সেইভ করা হয়েছে।",
-    "SketchFailedSave": "স্কেচ সেইভ ব্যর্থ হয়েছে।",
-    "AutosaveEnabled": "অটোসেইভ চালু হয়েছে।",
+    "SketchSaved": "স্কেচ সংরক্ষণ করা হয়েছে।",
+    "SketchFailedSave": "স্কেচ সংরক্ষণ ব্যর্থ হয়েছে।",
+    "AutosaveEnabled": "অটোসেভ সক্রিয় হয়েছে।",
     "LangChange": "ভাষা পরিবর্তন হয়েছে",
-    "SettingsSaved": "সেটিংস সেইভ হয়েছে।"
+    "SettingsSaved": "সেটিংস সংরক্ষণ করা হয়েছে।",
+    "EmptyCurrentPass": "বর্তমান পাসওয়ার্ড ফিল্ড খালি",
+    "IncorrectCurrentPass": "বর্তমান পাসওয়ার্ড ভুল",
+    "DefaultError": "কিছু ভুল হয়েছে",
+    "UserNotFound": "ব্যবহারকারী পাওয়া যায়নি",
+    "NetworkError": "নেটওয়ার্ক ত্রুটি"
   },
   "Toolbar": {
-    "Preview": "ফলাফল",
+    "Preview": "প্রিভিউ",
     "Auto-refresh": "অটো-রিফ্রেশ",
-    "OpenPreferencesARIA": "পছন্দ খুলুন",
+    "OpenPreferencesARIA": "পছন্দসমূহ খুলুন",
     "PlaySketchARIA": "স্কেচ চালান",
     "PlayOnlyVisualSketchARIA": "শুধুমাত্র ভিজুয়াল স্কেচ চালান",
     "StopSketchARIA": "স্কেচ বন্ধ করুন",
-    "EditSketchARIA": "স্কেচের নাম এডিট করুন",
+    "EditSketchARIA": "স্কেচের নাম সম্পাদনা করুন",
     "NewSketchNameARIA": "নতুন স্কেচের নাম",
-    "By": " দ্বারা "
+    "By": "দ্বারা ",
+    "CustomLibraryVersion": "কাস্টম p5.js সংস্করণ",
+    "VersionPickerARIA": "সংস্করণ পিকার",
+    "NewVersionPickerARIA": "সংস্করণ পিকার"
   },
   "Console": {
     "Title": "কনসোল",
-    "Clear": "ক্লিয়ার",
-    "ClearARIA": "কনসোল ক্লিয়ার করুন",
+    "Clear": "ক্লিয়ার",
+    "ClearARIA": "কনসোল ক্লিয়ার করুন",
     "Close": "বন্ধ",
     "CloseARIA": "কনসোল বন্ধ করুন",
-    "Open": "খোলা",
-    "OpenARIA": "কনসোল খোলুন"
+    "Open": "খুলুন",
+    "OpenARIA": "কনসোল খুলুন"
   },
   "Preferences": {
     "Settings": "সেটিংস",
     "GeneralSettings": "সাধারণ সেটিংস",
-    "Accessibility": "ব্যবহারযোগ্যতা",
+    "Accessibility": "অ্যাক্সেসিবিলিটি",
+    "LibraryManagement": "লাইব্রেরি ব্যবস্থাপনা",
     "Theme": "থিম",
-    "LightTheme": "সাদা",
-    "LightThemeARIA": "সাদা থিম চালু",
-    "DarkTheme": "কালো",
-    "DarkThemeARIA": "কালো থিম চালু",
-    "HighContrastTheme": "স্পষ্ট রঙের থিম",
-    "HighContrastThemeARIA": "স্পষ্ট রঙের থিম চালু",
+    "LightTheme": "লাইট",
+    "LightThemeARIA": "লাইট থিম চালু",
+    "DarkTheme": "ডার্ক",
+    "DarkThemeARIA": "ডার্ক থিম চালু",
+    "HighContrastTheme": "হাই কনট্রাস্ট",
+    "HighContrastThemeARIA": "হাই কনট্রাস্ট থিম চালু",
     "TextSize": "টেক্সট সাইজ",
     "DecreaseFont": "কমান",
     "DecreaseFontARIA": "ফন্ট সাইজ কমান",
-    "IncreaseFont": "বাড়ান",
-    "IncreaseFontARIA": "ফন্ট সাইজ বাড়ান",
+    "IncreaseFont": "বাড়ান",
+    "IncreaseFontARIA": "ফন্ট সাইজ বাড়ান",
     "FontSize": "ফন্ট সাইজ",
     "SetFontSize": "ফন্ট সাইজ সেট করুন",
-    "Autosave": "অটোসেইভ",
+    "Autosave": "অটোসেভ",
     "On": "চালু",
-    "AutosaveOnARIA": "অটোসেইভ চালু",
+    "AutosaveOnARIA": "অটোসেভ চালু",
     "Off": "বন্ধ",
-    "AutosaveOffARIA": "অটোসেইভ বন্ধ",
-    "AutocloseBracketsQuotes": "অটোক্লোজ ব্র্যাকেট এবং উদ্বৃতিচিহ্ন",
-    "AutocloseBracketsQuotesOnARIA": "অটোক্লোজ ব্র্যাকেট এবং উদ্বৃতিচিহ্ন চালু",
-    "AutocloseBracketsQuotesOffARIA": "অটোক্লোজ ব্র্যাকেট এবং উদ্বৃতিচিহ্ন বন্ধ",
+    "AutosaveOffARIA": "অটোসেভ বন্ধ",
+    "AutocloseBracketsQuotes": "বন্ধনী এবং উদ্ধৃতি স্বয়ংক্রিয়ভাবে বন্ধ করুন",
+    "AutocloseBracketsQuotesOnARIA": "বন্ধনী এবং উদ্ধৃতি স্বয়ংক্রিয়ভাবে বন্ধ চালু",
+    "AutocloseBracketsQuotesOffARIA": "বন্ধনী এবং উদ্ধৃতি স্বয়ংক্রিয়ভাবে বন্ধ বন্ধ",
     "AutocompleteHinter": "অটোকমপ্লিট হিন্টার",
     "AutocompleteHinterOnARIA": "অটোকমপ্লিট হিন্টার চালু",
-    "AutocompleteHinterOffARIA": "অটোকম",
-    "WordWrap": "শব্দ বিন্যাস",
-    "WordWrapOnARIA": "লাইন বিন্যাস অন",
-    "WordWrapOffARIA": "লাইন বিন্যাস অফ",
-    "LineNumbers": "লাইন সংখ্যা",
-    "LineNumbersOnARIA": "লাইন সংখ্যা অন",
-    "LineNumbersOffARIA": "লাইন সংখ্যা অফ",
+    "AutocompleteHinterOffARIA": "অটোকমপ্লিট হিন্টার বন্ধ",
+    "WordWrap": "ওয়ার্ড র্যাপ",
+    "WordWrapOnARIA": "ওয়ার্ড র্যাপ চালু",
+    "WordWrapOffARIA": "ওয়ার্ড র্যাপ বন্ধ",
+    "LineNumbers": "লাইন নম্বর",
+    "LineNumbersOnARIA": "লাইন নম্বর চালু",
+    "LineNumbersOffARIA": "লাইন নম্বর বন্ধ",
     "LintWarningSound": "লিন্ট সতর্কতা শব্দ",
-    "LintWarningOnARIA": "লিন্ট সতর্কতা অন",
-    "LintWarningOffARIA": "লিন্ট সতর্কতা অফ",
-    "PreviewSound": "শব্দের নমুনা",
-    "PreviewSoundARIA": "শব্দের নমুনা",
-    "AccessibleTextBasedCanvas": "ব্যবহারযোগ্য  টেক্সট ভিত্তিক ক্যানভাস",
-    "UsedScreenReader": "স্ক্রিন রিডার সহ ব্যবহৃত",
-    "PlainText": "সাধারণ টেক্সট",
-    "TextOutputARIA": "টেক্সট আউটপুট অন",
+    "LintWarningOnARIA": "লিন্ট সতর্কতা চালু",
+    "LintWarningOffARIA": "লিন্ট সতর্কতা বন্ধ",
+    "PreviewSound": "প্রিভিউ শব্দ",
+    "PreviewSoundARIA": "প্রিভিউ শব্দ",
+    "AccessibleTextBasedCanvas": "অ্যাক্সেসিবল টেক্সট-ভিত্তিক ক্যানভাস",
+    "UsedScreenReader": "স্ক্রিন রিডার দিয়ে ব্যবহার করা",
+    "PlainText": "প্লেইন-টেক্সট",
+    "TextOutputARIA": "টেক্সট আউটপুট চালু",
     "TableText": "টেবিল-টেক্সট",
-    "TableOutputARIA": "টেবিল আউটপুট অন"
+    "TableOutputARIA": "টেবিল আউটপুট চালু",
+    "LibraryVersion": "p5.js সংস্করণ",
+    "LibraryVersionInfo": "p5.js-এর একটি [নতুন 2.0 রিলিজ](https://github.com/processing/p5.js/releases/) উপলব্ধ! এটি আগস্ট 2026-এ ডিফল্ট হয়ে যাবে, তাই এটি পরীক্ষা করে দেখুন এবং বাগ রিপোর্ট করার জন্য এই সময়টি নিন। 1.x থেকে 2.0-এ স্কেচ স্থানান্তর করতে আগ্রহী? [সামঞ্জস্যতা এবং রূপান্তর সম্পদ](https://github.com/processing/p5.js-compatibility) দেখুন।",
+    "CustomVersionTitle": "আপনার নিজস্ব লাইব্রেরি পরিচালনা করছেন? দারুণ!",
+    "CustomVersionInfo": "p5.js-এর সংস্করণ বর্তমানে index.html-এর কোডে পরিচালিত হচ্ছে। এর মানে এটি এই ট্যাব থেকে সামঞ্জস্য করা যাবে না।",
+    "CustomVersionReset": "আপনি যদি ডিফল্ট লাইব্রেরি ব্যবহার করতে চান, তাহলে index.html-এ স্ক্রিপ্ট ট্যাগগুলি নিম্নলিখিত দিয়ে প্রতিস্থাপন করতে পারেন:",
+    "SoundAddon": "p5.sound.js অ্যাড-অন লাইব্রেরি",
+    "PreloadAddon": "p5.js 1.x সামঞ্জস্যতা অ্যাড-অন লাইব্রেরি — প্রিলোড",
+    "ShapesAddon": "p5.js 1.x সামঞ্জস্যতা অ্যাড-অন লাইব্রেরি — শেপস",
+    "DataAddon": "p5.js 1.x সামঞ্জস্যতা অ্যাড-অন লাইব্রেরি — ডেটা এবং ইভেন্টস",
+    "AddonOnARIA": "চালু",
+    "AddonOffARIA": "বন্ধ",
+    "SoundReference": "p5.js {{version}}-এর সাথে সামঞ্জস্যপূর্ণ p5.sound-এর রেফারেন্স দেখুন",
+    "CopyToClipboardSuccess": "ক্লিপবোর্ডে কপি করা হয়েছে!",
+    "CopyToClipboardFailure": "আমরা টেক্সট কপি করতে পারিনি, এটি ম্যানুয়ালি নির্বাচন করে কপি করার চেষ্টা করুন।"
   },
   "KeyboardShortcuts": {
     "Title": "কীবোর্ড শর্টকাট",
-    "ShortcutsFollow": "কীবোর্ড শর্টকাট গুলো",
-    "SublimeText": "সাবলাইম টেক্সট শর্টকাট এর অনুরূপ",
+    "ShortcutsFollow": "কোড সম্পাদনা কীবোর্ড শর্টকাটগুলি অনুসরণ করে",
+    "SublimeText": "সাবলাইম টেক্সট শর্টকাট",
     "CodeEditing": {
       "Tidy": "টাইডি",
-      "FindText": "টেক্সট খোঁজুন",
-      "FindNextMatch": "পরবর্তী ম্যাচ খোঁজুন",
-      "FindPrevMatch": "পূর্বের ম্যাচ খোঁজুন",
-      "ReplaceTextMatch": "টেক্সট ম্যাচ প্রতিস্থাপন",
-      "IndentCodeLeft": "কোড বামে ইনডেন্ট",
-      "IndentCodeRight": "কোড ডানে ইনডেন্ট",
-      "CommentLine": "কমেন্ট লাইন",
-      "FindNextTextMatch": "পরবর্তী টেক্সট ম্যাচ খোঁজুন",
-      "FindPreviousTextMatch": "পূর্বের টেক্সট ম্যাচ খোঁজুন",
-      "CodeEditing": "কোড এডিটিং",
-      "ColorPicker": "ইনলাইন রঙ নির্বাচক দেখান"
+      "FindText": "টেক্সট খুঁজুন",
+      "FindNextMatch": "পরবর্তী মিল খুঁজুন",
+      "FindPrevMatch": "পূর্ববর্তী মিল খুঁজুন",
+      "ReplaceTextMatch": "টেক্সট মিল প্রতিস্থাপন করুন",
+      "IndentCodeLeft": "কোড বামে ইন্ডেন্ট করুন",
+      "IndentCodeRight": "কোড ডানে ইন্ডেন্ট করুন",
+      "CommentLine": "লাইন কমেন্ট করুন",
+      "FindNextTextMatch": "পরবর্তী টেক্সট মিল খুঁজুন",
+      "FindPreviousTextMatch": "পূর্ববর্তী টেক্সট মিল খুঁজুন",
+      "CodeEditing": "কোড সম্পাদনা",
+      "ColorPicker": "ইনলাইন কালার পিকার দেখান",
+      "CreateNewFile": "নতুন ফাইল তৈরি করুন",
+      "RenameVariable": "ভেরিয়েবলের নাম পরিবর্তন করুন"
     },
+    "General": "সাধারণ",
     "GeneralSelection": {
-      "StartSketch": "স্কেচ শুরু",
-      "StopSketch": "স্কেচ বন্ধ",
-      "TurnOnAccessibleOutput": "ব্যবহারযোগ্য আউটপুট চালু করুন",
-      "TurnOffAccessibleOutput": "ব্যবহারযোগ্য আউটপুট বন্ধ করুন"
+      "StartSketch": "স্কেচ শুরু করুন",
+      "StopSketch": "স্কেচ বন্ধ করুন",
+      "TurnOnAccessibleOutput": "অ্যাক্সেসিবল আউটপুট চালু করুন",
+      "TurnOffAccessibleOutput": "অ্যাক্সেসিবল আউটপুট বন্ধ করুন",
+      "Reference": "হিন্টারে নির্বাচিত আইটেমের জন্য রেফারেন্সে যান"
     }
   },
   "Sidebar": {
-    "Title": "স্কেচ ফাইলগুলি",
-    "ToggleARIA": "স্কেচ ফাইল বিকল্প খোলা / বন্ধ করুন টগল",
+    "Title": "স্কেচ ফাইলসমূহ",
+    "ToggleARIA": "স্কেচ ফাইল অপশন খোলা/বন্ধ টগল করুন",
     "AddFolder": "ফোল্ডার তৈরি করুন",
     "AddFolderARIA": "ফোল্ডার যোগ করুন",
     "AddFile": "ফাইল তৈরি করুন",
@@ -221,9 +280,9 @@
     "UploadFileARIA": "ফাইল আপলোড করুন"
   },
   "FileNode": {
-    "OpenFolderARIA": "ফোল্ডার সামগ্রী খোলুন",
-    "CloseFolderARIA": "ফোল্ডার সামগ্রী বন্ধ করুন",
-    "ToggleFileOptionsARIA": "ফাইল বিকল্প খোলা/বন্ধ করুন",
+    "OpenFolderARIA": "ফোল্ডার কন্টেন্ট খুলুন",
+    "CloseFolderARIA": "ফোল্ডার কন্টেন্ট বন্ধ করুন",
+    "ToggleFileOptionsARIA": "ফাইল অপশন খোলা/বন্ধ টগল করুন",
     "AddFolder": "ফোল্ডার তৈরি করুন",
     "AddFolderARIA": "ফোল্ডার যোগ করুন",
     "AddFile": "ফাইল তৈরি করুন",
@@ -231,28 +290,29 @@
     "UploadFile": "ফাইল আপলোড করুন",
     "UploadFileARIA": "ফাইল আপলোড করুন",
     "Rename": "নাম পরিবর্তন করুন",
-    "Delete": "ডিলিট করুন"
+    "Delete": "মুছুন"
   },
   "Common": {
+    "SiteName": "p5.js ওয়েব এডিটর",
     "Error": "ত্রুটি",
     "ErrorARIA": "ত্রুটি",
-    "Save": "সেইভ",
+    "Save": "সংরক্ষণ করুন",
     "p5logoARIA": "p5.js লোগো",
-    "DeleteConfirmation": "{{name}} ডিলিট করতে আপনি কি নিশ্চিত?"
+    "DeleteConfirmation": "আপনি কি {{name}} মুছতে নিশ্চিত?"
   },
   "IDEView": {
-    "SubmitFeedback": "মন্তব্য জমা দিন",
-    "SubmitFeedbackARIA": "মন্তব্য জমা দিন",
+    "SubmitFeedback": "ফিডব্যাক জমা দিন",
+    "SubmitFeedbackARIA": "ফিডব্যাক জমা দিন",
     "AddCollectionTitle": "সংগ্রহে যোগ করুন",
     "AddCollectionARIA": "সংগ্রহে যোগ করুন",
-    "ShareTitle": "শেয়ার করুন",
-    "ShareARIA": "শেয়ার করুন"
+    "ShareTitle": "শেয়ার করুন",
+    "ShareARIA": "শেয়ার করুন"
   },
   "NewFileModal": {
     "Title": "ফাইল তৈরি করুন",
     "CloseButtonARIA": "নতুন ফাইল মোডাল বন্ধ করুন",
-    "EnterName": "নাম লিখুন",
-    "InvalidType": "ভুল ফাইল টইপ। গ্রহনযোগ্য এক্সটেনশনগুলি হলো .js, .css, .json, .xml, .stl, .txt, .csv, .tsv, .mtl, .frag এবং .vert."
+    "EnterName": "দয়া করে একটি নাম লিখুন",
+    "InvalidType": "অবৈধ ফাইল টাইপ। বৈধ এক্সটেনশনগুলি হল .js, .css, .json, .xml, .stl, .txt, .csv, .tsv, .mtl, .frag, এবং .vert।"
   },
   "NewFileForm": {
     "AddFileSubmit": "ফাইল যোগ করুন",
@@ -261,215 +321,217 @@
   "NewFolderModal": {
     "Title": "ফোল্ডার তৈরি করুন",
     "CloseButtonARIA": "নতুন ফোল্ডার মোডাল বন্ধ করুন",
-    "EnterName": "নাম লিখুন",
-    "EmptyName": "ফোল্ডার নাম খালি থাকতে পারবে না",
-    "InvalidExtension": "ফোল্ডার নামে একটি এক্সটেনশন থাকতে পারবে না"
+    "EnterName": "দয়া করে একটি নাম লিখুন",
+    "EmptyName": "ফোল্ডারের নাম শুধুমাত্র স্পেস থাকতে পারে না",
+    "InvalidExtension": "ফোল্ডারের নামে একটি এক্সটেনশন থাকতে পারে না"
   },
   "NewFolderForm": {
     "AddFolderSubmit": "ফোল্ডার যোগ করুন",
     "Placeholder": "নাম"
   },
   "ResetPasswordForm": {
-    "Email": "সাইন আপের জন্য ব্যবহৃত ই-মেইল",
-    "EmailARIA": "ই-মেইল",
-    "Submit": "পাসওয়ার্ড রিসেট ই-মেইল পাঠান"
+    "Email": "নিবন্ধনের জন্য ব্যবহৃত ইমেইল",
+    "EmailARIA": "ইমেইল",
+    "Submit": "পাসওয়ার্ড রিসেট ইমেইল পাঠান"
   },
   "ResetPasswordView": {
     "Title": "p5.js ওয়েব এডিটর | পাসওয়ার্ড রিসেট",
     "Reset": "আপনার পাসওয়ার্ড রিসেট করুন",
-    "Submitted": "আপনার পাসওয়ার্ড রিসেট ইমেল শীঘ্রই আসবে। আপনি যদি তা দেখতে না পান তবে দয়া করে\n            আপনার স্প্যাম ফোল্ডারে চেক করুন।",
+    "Submitted": "আপনার পাসওয়ার্ড রিসেট ইমেইল শীঘ্রই আসবে। আপনি যদি এটি না দেখতে পান তবে\n            আপনার স্প্যাম ফোল্ডারে চেক করুন কারণ কখনও কখনও এটি সেখানে শেষ হতে পারে।",
     "Login": "লগ ইন",
     "LoginOr": "অথবা",
     "SignUp": "সাইন আপ করুন"
   },
   "ReduxFormUtils": {
-    "errorInvalidEmail": "দয়া করে একটি সঠিক ই-মেইল লিখুন",
-    "errorEmptyEmail": "দয়া করে ই-মেইল লিখুন",
-    "errorPasswordMismatch": " একই পাসওয়ার্ড দেয়া আবশ্যক",
-    "errorEmptyPassword": "দয়া করে পাসওয়ার্ড লিখুন",
-    "errorShortPassword": "পাসওয়ার্ডটি কমপক্ষে 6 টি অক্ষর হতে হবে",
-    "errorConfirmPassword": "আপনার পাসওয়ার্ড কনফার্ম করুন",
-    "errorNewPassword": "দয়া করে একটি নতুন পাসওয়ার্ড লিখুন বা বর্তমান পাসওয়ার্ডটি ফাঁকা রাখুন।",
-    "errorNewPasswordRepeat": "নতুন পাসওয়ার্ডটি বর্তমান পাসওয়ার্ড এর থেকে অবশ্যই আলাদা হতে হবে।",
-    "errorEmptyUsername": "দয়া করে একটি ইউজারনেম লিখুন",
-    "errorLongUsername": "ইউজারনেম সর্বোচ্চ 20 টি অক্ষর হতে পারবে",
-    "errorValidUsername": "ইউজারনেম কেবলমাত্র সংখ্যা, অক্ষর, দোতলা, ড্যাশ, এবং আন্ডারস্কোর থাকতে পারে"
+    "errorInvalidEmail": "দয়া করে একটি বৈধ ইমেইল ঠিকানা লিখুন",
+    "errorEmptyEmail": "দয়া করে একটি ইমেইল লিখুন",
+    "errorEmptyEmailorUserName": "দয়া করে একটি ইমেইল বা ব্যবহারকারীর নাম লিখুন",
+    "errorPasswordMismatch": "পাসওয়ার্ড মিলতে হবে",
+    "errorEmptyPassword": "দয়া করে একটি পাসওয়ার্ড লিখুন",
+    "errorShortPassword": "পাসওয়ার্ড কমপক্ষে 6 অক্ষর হতে হবে",
+    "errorConfirmPassword": "দয়া করে আপনার পাসওয়ার্ড নিশ্চিত করুন",
+    "errorNewPassword": "দয়া করে একটি নতুন পাসওয়ার্ড লিখুন বা বর্তমান পাসওয়ার্ড খালি রাখুন।",
+    "errorNewPasswordRepeat": "আপনার নতুন পাসওয়ার্ড বর্তমানটি থেকে আলাদা হতে হবে।",
+    "errorEmptyUsername": "দয়া করে একটি ব্যবহারকারীর নাম লিখুন।",
+    "errorLongUsername": "ব্যবহারকারীর নাম 20 অক্ষরের কম হতে হবে।",
+    "errorValidUsername": "ব্যবহারকারীর নাম শুধুমাত্র সংখ্যা, অক্ষর, পিরিয়ড, ড্যাশ এবং আন্ডারস্কোর নিয়ে গঠিত হতে হবে।"
   },
   "NewPasswordView": {
     "Title": "p5.js ওয়েব এডিটর | নতুন পাসওয়ার্ড",
-    "Description": "নতুন পাসওয়ার্ড সেট করুন",
-    "TokenInvalidOrExpired": "পাসওয়ার্ড রিসেট টোকেন ভুল বা মেয়াদ উত্তীর্ণ হয়েছে।",
+    "Description": "একটি নতুন পাসওয়ার্ড সেট করুন",
+    "TokenInvalidOrExpired": "পাসওয়ার্ড রিসেট টোকেন অবৈধ বা মেয়াদোত্তীর্ণ হয়েছে।",
     "EmptyPassword": "দয়া করে একটি পাসওয়ার্ড লিখুন",
-    "PasswordConfirmation": "দয়া করে আপনার পাসওয়ার্ড কনফার্ম করুন",
-    "PasswordMismatch": "একই পাসওয়ার্ড দেওয়া আবশ্যক"
+    "PasswordConfirmation": "দয়া করে আপনার পাসওয়ার্ড নিশ্চিত করুন",
+    "PasswordMismatch": "পাসওয়ার্ড মিলতে হবে"
   },
   "AccountForm": {
-    "Email": "ই-মেইল",
-    "EmailARIA": "ই-মেইল",
-    "Unconfirmed": "অনুমোদিত নয়।",
-    "EmailSent": "কনফার্মেশন পাঠানো হয়েছে, আপনার ই-মেইল চেক করুন।",
-    "Resend": "অনুমোদন ই-মেইল পুনঃপ্রেরণ করুন",
+    "Email": "ইমেইল",
+    "EmailARIA": "ইমেইল",
+    "Unconfirmed": "অননুমোদিত।",
+    "EmailSent": "কনফার্মেশন পাঠানো হয়েছে, আপনার ইমেইল চেক করুন।",
+    "Resend": "কনফার্মেশন ইমেইল পুনরায় পাঠান",
     "UserName": "ব্যবহারকারীর নাম",
     "UserNameARIA": "ব্যবহারকারীর নাম",
     "CurrentPassword": "বর্তমান পাসওয়ার্ড",
     "CurrentPasswordARIA": "বর্তমান পাসওয়ার্ড",
     "NewPassword": "নতুন পাসওয়ার্ড",
     "NewPasswordARIA": "নতুন পাসওয়ার্ড",
-    "SaveAccountDetails": "অ্যাকাউন্টের বিবরণ সংরক্ষণ করুন"
+    "SaveAccountDetails": "অ্যাকাউন্ট বিবরণ সংরক্ষণ করুন"
   },
   "AccountView": {
     "SocialLogin": "সোশ্যাল লগইন",
-    "SocialLoginDescription": "p5.js ওয়েব এডিটরে লগ ইন করতে আপনি আপনার GitHub বা Google অ্যাকাউন্ট ব্যবহার করতে পারেন।",
+    "SocialLoginDescription": "p5.js ওয়েব এডিটরে লগ ইন করতে আপনার GitHub বা Google অ্যাকাউন্ট ব্যবহার করুন।",
     "Title": "p5.js ওয়েব এডিটর | অ্যাকাউন্ট সেটিংস",
     "Settings": "আমার অ্যাকাউন্ট",
     "AccountTab": "অ্যাকাউন্ট",
     "AccessTokensTab": "অ্যাক্সেস টোকেন"
   },
   "APIKeyForm": {
-    "ConfirmDelete": "আপনি কি নিশ্চিত যে আপনি {{key_label}} ডিলিট করতে চান?",
-    "Summary": "ব্যক্তিগত অ্যাক্সেস টোকেনগুলি এটির API এ অটোমেটেড\n          স্ক্রিপ্টগুলির একটি পাসওয়ার্ড হিসেবে কাজ করে। যেগুলি অ্যাক্সেস করতে প্রয়োজন,\n          সেগুলির জন্য একটি টোকেন তৈরি করুন।",
+    "ConfirmDelete": "আপনি কি {{key_label}} মুছতে নিশ্চিত?",
+    "Summary": "পার্সোনাল অ্যাক্সেস টোকেনগুলি অটোমেটেড স্ক্রিপ্টগুলিকে এডিটর API অ্যাক্সেস করার অনুমতি দেওয়ার জন্য আপনার পাসওয়ার্ডের মতো কাজ করে। অ্যাক্সেস প্রয়োজন এমন প্রতিটি স্ক্রিপ্টের জন্য একটি টোকেন তৈরি করুন।",
     "CreateToken": "নতুন টোকেন তৈরি করুন",
-    "TokenLabel": "এই টোকেনটি কি জন্য?",
-    "TokenPlaceholder": "উদাহরণস্বরূপ: টেস্টিং স্ক্রিপ্ট",
+    "TokenLabel": "এই টোকেনটি কীসের জন্য?",
+    "TokenPlaceholder": "এই টোকেনটি কীসের জন্য? যেমন: উদাহরণ ইম্পোর্ট স্ক্রিপ্ট",
     "CreateTokenSubmit": "তৈরি করুন",
-    "NoTokens": "আপনার কোনও টোকেন নেই।",
+    "NoTokens": "আপনার কোন বিদ্যমান টোকেন নেই।",
     "NewTokenTitle": "আপনার নতুন অ্যাক্সেস টোকেন",
-    "NewTokenInfo": "নিশ্চিত হোন যে আপনি আপনার নতুন ব্যক্তিগত অ্যাক্সেস টোকেনটি এখন কপি করে নিয়েছেন।\n                  আপনি এটি আবার দেখতে পারবেন না!",
+    "NewTokenInfo": "নিশ্চিত হন যে আপনি এখনই আপনার নতুন পার্সোনাল অ্যাক্সেস টোকেন কপি করেছেন। আপনি এটি আবার দেখতে পারবেন না!",
     "ExistingTokensTitle": "বিদ্যমান টোকেন"
   },
   "APIKeyList": {
     "Name": "নাম",
     "Created": "তৈরি হয়েছে",
-    "LastUsed": "সর্বশেষ ব্যবহার",
-    "Actions": "আ্যকশন সমূহ ",
+    "LastUsed": "সর্বশেষ ব্যবহৃত",
+    "Actions": "ক্রিয়াসমূহ",
     "Never": "কখনই না",
-    "DeleteARIA": "ডিলিট API কী"
+    "DeleteARIA": "API কী মুছুন"
   },
   "NewPasswordForm": {
     "Title": "পাসওয়ার্ড",
     "TitleARIA": "পাসওয়ার্ড",
-    "ConfirmPassword": "পাসওয়ার্ড কনফার্ম করুন",
-    "ConfirmPasswordARIA": "পাসওয়ার্ড কনফার্ম করুন",
+    "ConfirmPassword": "পাসওয়ার্ড নিশ্চিত করুন",
+    "ConfirmPasswordARIA": "পাসওয়ার্ড নিশ্চিত করুন",
     "SubmitSetNewPassword": "নতুন পাসওয়ার্ড সেট করুন"
   },
   "SignupForm": {
-    "Title": "ব্যবহারকারী নাম",
-    "TitleARIA": "ব্যবহারকারী নাম",
-    "Email": "ই-মেইল",
-    "EmailARIA": "ই-মেইল",
+    "Title": "ব্যবহারকারীর নাম",
+    "TitleARIA": "ব্যবহারকারীর নাম",
+    "Email": "ইমেইল",
+    "EmailARIA": "ইমেইল",
     "Password": "পাসওয়ার্ড",
     "PasswordARIA": "পাসওয়ার্ড",
     "ConfirmPassword": "পাসওয়ার্ড নিশ্চিত করুন",
     "ConfirmPasswordARIA": "পাসওয়ার্ড নিশ্চিত করুন",
-    "SubmitSignup": "নিবন্ধন করুন"
+    "SubmitSignup": "সাইন আপ করুন"
   },
   "SignupView": {
-    "Title": "p5.js ওয়েব এডিটর | সাইন আপ করুন",
+    "Title": "p5.js ওয়েব এডিটর | সাইন আপ",
     "Description": "সাইন আপ করুন",
     "Or": "অথবা",
     "AlreadyHave": "ইতিমধ্যে একটি অ্যাকাউন্ট আছে?",
     "Login": "লগ ইন",
-    "Warning":"সাইন আপ করে , আপনি p5.js এডিটরের <0>ব্যবহারের শর্তাবলী</0> এবং <1>গোপনীয়তা নীতিতে </1> সম্মত হবেন|"
+    "Warning": "সাইন আপ করে, আপনি p5.js এডিটরের <0>ব্যবহারের শর্তাবলী</0> এবং <1>গোপনীয়তা নীতিতে</1> সম্মত হন।"
   },
   "EmailVerificationView": {
-    "Title": "p5.js ওয়েব এডিটর | ই-মেইল যাচাই",
-    "Verify": "আপনার ই-মেইল যাচাই করুন",
-    "InvalidTokenNull": "সেই লিঙ্কটি ভুল।",
-    "Checking": "টোকেন যাচাই করা হচ্ছে, অনুগ্রহ করে অপেক্ষা করুন...",
-    "Verified": "আপনার ই-মেইল ভেরিফাইড হয়েছে।",
-    "InvalidState": "টোকেন ভুল বা মেয়াদ উত্তীর্ণ হয়েছে।"
+    "Title": "p5.js ওয়েব এডিটর | ইমেইল ভেরিফিকেশন",
+    "Verify": "আপনার ইমেইল যাচাই করুন",
+    "InvalidTokenNull": "সেই লিঙ্কটি অবৈধ।",
+    "Checking": "টোকেন যাচাই করা হচ্ছে, দয়া করে অপেক্ষা করুন...",
+    "Verified": "সমস্ত সম্পন্ন, আপনার ইমেইল ঠিকানা যাচাই করা হয়েছে।",
+    "InvalidState": "টোকেন অবৈধ বা মেয়াদোত্তীর্ণ।"
   },
   "AssetList": {
-    "Title": "p5.js ওয়েব এডিটর | আমার সম্পদ",
-    "ToggleOpenCloseARIA": "আসেট অপশন টগল করুন / বন্ধ করুন",
-    "Delete": "ডিলিট করুন",
+    "Title": "p5.js ওয়েব এডিটর | আমার অ্যাসেটসমূহ",
+    "ToggleOpenCloseARIA": "অ্যাসেট অপশন খোলা/বন্ধ টগল করুন",
+    "Delete": "মুছুন",
     "OpenNewTab": "নতুন ট্যাবে খুলুন",
-    "NoUploadedAssets": "কোনও আপলোড করা সম্পত্তি নেই।",
+    "NoUploadedAssets": "কোন আপলোড করা অ্যাসেট নেই।",
     "HeaderName": "নাম",
     "HeaderSize": "সাইজ",
-    "HeaderSketch": "স্কেচ"
+    "HeaderSketch": "স্কেচ",
+    "maximum": "সর্বোচ্চ"
   },
   "Feedback": {
-    "Title": "p5.js ওয়েব এডিটর | মন্তব্য করুন",
-    "ViaGithubHeader": "গিটহাব ইস্যু'র মাধ্যমে",
-    "ViaGithubDescription": "গিটহাবে বাগ রিপোর্ট পদ্ধতি।",
+    "Title": "p5.js ওয়েব এডিটর | ফিডব্যাক",
+    "ViaGithubHeader": "গিটহাব ইস্যুর মাধ্যমে",
+    "ViaGithubDescription": "আপনি যদি গিটহাবের সাথে পরিচিত হন, এটি বাগ রিপোর্ট এবং ফিডব্যাক পাওয়ার জন্য আমাদের পছন্দের পদ্ধতি।",
     "GoToGithub": "গিটহাবে যান",
     "ViaGoogleHeader": "গুগল ফর্মের মাধ্যমে",
-    "ViaGoogleDescription": "আপনি এই ফর্ম জমা দিতে পারেন।",
+    "ViaGoogleDescription": "আপনি এই দ্রুত ফর্মটিও জমা দিতে পারেন।",
     "GoToForm": "ফর্মে যান"
   },
   "Searchbar": {
     "SearchSketch": "স্কেচ অনুসন্ধান করুন...",
-    "SearchCollection": "সংগ্রহ সার্চ করুন...",
-    "ClearTerm": "স্পষ্ট"
+    "SearchCollection": "সংগ্রহ অনুসন্ধান করুন...",
+    "ClearTerm": "পরিষ্কার"
   },
   "UploadFileModal": {
     "Title": "ফাইল আপলোড করুন",
     "CloseButtonARIA": "আপলোড ফাইল মোডাল বন্ধ করুন",
-    "SizeLimitError": "ত্রুটি: আপনি আর কোনও ফাইল আপলোড করতে পারবেন না। আপনি এখানে সর্বোচ্চ আকার সীমা পৌঁছাচ্ছেন {{sizeLimit}}।\n                আপনি যদি আরও আপলোড করতে চান, তবে আপনি ব্যবহার করতে চাইলে একটি সময় যোগান দ্বারা এটি ব্যবহার করার পূর্বে তাদের মুছে ফেলুন "
+    "SizeLimitError": "ত্রুটি: আপনি আর কোন ফাইল আপলোড করতে পারবেন না। আপনি মোট সাইজ সীমা {{sizeLimit}} এ পৌঁছেছেন। আপনি যদি আরও আপলোড করতে চান, তবে দয়া করে আপনি যে গুলি আর ব্যবহার করছেন না সেগুলি সরিয়ে ফেলুন।"
   },
   "FileUploader": {
     "DictDefaultMessage": "ফাইলগুলি এখানে ড্রপ করুন বা ফাইল ব্রাউজার ব্যবহার করতে ক্লিক করুন"
   },
   "ErrorModal": {
-    "MessageLogin": "স্কেচ সেইভ করতে আপনার লগইন করা আবশ্যক। দয়া করে ",
-    "Login": "লগইন",
+    "MessageLogin": "স্কেচ সংরক্ষণ করতে, আপনাকে লগ ইন করতে হবে। দয়া করে ",
+    "Login": "লগ ইন",
     "LoginOr": " অথবা ",
     "SignUp": "সাইন আপ",
-    "MessageLoggedOut": "মনে হচ্ছে আপনি লগআউট হয়েছেন। দয়া করে ",
+    "MessageLoggedOut": "মনে হচ্ছে আপনি লগ আউট হয়েছেন। দয়া করে ",
     "LogIn": "লগ ইন করুন",
-    "SavedDifferentWindow": "আপনি সেইভ করতে চেষ্টা করা প্রকল্পটি অন্য উইন্ডো থেকে সংরক্ষণ করা হয়েছে।\n        সর্বশেষ সংস্করণ দেখতে দয়া করে পেইজটি রিফ্রেশ করুন।",
+    "SavedDifferentWindow": "আপনি যে প্রজেক্ট সংরক্ষণ করার চেষ্টা করেছেন তা অন্য উইন্ডো থেকে সংরক্ষণ করা হয়েছে। সর্বশেষ সংস্করণ দেখতে দয়া করে পৃষ্ঠাটি রিফ্রেশ করুন।",
     "LinkTitle": "অ্যাকাউন্ট লিঙ্কিং ত্রুটি",
-    "LinkMessage": "{{serviceauth}} অ্যাকাউন্ট আপনার p5.js Web এডিটর অ্যাকাউন্টে লিঙ্ক করতে সমস্যা হয়েছে। আপনার {{serviceauth}} অ্যাকাউন্টটি ইতিমধ্যে অন্য একটি p5.js Web এডিটর অ্যাকাউন্টে লিঙ্ক করা হয়েছে।"
+    "LinkMessage": "আপনার {{serviceauth}} অ্যাকাউন্টকে আপনার p5.js ওয়েব এডিটর অ্যাকাউন্টে লিঙ্ক করতে সমস্যা হয়েছে। আপনার {{serviceauth}} অ্যাকাউন্ট ইতিমধ্যেই অন্য p5.js ওয়েব এডিটর অ্যাকাউন্টে লিঙ্ক করা হয়েছে।"
   },
   "ShareModal": {
-    "Embed": "এম্বেড",
-    "Present": "প্রস্তুত",
-    "Fullscreen": "পূর্ণাঙ্গ",
-    "Edit": "এডিট"
+    "Embed": "স্কেচ এম্বেড করুন",
+    "Present": "উপস্থাপন করুন",
+    "Fullscreen": "শুধুমাত্র দেখার জন্য স্কেচ শেয়ার করুন",
+    "Edit": "স্কেচ শেয়ার করুন এবং সম্পাদনা করার অনুমতি দিন"
   },
   "CollectionView": {
     "TitleCreate": "সংগ্রহ তৈরি করুন",
     "TitleDefault": "সংগ্রহ"
   },
   "Collection": {
-    "Title": "p5.js Web এডিটর | আমার সংগ্রহগুলি",
-    "AnothersTitle": "p5.js Web এডিটর | {{anotheruser}}'s সংগ্রহগুলি",
-    "Share": "শেয়ার",
+    "Title": "p5.js ওয়েব এডিটর | আমার সংগ্রহসমূহ",
+    "AnothersTitle": "p5.js ওয়েব এডিটর | {{anotheruser}} এর সংগ্রহসমূহ",
+    "Share": "শেয়ার করুন",
     "URLLink": "সংগ্রহের লিঙ্ক",
     "AddSketch": "স্কেচ যোগ করুন",
-    "DeleteFromCollection": "{{name_sketch}} কে এই সংগ্রহ থেকে সরাতে চান কি না?",
-    "SketchDeleted": "স্কেচ ডিলিট হয়েছে",
-    "SketchRemoveARIA": "সংগ্রহ থেকে স্কেচ রিমুভ করুন",
-    "DescriptionPlaceholder": "বর্ণনা যোগ করুন",
-    "Description": "বর্ণনা",
+    "DeleteFromCollection": "আপনি কি {{name_sketch}} এই সংগ্রহ থেকে সরাতে নিশ্চিত?",
+    "SketchDeleted": "স্কেচ মুছে ফেলা হয়েছে",
+    "SketchRemoveARIA": "সংগ্রহ থেকে স্কেচ সরান",
+    "DescriptionPlaceholder": "বিবরণ যোগ করুন",
+    "Description": "বিবরণ",
     "NumSketches": "{{count}} স্কেচ",
     "NumSketches_plural": "{{count}} স্কেচ",
     "By": "সংগ্রহ করেছেন ",
     "NoSketches": "সংগ্রহে কোন স্কেচ নেই",
-    "TableSummary": "সমস্ত সংগ্রহ ধারণ করা টেবিল",
+    "TableSummary": "সমস্ত সংগ্রহ ধারণকারী টেবিল",
     "HeaderName": "নাম",
-    "HeaderCreatedAt": "যোগ করা হয়েছের তারিখ",
+    "HeaderCreatedAt": "যোগ করার তারিখ",
     "HeaderUser": "মালিক",
     "DirectionAscendingARIA": "ঊর্ধ্বগামী",
-    "DirectionDescendingARIA": "নিম্নগামী",
-    "ButtonLabelAscendingARIA": "{{displayName}} দ্বারা ঊর্ধ্বগামী করুন।",
-    "ButtonLabelDescendingARIA": "{{displayName}} দ্বারা নিম্নগামী করুন।"
+    "DirectionDescendingARIA": "অধোগামী",
+    "ButtonLabelAscendingARIA": "{{displayName}} দ্বারা ঊর্ধ্বগামী সাজান।",
+    "ButtonLabelDescendingARIA": "{{displayName}} দ্বারা অধোগামী সাজান।"
   },
   "AddToCollectionList": {
-    "Title": "p5.js Web এডিটর | আমার সংগ্রহগুলি",
-    "AnothersTitle": "p5.js Web এডিটর | {{anotheruser}}'s সংগ্রহগুলি",
+    "Title": "p5.js ওয়েব এডিটর | আমার সংগ্রহসমূহ",
+    "AnothersTitle": "p5.js ওয়েব এডিটর | {{anotheruser}} এর সংগ্রহসমূহ",
     "Empty": "কোন সংগ্রহ নেই"
   },
   "CollectionCreate": {
-    "Title": "p5.js Web এডিটর | সংগ্রহ তৈরি করুন",
+    "Title": "p5.js ওয়েব এডিটর | সংগ্রহ তৈরি করুন",
     "FormError": "সংগ্রহ তৈরি করা যায়নি",
     "FormLabel": "সংগ্রহের নাম",
     "FormLabelARIA": "নাম",
     "NameRequired": "সংগ্রহের নাম প্রয়োজন",
-    "Description": "বর্ণনা (ঐচ্ছিক)",
-    "DescriptionARIA": "বর্ণনা",
-    "DescriptionPlaceholder": "আমার প্রিয় স্কেচগুলি",
+    "Description": "বিবরণ (ঐচ্ছিক)",
+    "DescriptionARIA": "বিবরণ",
+    "DescriptionPlaceholder": "আমার প্রিয় স্কেচসমূহ",
     "SubmitCollectionCreate": "সংগ্রহ তৈরি করুন"
   },
   "DashboardView": {
@@ -478,74 +540,74 @@
     "CreateCollectionOverlay": "সংগ্রহ তৈরি করুন"
   },
   "DashboardTabSwitcher": {
-    "Sketches": "স্কেচগুলি",
-    "Collections": "সংগ্রহগুলি",
-    "Assets": "সম্পত্তিগুলি"
+    "Sketches": "স্কেচসমূহ",
+    "Collections": "সংগ্রহসমূহ",
+    "Assets": "অ্যাসেটসমূহ"
   },
   "CollectionList": {
-    "Title": "p5.js Web এডিটর | আমার সংগ্রহগুলি",
-    "AnothersTitle": "p5.js Web এডিটর | {{anotheruser}}'s সংগ্রহগুলি",
+    "Title": "p5.js ওয়েব এডিটর | আমার সংগ্রহসমূহ",
+    "AnothersTitle": "p5.js ওয়েব এডিটর | {{anotheruser}} এর সংগ্রহসমূহ",
     "NoCollections": "কোন সংগ্রহ নেই।",
-    "TableSummary": "সমস্ত সংগ্রহ ধারণ করা টেবিল",
+    "TableSummary": "সমস্ত সংগ্রহ ধারণকারী টেবিল",
     "HeaderName": "নাম",
     "HeaderCreatedAt": "তৈরির তারিখ",
     "HeaderCreatedAt_mobile": "তৈরি হয়েছে",
-    "HeaderUpdatedAt": "আপডেটর তারিখ",
+    "HeaderUpdatedAt": "আপডেটের তারিখ",
     "HeaderUpdatedAt_mobile": "আপডেট",
     "HeaderNumItems": "# স্কেচ",
     "HeaderNumItems_mobile": "# স্কেচ",
     "DirectionAscendingARIA": "ঊর্ধ্বগামী",
-    "DirectionDescendingARIA": "নিম্নগামী",
-    "ButtonLabelAscendingARIA": "{{displayName}} দ্বারা ঊর্ধ্বগামী করুন।",
-    "ButtonLabelDescendingARIA": "{{displayName}} দ্বারা নিম্নগামী করুন।",
+    "DirectionDescendingARIA": "অধোগামী",
+    "ButtonLabelAscendingARIA": "{{displayName}} দ্বারা ঊর্ধ্বগামী সাজান।",
+    "ButtonLabelDescendingARIA": "{{displayName}} দ্বারা অধোগামী সাজান।",
     "AddSketch": "স্কেচ যোগ করুন"
   },
   "CollectionListRow": {
-    "ToggleCollectionOptionsARIA": "সংগ্রহ বিকল্পগুলি খোলা/বন্ধ করুন",
+    "ToggleCollectionOptionsARIA": "সংগ্রহ অপশন খোলা/বন্ধ টগল করুন",
     "AddSketch": "স্কেচ যোগ করুন",
-    "Delete": "ডিলিট করুন",
-    "Rename": "রিনেইম করুন"
+    "Delete": "মুছুন",
+    "Rename": "নাম পরিবর্তন করুন"
   },
   "Overlay": {
     "AriaLabel": "{{title}} ওভারলে বন্ধ করুন"
   },
   "QuickAddList": {
-    "ButtonRemoveARIA": "সংগ্রহ থেকে রিমুভ করুন",
+    "ButtonRemoveARIA": "সংগ্রহ থেকে সরান",
     "ButtonAddToCollectionARIA": "সংগ্রহে যোগ করুন",
     "View": "দেখুন"
   },
   "SketchList": {
-    "View": "দৃশ্য",
-    "Title": "p5.js ওয়েব এডিটর | আমার স্কেচগুলি",
-    "AnothersTitle": "p5.js ওয়েব এডিটর | {{anotheruser}} এর স্কেচগুলি",
-    "ToggleLabelARIA": "স্কেচ অপশন খোলা/বন্ধ করুন",
-    "DropdownRename": "রিনেইম",
-    "DropdownDownload": "ডাউনলোড",
-    "DropdownDuplicate": "ডুপ্লিকেট",
+    "View": "দেখুন",
+    "Title": "p5.js ওয়েব এডিটর | আমার স্কেচসমূহ",
+    "AnothersTitle": "p5.js ওয়েব এডিটর | {{anotheruser}} এর স্কেচসমূহ",
+    "ToggleLabelARIA": "স্কেচ অপশন খোলা/বন্ধ টগল করুন",
+    "DropdownRename": "নাম পরিবর্তন করুন",
+    "DropdownDownload": "ডাউনলোড করুন",
+    "DropdownDuplicate": "ডুপ্লিকেট করুন",
     "DropdownAddToCollection": "সংগ্রহে যোগ করুন",
-    "DropdownDelete": "ডিলিট করুন",
-    "DirectionAscendingARIA": "উচ্চতম থেকে নিম্নতম",
-    "DirectionDescendingARIA": "নিম্নতম থেকে উচ্চতম",
-    "ButtonLabelAscendingARIA": "{{displayName}} দ্বারা ঊর্ধ্বগামী সারি করুন।",
-    "ButtonLabelDescendingARIA": "{{displayName}} দ্বারা নিম্নগামী সারি করুন।",
+    "DropdownDelete": "মুছুন",
+    "DirectionAscendingARIA": "ঊর্ধ্বগামী",
+    "DirectionDescendingARIA": "অধোগামী",
+    "ButtonLabelAscendingARIA": "{{displayName}} দ্বারা ঊর্ধ্বগামী সাজান।",
+    "ButtonLabelDescendingARIA": "{{displayName}} দ্বারা অধোগামী সাজান।",
     "AddToCollectionOverlayTitle": "সংগ্রহে যোগ করুন",
-    "TableSummary": "সমস্ত সংরক্ষিত প্রকল্প থাকা টেবিল",
+    "TableSummary": "সমস্ত সংরক্ষিত প্রজেক্ট ধারণকারী টেবিল",
     "HeaderName": "স্কেচ",
-    "HeaderCreatedAt": "তারিখ তৈরি হয়েছে",
+    "HeaderCreatedAt": "তৈরির তারিখ",
     "HeaderCreatedAt_mobile": "তৈরি হয়েছে",
-    "HeaderUpdatedAt": "তারিখ আপডেট হয়েছে",
+    "HeaderUpdatedAt": "আপডেটের তারিখ",
     "HeaderUpdatedAt_mobile": "আপডেট",
     "NoSketches": "কোন স্কেচ নেই।"
   },
   "AddToCollectionSketchList": {
-    "Title": "p5.js ওয়েব এডিটর | আমার স্কেচগুলি",
-    "AnothersTitle": "p5.js ওয়েব এডিটর | {{anotheruser}} এর স্কেচগুলি",
+    "Title": "p5.js ওয়েব এডিটর | আমার স্কেচসমূহ",
+    "AnothersTitle": "p5.js ওয়েব এডিটর | {{anotheruser}} এর স্কেচসমূহ",
     "NoCollections": "কোন সংগ্রহ নেই।"
   },
   "Editor": {
-    "OpenSketchARIA": "স্কেচ ফাইল নেভিগেশন খোলুন",
+    "OpenSketchARIA": "স্কেচ ফাইল নেভিগেশন খুলুন",
     "CloseSketchARIA": "স্কেচ ফাইল নেভিগেশন বন্ধ করুন",
-    "UnsavedChangesARIA": "স্কেচে সেইভ করা হয়নি এমন পরিবর্তন রয়েছে",
+    "UnsavedChangesARIA": "স্কেচে সংরক্ষণ না করা পরিবর্তন রয়েছে",
     "KeyUpLineNumber": "লাইন {{lineNumber}}"
   },
   "EditorAccessibility": {
@@ -553,10 +615,10 @@
     "CurrentLine": "বর্তমান লাইন"
   },
   "Timer": {
-    "SavedAgo": "সেইভ করা হয়েছে : {{timeAgo}}"
+    "SavedAgo": "সংরক্ষণ করা হয়েছে: {{timeAgo}}"
   },
   "formatDate": {
-    "JustNow": "এই মুহূর্তে",
+    "JustNow": "এইমাত্র",
     "15Seconds": "15 সেকেন্ড আগে",
     "25Seconds": "25 সেকেন্ড আগে",
     "35Seconds": "35 সেকেন্ড আগে",
@@ -564,34 +626,36 @@
   },
   "CopyableInput": {
     "CopiedARIA": "ক্লিপবোর্ডে কপি করা হয়েছে!",
-    "OpenViewTabARIA": "{{label}} দেখুন নতুন ট্যাবে"
+    "OpenViewTabARIA": "নতুন ট্যাবে {{label}} ভিউ খুলুন"
   },
   "EditableInput": {
-    "EditValue": "{{display}} ভ্যালু এডিট করুন",
-    "EmptyPlaceholder": "ভ্যালু নেই"
+    "EditValue": "{{display}} মান সম্পাদনা করুন",
+    "EmptyPlaceholder": "কোন মান নেই"
   },
   "PreviewNav": {
-    "EditSketchARIA": "স্কেচ এডিট করুন",
+    "EditSketchARIA": "স্কেচ সম্পাদনা করুন",
     "ByUser": "দ্বারা"
   },
   "MobilePreferences": {
     "Settings": "সেটিংস",
-    "GeneralSettings": "সাধারিত সেটিংস",
-    "Accessibility": "ব্যবহারযোগ্যতা ",
-    "AccessibleOutput": "ব্যবহারযোগ্যতা আউটপুট",
+    "GeneralSettings": "সাধারণ সেটিংস",
+    "Accessibility": "অ্যাক্সেসিবিলিটি",
+    "AccessibleOutput": "অ্যাক্সেসিবল আউটপুট",
     "Theme": "থিম",
-    "LightTheme": "সাদা",
+    "LightTheme": "লাইট",
     "DarkTheme": "ডার্ক",
-    "HighContrastTheme": "স্পষ্ট রঙের থিম",
-    "Autosave": "অটোসেইভ",
+    "HighContrastTheme": "হাই কনট্রাস্ট",
+    "Autosave": "অটোসেভ",
     "AutocompleteHinter": "অটোকমপ্লিট হিন্টার",
-    "WordWrap": "শব্দ বিন্যাস",
+    "WordWrap": "ওয়ার্ড র্যাপ",
     "LineNumbers": "লাইন নম্বর",
     "LintWarningSound": "লিন্ট সতর্কতা শব্দ",
-    "UsedScreenReader": "স্ক্রিন রিডার সাথে ব্যবহৃত",
-    "PlainText": "সাধারণ টেক্সট",
-    "TableText": "টেবিল টেক্সট",
-    "Sound": "শব্দ"
+    "UsedScreenReader": "স্ক্রিন রিডার দিয়ে ব্যবহার করা",
+    "PlainText": "প্লেইন-টেক্সট",
+    "TableText": "টেবিল-টেক্সট",
+    "Sound": "শব্দ",
+    "Preferences": "পছন্দসমূহ",
+    "Language": "ভাষা"
   },
   "PreferenceCreators": {
     "On": "চালু",
@@ -601,23 +665,38 @@
     "Examples": "উদাহরণসমূহ",
     "Sketches": "স্কেচসমূহ",
     "Collections": "সংগ্রহসমূহ",
-    "Assets": "সম্পত্তি",
+    "Assets": "অ্যাসেটসমূহ",
     "MyStuff": "আমার জিনিসপত্র",
     "CreateSketch": "স্কেচ তৈরি করুন",
     "CreateCollection": "সংগ্রহ তৈরি করুন"
   },
   "Explorer": {
-    "Files": "ফাইলস"
+    "Files": "ফাইলসমূহ"
   },
   "Cookies": {
     "Header": "কুকিজ",
-    "Body": "p5.js এডিটর কুকিজ ব্যবহার করে। কিছুটা ওয়েবসাইট কার্যক্ষমতার জন্য অত্যাবশ্যক এবং আপনাকে একটি অ্যাকাউন্ট এবং পছন্দ পরিচালনা করতে দেয়। অন্যান্যগুলি অত্যাবশ্যক নয়—এগুলি অ্যানালিটিক্সের জন্য ব্যবহৃত হয় এবং আমাদের সম্প্রদায়ে আরও জানতে সাহায্য করে। <strong> আমরা কখনই এই ডেটা বিক্রি করিনি বা এটি বিজ্ঞাপনের জন্য ব্যবহার করিনি। </strong> আপনি যে কুকিজগুলি অনুমোদন দিতে চান, এবং আমাদের <0>গোপনীয়তা নীতি<0> এ আরও জানতে পারেন।",
+    "Body": "p5.js এডিটর কুকিজ ব্যবহার করে। কিছু ওয়েবসাইট কার্যকারিতার জন্য অপরিহার্য এবং আপনাকে একটি অ্যাকাউন্ট এবং পছন্দ পরিচালনা করতে দেয়। অন্যগুলি অপরিহার্য নয়—এগুলি অ্যানালিটিক্সের জন্য ব্যবহৃত হয় এবং আমাদের সম্প্রদায় সম্পর্কে আরও জানতে দেয়। <strong> আমরা কখনও এই ডেটা বিক্রি করি না বা বিজ্ঞাপনের জন্য ব্যবহার করি না। </strong> আপনি কোন কুকিজ অনুমোদন করতে চান তা সিদ্ধান্ত নিতে পারেন, এবং আমাদের <0>গোপনীয়তা নীতিতে</0> আরও জানতে পারেন।",
     "AllowAll": "সব অনুমোদন করুন",
-    "AllowEssential": "গুরুত্বপূর্ণগুলো  অনুমোদন করুন"
+    "AllowEssential": "অপরিহার্য অনুমোদন করুন"
   },
   "Legal": {
     "PrivacyPolicy": "গোপনীয়তা নীতি",
-    "TermsOfUse": "ব্যবহারের শর্তাবলি",
-    "CodeOfConduct": "আচরণ-বিধির নীতি"
+    "TermsOfUse": "ব্যবহারের শর্তাবলী",
+    "CodeOfConduct": "আচরণবিধি"
+  },
+  "SkipLink": {
+    "PlaySketch": "স্কেচ চালানোতে এড়িয়ে যান"
+  },
+  "Visibility": {
+    "Label": "দৃশ্যমানতা",
+    "Public": {
+      "Description": "যে কেউ এই স্কেচ দেখতে পারে।",
+      "Label": "পাবলিক"
+    },
+    "Private": {
+      "Description": "শুধুমাত্র আপনি এই স্কেচ দেখতে পারেন।",
+      "Label": "প্রাইভেট"
+    },
+    "Changed": "'{{projectName}}' এখন {{newVisibility}}..."
   }
 }
