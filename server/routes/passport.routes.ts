@@ -11,7 +11,7 @@ const authenticateOAuth = (service: string) => (
   passport.authenticate(
     service,
     { failureRedirect: '/login' },
-    (err: any, user: any) => {
+    (err: unknown, user: unknown) => {
       if (err) {
         // use query string param to show error;
         res.redirect(`/account?error=${service}`);

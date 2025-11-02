@@ -5,7 +5,7 @@ import { Router } from 'react-router-dom';
 
 import { useTranslation } from 'react-i18next';
 import browserHistory from './browserHistory';
-import configureStore from './store';
+import { setupStore } from './store';
 import Routing from './routes';
 import ThemeProvider from './modules/App/components/ThemeProvider';
 import Loader from './modules/App/components/loader';
@@ -19,7 +19,7 @@ require('./images/p5js-square-logo.png');
 
 const initialState = window.__INITIAL_STATE__;
 
-const store = configureStore(initialState);
+const store = setupStore(initialState);
 
 const DONATE_LOGO_IMAGE_URL = 'https://donorbox.org/images/white_logo.svg';
 
