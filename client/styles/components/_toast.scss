@@ -1,8 +1,8 @@
 @use "sass:math";
 
 .toast {
-  background-color: #D9D9D9;
-  color: black;
+  background-color: $toast-background-color;
+  color: $toast-text-color;
   padding: #{math.div(10, $base-font-size)}rem #{math.div(20, $base-font-size)}rem;
   position: fixed;
   top: #{math.div(20, $base-font-size)}rem; 
