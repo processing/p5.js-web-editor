@@ -27,7 +27,9 @@
         "Title": "मदद",
         "KeyboardShortcuts": "कीबोर्ड शॉर्टकट",
         "Reference": "रिफरेन्स",
-        "About": "अधिक जानकारी"
+        "ReportBug": "रिपोर्ट बग",
+        "ChatOnDiscord": "डिस्कॉर्ड पर बातचीत",
+        "PostOnTheForum":"फ़ोरम पोस्ट के लिए विवरण"
       },
       "Lang": "भाषा",
       "BackEditor": "एडिटर पर वापस जाएं",
@@ -43,7 +45,7 @@
         "MySketches": "मेरे स्केच",
         "MyCollections": "मेरे संग्रह",
         "Asset": "संपत्ति",
-        "MyAssets": "मेरे ऐसेट",
+        "MyAssets": "मेरे संपत्ति",
         "LogOut": "लॉग आउट"
       }
     },
