@@ -413,7 +413,7 @@ export function deleteProject(id) {
       });
   };
 }
-export function changeVisibility(projectId, projectName, visibility) {
+export function changeVisibility(projectId, projectName, visibility, t) {
   return (dispatch, getState) => {
     const state = getState();
 
@@ -443,11 +443,25 @@ export function changeVisibility(projectId, projectName, visibility) {
               name: response.data.name
             });
 
-            dispatch(
-              setToastText(
-                `${projectName} is now ${newVisibility.toLowerCase()}`
-              )
-            );
+            let visibilityLabel;
+
+            switch (newVisibility) {
+              case 'Public':
+                visibilityLabel = t('Visibility.Public.Label');
+                break;
+              case 'Private':
+                visibilityLabel = t('Visibility.Private.Label');
+                break;
+              default:
+                visibilityLabel = newVisibility;
+            }
+
+            const visibilityToastText = t('Visibility.Changed', {
+              projectName,
+              newVisibility: visibilityLabel.toLowerCase()
+            });
+
+            dispatch(setToastText(visibilityToastText));
             dispatch(showToast(2000));
           }
         }

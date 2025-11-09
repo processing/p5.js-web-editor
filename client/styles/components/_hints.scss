@@ -15,7 +15,7 @@
   font-size: 100%;
   font-family: Inconsolata, monospace;
 
-  width: 18rem;
+  width: 20rem;
   max-height: 20rem;
   overflow-y: auto;
 
@@ -29,8 +29,74 @@
       border-bottom: #{math.div(1, $base-font-size)}rem solid getThemifyVariable('hint-item-border-bottom-color');
     }
 
-    .hint-name {
+    .hint-container {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      justify-content: center;
+      width: 100%;
       height: 100%;
+
+      // Widen the entire row only if a warning is present
+      &.has-warning {
+        width: 100%; // Let it fill the parent .CodeMirror-hint width
+        max-width: 24rem;
+      }
+    }
+
+    .hint-main {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-grow: 1;
+      padding: 0 0.5rem;
+      width: 100%;
+      height: 100%;
+      // position: relative; // optional, only if you want absolutely-positioned children
+    }
+
+    .hint-main a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 2rem;
+      height: 100%;
+      padding: 0;
+      // margin-left: auto;
+      text-align: center;
+      text-decoration: none;
+      font-size: 1.2rem;
+    }
+
+    .hint-name {
+      font-size: 1.2rem;
+      font-weight: bold;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .hint-type {
+      font-size: 1rem;
+      font-weight: normal;
+      color: #999;
+      margin-left: 1rem;
+      margin-right: 2.5rem; // leaves space for the arrow icon
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    // Warning box
+    .blacklist-warning {
+      background-color: #fff3cd;
+      border: 1px solid #ffc107;
+      color: #856404;
+      padding: 6px 10px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      margin: 0.25rem 0.5rem 0 0.5rem;
+      width: calc(100% - 1rem); // Match padding
+      box-sizing: border-box;
     }
   
     .fun-name, .obj-name {
@@ -156,7 +222,7 @@
     }
   
     a, .no-link-placeholder {
-      position: absolute;
+      // position: absolute;
       top: 0;
       right: 0;
       height: 100%;
@@ -173,6 +239,11 @@
     a:focus, a:active {
       outline: 0;
     }
+  }
+
+  .CodeMirror-hint.blacklisted {
+    height: auto;
+    min-height: 3.2rem; // enough to show the warning + content
   }
 }
 

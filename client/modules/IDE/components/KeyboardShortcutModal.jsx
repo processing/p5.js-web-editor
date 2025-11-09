@@ -8,6 +8,7 @@ function KeyboardShortcutModal() {
     metaKey === 'Ctrl' ? `${metaKeyName} + H` : `${metaKeyName} + ⌥ + F`;
   const newFileCommand =
     metaKey === 'Ctrl' ? `${metaKeyName} + Alt + N` : `${metaKeyName} + ⌥ + N`;
+  const renameCommand = metaKey === 'Ctrl' ? 'F2' : 'Ctrl + F2';
   return (
     <div className="keyboard-shortcuts">
       <h3 className="keyboard-shortcuts__title">
@@ -74,6 +75,10 @@ function KeyboardShortcutModal() {
         <li className="keyboard-shortcut-item">
           <span className="keyboard-shortcut__command">{newFileCommand}</span>
           <span>{t('KeyboardShortcuts.CodeEditing.CreateNewFile')}</span>
+        </li>
+        <li className="keyboard-shortcut-item">
+          <span className="keyboard-shortcut__command">{renameCommand}</span>
+          <span>{t('KeyboardShortcuts.CodeEditing.RenameVariable')}</span>
         </li>
       </ul>
       <h3 className="keyboard-shortcuts__title">

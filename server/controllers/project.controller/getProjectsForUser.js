@@ -1,5 +1,5 @@
 import Project from '../../models/project';
-import User from '../../models/user';
+import { User } from '../../models/user';
 import { toApi as toApiProjectObject } from '../../domain-objects/Project';
 
 /**

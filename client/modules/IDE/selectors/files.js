@@ -1,6 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 
-const selectFiles = (state) => state.files;
+export const selectFiles = (state) => state.files;
 
 export const selectRootFile = createSelector(selectFiles, (files) =>
   files.find((file) => file.name === 'root')

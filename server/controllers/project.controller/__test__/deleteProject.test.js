@@ -4,7 +4,7 @@
 import { Request, Response } from 'jest-express';
 
 import Project from '../../../models/project';
-import User from '../../../models/user';
+import { User } from '../../../models/user';
 import deleteProject from '../deleteProject';
 import { deleteObjectsFromS3 } from '../../aws.controller';
 

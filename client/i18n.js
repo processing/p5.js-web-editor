@@ -70,7 +70,7 @@ export function languageKeyToLabel(lang) {
     it: 'Italiano',
     ja: '日本語',
     ko: '한국어',
-    'pt-BR': 'Português',
+    'pt-BR': 'Português do Brasil',
     sv: 'Svenska',
     'uk-UA': 'Українська',
     'zh-CN': '简体中文',

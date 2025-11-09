@@ -33,7 +33,6 @@ const Toolbar = (props) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const userIsOwner = user?.username === project.owner?.username;
-
   const showVisibilityDropdown = project?.owner && userIsOwner;
 
   const playButtonClass = classNames({
@@ -51,7 +50,7 @@ const Toolbar = (props) => {
 
   const handleVisibilityChange = useCallback(
     (sketchId, sketchName, newVisibility) => {
-      dispatch(changeVisibility(sketchId, sketchName, newVisibility));
+      dispatch(changeVisibility(sketchId, sketchName, newVisibility, t));
     },
     [changeVisibility]
   );

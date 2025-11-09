@@ -2,7 +2,7 @@ import sinon from 'sinon';
 import 'sinon-mongoose';
 
 // Import the actual model to be mocked
-const User = jest.requireActual('../user').default;
+const { User } = jest.requireActual('../user');
 
 // Wrap User in a sinon mock
 // The returned object is used to configure
@@ -24,4 +24,4 @@ export function createInstanceMock() {
   return sinon.mock(User.prototype);
 }
 
-export default User;
+export { User };

@@ -91,7 +91,7 @@ const SketchListRowBase = ({
 
   const handleVisibilityChange = useCallback(
     (sketchId, sketchName, newVisibility) => {
-      changeVisibility(sketchId, sketchName, newVisibility);
+      changeVisibility(sketchId, sketchName, newVisibility, t);
     },
     [changeVisibility]
   );

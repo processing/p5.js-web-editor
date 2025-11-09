@@ -27,7 +27,9 @@
       "Title": "Ajuda",
       "KeyboardShortcuts": "Atalhos de Teclado",
       "Reference": "Referência",
-      "About": "Sobre"
+      "ReportBug": "Reportar um Erro",
+      "ChatOnDiscord": "Conversar no Discord",
+      "PostOnTheForum": "Postar no Fórum"
     },
     "BackEditor": "Voltar ao Editor",
     "WarningUnsavedChanges": "Realmente quer sair da página? Há mudanças não salvas.",
@@ -124,7 +126,8 @@
       "Report": "Reporte um erro ou comportamento incorreto com o Editor p5.js.",
       "Forum": "Expanda as possibilidades do p5.js com bibliotecas criadas pela comunidade.",
       "Discord": "Expanda as possibilidades do p5.js com bibliotecas criadas pela comunidade."
-    }
+    },
+    "Contact": "Entre em Contato"
   },
   "Toast": {
     "OpenedNewSketch": "Novo esboço aberto.",
@@ -208,7 +211,7 @@
     "AutocompleteHinterOnARIA": "Geração de dicas do Autocompleter ativada",
     "AutocompleteHinterOffARIA": "Geração de dicas do Autocompleter desativada",
     "LibraryVersion": "Versão do p5.js",
-    "LibraryVersionInfo": "Há uma [nova versão 2.0](https://github.com/processing/p5.js/releases/) do p5.js disponível! Ela se tornará padrão em agosto de 2026, então aproveite este tempo para testá-la e relatar bugs. Está interessado em transitar esboços de 1.x para 2.0? Confira os [recursos de compatibilidade e transição.](https://github.com/processing/p5.js-compatibility)",
+    "LibraryVersionInfo": "Há uma [nova versão 2.0](https://github.com/processing/p5.js/releases/) do p5.js disponível! Ela se tornará padrão em agosto de 2026, então aproveite este tempo para testá-la e relatar erros. Está interessado em migrar esboços de 1.x para 2.0? Confira os [recursos de compatibilidade e migração.](https://github.com/processing/p5.js-compatibility)",
     "CustomVersionTitle": "Gerenciando suas próprias bibliotecas? Legal!",
     "CustomVersionInfo": "A versão do p5.js está atualmente sendo gerenciada no código do index.html. Isso significa que não pode ser ajustada a partir desta aba.",
     "CustomVersionReset": "Se você gostaria de usar as bibliotecas padrão, pode substituir as tags de script no index.html pelo seguinte:",
@@ -216,7 +219,7 @@
     "PreloadAddon": "Biblioteca adicional de Compatibilidade p5.js 1.x — Pré-carregamento",
     "ShapesAddon": "Biblioteca adicional de Compatibilidade p5.js 1.x — Formas",
     "DataAddon": "Biblioteca adicional de Compatibilidade p5.js 1.x — Estruturas de Dados",
-    "SoundReference": "Ver a referência para p5.sound compatível com p5.js $VERSION",
+    "SoundReference": "Ver a referência para p5.sound compatível com p5.js {{version}}",
     "CopyToClipboardSuccess": "Copiado para a área de transferência!",
     "CopyToClipboardFailure": "Não conseguimos copiar o texto, tente selecioná-lo e copiá-lo manualmente."
   },
@@ -621,6 +624,7 @@
     "Private": {
       "Description": "Apenas você pode ver este esboço.",
       "Label": "Privado"
-    }
+    },
+    "Changed": "'{{projectName}}' agora é {{newVisibility}}..."
   }
 }

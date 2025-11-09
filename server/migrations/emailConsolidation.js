@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import fs from 'fs';
-import User from '../models/user';
+import { User } from '../models/user';
 import Project from '../models/project';
 import Collection from '../models/collection';
 import {

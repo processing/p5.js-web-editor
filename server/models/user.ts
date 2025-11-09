@@ -1,51 +1,15 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 import bcrypt from 'bcryptjs';
+import {
+  UserDocument,
+  UserModel,
+  CookieConsentOptions,
+  EmailConfirmationStates,
+  ApiKeyDocument
+} from '../types';
+import { apiKeySchema } from './apiKey';
 
-const EmailConfirmationStates = {
-  Verified: 'verified',
-  Sent: 'sent',
-  Resent: 'resent'
-};
-
-const { Schema } = mongoose;
-
-const apiKeySchema = new Schema(
-  {
-    label: { type: String, default: 'API Key' },
-    lastUsedAt: { type: Date },
-    hashedKey: { type: String, required: true }
-  },
-  { timestamps: true, _id: true }
-);
-
-apiKeySchema.virtual('id').get(function getApiKeyId() {
-  return this._id.toHexString();
-});
-
-/**
- * When serialising an APIKey instance, the `hashedKey` field
- * should never be exposed to the client. So we only return
- * a safe list of fields when toObject and toJSON are called.
- */
-function apiKeyMetadata(doc, ret, options) {
-  return {
-    id: doc.id,
-    label: doc.label,
-    lastUsedAt: doc.lastUsedAt,
-    createdAt: doc.createdAt
-  };
-}
-
-apiKeySchema.set('toObject', {
-  transform: apiKeyMetadata
-});
-
-apiKeySchema.set('toJSON', {
-  virtuals: true,
-  transform: apiKeyMetadata
-});
-
-const userSchema = new Schema(
+const userSchema = new Schema<UserDocument, UserModel>(
   {
     name: { type: String, default: '' },
     username: { type: String, required: true, unique: true },
@@ -79,13 +43,13 @@ const userSchema = new Schema(
     totalSize: { type: Number, default: 0 },
     cookieConsent: {
       type: String,
-      enum: ['none', 'essential', 'all'],
-      default: 'none'
+      enum: Object.values(CookieConsentOptions),
+      default: CookieConsentOptions.NONE
     },
     banned: { type: Boolean, default: false },
     lastLoginTimestamp: { type: Date }
   },
-  { timestamps: true, usePushEach: true }
+  { timestamps: true }
 );
 
 /**
@@ -100,6 +64,10 @@ userSchema.pre('save', function checkPassword(next) {
   bcrypt.genSalt(10, (err, salt) => {
     if (err) {
       next(err);
+      return;
+    }
+    if (!user.password) {
+      next(new Error('Password is missing'));
       return;
     }
     bcrypt.hash(user.password, salt, (innerErr, hash) => {
@@ -127,7 +95,7 @@ userSchema.pre('save', function checkApiKey(next) {
   let pendingTasks = 0;
   let nextCalled = false;
 
-  const done = (err) => {
+  const done = (err?: mongoose.CallbackError) => {
     if (nextCalled) return;
     if (err) {
       nextCalled = true;
@@ -179,8 +147,8 @@ userSchema.set('toJSON', {
  * @return {Promise<boolean>}
  */
 userSchema.methods.comparePassword = async function comparePassword(
-  candidatePassword
-) {
+  candidatePassword: string
+): Promise<boolean> {
   if (!this.password) {
     return false;
   }
@@ -197,8 +165,8 @@ userSchema.methods.comparePassword = async function comparePassword(
  * Helper method for validating a user's api key
  */
 userSchema.methods.findMatchingKey = async function findMatchingKey(
-  candidateKey
-) {
+  candidateKey: string
+): Promise<{ isMatch: boolean; keyDocument: ApiKeyDocument | null }> {
   let keyObj = { isMatch: false, keyDocument: null };
   /* eslint-disable no-restricted-syntax */
   for (const k of this.apiKeys) {
@@ -227,7 +195,9 @@ userSchema.methods.findMatchingKey = async function findMatchingKey(
  * @callback [cb] - Optional error-first callback that passes User document
  * @return {Object} - Returns User Object fulfilled by User document
  */
-userSchema.statics.findByEmail = async function findByEmail(email) {
+userSchema.statics.findByEmail = async function findByEmail(
+  email: string | string[]
+): Promise<UserDocument | null> {
   const user = this;
   const query = Array.isArray(email) ? { email: { $in: email } } : { email };
 
@@ -245,9 +215,11 @@ userSchema.statics.findByEmail = async function findByEmail(email) {
  * Queries User collection by emails and returns all Users that match.
  *
  * @param {string[]} emails - Array of email strings
- * @return {Promise<Object>} - Returns Promise fulfilled by User document
+ * @return {Promise<UserDocument[]>} - Returns Promise fulfilled by User document
  */
-userSchema.statics.findAllByEmails = async function findAllByEmails(emails) {
+userSchema.statics.findAllByEmails = async function findAllByEmails(
+  emails: string[]
+): Promise<UserDocument[] | null> {
   const user = this;
   const query = {
     email: { $in: emails }
@@ -268,22 +240,18 @@ userSchema.statics.findAllByEmails = async function findAllByEmails(emails) {
  * @param {string} username - Username string
  * @param {Object} [options] - Optional options
  * @param {boolean} options.caseInsensitive - Does a caseInsensitive query, defaults to false
- * @return {Object} - Returns User Object fulfilled by User document
+ * @return {UserDocument} - Returns User Object fulfilled by User document
  */
 userSchema.statics.findByUsername = async function findByUsername(
-  username,
-  options
-) {
+  username: string,
+  options?: { caseInsensitive?: boolean }
+): Promise<UserDocument | null> {
   const user = this;
   const query = {
     username
   };
 
-  if (
-    arguments.length === 2 &&
-    typeof options === 'object' &&
-    options.caseInsensitive
-  ) {
+  if (options?.caseInsensitive) {
     const foundUser = await user
       .findOne(query)
       .collation({ locale: 'en', strength: 2 })
@@ -307,17 +275,16 @@ userSchema.statics.findByUsername = async function findByUsername(
  *                                          default query for username or email, defaults
  *                                          to false
  * @param {("email"|"username")} options.valueType - Prevents automatic type inferrence
- * @return {Object} - Returns User Object fulfilled by User document
+ * @return {UserDocument} - Returns User Object fulfilled by User document
  */
 userSchema.statics.findByEmailOrUsername = async function findByEmailOrUsername(
-  value,
-  options
-) {
+  value: string,
+  options?: { caseInsensitive?: boolean; valueType?: 'email' | 'username' }
+): Promise<UserDocument | null> {
   const user = this;
-  const isEmail =
-    options && options.valueType
-      ? options.valueType === 'email'
-      : value.indexOf('@') > -1;
+  const isEmail = options?.valueType
+    ? options.valueType === 'email'
+    : value.indexOf('@') > -1;
 
   // do the case insensitive stuff
   if (
@@ -349,12 +316,12 @@ userSchema.statics.findByEmailOrUsername = async function findByEmailOrUsername(
  *
  * @param {string} email
  * @param {string} username
- * @return {Object} - Returns User Object fulfilled by User document
+ * @return {UserDocument} - Returns User Object fulfilled by User document
  */
 userSchema.statics.findByEmailAndUsername = async function findByEmailAndUsername(
-  email,
-  username
-) {
+  email: string,
+  username: string
+): Promise<UserDocument | null> {
   const user = this;
   const query = {
     $or: [{ email }, { username }]
@@ -367,9 +334,11 @@ userSchema.statics.findByEmailAndUsername = async function findByEmailAndUsernam
   return foundUser;
 };
 
-userSchema.statics.EmailConfirmation = EmailConfirmationStates;
-
 userSchema.index({ username: 1 }, { collation: { locale: 'en', strength: 2 } });
 userSchema.index({ email: 1 }, { collation: { locale: 'en', strength: 2 } });
 
-export default mongoose.models.User || mongoose.model('User', userSchema);
+userSchema.statics.EmailConfirmation = () => EmailConfirmationStates;
+
+export const User =
+  (mongoose.models.User as UserModel) ||
+  mongoose.model<UserDocument, UserModel>('User', userSchema);

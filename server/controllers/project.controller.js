@@ -7,7 +7,7 @@ import isAfter from 'date-fns/isAfter';
 import axios from 'axios';
 import slugify from 'slugify';
 import Project from '../models/project';
-import User from '../models/user';
+import { User } from '../models/user';
 import { resolvePathToFile } from '../utils/filePath';
 import { generateFileSystemSafeName } from '../utils/generateFileSystemSafeName';
 
