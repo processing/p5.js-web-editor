@@ -23,7 +23,10 @@ const store = setupStore(initialState);
 
 const DONATE_LOGO_IMAGE_URL = 'https://donorbox.org/images/white_logo.svg';
 
+const showDonateCampaign = false;
+
 if (
+  showDonateCampaign &&
   window.location.href.indexOf('full') === -1 &&
   window.location.href.indexOf('embed') === -1
 ) {

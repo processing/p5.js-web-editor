@@ -1,6 +1,6 @@
 {
   "name": "p5.js-web-editor",
-  "version": "2.18.4",
+  "version": "2.19.0",
   "description": "The web editor for p5.js.",
   "scripts": {
     "clean": "rimraf dist",
@@ -143,7 +143,6 @@
     "@types/node": "^16.18.126",
     "@types/nodemailer": "^7.0.1",
     "@types/nodemailer-mailgun-transport": "^1.4.6",
-    "@types/passport": "^1.0.17",
     "@types/passport": "^1.0.17",
     "@types/react": "^16.14.0",
     "@types/react-dom": "^16.9.25",
