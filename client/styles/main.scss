@@ -6,7 +6,7 @@
 @import 'base/reset';
 @import 'base/base';
 
-@import '~codemirror/lib/codemirror';
+@import 'codemirror/lib/codemirror.css';
 @import '~codemirror/addon/lint/lint';
 @import '~codemirror-colorpicker/addon/codemirror-colorpicker';
 @import '~dropzone/dist/dropzone';
