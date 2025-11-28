@@ -140,7 +140,18 @@ class Editor extends React.Component {
       styleSelectedText: true,
       lint: {
         onUpdateLinting: (annotations) => {
-          this.updateLintingMessageAccessibility(annotations);
+          const filteredAnnotations = annotations.filter((annotation) => {
+            const message = (annotation.message || '').toLowerCase();
+            const isNumericSeparatorError =
+              (message.includes('unexpected') &&
+                (message.includes("'_'") || message.includes('_'))) ||
+              message.includes('numeric separator') ||
+              (message.includes('syntax') && message.includes('_')) ||
+              (message.includes('illegal') && message.includes('_')) ||
+              (message.includes('token') && message.includes('_'));
+            return !isNumericSeparatorError;
+          });
+          this.updateLintingMessageAccessibility(filteredAnnotations);
         },
         options: {
           asi: true,
@@ -161,6 +172,45 @@ class Editor extends React.Component {
     });
 
     delete this._cm.options.lint.options.errors;
+
+    if (CodeMirror.lint && CodeMirror.lint.javascript) {
+      const originalJSLint = CodeMirror.lint.javascript;
+      CodeMirror.lint.javascript = (text, options, cm) => {
+        const result = originalJSLint(text, options, cm);
+        if (Array.isArray(result)) {
+          const lines = text.split('\n');
+          return result.filter((annotation) => {
+            const lineNum = annotation.from ? annotation.from.line : 0;
+            const lineContent = lines[lineNum] || '';
+            const hasNumericSeparator = /\d+_\d+/.test(lineContent);
+            const message = (annotation.message || '').toLowerCase();
+            if (hasNumericSeparator) {
+              if (
+                message.includes('unexpected') ||
+                message.includes('_') ||
+                message.includes('syntax') ||
+                message.includes('illegal') ||
+                message.includes('token') ||
+                message.includes('character')
+              ) {
+                return false;
+              }
+            }
+
+            const isNumericSeparatorError =
+              (message.includes('unexpected') &&
+                (message.includes("'_'") || message.includes('_'))) ||
+              message.includes('numeric separator') ||
+              (message.includes('syntax') && message.includes('_')) ||
+              (message.includes('illegal') && message.includes('_')) ||
+              (message.includes('token') && message.includes('_'));
+
+            return !isNumericSeparatorError;
+          });
+        }
+        return result;
+      };
+    }
 
     this._cm.getWrapperElement().addEventListener('click', (e) => {
       const isCtrlClick = isMac() ? e.metaKey : e.ctrlKey;
