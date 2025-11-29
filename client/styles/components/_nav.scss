@@ -58,7 +58,8 @@
 }
 
 // base focus styles
-.nav__item button:focus {
+.nav__item button:focus,
+.nav__item a:focus {
   @include themify() {
     background-color: getThemifyVariable('nav-hover-color');
   }
@@ -71,6 +72,13 @@
 
   .nav__item-header-triangle polygon,
   .nav__item-header-triangle path {
+    @include themify() {
+      fill: getThemifyVariable('button-hover-color');
+    }
+  }
+
+  .nav__back-icon g,
+  .nav__back-icon path {
     @include themify() {
       fill: getThemifyVariable('button-hover-color');
     }
