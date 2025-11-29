@@ -234,7 +234,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_ID,
       clientSecret: process.env.GOOGLE_SECRET,
-      callbackURL: 'https://editor.p5js.org/auth/google/callback',
+      callbackURL: '/auth/google/callback',
       passReqToCallback: true,
       scope: ['openid email']
     },
