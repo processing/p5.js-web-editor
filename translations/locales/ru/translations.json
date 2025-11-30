@@ -1,0 +1,697 @@
+{
+  "Nav": {
+    "File": {
+      "Title": "Файл",
+      "New": "Новый",
+      "Share": "Поделиться",
+      "Duplicate": "Дублировать",
+      "Open": "Открыть",
+      "Download": "Скачать",
+      "AddToCollection": "Добавить в коллекцию",
+      "Examples": "Примеры"
+    },
+    "Edit": {
+      "Title": "Редактировать",
+      "TidyCode": "Привести код в порядок",
+      "Find": "Найти",
+      "Replace": "Заменить"
+    },
+    "Sketch": {
+      "Title": "Скетч",
+      "AddFile": "Добавить файл",
+      "AddFolder": "Добавить папку",
+      "Run": "Запустить",
+      "Stop": "Остановить"
+    },
+    "Help": {
+      "Title": "Помощь",
+      "KeyboardShortcuts": "Сочетания клавиш",
+      "Reference": "Справочник",
+      "ReportBug": "Сообщить об ошибке",
+      "ChatOnDiscord": "Обсудить в Discord",
+      "PostOnTheForum": "Опубликовать на форуме"
+    },
+    "Lang": "Язык",
+    "BackEditor": "Вернуться в редактор",
+    "WarningUnsavedChanges": "Вы уверены, что хотите покинуть эту страницу? У вас есть несохраненные изменения.",
+    "Login": "Войти",
+    "LoginOr": "или",
+    "SignUp": "Зарегистрироваться",
+    "Auth": {
+      "Welcome": "Добро пожаловать",
+      "Hello": "Привет",
+      "MyAccount": "Мой аккаунт",
+      "My": "Мои",
+      "MySketches": "Мои скетчи",
+      "MyCollections": "Мои коллекции",
+      "Asset": "Ресурс",
+      "MyAssets": "Мои ресурсы",
+      "LogOut": "Выйти"
+    }
+  },
+  "CodemirrorFindAndReplace": {
+    "ToggleReplace": "Переключить замену",
+    "Find": "Найти",
+    "FindPlaceholder": "Найти в файлах",
+    "Replace": "Заменить",
+    "ReplaceAll": "Заменить все",
+    "ReplacePlaceholder": "Текст для замены",
+    "Regex": "Регулярное выражение",
+    "CaseSensitive": "С учетом регистра",
+    "WholeWords": "Слово целиком",
+    "Previous": "Предыдущий",
+    "Next": "Следующий",
+    "NoResults": "Нет результатов",
+    "Close": "Закрыть"
+  },
+  "LoginForm": {
+    "UsernameOrEmail": "Email или Имя пользователя",
+    "UsernameOrEmailARIA": "Email или Имя пользователя",
+    "Password": "Пароль",
+    "PasswordARIA": "Пароль",
+    "Submit": "Войти",
+    "Errors": {
+      "invalidCredentials": "Неверный адрес электронной почты или пароль."
+    }
+  },
+  "LoginView": {
+    "Title": "Веб-редактор p5.js | Вход",
+    "Login": "Войти",
+    "LoginOr": "или",
+    "SignUp": "Зарегистрироваться",
+    "Email": "email",
+    "Username": "имя пользователя",
+    "DontHaveAccount": "Нет аккаунта? ",
+    "ForgotPassword": "Забыли пароль? ",
+    "ResetPassword": "Сбросить пароль"
+  },
+  "SocialAuthButton": {
+    "Connect": "Подключить аккаунт {{serviceauth}}",
+    "Unlink": "Отключить аккаунт {{serviceauth}}",
+    "Login": "Войти с помощью {{serviceauth}}",
+    "LogoARIA": "Логотип {{serviceauth}}"
+  },
+  "About": {
+    "Title": "О нас",
+    "TitleHelmet": "Веб-редактор p5.js | О нас",
+    "Headline": "Создавайте, делитесь и ремиксуйте скетчи p5.js в редакторе p5.js.",
+    "Contribute": "Внести вклад",
+    "IntroDescription1": "p5.js — это бесплатная библиотека JavaScript с открытым исходным кодом для обучения кодированию и созданию искусства. Используя редактор p5.js, вы можете создавать, делиться и ремиксовать скетчи p5.js без необходимости что-либо скачивать или настраивать.",
+    "IntroDescription2": "Мы считаем, что программное обеспечение и инструменты для его изучения должны быть максимально открытыми и инклюзивными. Вы можете поддержать эту работу, сделав пожертвование Processing Foundation, организации, которая поддерживает p5.js. Ваше пожертвование поддерживает разработку программного обеспечения для p5.js, образовательные ресурсы, такие как примеры кода и учебные пособия, стипендии и общественные мероприятия.",
+    "Donate": "Пожертвовать",
+    "NewP5": "Новичок в p5.js?",
+    "Report": "Сообщить об ошибке",
+    "Learn": "Учиться",
+    "X": "X",
+    "Home": "Домашняя страница p5.js",
+    "Instagram": "Instagram",
+    "Discord": "Discord",
+    "DiscordCTA": "Присоединиться к Discord",
+    "Youtube": "Youtube",
+    "Github": "Github",
+    "GetInvolved": "Принять участие",
+    "WebEditor": "Веб-редактор",
+    "Resources": "Ресурсы",
+    "Reference": "Справочник",
+    "Libraries": "Библиотеки",
+    "Forum": "Форум",
+    "ForumCTA": "Присоединиться к форуму",
+    "Examples": "Примеры",
+    "PrivacyPolicy": "Политика конфиденциальности",
+    "TermsOfUse": "Условия использования",
+    "CodeOfConduct": "Кодекс поведения",
+    "Email": "Email",
+    "EmailAddress": "hello@p5js.org",
+    "Socials": "Соцсети",
+    "LinkDescriptions": {
+      "Home": "Узнайте больше о p5.js и нашем сообществе.",
+      "Examples": "Изучите возможности p5.js на коротких примерах.",
+      "CodeOfConduct": "Прочтите наше Заявление сообщества и Кодекс поведения.",
+      "Libraries": "Расширьте возможности p5.js с помощью библиотек, созданных сообществом.",
+      "Reference": "Найдите простые объяснения для каждого фрагмента кода p5.js.",
+      "Donate": "Поддержите эту работу пожертвованием Processing Foundation.",
+      "Contribute": "Внесите вклад в веб-редактор p5.js с открытым исходным кодом на Github.",
+      "Report": "Сообщить о неисправном или некорректном поведении веб-редактора p5.js.",
+      "Forum": "Задавайте вопросы, делитесь скетчами и получайте помощь от сообщества p5.js.",
+      "Discord": "Общайтесь с сообществом p5.js и получайте быструю помощь."
+    },
+    "Contact": "Связаться с нами"
+  },
+  "Toast": {
+    "OpenedNewSketch": "Открыт новый скетч.",
+    "SketchSaved": "Скетч сохранен.",
+    "SketchFailedSave": "Не удалось сохранить скетч.",
+    "AutosaveEnabled": "Автосохранение включено.",
+    "LangChange": "Язык изменен",
+    "SettingsSaved": "Настройки сохранены.",
+    "EmptyCurrentPass": "Поле текущего пароля пустое",
+    "IncorrectCurrentPass": "Текущий пароль неверный",
+    "DefaultError": "Что-то пошло не так",
+    "UserNotFound": "Пользователь не найден",
+    "NetworkError": "Ошибка сети"
+  },
+  "Toolbar": {
+    "Preview": "Предпросмотр",
+    "Auto-refresh": "Автообновление",
+    "OpenPreferencesARIA": "Открыть настройки",
+    "PlaySketchARIA": "Запустить скетч",
+    "PlayOnlyVisualSketchARIA": "Запустить только визуальный скетч",
+    "StopSketchARIA": "Остановить скетч",
+    "EditSketchARIA": "Изменить имя скетча",
+    "NewSketchNameARIA": "Новое имя скетча",
+    "By": " от ",
+    "CustomLibraryVersion": "Пользовательская версия p5.js",
+    "VersionPickerARIA": "Выбор версии",
+    "NewVersionPickerARIA": "Выбор версии"
+  },
+  "Console": {
+    "Title": "Консоль",
+    "Clear": "Очистить",
+    "ClearARIA": "Очистить консоль",
+    "Close": "Закрыть",
+    "CloseARIA": "Закрыть консоль",
+    "Open": "Открыть",
+    "OpenARIA": "Открыть консоль"
+  },
+  "Preferences": {
+    "Settings": "Настройки",
+    "GeneralSettings": "Общие настройки",
+    "Accessibility": "Доступность",
+    "LibraryManagement": "Управление библиотеками",
+    "Theme": "Тема",
+    "LightTheme": "Светлая",
+    "LightThemeARIA": "светлая тема включена",
+    "DarkTheme": "Темная",
+    "DarkThemeARIA": "темная тема включена",
+    "HighContrastTheme": "Высокий контраст",
+    "HighContrastThemeARIA": "тема высокого контраста включена",
+    "TextSize": "Размер текста",
+    "DecreaseFont": "Уменьшить",
+    "DecreaseFontARIA": "уменьшить размер шрифта",
+    "IncreaseFont": "Увеличить",
+    "IncreaseFontARIA": "увеличить размер шрифта",
+    "FontSize": "Размер шрифта",
+    "SetFontSize": "установить размер шрифта",
+    "Autosave": "Автосохранение",
+    "On": "Вкл",
+    "AutosaveOnARIA": "автосохранение включено",
+    "Off": "Выкл",
+    "AutosaveOffARIA": "автосохранение выключено",
+    "AutocloseBracketsQuotes": "Автозакрытие скобок и кавычек",
+    "AutocloseBracketsQuotesOnARIA": "автозакрытие скобок и кавычек включено",
+    "AutocloseBracketsQuotesOffARIA": "автозакрытие скобок и кавычек выключено",
+    "AutocompleteHinter": "Автодополнение",
+    "AutocompleteHinterOnARIA": "автодополнение включено",
+    "AutocompleteHinterOffARIA": "автодополнение выключено",
+    "WordWrap": "Перенос слов",
+    "WordWrapOnARIA": "перенос слов включен",
+    "WordWrapOffARIA": "перенос слов выключен",
+    "LineNumbers": "Номера строк",
+    "LineNumbersOnARIA": "номера строк включены",
+    "LineNumbersOffARIA": "номера строк выключены",
+    "LintWarningSound": "Звук предупреждения линтера",
+    "LintWarningOnARIA": "звук предупреждения линтера включен",
+    "LintWarningOffARIA": "звук предупреждения линтера выключен",
+    "PreviewSound": "Звук предпросмотра",
+    "PreviewSoundARIA": "звук предпросмотра",
+    "AccessibleTextBasedCanvas": "Доступный текстовый холст",
+    "UsedScreenReader": "Используется с программой чтения с экрана",
+    "PlainText": "Обычный текст",
+    "TextOutputARIA": "текстовый вывод включен",
+    "TableText": "Текст таблицы",
+    "TableOutputARIA": "табличный вывод включен",
+    "LibraryVersion": "Версия p5.js",
+    "LibraryVersionInfo": "Доступен [новый релиз 2.0](https://github.com/processing/p5.js/releases/) p5.js! Он станет версией по умолчанию в августе 2026 года, поэтому воспользуйтесь этим временем, чтобы протестировать его и сообщить об ошибках. Заинтересованы в переходе скетчей с 1.x на 2.0? Ознакомьтесь с [ресурсами по совместимости и переходу.](https://github.com/processing/p5.js-compatibility)",
+    "CustomVersionTitle": "Управляете своими собственными библиотеками? Отлично!",
+    "CustomVersionInfo": "Версия p5.js в настоящее время управляется в коде index.html. Это означает, что ее нельзя настроить на этой вкладке.",
+    "CustomVersionReset": "Если вы хотите использовать библиотеки по умолчанию, вы можете заменить теги скриптов в index.html на следующие:",
+    "SoundAddon": "Дополнительная библиотека p5.sound.js",
+    "PreloadAddon": "Дополнительная библиотека совместимости p5.js 1.x — Preload",
+    "ShapesAddon": "Дополнительная библиотека совместимости p5.js 1.x — Shapes",
+    "DataAddon": "Дополнительная библиотека совместимости p5.js 1.x — Data & Events",
+    "AddonOnARIA": "включено",
+    "AddonOffARIA": "выключено",
+    "SoundReference": "Посмотреть справочник по p5.sound, совместимый с p5.js {{version}}",
+    "CopyToClipboardSuccess": "Скопировано в буфер обмена!",
+    "CopyToClipboardFailure": "Не удалось скопировать текст, попробуйте выделить и скопировать его вручную."
+  },
+  "KeyboardShortcuts": {
+    "Title": "Сочетания клавиш",
+    "ShortcutsFollow": "Сочетания клавиш для редактирования кода соответствуют",
+    "SublimeText": "сочетаниям клавиш Sublime Text",
+    "CodeEditing": {
+      "Tidy": "Привести в порядок",
+      "FindText": "Найти текст",
+      "FindNextMatch": "Найти следующее совпадение",
+      "FindPrevMatch": "Найти предыдущее совпадение",
+      "ReplaceTextMatch": "Заменить текст",
+      "IndentCodeLeft": "Сдвинуть код влево",
+      "IndentCodeRight": "Сдвинуть код вправо",
+      "CommentLine": "Закомментировать строку",
+      "FindNextTextMatch": "Найти следующее текстовое совпадение",
+      "FindPreviousTextMatch": "Найти предыдущее текстовое совпадение",
+      "CodeEditing": "Редактирование кода",
+      "ColorPicker": "Показать встроенную палитру цветов",
+      "CreateNewFile": "Создать новый файл",
+      "RenameVariable": "Переименовать переменную"
+    },
+    "General": "Общие",
+    "GeneralSelection": {
+      "StartSketch": "Запустить скетч",
+      "StopSketch": "Остановить скетч",
+      "TurnOnAccessibleOutput": "Включить доступный вывод",
+      "TurnOffAccessibleOutput": "Выключить доступный вывод",
+      "Reference": "Перейти к справочнику для выбранного элемента в подсказке"
+    }
+  },
+  "Sidebar": {
+    "Title": "Файлы скетча",
+    "ToggleARIA": "Переключить открыть/закрыть опции файлов скетча",
+    "AddFolder": "Создать папку",
+    "AddFolderARIA": "добавить папку",
+    "AddFile": "Создать файл",
+    "AddFileARIA": "добавить файл",
+    "UploadFile": "Загрузить файл",
+    "UploadFileARIA": "загрузить файл"
+  },
+  "FileNode": {
+    "OpenFolderARIA": "Открыть содержимое папки",
+    "CloseFolderARIA": "Закрыть содержимое папки",
+    "ToggleFileOptionsARIA": "Переключить открыть/закрыть опции файла",
+    "AddFolder": "Создать папку",
+    "AddFolderARIA": "добавить папку",
+    "AddFile": "Создать файл",
+    "AddFileARIA": "добавить файл",
+    "UploadFile": "Загрузить файл",
+    "UploadFileARIA": "загрузить файл",
+    "Rename": "Переименовать",
+    "Delete": "Удалить"
+  },
+  "Common": {
+    "SiteName": "Веб-редактор p5.js",
+    "Error": "Ошибка",
+    "ErrorARIA": "Ошибка",
+    "Save": "Сохранить",
+    "p5logoARIA": "Логотип p5.js",
+    "DeleteConfirmation": "Вы уверены, что хотите удалить {{name}}?"
+  },
+  "IDEView": {
+    "SubmitFeedback": "Отправить отзыв",
+    "SubmitFeedbackARIA": "отправить-отзыв",
+    "AddCollectionTitle": "Добавить в коллекцию",
+    "AddCollectionARIA": "добавить в коллекцию",
+    "ShareTitle": "Поделиться",
+    "ShareARIA": "поделиться"
+  },
+  "NewFileModal": {
+    "Title": "Создать файл",
+    "CloseButtonARIA": "Закрыть модальное окно создания файла",
+    "EnterName": "Пожалуйста, введите имя",
+    "InvalidType": "Недопустимый тип файла. Допустимые расширения: .js, .css, .json, .xml, .stl, .txt, .csv, .tsv, .mtl, .frag, и .vert."
+  },
+  "NewFileForm": {
+    "AddFileSubmit": "Добавить файл",
+    "Placeholder": "Имя"
+  },
+  "NewFolderModal": {
+    "Title": "Создать папку",
+    "CloseButtonARIA": "Закрыть модальное окно создания папки",
+    "EnterName": "Пожалуйста, введите имя",
+    "EmptyName": "Имя папки не может содержать только пробелы",
+    "InvalidExtension": "Имя папки не может содержать расширение"
+  },
+  "NewFolderForm": {
+    "AddFolderSubmit": "Добавить папку",
+    "Placeholder": "Имя"
+  },
+  "ResetPasswordForm": {
+    "Email": "Email, использованный при регистрации",
+    "EmailARIA": "email",
+    "Submit": "Отправить письмо для сброса пароля"
+  },
+  "ResetPasswordView": {
+    "Title": "Веб-редактор p5.js | Сброс пароля",
+    "Reset": "Сбросить пароль",
+    "Submitted": "Письмо для сброса пароля должно прийти в ближайшее время. Если вы его не видите, проверьте папку со спамом, так как оно иногда может оказаться там.",
+    "Login": "Войти",
+    "LoginOr": "или",
+    "SignUp": "Зарегистрироваться"
+  },
+  "ReduxFormUtils": {
+    "errorInvalidEmail": "Пожалуйста, введите действительный адрес электронной почты",
+    "errorEmptyEmail": "Пожалуйста, введите email",
+    "errorEmptyEmailorUserName": "Пожалуйста, введите email или имя пользователя",
+    "errorPasswordMismatch": "Пароли должны совпадать",
+    "errorEmptyPassword": "Пожалуйста, введите пароль",
+    "errorShortPassword": "Пароль должен быть не менее 6 символов",
+    "errorConfirmPassword": "Пожалуйста, подтвердите пароль",
+    "errorNewPassword": "Пожалуйста, введите новый пароль или оставьте текущий пароль пустым.",
+    "errorNewPasswordRepeat": "Ваш новый пароль должен отличаться от текущего.",
+    "errorEmptyUsername": "Пожалуйста, введите имя пользователя.",
+    "errorLongUsername": "Имя пользователя должно быть менее 20 символов.",
+    "errorValidUsername": "Имя пользователя должно состоять только из цифр, букв, точек, тире и нижних подчеркиваний."
+  },
+  "NewPasswordView": {
+    "Title": "Веб-редактор p5.js | Новый пароль",
+    "Description": "Установить новый пароль",
+    "TokenInvalidOrExpired": "Токен сброса пароля недействителен или срок его действия истек.",
+    "EmptyPassword": "Пожалуйста, введите пароль",
+    "PasswordConfirmation": "Пожалуйста, подтвердите пароль",
+    "PasswordMismatch": "Пароли должны совпадать"
+  },
+  "AccountForm": {
+    "Email": "Email",
+    "EmailARIA": "email",
+    "Unconfirmed": "Не подтверждено.",
+    "EmailSent": "Подтверждение отправлено, проверьте вашу почту.",
+    "Resend": "Повторно отправить письмо с подтверждением",
+    "UserName": "Имя пользователя",
+    "UserNameARIA": "Имя пользователя",
+    "CurrentPassword": "Текущий пароль",
+    "CurrentPasswordARIA": "Текущий пароль",
+    "NewPassword": "Новый пароль",
+    "NewPasswordARIA": "Новый пароль",
+    "SaveAccountDetails": "Сохранить данные аккаунта"
+  },
+  "AccountView": {
+    "SocialLogin": "Вход через соцсети",
+    "SocialLoginDescription": "Используйте ваш аккаунт GitHub или Google для входа в веб-редактор p5.js.",
+    "Title": "Веб-редактор p5.js | Настройки аккаунта",
+    "Settings": "Мой аккаунт",
+    "AccountTab": "Аккаунт",
+    "AccessTokensTab": "Токены доступа"
+  },
+  "APIKeyForm": {
+    "ConfirmDelete": "Вы уверены, что хотите удалить {{key_label}}?",
+    "Summary": "Персональные токены доступа действуют как ваш пароль, чтобы разрешить автоматическим\n          скриптам доступ к API редактора. Создайте токен для каждого скрипта,\n          которому требуется доступ.",
+    "CreateToken": "Создать новый токен",
+    "TokenLabel": "Для чего этот токен?",
+    "TokenPlaceholder": "Для чего этот токен? Например, Скрипт импорта примера",
+    "CreateTokenSubmit": "Создать",
+    "NoTokens": "У вас нет существующих токенов.",
+    "NewTokenTitle": "Ваш новый токен доступа",
+    "NewTokenInfo": "Обязательно скопируйте ваш новый персональный токен доступа сейчас.\n                   Вы больше не сможете его увидеть!",
+    "ExistingTokensTitle": "Существующие токены"
+  },
+  "APIKeyList": {
+    "Name": "Имя",
+    "Created": "Создан",
+    "LastUsed": "Последнее использование",
+    "Actions": "Действия",
+    "Never": "Никогда",
+    "DeleteARIA": "Удалить ключ API"
+  },
+  "NewPasswordForm": {
+    "Title": "Пароль",
+    "TitleARIA": "Пароль",
+    "ConfirmPassword": "Подтвердить пароль",
+    "ConfirmPasswordARIA": "Подтвердить пароль",
+    "SubmitSetNewPassword": "Установить новый пароль"
+  },
+  "SignupForm": {
+    "Title": "Имя пользователя",
+    "TitleARIA": "имя пользователя",
+    "Email": "Email",
+    "EmailARIA": "email",
+    "Password": "Пароль",
+    "PasswordARIA": "пароль",
+    "ConfirmPassword": "Подтвердить пароль",
+    "ConfirmPasswordARIA": "Подтвердить пароль",
+    "SubmitSignup": "Зарегистрироваться"
+  },
+  "SignupView": {
+    "Title": "Веб-редактор p5.js | Регистрация",
+    "Description": "Зарегистрироваться",
+    "Or": "Или",
+    "AlreadyHave": "Уже есть аккаунт?",
+    "Login": "Войти",
+    "Warning": "Регистрируясь, вы соглашаетесь с <0>Условиями использования</0> и <1>Политикой конфиденциальности</1> редактора p5.js."
+  },
+  "EmailVerificationView": {
+    "Title": "Веб-редактор p5.js | Подтверждение email",
+    "Verify": "Подтвердите свой email",
+    "InvalidTokenNull": "Эта ссылка недействительна.",
+    "Checking": "Проверка токена, пожалуйста, подождите...",
+    "Verified": "Готово, ваш адрес электронной почты подтвержден.",
+    "InvalidState": "Токен недействителен или срок его действия истек."
+  },
+  "AssetList": {
+    "Title": "Веб-редактор p5.js | Мои ресурсы",
+    "ToggleOpenCloseARIA": "Переключить Открыть/Закрыть опции ресурсов",
+    "Delete": "Удалить",
+    "OpenNewTab": "Открыть в новой вкладке",
+    "NoUploadedAssets": "Нет загруженных ресурсов.",
+    "HeaderName": "Имя",
+    "HeaderSize": "Размер",
+    "HeaderSketch": "Скетч",
+    "maximum": "Максимум"
+  },
+  "Feedback": {
+    "Title": "Веб-редактор p5.js | Отзывы",
+    "ViaGithubHeader": "Через Github Issues",
+    "ViaGithubDescription": "Если вы знакомы с Github, это наш предпочтительный способ получения сообщений об ошибках и отзывов.",
+    "GoToGithub": "Перейти на Github",
+    "ViaGoogleHeader": "Через Google Форму",
+    "ViaGoogleDescription": "Вы также можете отправить эту быструю форму.",
+    "GoToForm": "Перейти к форме"
+  },
+  "Searchbar": {
+    "SearchSketch": "Поиск скетчей...",
+    "SearchCollection": "Поиск коллекций...",
+    "ClearTerm": "очистить"
+  },
+  "UploadFileModal": {
+    "Title": "Загрузить файл",
+    "CloseButtonARIA": "Закрыть модальное окно загрузки файла",
+    "SizeLimitError": "Ошибка: Вы не можете загрузить больше файлов. Вы достигли общего ограничения размера в {{sizeLimit}}.\n          Если вы хотите загрузить больше, пожалуйста, удалите те, которые больше не используете, в "
+  },
+  "FileUploader": {
+    "DictDefaultMessage": "Перетащите файлы сюда или нажмите, чтобы использовать браузер файлов"
+  },
+  "ErrorModal": {
+    "MessageLogin": "Чтобы сохранить скетчи, вы должны быть авторизованы. Пожалуйста, ",
+    "Login": "Войдите",
+    "LoginOr": " или ",
+    "SignUp": "Зарегистрируйтесь",
+    "MessageLoggedOut": "Похоже, вы вышли из системы. Пожалуйста, ",
+    "LogIn": "войдите",
+    "SavedDifferentWindow": "Проект, который вы пытались сохранить, был сохранен из другого окна.\n          Пожалуйста, обновите страницу, чтобы увидеть последнюю версию.",
+    "LinkTitle": "Ошибка связывания аккаунта",
+    "LinkMessage": "Возникла проблема при связывании вашего аккаунта {{serviceauth}} с вашим аккаунтом веб-редактора p5.js. Ваш аккаунт {{serviceauth}} уже связан с другим аккаунтом веб-редактора p5.js."
+  },
+  "ShareModal": {
+    "Embed": "Встроить скетч",
+    "Present": "Представить",
+    "Fullscreen": "Поделиться скетчем как только для просмотра",
+    "Edit": "Поделиться скетчем и разрешить редактирование"
+  },
+  "CollectionView": {
+    "TitleCreate": "Создать коллекцию",
+    "TitleDefault": "коллекция"
+  },
+  "Collection": {
+    "Title": "p5.js Веб-редактор | Мои коллекции",
+    "AnothersTitle": "p5.js Веб-редактор | Коллекции {{anotheruser}}",
+    "Share": "Поделиться",
+    "URLLink": "Ссылка на коллекцию",
+    "AddSketch": "Добавить скетч",
+    "DeleteFromCollection": "Вы уверены, что хотите удалить {{name_sketch}} из этой коллекции?",
+    "SketchDeleted": "Скетч удален",
+    "SketchRemoveARIA": "Удалить скетч из коллекции",
+    "DescriptionPlaceholder": "Добавить описание",
+    "Description": "описание",
+    "NumSketches": "{{count}} скетч",
+    "NumSketches_plural": "{{count}} скетчей",
+    "By": "Коллекция от ",
+    "NoSketches": "Нет скетчей в коллекции",
+    "TableSummary": "таблица, содержащая все коллекции",
+    "HeaderName": "Имя",
+    "HeaderCreatedAt": "Дата добавления",
+    "HeaderUser": "Владелец",
+    "DirectionAscendingARIA": "По возрастанию",
+    "DirectionDescendingARIA": "По убыванию",
+    "ButtonLabelAscendingARIA": "Сортировать по {{displayName}} по возрастанию.",
+    "ButtonLabelDescendingARIA": "Сортировать по {{displayName}} по убыванию."
+  },
+  "AddToCollectionList": {
+    "Title": "Веб-редактор p5.js | Мои коллекции",
+    "AnothersTitle": "Веб-редактор p5.js | Коллекции {{anotheruser}}",
+    "Empty": "Нет коллекций"
+  },
+  "CollectionCreate": {
+    "Title": "Веб-редактор p5.js | Создать коллекцию",
+    "FormError": "Не удалось создать коллекцию",
+    "FormLabel": "Имя коллекции",
+    "FormLabelARIA": "имя",
+    "NameRequired": "Требуется имя коллекции",
+    "Description": "Описание (необязательно)",
+    "DescriptionARIA": "описание",
+    "DescriptionPlaceholder": "Мои любимые скетчи",
+    "SubmitCollectionCreate": "Создать коллекцию"
+  },
+  "DashboardView": {
+    "CreateCollection": "Создать коллекцию",
+    "NewSketch": "Новый скетч",
+    "CreateCollectionOverlay": "Создать коллекцию"
+  },
+  "DashboardTabSwitcher": {
+    "Sketches": "Скетчи",
+    "Collections": "Коллекции",
+    "Assets": "Ресурсы"
+  },
+  "CollectionList": {
+    "Title": "Веб-редактор p5.js | Мои коллекции",
+    "AnothersTitle": "Веб-редактор p5.js | Коллекции {{anotheruser}}",
+    "NoCollections": "Нет коллекций.",
+    "TableSummary": "таблица, содержащая все коллекции",
+    "HeaderName": "Имя",
+    "HeaderCreatedAt": "Дата создания",
+    "HeaderCreatedAt_mobile": "Создан",
+    "HeaderUpdatedAt": "Дата обновления",
+    "HeaderUpdatedAt_mobile": "Обновлен",
+    "HeaderNumItems": "# скетчей",
+    "HeaderNumItems_mobile": "# скетчей",
+    "DirectionAscendingARIA": "По возрастанию",
+    "DirectionDescendingARIA": "По убыванию",
+    "ButtonLabelAscendingARIA": "Сортировать по {{displayName}} по возрастанию.",
+    "ButtonLabelDescendingARIA": "Сортировать по {{displayName}} по убыванию.",
+    "AddSketch": "Добавить скетч"
+  },
+  "CollectionListRow": {
+    "ToggleCollectionOptionsARIA": "Переключить Открыть/Закрыть опции коллекции",
+    "AddSketch": "Добавить скетч",
+    "Delete": "Удалить",
+    "Rename": "Переименовать"
+  },
+  "Overlay": {
+    "AriaLabel": "Закрыть {{title}} оверлей"
+  },
+  "QuickAddList": {
+    "ButtonRemoveARIA": "Удалить из коллекции",
+    "ButtonAddToCollectionARIA": "Добавить в коллекцию",
+    "View": "Просмотр"
+  },
+  "SketchList": {
+    "View": "Просмотр",
+    "Title": "Веб-редактор p5.js | Мои скетчи",
+    "AnothersTitle": "Веб-редактор p5.js | Скетчи {{anotheruser}}",
+    "ToggleLabelARIA": "Переключить Открыть/Закрыть опции скетча",
+    "DropdownRename": "Переименовать",
+    "DropdownDownload": "Скачать",
+    "DropdownDuplicate": "Дублировать",
+    "DropdownAddToCollection": "Добавить в коллекцию",
+    "DropdownDelete": "Удалить",
+    "DirectionAscendingARIA": "По возрастанию",
+    "DirectionDescendingARIA": "По убыванию",
+    "ButtonLabelAscendingARIA": "Сортировать по {{displayName}} по возрастанию.",
+    "ButtonLabelDescendingARIA": "Сортировать по {{displayName}} по убыванию.",
+    "AddToCollectionOverlayTitle": "Добавить в коллекцию",
+    "TableSummary": "таблица, содержащая все сохраненные проекты",
+    "HeaderName": "Скетч",
+    "HeaderCreatedAt": "Дата создания",
+    "HeaderCreatedAt_mobile": "Создан",
+    "HeaderUpdatedAt": "Дата обновления",
+    "HeaderUpdatedAt_mobile": "Обновлен",
+    "NoSketches": "Нет скетчей."
+  },
+  "AddToCollectionSketchList": {
+    "Title": "Веб-редактор p5.js | Мои скетчи",
+    "AnothersTitle": "Веб-редактор p5.js | Скетчи {{anotheruser}}",
+    "NoCollections": "Нет коллекций."
+  },
+  "Editor": {
+    "OpenSketchARIA": "Открыть навигацию по файлам скетча",
+    "CloseSketchARIA": "Закрыть навигацию по файлам скетча",
+    "UnsavedChangesARIA": "У скетча есть несохраненные изменения",
+    "KeyUpLineNumber": "строка {{lineNumber}}"
+  },
+  "EditorAccessibility": {
+    "NoLintMessages": "Нет сообщений линтера",
+    "CurrentLine": "Текущая строка"
+  },
+  "Timer": {
+    "SavedAgo": "Сохранено: {{timeAgo}}"
+  },
+  "formatDate": {
+    "JustNow": "только что",
+    "15Seconds": "15 секунд назад",
+    "25Seconds": "25 секунд назад",
+    "35Seconds": "35 секунд назад",
+    "Ago": "{{timeAgo}} назад"
+  },
+  "CopyableInput": {
+    "CopiedARIA": "Скопировано в буфер обмена!",
+    "OpenViewTabARIA": "Открыть представление {{label}} в новой вкладке"
+  },
+  "EditableInput": {
+    "EditValue": "Изменить значение {{display}}",
+    "EmptyPlaceholder": "Нет значения"
+  },
+  "PreviewNav": {
+    "EditSketchARIA": "Редактировать скетч",
+    "ByUser": "от"
+  },
+  "MobilePreferences": {
+    "Settings": "Настройки",
+    "GeneralSettings": "Общие настройки",
+    "Accessibility": "Доступность",
+    "AccessibleOutput": "Доступный вывод",
+    "Theme": "Тема",
+    "LightTheme": "Светлая",
+    "DarkTheme": "Темная",
+    "HighContrastTheme": "Высокий контраст",
+    "Autosave": "Автосохранение",
+    "AutocompleteHinter": "Автодополнение",
+    "WordWrap": "Перенос слов",
+    "LineNumbers": "Номера строк",
+    "LintWarningSound": "Звук предупреждения линтера",
+    "UsedScreenReader": "Используется с программой чтения с экрана",
+    "PlainText": "Обычный текст",
+    "TableText": "Текст таблицы",
+    "Sound": "Звук",
+    "Preferences": "Настройки",
+    "Language": "Язык"
+  },
+  "PreferenceCreators": {
+    "On": "Вкл",
+    "Off": "Выкл"
+  },
+  "MobileDashboardView": {
+    "Examples": "Примеры",
+    "Sketches": "Скетчи",
+    "Collections": "Коллекции",
+    "Assets": "Ресурсы",
+    "MyStuff": "Мои материалы",
+    "CreateSketch": "Создать скетч",
+    "CreateCollection": "Создать коллекцию"
+  },
+  "Explorer": {
+    "Files": "Файлы"
+  },
+  "Cookies": {
+    "Header": "Файлы cookie",
+    "Body": "Редактор p5.js использует файлы cookie. Некоторые из них необходимы для функционирования веб-сайта и позволяют управлять учетной записью и настройками. Другие не являются необходимыми — они используются для аналитики и позволяют нам узнать больше нашем сообществе. <strong>Мы никогда не продаем эти данные и не используем их для рекламы.</strong> Вы можете решить, какие файлы cookie вы хотите разрешить, и узнать больше в нашей <0>Политике конфиденциальности<0>.",
+    "AllowAll": "Разрешить все",
+    "AllowEssential": "Разрешить только необходимые"
+  },
+  "Legal": {
+    "PrivacyPolicy": "Политика конфиденциальности",
+    "TermsOfUse": "Условия использования",
+    "CodeOfConduct": "Кодекс поведения"
+  },
+  "SkipLink": {
+    "PlaySketch": "Перейти к запуску скетча"
+  },
+  "Visibility": {
+    "Label": "Видимость",
+    "Public": {
+      "Description": "Любой может видеть этот скетч.",
+      "Label": "Публичный"
+    },
+    "Private": {
+      "Description": "Только вы можете видеть этот скетч.",
+      "Label": "Приватный"
+    },
+    "Changed": "'{{projectName}}' теперь {{newVisibility}}..."
+  }
+}
