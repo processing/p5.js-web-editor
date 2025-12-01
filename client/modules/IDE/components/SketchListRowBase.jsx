@@ -28,7 +28,9 @@ const SketchListRowBase = ({
   changeVisibility,
   t,
   mobile,
-  onAddToCollection
+  onAddToCollection,
+  selected,
+  onSelect
 }) => {
   const [renameOpen, setRenameOpen] = useState(false);
   const [renameValue, setRenameValue] = useState(sketch.name);
@@ -122,6 +124,14 @@ const SketchListRowBase = ({
 
   return (
     <tr className="sketches-table__row">
+      <td>
+        <input
+          type="checkbox"
+          checked={selected}
+          onChange={onSelect}
+          aria-label={`Select ${sketch.name}`}
+        />
+      </td>
       <th scope="row">{name}</th>
       <td>{formatDateCell(sketch.createdAt, mobile)}</td>
       <td>{formatDateCell(sketch.updatedAt, mobile)}</td>
@@ -179,12 +189,16 @@ SketchListRowBase.propTypes = {
   showShareModal: PropTypes.func.isRequired,
   changeVisibility: PropTypes.func.isRequired,
   onAddToCollection: PropTypes.func.isRequired,
+  selected: PropTypes.bool,
+  onSelect: PropTypes.func,
   mobile: PropTypes.bool,
   t: PropTypes.func.isRequired
 };
 
 SketchListRowBase.defaultProps = {
-  mobile: false
+  mobile: false,
+  selected: false,
+  onSelect: () => {}
 };
 
 function mapDispatchToPropsSketchListRow(dispatch) {

@@ -592,7 +592,14 @@
     "HeaderCreatedAt_mobile": "Created",
     "HeaderUpdatedAt": "Date Updated",
     "HeaderUpdatedAt_mobile": "Updated",
-    "NoSketches": "No sketches."
+    "NoSketches": "No sketches.",
+    "SelectAll": "Select all sketches",
+    "SelectedCount": "{{count}} sketch(es) selected",
+    "ClearSelection": "Clear selection",
+    "BatchDownload": "Download selected",
+    "BatchDelete": "Delete selected",
+    "BatchDeleteConfirmation": "Are you sure you want to delete {{count}} sketch(es)? This action cannot be undone.",
+    "ChangeVisibility": "Change visibility"
   },
   "AddToCollectionSketchList": {
     "Title": "p5.js Web Editor | My sketches",

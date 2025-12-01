@@ -7,9 +7,11 @@ import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { bindActionCreators } from 'redux';
 import * as ProjectsActions from '../actions/projects';
+import * as ProjectActions from '../actions/project';
 import * as CollectionsActions from '../actions/collections';
 import * as ToastActions from '../actions/toast';
 import * as SortingActions from '../actions/sorting';
+import { getConfig } from '../../../utils/getConfig';
 import getSortedSketches from '../selectors/projects';
 import Loader from '../../App/components/loader';
 import Overlay from '../../App/components/Overlay';
@@ -17,6 +19,8 @@ import AddToCollectionList from './AddToCollectionList';
 import ArrowUpIcon from '../../../images/sort-arrow-up.svg';
 import ArrowDownIcon from '../../../images/sort-arrow-down.svg';
 import SketchListRowBase from './SketchListRowBase';
+
+const ROOT_URL = getConfig('API_URL');
 
 const SketchList = ({
   user,
@@ -27,11 +31,71 @@ const SketchList = ({
   sorting,
   toggleDirectionForField,
   resetSorting,
-  mobile
+  mobile,
+  changeVisibility,
+  deleteProject
 }) => {
   const [isInitialDataLoad, setIsInitialDataLoad] = useState(true);
   const [sketchToAddToCollection, setSketchToAddToCollection] = useState(null);
+  const [selectedSketches, setSelectedSketches] = useState([]);
   const { t } = useTranslation();
+
+  const handleSelectSketch = (sketchId) => {
+    setSelectedSketches((prev) =>
+      prev.includes(sketchId)
+        ? prev.filter((id) => id !== sketchId)
+        : [...prev, sketchId]
+    );
+  };
+
+  const handleSelectAll = () => {
+    if (selectedSketches.length === sketches.length) {
+      setSelectedSketches([]);
+    } else {
+      setSelectedSketches(sketches.map((sketch) => sketch.id));
+    }
+  };
+
+  const clearSelection = () => setSelectedSketches([]);
+
+  const handleBatchVisibilityChange = (visibility) => {
+    if (!visibility) return;
+    selectedSketches.forEach((id) => {
+      const sketch = sketches.find((s) => s.id === id);
+      if (sketch) {
+        changeVisibility(id, sketch.name, visibility, t);
+      }
+    });
+    clearSelection();
+  };
+
+  const handleBatchDownload = () => {
+    // TODO: implement batch download
+    selectedSketches.forEach((id) => {
+      const sketch = sketches.find((s) => s.id === id);
+      if (sketch) {
+        const downloadLink = document.createElement('a');
+        downloadLink.href = `${ROOT_URL}/projects/${id}/zip`;
+        downloadLink.download = `${sketch.name}.zip`;
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+      }
+    });
+  };
+
+  const handleBatchDelete = () => {
+    if (
+      window.confirm(
+        t('SketchList.BatchDeleteConfirmation', {
+          count: selectedSketches.length
+        })
+      )
+    ) {
+      selectedSketches.forEach((id) => deleteProject(id));
+      clearSelection();
+    }
+  };
 
   useEffect(() => {
     getProjects(username);
@@ -128,6 +192,27 @@ const SketchList = ({
       </Helmet>
       {renderLoader()}
       {renderEmptyTable()}
+      {selectedSketches.length > 0 && (
+        <div className="sketch-list-toolbar">
+          <span>
+            {t('SketchList.SelectedCount', { count: selectedSketches.length })}
+          </span>
+          <button onClick={clearSelection}>
+            {t('SketchList.ClearSelection')}
+          </button>
+          <button onClick={handleBatchDownload}>
+            {t('SketchList.BatchDownload')}
+          </button>
+          <button onClick={handleBatchDelete}>
+            {t('SketchList.BatchDelete')}
+          </button>
+          <select onChange={(e) => handleBatchVisibilityChange(e.target.value)}>
+            <option value="">{t('SketchList.ChangeVisibility')}</option>
+            <option value="Public">{t('Visibility.Public.Label')}</option>
+            <option value="Private">{t('Visibility.Private.Label')}</option>
+          </select>
+        </div>
+      )}
       {hasSketches() && (
         <table
           className="sketches-table"
@@ -135,6 +220,17 @@ const SketchList = ({
         >
           <thead>
             <tr>
+              <th scope="col">
+                <input
+                  type="checkbox"
+                  checked={
+                    selectedSketches.length === sketches.length &&
+                    sketches.length > 0
+                  }
+                  onChange={handleSelectAll}
+                  aria-label={t('SketchList.SelectAll')}
+                />
+              </th>
               {renderFieldHeader('name', t('SketchList.HeaderName'))}
               {renderFieldHeader(
                 'createdAt',
@@ -162,6 +258,8 @@ const SketchList = ({
                 user={user}
                 username={username}
                 onAddToCollection={() => setSketchToAddToCollection(sketch)}
+                selected={selectedSketches.includes(sketch.id)}
+                onSelect={() => handleSelectSketch(sketch.id)}
                 t={t}
               />
             ))}
@@ -204,6 +302,8 @@ SketchList.propTypes = {
     field: PropTypes.string.isRequired,
     direction: PropTypes.string.isRequired
   }).isRequired,
+  changeVisibility: PropTypes.func.isRequired,
+  deleteProject: PropTypes.func.isRequired,
   mobile: PropTypes.bool
 };
 
@@ -229,7 +329,11 @@ function mapDispatchToProps(dispatch) {
       ProjectsActions,
       CollectionsActions,
       ToastActions,
-      SortingActions
+      SortingActions,
+      {
+        changeVisibility: ProjectActions.changeVisibility,
+        deleteProject: ProjectActions.deleteProject
+      }
     ),
     dispatch
   );
