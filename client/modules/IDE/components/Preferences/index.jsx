@@ -22,7 +22,7 @@ import {
   setPreferencesTab
 } from '../../actions/preferences';
 import { majorVersion, p5URL, useP5Version } from '../../hooks/useP5Version';
-import p5SoundURL from '../../../../../common/p5URLs';
+import { p5SoundURL } from '../../../../../common/p5URLs';
 import VersionPicker from '../VersionPicker';
 import { updateFileContent } from '../../actions/files';
 import { CmControllerContext } from '../../pages/IDEView';
