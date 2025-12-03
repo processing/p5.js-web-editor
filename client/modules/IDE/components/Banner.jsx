@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Trans } from 'react-i18next';
 import { CrossIcon } from '../../../common/icons';
 
 /**
@@ -23,12 +24,11 @@ import { CrossIcon } from '../../../common/icons';
 
 const Banner = ({ onClose }) => {
   // URL can be updated depending on the opportunity or announcement.
-  const bannerURL = 'https://openprocessing.org/curation/89576';
+  const bannerURL = 'https://processingfoundation.org/donate';
+
   const bannerCopy = (
     <>
-      We’re accepting p5.js sketches for a special curation exploring mental
-      health and the newest features in p5.js 2.0!{' '}
-      <span style={{ fontWeight: 600 }}>Submit by July 20!</span>
+      <Trans i18nKey="Banner.Copy" components={{ bold: <strong /> }} />
     </>
   );
 

@@ -48,6 +48,9 @@
       "LogOut": "로그아웃"
     }
   },
+  "Banner": {
+    "Copy": "<bold>Donate Today!</bold> Support p5.js and the Processing Foundation."
+  },
   "LoginForm": {
     "UsernameOrEmail": "이메일 또는 아이디",
     "UsernameOrEmailARIA": "이메일 또는 아이디",

@@ -47,6 +47,9 @@
       "LogOut": "Logga ut"
     }
   },
+  "Banner": {
+    "Copy": "<bold>Donate Today!</bold> Support p5.js and the Processing Foundation."
+  },
   "CodemirrorFindAndReplace": {
     "ToggleReplace": "Växla ersätt",
     "Find": "Sök",

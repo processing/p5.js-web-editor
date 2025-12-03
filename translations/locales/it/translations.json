@@ -47,6 +47,9 @@
       "LogOut": "Esci"
     }
   },
+  "Banner": {
+    "Copy": "<bold>Donate Today!</bold> Support p5.js and the Processing Foundation."
+  },
   "CodemirrorFindAndReplace": {
     "ToggleReplace": "Attiva/disattiva Sostituzione",
     "Find": "Cerca",
