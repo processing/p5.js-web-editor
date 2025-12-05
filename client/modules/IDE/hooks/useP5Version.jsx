@@ -60,7 +60,10 @@ export function P5VersionProvider(props) {
         if (!match) return null;
 
         // See if this is a version we recognize
-        if (p5Versions.includes(match[1])) {
+        const versionExists = p5Versions.some((v) =>
+          typeof v === 'string' ? v === match[1] : v.version === match[1]
+        );
+        if (versionExists) {
           return { version: match[1], minified: !!match[2], scriptNode };
         }
         return null;

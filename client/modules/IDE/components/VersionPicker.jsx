@@ -77,9 +77,23 @@ const VersionPicker = React.forwardRef(({ onChangeVersion }, ref) => {
   return (
     <VersionDropdownMenu
       className="versionPicker"
+      aria-label="Select p5.js version"
       anchor={
         <VersionPickerButton ref={ref}>
-          <VersionPickerText>{versionInfo.version}</VersionPickerText>
+          <VersionPickerText>
+            {versionInfo
+              ? (() => {
+                  const current = p5Versions.find((v) =>
+                    typeof v === 'string'
+                      ? v === versionInfo.version
+                      : v.version === versionInfo.version
+                  );
+                  if (!current) return versionInfo.version;
+                  if (typeof current === 'string') return current;
+                  return `${current.version} ${current.label}`;
+                })()
+              : t('Toolbar.CustomLibraryVersion')}
+          </VersionPickerText>
           <VersionPickerArrow>
             <DropdownArrowIcon />
           </VersionPickerArrow>
@@ -88,11 +102,20 @@ const VersionPicker = React.forwardRef(({ onChangeVersion }, ref) => {
       align="left"
       maxHeight="50vh"
     >
-      {p5Versions.map((version) => (
-        <MenuItem key={version} onClick={() => dispatchReplaceVersion(version)}>
-          {version}
-        </MenuItem>
-      ))}
+      {p5Versions.map((item) => {
+        const version = typeof item === 'string' ? item : item.version;
+        const label =
+          typeof item === 'string' ? item : `${item.version} ${item.label}`;
+
+        return (
+          <MenuItem
+            key={version}
+            onClick={() => dispatchReplaceVersion(version)}
+          >
+            {label}
+          </MenuItem>
+        );
+      })}
     </VersionDropdownMenu>
   );
 });
