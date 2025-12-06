@@ -54,7 +54,11 @@ const initialTestState: RootState = {
   user: {
     email: 'happydog@example.com',
     username: 'happydog',
-    preferences: {},
+    preferences: {
+      ...initialPrefState,
+      indentationAmount: 2,
+      isTabIndent: true
+    },
     apiKeys: [],
     verified: 'sent',
     id: '123456789',
