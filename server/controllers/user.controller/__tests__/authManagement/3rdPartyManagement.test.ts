@@ -5,6 +5,7 @@ import { Request, Response } from 'express';
 import { unlinkGithub, unlinkGoogle } from '../../authManagement';
 import { saveUser } from '../../helpers';
 import { createMockUser } from '../../__testUtils__';
+import { UserDocument } from '../../../../types';
 
 jest.mock('../../helpers', () => ({
   ...jest.requireActual('../../helpers'),
@@ -50,10 +51,13 @@ describe('user.controller > auth management > 3rd party auth', () => {
       });
     });
     describe('and when there is a user in the request', () => {
-      const user = createMockUser({
-        github: 'testuser',
-        tokens: [{ kind: 'github' }, { kind: 'google' }]
-      });
+      const user = createMockUser(
+        {
+          github: 'testuser',
+          tokens: [{ kind: 'github' }, { kind: 'google' }]
+        },
+        true
+      ) as UserDocument;
 
       beforeEach(async () => {
         request.user = user;
@@ -96,10 +100,13 @@ describe('user.controller > auth management > 3rd party auth', () => {
       });
     });
     describe('and when there is a user in the request', () => {
-      const user = createMockUser({
-        google: 'testuser',
-        tokens: [{ kind: 'github' }, { kind: 'google' }]
-      });
+      const user = createMockUser(
+        {
+          google: 'testuser',
+          tokens: [{ kind: 'github' }, { kind: 'google' }]
+        },
+        true
+      ) as UserDocument;
 
       beforeEach(async () => {
         request.user = user;

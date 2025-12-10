@@ -1,6 +1,27 @@
+import type { CookieConsentOptions, PublicUser } from '../../../common/types';
 import * as ActionTypes from '../../constants';
 
-const user = (state = { authenticated: false }, action) => {
+// User Action:
+export type UserAction = {
+  user?: PublicUser;
+  cookieConsent?: CookieConsentOptions;
+  type: any;
+};
+
+export const user = (
+  state: Partial<PublicUser> & {
+    authenticated: boolean;
+    // TODO: use state of user from server as single source of truth:
+    // Currently using redux state below, but server also has similar info.
+    resetPasswordInitiate?: boolean;
+    resetPasswordInvalid?: boolean;
+    emailVerificationInitiate?: boolean;
+    emailVerificationTokenState?: 'checking' | 'verified' | 'invalid';
+  } = {
+    authenticated: false
+  },
+  action: UserAction
+) => {
   switch (action.type) {
     case ActionTypes.AUTH_USER:
       return {
@@ -47,5 +68,3 @@ const user = (state = { authenticated: false }, action) => {
       return state;
   }
 };
-
-export default user;

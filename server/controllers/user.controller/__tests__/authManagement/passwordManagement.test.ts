@@ -29,7 +29,7 @@ describe('user.controller > auth management > password management', () => {
   let response: MockResponse;
   let next: MockNext;
   let mockToken: string;
-  let mockUser: Partial<UserDocument>;
+  let mockUser: UserDocument;
   const fixedTime = 100000000;
 
   beforeEach(() => {
@@ -68,10 +68,13 @@ describe('user.controller > auth management > password management', () => {
     describe('if the user is found', () => {
       beforeEach(async () => {
         mockToken = 'mock-token';
-        mockUser = createMockUser({
-          email: 'test@example.com',
-          save: jest.fn().mockResolvedValue(null)
-        });
+        mockUser = createMockUser(
+          {
+            email: 'test@example.com',
+            save: jest.fn().mockResolvedValue(null)
+          },
+          false
+        ) as UserDocument;
 
         (generateToken as jest.Mock).mockResolvedValue(mockToken);
         User.findByEmail = jest.fn().mockResolvedValue(mockUser);
@@ -143,10 +146,13 @@ describe('user.controller > auth management > password management', () => {
     });
     it('returns unsuccessful for all other errors', async () => {
       mockToken = 'mock-token';
-      mockUser = createMockUser({
-        email: 'test@example.com',
-        save: jest.fn().mockResolvedValue(null)
-      });
+      mockUser = createMockUser(
+        {
+          email: 'test@example.com',
+          save: jest.fn().mockResolvedValue(null)
+        },
+        false
+      ) as UserDocument;
 
       (generateToken as jest.Mock).mockRejectedValue(
         new Error('network error')
@@ -298,7 +304,7 @@ describe('user.controller > auth management > password management', () => {
         resetPasswordToken: 'valid-token',
         resetPasswordExpires: fixedTime + 10000, // still valid
         save: jest.fn()
-      };
+      } as UserDocument;
 
       beforeEach(async () => {
         User.findOne = jest.fn().mockReturnValue({

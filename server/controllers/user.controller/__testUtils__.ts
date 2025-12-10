@@ -29,7 +29,10 @@ export const mockBaseUserSanitised: PublicUser = {
   email: 'test@example.com',
   username: 'tester',
   preferences: mockUserPreferences,
+  feat/login-required-upload
   apiKeys: [] as unknown as Types.DocumentArray<ApiKeyDocument>,
+  apiKeys: [],
+  develop
   verified: 'verified',
   id: 'abc123',
   totalSize: 42,
@@ -42,6 +45,7 @@ export const mockBaseUserSanitised: PublicUser = {
 export const mockBaseUserFull: Omit<User, 'createdAt'> = {
   ...mockBaseUserSanitised,
   name: 'test user',
+  apiKeys: ([] as unknown) as Types.DocumentArray<ApiKeyDocument>,
   tokens: [],
   password: 'abweorij',
   resetPasswordToken: '1i14ij23',
@@ -58,9 +62,15 @@ export const mockBaseUserFull: Omit<User, 'createdAt'> = {
 export function createMockUser(
   overrides: Partial<UserDocument> = {},
   unSanitised: boolean = false
-): PublicUser & Record<string, any> {
+): PublicUser | UserDocument {
+  if (unSanitised) {
+    return {
+      ...mockBaseUserFull,
+      ...overrides
+    } as UserDocument;
+  }
   return {
-    ...(unSanitised ? mockBaseUserFull : mockBaseUserSanitised),
+    ...mockBaseUserSanitised,
     ...overrides
-  };
+  } as PublicUser;
 }

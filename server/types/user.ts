@@ -2,7 +2,7 @@ import { Document, Model, Types } from 'mongoose';
 import { VirtualId, MongooseTimestamps } from './mongoose';
 import { UserPreferences, CookieConsentOptions } from './userPreferences';
 import { EmailConfirmationStates } from './email';
-import { ApiKeyDocument } from './apiKey';
+import { ApiKeyDocument, SanitisedApiKey } from './apiKey';
 import { Error, GenericResponseBody, RouteParam } from './express';
 
 // -------- MONGOOSE --------
@@ -38,14 +38,17 @@ export interface PublicUser
     | 'email'
     | 'username'
     | 'preferences'
-    | 'apiKeys'
     | 'verified'
     | 'id'
     | 'totalSize'
     | 'github'
     | 'google'
     | 'cookieConsent'
-  > {}
+    | 'totalSize'
+  > {
+  /** Can contain either raw ApiKeyDocuments (server side) or SanitisedApiKeys (client side) */
+  apiKeys: SanitisedApiKey[];
+}
 
 /** Mongoose document object for User */
 export interface UserDocument

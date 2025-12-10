@@ -60,13 +60,16 @@ describe('user.controller > auth management > updateSettings (email, username, p
     response = new MockResponse();
     next = jest.fn();
 
-    startingUser = createMockUser({
-      username: OLD_USERNAME,
-      email: OLD_EMAIL,
-      password: OLD_PASSWORD,
-      id: '123459',
-      comparePassword: jest.fn().mockResolvedValue(true)
-    });
+    startingUser = createMockUser(
+      {
+        username: OLD_USERNAME,
+        email: OLD_EMAIL,
+        password: OLD_PASSWORD,
+        id: '123459',
+        comparePassword: jest.fn().mockResolvedValue(true)
+      },
+      false
+    ) as UserDocument;
 
     testUser = { ...startingUser }; // copy to avoid mutation causing false-positive tests results
 
