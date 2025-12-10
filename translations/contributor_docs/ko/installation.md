@@ -21,15 +21,16 @@ _주의_: 다음의 설치 단계들은 유닉스 계열의 쉘을 이용한다�
    $ cd p5.js-web-editor
    $ npm install
    ```
+
 6. MongoDB를 설치하고 잘 실행되는지 확인하십시오
-   * [homebrew](http://brew.sh/)가 있는 맥 OSX:`brew tap mongodb/brew` 이후 `brew install mongodb-community` 그리고 `brew services start mongodb-community`로 서버를 시작하거나 다음의 설치 가이드를 살펴보십시오. [맥OS를 위한 설치 가이드](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/)
-   * 윈도우와 리눅스: [MongoDB 설치](https://docs.mongodb.com/manual/installation/)
+   - [homebrew](http://brew.sh/)가 있는 맥 OSX:`brew tap mongodb/brew` 이후 `brew install mongodb-community` 그리고 `brew services start mongodb-community`로 서버를 시작하거나 다음의 설치 가이드를 살펴보십시오. [맥OS를 위한 설치 가이드](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/)
+   - 윈도우와 리눅스: [MongoDB 설치](https://docs.mongodb.com/manual/installation/)
 7. `$ cp .env.example .env`
 8. (선택사항) 깃허브에 로그인 하고 싶을 경우 깃헙 ID를 더하는 등 특정한 행동을 가능하게 하고 싶을 경우 .env에 필수 키를 업데이트 하십시오.
 9. `$ npm run fetch-examples` - 이는 p5라 불리는 유저로 예시 스케치를 다운로드 합니다.
 10. `$ npm start`
 11. 브라우저에서 [http://localhost:8000](http://localhost:8000)에 접속하십시오.
-12. [리액트 개발자 도구](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en)를 설치하십시오. 
+12. [리액트 개발자 도구](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en)를 설치하십시오.
 13. `ctrl+h`로 리덕스 개발자 툴 열기와 닫기를, 그리고 `ctrl+w`로 이동시키기를 하십시오.
 
 ## 도커 설치
@@ -41,8 +42,8 @@ _주의_: 다음의 설치 단계들은 유닉스 계열의 쉘을 이용한다�
 다만 이는 여러분의 컴퓨터의 상당한 용량을 차지한다는 점을 주의하십시오. 최소한 5GB의 여유 공간을 확보해두시기 바랍니다.
 
 1. 운영 체제에 도커를 설치하십시오.
-   * 맥: https://www.docker.com/docker-mac
-   * 윈도우: https://www.docker.com/docker-windows
+   - 맥: https://www.docker.com/docker-mac
+   - 윈도우: https://www.docker.com/docker-windows
 2. 저장소를 클론하고 cd를 이용해 해당 저장소로 들어가십시오.
 3. `$ docker-compose -f docker-compose-development.yml build`
 4. `$ cp .env.example .env`
@@ -66,7 +67,7 @@ _주의_: 다음의 설치 단계들은 유닉스 계열의 쉘을 이용한다�
 
 애플리케이션 중 유저가 이미지, 비디오 등을 업로드 할 수 있도록 해주는 부분을 작업하지 않는 이상 이 부분은 필수 사항은 아니라는 점을 참고하십시오. 본 프로젝트에 사용될 S3 버킷을 설치하는 과정의 [요약본](https://gist.github.com/catarak/70c9301f0fd1ac2d6b58de03f61997e3)을 참고하십시오.
 
-만약 여러분의 S3 버킷이 미국 동부(북 버지니아) 지역(us-east-1)에 있다면,  해당 지역은 다른 지역과 달리 표준 명명 패턴을 따르지 않기 때문에 커스텀 URL 베이스를 설정해야 합니다. 다음을 environment/.env 파일에 추가해주십시오:
+만약 여러분의 S3 버킷이 미국 동부(북 버지니아) 지역(us-east-1)에 있다면, 해당 지역은 다른 지역과 달리 표준 명명 패턴을 따르지 않기 때문에 커스텀 URL 베이스를 설정해야 합니다. 다음을 environment/.env 파일에 추가해주십시오:
 
 `S3_BUCKET_URL_BASE=https://s3.amazonaws.com`
 
@@ -74,5 +75,4 @@ _주의_: 다음의 설치 단계들은 유닉스 계열의 쉘을 이용한다�
 
 `S3_BUCKET_URL_BASE=https://files.mydomain.com`
 
-커스텀 도메인을 사용하는데에 필요한 더 많은 정보를 보기 위해선 다음의 문서 링크를 확인하십시오:
-http://docs.aws.amazon.com/AmazonS3/latest/dev/VirtualHosting.html#VirtualHostingCustomURLs
+커스텀 도메인을 사용하는데에 필요한 더 많은 정보를 보기 위해선 다음의 문서 링크를 확인하십시오: http://docs.aws.amazon.com/AmazonS3/latest/dev/VirtualHosting.html#VirtualHostingCustomURLs

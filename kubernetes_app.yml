@@ -11,7 +11,7 @@ metadata:
   name: web-editor-ingress
   namespace: production
   annotations:
-    kubernetes.io/ingress.global-static-ip-name: "production-p5-web-editor-ip"
+    kubernetes.io/ingress.global-static-ip-name: 'production-p5-web-editor-ip'
 spec:
   defaultBackend:
     service:
@@ -26,7 +26,7 @@ metadata:
   namespace: production
   annotations:
     # need to make another global static ip
-    kubernetes.io/ingress.global-static-ip-name: "production-p5-preview-editor-ip"
+    kubernetes.io/ingress.global-static-ip-name: 'production-p5-preview-editor-ip'
 spec:
   defaultBackend:
     service:
@@ -47,12 +47,12 @@ spec:
   # type: LoadBalancer
   type: NodePort
   ports:
-  - port: 8000
-    name: editor-port
-    targetPort: 8000
-  - port: 8002
-    name: preview-port
-    targetPort: 8002
+    - port: 8000
+      name: editor-port
+      targetPort: 8000
+    - port: 8002
+      name: preview-port
+      targetPort: 8002
   selector:
     app: web-editor
 ---
@@ -72,29 +72,29 @@ spec:
         app: web-editor
     spec:
       containers:
-      - name: web-editor-app
-        image: index.docker.io/catarak/p5.js-web-editor:latest
-        # temp, just to test kubernetes
-        # envFrom:
-        # - configMapRef:
-        #     name: web-editor-env
-        envFrom:
-        - secretRef:
-            name: web-editor-credentials 
-        imagePullPolicy: Always
-        resources:
-          limits: 
-            cpu: 1000m
-            memory: 2048Mi
-          requests:
-            cpu: 500m
-            memory: 1100Mi
-        ports:
-        - containerPort: 8000
-        readinessProbe:
-          httpGet:
-            path: /health
-            port: 8000
+        - name: web-editor-app
+          image: index.docker.io/catarak/p5.js-web-editor:latest
+          # temp, just to test kubernetes
+          # envFrom:
+          # - configMapRef:
+          #     name: web-editor-env
+          envFrom:
+            - secretRef:
+                name: web-editor-credentials
+          imagePullPolicy: Always
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 2048Mi
+            requests:
+              cpu: 500m
+              memory: 1100Mi
+          ports:
+            - containerPort: 8000
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
 ---
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
@@ -165,7 +165,7 @@ metadata:
   name: web-editor-ingress
   namespace: staging
   annotations:
-    kubernetes.io/ingress.global-static-ip-name: "staging-p5-web-editor-ip"
+    kubernetes.io/ingress.global-static-ip-name: 'staging-p5-web-editor-ip'
 spec:
   defaultBackend:
     service:
@@ -179,7 +179,7 @@ metadata:
   name: preview-editor-ingress
   namespace: staging
   annotations:
-    kubernetes.io/ingress.global-static-ip-name: "staging-p5-preview-editor-ip"
+    kubernetes.io/ingress.global-static-ip-name: 'staging-p5-preview-editor-ip'
 spec:
   defaultBackend:
     service:
@@ -200,12 +200,12 @@ spec:
   # type: LoadBalancer
   type: NodePort
   ports:
-  - port: 8001
-    name: editor-port
-    targetPort: 8000
-  - port: 8003
-    name: preview-port
-    targetPort: 8002
+    - port: 8001
+      name: editor-port
+      targetPort: 8000
+    - port: 8003
+      name: preview-port
+      targetPort: 8002
   selector:
     app: web-editor
 ---
@@ -225,26 +225,26 @@ spec:
         app: web-editor
     spec:
       containers:
-      - name: web-editor-app
-        image: index.docker.io/catarak/p5.js-web-editor-staging:latest
-        # temp, just to test kubernetes
-        # envFrom:
-        # - configMapRef:
-        #     name: web-editor-env
-        envFrom:
-        - secretRef:
-            name: web-editor-credentials 
-        imagePullPolicy: Always
-        resources:
-          limits: 
-            cpu: 1000m
-            memory: 2048Mi
-          requests:
-            cpu: 500m
-            memory: 1100Mi
-        ports:
-        - containerPort: 8000
-        readinessProbe:
-          httpGet:
-            path: /health
-            port: 8000
+        - name: web-editor-app
+          image: index.docker.io/catarak/p5.js-web-editor-staging:latest
+          # temp, just to test kubernetes
+          # envFrom:
+          # - configMapRef:
+          #     name: web-editor-env
+          envFrom:
+            - secretRef:
+                name: web-editor-credentials
+          imagePullPolicy: Always
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 2048Mi
+            requests:
+              cpu: 500m
+              memory: 1100Mi
+          ports:
+            - containerPort: 8000
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000

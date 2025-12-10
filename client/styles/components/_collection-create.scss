@@ -1,4 +1,4 @@
-@use "sass:math";
+@use 'sass:math';
 
 .collection-create {
   padding: #{math.div(24, $base-font-size)}rem;

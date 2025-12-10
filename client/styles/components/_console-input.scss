@@ -1,4 +1,4 @@
-@use "sass:math";
+@use 'sass:math';
 
 .console__input {
   width: 100%;
@@ -13,12 +13,12 @@
   width: auto;
   height: 38%;
   @include themify() {
-		& g,
-		& polygon,
-		& path {
-			fill: getThemifyVariable('secondary-text-color');
-		}
-	}
+    & g,
+    & polygon,
+    & path {
+      fill: getThemifyVariable('secondary-text-color');
+    }
+  }
 }
 
 .console-active__arrow-container {
@@ -42,7 +42,7 @@
 
 .console__editor .CodeMirror {
   border: none;
-  font-family: Inconsolata,monospace;
+  font-family: Inconsolata, monospace;
   @include themify() {
     background-color: getThemifyVariable('console-input-background-color');
   }

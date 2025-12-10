@@ -1,4 +1,4 @@
-@use "sass:math";
+@use 'sass:math';
 
 .keyboard-shortcuts {
   padding: #{math.div(20, $base-font-size)}rem;
@@ -28,7 +28,7 @@
   padding: #{math.div(3, $base-font-size)}rem;
   min-inline-size: max-content;
   @include themify {
-    border: 1px solid getThemifyVariable("button-border-color");
+    border: 1px solid getThemifyVariable('button-border-color');
     border-radius: 3px;
   }
 }
@@ -47,7 +47,7 @@
 
 .keyboard-shortcuts__title:not(:first-of-type) {
   @include themify() {
-    border-top: 1px dashed getThemifyVariable("button-border-color");
+    border-top: 1px dashed getThemifyVariable('button-border-color');
     padding-top: #{math.div(10, $base-font-size)}rem;
   }
 }

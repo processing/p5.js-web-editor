@@ -10,19 +10,15 @@
 
 ### Upgrading the GKE control plane
 
-1. Upgrade the GKE control plane first, by following the steps below.
-![GKE control plane upgrade 1](./images/control_plane_upgrade_1.png)
-1. Look up the latest available version in the [Kubernetes release changelog](https://kubernetes.io/releases/) to determine if there are any breaking changes that will require updates to your manifest files. Based on this information, determine the version you want to upgrade the cluster to (ideally the latest supported version) and hit save changes. This should begin the control plane upgrade. Since this is a regional cluster, there should be no downtime during this process however, the API will be unavailable, so do not attempt a deploy during the upgrade.
-![GKE control plane upgrade 2](./images/control_plane_upgrade_2.png)
+1. Upgrade the GKE control plane first, by following the steps below. ![GKE control plane upgrade 1](./images/control_plane_upgrade_1.png)
+1. Look up the latest available version in the [Kubernetes release changelog](https://kubernetes.io/releases/) to determine if there are any breaking changes that will require updates to your manifest files. Based on this information, determine the version you want to upgrade the cluster to (ideally the latest supported version) and hit save changes. This should begin the control plane upgrade. Since this is a regional cluster, there should be no downtime during this process however, the API will be unavailable, so do not attempt a deploy during the upgrade. ![GKE control plane upgrade 2](./images/control_plane_upgrade_2.png)
 
 ### Upgrading the GKE node pool
 
 1. Wait until the GKE control plane upgrade is complete and then proceed by upgrading the GKE node pool using the following steps.
 1. Navigate to the workloads page to make sure that you have a few replicas (pods) of each service running in the cluster so that the node draining process doesn't cause downtime.
-1. Navigate back to the main GKE service page where you see the cluster listing and you should see that there is an update available.
-![GKE node pool upgrade 1](./images/node_pool_upgrade_1.png)
-1. Select the version that is the same as the control plane.
-![GKE node pool upgrade 2](./images/node_pool_upgrade_2.png)
+1. Navigate back to the main GKE service page where you see the cluster listing and you should see that there is an update available. ![GKE node pool upgrade 1](./images/node_pool_upgrade_1.png)
+1. Select the version that is the same as the control plane. ![GKE node pool upgrade 2](./images/node_pool_upgrade_2.png)
 
 ### Update the version in the terraform
 

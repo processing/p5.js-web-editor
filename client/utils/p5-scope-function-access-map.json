@@ -215,11 +215,7 @@
       "vertex",
       "year"
     ],
-    "blacklist":[
-      "draw",
-      "setup",
-      "preload"
-    ]
+    "blacklist": ["draw", "setup", "preload"]
   },
   "draw": {
     "whitelist": [
@@ -342,8 +338,20 @@
       "triangle",
       "vertex"
     ],
-    "blacklist":[
-      "createCanvas", "let","const", "var", "loadJSON", "loadStrings","loadShader","loadTable","loadXML","save","draw", "setup", "preload"
+    "blacklist": [
+      "createCanvas",
+      "let",
+      "const",
+      "var",
+      "loadJSON",
+      "loadStrings",
+      "loadShader",
+      "loadTable",
+      "loadXML",
+      "save",
+      "draw",
+      "setup",
+      "preload"
     ]
   },
   "global": {
@@ -404,11 +412,7 @@
       "loadXML",
       "soundFormats"
     ],
-    "blacklist":[
-      "preload",
-      "setup",
-      "draw"    
-    ]
+    "blacklist": ["preload", "setup", "draw"]
   },
   "doubleClicked": {
     "whitelist": [
@@ -436,44 +440,24 @@
     ]
   },
   "mouseReleased": {
-    "whitelist": [
-      "fill",
-      "noStroke",
-      "setAttributes",
-      "stroke"
-    ]
+    "whitelist": ["fill", "noStroke", "setAttributes", "stroke"]
   },
   "mouseClicked": {
-    "whitelist": [
-      "fill",
-      "strokeWeight"
-    ]
+    "whitelist": ["fill", "strokeWeight"]
   },
   "windowResized": {
-    "whitelist": [
-      "resizeCanvas"
-    ]
+    "whitelist": ["resizeCanvas"]
   },
   "keyPressed": {
-    "whitelist": [
-      "saveFrames",
-      "saveGif"
-    ]
+    "whitelist": ["saveFrames", "saveGif"]
   },
   "deviceMoved": {
-    "whitelist": [
-      "setMoveThreshold",
-      "setShakeThreshold"
-    ]
+    "whitelist": ["setMoveThreshold", "setShakeThreshold"]
   },
   "touchStarted": {
-    "whitelist": [
-      "random"
-    ]
+    "whitelist": ["random"]
   },
   "touchEnded": {
-    "whitelist": [
-      "random"
-    ]
+    "whitelist": ["random"]
   }
 }

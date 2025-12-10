@@ -49,8 +49,8 @@ describe('user.controller > signup', () => {
       });
 
       await createUser(
-        (request as unknown) as Request,
-        (response as unknown) as Response,
+        request as unknown as Request,
+        response as unknown as Response,
         next
       );
 
@@ -74,8 +74,8 @@ describe('user.controller > signup', () => {
       });
 
       await createUser(
-        (request as unknown) as Request,
-        (response as unknown) as Response,
+        request as unknown as Request,
+        response as unknown as Response,
         next
       );
 
@@ -97,8 +97,8 @@ describe('user.controller > signup', () => {
       request.query = { check_type: 'email', email: 'test@example.com' };
 
       await duplicateUserCheck(
-        (request as unknown) as Request<{}, {}, {}, DuplicateUserCheckQuery>,
-        (response as unknown) as Response,
+        request as unknown as Request<{}, {}, {}, DuplicateUserCheckQuery>,
+        response as unknown as Response,
         next
       );
 
@@ -117,8 +117,8 @@ describe('user.controller > signup', () => {
       request.query = { check_type: 'username', username: 'newuser' };
 
       await duplicateUserCheck(
-        (request as unknown) as Request<{}, {}, {}, DuplicateUserCheckQuery>,
-        (response as unknown) as Response,
+        request as unknown as Request<{}, {}, {}, DuplicateUserCheckQuery>,
+        response as unknown as Response,
         next
       );
 
@@ -136,8 +136,8 @@ describe('user.controller > signup', () => {
       request.query = { check_type: 'username', username: 'existinguser' };
 
       await duplicateUserCheck(
-        (request as unknown) as Request<{}, {}, {}, DuplicateUserCheckQuery>,
-        (response as unknown) as Response,
+        request as unknown as Request<{}, {}, {}, DuplicateUserCheckQuery>,
+        response as unknown as Response,
         next
       );
 
@@ -156,8 +156,8 @@ describe('user.controller > signup', () => {
       request.query = { check_type: 'email', email: 'existing@example.com' };
 
       await duplicateUserCheck(
-        (request as unknown) as Request<{}, {}, {}, DuplicateUserCheckQuery>,
-        (response as unknown) as Response,
+        request as unknown as Request<{}, {}, {}, DuplicateUserCheckQuery>,
+        response as unknown as Response,
         next
       );
 
@@ -178,8 +178,8 @@ describe('user.controller > signup', () => {
       request.query = { t: 'invalidtoken' };
 
       await verifyEmail(
-        (request as unknown) as Request<{}, {}, {}, VerifyEmailQuery>,
-        (response as unknown) as Response,
+        request as unknown as Request<{}, {}, {}, VerifyEmailQuery>,
+        response as unknown as Response,
         next
       );
 
@@ -214,8 +214,8 @@ describe('user.controller > signup', () => {
       request.query = { t: 'validtoken' };
 
       await verifyEmail(
-        (request as unknown) as Request<{}, {}, {}, VerifyEmailQuery>,
-        (response as unknown) as Response,
+        request as unknown as Request<{}, {}, {}, VerifyEmailQuery>,
+        response as unknown as Response,
         next
       );
 
@@ -237,8 +237,8 @@ describe('user.controller > signup', () => {
       request.headers.host = 'localhost:3000';
 
       await emailVerificationInitiate(
-        (request as unknown) as Request,
-        (response as unknown) as Response,
+        request as unknown as Request,
+        response as unknown as Response,
         next
       );
 
@@ -263,8 +263,8 @@ describe('user.controller > signup', () => {
       request.headers.host = 'localhost:3000';
 
       await emailVerificationInitiate(
-        (request as unknown) as Request,
-        (response as unknown) as Response,
+        request as unknown as Request,
+        response as unknown as Response,
         next
       );
 
@@ -296,8 +296,8 @@ describe('user.controller > signup', () => {
       request.headers.host = 'localhost:3000';
 
       await emailVerificationInitiate(
-        (request as unknown) as Request,
-        (response as unknown) as Response,
+        request as unknown as Request,
+        response as unknown as Response,
         next
       );
 
@@ -338,8 +338,8 @@ describe('user.controller > signup', () => {
       request.headers.host = 'localhost:3000';
 
       await emailVerificationInitiate(
-        (request as unknown) as Request,
-        (response as unknown) as Response,
+        request as unknown as Request,
+        response as unknown as Response,
         next
       );
 

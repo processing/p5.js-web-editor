@@ -3,7 +3,7 @@ import { isAuthenticated } from '../isAuthenticated';
 
 describe('isAuthenticated middleware', () => {
   it('should call next() if user property is present', () => {
-    const req = ({ user: 'any_user' } as unknown) as Request;
+    const req = { user: 'any_user' } as unknown as Request;
     const res = {} as Response;
     const next = jest.fn() as NextFunction;
 
@@ -14,10 +14,10 @@ describe('isAuthenticated middleware', () => {
 
   it('should return 403 if user is missing', () => {
     const req = { headers: {} } as Request;
-    const res = ({
+    const res = {
       status: jest.fn().mockReturnThis(),
       send: jest.fn()
-    } as unknown) as Response;
+    } as unknown as Response;
     const next = jest.fn() as NextFunction;
 
     isAuthenticated(req, res, next);

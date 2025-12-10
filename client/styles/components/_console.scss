@@ -1,121 +1,121 @@
-@use "sass:math";
+@use 'sass:math';
 
 .preview-console {
-	@include themify() {
-		background: getThemifyVariable('console-background-color');
-		border-color: getThemifyVariable('ide-border-color');
-	}
-	border-left: math.div(1, $base-font-size)rem solid;
-	border-right: math.div(1, $base-font-size)rem solid;
-	width: 100%;
-	height: 100%;
-	z-index: 1000;
-	display: flex;
-	flex-direction: column;
+  @include themify() {
+    background: getThemifyVariable('console-background-color');
+    border-color: getThemifyVariable('ide-border-color');
+  }
+  border-left: math.div(1, $base-font-size) rem solid;
+  border-right: math.div(1, $base-font-size) rem solid;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
 
-	& > * {
-		position: relative;
-		text-align: left;
-	  }
+  & > * {
+    position: relative;
+    text-align: left;
+  }
 }
 
 .preview-console__header {
-	@include themify() {
-		background-color: getThemifyVariable('console-header-background-color');
-		color: getThemifyVariable('console-header-color');
-	}
-	min-height: #{math.div(30, $base-font-size)}rem;
-	padding: #{math.div(5, $base-font-size)}rem;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
+  @include themify() {
+    background-color: getThemifyVariable('console-header-background-color');
+    color: getThemifyVariable('console-header-color');
+  }
+  min-height: #{math.div(30, $base-font-size)}rem;
+  padding: #{math.div(5, $base-font-size)}rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .preview-console__header-title {
-	font-size: #{math.div(12, $base-font-size)}rem;
-	font-weight: normal;
+  font-size: #{math.div(12, $base-font-size)}rem;
+  font-weight: normal;
 }
 
 .preview-console__messages {
-	display: flex;
-	flex: 1;
-	flex-direction: column;
-	overflow-y: auto;
-	& div div div:first-child {
-		height: unset;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  overflow-y: auto;
+  & div div div:first-child {
+    height: unset;
     line-height: unset;
-		font-size: unset;
-	}
+    font-size: unset;
+  }
 }
 
 .preview-console__collapse {
-	padding-top: #{math.div(3, $base-font-size)}rem;
-	@include icon();
-	@include themify() {
-		& g,
-		& polygon,
-		& path {
-			fill: getThemifyVariable('secondary-text-color');
-		}
-		&:hover {
-			& g,
-			& polygon,
-			& path {
-				fill: getThemifyVariable('logo-color');
-			}
-		}
-	}
-	.preview-console--collapsed & {
-		display: none;
-	}
+  padding-top: #{math.div(3, $base-font-size)}rem;
+  @include icon();
+  @include themify() {
+    & g,
+    & polygon,
+    & path {
+      fill: getThemifyVariable('secondary-text-color');
+    }
+    &:hover {
+      & g,
+      & polygon,
+      & path {
+        fill: getThemifyVariable('logo-color');
+      }
+    }
+  }
+  .preview-console--collapsed & {
+    display: none;
+  }
 }
 
 .preview-console__expand {
-	padding-top: #{math.div(3, $base-font-size)}rem;
-	@include icon();
-	@include themify() {
-		& g,
-		& polygon,
-		& path {
-			fill: getThemifyVariable('secondary-text-color');
-		}
-		&:hover {
-			& g,
-			& polygon,
-			& path {
-				fill: getThemifyVariable('logo-color');
-			}
-		}
-	}
-	display: none;
-	.preview-console--collapsed & {
-		display: inline-block;
-	}
+  padding-top: #{math.div(3, $base-font-size)}rem;
+  @include icon();
+  @include themify() {
+    & g,
+    & polygon,
+    & path {
+      fill: getThemifyVariable('secondary-text-color');
+    }
+    &:hover {
+      & g,
+      & polygon,
+      & path {
+        fill: getThemifyVariable('logo-color');
+      }
+    }
+  }
+  display: none;
+  .preview-console--collapsed & {
+    display: inline-block;
+  }
 }
 
 .preview-console__header-buttons {
-	display: flex;
-	align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .preview-console__clear {
-	@include themify() {
-		@extend %link;
-		color: getThemifyVariable('secondary-text-color');
-		&:hover {
-			color: getThemifyVariable('logo-color');
-		}
-	}
-	background: transparent;
-	border: none;
-	padding-right: #{math.div(10, $base-font-size)}rem;
-	.preview-console--collapsed & {
-		display: none;
-	}
+  @include themify() {
+    @extend %link;
+    color: getThemifyVariable('secondary-text-color');
+    &:hover {
+      color: getThemifyVariable('logo-color');
+    }
+  }
+  background: transparent;
+  border: none;
+  padding-right: #{math.div(10, $base-font-size)}rem;
+  .preview-console--collapsed & {
+    display: none;
+  }
 }
 
 .preview-console__body {
-	display: flex;
-	flex-direction: column;
-	height: calc(100% - #{math.div(30, $base-font-size)}rem);
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - #{math.div(30, $base-font-size)}rem);
 }

@@ -93,8 +93,8 @@ describe('user.controller > auth management > updateSettings (email, username, p
       request.user = createMockUser({ id: 'nonexistent-id' });
 
       await updateSettings(
-        (request as unknown) as Request,
-        (response as unknown) as Response,
+        request as unknown as Request,
+        response as unknown as Response,
         next
       );
     });
@@ -118,8 +118,8 @@ describe('user.controller > auth management > updateSettings (email, username, p
           requestBody = { ...minimumValidRequest };
           request.setBody(requestBody);
           await updateSettings(
-            (request as unknown) as Request,
-            (response as unknown) as Response,
+            request as unknown as Request,
+            response as unknown as Response,
             next
           );
         });
@@ -138,8 +138,8 @@ describe('user.controller > auth management > updateSettings (email, username, p
           requestBody = { ...minimumValidRequest, username: NEW_USERNAME };
           request.setBody(requestBody);
           await updateSettings(
-            (request as unknown) as Request,
-            (response as unknown) as Response,
+            request as unknown as Request,
+            response as unknown as Response,
             next
           );
         });
@@ -160,8 +160,8 @@ describe('user.controller > auth management > updateSettings (email, username, p
           requestBody = { ...minimumValidRequest, email: NEW_EMAIL };
           request.setBody(requestBody);
           await updateSettings(
-            (request as unknown) as Request,
-            (response as unknown) as Response,
+            request as unknown as Request,
+            response as unknown as Response,
             next
           );
         });
@@ -189,8 +189,8 @@ describe('user.controller > auth management > updateSettings (email, username, p
           requestBody = { username: NEW_USERNAME, email: NEW_EMAIL };
           request.setBody(requestBody);
           await updateSettings(
-            (request as unknown) as Request,
-            (response as unknown) as Response,
+            request as unknown as Request,
+            response as unknown as Response,
             next
           );
         });
@@ -223,8 +223,8 @@ describe('user.controller > auth management > updateSettings (email, username, p
           };
           request.setBody(requestBody);
           await updateSettings(
-            (request as unknown) as Request,
-            (response as unknown) as Response,
+            request as unknown as Request,
+            response as unknown as Response,
             next
           );
         });
@@ -250,8 +250,8 @@ describe('user.controller > auth management > updateSettings (email, username, p
           };
           request.setBody(requestBody);
           await updateSettings(
-            (request as unknown) as Request,
-            (response as unknown) as Response,
+            request as unknown as Request,
+            response as unknown as Response,
             next
           );
         });
@@ -278,8 +278,8 @@ describe('user.controller > auth management > updateSettings (email, username, p
           };
           request.setBody(requestBody);
           await updateSettings(
-            (request as unknown) as Request,
-            (response as unknown) as Response,
+            request as unknown as Request,
+            response as unknown as Response,
             next
           );
         });
@@ -313,8 +313,8 @@ describe('user.controller > auth management > updateSettings (email, username, p
           };
           request.setBody(requestBody);
           await updateSettings(
-            (request as unknown) as Request,
-            (response as unknown) as Response,
+            request as unknown as Request,
+            response as unknown as Response,
             next
           );
         });
@@ -346,8 +346,8 @@ describe('user.controller > auth management > updateSettings (email, username, p
         beforeEach(async () => {
           request.setBody({ email: OLD_EMAIL });
           await updateSettings(
-            (request as unknown) as Request,
-            (response as unknown) as Response,
+            request as unknown as Request,
+            response as unknown as Response,
             next
           );
         });
@@ -372,8 +372,8 @@ describe('user.controller > auth management > updateSettings (email, username, p
         beforeEach(async () => {
           request.setBody({ username: OLD_USERNAME });
           await updateSettings(
-            (request as unknown) as Request,
-            (response as unknown) as Response,
+            request as unknown as Request,
+            response as unknown as Response,
             next
           );
         });
@@ -402,8 +402,8 @@ describe('user.controller > auth management > updateSettings (email, username, p
           };
           request.setBody(requestBody);
           await updateSettings(
-            (request as unknown) as Request,
-            (response as unknown) as Response,
+            request as unknown as Request,
+            response as unknown as Response,
             next
           );
         });
@@ -434,8 +434,8 @@ describe('user.controller > auth management > updateSettings (email, username, p
           };
           request.setBody(requestBody);
           await updateSettings(
-            (request as unknown) as Request,
-            (response as unknown) as Response,
+            request as unknown as Request,
+            response as unknown as Response,
             next
           );
         });
@@ -466,8 +466,8 @@ describe('user.controller > auth management > updateSettings (email, username, p
           };
           request.setBody(requestBody);
           await updateSettings(
-            (request as unknown) as Request,
-            (response as unknown) as Response,
+            request as unknown as Request,
+            response as unknown as Response,
             next
           );
         });
@@ -495,8 +495,8 @@ describe('user.controller > auth management > updateSettings (email, username, p
           };
           request.setBody(requestBody);
           await updateSettings(
-            (request as unknown) as Request,
-            (response as unknown) as Response,
+            request as unknown as Request,
+            response as unknown as Response,
             next
           );
         });
@@ -524,8 +524,8 @@ describe('user.controller > auth management > updateSettings (email, username, p
       requestBody = minimumValidRequest;
       request.setBody(requestBody);
       await updateSettings(
-        (request as unknown) as Request,
-        (response as unknown) as Response,
+        request as unknown as Request,
+        response as unknown as Response,
         next
       );
     });

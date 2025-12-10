@@ -36,8 +36,8 @@ describe('user.controller > api key', () => {
       User.findById = jest.fn().mockResolvedValue(null);
 
       await createApiKey(
-        (request as unknown) as Request,
-        (response as unknown) as Response,
+        request as unknown as Request,
+        response as unknown as Response,
         next
       );
 
@@ -55,8 +55,8 @@ describe('user.controller > api key', () => {
       User.findById = jest.fn().mockResolvedValue(user);
 
       await createApiKey(
-        (request as unknown) as Request,
-        (response as unknown) as Response,
+        request as unknown as Request,
+        response as unknown as Response,
         next
       );
 
@@ -71,14 +71,14 @@ describe('user.controller > api key', () => {
       request.setBody({ label: 'my key' });
 
       const user = new User();
-      user.apiKeys = ([] as unknown) as Types.DocumentArray<ApiKeyDocument>;
+      user.apiKeys = [] as unknown as Types.DocumentArray<ApiKeyDocument>;
 
       User.findById = jest.fn().mockResolvedValue(user);
       user.save = jest.fn();
 
       await createApiKey(
-        (request as unknown) as Request,
-        (response as unknown) as Response,
+        request as unknown as Request,
+        response as unknown as Response,
         next
       );
 
@@ -103,8 +103,8 @@ describe('user.controller > api key', () => {
       User.findById = jest.fn().mockResolvedValue(null);
 
       await removeApiKey(
-        (request as unknown) as Request<RemoveApiKeyRequestParams>,
-        (response as unknown) as Response,
+        request as unknown as Request<RemoveApiKeyRequestParams>,
+        response as unknown as Response,
         next
       );
 
@@ -118,13 +118,13 @@ describe('user.controller > api key', () => {
       request.user = createMockUser({ id: '1234' });
       request.params = { keyId: 'not-a-real-key' };
       const user = new User();
-      user.apiKeys = ([] as unknown) as Types.DocumentArray<ApiKeyDocument>;
+      user.apiKeys = [] as unknown as Types.DocumentArray<ApiKeyDocument>;
 
       User.findById = jest.fn().mockResolvedValue(user);
 
       await removeApiKey(
-        (request as unknown) as Request<RemoveApiKeyRequestParams>,
-        (response as unknown) as Response,
+        request as unknown as Request<RemoveApiKeyRequestParams>,
+        response as unknown as Response,
         next
       );
 
@@ -138,10 +138,10 @@ describe('user.controller > api key', () => {
       const mockKey1 = { _id: 'id1', id: 'id1', label: 'first key' };
       const mockKey2 = { _id: 'id2', id: 'id2', label: 'second key' };
 
-      const apiKeys = ([
+      const apiKeys = [
         mockKey1,
         mockKey2
-      ] as unknown) as Types.DocumentArray<ApiKeyDocument>;
+      ] as unknown as Types.DocumentArray<ApiKeyDocument>;
       apiKeys.find = Array.prototype.find;
       apiKeys.pull = jest.fn();
 
@@ -157,8 +157,8 @@ describe('user.controller > api key', () => {
       User.findById = jest.fn().mockResolvedValue(user);
 
       await removeApiKey(
-        (request as unknown) as Request<RemoveApiKeyRequestParams>,
-        (response as unknown) as Response,
+        request as unknown as Request<RemoveApiKeyRequestParams>,
+        response as unknown as Response,
         next
       );
 

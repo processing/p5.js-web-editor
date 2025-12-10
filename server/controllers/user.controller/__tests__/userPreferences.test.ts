@@ -50,8 +50,8 @@ describe('user.controller > user preferences', () => {
       };
 
       await updatePreferences(
-        (request as unknown) as Request,
-        (response as unknown) as Response,
+        request as unknown as Request,
+        response as unknown as Response,
         next
       );
 
@@ -72,8 +72,8 @@ describe('user.controller > user preferences', () => {
       request.user = createMockUser({ id: 'nonexistentid' });
 
       await updatePreferences(
-        (request as unknown) as Request,
-        (response as unknown) as Response,
+        request as unknown as Request,
+        response as unknown as Response,
         next
       );
 
@@ -95,8 +95,8 @@ describe('user.controller > user preferences', () => {
       request.body = { preferences: { theme: 'dark' } };
 
       await updatePreferences(
-        (request as unknown) as Request,
-        (response as unknown) as Response,
+        request as unknown as Request,
+        response as unknown as Response,
         next
       );
 
@@ -119,8 +119,8 @@ describe('user.controller > user preferences', () => {
       request.body = { cookieConsent: CookieConsentOptions.ESSENTIAL };
 
       await updateCookieConsent(
-        (request as unknown) as Request,
-        (response as unknown) as Response,
+        request as unknown as Request,
+        response as unknown as Response,
         next
       );
 
@@ -142,8 +142,8 @@ describe('user.controller > user preferences', () => {
       request.body = { cookieConsent: true };
 
       await updateCookieConsent(
-        (request as unknown) as Request,
-        (response as unknown) as Response,
+        request as unknown as Request,
+        response as unknown as Response,
         next
       );
 
@@ -166,8 +166,8 @@ describe('user.controller > user preferences', () => {
       request.body = { cookieConsent: true };
 
       await updateCookieConsent(
-        (request as unknown) as Request,
-        (response as unknown) as Response,
+        request as unknown as Request,
+        response as unknown as Response,
         next
       );
 

@@ -8,8 +8,7 @@ Access to the API is available via a Personal Access Token, linked to an existin
 
 When contacting the API, the username and token must be sent with every request using basic auth.
 
-This involved sending the base64 encoded `${username}:${personalAccessToken}` in the `Authorization` header. For example:
-  `Authorization: Basic cDU6YWJjMTIzYWJj`
+This involved sending the base64 encoded `${username}:${personalAccessToken}` in the `Authorization` header. For example: `Authorization: Basic cDU6YWJjMTIzYWJj`
 
 # API Access
 
@@ -22,7 +21,7 @@ The API is versioned and this version is indicated in the root URL path e.g. ver
 You must provide the version number when accessing the API.
 
 | Version | Release date |
-|---------|--------------|
+| ------- | ------------ |
 | v1      | Unreleased   |
 
 # Models
@@ -43,12 +42,11 @@ UI_ACCESS_TOKEN_ENABLED=true
 
 ## Sketch
 
-| Name  | Type              | Description                                                                          |
-|-------|-------------------|--------------------------------------------------------------------------------------|
-| name  | String            | The sketch’s title                                                                   |
+| Name | Type | Description |
+| --- | --- | --- |
+| name | String | The sketch’s title |
 | files | DirectoryContents | The files and directories in this sketch. See `DirectoryContents` for the structure. |
-| slug  | String            | A path that can be used to access the sketch                                         |
-
+| slug | String | A path that can be used to access the sketch |
 
     {
       "id": String, // opaque ID
@@ -67,7 +65,6 @@ UI_ACCESS_TOKEN_ENABLED=true
 
 A map of filenames to `File` or `Directory`. The key of each item is used as the filename. Using a map ensures that filenames are unique in the directory.
 
-
     {
       [String]:  File | Directory
     }
@@ -83,7 +80,7 @@ A map of filenames to `File` or `Directory`. The key of each item is used as the
 This file is editable in the Editor UI and stored in the Editor's database.
 
 | Name    | Type         | Description                                |
-|---------|--------------|--------------------------------------------|
+| ------- | ------------ | ------------------------------------------ |
 | content | UTF-8 String | The contents of the file as a UTF-8 string |
 
     {
@@ -94,9 +91,8 @@ This file is editable in the Editor UI and stored in the Editor's database.
 
 This file is hosted elsewhere on the Internet. It appears in the Editor's listing and can be referenced using a proxy URL in the Editor.
 
-
 | Name | Type | Description                                     |
-|------|------|-------------------------------------------------|
+| ---- | ---- | ----------------------------------------------- |
 | url  | URL  | A valid URL pointing to a file hosted elsewhere |
 
     {
@@ -110,7 +106,7 @@ A `File` is either a `DirectFile` or `ReferencedFile`. The API supports both eve
 ## Directory
 
 | Name  | Type              | Description                     |
-|-------|-------------------|---------------------------------|
+| ----- | ----------------- | ------------------------------- |
 | files | DirectoryContents | A map of the directory contents |
 
     {
@@ -128,9 +124,11 @@ List a user’s sketches.
 This will not return the files within the sketch, just the sketch metadata.
 
 ### Request format
+
 No body.
 
 ### Response format
+
     {
       "sketches": Array<Sketch>
     }
@@ -138,14 +136,13 @@ No body.
 ### Example
 
     GET /p5/sketches
-    
+
     {
       "sketches": [
         { "id": "H1PLJg8_", "name": "My Lovely Sketch" },
         { "id": "Bkhf0APpg", "name":  "My Lovely Sketch 2" }
       ]
     }
-
 
 ## `POST /:user/sketches`
 
@@ -154,9 +151,11 @@ Create a new sketch.
 A sketch must contain at least one file with the `.html` extension. If none is provided in the payload, a default `index.html` and linked `style.css` file will be created automatically.
 
 ### Request format
+
 See `Sketch` in Models above.
 
 ### Response format
+
     {
       "id": String
     }
@@ -164,7 +163,7 @@ See `Sketch` in Models above.
 ### Example
 
     POST /p5/sketches
-    
+
     {
       "name": "My Lovely Sketch",
       "files": {
@@ -175,9 +174,8 @@ See `Sketch` in Models above.
 
 `files` can be nested to represent a folder structure. For example, this will create an empty “data” directory in the sketch:
 
-
     POST /p5/sketches
-    
+
     {
       "name": "My Lovely Sketch 2",
       "files": [
@@ -195,16 +193,15 @@ See `Sketch` in Models above.
 
 ### Responses
 
-| HTTP code                | Body                                                              |
-|--------------------------|-------------------------------------------------------------------|
-| 201 Created              | id of sketch                                                      |
+| HTTP code | Body |
+| --- | --- |
+| 201 Created | id of sketch |
 | 422 Unprocessable Entity | file validation failed, unsupported filetype, slug already exists |
-
 
 ### Examples
 
     201 CREATED
-    
+
     {
       "id": "Ckhf0APpg"
     }
@@ -214,9 +211,11 @@ See `Sketch` in Models above.
 Delete a sketch and all its associated files.
 
 ### Request format
+
 No body
 
 ### Response format
+
 No body
 
 ### Example
@@ -226,8 +225,6 @@ No body
 ### Responses
 
 | HTTP code     | Description             |
-|---------------|-------------------------|
+| ------------- | ----------------------- |
 | 200 OK        | Sketch has been deleted |
 | 404 Not Found | Sketch does not exist   |
-
-

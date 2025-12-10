@@ -1,16 +1,7 @@
 {
   "p5.Color": {
-    "createMethods": [
-      "color",
-      "p5.Color"
-    ],
-    "methods": [
-      "setAlpha",
-      "setBlue",
-      "setGreen",
-      "setRed",
-      "toString"
-    ]
+    "createMethods": ["color", "p5.Color"],
+    "methods": ["setAlpha", "setBlue", "setGreen", "setRed", "toString"]
   },
   "p5.Geometry": {
     "createMethods": [
@@ -66,10 +57,7 @@
     ]
   },
   "p5.Camera": {
-    "createMethods": [
-      "createCamera",
-      "p5.Camera"
-    ],
+    "createMethods": ["createCamera", "p5.Camera"],
     "methods": [
       "camera",
       "centerX",
@@ -147,18 +135,8 @@
     ]
   },
   "p5.File": {
-    "createMethods": [
-      "createFileInput",
-      "p5.File"
-    ],
-    "methods": [
-      "data",
-      "file",
-      "name",
-      "size",
-      "subtype",
-      "type"
-    ]
+    "createMethods": ["createFileInput", "p5.File"],
+    "methods": ["data", "file", "name", "size", "subtype", "type"]
   },
   "p5.Shader": {
     "createMethods": [
@@ -168,18 +146,10 @@
       "p5.Shader",
       "shader"
     ],
-    "methods": [
-      "copyToContext",
-      "inspectHooks",
-      "modify",
-      "setUniform"
-    ]
+    "methods": ["copyToContext", "inspectHooks", "modify", "setUniform"]
   },
   "p5.Framebuffer": {
-    "createMethods": [
-      "createFramebuffer",
-      "p5.Framebuffer"
-    ],
+    "createMethods": ["createFramebuffer", "p5.Framebuffer"],
     "methods": [
       "autoSized",
       "begin",
@@ -198,23 +168,11 @@
     ]
   },
   "p5.Graphics": {
-    "createMethods": [
-      "createGraphics",
-      "p5.Graphics"
-    ],
-    "methods": [
-      "createFramebuffer",
-      "remove",
-      "reset"
-    ]
+    "createMethods": ["createGraphics", "p5.Graphics"],
+    "methods": ["createFramebuffer", "remove", "reset"]
   },
   "p5.Image": {
-    "createMethods": [
-      "createImage",
-      "get",
-      "loadImage",
-      "p5.Image"
-    ],
+    "createMethods": ["createImage", "get", "loadImage", "p5.Image"],
     "methods": [
       "blend",
       "copy",
@@ -240,9 +198,7 @@
     ]
   },
   "p5.NumberDict": {
-    "createMethods": [
-      "createNumberDict"
-    ],
+    "createMethods": ["createNumberDict"],
     "methods": [
       "add",
       "div",
@@ -255,16 +211,11 @@
     ]
   },
   "p5.StringDict": {
-    "createMethods": [
-      "createStringDict"
-    ],
+    "createMethods": ["createStringDict"],
     "methods": []
   },
   "p5.Vector": {
-    "createMethods": [
-      "createVector",
-      "p5.Vector"
-    ],
+    "createMethods": ["createVector", "p5.Vector"],
     "methods": [
       "add",
       "angleBetween",
@@ -302,31 +253,15 @@
     ]
   },
   "p5.PrintWriter": {
-    "createMethods": [
-      "createWriter",
-      "p5.PrintWriter"
-    ],
-    "methods": [
-      "clear",
-      "close",
-      "print",
-      "write"
-    ]
+    "createMethods": ["createWriter", "p5.PrintWriter"],
+    "methods": ["clear", "close", "print", "write"]
   },
   "p5.Font": {
-    "createMethods": [
-      "loadFont"
-    ],
-    "methods": [
-      "font",
-      "textBounds",
-      "textToPoints"
-    ]
+    "createMethods": ["loadFont"],
+    "methods": ["font", "textBounds", "textToPoints"]
   },
   "p5.Table": {
-    "createMethods": [
-      "loadTable"
-    ],
+    "createMethods": ["loadTable"],
     "methods": [
       "addColumn",
       "addRow",
@@ -357,9 +292,7 @@
     ]
   },
   "p5.XML": {
-    "createMethods": [
-      "loadXML"
-    ],
+    "createMethods": ["loadXML"],
     "methods": [
       "addChild",
       "getAttributeCount",
@@ -433,12 +366,7 @@
   },
   "p5.Gain": {
     "createMethods": [],
-    "methods": [
-      "amp",
-      "connect",
-      "disconnect",
-      "setInput"
-    ]
+    "methods": ["amp", "connect", "disconnect", "setInput"]
   },
   "p5.MonoSynth": {
     "createMethods": [],
@@ -456,9 +384,7 @@
   },
   "p5.Noise": {
     "createMethods": [],
-    "methods": [
-      "setType"
-    ]
+    "methods": ["setType"]
   },
   "p5.Oscillator": {
     "createMethods": [],
@@ -518,16 +444,11 @@
   },
   "p5.PeakDetect": {
     "createMethods": [],
-    "methods": [
-      "onPeak",
-      "update"
-    ]
+    "methods": ["onPeak", "update"]
   },
   "p5.Phrase": {
     "createMethods": [],
-    "methods": [
-      "sequence"
-    ]
+    "methods": ["sequence"]
   },
   "p5.PolySynth": {
     "createMethods": [],
@@ -547,30 +468,15 @@
   },
   "p5.Pulse": {
     "createMethods": [],
-    "methods": [
-      "width"
-    ]
+    "methods": ["width"]
   },
   "p5.Reverb": {
     "createMethods": [],
-    "methods": [
-      "amp",
-      "connect",
-      "disconnect",
-      "process",
-      "set"
-    ]
+    "methods": ["amp", "connect", "disconnect", "process", "set"]
   },
   "p5.Score": {
     "createMethods": [],
-    "methods": [
-      "loop",
-      "noLoop",
-      "pause",
-      "setBPM",
-      "start",
-      "stop"
-    ]
+    "methods": ["loop", "noLoop", "pause", "setBPM", "start", "stop"]
   },
   "p5.SoundFile": {
     "createMethods": [],
@@ -626,22 +532,11 @@
   },
   "p5.SoundRecorder": {
     "createMethods": [],
-    "methods": [
-      "record",
-      "setInput",
-      "stop"
-    ]
+    "methods": ["record", "setInput", "stop"]
   },
   "p5.TableRow": {
     "createMethods": [],
-    "methods": [
-      "get",
-      "getNum",
-      "getString",
-      "set",
-      "setNum",
-      "setString"
-    ]
+    "methods": ["get", "getNum", "getString", "set", "setNum", "setString"]
   },
   "p5.TypedDict": {
     "createMethods": [],

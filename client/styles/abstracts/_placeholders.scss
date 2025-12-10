@@ -1,249 +1,272 @@
-@use "sass:math";
+@use 'sass:math';
 
 %toolbar-button {
-	@include themify() {
-		display: inline-block;
-		height: #{math.div(44, $base-font-size)}rem;
-		width: #{math.div(44, $base-font-size)}rem;
-		text-align: center;
-		border-radius: 100%;
-		cursor: pointer;
-		border: none;
-		outline: none;
-		background-color: getThemifyVariable('toolbar-button-background-color');
-		color: getThemifyVariable('toolbar-button-color');
-		& g, & path {
-			fill: getThemifyVariable('toolbar-button-color');
-		}
-		&:hover {
-			background-color: getThemifyVariable('button-background-hover-color');
-			color: getThemifyVariable('button-hover-color');
+  @include themify() {
+    display: inline-block;
+    height: #{math.div(44, $base-font-size)}rem;
+    width: #{math.div(44, $base-font-size)}rem;
+    text-align: center;
+    border-radius: 100%;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    background-color: getThemifyVariable('toolbar-button-background-color');
+    color: getThemifyVariable('toolbar-button-color');
+    & g,
+    & path {
+      fill: getThemifyVariable('toolbar-button-color');
+    }
+    &:hover {
+      background-color: getThemifyVariable('button-background-hover-color');
+      color: getThemifyVariable('button-hover-color');
 
-			& g, & path {
-				fill: getThemifyVariable('button-hover-color');
-			}
-		}
-		&--selected {
-	    background-color: getThemifyVariable('button-background-hover-color');
-	    & g, & path {
-	        fill: getThemifyVariable('button-hover-color');
-	    }
-	  }
-	}
+      & g,
+      & path {
+        fill: getThemifyVariable('button-hover-color');
+      }
+    }
+    &--selected {
+      background-color: getThemifyVariable('button-background-hover-color');
+      & g,
+      & path {
+        fill: getThemifyVariable('button-hover-color');
+      }
+    }
+  }
 }
 
-%icon-toast{
-	@include themify() {
-		color: $toast-text-color
-		& g, & path {
-			fill: $toast-text-color
-		}
-		&:hover {
-			color: getThemifyVariable('icon-toast-hover-color');
-			& g, & path {
-				opacity: 1;
-				fill: getThemifyVariable('icon-toast-hover-color');
-			}
-		}
-	}
-	background-color: transparent;
-	border: none;
-	cursor: pointer;
-	padding: 0;
+%icon-toast {
+  @include themify() {
+    color: $toast-text-color & g, & path {
+      fill: $toast-text-color;
+    }
+    &:hover {
+      color: getThemifyVariable('icon-toast-hover-color');
+      & g,
+      & path {
+        opacity: 1;
+        fill: getThemifyVariable('icon-toast-hover-color');
+      }
+    }
+  }
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
 }
 %none-themify-icon {
-	background-color: transparent;
-	border: none;
-	cursor: pointer;
-	padding: 0;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
 }
 
 %none-themify-icon-with-hover {
-	color: $medium-dark;
-	& g, & path {
-		fill: $medium-dark;
-	}
-	&:hover {
-		color: $p5js-pink;
-		& g, & path {
-			opacity: 1;
-			fill: $p5js-pink;
-		}
-	}
-	background-color: transparent;
-	border: none;
-	cursor: pointer;
-	padding: 0;
+  color: $medium-dark;
+  & g,
+  & path {
+    fill: $medium-dark;
+  }
+  &:hover {
+    color: $p5js-pink;
+    & g,
+    & path {
+      opacity: 1;
+      fill: $p5js-pink;
+    }
+  }
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
 }
 
 %button {
-	@include themify() {
-		background-color: getThemifyVariable('button-background-color');
-		color: getThemifyVariable('button-color');
-		cursor: pointer;
-		border: 2px solid getThemifyVariable('button-border-color');
-		border-radius: 2px;
-		padding: #{math.div(10, $base-font-size)}rem #{math.div(30, $base-font-size)}rem;
-		& g, & path {
-			fill: getThemifyVariable('button-color');
-			opacity: 1;
-		}
-		&:not(disabled):hover {
-			border-color: getThemifyVariable('button-background-hover-color');
-			background-color: getThemifyVariable('button-background-hover-color');
-			color: getThemifyVariable('button-hover-color');
-			& g, & path {
-				fill: getThemifyVariable('button-hover-color');
-			}
-		}
-		&:not(disabled):active {
-			border-color: getThemifyVariable('button-background-active-color');
-			background-color: getThemifyVariable('button-background-active-color');
-			color: getThemifyVariable('button-active-color');
-			& g, & path {
-				fill: getThemifyVariable('button-active-color');
-			}
-		}
-	}
+  @include themify() {
+    background-color: getThemifyVariable('button-background-color');
+    color: getThemifyVariable('button-color');
+    cursor: pointer;
+    border: 2px solid getThemifyVariable('button-border-color');
+    border-radius: 2px;
+    padding: #{math.div(10, $base-font-size)}rem #{math.div(30, $base-font-size)}rem;
+    & g,
+    & path {
+      fill: getThemifyVariable('button-color');
+      opacity: 1;
+    }
+    &:not(disabled):hover {
+      border-color: getThemifyVariable('button-background-hover-color');
+      background-color: getThemifyVariable('button-background-hover-color');
+      color: getThemifyVariable('button-hover-color');
+      & g,
+      & path {
+        fill: getThemifyVariable('button-hover-color');
+      }
+    }
+    &:not(disabled):active {
+      border-color: getThemifyVariable('button-background-active-color');
+      background-color: getThemifyVariable('button-background-active-color');
+      color: getThemifyVariable('button-active-color');
+      & g,
+      & path {
+        fill: getThemifyVariable('button-active-color');
+      }
+    }
+  }
 }
 
 %preferences-button {
-	@extend %toolbar-button;
-	@include themify() {
-		color: getThemifyVariable('primary-text-color');
-		background-color: getThemifyVariable('preferences-button-background-color');
-		padding: 0;
-		margin-bottom: #{math.div(28, $base-font-size)}rem;
-		line-height: #{math.div(50, $base-font-size)}rem;
-		& g, & path {
-			fill: getThemifyVariable('modal-button-color');
-		}
-		&:enabled:hover {
-			background-color: getThemifyVariable('button-background-hover-color');
-			color: getThemifyVariable('button-hover-color');
-			& g, & path {
-				fill: getThemifyVariable('button-hover-color');
-			}
-		}
-		&:disabled:hover {
-			cursor: not-allowed;
-			background-color: getThemifyVariable('preferences-button-background-color');
-		}
-	}
+  @extend %toolbar-button;
+  @include themify() {
+    color: getThemifyVariable('primary-text-color');
+    background-color: getThemifyVariable('preferences-button-background-color');
+    padding: 0;
+    margin-bottom: #{math.div(28, $base-font-size)}rem;
+    line-height: #{math.div(50, $base-font-size)}rem;
+    & g,
+    & path {
+      fill: getThemifyVariable('modal-button-color');
+    }
+    &:enabled:hover {
+      background-color: getThemifyVariable('button-background-hover-color');
+      color: getThemifyVariable('button-hover-color');
+      & g,
+      & path {
+        fill: getThemifyVariable('button-hover-color');
+      }
+    }
+    &:disabled:hover {
+      cursor: not-allowed;
+      background-color: getThemifyVariable(
+        'preferences-button-background-color'
+      );
+    }
+  }
 }
 
 %preference-option {
-	@include themify() {
-		background-color: transparent;
-		color: getThemifyVariable('inactive-text-color');
-		&:hover {
-			color: getThemifyVariable('heavy-text-color');
-		}
-	}
-	font-size: #{math.div(12, $base-font-size)}rem;
-	cursor: pointer;
-	text-align: left;
-	padding: 0;
-	margin-bottom: #{math.div(5, $base-font-size)}rem;
-	padding-right: #{math.div(5, $base-font-size)}rem;
-	border: 0;
-	list-style-type: none;
+  @include themify() {
+    background-color: transparent;
+    color: getThemifyVariable('inactive-text-color');
+    &:hover {
+      color: getThemifyVariable('heavy-text-color');
+    }
+  }
+  font-size: #{math.div(12, $base-font-size)}rem;
+  cursor: pointer;
+  text-align: left;
+  padding: 0;
+  margin-bottom: #{math.div(5, $base-font-size)}rem;
+  padding-right: #{math.div(5, $base-font-size)}rem;
+  border: 0;
+  list-style-type: none;
 }
 
 %modal {
-	@include themify() {
-		background-color: getThemifyVariable('modal-background-color');
-		border: 1px solid getThemifyVariable('modal-border-color');
-		box-shadow: 0 12px 12px getThemifyVariable('shadow-color');
-	}
-	border-radius: 2px;
-	z-index: 20;
+  @include themify() {
+    background-color: getThemifyVariable('modal-background-color');
+    border: 1px solid getThemifyVariable('modal-border-color');
+    box-shadow: 0 12px 12px getThemifyVariable('shadow-color');
+  }
+  border-radius: 2px;
+  z-index: 20;
 }
 
 %hidden-element {
-	position:absolute;
-	left:-10000px;
-	top:auto;
-	width:1px;
-	height:1px;
-	overflow:hidden;
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
 }
 
-
 %link {
-	@include themify() {
-		text-decoration: none;
-		color: getThemifyVariable('inactive-text-color');
-		cursor: pointer;
-		& g, & path {
-			fill: getThemifyVariable('inactive-text-color');
-		}
-		&:hover {
-			text-decoration: none;
-			color: getThemifyVariable('heavy-text-color');
-			& g, & path {
-				fill: getThemifyVariable('heavy-text-color');
-			}
-		}
-	}
+  @include themify() {
+    text-decoration: none;
+    color: getThemifyVariable('inactive-text-color');
+    cursor: pointer;
+    & g,
+    & path {
+      fill: getThemifyVariable('inactive-text-color');
+    }
+    &:hover {
+      text-decoration: none;
+      color: getThemifyVariable('heavy-text-color');
+      & g,
+      & path {
+        fill: getThemifyVariable('heavy-text-color');
+      }
+    }
+  }
 }
 
 %dropdown-open {
-	@include themify() {
+  @include themify() {
     background-color: map-get($theme-map, 'modal-background-color');
     border: 1px solid map-get($theme-map, 'modal-border-color');
     box-shadow: 0 0 18px 0 getThemifyVariable('shadow-color');
     color: getThemifyVariable('primary-text-color');
-	}
-	text-align: left;
-	width: #{math.div(180, $base-font-size)}rem;
-	display: flex;
-	position: absolute;
-	flex-direction: column;
-	top: 95%;
-	height: auto;
-	z-index: 9999;
-	border-radius: #{math.div(6, $base-font-size)}rem;
-	& li:first-child {
-		border-radius: #{math.div(5, $base-font-size)}rem #{math.div(5, $base-font-size)}rem 0 0;
-	}
-	& li:last-child {
-		border-radius: 0 0 #{math.div(5, $base-font-size)}rem #{math.div(5, $base-font-size)}rem;
-	}
-	& li {
-		& button,
-		& a {
-			@include themify() {
-				color: getThemifyVariable('primary-text-color');
-			}
-			width: 100%;
-			text-align: left;
-			padding: #{math.div(8, $base-font-size)}rem #{math.div(16, $base-font-size)}rem;
-		}
-		height: #{math.div(35, $base-font-size)}rem;
-		cursor: pointer;
-		display: flex;
-		align-items: center;
-	}
-	& li:hover {
-		@include themify() {
+  }
+  text-align: left;
+  width: #{math.div(180, $base-font-size)}rem;
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  top: 95%;
+  height: auto;
+  z-index: 9999;
+  border-radius: #{math.div(6, $base-font-size)}rem;
+  & li:first-child {
+    border-radius: #{math.div(5, $base-font-size)}rem #{math.div(
+        5,
+        $base-font-size
+      )}rem 0 0;
+  }
+  & li:last-child {
+    border-radius: 0 0 #{math.div(5, $base-font-size)}rem #{math.div(
+        5,
+        $base-font-size
+      )}rem;
+  }
+  & li {
+    & button,
+    & a {
+      @include themify() {
+        color: getThemifyVariable('primary-text-color');
+      }
+      width: 100%;
+      text-align: left;
+      padding: #{math.div(8, $base-font-size)}rem #{math.div(
+          16,
+          $base-font-size
+        )}rem;
+    }
+    height: #{math.div(35, $base-font-size)}rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+  & li:hover {
+    @include themify() {
       background-color: getThemifyVariable('button-background-hover-color');
-      color: getThemifyVariable('button-hover-color')
-		}
-		& button, & a {
+      color: getThemifyVariable('button-hover-color');
+    }
+    & button,
+    & a {
       @include themify() {
         color: getThemifyVariable('button-hover-color');
       }
     }
-	}
+  }
 }
 
 %dropdown-open-left {
-	@extend %dropdown-open;
-	left: 0;
+  @extend %dropdown-open;
+  left: 0;
 }
 
 %dropdown-open-right {
-	@extend %dropdown-open;
-	right: 0;
+  @extend %dropdown-open;
+  right: 0;
 }

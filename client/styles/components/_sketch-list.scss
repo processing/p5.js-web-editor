@@ -1,4 +1,4 @@
-@use "sass:math";
+@use 'sass:math';
 
 .sketch-visibility__title {
   @include themify() {
@@ -40,7 +40,7 @@
 }
 
 .sketch-visibility_ul li::before {
-  content: "\2022";
+  content: '\2022';
 
   @include themify() {
     color: getThemifyVariable('hint-arrow-background-color');
@@ -50,9 +50,6 @@
   margin-right: 10px;
 }
 
-
-
-
 .sketches-table-container {
   overflow-y: auto;
   max-width: 100%;
@@ -60,7 +57,7 @@
 
   @media (max-width: 770px) {
     @include themify() {
-      background-color: getThemifyVariable("modal-background-color");
+      background-color: getThemifyVariable('modal-background-color');
     }
 
     .sketches-table {
@@ -79,8 +76,6 @@
         flex-direction: column;
         gap: #{math.div(12, $base-font-size)}rem;
 
-
-
         .sketches-table__row {
           margin: 0;
           position: relative;
@@ -91,8 +86,10 @@
           gap: #{math.div(8, $base-font-size)}rem;
 
           @include themify() {
-            border: 1px solid getThemifyVariable("modal-border-color");
-            background-color: getThemifyVariable("search-background-color") !important;
+            border: 1px solid getThemifyVariable('modal-border-color');
+            background-color: getThemifyVariable(
+              'search-background-color'
+            ) !important;
           }
 
           .sketches-table_name {
@@ -102,14 +99,13 @@
             align-items: center;
           }
 
-
-          >td {
+          > td {
             padding-left: 0;
             width: 30%;
             font-size: #{math.div(14, $base-font-size)}rem;
 
             @include themify() {
-              color: getThemifyVariable("modal-border-color");
+              color: getThemifyVariable('modal-border-color');
             }
           }
 
@@ -152,7 +148,7 @@
   z-index: 1;
 
   @include themify() {
-    background-color: getThemifyVariable("background-color");
+    background-color: getThemifyVariable('background-color');
   }
 }
 
@@ -168,7 +164,7 @@
   & svg {
     margin-left: #{math.div(5, $base-font-size)}rem;
     @include themify() {
-      fill: getThemifyVariable("inactive-text-color");
+      fill: getThemifyVariable('inactive-text-color');
     }
   }
 }
@@ -178,13 +174,13 @@
   padding: #{math.div(3, $base-font-size)}rem 0;
 
   @include themify() {
-    color: getThemifyVariable("inactive-text-color");
+    color: getThemifyVariable('inactive-text-color');
   }
 }
 
 .sketches-table__header--selected {
   @include themify() {
-    border-color: getThemifyVariable("logo-color");
+    border-color: getThemifyVariable('logo-color');
   }
 }
 
@@ -200,27 +196,26 @@
 
 .sketches-table__row:nth-child(odd) {
   @include themify() {
-    background: getThemifyVariable("table-row-stripe-color");
+    background: getThemifyVariable('table-row-stripe-color');
   }
 }
 
-.sketches-table__row>th:nth-child(1) {
+.sketches-table__row > th:nth-child(1) {
   padding-left: #{math.div(12, $base-font-size)}rem;
 }
 
-.sketches-table__row>td {
+.sketches-table__row > td {
   padding-left: #{math.div(8, $base-font-size)}rem;
 }
 
 .sketches-table__row a {
   @include themify() {
     text-decoration: underline;
-    color: getThemifyVariable("primary-text-color");
+    color: getThemifyVariable('primary-text-color');
   }
-  
 }
 
-.sketches-table__row.is-deleted-or-private>* {
+.sketches-table__row.is-deleted-or-private > * {
   font-style: italic;
 }
 
@@ -228,7 +223,7 @@
   font-size: #{math.div(12, $base-font-size)}rem;
 
   @include themify() {
-    color: getThemifyVariable("inactive-text-color");
+    color: getThemifyVariable('inactive-text-color');
   }
 }
 
@@ -251,9 +246,9 @@
   font-size: #{math.div(16, $base-font-size)}rem;
   padding: #{math.div(42, $base-font-size)}rem 0;
 }
-.sketches-table__row a:hover{
+.sketches-table__row a:hover {
   @include themify() {
-    color: getThemifyVariable("logo-color");
+    color: getThemifyVariable('logo-color');
   }
   text-decoration-thickness: 0.1em;
 }

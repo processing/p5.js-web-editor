@@ -22,15 +22,17 @@ Referência para a [API pública](./public_api.md) para a atual versão da API.
 Buscar um esboço
 
 ### Formato da requisição
+
 Sem corpo.
 
 ### Formato da resposta
+
 Retorna `Sketch`.
 
 ### Exemplo
 
     GET /p5/sketches/Ckhf0APpg`
-    
+
     {
       "name": "Another title",
       "slug": "example-1",
@@ -47,21 +49,22 @@ Retorna `Sketch`.
 | 200 OK        | Retorna o ID de um esboço criado |
 | 404 Not Found | Esboço não existe                |
 
-
 ## `PUT /:user/sketches/:id`
 
 Substitui o esboço por um inteiramente novo, mantendo o mesmo ID. Qualquer arquivo existente será apagado antes que os novos sejam criados.
 
 ### Formato da requisição
+
 Veja `Sketch` nas Models abaixo.
 
 ### Formato de resposta
+
 Sem corpo.
 
 ### Exemplo
 
     PUT /p5/sketches/Ckhf0APpg
-    
+
     {
       "name": "Another title",
       "files": {
@@ -72,12 +75,11 @@ Sem corpo.
 
 ### Respostas
 
-| Código HTTP              | Descrição                                                  |
-| ------------------------ | ---------------------------------------------------------- |
-| 200 OK                   |                                                            |
-| 404 Not Found            | Esboço não existe                                          |
+| Código HTTP | Descrição |
+| --- | --- |
+| 200 OK |  |
+| 404 Not Found | Esboço não existe |
 | 422 Unprocessable Entity | validação de arquivo falhou, tipo de arquivo não suportado |
-
 
 ## `PATCH /:user/sketches/:id`
 
@@ -87,25 +89,29 @@ Atualiza o esboço enquanto mantém informações existentes:
 - Atualizar conteúdo de arquivo ou adicionar novos arquivos
 
 ### Formato da requisição
+
 Veja `Sketch` nas Models abaixo.
 
 ### Formato da resposta
+
 Sem corpo.
 
 ### Exemplo
+
 Mudar o nome do esboço
 
     PATCH /p5/sketches/Ckhf0APpg
-    
+
     {
       "name": "My Very Lovely Sketch"
     }
 
 ### Exemplo
+
 Adicionar um arquivo ao esboço ou substituir um arquivo existente.
 
     PATCH /p5/sketches/Ckhf0APpg
-    
+
     {
       "files": {
         "index.html": { "content": "My new content" }, // contents will be replaced
@@ -121,7 +127,6 @@ Adicionar um arquivo ao esboço ou substituir um arquivo existente.
 | 404 Not Found            | Esboço não existe              |
 | 422 Unprocessable Entity | Erro de validação dos arquivos |
 
-
 ## Operando em arquivos dentro de um esboço
 
 Arquivos dentro de um esboço podem ser acessados individualmente pelos seus `path` e.g `data/something.json`.
@@ -131,41 +136,44 @@ Arquivos dentro de um esboço podem ser acessados individualmente pelos seus `pa
 Buscar os conteúdos de um arquivo.
 
 ### Formato da requisição
+
 Sem corpo.
 
 ### Formato da resposta
+
 Retorna conteúdo dos arquivos
 
 ### Exemplo
 
     GET /p5/sketches/Ckhf0APpg/files/assets/something.js
-    
+
     Content-Type: application/javascript
-    
+
     var uselessness = 12;
 
 ### Respostas
 
-| Código HTTP   | Descrição                                                                     |
-| ------------- | ----------------------------------------------------------------------------- |
-| 200 OK        | Retorna corpo do arquivo com o content-type definido pela extenção do arquivo |
-| 404 Not Found | Arquivo não existe                                                            |
+| Código HTTP | Descrição |
+| --- | --- |
+| 200 OK | Retorna corpo do arquivo com o content-type definido pela extenção do arquivo |
+| 404 Not Found | Arquivo não existe |
 
-
-## `PATCH /:user/sketches/:id/files/:path` 
+## `PATCH /:user/sketches/:id/files/:path`
 
 Atualizar o nome ou conteúdos de um arquivo ou diretório.
 
 ### Formato da requisição
+
 Veja `File` e `Directory` abaixo.
 
 ### Formato da resposta
+
 Sem corpo.
 
 ### Exemplo: Mudar nome do arquivo
 
     PATCH /p5/sketches/Ckhf0APpg/files/assets/something.js
-    
+
     {
       "name": "new-name.js"
     }
@@ -175,7 +183,7 @@ Arquivo `assets/something.js` → `assets/new-name.js`.
 ### Exemplo: Mudar o conteúdo do arquivo
 
     PATCH /p5/sketches/Ckhf0APpg/files/assets/something.js
-    
+
     {
       "content": "var answer = 24;"
     }
@@ -203,15 +211,16 @@ Arquivos são adicionados ao diretório, em adição à o que está lá.
 | 404 Not Found            | Caminho não existe            |
 | 422 Unprocessable Entity | Erro de validação de arquivos |
 
-
 ## `DELETE /:user/:sketches/files/:path`
 
 Delete um arquivo/diretório e seus conteúdos.
 
 ### Formato da requisição
+
 Sem corpo.
 
 ### Formato da resposta
+
 Sem corpo.
 
 ### Exemplo: Deletar arquivo
@@ -232,6 +241,3 @@ O diretório `assets` e tudo dentro dele será removido.
 | ------------- | ------------------- |
 | 200 OK        | O item foi deletado |
 | 404 Not Found | Caminho não existe  |
-
-
-

@@ -1,4 +1,4 @@
-@use "sass:math";
+@use 'sass:math';
 
 .dashboard-header {
   padding: #{math.div(24, $base-font-size)}rem #{math.div(66, $base-font-size)}rem;
@@ -14,7 +14,10 @@
     .dashboard-header__nav {
       display: flex;
       flex-direction: column;
-      padding: #{math.div(10, $base-font-size)}rem #{math.div(16, $base-font-size)}rem;
+      padding: #{math.div(10, $base-font-size)}rem #{math.div(
+          16,
+          $base-font-size
+        )}rem;
       gap: #{math.div(10, $base-font-size)}rem;
 
       .dashboard-header__tabs {
@@ -26,11 +29,11 @@
         font-size: #{math.div(15, $base-font-size)}rem;
 
         @include themify() {
-          color: getThemifyVariable("inactive-text-color");
+          color: getThemifyVariable('inactive-text-color');
           opacity: 0.7;
 
           &.dashboard-header__tab--selected {
-            color: getThemifyVariable("primary-text-color");
+            color: getThemifyVariable('primary-text-color');
             opacity: 1;
           }
         }
@@ -79,13 +82,13 @@
   width: 100%;
 
   @include themify() {
-    border-bottom: 1px solid getThemifyVariable("inactive-text-color");
+    border-bottom: 1px solid getThemifyVariable('inactive-text-color');
   }
 }
 
 .dashboard-header__tab {
   @include themify() {
-    color: getThemifyVariable("inactive-text-color");
+    color: getThemifyVariable('inactive-text-color');
     padding: 0;
     margin-right: #{math.div(26, $base-font-size)}rem;
     @media (max-width: 770px) {
@@ -113,8 +116,8 @@
     &:hover,
     &:focus,
     &.dashboard-header__tab--selected {
-      color: getThemifyVariable("primary-text-color");
-      border-bottom-color: getThemifyVariable("nav-hover-color");
+      color: getThemifyVariable('primary-text-color');
+      border-bottom-color: getThemifyVariable('nav-hover-color');
       cursor: pointer;
     }
   }

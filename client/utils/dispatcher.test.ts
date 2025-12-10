@@ -12,7 +12,7 @@ describe('dispatcher', () => {
 
   beforeEach(() => {
     origin = 'https://example.com';
-    mockFrame = ({ postMessage: jest.fn() } as unknown) as Window;
+    mockFrame = { postMessage: jest.fn() } as unknown as Window;
   });
 
   afterEach(() => {
@@ -47,8 +47,8 @@ describe('dispatcher', () => {
     });
 
     it('sends a deep-copied message to all registered frames', () => {
-      const frame1 = ({ postMessage: jest.fn() } as unknown) as Window;
-      const frame2 = ({ postMessage: jest.fn() } as unknown) as Window;
+      const frame1 = { postMessage: jest.fn() } as unknown as Window;
+      const frame2 = { postMessage: jest.fn() } as unknown as Window;
 
       const remove1 = registerFrame(frame1, origin);
       const remove2 = registerFrame(frame2, origin);

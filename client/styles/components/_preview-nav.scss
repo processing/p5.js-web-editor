@@ -1,11 +1,11 @@
-@use "sass:math";
+@use 'sass:math';
 
 .preview-nav__editor-svg {
   & svg {
     width: #{math.div(22, $base-font-size)}rem;
     height: #{math.div(22, $base-font-size)}rem;
     @include themify() {
-        fill: getThemifyVariable('button-nav-inactive-color');
+      fill: getThemifyVariable('button-nav-inactive-color');
     }
     &:hover {
       @include themify() {

@@ -399,8 +399,9 @@ function startSearch(cm, state, query) {
   var searchDialog = document.querySelector('.CodeMirror-dialog');
   if (searchDialog) {
     // check if the file has changed
-    let currentFileName = document.querySelector('.editor__file-name span')
-      ?.innerText;
+    let currentFileName = document.querySelector(
+      '.editor__file-name span'
+    )?.innerText;
 
     if (state.lastFileName !== currentFileName) {
       state.lastFileName = currentFileName;
@@ -438,9 +439,8 @@ function startSearch(cm, state, query) {
     cursor.findNext();
     var num_match = cm.state.search.annotate.matches.length;
     if (num_match == 0) {
-      cm.display.wrapper.querySelector(
-        '.CodeMirror-search-results'
-      ).innerText = i18n.t('CodemirrorFindAndReplace.NoResults');
+      cm.display.wrapper.querySelector('.CodeMirror-search-results').innerText =
+        i18n.t('CodemirrorFindAndReplace.NoResults');
       cm.removeOverlay(state.overlay, state.caseInsensitive);
     } else {
       var next =
@@ -450,9 +450,8 @@ function startSearch(cm, state, query) {
           );
         }) + 1;
       var text_match = next + '/' + num_match;
-      cm.display.wrapper.querySelector(
-        '.CodeMirror-search-results'
-      ).innerText = text_match;
+      cm.display.wrapper.querySelector('.CodeMirror-search-results').innerText =
+        text_match;
     }
   }
 }
@@ -645,9 +644,8 @@ function findNext(cm, rev, callback) {
           s.from.ch === cursor.from().ch && s.from.line === cursor.from().line
       ) + 1;
     var text_match = next + '/' + num_match;
-    cm.display.wrapper.querySelector(
-      '.CodeMirror-search-results'
-    ).innerText = text_match;
+    cm.display.wrapper.querySelector('.CodeMirror-search-results').innerText =
+      text_match;
     if (callback) callback(cursor.from(), cursor.to());
   });
 }

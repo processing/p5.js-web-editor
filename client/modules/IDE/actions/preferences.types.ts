@@ -6,7 +6,8 @@ import type { RootState } from '../../../reducers';
 export type SetPreferencesTabValue = PreferencesState['tabIndex'];
 export type SetFontSizeValue = PreferencesState['fontSize'];
 export type SetLineNumbersValue = PreferencesState['lineNumbers'];
-export type SetAutocloseBracketsQuotesValue = PreferencesState['autocloseBracketsQuotes'];
+export type SetAutocloseBracketsQuotesValue =
+  PreferencesState['autocloseBracketsQuotes'];
 export type SetAutocompleteHinterValue = PreferencesState['autocompleteHinter'];
 export type SetAutosaveValue = PreferencesState['autosave'];
 export type SetLinewrapValue = PreferencesState['linewrap'];

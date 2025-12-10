@@ -14,5 +14,5 @@
   "trailingComma": "none",
   "useTabs": false,
   "quoteProps": "as-needed",
-  "endOfLine":"auto"
+  "endOfLine": "auto"
 }

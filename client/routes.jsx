@@ -26,10 +26,11 @@ import ProtectedSketchRoute from './protected-route';
  *  It is a nested property of `match`.
  *  Use an HOC to lift it up to top-level.
  */
-const withParams = (Component) => (props) => (
-  // eslint-disable-next-line react/prop-types
-  <Component {...props} params={props.match.params} />
-);
+const withParams = (Component) => (props) =>
+  (
+    // eslint-disable-next-line react/prop-types
+    <Component {...props} params={props.match.params} />
+  );
 /**
  * Instead of updating all individual components, use this plug-in Route replacement.
  * It passes the `params` as a top-level property

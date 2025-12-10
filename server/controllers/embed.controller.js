@@ -19,8 +19,9 @@ export function serveProject(req, res) {
       }
 
       const { files } = project;
-      const htmlFile = files.find((file) => file.name.match(/\.html$/i))
-        ?.content;
+      const htmlFile = files.find((file) =>
+        file.name.match(/\.html$/i)
+      )?.content;
 
       if (!htmlFile) {
         get404Sketch((html) => res.send(html));

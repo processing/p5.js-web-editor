@@ -30,10 +30,10 @@ const Console = () => {
     cm.current.scrollTop = cm.current.scrollHeight;
   });
 
-  const consoleFeedStyle = useMemo(() => getConsoleFeedStyle(theme, fontSize), [
-    theme,
-    fontSize
-  ]);
+  const consoleFeedStyle = useMemo(
+    () => getConsoleFeedStyle(theme, fontSize),
+    [theme, fontSize]
+  );
 
   const handleMessageEvent = useHandleMessageEvent();
 

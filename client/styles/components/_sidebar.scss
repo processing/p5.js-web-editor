@@ -1,4 +1,4 @@
-@use "sass:math";
+@use 'sass:math';
 
 .sidebar {
   display: flex;
@@ -45,7 +45,7 @@
 
 .sidebar__file-list {
   @include themify() {
-    border-color: getThemifyVariable('ide-border-color')
+    border-color: getThemifyVariable('ide-border-color');
   }
   border-top: 1px solid;
   .sidebar--contracted & {
@@ -80,7 +80,6 @@
   position: relative;
   @include themify() {
     color: map-get($theme-map, 'primary-text-color');
-    // TODO get this to not affect parent, need to move it into JS
     &:hover:not(.sidebar__file-item--selected) > .file-item__content {
       background-color: map-get($theme-map, 'file-hover-color');
     }
@@ -96,9 +95,6 @@
   }
 }
 
-// to indent each row in the file tree
-// not sure how to do this in a better way
-// it won't work if the file tree is too nested
 .file-item__spacer {
   flex-shrink: 0;
   .sidebar__file-item & {
@@ -206,9 +202,28 @@
   display: none;
   width: 100%;
   max-width: #{math.div(180, $base-font-size)}rem;
+  overflow: visible !important;
   .sidebar__file-item--open > .file-item__content & {
     display: flex;
   }
+  
+  ul {
+    overflow: visible !important;
+  }
+  
+  li {
+    overflow: visible !important;
+    position: relative;
+  }
+  
+  button {
+    overflow: visible !important;
+  }
+}
+
+.sidebar__file-item-option {
+  position: relative;
+  overflow: visible !important;
 }
 
 .sidebar__file-item-input {
@@ -236,14 +251,16 @@
   justify-content: center;
   align-items: center;
   @include themify() {
-    background-color: getThemifyVariable("toolbar-button-background-color");
-    & polygon, & path {
-      fill: getThemifyVariable("toolbar-button-color");
+    background-color: getThemifyVariable('toolbar-button-background-color');
+    & polygon,
+    & path {
+      fill: getThemifyVariable('toolbar-button-color');
     }
     &:hover {
-      background-color: getThemifyVariable("button-background-hover-color");
-      & polygon, & path {
-        fill: getThemifyVariable("button-hover-color");
+      background-color: getThemifyVariable('button-background-hover-color');
+      & polygon,
+      & path {
+        fill: getThemifyVariable('button-hover-color');
       }
     }
   }
@@ -328,7 +345,114 @@
   display: none;
   width: 100%;
   max-width: #{math.div(180, $base-font-size)}rem;
+  overflow: visible !important;
   .sidebar--project-options & {
     display: flex;
   }
+
+  ul {
+    overflow: visible !important;
+  }
+
+  li {
+    position: relative;
+    overflow: visible !important;
+  }
+  
+  button {
+    overflow: visible !important;
+  }
+}
+
+.sidebar__lock-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: #{math.div(14, $base-font-size)}rem;
+  height: #{math.div(14, $base-font-size)}rem;
+  flex-shrink: 0;
+
+  svg {
+    width: 100%;
+    height: 100%;
+
+    @include themify() {
+      color: getThemifyVariable('secondary-text-color');
+      fill: currentColor;
+    }
+
+    path {
+      fill: currentColor;
+    }
+  }
+}
+
+.tooltipped-login {
+  position: relative;
+  cursor: not-allowed !important;
+  display: flex !important;
+  align-items: center;
+  gap: #{math.div(6, $base-font-size)}rem;
+  
+  @include themify() {
+    color: getThemifyVariable('secondary-text-color') !important;
+  }
+  
+  > *:not(.tooltipped-login-tooltip) {
+    opacity: 0.5;
+  }
+}
+
+.tooltipped-login-tooltip {
+  position: absolute;
+  display: none;
+  z-index: 1000000;
+  padding: #{math.div(12, $base-font-size)}rem #{math.div(16, $base-font-size)}rem;
+  font-size: #{math.div(14, $base-font-size)}rem;
+  font-family: Montserrat, sans-serif;
+  font-weight: 600;
+  line-height: 1.5;
+  text-align: center;
+  white-space: nowrap;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.9), 0 0 0 3px rgba(255, 255, 255, 0.1);
+  pointer-events: none;
+  
+  left: calc(100% + #{math.div(15, $base-font-size)}rem);
+  top: 50%;
+  transform: translateY(-50%);
+  
+  opacity: 1 !important;
+  visibility: visible !important;
+  
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%) !important;
+  color: #ffffff !important;
+  border: 3px solid #ff006e !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    transform: translateY(-50%);
+    border: 10px solid transparent;
+    border-right-color: #ff006e !important;
+    filter: drop-shadow(-2px 0 4px rgba(0, 0, 0, 0.5));
+  }
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: calc(100% + 3px);
+    transform: translateY(-50%);
+    border: 7px solid transparent;
+    border-right-color: #1a1a1a !important;
+  }
+}
+
+.tooltipped-login:hover .tooltipped-login-tooltip {
+  display: block !important;
+  visibility: visible !important;
 }

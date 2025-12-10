@@ -57,8 +57,8 @@ describe('user.controller > auth management > password management', () => {
       User.findByEmail = jest.fn().mockResolvedValue({});
       request.body = { email: 'email@gmail.com' };
       await resetPasswordInitiate(
-        (request as unknown) as Request,
-        (response as unknown) as Response,
+        request as unknown as Request,
+        response as unknown as Response,
         next
       );
 
@@ -80,8 +80,8 @@ describe('user.controller > auth management > password management', () => {
         request.headers.host = 'localhost:3000';
 
         await resetPasswordInitiate(
-          (request as unknown) as Request,
-          (response as unknown) as Response,
+          request as unknown as Request,
+          response as unknown as Response,
           next
         );
       });
@@ -120,8 +120,8 @@ describe('user.controller > auth management > password management', () => {
       });
       it('does not send the reset password email', async () => {
         await resetPasswordInitiate(
-          (request as unknown) as Request,
-          (response as unknown) as Response,
+          request as unknown as Request,
+          response as unknown as Response,
           next
         );
 
@@ -129,8 +129,8 @@ describe('user.controller > auth management > password management', () => {
       });
       it('returns a success message that does not indicate if the user exists, for security purposes', async () => {
         await resetPasswordInitiate(
-          (request as unknown) as Request,
-          (response as unknown) as Response,
+          request as unknown as Request,
+          response as unknown as Response,
           next
         );
 
@@ -157,8 +157,8 @@ describe('user.controller > auth management > password management', () => {
       request.headers.host = 'localhost:3000';
 
       await resetPasswordInitiate(
-        (request as unknown) as Request,
-        (response as unknown) as Response,
+        request as unknown as Request,
+        response as unknown as Response,
         next
       );
 
@@ -180,8 +180,8 @@ describe('user.controller > auth management > password management', () => {
       request.params = { token: 'some-token' };
 
       await validateResetPasswordToken(
-        (request as unknown) as Request<ResetOrUpdatePasswordRequestParams>,
-        (response as unknown) as Response,
+        request as unknown as Request<ResetOrUpdatePasswordRequestParams>,
+        response as unknown as Response,
         next
       );
 
@@ -200,8 +200,8 @@ describe('user.controller > auth management > password management', () => {
         request.params = { token: 'invalid-token' };
 
         await validateResetPasswordToken(
-          (request as unknown) as Request<ResetOrUpdatePasswordRequestParams>,
-          (response as unknown) as Response,
+          request as unknown as Request<ResetOrUpdatePasswordRequestParams>,
+          response as unknown as Response,
           next
         );
       });
@@ -231,8 +231,8 @@ describe('user.controller > auth management > password management', () => {
         request.params = { token: 'valid-token' };
 
         await validateResetPasswordToken(
-          (request as unknown) as Request<ResetOrUpdatePasswordRequestParams>,
-          (response as unknown) as Response,
+          request as unknown as Request<ResetOrUpdatePasswordRequestParams>,
+          response as unknown as Response,
           next
         );
       });
@@ -254,8 +254,8 @@ describe('user.controller > auth management > password management', () => {
       request.params = { token: 'some-token' };
 
       await updatePassword(
-        (request as unknown) as Request<ResetOrUpdatePasswordRequestParams>,
-        (response as unknown) as Response,
+        request as unknown as Request<ResetOrUpdatePasswordRequestParams>,
+        response as unknown as Response,
         next
       );
 
@@ -274,8 +274,8 @@ describe('user.controller > auth management > password management', () => {
         request.params = { token: 'invalid-token' };
 
         await updatePassword(
-          (request as unknown) as Request<ResetOrUpdatePasswordRequestParams>,
-          (response as unknown) as Response,
+          request as unknown as Request<ResetOrUpdatePasswordRequestParams>,
+          response as unknown as Response,
           next
         );
       });
@@ -317,8 +317,8 @@ describe('user.controller > auth management > password management', () => {
         });
 
         await updatePassword(
-          (request as unknown) as Request<ResetOrUpdatePasswordRequestParams>,
-          (response as unknown) as Response,
+          request as unknown as Request<ResetOrUpdatePasswordRequestParams>,
+          response as unknown as Response,
           next
         );
       });

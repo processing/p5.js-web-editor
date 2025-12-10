@@ -95,8 +95,9 @@ export const get404Sketch = async () => {
     const sketch = projects[randomIndex];
 
     // Get sketch files
-    let htmlFile = sketch.files.find((file) => file.name.match(/.*\.html$/i))
-      .content;
+    let htmlFile = sketch.files.find((file) =>
+      file.name.match(/.*\.html$/i)
+    ).content;
     const jsFiles = sketch.files.filter((file) => file.name.match(/.*\.js$/i));
     const cssFiles = sketch.files.filter((file) =>
       file.name.match(/.*\.css$/i)

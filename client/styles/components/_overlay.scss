@@ -1,4 +1,4 @@
-@use "sass:math";
+@use 'sass:math';
 
 .overlay {
   position: fixed;
@@ -37,7 +37,7 @@
   }
 }
 
-.overlay__body:has(.collection-create){
+.overlay__body:has(.collection-create) {
   max-height: none;
 }
 

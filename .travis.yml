@@ -1,11 +1,11 @@
 sudo: required
 language: node_js
 node_js:
- - "18.20.8"
+  - '18.20.8'
 
 cache:
   directories:
-    - "$HOME/google-cloud-sdk/"
+    - '$HOME/google-cloud-sdk/'
 
 services:
   - docker
@@ -19,10 +19,10 @@ install: true
 jobs:
   include:
     - stage: test
-      name: "Linting"
+      name: 'Linting'
       script: docker-compose exec -T app npm run lint
     - # stage name not required, will continue to use `test`
-      name: "Tests"
+      name: 'Tests'
       script: docker-compose exec -T app npm run test
 
 before_deploy:

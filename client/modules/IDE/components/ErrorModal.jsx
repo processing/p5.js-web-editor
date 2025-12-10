@@ -53,7 +53,8 @@ const ErrorModal = ({ type, service, closeModal }) => {
 
   return (
     <div className="error-modal__content">
-      {(() => { // eslint-disable-line
+      {(() => {
+        // eslint-disable-line
         if (type === 'forceAuthentication') {
           return forceAuthentication();
         } else if (type === 'staleSession') {
@@ -63,6 +64,7 @@ const ErrorModal = ({ type, service, closeModal }) => {
         } else if (type === 'oauthError') {
           return oauthError();
         }
+        return null;
       })()}
     </div>
   );

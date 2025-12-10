@@ -232,9 +232,10 @@ p5.prototype.registerMethod('afterSetup', p5.prototype.ensureAccessibleCanvas);`
   }
 
   const previewScripts = sketchDoc.createElement('script');
-  previewScripts.src = `${
-    window.location.origin
-  }${getConfig('PREVIEW_SCRIPTS_URL', { nullishString: true })}`;
+  previewScripts.src = `${window.location.origin}${getConfig(
+    'PREVIEW_SCRIPTS_URL',
+    { nullishString: true }
+  )}`;
   previewScripts.setAttribute('crossorigin', '');
   sketchDoc.head.appendChild(previewScripts);
 

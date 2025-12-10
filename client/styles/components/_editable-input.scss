@@ -1,4 +1,4 @@
-@use "sass:math";
+@use 'sass:math';
 
 .editable-input {
   height: 70%;
@@ -16,7 +16,7 @@ button.editable-input__label {
       fill: getThemifyVariable('inactive-text-color');
     }
     &:hover {
-    color: getThemifyVariable('logo-color');
+      color: getThemifyVariable('logo-color');
       & path {
         fill: getThemifyVariable('logo-color');
       }

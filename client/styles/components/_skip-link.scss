@@ -1,4 +1,4 @@
-@use "sass:math";
+@use 'sass:math';
 
 .skip_link {
   left: 50%;
@@ -12,7 +12,8 @@
   vertical-align: middle;
   background-color: transparent;
   font-size: #{math.div(12, $base-font-size)}rem;
-  line-height: #{math.div(50, $base-font-size)}rem;line-height: 11px;
+  line-height: #{math.div(50, $base-font-size)}rem;
+  line-height: 11px;
   padding: #{math.div(10, $base-font-size)}rem #{math.div(10, $base-font-size)}rem;
   background: #fff;
   display: inline-block;

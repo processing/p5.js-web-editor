@@ -1,6 +1,6 @@
 name: 🐛 Found a Bug
 description: Report p5.js web editor bugs (broken or incorrect behaviour).
-labels: [ Bug, Awaiting Maintainer Approval ]
+labels: [Bug, Awaiting Maintainer Approval]
 body:
   - type: markdown
     attributes:
@@ -57,20 +57,18 @@ body:
       description: |
         - Add steps to reproduce bugs or add information on the place where the feature should be implemented.
         - Add links to a sample deployment or code.
-      value: "### Steps: 
-      
-              1.
-              2.
-              3.
-          
-              ### Snippet:
-              
-              ```js
-              
-              
-              // Paste your code here :)
-              
-              
-              ```"
+      value: '### Steps:
+
+        1. 2. 3.
+
+        ### Snippet:
+
+        ```js
+
+
+        // Paste your code here :)
+
+
+        ```'
     validations:
       required: true

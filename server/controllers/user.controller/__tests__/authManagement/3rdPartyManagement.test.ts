@@ -33,8 +33,8 @@ describe('user.controller > auth management > 3rd party auth', () => {
     describe('and when there is no user in the request', () => {
       beforeEach(async () => {
         await unlinkGithub(
-          (request as unknown) as Request,
-          (response as unknown) as Response,
+          request as unknown as Request,
+          response as unknown as Response,
           next
         );
       });
@@ -58,8 +58,8 @@ describe('user.controller > auth management > 3rd party auth', () => {
       beforeEach(async () => {
         request.user = user;
         await unlinkGithub(
-          (request as unknown) as Request,
-          (response as unknown) as Response,
+          request as unknown as Request,
+          response as unknown as Response,
           next
         );
       });
@@ -79,8 +79,8 @@ describe('user.controller > auth management > 3rd party auth', () => {
     describe('and when there is no user in the request', () => {
       beforeEach(async () => {
         await unlinkGoogle(
-          (request as unknown) as Request,
-          (response as unknown) as Response,
+          request as unknown as Request,
+          response as unknown as Response,
           next
         );
       });
@@ -104,8 +104,8 @@ describe('user.controller > auth management > 3rd party auth', () => {
       beforeEach(async () => {
         request.user = user;
         await unlinkGoogle(
-          (request as unknown) as Request,
-          (response as unknown) as Response,
+          request as unknown as Request,
+          response as unknown as Response,
           next
         );
       });

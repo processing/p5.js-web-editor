@@ -1,4 +1,4 @@
-@use "sass:math";
+@use 'sass:math';
 
 .collection-container {
   padding: #{math.div(24, $base-font-size)}rem #{math.div(66, $base-font-size)}rem;
@@ -6,9 +6,9 @@
   flex: 1;
   overflow: hidden;
   display: flex;
-  flex-direction:column;
+  flex-direction: column;
 
-  @media (max-width:770px) {
+  @media (max-width: 770px) {
     padding: 0;
   }
 }
@@ -28,7 +28,7 @@
 
 .collection-metadata__columns {
   display: flex;
-  @media (max-width:770px) {
+  @media (max-width: 770px) {
     flex-direction: column;
   }
 }
@@ -83,7 +83,9 @@
   text-align: left;
 }
 
-.collection-metadata__description .editable-input--has-value:not(:hover) .editable-input__label  {
+.collection-metadata__description
+  .editable-input--has-value:not(:hover)
+  .editable-input__label {
   @include themify() {
     color: getThemifyVariable('primary-text-color');
   }
@@ -132,9 +134,8 @@
   min-height: 100%;
 }
 
-
 // maybe don't need this?
-[data-has-items=false] .collection-table-wrapper {
+[data-has-items='false'] .collection-table-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -152,8 +153,8 @@
 
 .collection-row__remove-button {
   display: inline-block;
-  width:#{math.div(35, $base-font-size)}rem;
-  height:#{math.div(35, $base-font-size)}rem;
+  width: #{math.div(35, $base-font-size)}rem;
+  height: #{math.div(35, $base-font-size)}rem;
   @include icon();
   @include themify() {
     // icon graphic
@@ -167,8 +168,8 @@
     }
 
     & svg {
-      width:#{math.div(35, $base-font-size)}rem;
-      height:#{math.div(35, $base-font-size)}rem;
+      width: #{math.div(35, $base-font-size)}rem;
+      height: #{math.div(35, $base-font-size)}rem;
     }
 
     &:hover,

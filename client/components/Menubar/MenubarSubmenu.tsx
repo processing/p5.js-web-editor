@@ -40,10 +40,10 @@ export function useMenuProps(id: string) {
 
   const { createMenuHandlers } = useContext(MenubarContext);
 
-  const handlers = useMemo(() => createMenuHandlers(id), [
-    createMenuHandlers,
-    id
-  ]);
+  const handlers = useMemo(
+    () => createMenuHandlers(id),
+    [createMenuHandlers, id]
+  );
 
   return { isOpen, handlers };
 }
@@ -98,12 +98,8 @@ const MenubarTrigger = React.forwardRef<HTMLButtonElement, MenubarTriggerProps>(
     },
     ref
   ) => {
-    const {
-      setActiveIndex,
-      menuItems,
-      registerTopLevelItem,
-      hasFocus
-    } = useContext(MenubarContext);
+    const { setActiveIndex, menuItems, registerTopLevelItem, hasFocus } =
+      useContext(MenubarContext);
     const { id, title, first, last } = useContext(SubmenuContext);
     const { isOpen, handlers } = useMenuProps(id);
 

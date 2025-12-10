@@ -1,4 +1,4 @@
-@use "sass:math";
+@use 'sass:math';
 
 .asset-table-container {
   overflow-y: auto;
@@ -8,7 +8,7 @@
 
 .asset-table {
   width: 100%;
-  
+
   max-height: 100%;
   border-spacing: 0;
   position: relative;
@@ -27,7 +27,7 @@
   }
 }
 
-.asset-table thead th:nth-child(1){
+.asset-table thead th:nth-child(1) {
   padding-left: #{math.div(12, $base-font-size)}rem;
 }
 
@@ -56,7 +56,7 @@
 .asset-table thead {
   font-size: #{math.div(12, $base-font-size)}rem;
   @include themify() {
-    color: getThemifyVariable('inactive-text-color')
+    color: getThemifyVariable('inactive-text-color');
   }
 }
 
@@ -73,7 +73,7 @@
 .asset-table__total {
   padding: 0 #{math.div(20, $base-font-size)}rem;
   position: sticky;
-  top: 0; 
+  top: 0;
   @include themify() {
     background-color: getThemifyVariable('background-color');
   }

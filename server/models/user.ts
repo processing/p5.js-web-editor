@@ -318,21 +318,22 @@ userSchema.statics.findByEmailOrUsername = async function findByEmailOrUsername(
  * @param {string} username
  * @return {UserDocument} - Returns User Object fulfilled by User document
  */
-userSchema.statics.findByEmailAndUsername = async function findByEmailAndUsername(
-  email: string,
-  username: string
-): Promise<UserDocument | null> {
-  const user = this;
-  const query = {
-    $or: [{ email }, { username }]
-  };
-  const foundUser = await user
-    .findOne(query)
-    .collation({ locale: 'en', strength: 2 })
-    .exec();
+userSchema.statics.findByEmailAndUsername =
+  async function findByEmailAndUsername(
+    email: string,
+    username: string
+  ): Promise<UserDocument | null> {
+    const user = this;
+    const query = {
+      $or: [{ email }, { username }]
+    };
+    const foundUser = await user
+      .findOne(query)
+      .collation({ locale: 'en', strength: 2 })
+      .exec();
 
-  return foundUser;
-};
+    return foundUser;
+  };
 
 userSchema.index({ username: 1 }, { collation: { locale: 'en', strength: 2 } });
 userSchema.index({ email: 1 }, { collation: { locale: 'en', strength: 2 } });

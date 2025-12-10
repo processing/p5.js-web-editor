@@ -10,16 +10,16 @@
 //light gray: #f4f4f4
 //dark gray: #b5b5b5
 
-$p5-dark-lightbrown: #A67F59;
-$p5-light-green: #42F48F;
-$p5-dark-black: #1C1C1C;
-$p5-dark-pink: #DE4A9B;
-$p5-dark-gray: #9B9B9B;
-$p5-dark-lightblue: #0F9DD7;
+$p5-dark-lightbrown: #a67f59;
+$p5-light-green: #42f48f;
+$p5-dark-black: #1c1c1c;
+$p5-dark-pink: #de4a9b;
+$p5-dark-gray: #9b9b9b;
+$p5-dark-lightblue: #0f9dd7;
 $p5-dark-darkblue: #318094;
-$p5-dark-white: #FDFDFD;
-$p5-dark-orange: #EE9900;
-$p5-dark-lightgray: #E0D7D1;
+$p5-dark-white: #fdfdfd;
+$p5-dark-orange: #ee9900;
+$p5-dark-lightgray: #e0d7d1;
 $p5-dark-darkgray: #666666;
 $p5-dark-green: #58a10b;
 $p5-dark-goldbrown: #b58318;
@@ -85,10 +85,22 @@ $p5-dark-error: #df3a3d;
 }
 
 .cm-s-p5-dark {
-  .CodeMirror-selected { background: $p5-dark-selected; }
-  .CodeMirror-focused .CodeMirror-selected { background: $p5-dark-selected; }
-  .CodeMirror-line::selection, .CodeMirror-line > span::selection, .CodeMirror-line > span > span::selection { background: $p5-dark-selected; }
-  .CodeMirror-line::-moz-selection, .CodeMirror-line > span::-moz-selection, .CodeMirror-line > span > span::-moz-selection { background: $p5-dark-selected; } 
+  .CodeMirror-selected {
+    background: $p5-dark-selected;
+  }
+  .CodeMirror-focused .CodeMirror-selected {
+    background: $p5-dark-selected;
+  }
+  .CodeMirror-line::selection,
+  .CodeMirror-line > span::selection,
+  .CodeMirror-line > span > span::selection {
+    background: $p5-dark-selected;
+  }
+  .CodeMirror-line::-moz-selection,
+  .CodeMirror-line > span::-moz-selection,
+  .CodeMirror-line > span > span::-moz-selection {
+    background: $p5-dark-selected;
+  }
 }
 
 .cm-s-p5-dark .CodeMirror-activeline-background {

@@ -29,10 +29,7 @@ const editorAccessibilitySlice = createSlice({
   }
 });
 
-export const {
-  updateLintMessage,
-  clearLintMessage,
-  toggleForceDesktop
-} = editorAccessibilitySlice.actions;
+export const { updateLintMessage, clearLintMessage, toggleForceDesktop } =
+  editorAccessibilitySlice.actions;
 
 export default editorAccessibilitySlice.reducer;

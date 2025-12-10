@@ -3,14 +3,15 @@
 This document contains information about how to deploy to production, all of the different platforms and tools, and how to configure them.
 
 WIP:
-* Travis
-* Docker Hub
-* Kubernetes
-* S3
-* Mailgun
-* Cloudflare
-* DNS/Dreamhost
-* mLab
+
+- Travis
+- Docker Hub
+- Kubernetes
+- S3
+- Mailgun
+- Cloudflare
+- DNS/Dreamhost
+- mLab
 
 ## Deployment Process
 
@@ -46,7 +47,7 @@ If you are interested in hosting and deploying your own p5.js Web Editor instanc
 
 1. Sign up for a free account at: [Heroku](https://www.heroku.com/)
 2. Click here: [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/processing/p5.js-web-editor/tree/develop)
-3. Enter a unique *App name*, this will become part of the URL (i.e. https://app-name.herokuapp.com/)
+3. Enter a unique _App name_, this will become part of the URL (i.e. https://app-name.herokuapp.com/)
 4. Update any configuration variables, or accept the defaults for a quick evaluation (they can be changed later to enable full functionality)
 5. Click on the "Deploy app" button
 6. When complete, click on the "View app" button

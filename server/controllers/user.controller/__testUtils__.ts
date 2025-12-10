@@ -29,7 +29,7 @@ export const mockBaseUserSanitised: PublicUser = {
   email: 'test@example.com',
   username: 'tester',
   preferences: mockUserPreferences,
-  apiKeys: ([] as unknown) as Types.DocumentArray<ApiKeyDocument>,
+  apiKeys: [] as unknown as Types.DocumentArray<ApiKeyDocument>,
   verified: 'verified',
   id: 'abc123',
   totalSize: 42,

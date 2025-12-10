@@ -1,7 +1,7 @@
 name: Deploy to production
 on:
   workflow_run:
-    workflows: ["Test"]
+    workflows: ['Test']
     branches:
       - release
     types:
@@ -47,11 +47,11 @@ jobs:
         with:
           service_account_key: ${{ secrets.GKE_SA_KEY }}
           project_id: ${{ secrets.GKE_PROJECT }}
- 
+
       # Configure docker to use the gcloud command-line tool as a credential helper
       - run: |-
           gcloud --quiet auth configure-docker
-        
+
       # Get the GKE credentials so we can deploy to the cluster
       - uses: google-github-actions/get-gke-credentials@v0.2.1
         with:
@@ -64,4 +64,3 @@ jobs:
         run: |-
           kubectl set image deployment/$DEPLOYMENT_NAME web-editor-app=index.docker.io/$IMAGE:$GITHUB_SHA --namespace=production
           kubectl get services -o wide
-

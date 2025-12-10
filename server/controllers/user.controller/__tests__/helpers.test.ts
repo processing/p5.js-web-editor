@@ -19,14 +19,8 @@ const mockFullUser = createMockUser({
   banned: true
 });
 
-const {
-  name,
-  tokens,
-  password,
-  resetPasswordToken,
-  banned,
-  ...sanitised
-} = mockFullUser;
+const { name, tokens, password, resetPasswordToken, banned, ...sanitised } =
+  mockFullUser;
 
 describe('user.controller > helpers', () => {
   describe('userResponse', () => {
@@ -66,8 +60,8 @@ describe('user.controller > helpers', () => {
       };
       const response = new MockResponse();
       await saveUser(
-        (response as unknown) as Response,
-        (userWithSuccessfulSave as unknown) as UserDocument
+        response as unknown as Response,
+        userWithSuccessfulSave as unknown as UserDocument
       );
       expect(response.json).toHaveBeenCalledWith(sanitised);
     });
@@ -79,8 +73,8 @@ describe('user.controller > helpers', () => {
       };
       const response = new MockResponse();
       await saveUser(
-        (response as unknown) as Response,
-        (userWithUnsuccessfulSave as unknown) as UserDocument
+        response as unknown as Response,
+        userWithUnsuccessfulSave as unknown as UserDocument
       );
       expect(response.status).toHaveBeenCalledWith(500);
       expect(response.json).toHaveBeenCalledWith({

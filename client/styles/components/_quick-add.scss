@@ -1,4 +1,4 @@
-@use "sass:math";
+@use 'sass:math';
 
 .quick-add {
   width: auto;
@@ -15,7 +15,8 @@
   height: #{math.div(64, $base-font-size)}rem;
   padding-right: #{math.div(24, $base-font-size)}rem;
 
-  button, a {
+  button,
+  a {
     @include themify() {
       color: getThemifyVariable('primary-text-color');
     }
@@ -39,9 +40,9 @@
 
 .quick-add__icon {
   display: inline-block;
-  margin-right:#{math.div(15, $base-font-size)}rem;
-  width:#{math.div(35, $base-font-size)}rem;
-  height:#{math.div(35, $base-font-size)}rem;
+  margin-right: #{math.div(15, $base-font-size)}rem;
+  width: #{math.div(35, $base-font-size)}rem;
+  height: #{math.div(35, $base-font-size)}rem;
   @include icon();
   @include themify() {
     // icon graphic
@@ -55,8 +56,8 @@
     }
 
     & svg {
-      width:#{math.div(35, $base-font-size)}rem;
-      height:#{math.div(35, $base-font-size)}rem;
+      width: #{math.div(35, $base-font-size)}rem;
+      height: #{math.div(35, $base-font-size)}rem;
     }
   }
 }
@@ -87,7 +88,7 @@
 .quick-add__item-toggle,
 .quick-add__item-toggle:focus {
   cursor: pointer;
-  
+
   @include themify() {
     & .quick-add__icon path {
       fill: getThemifyVariable('table-button-hover-color');
@@ -118,4 +119,3 @@
     display: none;
   }
 }
-

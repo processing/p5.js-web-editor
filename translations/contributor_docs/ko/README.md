@@ -24,15 +24,13 @@ p5.js 웹 에디터에서 버그를 발견하셨다면, [“이슈” 탭](https
 
 버그와 기능 요청은 각각에 알맞은 저장소에 보고해주시기 바랍니다:
 
-* p5.js 라이브러리와 p5.dom: [https://github.com/processing/p5.js/issues](https://github.com/processing/p5.js/issues)
-* p5.accessibility: [https://github.com/processing/p5.accessibility/issues](https://github.com/processing/p5.accessibility/issues)
-* p5.sound: [https://github.com/processing/p5.js-sound/issues](https://github.com/processing/p5.js-sound/issues)
-* p5.js 웹사이트: [https://github.com/processing/p5.js-website/issues](https://github.com/processing/p5.js-website/issues)
+- p5.js 라이브러리와 p5.dom: [https://github.com/processing/p5.js/issues](https://github.com/processing/p5.js/issues)
+- p5.accessibility: [https://github.com/processing/p5.accessibility/issues](https://github.com/processing/p5.accessibility/issues)
+- p5.sound: [https://github.com/processing/p5.js-sound/issues](https://github.com/processing/p5.js-sound/issues)
+- p5.js 웹사이트: [https://github.com/processing/p5.js-website/issues](https://github.com/processing/p5.js-website/issues)
 
 ## 감사의 말
 
 본 프로젝트는 [프로세싱 재단](https://processingfoundation.org/), [뉴욕대 ITP](https://tisch.nyu.edu/itp), [뉴욕시 교육부의 CS4All](http://cs4all.nyc/)에서 후원해주셨습니다.
 
-호스팅과 기술적 지원은 다음 단체들에서 해주셨습니다:<br />
-<a href="https://www.browserstack.com/" target="_blank"><img width="100" src="https://user-images.githubusercontent.com/6063380/46976166-ab280a80-d096-11e8-983b-18dd38c8cc9b.png" /></a> <a href="https://mlab.com" target="_blank"><img width="100" src="https://user-images.githubusercontent.com/6063380/46976572-dbbc7400-d097-11e8-89fe-c7bb08ed0775.png" /></a>
-
+호스팅과 기술적 지원은 다음 단체들에서 해주셨습니다:<br /> <a href="https://www.browserstack.com/" target="_blank"><img width="100" src="https://user-images.githubusercontent.com/6063380/46976166-ab280a80-d096-11e8-983b-18dd38c8cc9b.png" /></a> <a href="https://mlab.com" target="_blank"><img width="100" src="https://user-images.githubusercontent.com/6063380/46976572-dbbc7400-d097-11e8-89fe-c7bb08ed0775.png" /></a>

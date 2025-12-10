@@ -1,15 +1,15 @@
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import React, { useState, useRef } from 'react';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 
 import * as IDEActions from '../actions/ide';
 import * as FileActions from '../actions/files';
 import DownArrowIcon from '../../../images/down-filled-triangle.svg';
 import FolderRightIcon from '../../../images/triangle-arrow-right.svg';
 import FolderDownIcon from '../../../images/triangle-arrow-down.svg';
+import LockIcon from '../../../images/lock.svg';
 import FileTypeIcon from './FileTypeIcon';
 
 function parseFileName(name) {
@@ -20,33 +20,18 @@ function parseFileName(name) {
     const firstLetter = baseName[0];
     const lastLetter = baseName[baseName.length - 1];
     const middleText = baseName.slice(1, -1);
-    return {
-      baseName,
-      firstLetter,
-      lastLetter,
-      middleText,
-      extension
-    };
+    return { baseName, firstLetter, lastLetter, middleText, extension };
   }
   const firstLetter = name[0];
   const lastLetter = name[name.length - 1];
   const middleText = name.slice(1, -1);
-  return {
-    baseName: name,
-    firstLetter,
-    lastLetter,
-    middleText
-  };
+  return { baseName: name, firstLetter, lastLetter, middleText };
 }
 
 function FileName({ name }) {
-  const {
-    baseName,
-    firstLetter,
-    lastLetter,
-    middleText,
-    extension
-  } = parseFileName(name);
+  const { baseName, firstLetter, lastLetter, middleText, extension } =
+    parseFileName(name);
+
   return (
     <span className="sidebar__file-item-name-text">
       <span>{firstLetter}</span>
@@ -59,9 +44,7 @@ function FileName({ name }) {
   );
 }
 
-FileName.propTypes = {
-  name: PropTypes.string.isRequired
-};
+FileName.propTypes = { name: PropTypes.string.isRequired };
 
 const FileNode = ({
   id,
@@ -90,6 +73,9 @@ const FileNode = ({
   const [updatedName, setUpdatedName] = useState(name);
 
   const files = useSelector((state) => state.files);
+  const { t } = useTranslation();
+  const fileNameInput = useRef(null);
+  const fileOptionsRef = useRef(null);
 
   const checkDuplicate = (newName) => {
     const parentFolder = files.find((f) => f.id === parentId);
@@ -100,54 +86,38 @@ const FileNode = ({
       .filter(Boolean)
       .filter((file) => file.id !== id);
 
-    const isDuplicate = siblingFiles.some(
+    return siblingFiles.some(
       (f) => f.name.trim().toLowerCase() === newName.trim().toLowerCase()
     );
-
-    return isDuplicate;
   };
-
-  const { t } = useTranslation();
-  const fileNameInput = useRef(null);
-  const fileOptionsRef = useRef(null);
 
   const handleFileClick = (event) => {
     event.stopPropagation();
-    if (name !== 'root' && !isDeleting) {
-      setSelectedFile(id);
-    }
-    if (onClickFile) {
-      onClickFile();
-    }
+    if (name !== 'root' && !isDeleting) setSelectedFile(id);
+    if (onClickFile) onClickFile();
   };
 
-  const handleFileNameChange = (event) => {
-    setUpdatedName(event.target.value);
-  };
+  const handleFileNameChange = (event) => setUpdatedName(event.target.value);
 
-  const showEditFileName = () => {
-    setIsEditingName(true);
-  };
-
-  const hideFileOptions = () => {
-    setIsOptionsOpen(false);
-  };
+  const showEditFileName = () => setIsEditingName(true);
+  const hideEditFileName = () => setIsEditingName(false);
+  const hideFileOptions = () => setIsOptionsOpen(false);
 
   const handleClickRename = () => {
     setUpdatedName(name);
     showEditFileName();
     setTimeout(() => fileNameInput.current.focus(), 0);
-    setTimeout(() => hideFileOptions(), 0);
+    setTimeout(hideFileOptions, 0);
   };
 
   const handleClickAddFile = () => {
     newFile(id);
-    setTimeout(() => hideFileOptions(), 0);
+    setTimeout(hideFileOptions, 0);
   };
 
   const handleClickAddFolder = () => {
     newFolder(id);
-    setTimeout(() => hideFileOptions(), 0);
+    setTimeout(hideFileOptions, 0);
   };
 
   const handleClickUploadFile = () => {
@@ -157,7 +127,6 @@ const FileNode = ({
 
   const handleClickDelete = () => {
     const prompt = t('Common.DeleteConfirmation', { name });
-
     if (window.confirm(prompt)) {
       setIsDeleting(true);
       resetSelectedFile(id);
@@ -165,14 +134,8 @@ const FileNode = ({
     }
   };
 
-  const hideEditFileName = () => {
-    setIsEditingName(false);
-  };
-
   const handleKeyPress = (event) => {
-    if (event.key === 'Enter') {
-      hideEditFileName();
-    }
+    if (event.key === 'Enter') hideEditFileName();
   };
 
   const saveUpdatedFileName = () => {
@@ -195,6 +158,7 @@ const FileNode = ({
     const hasEmptyFilename = updatedName.trim() === '';
     const hasOnlyExtension =
       newFileExtension && updatedName.trim() === newFileExtension[0];
+
     if (
       hasEmptyFilename ||
       hasNoExtension ||
@@ -206,14 +170,9 @@ const FileNode = ({
       const userResponse = window.confirm(
         'Are you sure you want to change the file extension?'
       );
-      if (userResponse) {
-        saveUpdatedFileName();
-      } else {
-        setUpdatedName(currentName);
-      }
-    } else {
-      saveUpdatedFileName();
-    }
+      if (userResponse) saveUpdatedFileName();
+      else setUpdatedName(currentName);
+    } else saveUpdatedFileName();
   };
 
   const handleFileNameBlur = () => {
@@ -228,9 +187,7 @@ const FileNode = ({
 
   const toggleFileOptions = (event) => {
     event.preventDefault();
-    if (!canEdit) {
-      return;
-    }
+    if (!canEdit) return;
     setIsOptionsOpen(!isOptionsOpen);
   };
 
@@ -246,14 +203,13 @@ const FileNode = ({
   const isFile = fileType === 'file';
   const isFolder = fileType === 'folder';
   const isRoot = name === 'root';
-
   const { extension } = parseFileName(name);
 
   return (
     <div className={itemClass}>
       {!isRoot && (
         <div className="file-item__content" onContextMenu={toggleFileOptions}>
-          <span className="file-item__spacer"></span>
+          <span className="file-item__spacer" />
           {isFile && (
             <span className="sidebar__file-item-icon">
               <FileTypeIcon
@@ -305,7 +261,7 @@ const FileNode = ({
             type="text"
             className="sidebar__file-item-input"
             value={updatedName}
-            maxLength="128"
+            maxLength={128}
             onChange={handleFileNameChange}
             ref={fileNameInput}
             onBlur={handleFileNameBlur}
@@ -315,7 +271,7 @@ const FileNode = ({
             className="sidebar__file-item-show-options"
             aria-label={t('FileNode.ToggleFileOptionsARIA')}
             ref={fileOptionsRef}
-            tabIndex="0"
+            tabIndex={0}
             onClick={toggleFileOptions}
             onBlur={() => setTimeout(hideFileOptions, 200)}
           >
@@ -343,34 +299,52 @@ const FileNode = ({
                       {t('FileNode.AddFile')}
                     </button>
                   </li>
-                  {authenticated && (
-                    <li>
-                      <button
-                        aria-label={t('FileNode.UploadFileARIA')}
-                        onClick={handleClickUploadFile}
-                      >
-                        {t('FileNode.UploadFile')}
-                      </button>
-                    </li>
-                  )}
+                  <li>
+                    <button
+                      disabled={!authenticated}
+                      className={classNames('sidebar__file-item-option', {
+                        'tooltipped-login': !authenticated
+                      })}
+                      aria-label={
+                        authenticated
+                          ? t('FileNode.UploadFileARIA')
+                          : t('FileNode.UploadFileRequiresLogin')
+                      }
+                      onClick={
+                        authenticated ? handleClickUploadFile : undefined
+                      }
+                    >
+                      {!authenticated && (
+                        <span className="sidebar__lock-icon">
+                          <LockIcon focusable="false" aria-hidden="true" />
+                        </span>
+                      )}
+                      {t('FileNode.UploadFile')}
+                      {!authenticated && (
+                        <span className="tooltipped-login-tooltip">
+                          {t('FileNode.UploadFileRequiresLogin')}
+                        </span>
+                      )}
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      onClick={handleClickRename}
+                      className="sidebar__file-item-option"
+                    >
+                      {t('FileNode.Rename')}
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      onClick={handleClickDelete}
+                      className="sidebar__file-item-option"
+                    >
+                      {t('FileNode.Delete')}
+                    </button>
+                  </li>
                 </>
               )}
-              <li>
-                <button
-                  onClick={handleClickRename}
-                  className="sidebar__file-item-option"
-                >
-                  {t('FileNode.Rename')}
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={handleClickDelete}
-                  className="sidebar__file-item-option"
-                >
-                  {t('FileNode.Delete')}
-                </button>
-              </li>
             </ul>
           </div>
         </div>
@@ -423,14 +397,11 @@ FileNode.defaultProps = {
 };
 
 function mapStateToProps(state, ownProps) {
-  // this is a hack, state is updated before ownProps
   const fileNode = state.files.find((file) => file.id === ownProps.id) || {
     name: 'test',
     fileType: 'file'
   };
-  return Object.assign({}, fileNode, {
-    authenticated: state.user.authenticated
-  });
+  return { ...fileNode, authenticated: state.user.authenticated };
 }
 
 const mapDispatchToProps = { ...FileActions, ...IDEActions };

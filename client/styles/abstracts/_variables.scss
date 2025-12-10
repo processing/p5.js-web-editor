@@ -6,27 +6,27 @@ $p5js-pink-opacity: #ed225d80;
 $p5js-active-pink: #f10046;
 $white: #fff;
 $black: #000;
-$yellow: #F5DC23;
-$dodgerblue: #1E90FF;
-$p5-contrast-pink: #FFA9D9;
+$yellow: #f5dc23;
+$dodgerblue: #1e90ff;
+$p5-contrast-pink: #ffa9d9;
 
-$outline-color: #0F9DD7;
+$outline-color: #0f9dd7;
 
 // Grayscale values
-$lightest: #FFF; // primary
-$lighter: #FBFBFB;
+$lightest: #fff; // primary
+$lighter: #fbfbfb;
 
-$light: #F0F0F0; // primary
-$medium-light: #D9D9D9;
-$middle-light: #A6A6A6;
+$light: #f0f0f0; // primary
+$medium-light: #d9d9d9;
+$middle-light: #a6a6a6;
 
 // $middle-gray: #7D7D7D; // primary
 $middle-gray: #747474; // primary
 $middle-dark: #666;
-$medium-dark: #4D4D4D;
+$medium-dark: #4d4d4d;
 
 $dark: #333; // primary
-$darker: #1C1C1C;
+$darker: #1c1c1c;
 $darkest: #000;
 
 $themes: (
@@ -61,7 +61,7 @@ $themes: (
     console-input-background-color: $lightest,
     console-color: $darker,
     console-arrow-color: $middle-gray,
-    console-active-arrow-color: #0071AD,
+    console-active-arrow-color: #0071ad,
     console-header-background-color: $medium-light,
     console-header-color: $darker,
     ide-border-color: $medium-light,
@@ -84,14 +84,14 @@ $themes: (
     error-color: $p5js-pink,
     table-row-stripe-color: $medium-light,
     table-row-stripe-color-alternate: $medium-light,
-    codefold-icon-open: url("../images/triangle-arrow-down.svg?byUrl"),
-    codefold-icon-closed: url("../images/triangle-arrow-right.svg?byUrl"),
+    codefold-icon-open: url('../images/triangle-arrow-down.svg?byUrl'),
+    codefold-icon-closed: url('../images/triangle-arrow-right.svg?byUrl'),
     preferences-warning-color: $p5js-pink,
 
     table-button-color: $lightest,
     table-button-background-color: $middle-gray,
     table-button-active-color: $lightest,
-    table-button-background-active-color: #00A1D3,
+    table-button-background-active-color: #00a1d3,
     table-button-hover-color: $lightest,
     table-button-background-hover-color: $p5js-pink,
 
@@ -107,9 +107,9 @@ $themes: (
     hint-background-color: $white,
     hint-text-color: $dark,
     hint-item-border-bottom-color: $white,
-    hint-fun-text-color: #0B7CA9,
-    hint-var-text-color: #D52889,
-    hint-keyword-text-color: #7A5A3A,
+    hint-fun-text-color: #0b7ca9,
+    hint-var-text-color: #d52889,
+    hint-keyword-text-color: #7a5a3a,
     hint-type-text-color: $medium-dark,
     hint-arrow-color: $lightest,
     hint-arrow-background-color: #ed225ddd,
@@ -119,17 +119,17 @@ $themes: (
     hint-item-hover-background-color: #f4f4f4,
     hint-item-active-text-color: $white,
     hint-item-active-background-color: $middle-gray,
-    hint-fun-active-border-bottom-color: #0B7CA9,
-    hint-var-active-border-bottom-color: #D52889,
+    hint-fun-active-border-bottom-color: #0b7ca9,
+    hint-var-active-border-bottom-color: #d52889,
     hint-item-active-type-text-color: $white,
     hint-item-active-outline: none,
     hint-item-active-outline-offset: 0,
     hint-inline-text-color-light: $middle-light,
     hint-inline-text-color: $middle-gray,
 
-    admonition-border: #22C8ED,
-    admonition-background: #E4F8FF,
-    admonition-text: #075769,
+    admonition-border: #22c8ed,
+    admonition-background: #e4f8ff,
+    admonition-text: #075769
   ),
   dark: (
     logo-color: $p5js-pink,
@@ -162,7 +162,7 @@ $themes: (
     console-input-background-color: $darker,
     console-color: $lightest,
     console-arrow-color: $medium-light,
-    console-active-arrow-color: #097BB3,
+    console-active-arrow-color: #097bb3,
     console-header-background-color: $medium-dark,
     console-header-color: $lightest,
     ide-border-color: $middle-dark,
@@ -185,14 +185,14 @@ $themes: (
     error-color: $p5js-pink,
     table-row-stripe-color: $dark,
     table-row-stripe-color-alternate: $darker,
-    codefold-icon-open: url("../images/triangle-arrow-down-white.svg?byUrl"),
-    codefold-icon-closed: url("../images/triangle-arrow-right-white.svg?byUrl"),
+    codefold-icon-open: url('../images/triangle-arrow-down-white.svg?byUrl'),
+    codefold-icon-closed: url('../images/triangle-arrow-right-white.svg?byUrl'),
     preferences-warning-color: $yellow,
 
     table-button-color: $lightest,
     table-button-background-color: $middle-gray,
     table-button-active-color: $lightest,
-    table-button-background-active-color: #00A1D3,
+    table-button-background-active-color: #00a1d3,
     table-button-hover-color: $lightest,
     table-button-background-hover-color: $p5js-pink,
 
@@ -206,9 +206,9 @@ $themes: (
     hint-background-color: $darker,
     hint-text-color: $light,
     hint-item-border-bottom-color: $darker,
-    hint-fun-text-color: #0F9DD7,
-    hint-var-text-color: #DE4A9B,
-    hint-keyword-text-color: #B58318,
+    hint-fun-text-color: #0f9dd7,
+    hint-var-text-color: #de4a9b,
+    hint-keyword-text-color: #b58318,
     hint-type-text-color: $light,
     hint-arrow-color: $lightest,
     hint-arrow-background-color: #ed225ddd,
@@ -218,17 +218,17 @@ $themes: (
     hint-item-hover-background-color: $medium-dark,
     hint-item-active-text-color: $darker,
     hint-item-active-background-color: #cfcfcf,
-    hint-fun-active-border-bottom-color: #0F9DD7,
-    hint-var-active-border-bottom-color: #DE4A9B,
+    hint-fun-active-border-bottom-color: #0f9dd7,
+    hint-var-active-border-bottom-color: #de4a9b,
     hint-item-active-type-text-color: $darker,
     hint-item-active-outline: none,
     hint-item-active-outline-offset: 0,
     hint-inline-text-color-light: $middle-gray,
     hint-inline-text-color: #cfcfcf,
 
-    admonition-border: #22C8ED,
-    admonition-background: #105A7F,
-    admonition-text: #FFFFFF,
+    admonition-border: #22c8ed,
+    admonition-background: #105a7f,
+    admonition-text: #ffffff
   ),
   contrast: (
     logo-color: $yellow,
@@ -284,14 +284,14 @@ $themes: (
     error-color: $p5-contrast-pink,
     table-row-stripe-color: $dark,
     table-row-stripe-color-alternate: $darker,
-    codefold-icon-open: url("../images/triangle-arrow-down-white.svg?byUrl"),
-    codefold-icon-closed: url("../images/triangle-arrow-right-white.svg?byUrl"),
+    codefold-icon-open: url('../images/triangle-arrow-down-white.svg?byUrl'),
+    codefold-icon-closed: url('../images/triangle-arrow-right-white.svg?byUrl'),
     preferences-warning-color: $yellow,
 
     table-button-color: $dark,
     table-button-background-color: $middle-gray,
     table-button-active-color: $dark,
-    table-button-background-active-color: #00FFFF,
+    table-button-background-active-color: #00ffff,
     table-button-hover-color: $dark,
     table-button-background-hover-color: $yellow,
 
@@ -305,13 +305,13 @@ $themes: (
     hint-background-color: $darkest,
     hint-text-color: $medium-light,
     hint-item-border-bottom-color: $medium-dark,
-    hint-fun-text-color: #00FFFF,
-    hint-var-text-color: #FFA9D9,
-    hint-keyword-text-color: #F5DC23,
+    hint-fun-text-color: #00ffff,
+    hint-var-text-color: #ffa9d9,
+    hint-keyword-text-color: #f5dc23,
     hint-type-text-color: $middle-light,
     hint-arrow-color: $darker,
-    hint-arrow-background-color: #F5DC23DD,
-    hint-arrow-background-active-color: #F5DC23,
+    hint-arrow-background-color: #f5dc23dd,
+    hint-arrow-background-active-color: #f5dc23,
     hint-arrow-focus-outline-color: $lighter,
     hint-no-link-background-color: $medium-dark,
     hint-item-hover-background-color: $dark,
@@ -325,12 +325,11 @@ $themes: (
     hint-inline-text-color-light: $middle-gray,
     hint-inline-text-color: #cfcfcf,
 
-    admonition-border: #22C8ED,
+    admonition-border: #22c8ed,
     admonition-background: #000000,
-    admonition-text: #ffffff,
+    admonition-text: #ffffff
   )
 );
 
 $toast-background-color: $medium-dark;
 $toast-text-color: $lightest;
-

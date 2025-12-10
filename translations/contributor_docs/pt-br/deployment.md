@@ -3,15 +3,16 @@
 Esse documento contém informações sobre como realizar um deploy para produção, todas as plataformas e ferramentas diferentes e como configura-las.
 
 WIP.
-* Configuração/Instalação de Produção
-* Travis
-* Docker Hub
-* Kubernetes
-* S3
-* Mailgun
-* Cloudflare
-* DNS/Dreamhost
-* mLab
+
+- Configuração/Instalação de Produção
+- Travis
+- Docker Hub
+- Kubernetes
+- S3
+- Mailgun
+- Cloudflare
+- DNS/Dreamhost
+- mLab
 
 ## Processo de Deploy
 
@@ -29,7 +30,7 @@ Esses são os passos que acontecem quando você realiza o deploy da aplicação.
 
 Você só terá que fazer isso se estiver testando o ambinente de produção loclamente.
 
-_Nota_: Os passos de instalação assumem que você está usando um shell baseado em Unix. Se você está usando Windows, você terá que usar `copy` no lugar de `cp`. 
+_Nota_: Os passos de instalação assumem que você está usando um shell baseado em Unix. Se você está usando Windows, você terá que usar `copy` no lugar de `cp`.
 
 1. Clone esse repositório e use um `cd` para entrar nele
 2. `$ npm install`
@@ -47,7 +48,7 @@ Se você está interessado em hospedar e fazer deploy da sua própria instância
 
 1. Se cadastre para uma conta grátis em: [Heroku](https://www.heroku.com/)
 2. Clique aqui: [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/processing/p5.js-web-editor/tree/master)
-3. Coloque um *Nome para o App* único, ele fará parte da url(i.e. https://nome-do-app.herokuapp.com/)
+3. Coloque um _Nome para o App_ único, ele fará parte da url(i.e. https://nome-do-app.herokuapp.com/)
 4. Atualize qualquer variável de configuração ou aceite os valores default para uma avaliação rápida (elas podem ser alteradas depois para permitir total funcionalidade)
-5. Clique no botão "Deploy app" 
+5. Clique no botão "Deploy app"
 6. Quando copleto, clique no botão "View app"

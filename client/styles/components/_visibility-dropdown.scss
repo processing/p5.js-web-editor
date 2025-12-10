@@ -1,4 +1,4 @@
-@use "sass:math";
+@use 'sass:math';
 
 .visibility-dropdown {
   position: relative;
@@ -19,8 +19,8 @@
 
 .visibility-dropdown__trigger-toolbar {
   @include themify() {
-    color: getThemifyVariable("toolbar-button-color");
-    background-color: getThemifyVariable("toolbar-button-background-color");
+    color: getThemifyVariable('toolbar-button-color');
+    background-color: getThemifyVariable('toolbar-button-background-color');
 
     & g,
     & path {
@@ -30,10 +30,12 @@
 
   &:hover {
     @include themify() {
-      background-color: getThemifyVariable("button-background-hover-color") !important;
-      color: getThemifyVariable("button-hover-color") !important;
+      background-color: getThemifyVariable(
+        'button-background-hover-color'
+      ) !important;
+      color: getThemifyVariable('button-hover-color') !important;
 
-    & g,
+      & g,
       & path {
         fill: getThemifyVariable('button-hover-color') !important;
       }
@@ -52,9 +54,9 @@
   border-radius: #{math.div(6, $base-font-size)}rem;
 
   @include themify() {
-    border: 1px solid getThemifyVariable("modal-border-color");
-    color: getThemifyVariable("primary-text-color");
-    background-color: getThemifyVariable("modal-background-color");
+    border: 1px solid getThemifyVariable('modal-border-color');
+    color: getThemifyVariable('primary-text-color');
+    background-color: getThemifyVariable('modal-background-color');
   }
 }
 
@@ -66,8 +68,8 @@
   flex-direction: column;
 
   @include themify() {
-    border-bottom: 1px solid getThemifyVariable("modal-border-color");
-    background-color: getThemifyVariable("modal-background-color");
+    border-bottom: 1px solid getThemifyVariable('modal-border-color');
+    background-color: getThemifyVariable('modal-background-color');
   }
 
   &:last-child {
@@ -76,10 +78,12 @@
 
   &:hover {
     @include themify() {
-      background-color: getThemifyVariable("button-background-hover-color") !important;
-      color: getThemifyVariable("button-hover-color") !important;
+      background-color: getThemifyVariable(
+        'button-background-hover-color'
+      ) !important;
+      color: getThemifyVariable('button-hover-color') !important;
 
-    & g {
+      & g {
         fill: getThemifyVariable('button-hover-color') !important;
       }
     }
@@ -87,7 +91,7 @@
 
   &.selected {
     @include themify() {
-      background-color: getThemifyVariable("table-row-stripe-color");
+      background-color: getThemifyVariable('table-row-stripe-color');
     }
   }
 }
@@ -122,7 +126,7 @@
   flex-shrink: 0;
 
   @include themify() {
-    stroke: getThemifyVariable("inactive-text-color");
+    stroke: getThemifyVariable('inactive-text-color');
   }
 }
 
@@ -132,7 +136,7 @@
   height: #{math.div(16, $base-font-size)}rem;
 
   @include themify() {
-    stroke: getThemifyVariable("logo-color");
+    stroke: getThemifyVariable('logo-color');
   }
 }
 
@@ -144,7 +148,7 @@
   font-size: #{math.div(14, $base-font-size)}rem;
 
   @include themify() {
-    color: getThemifyVariable("inactive-text-color");
+    color: getThemifyVariable('inactive-text-color');
   }
 }
 
@@ -163,7 +167,7 @@
 }
 
 .toolbar .visibility-dropdown__trigger {
-  font-size: 1rem; 
+  font-size: 1rem;
 }
 
 .toolbar .visibility-icon {

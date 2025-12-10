@@ -4,36 +4,33 @@ import { UserDocument } from '../types';
 
 const router = Router();
 
-const authenticateOAuth = (service: string) => (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  passport.authenticate(
-    service,
-    { failureRedirect: '/login' },
-    (err: unknown, user: UserDocument) => {
-      if (err) {
-        // use query string param to show error;
-        res.redirect(`/account?error=${service}`);
-        return;
-      }
-
-      if (!user) {
-        res.redirect(`/account?error=${service}NoUser`);
-        return;
-      }
-
-      req.logIn(user, (loginErr) => {
-        if (loginErr) {
-          next(loginErr);
+const authenticateOAuth =
+  (service: string) => (req: Request, res: Response, next: NextFunction) => {
+    passport.authenticate(
+      service,
+      { failureRedirect: '/login' },
+      (err: unknown, user: UserDocument) => {
+        if (err) {
+          // use query string param to show error;
+          res.redirect(`/account?error=${service}`);
           return;
         }
-        res.redirect('/');
-      });
-    }
-  )(req, res, next);
-};
+
+        if (!user) {
+          res.redirect(`/account?error=${service}NoUser`);
+          return;
+        }
+
+        req.logIn(user, (loginErr) => {
+          if (loginErr) {
+            next(loginErr);
+            return;
+          }
+          res.redirect('/');
+        });
+      }
+    )(req, res, next);
+  };
 
 router.get('/auth/github', passport.authenticate('github'));
 router.get('/auth/github/callback', authenticateOAuth('github'));

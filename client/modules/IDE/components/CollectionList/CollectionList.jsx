@@ -38,10 +38,8 @@ const CollectionList = ({
 }) => {
   const { t } = useTranslation();
   const [hasLoadedData, setHasLoadedData] = useState(false);
-  const [
-    addingSketchesToCollectionId,
-    setAddingSketchesToCollectionId
-  ] = useState(null);
+  const [addingSketchesToCollectionId, setAddingSketchesToCollectionId] =
+    useState(null);
 
   useEffect(() => {
     if (projectId) {

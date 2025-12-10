@@ -12,33 +12,31 @@ function makeEvaluateExpression(evalInClosure: EvalInClosureFn) {
 }
 
 export function evaluateExpressionWrapper(): (expr: string) => EvalResult {
-  return makeEvaluateExpression(
-    (expr: string): EvalResult => {
-      let newExpr = expr;
-      let result = null;
-      let error = false;
+  return makeEvaluateExpression((expr: string): EvalResult => {
+    let newExpr = expr;
+    let result = null;
+    let error = false;
+    try {
       try {
-        try {
-          const wrapped = `(${expr})`;
-          // eslint-disable-next-line no-new-func
-          const validate = new Function(wrapped);
-          newExpr = wrapped;
-        } catch (e) {
-          // We shouldn't wrap the expression
-        }
-        // eslint-disable-next-line no-eval
-        result = (0, eval)(newExpr);
+        const wrapped = `(${expr})`;
+        // eslint-disable-next-line no-new-func
+        const validate = new Function(wrapped);
+        newExpr = wrapped;
       } catch (e) {
-        if (e instanceof Error) {
-          result = `${e.name}: ${e.message}`;
-        } else {
-          result = String(e);
-        }
-        error = true;
+        // We shouldn't wrap the expression
       }
-      return { result, error };
+      // eslint-disable-next-line no-eval
+      result = (0, eval)(newExpr);
+    } catch (e) {
+      if (e instanceof Error) {
+        result = `${e.name}: ${e.message}`;
+      } else {
+        result = String(e);
+      }
+      error = true;
     }
-  );
+    return { result, error };
+  });
 }
 
 export const evaluateExpression = evaluateExpressionWrapper();

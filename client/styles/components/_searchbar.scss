@@ -1,4 +1,4 @@
-@use "sass:math";
+@use 'sass:math';
 
 .searchbar {
   position: relative;
@@ -60,7 +60,8 @@ div.searchbar__button {
   @include themify() {
     color: getThemifyVariable('primary-text-color');
     background-color: getThemifyVariable('search-clear-background-color');
-    &:hover, &:focus {
+    &:hover,
+    &:focus {
       color: getThemifyVariable('search-hover-text-color');
       background-color: getThemifyVariable('search-hover-background-color');
     }

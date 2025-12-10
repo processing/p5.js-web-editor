@@ -1,4 +1,4 @@
-@use "sass:math";
+@use 'sass:math';
 
 .modal {
   position: absolute;
@@ -38,15 +38,18 @@
   margin-bottom: #{math.div(20, $base-font-size)}rem;
 }
 
-.new-folder-form__input-wrapper, .new-file-form__input-wrapper {
+.new-folder-form__input-wrapper,
+.new-file-form__input-wrapper {
   display: flex;
 }
 
-.new-file-form__name-label, .new-folder-form__name-label {
+.new-file-form__name-label,
+.new-folder-form__name-label {
   @extend %hidden-element;
 }
 
-.new-file-form__name-input, .new-folder-form__name-input {
+.new-file-form__name-input,
+.new-folder-form__name-input {
   margin-right: #{math.div(10, $base-font-size)}rem;
   flex: 1;
 }

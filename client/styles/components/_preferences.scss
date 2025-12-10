@@ -1,4 +1,4 @@
-@use "sass:math";
+@use 'sass:math';
 
 .preferences {
   width: 100%;
@@ -6,7 +6,8 @@
   max-width: 100%;
   max-height: 100%;
   z-index: 9999;
-  padding: 0 #{math.div(20, $base-font-size)}rem #{math.div(2, $base-font-size)}rem #{math.div(20, $base-font-size)}rem;
+  padding: 0 #{math.div(20, $base-font-size)}rem #{math.div(2, $base-font-size)}rem
+    #{math.div(20, $base-font-size)}rem;
   display: flex;
   flex-direction: column;
   outline: none;
@@ -46,7 +47,7 @@
   padding-bottom: #{math.div(12, $base-font-size)}rem;
   & + & {
     @include themify() {
-      border-top: 1px dashed getThemifyVariable("button-border-color");
+      border-top: 1px dashed getThemifyVariable('button-border-color');
     }
   }
 }
@@ -60,7 +61,7 @@
 
 .preference__subtitle {
   @include themify() {
-    color: getThemifyVariable("inactive-text-color");
+    color: getThemifyVariable('inactive-text-color');
   }
   width: 100%;
   margin-bottom: #{math.div(10, $base-font-size)}rem;
@@ -91,9 +92,9 @@
 .preference__value {
   @include themify() {
     border: #{math.div(1, $base-font-size)}rem solid
-      getThemifyVariable("button-border-color");
+      getThemifyVariable('button-border-color');
     // background-color: getThemifyVariable("button-background-color");
-    color: getThemifyVariable("input-text-color");
+    color: getThemifyVariable('input-text-color');
     background-color: getThemifyVariable('input-background-color');
   }
   text-align: center;
@@ -109,12 +110,15 @@
 
 .preference__label {
   @include themify() {
-    color: getThemifyVariable("secondary-text-color");
+    color: getThemifyVariable('secondary-text-color');
     &:hover {
-      color: getThemifyVariable("heavy-text-color");
+      color: getThemifyVariable('heavy-text-color');
     }
   }
-  margin: #{math.div(-15, $base-font-size)}rem 0 0 #{math.div(-5, $base-font-size)}rem;
+  margin: #{math.div(-15, $base-font-size)}rem 0 0 #{math.div(
+      -5,
+      $base-font-size
+    )}rem;
   font-size: #{math.div(9, $base-font-size)}rem;
   width: #{math.div(44, $base-font-size)}rem;
 }
@@ -122,13 +126,13 @@
 .react-tabs__tab--selected {
   @include themify() {
     border-bottom: #{math.div(4, $base-font-size)}rem solid
-      getThemifyVariable("button-background-hover-color");
+      getThemifyVariable('button-background-hover-color');
   }
 }
 
 .react-tabs__tab--selected .preference__subheading {
   @include themify() {
-    color: getThemifyVariable("primary-text-color");
+    color: getThemifyVariable('primary-text-color');
   }
 }
 
@@ -144,7 +148,7 @@
   &:hover {
     @include themify() {
       border-bottom: #{math.div(4, $base-font-size)}rem solid
-        getThemifyVariable("button-background-hover-color");
+        getThemifyVariable('button-background-hover-color');
     }
   }
 }
@@ -167,8 +171,8 @@
   @extend %hidden-element;
 }
 
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
@@ -191,7 +195,7 @@ input[type="number"]::-webkit-outer-spin-button {
   @include themify() {
     @extend %preference-option;
     &:hover {
-      color: getThemifyVariable("button-background-hover-color");
+      color: getThemifyVariable('button-background-hover-color');
     }
   }
   margin-left: #{math.div(30, $base-font-size)}rem;
@@ -208,13 +212,13 @@ input[type="number"]::-webkit-outer-spin-button {
 .preference__radio-button:checked + .preference__option {
   @include themify() {
     //for some reason this won't work for getThemifyVariable
-    color: map-get($theme-map, "heavy-text-color");
+    color: map-get($theme-map, 'heavy-text-color');
     font-weight: bold;
   }
 }
 .preference__radio-button:focus + .preference__option,
 .preference__radio-button:focus-visible + .preference__option {
-  outline: 2px solid $dodgerblue; 
+  outline: 2px solid $dodgerblue;
   outline-offset: 2px;
   border-radius: 4px;
 }
@@ -226,4 +230,3 @@ input[type="number"]::-webkit-outer-spin-button {
 .preference__option.preference__canvas:not(:last-child) {
   padding-right: #{math.div(14, $base-font-size)}rem;
 }
-

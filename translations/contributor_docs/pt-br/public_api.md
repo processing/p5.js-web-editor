@@ -2,14 +2,13 @@
 
 Essa API provê uma forma de importar informações para o p5.js Web Editor de forma programática.
 
-# Authenticação 
+# Authenticação
 
 Acesso à API está disponível via um Token de Acesso Pessoal, relacionado à uma conta de editor existente. Tokens podem ser criados e deletados na tela de Configurações de um usuário loggado.
 
 Quando entrar em contato com a API, o nome de usuário e token devem ser enviados em todas requisições usando autenticação básica.
 
-Isso envolve enviar o base64 codificado `${username}:${personalAccessToken}` no header `Authorization`, Por exemplo:
-  `Authorization: Basic cDU6YWJjMTIzYWJj`
+Isso envolve enviar o base64 codificado `${username}:${personalAccessToken}` no header `Authorization`, Por exemplo: `Authorization: Basic cDU6YWJjMTIzYWJj`
 
 # Acesso à API
 
@@ -31,12 +30,11 @@ A API aceita e retorna as seguintes Models como JSON.
 
 ## Sketch
 
-| Nome  | Tipo              | Descrição                                                                      |
-| ----- | ----------------- | ------------------------------------------------------------------------------ |
-| name  | String            | O título do esboço                                                             |
+| Nome | Tipo | Descrição |
+| --- | --- | --- |
+| name | String | O título do esboço |
 | files | DirectoryContents | Os arquivos e diretórios no esboço. Veja `DirectoryContents` para a estrutura. |
-| slug  | String            | Um caminho que pode ser usado para acessar o esboço                            |
-
+| slug | String | Um caminho que pode ser usado para acessar o esboço |
 
     {
       "id": String, // opaque ID
@@ -81,10 +79,9 @@ Isso é editável na interfáce do editor e guardada no bando de dados do Editor
 
 Esse arquivo é hospedado em outro lugar na Internet. Ele aparece na listagem do Editor e pode ser referenciado usando um proxy URL no Editor.
 
-
-| Nome | Tipo | Descrição                                                         |
-| ---- | ---- | ----------------------------------------------------------------- |
-| url  | URL  | Uma URL váçida apontando para um arquivo hospedado em outro lugar |
+| Nome | Tipo | Descrição |
+| --- | --- | --- |
+| url | URL | Uma URL váçida apontando para um arquivo hospedado em outro lugar |
 
     {
       "url": URL
@@ -115,9 +112,11 @@ Liste os esboços de um usuário.
 Isso não irá retornar os arquivos dentro de um esboço, apenas a metadata do esboço.
 
 ### Formato da requisição
+
 Sem corpo.
 
 ### Formato da resposta
+
     {
       "sketches": Array<Sketch>
     }
@@ -125,14 +124,13 @@ Sem corpo.
 ### Exemplo
 
     GET /p5/sketches
-    
+
     {
       "sketches": [
         { "id": "H1PLJg8_", "name": "My Lovely Sketch" },
         { "id": "Bkhf0APpg", "name":  "My Lovely Sketch 2" }
       ]
     }
-
 
 ## `POST /:user/sketches`
 
@@ -141,9 +139,11 @@ Criar um novo esboço.
 Um esboço deve conter pelo menos um arquivo com a extenção `.html`. Se nenhum for fornecido no payload, um `index.html` padrão e um arquivo `style.css` associado serão criados automaticamente.
 
 ### Formato da requisição
+
 Veja `Sketch` nas Models abaixo.
 
 ### Formato da resposta
+
     {
       "id": String
     }
@@ -151,7 +151,7 @@ Veja `Sketch` nas Models abaixo.
 ### Exemplo
 
     POST /p5/sketches
-    
+
     {
       "name": "My Lovely Sketch",
       "files": {
@@ -162,9 +162,8 @@ Veja `Sketch` nas Models abaixo.
 
 `files` podem possuir uma hierarquia para representar uma estrutura de pastas. Por exemplo, isso irá criar um diretório "data" vazio no esboço:
 
-
     POST /p5/sketches
-    
+
     {
       "name": "My Lovely Sketch 2",
       "files": [
@@ -182,16 +181,15 @@ Veja `Sketch` nas Models abaixo.
 
 ### Respostas
 
-| Código HTTP              | Descrição                                                                       |
-| ------------------------ | ------------------------------------------------------------------------------- |
-| 201 Created              | id do esboço                                                                    |
+| Código HTTP | Descrição |
+| --- | --- |
+| 201 Created | id do esboço |
 | 422 Unprocessable Entity | falha na validação de um arquivo, tipo de arquivo não suportado, slug já existe |
-
 
 ### Exemplos
 
     201 CREATED
-    
+
     {
       "id": "Ckhf0APpg"
     }
@@ -201,9 +199,11 @@ Veja `Sketch` nas Models abaixo.
 Delete um esboço e todos os seus arquivos associados.
 
 ### Formato da requisição
+
 Sem corpo
 
 ### Formato da resposta
+
 Sem corpo
 
 ### Exemplo

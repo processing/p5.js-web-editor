@@ -8,9 +8,10 @@ Before you dive in, note that there are two ways to install the project locally:
 
 - **Docker Installation** is ideal if you want a faster setup with all dependencies (Node, MongoDB, etc.) isolated in containers. This avoids version conflicts and works consistently across environments especially helpful if you're new to backend setup or don't want to alter your local setup.
 
-If you're just getting started, try going with the **Manual Installation** method! Once you're comfortable with one method, feel free to try out both to see which one you prefer. 
+If you're just getting started, try going with the **Manual Installation** method! Once you're comfortable with one method, feel free to try out both to see which one you prefer.
 
 ### Installation Issues
+
 If you run into any issues while setting up your environment, take some time to search through [prior issues](https://github.com/processing/p5.js-web-editor/issues) here or discussions on the [Processing Foundation discourse](https://discourse.processing.org/) to see if anyone has encountered what you've faced before. If you don't find anything, feel free to open one!
 
 ## Manual Installation
@@ -18,7 +19,7 @@ If you run into any issues while setting up your environment, take some time to 
 _Note_: The installation steps assume you are using a Unix-like shell. If you are using Windows, you will need to use `copy` instead of `cp`.
 
 1. Install Node.js. The recommended way is to Node through [nvm](https://github.com/nvm-sh/nvm), which is a command-line tool that helps you manage different versions of Node.js on your system. You can install nvm by using [nvm's installation guide](https://github.com/nvm-sh/nvm?tab=readme-ov-file#installing-and-updating).
-      - You can also install [node.js](https://nodejs.org/download/release/v18.20.8/) version 18.20.8 directly from the Node.js website. To check if you already have Node installed on your computer, run `$ node -v`.
+   - You can also install [node.js](https://nodejs.org/download/release/v18.20.8/) version 18.20.8 directly from the Node.js website. To check if you already have Node installed on your computer, run `$ node -v`.
 2. [Fork](https://help.github.com/articles/fork-a-repo) the [p5.js Web Editor repository](https://github.com/processing/p5.js-web-editor) into your own GitHub account.
 3. [Clone](https://help.github.com/articles/cloning-a-repository/) your new fork of the repository from GitHub onto your local computer.
 
@@ -27,20 +28,21 @@ _Note_: The installation steps assume you are using a Unix-like shell. If you ar
    ```
 
 4. If you are using nvm, run `$ nvm use 18.20.8` to set your Node version to 18.20.8
-5. Ensure your npm version is set to 10.8.2 by running `$ npm -v`. If it isn't, run `npm install -g npm@10.8.2` to install it. 
+5. Ensure your npm version is set to 10.8.2 by running `$ npm -v`. If it isn't, run `npm install -g npm@10.8.2` to install it.
 6. Navigate into the project folder and install all its necessary dependencies with npm.
 
    ```
    $ cd p5.js-web-editor
    $ npm install
    ```
+
 7. Install MongoDB and make sure it is running
-   * For Mac OSX with [homebrew](http://brew.sh/): `brew tap mongodb/brew` then `brew install mongodb-community` and finally start the server with `brew services start mongodb-community` or you can visit the installation guide here [Installation Guide For MacOS](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/)
-   * For Windows and Linux: [MongoDB Installation](https://docs.mongodb.com/manual/installation/)
+   - For Mac OSX with [homebrew](http://brew.sh/): `brew tap mongodb/brew` then `brew install mongodb-community` and finally start the server with `brew services start mongodb-community` or you can visit the installation guide here [Installation Guide For MacOS](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/)
+   - For Windows and Linux: [MongoDB Installation](https://docs.mongodb.com/manual/installation/)
 8. `$ cp .env.example .env`
 9. (Optional) Update `.env` with necessary keys to enable certain app behaviors, i.e. add Github ID and Github Secret if you want to be able to log in with Github.
-   * See the [GitHub API Configuration](#github-api-configuration) section for information on how to authenticate with Github.
-   * See the [S3 Bucket Configuration](#s3-bucket-configuration) section for information on how to set up an S3 bucket
+   - See the [GitHub API Configuration](#github-api-configuration) section for information on how to authenticate with Github.
+   - See the [S3 Bucket Configuration](#s3-bucket-configuration) section for information on how to set up an S3 bucket
 10. (Optional) Run `$ npm run fetch-examples` to download the example sketches into a user called 'p5'. Note that you need to configure your GitHub Credentials, which you can do by following the [Github API Configuration](#github-api-configuration) section.
 11. Enable Prettier in your text editor by following [this guide](https://prettier.io/docs/en/editors.html).
 12. `$ npm start`
@@ -57,17 +59,17 @@ Using Docker, you can have a complete, consistent development environment withou
 Note that this takes up a significant amount of space on your machine. Make sure you have at least 5GB free.
 
 1. Install Docker for your operating system
-   * [Mac](https://www.docker.com/docker-mac)
-   * [Windows](https://www.docker.com/docker-windows)
+   - [Mac](https://www.docker.com/docker-mac)
+   - [Windows](https://www.docker.com/docker-windows)
 2. Install [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 3. Clone this repository and cd into it
 4. `$ docker-compose -f docker-compose-development.yml build`
-   * Note: Depending on which version of Docker Compose you are using, the base command will be either `docker-compose` or `docker compose`. More information about it can be found in Docker Compose's documentation for their [V1 to V2 transition](https://github.com/docker/compose/tree/v1?tab=readme-ov-file#v1-vs-v2-transition-hourglass_flowing_sand). 
+   - Note: Depending on which version of Docker Compose you are using, the base command will be either `docker-compose` or `docker compose`. More information about it can be found in Docker Compose's documentation for their [V1 to V2 transition](https://github.com/docker/compose/tree/v1?tab=readme-ov-file#v1-vs-v2-transition-hourglass_flowing_sand).
 5. `$ cp .env.example .env`
 6. (Optional) Update `.env` with necessary keys to enable certain app behaviors, i.e. add Github ID and Github Secret if you want to be able to log in with Github.
-   * See the [GitHub API Configuration](#github-api-configuration) section for information on how to authenticate with Github.
-   * See the [S3 Bucket Configuration](#s3-bucket-configuration) section for information on how to set up an S3 bucket
-7. `$ docker-compose -f docker-compose-development.yml run --rm app npm run fetch-examples` -  note that you need to configure your GitHub Credentials, which you can do by following the [Github API Configuration](#github-api-configuration) section.
+   - See the [GitHub API Configuration](#github-api-configuration) section for information on how to authenticate with Github.
+   - See the [S3 Bucket Configuration](#s3-bucket-configuration) section for information on how to set up an S3 bucket
+7. `$ docker-compose -f docker-compose-development.yml run --rm app npm run fetch-examples` - note that you need to configure your GitHub Credentials, which you can do by following the [Github API Configuration](#github-api-configuration) section.
 8. Enable Prettier in your text editor by following [this guide](https://prettier.io/docs/en/editors.html).
 
 Now, anytime you wish to start the server with its dependencies, you can run:
@@ -87,23 +89,26 @@ If you don't have the full server environment running, you can launch a one-off 
 
 See [this configuration guide](./s3_configuration.md) for information about how to configure your own S3 bucket. These instructions were adapted from [this gist](https://gist.github.com/catarak/70c9301f0fd1ac2d6b58de03f61997e3).
 
-Note that this is optional unless you are working on the part of the application that allows a user to upload images, videos, etc. 
+Note that this is optional unless you are working on the part of the application that allows a user to upload images, videos, etc.
 
 ## GitHub API Configuration
 
 In this application, GitHub credentials are used for:
-* Authentication with GitHub
-* Importing the p5.js examples to your local database
-* Rendering the 404 pages
+
+- Authentication with GitHub
+- Importing the p5.js examples to your local database
+- Rendering the 404 pages
 
 If you are working on a part of the application that requires one of the above uses, then you will need to get GitHub API credentials.
 
 When you go to the [Developer settings](https://github.com/settings/developers) in your GitHub account, you will see that you can create two types of Apps: `GitHub Apps` and `OAuth Apps` ([differences between GitHub Apps and OAuth Apps](https://docs.github.com/en/free-pro-team@latest/developers/apps/differences-between-github-apps-and-oauth-apps)). This project requires you to make an `OAuth App`. After clicking on "New OAuth App", you will need to fill in the following fields:
+
 - **Application name**: `p5.js Web Editor - Local`
 - **Homepage URL**: `http://localhost:8000`
 - **Authorization Callback URL**: `http://localhost:8000/auth/github/callback`
 
 Once you've created a new OAuth app, update your `.env`:
+
 ```
 GITHUB_ID={GITHUB_ID}
 GITHUB_SECRET={GITHUB_SECRET}

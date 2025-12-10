@@ -1,4 +1,4 @@
-@use "sass:math";
+@use 'sass:math';
 
 .tabs__titles {
   display: flex;
@@ -12,13 +12,14 @@
 .tabs__title {
   @include themify() {
     color: getThemifyVariable('inactive-text-color');
-    &:hover, &:focus{
+    &:hover,
+    &:focus {
       color: getThemifyVariable('primary-text-color');
-      cursor: pointer; 
+      cursor: pointer;
     }
-    &:focus  {
+    &:focus {
       color: getThemifyVariable('primary-text-color');
-      cursor: pointer; 
+      cursor: pointer;
     }
   }
   font-size: #{math.div(12, $base-font-size)}rem;
@@ -30,7 +31,8 @@
 
 .react-tabs__tab--selected {
   @include themify() {
-    border-bottom: #{math.div(4, $base-font-size)}rem solid getThemifyVariable('button-background-hover-color');
+    border-bottom: #{math.div(4, $base-font-size)}rem solid
+      getThemifyVariable('button-background-hover-color');
   }
 }
 
@@ -54,13 +56,14 @@
 .tabs__title {
   @include themify() {
     color: getThemifyVariable('inactive-text-color');
-    &:hover, &:focus{
+    &:hover,
+    &:focus {
       color: getThemifyVariable('primary-text-color');
-      cursor: pointer; 
+      cursor: pointer;
     }
-    &:focus  {
+    &:focus {
       color: getThemifyVariable('primary-text-color');
-      cursor: pointer; 
+      cursor: pointer;
     }
   }
   font-size: #{math.div(12, $base-font-size)}rem;

@@ -275,7 +275,8 @@
     "AddFile": "Create file",
     "AddFileARIA": "add file",
     "UploadFile": "Upload file",
-    "UploadFileARIA": "upload file"
+    "UploadFileARIA": "upload file",
+    "UploadFileRequiresLogin": "You must log in to upload files"
   },
   "FileNode": {
     "OpenFolderARIA": "Open folder contents",
@@ -288,7 +289,8 @@
     "UploadFile": "Upload file",
     "UploadFileARIA": "upload file",
     "Rename": "Rename",
-    "Delete": "Delete"
+    "Delete": "Delete",
+    "UploadFileRequiresLogin": "You must log in to upload files"
   },
   "Common": {
     "SiteName": "p5.js Web Editor",
@@ -466,7 +468,8 @@
   "UploadFileModal": {
     "Title": "Upload File",
     "CloseButtonARIA": "Close upload file modal",
-    "SizeLimitError": "Error: You cannot upload any more files. You have reached the total size limit of {{sizeLimit}}.\n                If you would like to upload more, please remove the ones you aren't using anymore by\n                in your "
+    "SizeLimitError": "Error: You cannot upload any more files. You have reached the total size limit of {{sizeLimit}}.\n                If you would like to upload more, please remove the ones you aren't using anymore by\n                in your ",
+    "UploadFileRequiresLogin": "You must log in to upload files"
   },
   "FileUploader": {
     "DictDefaultMessage": "Drop files here or click to use the file browser"

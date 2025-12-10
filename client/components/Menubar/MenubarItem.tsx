@@ -57,11 +57,8 @@ export function MenubarItem({
   ...rest
 }: MenubarItemProps) {
   const { createMenuItemHandlers, hasFocus } = useContext(MenubarContext);
-  const {
-    setSubmenuActiveIndex,
-    submenuItems,
-    registerSubmenuItem
-  } = useContext(SubmenuContext);
+  const { setSubmenuActiveIndex, submenuItems, registerSubmenuItem } =
+    useContext(SubmenuContext);
   const parent = useContext(ParentMenuContext);
 
   const menuItemRef = useRef(null);

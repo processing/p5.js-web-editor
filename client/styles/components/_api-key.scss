@@ -1,4 +1,4 @@
-@use "sass:math";
+@use 'sass:math';
 
 .api-key-form__summary {
   padding-top: #{math.div(25, $base-font-size)}rem;
@@ -48,32 +48,34 @@
 }
 
 .api-key-list__delete-button {
-    width:#{math.div(20, $base-font-size)}rem;
-    height:#{math.div(20, $base-font-size)}rem;
+  width: #{math.div(20, $base-font-size)}rem;
+  height: #{math.div(20, $base-font-size)}rem;
 
-    text-align: center;
+  text-align: center;
 
-    @include themify() {
-      background-color: transparent;
-      border: none;
-      cursor: pointer;
-      padding: 0;
-      position: initial;
-      left: 0;
-      top: 0;
-        & g, & path {
-          opacity: 1;
-          fill: getThemifyVariable('icon-color');
-        }
+  @include themify() {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    position: initial;
+    left: 0;
+    top: 0;
+    & g,
+    & path {
+      opacity: 1;
+      fill: getThemifyVariable('icon-color');
     }
+  }
 }
 
 .api-key-list__delete-button:hover {
   @include themify() {
-      & g, & path {
-        opacity: 1;
-        fill: getThemifyVariable('icon-hover-color');
-      }
+    & g,
+    & path {
+      opacity: 1;
+      fill: getThemifyVariable('icon-hover-color');
+    }
   }
 }
 

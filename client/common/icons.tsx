@@ -25,6 +25,7 @@ import Add from '../images/add.svg';
 import Filter from '../images/filter.svg';
 import Cross from '../images/cross.svg';
 import Copy from '../images/copy.svg';
+import Lock from '../images/lock.svg';
 
 export interface IconColors {
   default?: string;
@@ -36,11 +37,6 @@ export interface IconProps extends React.SVGProps<SVGSVGElement> {
   Icon?: IconColors;
 }
 
-// HOC that adds the right web accessibility props
-// https://www.scottohara.me/blog/2019/05/22/contextual-images-svgs-and-a11y.html
-
-// could also give these a default size, color, etc. based on the theme
-// Need to add size to these - like small icon, medium icon, large icon. etc.
 function withLabel(
   SvgComponent: React.ComponentType<React.SVGProps<SVGSVGElement>>
 ) {
@@ -65,7 +61,6 @@ function withLabel(
     }
   `;
 
-  // Necessary because styled components inject a different type for the ref prop
   type StyledIconProps = Omit<
     React.ComponentProps<typeof StyledIcon>,
     'ref'
@@ -115,3 +110,4 @@ export const CircleInfoIcon = withLabel(CircleInfo);
 export const AddIcon = withLabel(Add);
 export const FilterIcon = withLabel(Filter);
 export const CopyIcon = withLabel(Copy);
+export const LockIcon = withLabel(Lock);

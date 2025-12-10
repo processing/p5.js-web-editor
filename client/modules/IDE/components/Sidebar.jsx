@@ -14,17 +14,14 @@ import { selectRootFile } from '../selectors/files';
 import { getAuthenticated, selectCanEditSketch } from '../selectors/users';
 
 import ConnectedFileNode from './FileNode';
-import { PlusIcon } from '../../../common/icons';
+import { PlusIcon, LockIcon } from '../../../common/icons';
 import { FileDrawer } from './Editor/MobileEditor';
-
-// TODO: use a generic Dropdown UI component
 
 export default function SideBar() {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
   const rootFile = useSelector(selectRootFile);
-  const ide = useSelector((state) => state.ide);
   const projectOptionsVisible = useSelector(
     (state) => state.ide.projectOptionsVisible
   );
@@ -58,11 +55,8 @@ export default function SideBar() {
 
   const toggleProjectOptions = (e) => {
     e.preventDefault();
-    if (projectOptionsVisible) {
-      dispatch(closeProjectOptions());
-    } else {
-      dispatch(openProjectOptions());
-    }
+    if (projectOptionsVisible) dispatch(closeProjectOptions());
+    else dispatch(openProjectOptions());
   };
 
   const sidebarClass = classNames({
@@ -74,7 +68,7 @@ export default function SideBar() {
 
   return (
     <FileDrawer>
-      {ide.sidebarIsExpanded && (
+      {isExpanded && (
         <button
           data-backdrop="filedrawer"
           onClick={() => {
@@ -95,7 +89,7 @@ export default function SideBar() {
             <button
               aria-label={t('Sidebar.ToggleARIA')}
               className="sidebar__add"
-              tabIndex="0"
+              tabIndex={0}
               onClick={toggleProjectOptions}
             >
               <PlusIcon focusable="false" aria-hidden="true" />
@@ -124,19 +118,37 @@ export default function SideBar() {
                     {t('Sidebar.AddFile')}
                   </button>
                 </li>
-                {isAuthenticated && (
-                  <li>
-                    <button
-                      aria-label={t('Sidebar.UploadFileARIA')}
-                      onClick={() => {
+                <li>
+                  <button
+                    disabled={!isAuthenticated}
+                    className={classNames({
+                      'tooltipped-login': !isAuthenticated
+                    })}
+                    aria-label={
+                      isAuthenticated
+                        ? t('Sidebar.UploadFileARIA')
+                        : t('Sidebar.UploadFileRequiresLogin')
+                    }
+                    onClick={() => {
+                      if (isAuthenticated) {
                         dispatch(openUploadFileModal(rootFile.id));
                         setTimeout(() => dispatch(closeProjectOptions()), 300);
-                      }}
-                    >
-                      {t('Sidebar.UploadFile')}
-                    </button>
-                  </li>
-                )}
+                      }
+                    }}
+                  >
+                    {!isAuthenticated && (
+                      <span className="sidebar__lock-icon">
+                        <LockIcon focusable="false" aria-hidden="true" />
+                      </span>
+                    )}
+                    {t('Sidebar.UploadFile')}
+                    {!isAuthenticated && (
+                      <span className="tooltipped-login-tooltip">
+                        {t('Sidebar.UploadFileRequiresLogin')}
+                      </span>
+                    )}
+                  </button>
+                </li>
               </ul>
             )}
           </div>
