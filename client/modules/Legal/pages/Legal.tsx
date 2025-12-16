@@ -1,5 +1,4 @@
 import axios from 'axios';
-import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import Helmet from 'react-helmet';
 import { useTranslation } from 'react-i18next';
@@ -9,7 +8,7 @@ import { RootPage } from '../../../components/RootPage';
 import { remSize } from '../../../theme';
 import Loader from '../../App/components/loader';
 import Nav from '../../IDE/components/Header/Nav';
-import PolicyContainer from '../components/PolicyContainer';
+import { PolicyContainer } from '../components/PolicyContainer';
 
 const StyledTabList = styled.nav`
   display: flex;
@@ -21,8 +20,18 @@ const StyledTabList = styled.nav`
     gap: ${remSize(19)};
   }
 `;
-
-function Legal({ policyFile, title }) {
+export interface LegalProps {
+  /**
+   * Path of the markdown '.md' file, relative to the /public directory.
+   */
+  policyFile: string;
+  /**
+   * Used in the HTML <title> tag.
+   * TODO: pass this to the Nav to use as the mobile title.
+   */
+  title: string;
+}
+export function Legal({ policyFile, title }: LegalProps) {
   const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(true);
   const [policy, setPolicy] = useState('');
@@ -55,17 +64,3 @@ function Legal({ policyFile, title }) {
     </RootPage>
   );
 }
-
-Legal.propTypes = {
-  /**
-   * Used in the HTML <title> tag.
-   * TODO: pass this to the Nav to use as the mobile title.
-   */
-  title: PropTypes.string.isRequired,
-  /**
-   * Path of the markdown '.md' file, relative to the /public directory.
-   */
-  policyFile: PropTypes.string.isRequired
-};
-
-export default Legal;

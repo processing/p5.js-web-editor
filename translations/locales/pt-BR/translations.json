@@ -45,6 +45,9 @@
       "LogOut": "Sair"
     }
   },
+  "Banner": {
+    "Copy": "<bold>Donate Today!</bold> Support p5.js and the Processing Foundation."
+  },
   "CodemirrorFindAndReplace": {
     "ToggleReplace": "Alternar entre localizar/substituir",
     "FindPlaceholder": "Localizar em arquivos",
@@ -238,7 +241,8 @@
       "FindPreviousTextMatch": "Localizar ocorrência de texto anterior",
       "CodeEditing": "Edição de código",
       "ColorPicker": "Mostrar ferramenta seletora de cores",
-      "CreateNewFile": "Criar novo arquivo"
+      "CreateNewFile": "Criar novo arquivo",
+      "RenameVariable": "Renomear variável"
     },
     "GeneralSelection": {
       "StartSketch": "Começar esboço",

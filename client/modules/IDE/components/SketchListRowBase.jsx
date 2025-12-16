@@ -10,7 +10,7 @@ import { TableDropdown } from '../../../components/Dropdown/TableDropdown';
 import { MenuItem } from '../../../components/Dropdown/MenuItem';
 import { formatDateToString } from '../../../utils/formatDate';
 import { getConfig } from '../../../utils/getConfig';
-import VisibilityDropdown from '../../User/components/VisibilityDropdown';
+import { VisibilityDropdown } from '../../User/components/VisibilityDropdown';
 
 const ROOT_URL = getConfig('API_URL');
 

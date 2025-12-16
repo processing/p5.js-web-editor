@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,31 +5,24 @@ import { Button, ButtonTypes } from '../../../common/Button';
 import { PlusIcon } from '../../../common/icons';
 import CopyableInput from '../../IDE/components/CopyableInput';
 import { createApiKey, removeApiKey } from '../actions';
+import { APIKeyList } from './APIKeyList';
+import { RootState } from '../../../reducers';
+import { SanitisedApiKey } from '../../../../common/types';
 
-import APIKeyList from './APIKeyList';
-
-export const APIKeyPropType = PropTypes.shape({
-  id: PropTypes.string.isRequired,
-  token: PropTypes.string,
-  label: PropTypes.string.isRequired,
-  createdAt: PropTypes.string.isRequired,
-  lastUsedAt: PropTypes.string
-});
-
-const APIKeyForm = () => {
+export const APIKeyForm = () => {
   const { t } = useTranslation();
-  const apiKeys = useSelector((state) => state.user.apiKeys);
+  const apiKeys = useSelector((state: RootState) => state.user.apiKeys) ?? [];
   const dispatch = useDispatch();
 
   const [keyLabel, setKeyLabel] = useState('');
 
-  const addKey = (event) => {
+  const addKey = (event: React.FormEvent) => {
     event.preventDefault();
     dispatch(createApiKey(keyLabel));
     setKeyLabel('');
   };
 
-  const removeKey = (key) => {
+  const removeKey = (key: SanitisedApiKey) => {
     const message = t('APIKeyForm.ConfirmDelete', {
       key_label: key.label
     });
@@ -77,7 +69,7 @@ const APIKeyForm = () => {
           <Button
             disabled={keyLabel === ''}
             iconBefore={<PlusIcon />}
-            label="Create new key"
+            aria-label="Create new key"
             type={ButtonTypes.SUBMIT}
           >
             {t('APIKeyForm.CreateTokenSubmit')}
@@ -94,7 +86,7 @@ const APIKeyForm = () => {
             </p>
             <CopyableInput
               label={keyWithToken.label}
-              value={keyWithToken.token}
+              value={keyWithToken.token ?? ''}
             />
           </div>
         )}
@@ -109,5 +101,3 @@ const APIKeyForm = () => {
     </div>
   );
 };
-
-export default APIKeyForm;

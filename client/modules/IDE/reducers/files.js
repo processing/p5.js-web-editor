@@ -5,12 +5,14 @@ import {
   defaultCSS,
   defaultHTML
 } from '../../../../server/domain-objects/createDefaultFiles';
+import { parseUrlParams } from '../../../utils/parseURLParams';
 
 export const initialState = () => {
   const a = objectID().toHexString();
   const b = objectID().toHexString();
   const c = objectID().toHexString();
   const r = objectID().toHexString();
+  const params = parseUrlParams(window.location.href);
   return [
     {
       name: 'root',
@@ -32,7 +34,7 @@ export const initialState = () => {
     },
     {
       name: 'index.html',
-      content: defaultHTML,
+      content: defaultHTML(params),
       id: b,
       _id: b,
       fileType: 'file',

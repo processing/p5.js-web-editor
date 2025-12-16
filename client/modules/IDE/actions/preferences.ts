@@ -6,7 +6,6 @@ import type {
   UpdatePreferencesDispatch,
   SetPreferencesTabValue,
   SetFontSizeValue,
-  GetRootState,
   SetLineNumbersValue,
   SetAutocloseBracketsQuotesValue,
   SetAutocompleteHinterValue,
@@ -20,6 +19,7 @@ import type {
   SetLanguageValue,
   SetThemeValue
 } from './preferences.types';
+import type { GetRootState } from '../../../reducers';
 
 function updatePreferences(
   formParams: UpdatePreferencesRequestBody,

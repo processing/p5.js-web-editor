@@ -6,17 +6,21 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import { Button, ButtonTypes } from '../../../common/Button';
 import { validateLogin } from '../../../utils/reduxFormUtils';
 import { validateAndLoginUser } from '../actions';
-import { useSyncFormTranslations } from '../../../common/useSyncFormTranslations';
+import {
+  FormLike,
+  useSyncFormTranslations
+} from '../../../common/useSyncFormTranslations';
+import type { LoginForm as LoginFormType } from '../../../utils/reduxFormUtils';
 
-function LoginForm() {
+export function LoginForm() {
   const { t, i18n } = useTranslation();
 
   const dispatch = useDispatch();
-  function onSubmit(formProps) {
+  function onSubmit(formProps: LoginFormType) {
     return dispatch(validateAndLoginUser(formProps));
   }
   const [showPassword, setShowPassword] = useState(false);
-  const formRef = useRef(null);
+  const formRef = useRef<FormLike<LoginFormType> | null>(null);
 
   const handleVisibility = () => {
     setShowPassword(!showPassword);
@@ -114,5 +118,3 @@ function LoginForm() {
     </Form>
   );
 }
-
-export default LoginForm;

@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import ReactMarkdown from 'react-markdown';
 import remarkSlug from 'remark-slug';
-import PropTypes from 'prop-types';
 import { remSize, prop } from '../../../theme';
 
 const PolicyContainerMain = styled.main`
@@ -48,16 +47,13 @@ const PolicyContainerMain = styled.main`
   }
 `;
 
-function PolicyContainer({ policy }) {
+export interface PolicyContainerProps {
+  policy: string;
+}
+export function PolicyContainer({ policy }: PolicyContainerProps) {
   return (
     <PolicyContainerMain>
       <ReactMarkdown remarkPlugins={[remarkSlug]}>{policy}</ReactMarkdown>
     </PolicyContainerMain>
   );
 }
-
-PolicyContainer.propTypes = {
-  policy: PropTypes.string.isRequired
-};
-
-export default PolicyContainer;

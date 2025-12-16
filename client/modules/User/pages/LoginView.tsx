@@ -2,12 +2,15 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
-import LoginForm from '../components/LoginForm';
-import SocialAuthButton from '../components/SocialAuthButton';
+import { LoginForm } from '../components/LoginForm';
+import {
+  SocialAuthButton,
+  SocialAuthServices
+} from '../components/SocialAuthButton';
 import Nav from '../../IDE/components/Header/Nav';
 import { RootPage } from '../../../components/RootPage';
 
-function LoginView() {
+export function LoginView() {
   const { t } = useTranslation();
   return (
     <RootPage>
@@ -21,8 +24,8 @@ function LoginView() {
           <LoginForm />
           <h2 className="form-container__divider">{t('LoginView.LoginOr')}</h2>
           <div className="form-container__stack">
-            <SocialAuthButton service={SocialAuthButton.services.github} />
-            <SocialAuthButton service={SocialAuthButton.services.google} />
+            <SocialAuthButton service={SocialAuthServices.github} />
+            <SocialAuthButton service={SocialAuthServices.google} />
           </div>
           <p className="form__navigation-options">
             {t('LoginView.DontHaveAccount')}
@@ -42,5 +45,3 @@ function LoginView() {
     </RootPage>
   );
 }
-
-export default LoginView;

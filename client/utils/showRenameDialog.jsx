@@ -1,6 +1,6 @@
 import announceToScreenReader from './ScreenReaderHelper';
 import p5CodeAstAnalyzer from './p5CodeAstAnalyzer';
-import { getClassContext, getContext, getAST } from './renameVariableHelper';
+import { getContext, getAST } from './renameVariableHelper';
 
 const allFuncs = require('./p5-reference-functions.json');
 

@@ -46,9 +46,6 @@ function startRenaming(cm, ast, fromPos, newName, oldName) {
 
       const startIndex = node.start;
       const endIndex = node.end;
-
-      if (node.name !== oldName) return;
-
       const pos = cm.posFromIndex(startIndex);
 
       if (
@@ -57,9 +54,7 @@ function startRenaming(cm, ast, fromPos, newName, oldName) {
           parent.type === 'ArrowFunctionExpression') &&
         parent.params.some((p) => p.type === 'Identifier' && p.name === oldName)
       ) {
-        if (!parent.params.includes(node)) {
-          return;
-        }
+        if (!parent.params.includes(node)) return;
       }
 
       if (
@@ -67,9 +62,7 @@ function startRenaming(cm, ast, fromPos, newName, oldName) {
         parent.property === node &&
         !parent.computed
       ) {
-        if (parent.object.type === 'ThisExpression' && !isBaseThis) {
-          return;
-        }
+        if (parent.object.type === 'ThisExpression' && !isBaseThis) return;
       }
 
       const thisContext = getContext(
@@ -83,6 +76,8 @@ function startRenaming(cm, ast, fromPos, newName, oldName) {
       let shouldRename = false;
       let shouldRenameGlobalVar = false;
       const isThis = isThisReference(cm, ast, pos, oldName);
+
+      shouldRenameGlobalVar = isGlobal && thisContext === 'global';
 
       // Handle renaming inside classes
       if (isInsideClassContext) {
@@ -121,14 +116,6 @@ function startRenaming(cm, ast, fromPos, newName, oldName) {
           isThis === isBaseThis &&
           baseContext === thisContext
         ) {
-          Object.entries(classMeta.methodVars || {}).forEach(
-            ([methodName, vars]) => {
-              if (!vars.includes(oldName) && thisContext === methodName) {
-                const shouldRenameMethodVar = true;
-              }
-            }
-          );
-
           shouldRename =
             thisContext === baseContext &&
             (currentMethodName === 'constructor' || shouldRenameGlobalVar);
@@ -162,7 +149,6 @@ function startRenaming(cm, ast, fromPos, newName, oldName) {
             isGlobal &&
             !Object.prototype.hasOwnProperty.call(thisScopeVars, oldName);
         }
-        shouldRenameGlobalVar = isGlobal && thisContext === 'global';
       }
       // Handle renaming outside classes
       else {
@@ -201,15 +187,13 @@ function startRenaming(cm, ast, fromPos, newName, oldName) {
           isBaseThis
         );
 
-        if (
-          isThisGlobal &&
-          thisContext in userDefinedFunctionMetadata &&
-          userDefinedFunctionMetadata[thisContext].params.some(
-            (param) => param.p === oldName
-          )
-        ) {
-          return;
-        }
+        const params = userDefinedFunctionMetadata[thisContext]?.params || [];
+        const hasParamNamedOldName = params.some((param) =>
+          typeof param === 'string'
+            ? param === oldName
+            : param?.name === oldName || param?.p === oldName
+        );
+        if (isThisGlobal && hasParamNamedOldName) return;
 
         const methodPath = path.findParent((p) => p.isClassMethod());
         let currentMethodName = null;

@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
@@ -20,10 +19,10 @@ const icons = {
   google: GoogleIcon
 };
 
-const services = {
-  github: 'github',
-  google: 'google'
-};
+export enum SocialAuthServices {
+  github = 'github',
+  google = 'google'
+}
 
 const servicesLabels = {
   github: 'GitHub',
@@ -34,7 +33,16 @@ const StyledButton = styled(Button)`
   width: ${remSize(300)};
 `;
 
-function SocialAuthButton({ service, linkStyle, isConnected }) {
+export interface SocialAuthButtonProps {
+  service: SocialAuthServices;
+  linkStyle?: boolean;
+  isConnected?: boolean;
+}
+export function SocialAuthButton({
+  service,
+  linkStyle = false,
+  isConnected = false
+}: SocialAuthButtonProps) {
   const { t } = useTranslation();
 
   const ServiceIcon = icons[service];
@@ -81,18 +89,3 @@ function SocialAuthButton({ service, linkStyle, isConnected }) {
     </StyledButton>
   );
 }
-
-SocialAuthButton.services = services;
-
-SocialAuthButton.propTypes = {
-  service: PropTypes.oneOf(['github', 'google']).isRequired,
-  linkStyle: PropTypes.bool,
-  isConnected: PropTypes.bool
-};
-
-SocialAuthButton.defaultProps = {
-  linkStyle: false,
-  isConnected: false
-};
-
-export default SocialAuthButton;

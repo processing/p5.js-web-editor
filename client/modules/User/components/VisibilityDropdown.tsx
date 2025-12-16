@@ -1,13 +1,29 @@
 import React, { useState, useRef, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import LockIcon from '../../../images/lock.svg';
 import EarthIcon from '../../../images/earth.svg';
 import CheckmarkIcon from '../../../images/checkmark.svg';
 
-const VisibilityDropdown = ({ sketch, onVisibilityChange, location }) => {
+export interface VisibilityDropdownProps {
+  sketch: {
+    id: string;
+    name: string;
+    visibility: string;
+  };
+  onVisibilityChange: (
+    sketchId: string,
+    sketchName: string,
+    newVisibility: string
+  ) => void;
+  location?: string;
+}
+export const VisibilityDropdown = ({
+  sketch,
+  onVisibilityChange,
+  location = 'sketchlist'
+}: VisibilityDropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef(null);
+  const dropdownRef = useRef<null | HTMLDivElement>(null);
 
   const { t } = useTranslation();
 
@@ -31,8 +47,13 @@ const VisibilityDropdown = ({ sketch, onVisibilityChange, location }) => {
     visibilityOptions[0];
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Node | null;
+      if (
+        dropdownRef.current &&
+        target &&
+        !dropdownRef.current.contains(target)
+      ) {
         setIsOpen(false);
       }
     };
@@ -41,14 +62,17 @@ const VisibilityDropdown = ({ sketch, onVisibilityChange, location }) => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const handleVisibilitySelect = (newVisibility) => {
+  const handleVisibilitySelect = (newVisibility: string) => {
     if (newVisibility !== sketch.visibility) {
       onVisibilityChange(sketch.id, sketch.name, newVisibility);
     }
     setIsOpen(false);
   };
 
-  const handleKeyDown = (event, visibility) => {
+  const handleKeyDown = (
+    event: React.KeyboardEvent<HTMLDivElement>,
+    visibility: string
+  ) => {
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();
       handleVisibilitySelect(visibility);
@@ -104,19 +128,3 @@ const VisibilityDropdown = ({ sketch, onVisibilityChange, location }) => {
     </div>
   );
 };
-
-VisibilityDropdown.defaultProps = {
-  location: 'sketchlist'
-};
-
-VisibilityDropdown.propTypes = {
-  sketch: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    visibility: PropTypes.string.isRequired
-  }).isRequired,
-  onVisibilityChange: PropTypes.func.isRequired,
-  location: PropTypes.string
-};
-
-export default VisibilityDropdown;

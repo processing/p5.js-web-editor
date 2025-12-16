@@ -20,7 +20,7 @@ import StopIcon from '../../../../images/stop.svg';
 import PreferencesIcon from '../../../../images/preferences.svg';
 import ProjectName from './ProjectName';
 import VersionIndicator from '../VersionIndicator';
-import VisibilityDropdown from '../../../User/components/VisibilityDropdown';
+import { VisibilityDropdown } from '../../../User/components/VisibilityDropdown';
 import { changeVisibility } from '../../actions/project';
 
 const Toolbar = (props) => {

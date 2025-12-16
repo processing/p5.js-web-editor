@@ -4,8 +4,9 @@ import Nav from '../../IDE/components/Header/Nav';
 import { RootPage } from '../../../components/RootPage';
 import Collection from '../components/Collection';
 
-const CollectionView = () => {
-  const params = useParams();
+export const CollectionView = () => {
+  // eslint-disable-next-line camelcase
+  const params = useParams<{ collection_id: string; username: string }>();
 
   return (
     <RootPage>
@@ -17,5 +18,3 @@ const CollectionView = () => {
     </RootPage>
   );
 };
-
-export default CollectionView;

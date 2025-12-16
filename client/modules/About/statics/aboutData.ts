@@ -1,4 +1,9 @@
-export const ContactSectionLinks = [
+import type {
+  ContactSectionLink,
+  AboutSectionInfoSection
+} from '../pages/About';
+
+export const ContactSectionLinks: ContactSectionLink[] = [
   {
     label: 'About.Github',
     href: 'https://github.com/processing/p5.js-web-editor'
@@ -22,7 +27,7 @@ export const ContactSectionLinks = [
   }
 ];
 
-export const AboutSectionInfo = [
+export const AboutSectionInfo: AboutSectionInfoSection[] = [
   {
     header: 'About.NewP5',
     items: [
