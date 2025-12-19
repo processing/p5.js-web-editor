@@ -7,16 +7,23 @@ import { validateSignup } from '../../../utils/reduxFormUtils';
 import { validateAndSignUpUser } from '../actions';
 import { Button, ButtonTypes } from '../../../common/Button';
 import { apiClient } from '../../../utils/apiClient';
-import { useSyncFormTranslations } from '../../../common/useSyncFormTranslations';
+import {
+  FormLike,
+  useSyncFormTranslations
+} from '../../../common/useSyncFormTranslations';
+import {
+  CreateUserRequestBody,
+  DuplicateUserCheckQuery
+} from '../../../../common/types';
 
-const timeoutRef = { current: null };
+const timeoutRef: { current: (() => void) | null } = { current: null };
 
-function asyncValidate(fieldToValidate, value) {
+function asyncValidate(fieldToValidate: 'username' | 'email', value: string) {
   if (!value || value.trim().length === 0) {
     return Promise.resolve('');
   }
 
-  const queryParams = {
+  const queryParams: DuplicateUserCheckQuery = {
     [fieldToValidate]: value,
     check_type: fieldToValidate
   };
@@ -48,18 +55,18 @@ function asyncValidate(fieldToValidate, value) {
   });
 }
 
-function validateUsername(username) {
+function validateUsername(username: CreateUserRequestBody['username']) {
   return asyncValidate('username', username);
 }
 
-function validateEmail(email) {
+function validateEmail(email: CreateUserRequestBody['email']) {
   return asyncValidate('email', email);
 }
 
-function SignupForm() {
+export function SignupForm() {
   const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
-  const formRef = useRef(null);
+  const formRef = useRef<FormLike<CreateUserRequestBody> | null>(null);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -69,7 +76,7 @@ function SignupForm() {
   const handleConfirmVisibility = () =>
     setShowConfirmPassword(!showConfirmPassword);
 
-  function onSubmit(formProps) {
+  function onSubmit(formProps: CreateUserRequestBody) {
     return dispatch(validateAndSignUpUser(formProps));
   }
 
@@ -216,5 +223,3 @@ function SignupForm() {
     </Form>
   );
 }
-
-export default SignupForm;

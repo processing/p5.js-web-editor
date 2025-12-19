@@ -6,14 +6,15 @@ import { useTranslation } from 'react-i18next';
 import { verifyEmailConfirmation } from '../actions';
 import { RootPage } from '../../../components/RootPage';
 import Nav from '../../IDE/components/Header/Nav';
+import type { RootState } from '../../../reducers';
 
-const EmailVerificationView = () => {
+export const EmailVerificationView = () => {
   const { t } = useTranslation();
   const location = useLocation();
   const dispatch = useDispatch();
   const browserHistory = useHistory();
   const emailVerificationTokenState = useSelector(
-    (state) => state.user.emailVerificationTokenState
+    (state: RootState) => state.user.emailVerificationTokenState
   );
   const verificationToken = useMemo(() => {
     const searchParams = new URLSearchParams(location.search);
@@ -53,4 +54,3 @@ const EmailVerificationView = () => {
     </RootPage>
   );
 };
-export default EmailVerificationView;

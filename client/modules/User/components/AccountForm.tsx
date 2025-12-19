@@ -6,14 +6,21 @@ import { Button, ButtonTypes } from '../../../common/Button';
 import { validateSettings } from '../../../utils/reduxFormUtils';
 import { updateSettings, initiateVerification } from '../actions';
 import { apiClient } from '../../../utils/apiClient';
+import {
+  DuplicateUserCheckQuery,
+  UpdateSettingsRequestBody
+} from '../../../../common/types';
+import { RootState } from '../../../reducers';
+import type { AccountForm as AccountFormType } from '../../../utils/reduxFormUtils';
 
-function asyncValidate(fieldToValidate, value) {
+function asyncValidate(fieldToValidate: 'username' | 'email', value: string) {
   if (!value || value.trim().length === 0) {
     return '';
   }
-  const queryParams = {};
+  const queryParams: DuplicateUserCheckQuery = {
+    check_type: fieldToValidate
+  };
   queryParams[fieldToValidate] = value;
-  queryParams.check_type = fieldToValidate;
   return apiClient
     .get('/signup/duplicate_check', { params: queryParams })
     .then((response) => {
@@ -24,27 +31,27 @@ function asyncValidate(fieldToValidate, value) {
     });
 }
 
-function AccountForm() {
+export function AccountForm() {
   const { t } = useTranslation();
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
 
-  const handleInitiateVerification = (evt) => {
+  const handleInitiateVerification = (evt: React.MouseEvent) => {
     evt.preventDefault();
     dispatch(initiateVerification());
   };
 
-  function validateUsername(username) {
+  function validateUsername(username: AccountFormType['username']) {
     if (username === user.username) return '';
     return asyncValidate('username', username);
   }
 
-  function validateEmail(email) {
+  function validateEmail(email: AccountFormType['email']) {
     if (email === user.email) return '';
     return asyncValidate('email', email);
   }
 
-  function onSubmit(formProps) {
+  function onSubmit(formProps: UpdateSettingsRequestBody) {
     return dispatch(updateSettings(formProps));
   }
 
@@ -54,11 +61,13 @@ function AccountForm() {
       validate={validateSettings}
       onSubmit={onSubmit}
     >
-      {({ handleSubmit, submitting, invalid, restart }) => (
+      {({ handleSubmit, submitting, invalid, form }) => (
         <form
           className="form"
-          onSubmit={(event) => {
-            handleSubmit(event).then(restart);
+          onSubmit={async (event: React.FormEvent) => {
+            const result = await handleSubmit(event);
+            form.restart();
+            return result;
           }}
         >
           <Field
@@ -183,5 +192,3 @@ function AccountForm() {
     </Form>
   );
 }
-
-export default AccountForm;

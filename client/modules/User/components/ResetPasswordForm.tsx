@@ -5,15 +5,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { validateResetPassword } from '../../../utils/reduxFormUtils';
 import { initiateResetPassword } from '../actions';
 import { Button, ButtonTypes } from '../../../common/Button';
+import { RootState } from '../../../reducers';
+import { ResetPasswordInitiateRequestBody } from '../../../../common/types';
 
-function ResetPasswordForm(props) {
+export function ResetPasswordForm() {
   const { t } = useTranslation();
   const resetPasswordInitiate = useSelector(
-    (state) => state.user.resetPasswordInitiate
+    (state: RootState) => state.user.resetPasswordInitiate
   );
   const dispatch = useDispatch();
 
-  function onSubmit(formProps) {
+  function onSubmit(formProps: ResetPasswordInitiateRequestBody) {
     dispatch(initiateResetPassword(formProps));
   }
 
@@ -57,5 +59,3 @@ function ResetPasswordForm(props) {
     </Form>
   );
 }
-
-export default ResetPasswordForm;

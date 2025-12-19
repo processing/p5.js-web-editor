@@ -6,17 +6,21 @@ import ReactGA from 'react-ga';
 import { Transition } from 'react-transition-group';
 import { Link } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
-import PropTypes from 'prop-types';
 import { getConfig } from '../../../utils/getConfig';
 import { setUserCookieConsent } from '../actions';
 import { remSize, prop, device } from '../../../theme';
 import { Button, ButtonKinds } from '../../../common/Button';
+import { RootState } from '../../../reducers';
+import { CookieConsentOptions } from '../../../../common/types';
 
+interface CookieConsentContainerState {
+  state: string;
+}
 const CookieConsentContainer = styled.div`
   position: fixed;
   transition: 1.6s cubic-bezier(0.165, 0.84, 0.44, 1);
   bottom: 0;
-  transform: ${({ state }) => {
+  transform: ${({ state }: CookieConsentContainerState) => {
     if (state === 'entered') {
       return 'translateY(0)';
     }
@@ -79,37 +83,49 @@ const CookieConsentButtons = styled.div`
 
 const GOOGLE_ANALYTICS_ID = getConfig('GA_MEASUREMENT_ID');
 
-function CookieConsent({ hide }) {
-  const user = useSelector((state) => state.user);
-  const [cookieConsent, setBrowserCookieConsent] = useState('none');
+export function CookieConsent({ hide = false }: { hide?: boolean }) {
+  const user = useSelector((state: RootState) => state.user);
+  const [
+    cookieConsent,
+    setBrowserCookieConsent
+  ] = useState<CookieConsentOptions>(CookieConsentOptions.NONE);
   const [inProp, setInProp] = useState(false);
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
   function initializeCookieConsent() {
     if (user.authenticated) {
+      if (!user.cookieConsent) {
+        return;
+      }
       setBrowserCookieConsent(user.cookieConsent);
       Cookies.set('p5-cookie-consent', user.cookieConsent, { expires: 365 });
       return;
     }
-    setBrowserCookieConsent('none');
-    Cookies.set('p5-cookie-consent', 'none', { expires: 365 });
+    setBrowserCookieConsent(CookieConsentOptions.NONE);
+    Cookies.set('p5-cookie-consent', CookieConsentOptions.NONE, {
+      expires: 365
+    });
   }
 
   function acceptAllCookies() {
     if (user.authenticated) {
-      dispatch(setUserCookieConsent('all'));
+      dispatch(setUserCookieConsent(CookieConsentOptions.ALL));
     }
-    setBrowserCookieConsent('all');
-    Cookies.set('p5-cookie-consent', 'all', { expires: 365 });
+    setBrowserCookieConsent(CookieConsentOptions.ALL);
+    Cookies.set('p5-cookie-consent', CookieConsentOptions.ALL, {
+      expires: 365
+    });
   }
 
   function acceptEssentialCookies() {
     if (user.authenticated) {
-      dispatch(setUserCookieConsent('essential'));
+      dispatch(setUserCookieConsent(CookieConsentOptions.ESSENTIAL));
     }
-    setBrowserCookieConsent('essential');
-    Cookies.set('p5-cookie-consent', 'essential', { expires: 365 });
+    setBrowserCookieConsent(CookieConsentOptions.ESSENTIAL);
+    Cookies.set('p5-cookie-consent', CookieConsentOptions.ESSENTIAL, {
+      expires: 365
+    });
     // Remove Google Analytics Cookies
     Cookies.remove('_ga');
     Cookies.remove('_gat');
@@ -118,11 +134,19 @@ function CookieConsent({ hide }) {
 
   function mergeCookieConsent() {
     if (user.authenticated) {
-      if (user.cookieConsent === 'none' && cookieConsent !== 'none') {
-        dispatch(setUserCookieConsent(cookieConsent));
-      } else if (user.cookieConsent !== 'none') {
+      if (!user.cookieConsent) {
+        user.cookieConsent = CookieConsentOptions.NONE;
+      }
+      if (
+        user.cookieConsent === CookieConsentOptions.NONE &&
+        cookieConsent !== CookieConsentOptions.NONE
+      ) {
+        dispatch(setUserCookieConsent(cookieConsent as CookieConsentOptions));
+      } else if (user.cookieConsent !== CookieConsentOptions.NONE) {
         setBrowserCookieConsent(user.cookieConsent);
-        Cookies.set('p5-cookie-consent', user.cookieConsent, { expires: 365 });
+        Cookies.set('p5-cookie-consent', user.cookieConsent, {
+          expires: 365
+        });
       }
     }
   }
@@ -130,7 +154,7 @@ function CookieConsent({ hide }) {
   useEffect(() => {
     const p5CookieConsent = Cookies.get('p5-cookie-consent');
     if (p5CookieConsent) {
-      setBrowserCookieConsent(p5CookieConsent);
+      setBrowserCookieConsent(p5CookieConsent as CookieConsentOptions);
     } else {
       initializeCookieConsent();
     }
@@ -165,9 +189,9 @@ function CookieConsent({ hide }) {
 
   return (
     <Transition in={inProp} timeout={500}>
-      {(state) => (
+      {(state: CookieConsentContainerState['state']) => (
         <CookieConsentContainer state={state}>
-          <CookieConsentDialog role="dialog" tabIndex="0">
+          <CookieConsentDialog role="dialog" tabIndex={0}>
             <CookieConsentHeader>{t('Cookies.Header')}</CookieConsentHeader>
             <CookieConsentContent>
               <CookieConsentCopy>
@@ -191,13 +215,3 @@ function CookieConsent({ hide }) {
     </Transition>
   );
 }
-
-CookieConsent.propTypes = {
-  hide: PropTypes.bool
-};
-
-CookieConsent.defaultProps = {
-  hide: false
-};
-
-export default CookieConsent;

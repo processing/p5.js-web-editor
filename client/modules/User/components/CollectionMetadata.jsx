@@ -11,7 +11,7 @@ import AddToCollectionSketchList from '../../IDE/components/AddToCollectionSketc
 import EditableInput from '../../IDE/components/EditableInput';
 import { SketchSearchbar } from '../../IDE/components/Searchbar';
 import { getCollection } from '../../IDE/selectors/collections';
-import ShareURL from './CollectionShareButton';
+import { ShareURL } from './CollectionShareButton';
 
 function CollectionMetadata({ collectionId }) {
   const { t } = useTranslation();
