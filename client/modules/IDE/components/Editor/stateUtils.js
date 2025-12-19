@@ -56,6 +56,7 @@ import { emmetConfig } from '@emmetio/codemirror6-plugin';
 
 import p5JavaScript from './p5JavaScript';
 import tidyCodeWithPrettier from './tidier';
+import { highlightStyle } from './highlightStyle';
 
 // ----- TODOS -----
 // - JSON linter
@@ -323,7 +324,7 @@ export function createNewFileState(filename, document, settings) {
     highlightActiveLineGutter(),
     highlightSpecialChars(),
     highlightSelectionMatches(),
-    syntaxHighlighting(defaultHighlightStyle, { fallback: true }), // Might need to replace highlight style
+    syntaxHighlighting(highlightStyle),
     // Selection extensions
     drawSelection(),
     rectangularSelection(),

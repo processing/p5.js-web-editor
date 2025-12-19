@@ -186,72 +186,75 @@
   }
 }
 
-// .cm-comment {
-//   @include themify() { color: getThemifyVariable("highlight-style-comment-color"); }
-// }
+// Used for comment, lineComment, blockComment, docComment, docString
+.cm-comment {
+  @include themify() { color: getThemifyVariable("highlight-style-comment-color"); }
+}
 
-// .cm-def {
-//   @include themify() { color: getThemifyVariable("highlight-style-def-color"); }
-// }
+// Used for name, variableName, typeName
+.cm-variable {
+  @include themify() { color: getThemifyVariable("highlight-style-variable-color"); }
+}
 
-// .cm-string {
-//   @include themify() { color: getThemifyVariable("highlight-style-string-color"); }
-// }
+// Used for string, character, attributeValue
+.cm-string {
+  @include themify() { color: getThemifyVariable("highlight-style-string-color"); }
+}
 
-// .cm-string-2 {
-//   @include themify() { color: getThemifyVariable("highlight-style-string2-color"); }
-// }
+// Used for regexp
+.cm-regexp {
+  @include themify() { color: getThemifyVariable("highlight-style-regexp-color"); }
+}
 
-// .cm-number {
-//   @include themify() { color: getThemifyVariable("highlight-style-number-color"); }
-// }
+// Used for number, integer, float
+.cm-number {
+  @include themify() { color: getThemifyVariable("highlight-style-number-color"); }
+}
 
-// .cm-variable {
-//   @include themify() { color: getThemifyVariable("highlight-style-variable-color"); }
-// }
+// Used for bool, atom, null
+.cm-atom {
+  @include themify() { color: getThemifyVariable("highlight-style-atom-color"); }
+}
 
-// .cm-variable2 {
-//   @include themify() { color: getThemifyVariable("highlight-style-variable2-color"); }
-// }
+// Used for keyword, self, function, className
+.cm-keyword {
+  @include themify() { color: getThemifyVariable("highlight-style-keyword-color"); }
+}
 
-// .cm-property {
-//   @include themify() { color: getThemifyVariable("highlight-style-property-color"); }
-// }
+// Used for operatorKeyword, controlKeyword, operator, derefOperator, arithmeticOperator,
+// logicOperator, bitwiseOperator, compareOperator, updateOperator, typeOperator
+// controlOperator
+.cm-operator {
+  @include themify() { color: getThemifyVariable("highlight-style-operator-color"); }
+}
 
-// .cm-atom {
-//   @include themify() { color: getThemifyVariable("highlight-style-atom-color"); }
-// }
+// Used for definitionKeyword, definition, const, local
+.cm-def {
+  @include themify() { color: getThemifyVariable("highlight-style-def-color"); }
+}
 
-// .cm-operator {
-//   @include themify() { color: getThemifyVariable("highlight-style-operator-color"); }
-// }
+// tagName, heading, heading1, heading2, heading3, heading4, heading5, heading6,
+// list, quote, emphasis, strong, link
+.cm-tag {
+  @include themify() { color: getThemifyVariable("highlight-style-tag-color"); }
+}
 
-// .cm-matchingbracket {
-//   @include themify() {
-//     outline: 1px solid getThemifyVariable("highlight-style-matchingbracket-outline-color");
-//     outline-offset: 1px;
-//     color: getThemifyVariable("highlight-style-default-color") !important;
-//   }
-// }
+// Used for propertyName
+.cm-property {
+  @include themify() { color: getThemifyVariable("highlight-style-property-color"); }
+}
+
+// Used for attributeName
+.cm-attribute {
+  @include themify() { color: getThemifyVariable("highlight-style-attribute-color"); }
+}
 
 // .cm-qualifier {
 //   @include themify() { color: getThemifyVariable("highlight-style-variable-color"); }
 // }
 
-// .cm-tag {
-//   @include themify() { color: getThemifyVariable("highlight-style-atom-color"); }
-// }
-
 // .cm-builtin {
 //   @include themify() { color: getThemifyVariable("highlight-style-variable-color"); }
-// }
-
-// .cm-attribute {
-//   @include themify() { color: getThemifyVariable("highlight-style-property-color"); }
-// }
-
-// .cm-keyword {
-//   @include themify() { color: getThemifyVariable("highlight-style-keyword-color"); }
 // }
 
 // .cm-p5-function {
@@ -261,4 +264,19 @@
 
 // .cm-p5-variable {
 //   @include themify() { color: getThemifyVariable("p5-variable-color"); }
+// }
+
+
+// Unassigned: literal, escape, color, url, unit, modifier, punctuation, separator
+// bracket, angleBracket, squareBracket, paren, brace, content
+// contentSeparator, monospace, strikethrough, inserted, deleted, changed, invalid, meta,
+// documentMeta, annotation, processingInstruction, standard, special, macroName
+
+// TODO: Matching bracket code
+// .cm-matchingbracket {
+//   @include themify() {
+//     outline: 1px solid getThemifyVariable("highlight-style-matchingbracket-outline-color");
+//     outline-offset: 1px;
+//     color: getThemifyVariable("highlight-style-default-color") !important;
+//   }
 // }
