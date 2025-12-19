@@ -56,7 +56,12 @@
         "displayName": "client",
         "testEnvironment": "jsdom",
         "transform": {
-          "^.+\\.[jt]sx?$": "babel-jest"
+          "\\.[jt]sx?$": [
+            "babel-jest",
+            {
+              "configFile": "./.babelrc"
+            }
+          ]
         },
         "moduleFileExtensions": [
           "ts",
@@ -76,14 +81,6 @@
         "transformIgnorePatterns": [
           "<rootDir>/node_modules/(?!colors-named|colors-named-hex|hsl-matcher|@emmetio/)"
         ],
-        "transform": {
-          "\\.[jt]sx?$": [
-            "babel-jest",
-            {
-              "configFile": "./.babelrc"
-            }
-          ]
-        },
         "testMatch": [
           "<rootDir>/client/**/*.test.(js|jsx|ts|tsx)"
         ]
@@ -211,6 +208,7 @@
     "@codemirror/view": "^6.36.5",
     "@emmetio/codemirror6-plugin": "^0.4.0",
     "@gatsbyjs/webpack-hot-middleware": "^2.25.3",
+    "@lezer/highlight": "^1.2.3",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.11",
     "@redux-devtools/core": "^3.11.0",
     "@redux-devtools/dock-monitor": "^3.0.1",
