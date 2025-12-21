@@ -29,7 +29,7 @@ export async function dropzoneAcceptCallback(userId, file, done) {
       // eslint-disable-next-line no-param-reassign
       file.content = await file.text();
       // Make it an error so that it won't be sent to S3, but style as a success.
-      done('Uploading plaintext file locally.');
+      done('Large text file detected: Loading locally for editing.');
       file.previewElement.classList.remove('dz-error');
       file.previewElement.classList.add('dz-success');
       file.previewElement.classList.add('dz-processing');
