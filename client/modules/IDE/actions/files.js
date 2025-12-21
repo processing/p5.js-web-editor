@@ -11,6 +11,8 @@ import {
 import { setProjectSavedTime } from './project';
 import { createError } from './ide';
 
+const TEXT_FILE_REGEX = /\.(js|jsx|html|css|json|txt|csv|tsv|vert|frag|xml)$/i;
+
 export function appendToFilename(filename, string) {
   const dotIndex = filename.lastIndexOf('.');
   if (dotIndex === -1) return filename + string;
@@ -245,4 +247,23 @@ export function getBlobUrl(file) {
   const fileBlob = blobUtil.createBlob([file.content], { type: 'text/plain' });
   const blobURL = blobUtil.createObjectURL(fileBlob);
   return blobURL;
+}
+
+export function fetchS3FileContent(file) {
+  return (dispatch) => {
+    if (file.url && !file.content && TEXT_FILE_REGEX.test(file.name)) {
+      return fetch(file.url)
+        .then((response) => {
+          if (!response.ok) throw new Error('Failed to fetch from S3');
+          return response.text();
+        })
+        .then((text) => {
+          dispatch(updateFileContent(file.id, text));
+        })
+        .catch((err) => {
+          console.error('S3 Fetch Error:', err);
+        });
+    }
+    return Promise.resolve();
+  };
 }
