@@ -5,13 +5,13 @@ import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { withTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import MenuItem from '../../../../components/Dropdown/MenuItem';
-import TableDropdown from '../../../../components/Dropdown/TableDropdown';
+import { MenuItem } from '../../../../components/Dropdown/MenuItem';
+import { TableDropdown } from '../../../../components/Dropdown/TableDropdown';
 import * as ProjectActions from '../../actions/project';
 import * as CollectionsActions from '../../actions/collections';
 import * as IdeActions from '../../actions/ide';
 import * as ToastActions from '../../actions/toast';
-import dates from '../../../../utils/formatDate';
+import { formatDateToString } from '../../../../utils/formatDate';
 import { remSize, prop } from '../../../../theme';
 
 const SketchsTableRow = styled.tr`
@@ -34,6 +34,12 @@ const SketchsTableRow = styled.tr`
 
   a {
     color: ${prop('primaryTextColor')};
+    text-decoration: underline;
+
+    &:hover {
+      text-decoration: underline;
+      text-decoration-thickness: 0.1em;
+    }
   }
 
   &.is-deleted > * {
@@ -87,7 +93,7 @@ const SketchlistDropdownColumn = styled.td`
   }
 `;
 const formatDateCell = (date, mobile = false) =>
-  dates.format(date, { showTime: !mobile });
+  formatDateToString(date, { showTime: !mobile });
 
 const CollectionListRowBase = (props) => {
   const [renameOpen, setRenameOpen] = useState(false);

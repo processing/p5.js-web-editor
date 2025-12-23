@@ -47,6 +47,9 @@
       "LogOut": "登出"
     }
   },
+  "Banner": {
+    "Copy": "<bold>Donate Today!</bold> Support p5.js and the Processing Foundation."
+  },
   "CodemirrorFindAndReplace": {
     "ToggleReplace": "开关替换选项",
     "Find": "查找",

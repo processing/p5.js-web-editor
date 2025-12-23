@@ -16,13 +16,13 @@ module.exports = [
 
     resolve: {
       extensions: ['*', '.js', '.jsx', '.ts', '.tsx'],
-      modules: ['client', 'node_modules']
+      modules: ['server', 'client', 'node_modules']
     },
 
     module: {
       rules: [
         {
-          test: /\.js$/,
+          test: /\.[jt]sx?$/,
           exclude: /node_modules/,
           loader: 'babel-loader',
           options: {
@@ -46,13 +46,13 @@ module.exports = [
 
     resolve: {
       extensions: ['*', '.js', '.jsx', '.ts', '.tsx'],
-      modules: ['client', 'node_modules']
+      modules: ['server', 'client', 'node_modules']
     },
 
     module: {
       rules: [
         {
-          test: /\.[jt]s$/,
+          test: /\.[jt]sx?$/,
           exclude: /node_modules/,
           loader: 'babel-loader',
           options: {
@@ -76,13 +76,13 @@ module.exports = [
 
     resolve: {
       extensions: ['*', '.js', '.jsx', '.ts', '.tsx'],
-      modules: ['client', 'node_modules']
+      modules: ['server', 'client', 'node_modules']
     },
 
     module: {
       rules: [
         {
-          test: /\.[jt]s$/,
+          test: /\.[jt]sx?$/,
           exclude: /node_modules/,
           loader: 'babel-loader',
           options: {

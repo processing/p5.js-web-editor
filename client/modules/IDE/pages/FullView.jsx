@@ -3,7 +3,7 @@ import Helmet from 'react-helmet';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import PreviewFrame from '../components/PreviewFrame';
-import PreviewNav from '../../../components/PreviewNav';
+import { PreviewNav } from '../../../components/PreviewNav';
 import { getProject } from '../actions/project';
 import { startSketch } from '../actions/ide';
 import {
@@ -12,7 +12,7 @@ import {
   MessageTypes
 } from '../../../utils/dispatcher';
 import useInterval from '../hooks/useInterval';
-import RootPage from '../../../components/RootPage';
+import { RootPage } from '../../../components/RootPage';
 
 function FullView() {
   const dispatch = useDispatch();

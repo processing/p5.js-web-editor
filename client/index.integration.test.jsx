@@ -4,13 +4,13 @@ import React from 'react';
 import Routing from './routes';
 
 import { reduxRender, act, waitFor, screen, within } from './test-utils';
-import configureStore from './store';
+import { setupStore } from './store';
 import * as Actions from './modules/User/actions';
 import { userResponse } from './testData/testServerResponses';
 
 // setup for the app
 const initialState = window.__INITIAL_STATE__;
-const store = configureStore(initialState);
+const store = setupStore(initialState);
 
 // need to mock this file or it'll throw ERRCONNECTED
 jest.mock('./i18n');

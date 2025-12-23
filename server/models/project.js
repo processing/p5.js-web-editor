@@ -38,6 +38,11 @@ const projectSchema = new Schema(
     serveSecure: { type: Boolean, default: false },
     files: { type: [fileSchema] },
     _id: { type: String, default: shortid.generate },
+    visibility: {
+      type: String,
+      enum: ['Private', 'Public'],
+      default: 'Public'
+    },
     slug: { type: String }
   },
   { timestamps: true }
@@ -55,7 +60,7 @@ projectSchema.pre('save', function generateSlug(next) {
   if (!this.slug) {
     this.slug = slugify(this.name, '_');
   }
-  next();
+  return next();
 });
 
 /**
@@ -74,6 +79,22 @@ projectSchema.methods.isSlugUnique = async function isSlugUnique() {
     isUnique: docsWithSlug.length === 0,
     conflictingIds: docsWithSlug.map((d) => d._id) || []
   };
+};
+
+/**
+ * Queries Project collection by userId and returns all Projects that match.
+ * @return {Promise<{ isUnique: boolean; conflictingIds: string[] }>}
+ */
+projectSchema.statics.getProjectsForUserId = async function getProjectsForUserId(
+  userId
+) {
+  const project = this;
+
+  return project
+    .find({ user: userId })
+    .sort('-createdAt')
+    .select('name files id createdAt updatedAt')
+    .exec();
 };
 
 export default mongoose.models.Project ||

@@ -6,7 +6,7 @@ import {
 } from '@aws-sdk/client-s3';
 import path from 'path';
 import mongoose from 'mongoose';
-import User from '../models/user';
+import { User } from '../models/user';
 import Project from '../models/project';
 import async from 'async';
 import dotenv from 'dotenv';

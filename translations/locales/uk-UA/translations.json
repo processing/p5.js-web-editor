@@ -19,13 +19,13 @@
     "Sketch": {
       "Title": "Скетч",
       "AddFile": "Додати файл",
-      "AddFolder": "Додати папку",
+      "AddFolder": "Додати теку",
       "Run": "Запустити",
       "Stop": "Зупинити"
     },
     "Help": {
       "Title": "Довідка",
-      "KeyboardShortcuts": "Комбінації клавіш",
+      "KeyboardShortcuts": "Сполучення клавіш",
       "Reference": "Довідник з функцій",
       "About": "Про p5.js"
     },
@@ -47,6 +47,9 @@
       "LogOut": "Вийти"
     }
   },
+  "Banner": {
+    "Copy": "<bold>Donate Today!</bold> Support p5.js and the Processing Foundation."
+  },
   "CodemirrorFindAndReplace": {
     "ToggleReplace": "Увімкнути заміну",
     "Find": "Знайти",
@@ -67,10 +70,13 @@
     "UsernameOrEmailARIA": "Електронна пошта або ім'я користувача",
     "Password": "Пароль",
     "PasswordARIA": "Пароль",
-    "Submit": "Увійти"
+    "Submit": "Увійти",
+    "Errors": {
+      "invalidCredentials": "Неправильна електронна пошта або пароль."
+    }
   },
   "LoginView": {
-    "Title": "p5.js веб-редактор | Вхід",
+    "Title": "p5.js вебредактор | Вхід",
     "Login": "Увійти",
     "LoginOr": "або",
     "SignUp": "Зареєструватися",
@@ -88,23 +94,48 @@
   },
   "About": {
     "Title": "Про редактор",
-    "TitleHelmet": "p5.js веб-редактор | Про редактор",
+    "TitleHelmet": "p5.js вебредактор | Про редактор",
+	"Headline": "Створюй, поширюй та реміксуй скетчі p5.js за допомогою редактора p5.js.",
     "Contribute": "Внесок",
+	"IntroDescription1": "p5.js — це безплатна бібліотека JavaScript з відкритим кодом для навчання програмуванню та створення мистецтва. За допомогою редактора p5.js ви можете створювати, поширювати та реміксувати скетчі p5.js без потреби щось завантажувати чи налаштовувати.",
+    "IntroDescription2": "Ми хочемо, щоб програмування та інструменти для його вивчення були відкритими й доступними. Підтримайте p5.js, зробивши внесок на користь Processing Foundation — це допоможе розвивати бібліотеку, створювати навчальні матеріали та проводити події для спільноти.",
+	"Donate": "Підтримати",
     "NewP5": "Початківець в p5.js?",
     "Report": "Повідомити про помилку",
     "Learn": "Посібники",
-    "Twitter": "Twitter",
+    "X": "X",
     "Home": "Головна",
     "Instagram": "Instagram",
     "Discord": "Discord",
-    "WebEditor": "Веб редактор",
+	"DiscordCTA": "Доєднуйтесь у Discord",
+	"Youtube": "Youtube",
+    "Github": "Github",
+    "GetInvolved": "Долучитися",
+    "WebEditor": "Вебредактор",
     "Resources": "Ресурси",
+	"Reference": "Довідка",
     "Libraries": "Бібліотеки",
     "Forum": "Форум",
+	"ForumCTA": "Приєднатися до форуму",
     "Examples": "Приклади",
     "PrivacyPolicy": "Політика конфіденційності",
     "TermsOfUse": "Умови використання",
-    "CodeOfConduct": "Кодекс поведінки"
+    "CodeOfConduct": "Кодекс поведінки",
+	"Email": "Електронна пошта",
+    "EmailAddress": "hello@p5js.org",
+    "Socials": "Соціальні мережі",
+    "LinkDescriptions": {
+      "Home": "Дізнайтеся більше про p5.js та нашу спільноту.",
+      "Examples": "Дослідіть можливості p5.js за допомогою коротких прикладів.",
+      "CodeOfConduct": "Читайте наш Статут спільноти та Кодекс поведінки.",
+      "Libraries": "Розширте можливості p5.js за допомогою бібліотек, створених спільнотою.",
+      "Reference": "Знайдіть прості пояснення для кожного фрагмента коду p5.js.",
+      "Donate": "Підтримайте цю роботу, зробивши внесок до Processing Foundation.",
+      "Contribute": "Зробіть свій внесок у розробку редактора p5.js з відкритим кодом на Github.",
+      "Report": "Повідомте про помилку в редакторі p5.js.",
+      "Forum": "Розширте можливості p5.js за допомогою бібліотек, створених спільнотою.",
+      "Discord": "Розширте можливості p5.js за допомогою бібліотек, створених спільнотою."
+    }
   },
   "Toast": {
     "OpenedNewSketch": "Відкрито новий скетч.",
@@ -112,7 +143,12 @@
     "SketchFailedSave": "Не вдалося зберегти скетч.",
     "AutosaveEnabled": "Автозбереження увімкнено.",
     "LangChange": "Мова змінена",
-    "SettingsSaved": "Налаштування збережено."
+    "SettingsSaved": "Налаштування збережено.",
+	"EmptyCurrentPass": "Ви не ввели пароль.",
+    "IncorrectCurrentPass": "Поточний пароль неправильний",
+    "DefaultError": "Щось пішло не так",
+    "UserNotFound": "Користувача не знайдено",
+    "NetworkError": "Помилка мережі"
   },
   "Toolbar": {
     "Preview": "Перегляд",
@@ -123,7 +159,10 @@
     "StopSketchARIA": "Зупинити скетч",
     "EditSketchARIA": "Редагувати ім'я скетча",
     "NewSketchNameARIA": "Нове ім'я скетча",
-    "By": " користувачем "
+    "By": " користувачем ",
+	"CustomLibraryVersion": "Вибрана версія p5.js",
+    "VersionPickerARIA": "Вибір версії",
+    "NewVersionPickerARIA": "Вибір версії"
   },
   "Console": {
     "Title": "Консоль",
@@ -138,6 +177,7 @@
     "Settings": "Налаштування",
     "GeneralSettings": "Загальні налаштування",
     "Accessibility": "Інші параметри",
+	"LibraryManagement": "Управління бібліотекою",
     "Theme": "Тема",
     "LightTheme": "Світла",
     "LightThemeARIA": "світла тема на",
@@ -150,14 +190,19 @@
     "DecreaseFontARIA": "зменшити розмір шрифту",
     "IncreaseFont": "Збільшити",
     "IncreaseFontARIA": "збільшити розмір шрифту",
+	"FontSize": "Розмір шрифту",
+    "SetFontSize": "встановити розмір шрифту",
     "Autosave": "Автозбереження",
     "On": "Так",
     "AutosaveOnARIA": "автозбереження увімкнено",
     "Off": "Ні",
     "AutosaveOffARIA": "автозбереження вимкнено",
-    "AutocloseBracketsQuotes": "Автоматично закривати дужки та лапки",
+    "AutocloseBracketsQuotes": "Автоматичне закриття дужок та лапок",
     "AutocloseBracketsQuotesOnARIA": "автоматично закривати дужки та лапки",
     "AutocloseBracketsQuotesOffARIA": "автоматично закривати дужки та лапки",
+	"AutocompleteHinter": "Автозаповнення коду",
+    "AutocompleteHinterOnARIA": "автозаповнення коду увімкено",
+    "AutocompleteHinterOffARIA": "автозаповнення коду вимкнено",
     "WordWrap": "Перенесення слів",
     "WordWrapOnARIA": "перенесення рядків увімкнено",
     "WordWrapOffARIA": "перенесення рядків вимкнено",
@@ -175,15 +220,27 @@
     "TextOutputARIA": "текст виводиться на",
     "TableText": "Таблиця",
     "TableOutputARIA": "виведення таблиці на",
-    "Sound": "Звук",
-    "SoundOutputARIA": "виведення звуку увімкнено"
+	"LibraryVersion": "Версія p5.js",
+    "LibraryVersionInfo": "Доступний [новий реліз 2.0](https://github.com/processing/p5.js/releases/) p5.js! Він стане стандартним у серпні 2026 року, тож скористайтеся цим часом, щоб протестувати його та повідомити про помилки. Зацікавлені в переході скетчів з 1.x на 2.0? Перегляньте [ресурсів сумісності та переходу.](https://github.com/processing/p5.js-compatibility)",
+    "CustomVersionTitle": "Керувати власними бібліотеками? Чудово!",
+    "CustomVersionInfo": "Версія p5.js наразі керується у коді файлу index.html. Це означає, що її не можна змінити з цієї вкладки.",
+    "CustomVersionReset": "Якщо ви хочете використовувати стандартні бібліотеки, замініть теги <script> у файлі index.html на наступні:",
+	"SoundAddon": "p5.sound.js Add-on Library",
+    "PreloadAddon": "p5.js 1.x Compatibility Add-on Library — Preload",
+    "ShapesAddon": "p5.js 1.x Compatibility Add-on Library — Shapes",
+    "DataAddon": "p5.js 1.x Compatibility Add-on Library — Data Structures",
+    "AddonOnARIA": "так",
+    "AddonOffARIA": "ні",
+    "SoundReference": "Покликання на бібліотеку p5.sound, сумісну з p5.js {{version}}",
+    "CopyToClipboardSuccess": "Скопійовано до буфера обміну!",
+    "CopyToClipboardFailure": "Нам не вдалося скопіювати текст, спробуйте виділити його та скопіювати вручну."
   },
   "KeyboardShortcuts": {
-    "Title": " Комбінації клавіш",
-    "ShortcutsFollow": "Далі йдуть комбінації клавіш для",
+    "Title": " Сполучення клавіш",
+    "ShortcutsFollow": "Сполучення клавіш для редагування коду відповідають комбінаціям у",
     "SublimeText": "Sublime Text",
     "CodeEditing": {
-      "Tidy": "Очистити",
+      "Tidy": "Охайний код",
       "FindText": "Знайти текст",
       "FindNextMatch": "Знайти наступний збіг",
       "FindPrevMatch": "Знайти попередній збіг",
@@ -193,31 +250,35 @@
       "CommentLine": "Коментар",
       "FindNextTextMatch": "Знайти наступний збіг тексту",
       "FindPreviousTextMatch": "Знайти попередній збіг тексту",
-      "CodeEditing": "Редагування коду"
+      "CodeEditing": "Редагування коду",
+	  "ColorPicker": "Вибір кольору",
+      "CreateNewFile": "Створити новий файл"
     },
+	"General": "Загальне",
     "GeneralSelection": {
       "StartSketch": "Запустити",
       "StopSketch": "Зупинити",
       "TurnOnAccessibleOutput": "Увімкнути доступне виведення",
-      "TurnOffAccessibleOutput": "Вимкнути доступне виведення"
+      "TurnOffAccessibleOutput": "Вимкнути доступне виведення",
+	  "Reference": "Перейти до довідки для обраного елемента"
     }
   },
   "Sidebar": {
     "Title": "Файли скетча",
     "ToggleARIA": "Відкрити/закрити параметри скетч-файла",
-    "AddFolder": "Додати папку",
-    "AddFolderARIA": "додати папку",
+    "AddFolder": "Додати теку",
+    "AddFolderARIA": "додати теку",
     "AddFile": "Додати файл",
     "AddFileARIA": "додати файл",
     "UploadFile": "Завантажити файл",
     "UploadFileARIA": "завантажити файл"
   },
   "FileNode": {
-    "OpenFolderARIA": "Показати вміст папки",
-    "CloseFolderARIA": "Сховати вміст папки",
+    "OpenFolderARIA": "Показати вміст теки",
+    "CloseFolderARIA": "Сховати вміст теки",
     "ToggleFileOptionsARIA": "Відкрити/закрити параметри файла",
-    "AddFolder": "Додати папку",
-    "AddFolderARIA": "додати папку",
+    "AddFolder": "Додати теку",
+    "AddFolderARIA": "додати теку",
     "AddFile": "Додати файл",
     "AddFileARIA": "додати файл",
     "UploadFile": "Завантажити файл",
@@ -237,9 +298,9 @@
     "SubmitFeedback": "Надіслати відгук",
     "SubmitFeedbackARIA": "надіслати відгук",
     "AddCollectionTitle": "Додати у колекцію",
-    "AddCollectionARIA":"додати у колекцію",
+    "AddCollectionARIA": "додати у колекцію",
     "ShareTitle": "Поширити",
-    "ShareARIA":"поширити"
+    "ShareARIA": "поширити"
   },
   "NewFileModal": {
     "Title": "Додати файл",
@@ -252,11 +313,11 @@
     "Placeholder": "Ім'я файла"
   },
   "NewFolderModal": {
-    "Title": "Додати папку",
+    "Title": "Додати теку",
     "CloseButtonARIA": "Закрити",
-    "EnterName": "Введіть ім'я папки",
-    "EmptyName": "Ім'я папки не може містити лише пробіли",
-    "InvalidExtension": "Ім'я папки не може містити розширення"
+    "EnterName": "Введіть ім'я теки",
+    "EmptyName": "Ім'я теки не може містити лише пробіли",
+    "InvalidExtension": "Ім'я теки не може містити розширення"
   },
   "NewFolderForm": {
     "AddFolderSubmit": "Створити",
@@ -268,9 +329,9 @@
     "Submit": "Надіслати електронний лист для скидання пароля"
   },
   "ResetPasswordView": {
-    "Title": "p5.js веб-редактор | Скинути пароль",
+    "Title": "p5.js вебредактор | Скинути пароль",
     "Reset": "Скинути пароль",
-    "Submitted": "Лист для скидання пароля має надійти незабаром на вашу електронну пошту.\n            Якщо лист не прийшов, перевірте папку із спамом.",
+    "Submitted": "Лист для скидання пароля має надійти незабаром на вашу електронну пошту.\n            Якщо лист не прийшов, перевірте теку із спамом.",
     "Login": "Увійти",
     "LoginOr": "або",
     "SignUp": "Зареєструватися"
@@ -278,18 +339,19 @@
   "ReduxFormUtils": {
     "errorInvalidEmail": "Будь ласка, введіть дійсну адресу електронної пошти",
     "errorEmptyEmail": "Введіть адресу електронної пошти",
+	"errorEmptyEmailorUserName": "Будь ласка, введіть електронну пошту або ім'я користувача",
     "errorPasswordMismatch": "Паролі повинні збігатися",
     "errorEmptyPassword": "Введіть пароль",
     "errorShortPassword": "Пароль повинен містити щонайменше 6 символів",
     "errorConfirmPassword": "Введіть підтвердження пароля",
     "errorNewPassword": "Введіть новий пароль або залиште поточний пароль порожнім.",
-    "errorNewPasswordRepeat":"Your New Password must differ from the current one.",
+    "errorNewPasswordRepeat": "Your New Password must differ from the current one.",
     "errorEmptyUsername": "Введіть ім'я користувача.",
     "errorLongUsername": "Ім'я користувача має містити менше 20 символів.",
     "errorValidUsername": "Ім'я користувача має складатися лише з цифр, літер, крапок, тире та символа підкреслення."
   },
   "NewPasswordView": {
-    "Title": "p5.js веб-редактор | Новий пароль",
+    "Title": "p5.js вебредактор | Новий пароль",
     "Description": "Встановити новий пароль",
     "TokenInvalidOrExpired": "Помилка скидання пароля або термін дії минув.",
     "EmptyPassword": "Введіть пароль",
@@ -312,8 +374,8 @@
   },
   "AccountView": {
     "SocialLogin": "Увійти через соціальну мережу",
-    "SocialLoginDescription": "Використовуйте свій обліковий запис GitHub або Google, щоб увійти у p5.js веб-редактор.",
-    "Title": "p5.js веб-редактор | Налаштування акаунта",
+    "SocialLoginDescription": "Використовуйте свій обліковий запис GitHub або Google, щоб увійти у p5.js вебредактор.",
+    "Title": "p5.js вебредактор | Налаштування акаунта",
     "Settings": "Налаштування акаунта",
     "AccountTab": "Акаунт",
     "AccessTokensTab": "Ключі"
@@ -357,14 +419,15 @@
     "SubmitSignup": "Зареєструватися"
   },
   "SignupView": {
-    "Title": "p5.js веб-редактор | Реєстрація",
+    "Title": "p5.js вебредактор | Реєстрація",
     "Description": "Реєстрація",
     "Or": "Або",
     "AlreadyHave": "Ви вже маєте акаунт? ",
-    "Login": "Увійти"
+    "Login": "Увійти",
+	"Warning": "Реєструючись, ви погоджуєтеся з <0>Умовами використання</0> та <1>Політикою конфіденційності редактора p5.js.</1>"
   },
   "EmailVerificationView": {
-    "Title": "p5.js веб-редактор | Підтвердження електронної пошти",
+    "Title": "p5.js вебредактор | Підтвердження електронної пошти",
     "Verify": "Підтвердьте свою електронну адресу",
     "InvalidTokenNull": "Це посилання недійсне.",
     "Checking": "Перевірка ключа, зачекайте...",
@@ -372,17 +435,17 @@
     "InvalidState": "Щось пішло не так."
   },
   "AssetList": {
-    "Title": "p5.js веб-редактор | Мої файли",
+    "Title": "p5.js вебредактор | Мої файли",
     "ToggleOpenCloseARIA": "Увімкнути/вимкнути параметри файлів",
     "Delete": "Видалити",
     "OpenNewTab": "Відкрити у новій вкладці",
     "NoUploadedAssets": "Файли відсутні.",
     "HeaderName": "Ім'я",
-    "HeaderSize": "Розмір",
+    "HeaderSize": "Обсяг",
     "HeaderSketch": "Скетч"
   },
   "Feedback": {
-    "Title": "p5.js веб-редактор | Зворотний зв'язок",
+    "Title": "p5.js вебредактор | Зворотний зв'язок",
     "ViaGithubHeader": "Через Github Issues",
     "ViaGithubDescription": "Якщо ви знайомі з Github, це наш найкращий спосіб отримання звітів про помилки та відгуків.",
     "GoToGithub": "Перейти на Github",
@@ -398,7 +461,7 @@
   "UploadFileModal": {
     "Title": "Завантажити файл",
     "CloseButtonARIA": "Закрити вікно завантаження",
-    "SizeLimitError": "Помилка: Ви не можете завантажити більше файлів. Ви досягли обмеження загального розміру {{sizeLimit}}.\n                Якщо ви хочете завантажити більше файлів, видаліть ті, якими ви вже не користуєтесь\n                у вашому "
+    "SizeLimitError": "Помилка: Ви не можете завантажити більше файлів. Ви досягли обмеження загального обсягу {{sizeLimit}}.\n                Якщо ви хочете завантажити більше файлів, видаліть ті, якими ви вже не користуєтесь\n                у вашому "
   },
   "FileUploader": {
     "DictDefaultMessage": "Перетягніть сюди файли або натисніть, щоб завантажити файли"
@@ -412,7 +475,7 @@
     "LogIn": "Увійти",
     "SavedDifferentWindow": "Проєкт, який ви намагалися зберегти, було збережено у іншому вікні.\n        Оновіть сторінку, щоб побачити останню версію.",
     "LinkTitle": "Помилка зв'язування облікового запису",
-    "LinkMessage": "Не вдалося пов'язати ваш обліковий запис {{serviceauth}} з вашим обліковим записом p5.js веб-редактор. Ваш обліковий запис {{serviceauth}} вже пов'язаний з іншим обліковим записом p5.js веб-редактор."
+    "LinkMessage": "Сталася проблема з підключенням вашого облікового запису {{serviceauth}} до вашого облікового запису p5.js Web Editor. Ваш обліковий запис {{serviceauth}} уже підключено до іншого облікового запису p5.js Web Editor."
   },
   "ShareModal": {
     "Embed": "Вбудувати",
@@ -425,8 +488,8 @@
     "TitleDefault": "колекція"
   },
   "Collection": {
-    "Title": "p5.js веб-редактор | Мої колекції",
-    "AnothersTitle": "p5.js веб-редактор | Колекції {{anotheruser}}",
+    "Title": "p5.js вебредактор | Мої колекції",
+    "AnothersTitle": "p5.js вебредактор | Колекції {{anotheruser}}",
     "Share": "Поділитися",
     "URLLink": "Посилання на колекцію",
     "AddSketch": "Додати скетч",
@@ -437,7 +500,7 @@
     "Description": "опис",
     "NumSketches": "{{count}} скетч",
     "NumSketches_plural": "{{count}} скетчів",
-    "By":"Колекція від ",
+    "By": "Колекція від ",
     "NoSketches": "Немає скетчів у колекції",
     "TableSummary": "таблиця, що містить усі колекції",
     "HeaderName": "Ім'я",
@@ -449,12 +512,12 @@
     "ButtonLabelDescendingARIA": "Сортувати {{displayName}} за спаданням."
   },
   "AddToCollectionList": {
-    "Title": "p5.js веб-редактор | Мої колекції",
-    "AnothersTitle": "p5.js веб-редактор | Колекції {{anotheruser}}",
+    "Title": "p5.js вебредактор | Мої колекції",
+    "AnothersTitle": "p5.js вебредактор | Колекції {{anotheruser}}",
     "Empty": "Немає колекцій"
   },
   "CollectionCreate": {
-    "Title": "p5.js веб-редактор | Створити колекцію",
+    "Title": "p5.js вебредактор | Створити колекцію",
     "FormError": "Не вдалося створити колекцію",
     "FormLabel": "Ім'я колекції",
     "FormLabelARIA": "ім'я",
@@ -475,8 +538,8 @@
     "Assets": "Файли"
   },
   "CollectionList": {
-    "Title": "p5.js веб-редактор | Мої колекції",
-    "AnothersTitle": "p5.js веб-редактор | Колекції {{anotheruser}}",
+    "Title": "p5.js вебредактор | Мої колекції",
+    "AnothersTitle": "p5.js вебредактор | Колекції {{anotheruser}}",
     "NoCollections": "Немає колекцій.",
     "TableSummary": "таблиця, що містить усі колекції",
     "HeaderName": "Ім'я",
@@ -484,8 +547,8 @@
     "HeaderCreatedAt_mobile": "Створено",
     "HeaderUpdatedAt": "Дата оновлення",
     "HeaderUpdatedAt_mobile": "Оновлено",
-    "HeaderNumItems": "# скетчі",
-    "HeaderNumItems_mobile": "# скетчі",
+    "HeaderNumItems": "# скетчів",
+    "HeaderNumItems_mobile": "# скетчів",
     "DirectionAscendingARIA": "За зростанням",
     "DirectionDescendingARIA": "За спаданням",
     "ButtonLabelAscendingARIA": "Сортувати {{displayName}} за зростанням.",
@@ -501,15 +564,15 @@
   "Overlay": {
     "AriaLabel": "Закрити {{title}}"
   },
-  "QuickAddList":{
+  "QuickAddList": {
     "ButtonRemoveARIA": "Видалити з колекції",
     "ButtonAddToCollectionARIA": "Додати у колекцію",
     "View": "Перегляд"
   },
   "SketchList": {
     "View": "Перегляд",
-    "Title": "p5.js веб-редактор | Мої скетчі",
-    "AnothersTitle": "p5.js веб-редактор | Скетчі {{anotheruser}}",
+    "Title": "p5.js вебредактор | Мої скетчі",
+    "AnothersTitle": "p5.js вебредактор | Скетчі {{anotheruser}}",
     "ToggleLabelARIA": "Відкрити/закрити параметри скетчу",
     "DropdownRename": "Перейменувати",
     "DropdownDownload": "Завантажити",
@@ -530,8 +593,8 @@
     "NoSketches": "Немає скетчів."
   },
   "AddToCollectionSketchList": {
-    "Title": "p5.js веб-редактор | Мої скетчі",
-    "AnothersTitle": "p5.js веб-редактор | Скетчі {{anotheruser}}",
+    "Title": "p5.js вебредактор | Мої скетчі",
+    "AnothersTitle": "p5.js вебредактор | Скетчі {{anotheruser}}",
     "NoCollections": "Немає колекцій."
   },
   "Editor": {
@@ -576,6 +639,7 @@
     "DarkTheme": "Темна",
     "HighContrastTheme": "Високий контраст",
     "Autosave": "Автозбереження",
+	"AutocompleteHinter": "Автозаповнення коду",
     "WordWrap": "Переноси слів",
     "LineNumbers": "Номери рядків",
     "LintWarningSound": "Звук попередження",
@@ -599,5 +663,19 @@
   },
   "Explorer": {
     "Files": "Файли"
+  },
+  "Cookies": {
+    "Header": "Файли cookie",
+    "Body": "Редактор p5.js використовує файли cookie. Деякі з них необхідні для роботи сайту та дозволяють керувати обліковим записом і налаштуваннями. Інші не є обов’язковими — вони використовуються для аналітики і допомагають нам краще розуміти нашу спільноту. <strong>Ми ніколи не продаємо ці дані і не використовуємо їх для реклами.</strong> Ви можете обирати, які файли cookie дозволяти, і дізнатися більше у нашій <0>Політиці конфіденційності<0>.",
+    "AllowAll": "Дозволити все",
+    "AllowEssential": "Дозволити необхідні"
+  },
+  "Legal": {
+    "PrivacyPolicy": "Політика конфіденційності",
+    "TermsOfUse": "Умови користування",
+    "CodeOfConduct": "Кодекс поведінки"
+  },
+  "SkipLink": {
+    "PlaySketch": "Запустити скетч"
   }
 }

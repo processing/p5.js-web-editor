@@ -5,16 +5,21 @@ import { useDispatch } from 'react-redux';
 import { openPreferences } from '../actions/ide';
 import { setPreferencesTab } from '../actions/preferences';
 import { prop } from '../../../theme';
-import EditIcon from '../../../images/preferences.svg';
 
 import { useP5Version } from '../hooks/useP5Version';
 
 const VersionPickerButton = styled.button`
-  color: ${prop('Button.primary.default.foreground')};
+  color: ${prop('toolbarTextColor')} !important;
   margin-left: 1rem;
 
+  background-color: ${prop('toolbarBackgroundColor')};
+  margin-right: 1.2rem;
+  padding: 0.5rem 0.7rem;
+  border-radius: 10rem;
+
   &:hover {
-    color: ${prop('Button.primary.hover.background')} !important;
+    background-color: ${prop('Button.primary.hover.background')} !important;
+    color: ${prop('toolbarTextHoverColor')} !important;
   }
 
   & svg {
@@ -75,7 +80,6 @@ const VersionIndicator = () => {
   return (
     <VersionPickerButton onClick={openVersionSettings} ariaLabel={ariaLabel}>
       {currentVersion}
-      <EditIcon focusable="false" aria-hidden="true" />
       {showNotificationDot && <NotificationDot />}
     </VersionPickerButton>
   );

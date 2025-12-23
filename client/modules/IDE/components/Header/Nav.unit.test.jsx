@@ -7,49 +7,44 @@ import Nav from './Nav';
 jest.mock('../../../../utils/generateRandomName');
 
 // mock Menubar
-jest.mock(
-  '../../../../components/Menubar/Menubar',
-  () =>
-    function Menubar({ children, className = 'nav__menubar' }) {
-      return (
-        <ul className={className} role="menubar">
-          {children}
-        </ul>
-      );
-    }
-);
+jest.mock('../../../../components/Menubar/Menubar', () => ({
+  Menubar: ({ children, className = 'nav__menubar' }) => (
+    <ul className={className} role="menubar">
+      {children}
+    </ul>
+  )
+}));
 
 // mock MenubarSubmenu
 jest.mock('../../../../components/Menubar/MenubarSubmenu', () => {
-  function MenubarSubmenu({ children, title }) {
-    return (
-      <li className="nav__item">
-        <span role="menuitem">{title}</span>
-        <ul role="menu" aria-label={`${title} menu`}>
-          {children}
-        </ul>
-      </li>
-    );
-  }
+  const MenubarSubmenu = ({ children, title }) => (
+    <li className="nav__item">
+      <span role="menuitem">{title}</span>
+      <ul role="menu" aria-label={`${title} menu`}>
+        {children}
+      </ul>
+    </li>
+  );
 
-  MenubarSubmenu.useMenuProps = () => ({
+  const useMenuProps = () => ({
     isOpen: false,
     handlers: {}
   });
 
-  return MenubarSubmenu;
+  return {
+    __esModule: true,
+    MenubarSubmenu,
+    useMenuProps
+  };
 });
 
 // mock MenubarItem
-jest.mock(
-  '../../../../components/Menubar/MenubarItem',
-  () =>
-    function MenubarItem({ children, hideIf }) {
-      if (hideIf) return null;
-
-      return <li>{children}</li>;
-    }
-);
+jest.mock('../../../../components/Menubar/MenubarItem', () => ({
+  MenubarItem: ({ children, hideIf }) => {
+    if (hideIf) return null;
+    return <li>{children}</li>;
+  }
+}));
 
 describe('Nav', () => {
   it('renders editor version for desktop', () => {

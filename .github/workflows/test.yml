@@ -7,13 +7,12 @@ jobs:
     name: Test and lint code base
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js
-      uses: actions/setup-node@v1
-      with:
-        node-version: '16.14.x'
-    - run: npm install
-    - run: npm run test
-    - run: npm run lint
-
-
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '18.20.x'
+      - run: npm install
+      - run: npm run test
+      - run: npm run typecheck
+      - run: npm run lint

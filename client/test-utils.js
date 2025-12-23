@@ -12,7 +12,7 @@
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { render } from '@testing-library/react';
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
@@ -23,7 +23,7 @@ import { Context as ResponsiveContext } from 'react-responsive';
 
 import i18n from './i18n-test';
 import ThemeProvider from './modules/App/components/ThemeProvider';
-import configureStore from './store';
+import { setupStore } from './store';
 import theme, { Theme } from './theme';
 
 export const history = createMemoryHistory();
@@ -34,9 +34,10 @@ export * from '@testing-library/react';
 
 const ResponsiveProvider = ({ children, mobile, deviceWidth }) => {
   const width = deviceWidth ?? (mobile ? 400 : 1000);
+  const value = useMemo(() => ({ width }), [width]);
   return (
     // eslint-disable-next-line react/jsx-filename-extension
-    <ResponsiveContext.Provider value={{ width }}>
+    <ResponsiveContext.Provider value={value}>
       {children}
     </ResponsiveContext.Provider>
   );
@@ -94,7 +95,7 @@ Providers.propTypes = {
  */
 function reduxRender(
   ui,
-  { initialState, store = configureStore(initialState), ...renderOptions } = {}
+  { initialState, store = setupStore(initialState), ...renderOptions } = {}
 ) {
   function Wrapper({ children }) {
     return (

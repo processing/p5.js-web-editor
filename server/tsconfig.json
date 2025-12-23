@@ -1,0 +1,13 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "commonjs",
+    "lib": ["ES2022"],
+    "types": ["node", "jest", "express"],
+    "typeRoots": ["./types", "../node_modules/@types"]
+  },
+  "strictNullChecks": true,
+  "include": ["./**/*"],
+  "exclude": ["../node_modules", "../client"]
+}

@@ -1,13 +1,13 @@
 import mongoose from 'mongoose';
 import fs from 'fs';
-import User from '../models/user';
+import { User } from '../models/user';
 import Project from '../models/project';
 import Collection from '../models/collection';
 import {
   moveObjectToUserInS3,
   copyObjectInS3
 } from '../controllers/aws.controller';
-import mail from '../utils/mail';
+import { mailerService } from '../utils/mail';
 import { renderAccountConsolidation } from '../views/mail';
 
 const mongoConnectionString = process.env.MONGO_URL;
@@ -31,7 +31,8 @@ mongoose.connection.on('error', () => {
  * https://mongodb.github.io/node-mongodb-native
  */
 
-const agg = [ // eslint-disable-line
+const agg = [
+  // eslint-disable-line
   {
     $project: {
       email: {
@@ -187,7 +188,7 @@ async function consolidateAccount(email) {
       });
 
       return new Promise((resolve, reject) => {
-        mail.send(mailOptions, (mailErr, result) => {
+        mailerService.send(mailOptions, (mailErr, result) => {
           console.log('Sent email.');
           if (mailErr) {
             return reject(mailErr);
@@ -226,7 +227,7 @@ async function consolidateAccount(email) {
 //   });
 
 //   return new Promise((resolve, reject) => {
-//     mail.send(mailOptions, (mailErr, result) => {
+//     mailerService.send(mailOptions, (mailErr, result) => {
 //       console.log('Sent email.');
 //       if (mailErr) {
 //         return reject(mailErr);

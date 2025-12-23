@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 import objectID from 'bson-objectid';
 import shortid from 'shortid';
 import { defaultCSS, defaultHTML } from '../domain-objects/createDefaultFiles';
-import User from '../models/user';
+import { User } from '../models/user';
 import Project from '../models/project';
 
 const clientId = process.env.GITHUB_ID;

@@ -21,12 +21,8 @@ import {
   setLinewrap,
   setPreferencesTab
 } from '../../actions/preferences';
-import {
-  majorVersion,
-  p5SoundURL,
-  p5URL,
-  useP5Version
-} from '../../hooks/useP5Version';
+import { majorVersion, p5URL, useP5Version } from '../../hooks/useP5Version';
+import { p5SoundURL } from '../../../../../common/p5URLs';
 import VersionPicker from '../VersionPicker';
 import { updateFileContent } from '../../actions/files';
 import { CmControllerContext } from '../../pages/IDEView';
@@ -43,7 +39,7 @@ export default function Preferences() {
     tabIndex,
     fontSize,
     autosave,
-    wordwrap,
+    linewrap,
     lineNumbers,
     lintWarning,
     textOutput,
@@ -120,6 +116,7 @@ export default function Preferences() {
   };
 
   const markdownComponents = useMemo(() => {
+    // eslint-disable-next-line react/no-unstable-nested-components
     const ExternalLink = ({ children, ...props }) => (
       <a {...props} target="_blank">
         {children}
@@ -132,6 +129,7 @@ export default function Preferences() {
       children: undefined
     };
 
+    // eslint-disable-next-line react/no-unstable-nested-components
     const Paragraph = ({ children, ...props }) => (
       <p className="preference__paragraph" {...props}>
         {children}
@@ -396,7 +394,7 @@ export default function Preferences() {
                 id="wordwrap-on"
                 className="preference__radio-button"
                 value="On"
-                checked={wordwrap}
+                checked={linewrap}
               />
               <label htmlFor="wordwrap-on" className="preference__option">
                 {t('Preferences.On')}
@@ -409,7 +407,7 @@ export default function Preferences() {
                 id="wordwrap-off"
                 className="preference__radio-button"
                 value="Off"
-                checked={!wordwrap}
+                checked={!linewrap}
               />
               <label htmlFor="wordwrap-off" className="preference__option">
                 {t('Preferences.Off')}
@@ -625,10 +623,9 @@ export default function Preferences() {
                         versionInfo.isVersion2 ? 'beta.' : ''
                       }p5js.org/reference/p5.sound`}
                     >
-                      {t('Preferences.SoundReference').replace(
-                        '$VERSION',
-                        versionInfo.version
-                      )}
+                      {t('Preferences.SoundReference', {
+                        version: versionInfo.version
+                      })}
                     </a>
                   </legend>
                 </fieldset>

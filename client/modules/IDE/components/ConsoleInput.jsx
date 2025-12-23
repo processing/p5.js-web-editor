@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { Encode } from 'console-feed';
 
 import RightArrowIcon from '../../../images/right-arrow.svg';
-import { dispatchConsoleEvent } from '../../IDE/actions/console';
+import { dispatchConsoleEvent } from '../actions/console';
 import { dispatchMessage, MessageTypes } from '../../../utils/dispatcher';
 
 // heavily inspired by

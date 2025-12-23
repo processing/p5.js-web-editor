@@ -47,6 +47,9 @@
         "LogOut": "ログアウト"
       }
     },
+    "Banner": {
+      "Copy": "<bold>Donate Today!</bold> Support p5.js and the Processing Foundation."
+    },
     "CodemirrorFindAndReplace": {
       "ToggleReplace": "置換の切り替え",
       "Find": "検索",

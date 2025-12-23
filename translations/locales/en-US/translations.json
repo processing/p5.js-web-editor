@@ -27,7 +27,9 @@
       "Title": "Help",
       "KeyboardShortcuts": "Keyboard Shortcuts",
       "Reference": "Reference",
-      "About": "About"
+      "ReportBug": "Report a Bug",
+      "ChatOnDiscord": "Chat On Discord",
+      "PostOnTheForum": "Post on the Forum"
     },
     "Lang": "Language",
     "BackEditor": "Back to Editor",
@@ -46,6 +48,9 @@
       "MyAssets": "My Assets",
       "LogOut": "Log Out"
     }
+  },
+  "Banner": {
+    "Copy": "<bold>Donate Today!</bold> Support p5.js and the Processing Foundation."
   },
   "CodemirrorFindAndReplace": {
     "ToggleReplace": "Toggle Replace",
@@ -122,17 +127,18 @@
     "EmailAddress": "hello@p5js.org",
     "Socials": "Socials",
     "LinkDescriptions": {
-      "Home": "Learn more about p5.js and our community.", 
+      "Home": "Learn more about p5.js and our community.",
       "Examples": "Explore the possibilities of p5.js with short examples.",
-      "CodeOfConduct": "Read our Community State and Code of Conduct.",
+      "CodeOfConduct": "Read our Community Statement and Code of Conduct.",
       "Libraries": "Expand the possibilities of p5.js with community-created libraries.",
       "Reference": "Find easy explanations for every piece of p5.js code.",
       "Donate": "Support this work with a donation to the Processing Foundation.",
       "Contribute": "Contribute to the open-source p5.js Editor on Github.",
       "Report": "Report broken or incorrect behavior with the p5.js Editor.",
-      "Forum": "Expand the possibilities of p5.js with community-created libraries.",
-      "Discord": "Expand the possibilities of p5.js with community-created libraries."
-    }
+      "Forum": "Ask questions, share sketches, and get help from the p5.js community.",
+      "Discord": "Chat with the p5.js community and get quick help."
+    },
+    "Contact": "Contact Us"
   },
   "Toast": {
     "OpenedNewSketch": "Opened new sketch.",
@@ -143,7 +149,7 @@
     "SettingsSaved": "Settings saved.",
     "EmptyCurrentPass": "Current password field is empty",
     "IncorrectCurrentPass": "Current password is incorrect",
-    "DefaultError":"Something went wrong",
+    "DefaultError": "Something went wrong",
     "UserNotFound": "User not found",
     "NetworkError": "Network error"
   },
@@ -225,10 +231,10 @@
     "SoundAddon": "p5.sound.js Add-on Library",
     "PreloadAddon": "p5.js 1.x Compatibility Add-on Library — Preload",
     "ShapesAddon": "p5.js 1.x Compatibility Add-on Library — Shapes",
-    "DataAddon": "p5.js 1.x Compatibility Add-on Library — Data Structures",
+    "DataAddon": "p5.js 1.x Compatibility Add-on Library — Data & Events",
     "AddonOnARIA": "on",
     "AddonOffARIA": "off",
-    "SoundReference": "View the reference for p5.sound compatible with p5.js $VERSION",
+    "SoundReference": "View the reference for p5.sound compatible with p5.js {{version}}",
     "CopyToClipboardSuccess": "Copied to clipboard!",
     "CopyToClipboardFailure": "We weren't able to copy the text, try selecting it and copying it manually."
   },
@@ -249,7 +255,8 @@
       "FindPreviousTextMatch": "Find Previous Text Match",
       "CodeEditing": "Code Editing",
       "ColorPicker": "Show Inline Color Picker",
-      "CreateNewFile": "Create New File"
+      "CreateNewFile": "Create New File",
+      "RenameVariable": "Rename Variable"
     },
     "General": "General",
     "GeneralSelection": {
@@ -295,9 +302,9 @@
     "SubmitFeedback": "Submit Feedback",
     "SubmitFeedbackARIA": "submit-feedback",
     "AddCollectionTitle": "Add to collection",
-    "AddCollectionARIA":"add to collection",
+    "AddCollectionARIA": "add to collection",
     "ShareTitle": "Share",
-    "ShareARIA":"share"
+    "ShareARIA": "share"
   },
   "NewFileModal": {
     "Title": "Create File",
@@ -342,7 +349,7 @@
     "errorShortPassword": "Password must be at least 6 characters",
     "errorConfirmPassword": "Please confirm your password",
     "errorNewPassword": "Please enter a new password or leave the current password empty.",
-    "errorNewPasswordRepeat":"Your New Password must differ from the current one.",
+    "errorNewPasswordRepeat": "Your New Password must differ from the current one.",
     "errorEmptyUsername": "Please enter a username.",
     "errorLongUsername": "Username must be less than 20 characters.",
     "errorValidUsername": "Username must only consist of numbers, letters, periods, dashes, and underscores."
@@ -439,7 +446,8 @@
     "NoUploadedAssets": "No uploaded assets.",
     "HeaderName": "Name",
     "HeaderSize": "Size",
-    "HeaderSketch": "Sketch"
+    "HeaderSketch": "Sketch",
+    "maximum": "Maximum"
   },
   "Feedback": {
     "Title": "p5.js Web Editor | Feedback",
@@ -475,10 +483,10 @@
     "LinkMessage": "There was a problem linking your {{serviceauth}} account to your p5.js Web Editor account. Your {{serviceauth}} account has already been linked to another p5.js Web Editor account."
   },
   "ShareModal": {
-    "Embed": "Embed",
+    "Embed": "Embed Sketch",
     "Present": "Present",
-    "Fullscreen": "Fullscreen",
-    "Edit": "Edit"
+    "Fullscreen": "Share Sketch As View-Only",
+    "Edit": "Share Sketch and Allow Editing"
   },
   "CollectionView": {
     "TitleCreate": "Create collection",
@@ -497,7 +505,7 @@
     "Description": "description",
     "NumSketches": "{{count}} sketch",
     "NumSketches_plural": "{{count}} sketches",
-    "By":"Collection by ",
+    "By": "Collection by ",
     "NoSketches": "No sketches in collection",
     "TableSummary": "table containing all collections",
     "HeaderName": "Name",
@@ -561,7 +569,7 @@
   "Overlay": {
     "AriaLabel": "Close {{title}} overlay"
   },
-  "QuickAddList":{
+  "QuickAddList": {
     "ButtonRemoveARIA": "Remove from collection",
     "ButtonAddToCollectionARIA": "Add to collection",
     "View": "View"
@@ -643,7 +651,9 @@
     "UsedScreenReader": "Used with screen reader",
     "PlainText": "Plain-text",
     "TableText": "Table-text",
-    "Sound": "Sound"
+    "Sound": "Sound",
+    "Preferences": "Preferences",
+    "Language": "Language"
   },
   "PreferenceCreators": {
     "On": "On",
@@ -674,5 +684,17 @@
   },
   "SkipLink": {
     "PlaySketch": "Skip to Play Sketch"
+  },
+  "Visibility": {
+    "Label": "Visibility",
+    "Public": {
+      "Description": "Anyone can see this sketch.",
+      "Label": "Public"
+    },
+    "Private": {
+      "Description": "Only you can see this sketch.",
+      "Label": "Private"
+    },
+    "Changed": "'{{projectName}}' is now {{newVisibility}}..."
   }
 }

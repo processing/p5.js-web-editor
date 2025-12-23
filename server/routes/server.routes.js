@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import sendHtml, { renderIndex, renderProjectIndex } from '../views/index';
+import { sendHtml, renderIndex, renderProjectIndex } from '../views/index';
 import { userExists } from '../controllers/user.controller';
 import {
   projectExists,
@@ -8,13 +8,7 @@ import {
 } from '../controllers/project.controller';
 import { collectionForUserExists } from '../controllers/collection.controller';
 
-const router = new Router();
-
-// const fallback404 = (res) => (exists) =>
-//   exists ? res.send(renderIndex()) : get404Sketch((html) => res.send(html));
-
-// this is intended to be a temporary file
-// until i figure out isomorphic rendering
+const router = Router();
 
 router.get('/', (req, res) => {
   res.send(renderIndex());
@@ -159,4 +153,5 @@ router.get('/code-of-conduct', (req, res) => {
   res.send(renderIndex());
 });
 
+// eslint-disable-next-line import/no-default-export
 export default router;

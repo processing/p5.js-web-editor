@@ -4,7 +4,7 @@ import MediaQuery from 'react-responsive';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import useModalClose from '../../../common/useModalClose';
+import { useModalClose } from '../../../common/useModalClose';
 
 import ExitIcon from '../../../images/exit.svg';
 
