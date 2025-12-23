@@ -10,14 +10,13 @@ import PreviewFrame from '../components/PreviewFrame';
 import Console from '../components/Console';
 import Toast from '../components/Toast';
 import { updateFileContent } from '../actions/files';
-
 import {
   autosaveProject,
   clearPersistedState,
   getProject
 } from '../actions/project';
 import { getIsUserOwner } from '../selectors/users';
-import RootPage from '../../../components/RootPage';
+import { RootPage } from '../../../components/RootPage';
 import Header from '../components/Header';
 import FloatingActionButton from '../components/FloatingActionButton';
 import Editor from '../components/Editor';
@@ -27,7 +26,15 @@ import {
 } from '../components/Editor/MobileEditor';
 import IDEOverlays from '../components/IDEOverlays';
 import useIsMobile from '../hooks/useIsMobile';
+import Banner from '../components/Banner';
 import { P5VersionProvider } from '../hooks/useP5Version';
+
+const BANNER_DISMISS_KEY = 'bannerLastDismissedAt';
+const BANNER_COOLDOWN_MINUTES = 30;
+
+function minutesSince(timestamp) {
+  return (Date.now() - timestamp) / (1000 * 60);
+}
 
 function getTitle(project) {
   const { id } = project;
@@ -97,6 +104,7 @@ const IDEView = () => {
   const project = useSelector((state) => state.project);
   const isUserOwner = useSelector(getIsUserOwner);
   const dispatch = useDispatch();
+
   const { t } = useTranslation();
 
   const params = useParams();
@@ -105,6 +113,7 @@ const IDEView = () => {
   const [sidebarSize, setSidebarSize] = useState(160);
   const [isOverlayVisible, setIsOverlayVisible] = useState(false);
   const [MaxSize, setMaxSize] = useState(window.innerWidth);
+  const [displayBanner, setDisplayBanner] = useState(true);
 
   const cmRef = useRef({});
 
@@ -149,6 +158,7 @@ const IDEView = () => {
       }
     };
   }, [shouldAutosave, dispatch]);
+
   useEffect(() => {
     const updateInnerWidth = (e) => {
       setMaxSize(e.target.innerWidth);
@@ -161,6 +171,29 @@ const IDEView = () => {
     };
   }, [setMaxSize]);
 
+  // checks how long banner has been closed for to hide banner
+  useEffect(() => {
+    const stored = window.localStorage.getItem(BANNER_DISMISS_KEY);
+    const lastClosedAt = stored ? Number(stored) : null;
+
+    if (!lastClosedAt) {
+      setDisplayBanner(true);
+      return;
+    }
+
+    if (minutesSince(lastClosedAt) >= BANNER_COOLDOWN_MINUTES) {
+      setDisplayBanner(true);
+    } else {
+      setDisplayBanner(false);
+    }
+  }, []);
+
+  const handleBannerClose = () => {
+    setDisplayBanner(false);
+
+    window.localStorage.setItem(BANNER_DISMISS_KEY, String(Date.now()));
+  };
+
   const consoleCollapsedSize = 29;
   const currentConsoleSize = ide.consoleIsExpanded
     ? consoleSize
@@ -171,6 +204,7 @@ const IDEView = () => {
       <Helmet>
         <title>{getTitle(project)}</title>
       </Helmet>
+      {displayBanner && <Banner onClose={handleBannerClose} />}
       <IDEKeyHandlers getContent={() => cmRef.current?.getContent()} />
       <WarnIfUnsavedChanges />
       <Toast />

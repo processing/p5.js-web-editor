@@ -3,13 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import prettyBytes from 'pretty-bytes';
-import getConfig from '../../../utils/getConfig';
+import { getConfig } from '../../../utils/getConfig';
 import { closeUploadFileModal } from '../actions/ide';
 import FileUploader from './FileUploader';
 import { getreachedTotalSizeLimit } from '../selectors/users';
 import Modal from './Modal';
+import { parseNumber } from '../../../utils/parseStringToType';
 
-const limit = getConfig('UPLOAD_LIMIT') || 250000000;
+const limit = parseNumber(getConfig('UPLOAD_LIMIT')) || 250000000;
 const limitText = prettyBytes(limit);
 
 const UploadFileModal = () => {

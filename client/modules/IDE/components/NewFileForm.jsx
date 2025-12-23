@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { handleCreateFile } from '../actions/files';
 import { CREATE_FILE_REGEX } from '../../../../server/utils/fileUtils';
 
-import Button from '../../../common/Button';
+import { Button, ButtonTypes } from '../../../common/Button';
 
 function NewFileForm() {
   const fileNameInput = useRef(null);
@@ -57,7 +57,7 @@ function NewFileForm() {
             </Field>
             <Field name="submitButton">
               {() => (
-                <Button type="submit" disabled={submitting}>
+                <Button type={ButtonTypes.SUBMIT} disabled={submitting}>
                   {t('NewFileForm.AddFileSubmit')}
                 </Button>
               )}

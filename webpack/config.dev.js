@@ -29,20 +29,20 @@ module.exports = {
     publicPath: '/'
   },
   resolve: {
-    extensions: ['.js', '.jsx'],
-    modules: ['client', 'node_modules'],
+    extensions: ['.js', '.jsx', '.ts', '.tsx'],
+    modules: ['client', 'server', 'node_modules'],
     fallback: {
       os: require.resolve('os-browserify/browser')
     }
   },
   plugins: [
     new ESLintPlugin({
-      extensions: ['js', 'jsx']
+      extensions: ['js', 'jsx', 'ts', 'tsx']
     }),
     new webpack.HotModuleReplacementPlugin(),
     new ReactRefreshPlugin({
       overlay: {
-        sockIntegration: 'whm',
+        sockIntegration: 'whm'
       }
     }),
     new webpack.DefinePlugin({
@@ -62,7 +62,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
+        test: /\.[jt]sx?$/,
         exclude: [/node_modules/, /.+\.config.js/],
         use: [
           {
@@ -97,11 +97,11 @@ module.exports = {
         oneOf: [
           {
             resourceQuery: /byContent/,
-            type: 'asset/source',
+            type: 'asset/source'
           },
           {
             resourceQuery: /byUrl/,
-            type: 'asset/resource',
+            type: 'asset/resource'
           },
           {
             use: {

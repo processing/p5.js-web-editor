@@ -48,6 +48,9 @@
         "LogOut": "Se déconnecter"
       }
     },
+    "Banner": {
+      "Copy": "<bold>Donate Today!</bold> Support p5.js and the Processing Foundation."
+    },
     "CodemirrorFindAndReplace": {
       "ToggleReplace": "Activer/désactiver le remplacement",
       "Find": "Rechercher",

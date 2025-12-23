@@ -1,13 +1,21 @@
 import { TEXT_FILE_REGEX } from '../../../../server/utils/fileUtils';
-import apiClient from '../../../utils/apiClient';
-import getConfig from '../../../utils/getConfig';
+import { apiClient } from '../../../utils/apiClient';
+import { getConfig } from '../../../utils/getConfig';
+import { isTestEnvironment } from '../../../utils/checkTestEnv';
 import { handleCreateFile } from './files';
 
+const s3BucketUrlBase = getConfig('S3_BUCKET_URL_BASE');
+const awsRegion = getConfig('AWS_REGION');
+const s3Bucket = getConfig('S3_BUCKET');
+
+if (!isTestEnvironment && !s3BucketUrlBase && !(awsRegion && s3Bucket)) {
+  throw new Error(`S3 bucket address not configured. 
+    Configure either S3_BUCKET_URL_BASE or both AWS_REGION & S3_BUCKET in env vars`);
+}
+
 export const s3BucketHttps =
-  getConfig('S3_BUCKET_URL_BASE') ||
-  `https://s3-${getConfig('AWS_REGION')}.amazonaws.com/${getConfig(
-    'S3_BUCKET'
-  )}/`;
+  s3BucketUrlBase || `https://s3-${awsRegion}.amazonaws.com/${s3Bucket}/`;
+
 const MAX_LOCAL_FILE_SIZE = 80000; // bytes, aka 80 KB
 
 function isS3Upload(file) {

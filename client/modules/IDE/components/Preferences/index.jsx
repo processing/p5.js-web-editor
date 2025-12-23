@@ -21,7 +21,8 @@ import {
   setLinewrap,
   setPreferencesTab
 } from '../../actions/preferences';
-import { p5SoundURL, p5URL, useP5Version } from '../../hooks/useP5Version';
+import { majorVersion, p5URL, useP5Version } from '../../hooks/useP5Version';
+import { p5SoundURL } from '../../../../../common/p5URLs';
 import VersionPicker from '../VersionPicker';
 import { updateFileContent } from '../../actions/files';
 import { CmControllerContext } from '../../pages/IDEView';
@@ -38,7 +39,7 @@ export default function Preferences() {
     tabIndex,
     fontSize,
     autosave,
-    wordwrap,
+    linewrap,
     lineNumbers,
     lintWarning,
     textOutput,
@@ -55,7 +56,7 @@ export default function Preferences() {
   const timerRef = useRef(null);
   const pickerRef = useRef(null);
   const onChangeVersion = (version) => {
-    const shouldShowStars = version.startsWith('2.');
+    const shouldShowStars = majorVersion(version) === '2';
     const box = pickerRef.current?.getBoundingClientRect();
     if (shouldShowStars) {
       setShowStars({ left: box?.left || 0, top: box?.top || 0 });
@@ -115,6 +116,7 @@ export default function Preferences() {
   };
 
   const markdownComponents = useMemo(() => {
+    // eslint-disable-next-line react/no-unstable-nested-components
     const ExternalLink = ({ children, ...props }) => (
       <a {...props} target="_blank">
         {children}
@@ -127,6 +129,7 @@ export default function Preferences() {
       children: undefined
     };
 
+    // eslint-disable-next-line react/no-unstable-nested-components
     const Paragraph = ({ children, ...props }) => (
       <p className="preference__paragraph" {...props}>
         {children}
@@ -391,7 +394,7 @@ export default function Preferences() {
                 id="wordwrap-on"
                 className="preference__radio-button"
                 value="On"
-                checked={wordwrap}
+                checked={linewrap}
               />
               <label htmlFor="wordwrap-on" className="preference__option">
                 {t('Preferences.On')}
@@ -404,7 +407,7 @@ export default function Preferences() {
                 id="wordwrap-off"
                 className="preference__radio-button"
                 value="Off"
-                checked={!wordwrap}
+                checked={!linewrap}
               />
               <label htmlFor="wordwrap-off" className="preference__option">
                 {t('Preferences.Off')}
@@ -578,17 +581,7 @@ export default function Preferences() {
                   <input
                     type="radio"
                     onChange={() => {
-                      if (versionInfo.lastP5SoundURL) {
-                        // If the sketch previously used a nonstandard p5.sound
-                        // URL, restore that URL
-                        updateHTML(
-                          versionInfo.setP5SoundURL(versionInfo.lastP5SoundURL)
-                        );
-                        versionInfo.setLastP5SoundURL(undefined);
-                      } else {
-                        // Otherwise, turn on the default p5.sound URL
-                        updateHTML(versionInfo.setP5Sound(true));
-                      }
+                      updateHTML(versionInfo.setP5Sound(true));
                     }}
                     aria-label={`${t('Preferences.SoundAddon')} ${t(
                       'Preferences.AddonOn'
@@ -605,12 +598,6 @@ export default function Preferences() {
                   <input
                     type="radio"
                     onChange={() => {
-                      // If the previous p5.sound.js script tag is not the
-                      // default version that one will get via this toggle,
-                      // record it so we can give the option to put it back
-                      if (versionInfo.p5SoundURL !== p5SoundURL) {
-                        versionInfo.setLastP5SoundURL(versionInfo.p5SoundURL);
-                      }
                       updateHTML(versionInfo.setP5Sound(false));
                     }}
                     aria-label={`${t('Preferences.SoundAddon')} ${t(
@@ -628,11 +615,19 @@ export default function Preferences() {
                   >
                     {t('Preferences.Off')}
                   </label>
-                  {versionInfo.lastP5SoundURL && (
-                    <legend className="preference__warning">
-                      {t('Preferences.UndoSoundVersion')}
-                    </legend>
-                  )}
+                  <legend className="preference__warning">
+                    <a
+                      target="_blank"
+                      rel="noreferrer"
+                      href={`https://${
+                        versionInfo.isVersion2 ? 'beta.' : ''
+                      }p5js.org/reference/p5.sound`}
+                    >
+                      {t('Preferences.SoundReference', {
+                        version: versionInfo.version
+                      })}
+                    </a>
+                  </legend>
                 </fieldset>
               </div>
               <div className="preference">

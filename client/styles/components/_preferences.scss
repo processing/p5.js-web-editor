@@ -71,12 +71,14 @@
   margin-bottom: #{math.div(10, $base-font-size)}rem;
 
   & a {
+    text-decoration: underline;
     @include themify() {
       color: getThemifyVariable('button-background-hover-color');
     }
   }
   & a:hover {
     text-decoration: underline;
+    text-decoration-thickness: 0.1em;
   }
 }
 
@@ -150,8 +152,14 @@
 .preference__warning {
   @include themify() {
     display: contents;
-    font-weight: bold;
-    color: getThemifyVariable("preferences-warning-color");
+    & a {
+      text-decoration: underline;
+      color: getThemifyVariable('button-background-hover-color');
+    }
+    & a:hover {
+      text-decoration: underline;
+      text-decoration-thickness: 0.1em;
+    }
   }
 }
 

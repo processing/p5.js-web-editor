@@ -2,7 +2,6 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import CopyableInput from './CopyableInput';
-// import getConfig from '../../../utils/getConfig';
 
 const ShareModal = () => {
   const { t } = useTranslation();
@@ -15,7 +14,6 @@ const ShareModal = () => {
   );
 
   const hostname = window.location.origin;
-  // const previewUrl = getConfig('PREVIEW_URL');
   return (
     <div className="share-modal">
       <h3 className="share-modal__project-name">{projectName}</h3>

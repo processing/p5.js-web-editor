@@ -71,7 +71,14 @@ import EditorAccessibility from '../EditorAccessibility';
 import UnsavedChangesIndicator from '../UnsavedChangesIndicator';
 import { EditorContainer, EditorHolder } from './MobileEditor';
 import { FolderIcon } from '../../../../common/icons';
-import IconButton from '../../../../common/IconButton';
+import { IconButton } from '../../../../common/IconButton';
+
+import contextAwareHinter from '../../../../utils/contextAwareHinter';
+import showRenameDialog from '../../../../utils/showRenameDialog';
+import handleRename from '../../../../utils/rename-variable';
+import { jumpToDefinition } from '../../../../utils/jump-to-definition';
+import { ensureAriaLiveRegion } from '../../../../utils/ScreenReaderHelper';
+import { isMac } from '../../../../utils/device';
 
 emmet(CodeMirror);
 
@@ -109,6 +116,7 @@ class Editor extends React.Component {
 
   componentDidMount() {
     this.beep = new Audio(beepUrl);
+    ensureAriaLiveRegion();
     // this.widgets = [];
     this._cm = CodeMirror(this.codemirrorContainer, {
       theme: `p5-${this.props.theme}`,
@@ -154,6 +162,17 @@ class Editor extends React.Component {
 
     delete this._cm.options.lint.options.errors;
 
+    this._cm.getWrapperElement().addEventListener('click', (e) => {
+      const isCtrlClick = isMac() ? e.metaKey : e.ctrlKey;
+
+      if (isCtrlClick) {
+        const pos = this._cm.coordsChar({ left: e.clientX, top: e.clientY });
+        jumpToDefinition.call(this, pos);
+      }
+    });
+
+    const renameKey = isMac() ? 'Ctrl-F2' : 'F2';
+
     const replaceCommand =
       metaKey === 'Ctrl' ? `${metaKey}-H` : `${metaKey}-Option-F`;
     this._cm.setOption('extraKeys', {
@@ -169,6 +188,10 @@ class Editor extends React.Component {
       },
       Enter: 'emmetInsertLineBreak',
       Esc: 'emmetResetAbbreviation',
+      [`Shift-${metaKey}-E`]: (cm) => {
+        cm.getInputField().blur();
+      },
+      [renameKey]: (cm) => this.renameVariable(cm),
       [`Shift-Tab`]: false,
       [`${metaKey}-Enter`]: () => null,
       [`Shift-${metaKey}-Enter`]: () => null,
@@ -206,7 +229,14 @@ class Editor extends React.Component {
     }
 
     this._cm.on('keydown', (_cm, e) => {
-      // Show hint
+      // Skip hinting if the user is pasting (Ctrl/Cmd+V) or using modifier keys (Ctrl/Alt)
+      if (
+        ((e.ctrlKey || e.metaKey) && e.key === 'v') ||
+        e.ctrlKey ||
+        e.altKey
+      ) {
+        return;
+      }
       const mode = this._cm.getOption('mode');
       if (/^[a-z]$/i.test(e.key) && (mode === 'css' || mode === 'javascript')) {
         this.showHint(_cm);
@@ -392,12 +422,15 @@ class Editor extends React.Component {
   }
 
   showHint(_cm) {
+    if (!_cm) return;
+
     if (!this.props.autocompleteHinter) {
       CodeMirror.showHint(_cm, () => {}, {});
       return;
     }
 
     let focusedLinkElement = null;
+
     const setFocusedLinkElement = (set) => {
       if (set && !focusedLinkElement) {
         const activeItemLink = document.querySelector(
@@ -412,6 +445,7 @@ class Editor extends React.Component {
         }
       }
     };
+
     const removeFocusedLinkElement = () => {
       if (focusedLinkElement) {
         focusedLinkElement.classList.remove('focused-hint-link');
@@ -434,12 +468,8 @@ class Editor extends React.Component {
           );
           if (activeItemLink) activeItemLink.click();
         },
-        Right: (cm, e) => {
-          setFocusedLinkElement(true);
-        },
-        Left: (cm, e) => {
-          removeFocusedLinkElement();
-        },
+        Right: (cm, e) => setFocusedLinkElement(true),
+        Left: (cm, e) => removeFocusedLinkElement(),
         Up: (cm, e) => {
           const onLink = removeFocusedLinkElement();
           e.moveFocus(-1);
@@ -458,30 +488,28 @@ class Editor extends React.Component {
       closeOnUnfocus: false
     };
 
-    if (_cm.options.mode === 'javascript') {
-      // JavaScript
-      CodeMirror.showHint(
-        _cm,
-        () => {
-          const c = _cm.getCursor();
-          const token = _cm.getTokenAt(c);
+    const triggerHints = () => {
+      if (_cm.options.mode === 'javascript') {
+        CodeMirror.showHint(
+          _cm,
+          () => {
+            const c = _cm.getCursor();
+            const token = _cm.getTokenAt(c);
+            const hints = contextAwareHinter(_cm, { hinter: this.hinter });
+            return {
+              list: hints,
+              from: CodeMirror.Pos(c.line, token.start),
+              to: CodeMirror.Pos(c.line, c.ch)
+            };
+          },
+          hintOptions
+        );
+      } else if (_cm.options.mode === 'css') {
+        CodeMirror.showHint(_cm, CodeMirror.hint.css, hintOptions);
+      }
+    };
 
-          const hints = this.hinter
-            .search(token.string)
-            .filter((h) => h.item.text[0] === token.string[0]);
-
-          return {
-            list: hints,
-            from: CodeMirror.Pos(c.line, token.start),
-            to: CodeMirror.Pos(c.line, c.ch)
-          };
-        },
-        hintOptions
-      );
-    } else if (_cm.options.mode === 'css') {
-      // CSS
-      CodeMirror.showHint(_cm, CodeMirror.hint.css, hintOptions);
-    }
+    setTimeout(triggerHints, 0);
   }
 
   showReplace() {
@@ -519,6 +547,34 @@ class Editor extends React.Component {
     }
   }
 
+  renameVariable(cm) {
+    const cursorCoords = cm.cursorCoords(true, 'page');
+    const selection = cm.getSelection();
+    const pos = cm.getCursor(); // or selection start
+    const token = cm.getTokenAt(pos);
+    const tokenType = token.type;
+    if (!selection) {
+      return;
+    }
+
+    const sel = cm.listSelections()[0];
+    const fromPos =
+      CodeMirror.cmpPos(sel.anchor, sel.head) <= 0 ? sel.anchor : sel.head;
+
+    showRenameDialog(
+      cm,
+      fromPos,
+      tokenType,
+      cursorCoords,
+      selection,
+      (newName) => {
+        if (newName && newName.trim() !== '' && newName !== selection) {
+          handleRename(fromPos, selection, newName, cm);
+        }
+      }
+    );
+  }
+
   initializeDocuments(files) {
     this._docs = {};
     files.forEach((file) => {
@@ -552,7 +608,7 @@ class Editor extends React.Component {
             <section className={editorSectionClass}>
               <div className="editor__header">
                 <button
-                  aria-label={this.props.t('Editor.OpenSketchARIA')}
+                  aria-label={this.props.t('Editor.CloseSketchARIA')}
                   className="sidebar__contract"
                   onClick={() => {
                     this.props.collapseSidebar();
@@ -562,7 +618,7 @@ class Editor extends React.Component {
                   <LeftArrowIcon focusable="false" aria-hidden="true" />
                 </button>
                 <button
-                  aria-label={this.props.t('Editor.CloseSketchARIA')}
+                  aria-label={this.props.t('Editor.OpenSketchARIA')}
                   className="sidebar__expand"
                   onClick={this.props.expandSidebar}
                 >

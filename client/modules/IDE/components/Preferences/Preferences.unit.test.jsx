@@ -442,43 +442,44 @@ describe('<Preferences />', () => {
         );
       });
     });
-    describe('start wordwrap at false', () => {
-      it('wordwrap toggle, starting at false', () => {
-        // render the component with wordwrap prop set to false
-        subject({ wordwrap: false });
+    // TODO: Consolidate "linewrap" (reference from backend/User model) and "word wrap" (currently used in UI) into consistent naming.
+    describe('start linewrap at false', () => {
+      it('linewrap toggle, starting at false', () => {
+        // render the component with linewrap prop set to false
+        subject({ linewrap: false });
 
-        // get ahold of the radio buttons for toggling wordwrap
-        const wordwrapRadioFalse = screen.getByRole('radio', {
+        // get ahold of the radio buttons for toggling linewrap
+        const linewrapRadioFalse = screen.getByRole('radio', {
           name: /wordwrap off/i
         });
-        const wordwrapRadioTrue = screen.getByRole('radio', {
+        const linewrapRadioTrue = screen.getByRole('radio', {
           name: /wordwrap on/i
         });
 
         testToggle(
-          wordwrapRadioFalse,
-          wordwrapRadioTrue,
+          linewrapRadioFalse,
+          linewrapRadioTrue,
           props.setLinewrap,
           true
         );
       });
     });
-    describe('start wordwrap at true', () => {
-      it('wordwrap toggle, starting at true', () => {
-        // render the component with wordwrap prop set to true
-        subject({ wordwrap: true });
+    describe('start linewrap at true', () => {
+      it('linewrap toggle, starting at true', () => {
+        // render the component with linewrap prop set to true
+        subject({ linewrap: true });
 
-        // get ahold of the radio buttons for toggling wordwrap
-        const wordwrapRadioFalse = screen.getByRole('radio', {
+        // get ahold of the radio buttons for toggling linewrap
+        const linewrapRadioFalse = screen.getByRole('radio', {
           name: /wordwrap off/i
         });
-        const wordwrapRadioTrue = screen.getByRole('radio', {
+        const linewrapRadioTrue = screen.getByRole('radio', {
           name: /wordwrap on/i
         });
 
         testToggle(
-          wordwrapRadioTrue,
-          wordwrapRadioFalse,
+          linewrapRadioTrue,
+          linewrapRadioFalse,
           props.setLinewrap,
           false
         );
@@ -487,7 +488,7 @@ describe('<Preferences />', () => {
   });
 
   describe('can toggle between general settings and accessibility tabs successfully', () => {
-    it('can toggle sucessfully', () => {
+    it('can toggle successfully', () => {
       // render the component with lineNumbers prop set to false
       subject({ lineNumbers: false });
 

@@ -57,6 +57,13 @@
 		& path {
 			fill: getThemifyVariable('secondary-text-color');
 		}
+		&:hover {
+			& g,
+			& polygon,
+			& path {
+				fill: getThemifyVariable('logo-color');
+			}
+		}
 	}
 	.preview-console--collapsed & {
 		display: none;
@@ -71,6 +78,13 @@
 		& polygon,
 		& path {
 			fill: getThemifyVariable('secondary-text-color');
+		}
+		&:hover {
+			& g,
+			& polygon,
+			& path {
+				fill: getThemifyVariable('logo-color');
+			}
 		}
 	}
 	display: none;

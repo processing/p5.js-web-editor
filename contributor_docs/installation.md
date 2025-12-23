@@ -18,7 +18,7 @@ If you run into any issues while setting up your environment, take some time to 
 _Note_: The installation steps assume you are using a Unix-like shell. If you are using Windows, you will need to use `copy` instead of `cp`.
 
 1. Install Node.js. The recommended way is to Node through [nvm](https://github.com/nvm-sh/nvm), which is a command-line tool that helps you manage different versions of Node.js on your system. You can install nvm by using [nvm's installation guide](https://github.com/nvm-sh/nvm?tab=readme-ov-file#installing-and-updating).
-      - You can also install [node.js](https://nodejs.org/download/release/v16.14.2/) version 16.14.2 directly from the Node.js website. To check if you already have Node installed on your computer, run `$ node -v`.
+      - You can also install [node.js](https://nodejs.org/download/release/v18.20.8/) version 18.20.8 directly from the Node.js website. To check if you already have Node installed on your computer, run `$ node -v`.
 2. [Fork](https://help.github.com/articles/fork-a-repo) the [p5.js Web Editor repository](https://github.com/processing/p5.js-web-editor) into your own GitHub account.
 3. [Clone](https://help.github.com/articles/cloning-a-repository/) your new fork of the repository from GitHub onto your local computer.
 
@@ -26,8 +26,8 @@ _Note_: The installation steps assume you are using a Unix-like shell. If you ar
    $ git clone https://github.com/YOUR_USERNAME/p5.js-web-editor.git
    ```
 
-4. If you are using nvm, run `$ nvm use 16.14.2` to set your Node version to 16.14.2
-5. Ensure your npm version is set to 8.5.0 by running `$ npm -v`. If it isn't, run `npm install -g npm@8.5.0` to install it. 
+4. If you are using nvm, run `$ nvm use 18.20.8` to set your Node version to 18.20.8
+5. Ensure your npm version is set to 10.8.2 by running `$ npm -v`. If it isn't, run `npm install -g npm@10.8.2` to install it. 
 6. Navigate into the project folder and install all its necessary dependencies with npm.
 
    ```

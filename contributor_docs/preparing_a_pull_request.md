@@ -8,6 +8,7 @@ Pull-requests are easier when your code is up to date!
 Before submitting a pull request, make sure that:
 
 - Your work is related to an issue. **Pull requests that do not have an associated issue will not be accepted.** 
+- **The issue is not already assigned to another contributor.** We follow a "first assigned, first served" approach to avoid duplicated work. If you open a PR for an issue that someone else is already working on, your PR will be closed.
 - Your work adheres to the style guidelines and fits in with the rest of the codebase.
 - You ran the project locally and tested your changes. Pay special attention to any specific areas of the p5.js editor that may be affected by your changes. Does everything still work as before? Great!
 
@@ -50,7 +51,7 @@ Then ask git about the latest changes.
     git status       
 
 ## Pull Request Templates
-Once you've opened your pull request, please ensure that you follow the guidelines and 
+Once you've opened your pull request, please ensure that you follow the guidelines.
 
 ## CONFLICTS
 You may have some conflicts! It's okay. Feel free to ask for help. If merging with the latest upstream `develop` branch causes conflicts, you can always make a pull request with the upstream repository, which makes the merge conflicts public.

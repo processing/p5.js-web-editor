@@ -13,7 +13,7 @@ import {
 } from '../actions/ide';
 import { setAllAccessibleOutput } from '../actions/preferences';
 import { cloneProject, saveProject } from '../actions/project';
-import useKeyDownHandlers from '../../../common/useKeyDownHandlers';
+import { useKeyDownHandlers } from '../../../common/useKeyDownHandlers';
 import {
   getAuthenticated,
   getIsUserOwner,

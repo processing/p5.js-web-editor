@@ -306,13 +306,13 @@
     "CurrentPasswordARIA": "aktuelles passwort",
     "NewPassword": "Neues Passwort",
     "NewPasswordARIA": "neues passwort",
-    "SubmitSaveAllSettings": "Alle Einstellungen speichern"
+    "SaveAccountDetails": "Kontoeinstellungen speichern"
   },
   "AccountView": {
     "SocialLogin": "Social Login",
     "SocialLoginDescription": "Nutze Deinen GitHub oder Google Account um dich beim p5.js Web Editor anzumelden.",
     "Title": "p5.js Web Editor | Account Einstellungen",
-    "Settings": "Account Einstellungen",
+    "Settings": "Mein Konto",
     "AccountTab": "Account",
     "AccessTokensTab": "Zugangstokens"
   },

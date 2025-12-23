@@ -7,9 +7,9 @@ import isAfter from 'date-fns/isAfter';
 import axios from 'axios';
 import slugify from 'slugify';
 import Project from '../models/project';
-import User from '../models/user';
+import { User } from '../models/user';
 import { resolvePathToFile } from '../utils/filePath';
-import generateFileSystemSafeName from '../utils/generateFileSystemSafeName';
+import { generateFileSystemSafeName } from '../utils/generateFileSystemSafeName';
 
 export {
   default as createProject,
@@ -68,7 +68,7 @@ export async function updateProject(req, res) {
       const newFileIds = req.body.files.map((file) => file.id);
       const staleIds = oldFileIds.filter((id) => newFileIds.indexOf(id) === -1);
       staleIds.forEach((staleId) => {
-        updatedProject.files.id(staleId).remove();
+        updatedProject.files.id(staleId).deleteOne();
       });
       const savedProject = await updatedProject.save();
       res.json(savedProject);
@@ -99,13 +99,6 @@ export async function getProject(req, res) {
       .send({ message: 'Project with that id does not exist' });
   }
   return res.json(project);
-}
-
-export function getProjectsForUserId(userId) {
-  return Project.find({ user: userId })
-    .sort('-createdAt')
-    .select('name files id createdAt updatedAt')
-    .exec();
 }
 
 export async function getProjectAsset(req, res) {
@@ -146,7 +139,7 @@ export async function getProjectAsset(req, res) {
 
 export async function getProjects(req, res) {
   if (req.user) {
-    const projects = await getProjectsForUserId(req.user._id);
+    const projects = await Project.getProjectsForUserId(req.user._id);
     res.json(projects);
   } else {
     // could just move this to client side
@@ -287,4 +280,41 @@ export async function downloadProjectAsZip(req, res) {
   }
   // save project to some path
   buildZip(project, req, res);
+}
+
+export async function changeProjectVisibility(req, res) {
+  try {
+    const { projectId, visibility: newVisibility } = req.body;
+
+    const project = await Project.findOne({
+      $or: [{ _id: projectId }, { slug: projectId }]
+    });
+
+    if (!project) {
+      return res
+        .status(404)
+        .json({ success: false, message: 'No project found.' });
+    }
+
+    if (newVisibility !== 'Private' && newVisibility !== 'Public') {
+      return res.status(400).json({ success: false, message: 'Invalid data.' });
+    }
+
+    const updatedProject = await Project.findByIdAndUpdate(
+      projectId,
+      {
+        visibility: newVisibility
+      },
+      {
+        new: true,
+        runValidators: true
+      }
+    )
+      .populate('user', 'username')
+      .exec();
+
+    return res.status(200).json(updatedProject);
+  } catch (error) {
+    return res.status(500).json(error);
+  }
 }

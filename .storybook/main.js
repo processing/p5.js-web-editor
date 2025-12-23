@@ -1,6 +1,6 @@
 /** @type { import('@storybook/react-webpack5').StorybookConfig } */
 const config = {
-  stories: ['../client/**/*.stories.(jsx|mdx)'],
+  stories: ['../client/**/*.stories.(jsx|mdx|tsx)'],
   addons: [
     '@storybook/addon-links',
     '@storybook/addon-essentials',
@@ -18,19 +18,19 @@ const config = {
     // https://storybook.js.org/docs/react/builders/webpack
     // this modifies the existing image rule to exclude .svg files
     // since we want to handle those files with @svgr/webpack
-    const imageRule = config.module.rules.find(rule => rule.test.test('.svg'))
-    imageRule.exclude = /\.svg$/
+    const imageRule = config.module.rules.find((rule) =>
+      rule.test.test('.svg')
+    );
+    imageRule.exclude = /\.svg$/;
 
     // configure .svg files to be loaded with @svgr/webpack
     config.module.rules.push({
       test: /\.svg$/,
       use: ['@svgr/webpack']
-    })
+    });
 
-    return config
-  },
+    return config;
+  }
 };
 
 export default config;
-
-

@@ -1,4 +1,7 @@
-require('@babel/register');
+require('@babel/register')({
+  extensions: ['.js', '.ts'],
+  presets: ['@babel/preset-env', '@babel/preset-typescript']
+});
 require('regenerator-runtime/runtime');
 const dotenv = require('dotenv');
 

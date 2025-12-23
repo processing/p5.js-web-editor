@@ -1,7 +1,7 @@
 import loopProtect from 'loop-protect';
 import { Hook, Decode, Encode } from 'console-feed';
 import StackTrace from 'stacktrace-js';
-import evaluateExpression from './evaluateExpression';
+import { evaluateExpression } from './evaluateExpression';
 
 // should postMessage user the dispatcher? does the parent window need to
 // be registered as a frame? or a just a listener?

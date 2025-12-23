@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 
 import { generateCollectionName } from '../../../utils/generateRandomName';
-import Button from '../../../common/Button';
+import { Button, ButtonTypes } from '../../../common/Button';
 import { createCollection } from '../../IDE/actions/collections';
 
 const CollectionCreate = () => {
@@ -74,7 +74,7 @@ const CollectionCreate = () => {
               rows="6"
             />
           </p>
-          <Button type="submit" disabled={invalid}>
+          <Button type={ButtonTypes.SUBMIT} disabled={invalid}>
             {t('CollectionCreate.SubmitCollectionCreate')}
           </Button>
         </form>

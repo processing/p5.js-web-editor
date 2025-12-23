@@ -162,6 +162,22 @@ exports[`Nav renders dashboard version for mobile 1`] = `
   margin: 0;
 }
 
+.c2 > section {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  gap: 5px;
+}
+
 .c2 > h5 {
   font-size: 1.0833333333333333rem;
   font-weight: normal;
@@ -335,7 +351,7 @@ exports[`Nav renders dashboard version for mobile 1`] = `
           >
             <test-file-stub
               aria-hidden="true"
-              classname="icons__StyledIcon-sc-xmer15-0 dStXqm"
+              classname="icons__StyledIcon-sc-1rmv3zl-0 bKwKVB"
               focusable="false"
             />
           </button>
@@ -351,7 +367,7 @@ exports[`Nav renders dashboard version for mobile 1`] = `
         >
           <test-file-stub
             aria-hidden="true"
-            classname="icons__StyledIcon-sc-xmer15-0 dStXqm"
+            classname="icons__StyledIcon-sc-1rmv3zl-0 bKwKVB"
             focusable="false"
           />
         </button>
@@ -642,6 +658,15 @@ exports[`Nav renders editor version for desktop 1`] = `
               <li>
                 About
               </li>
+              <li>
+                Report a Bug
+              </li>
+              <li>
+                Chat On Discord
+              </li>
+              <li>
+                Post on the Forum
+              </li>
             </ul>
           </li>
         </ul>
@@ -755,6 +780,22 @@ exports[`Nav renders editor version for mobile 1`] = `
 .c2 * {
   padding: 0;
   margin: 0;
+}
+
+.c2 > section {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  gap: 5px;
 }
 
 .c2 > h5 {
@@ -930,7 +971,7 @@ exports[`Nav renders editor version for mobile 1`] = `
           >
             <test-file-stub
               aria-hidden="true"
-              classname="icons__StyledIcon-sc-xmer15-0 dStXqm"
+              classname="icons__StyledIcon-sc-1rmv3zl-0 bKwKVB"
               focusable="false"
             />
           </button>
@@ -946,7 +987,7 @@ exports[`Nav renders editor version for mobile 1`] = `
         >
           <test-file-stub
             aria-hidden="true"
-            classname="icons__StyledIcon-sc-xmer15-0 dStXqm"
+            classname="icons__StyledIcon-sc-1rmv3zl-0 bKwKVB"
             focusable="false"
           />
         </button>
