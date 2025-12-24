@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { sortBy } from 'lodash';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { MenubarSubmenu } from '../../../../components/Menubar/MenubarSubmenu';
@@ -25,7 +25,8 @@ import {
   newFolder,
   showKeyboardShortcutModal,
   startSketch,
-  stopSketch
+  stopSketch,
+  showErrorModal
 } from '../../actions/ide';
 import { logoutUser } from '../../../User/actions';
 import { CmControllerContext } from '../../pages/IDEView';
@@ -34,7 +35,6 @@ import useIsMobile from '../../hooks/useIsMobile';
 
 const Nav = ({ layout }) => {
   const isMobile = useIsMobile();
-
   return isMobile ? (
     <MobileNav />
   ) : (
@@ -160,6 +160,7 @@ const ProjectMenu = () => {
   const cmRef = useContext(CmControllerContext);
 
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const { t } = useTranslation();
   const {
@@ -182,12 +183,14 @@ const ProjectMenu = () => {
         </MenubarItem>
         <MenubarItem
           id="file-save"
-          isDisabled={
-            !user.authenticated ||
-            !isLoginEnabled ||
-            (project?.owner && !isUserOwner)
-          }
-          onClick={() => saveSketch(cmRef.current)}
+          isDisabled={!isLoginEnabled || (project?.owner && !isUserOwner)}
+          onClick={() => {
+            if (!user.authenticated) {
+              dispatch(showErrorModal('forceAuthentication'));
+              return;
+            }
+            saveSketch(cmRef.current);
+          }}
         >
           {t('Common.Save')}
           <span className="nav__keyboard-shortcut">{metaKeyName}+S</span>
@@ -222,10 +225,16 @@ const ProjectMenu = () => {
         </MenubarItem>
         <MenubarItem
           id="file-add-to-collection"
-          isDisabled={
-            !isUiCollectionsEnabled || !user.authenticated || isUnsaved
-          }
-          href={`/${user.username}/sketches/${project?.id}/add-to-collection`}
+          isDisabled={!isUiCollectionsEnabled || isUnsaved}
+          onClick={() => {
+            if (!user.authenticated) {
+              dispatch(showErrorModal('forceAuthentication'));
+              return;
+            }
+            history.push(
+              `/${user.username}/sketches/${project?.id}/add-to-collection`
+            );
+          }}
         >
           {t('Nav.File.AddToCollection')}
         </MenubarItem>
