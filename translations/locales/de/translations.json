@@ -27,7 +27,9 @@
       "Title": "Hilfe",
       "KeyboardShortcuts": "Tastenkürzel",
       "Reference": "Referenz",
-      "About": "Über"
+      "ReportBug": "Fehler melden",
+      "ChatOnDiscord": "Auf Discord chatten",
+      "PostOnTheForum": "Im Forum posten"
     },
     "Lang": "Sprache",
     "BackEditor": "Zurück zum Editor",

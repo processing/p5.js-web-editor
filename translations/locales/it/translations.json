@@ -27,7 +27,9 @@
       "Title": "Aiuto",
       "KeyboardShortcuts": "Scorciatoie tastiera",
       "Reference": "Riferimenti",
-      "About": "Informazioni"
+      "ReportBug": "Segnala un bug",
+      "ChatOnDiscord": "Chatta su Discord",
+      "PostOnTheForum": "Posta sul forum"
     },
     "Lang": "Lingua",
     "BackEditor": "Torna a Editor",
@@ -138,6 +140,7 @@
     "OpenARIA": "Apri terminale"
   },
   "Preferences": {
+    "TitleHelmet": "p5.js Web Editor | Preferenze",
     "Settings": "Impostazioni",
     "GeneralSettings": "Impostazioni generali",
     "Accessibility": "Accessibilità",
@@ -186,7 +189,12 @@
     "SoundAddon": "p5.sound.js Add-on",
     "PreloadAddon": "p5.js 1.x Compatibility Add-on Library — Precaricamento",
     "ShapesAddon": "p5.js 1.x Compatibility Add-on Library — Forme",
-    "DataAddon": "p5.js 1.x Compatibility Add-on Library — Strutture di dati"
+    "DataAddon": "p5.js 1.x Compatibility Add-on Library — Strutture di dati",
+    "AddonOnARIA": "attivo",
+    "AddonOffARIA": "disattivo",
+    "SoundReference": "Visualizza il riferimento per p5.sound compatibile con p5.js {{version}}",
+    "CopyToClipboardSuccess": "Copiato negli appunti!",
+    "CopyToClipboardFailure": "Non è stato possibile copiare il testo, prova a selezionarlo e copiarlo manualmente."
   },
   "KeyboardShortcuts": {
     "Title": " Scorciatoie tastiera",

@@ -177,6 +177,7 @@
     "OpenARIA": "Open console"
   },
   "Preferences": {
+    "TitleHelmet": "p5.js Web Editor | Preferences",
     "Settings": "Settings",
     "GeneralSettings": "General Settings",
     "Accessibility": "Accessibility",

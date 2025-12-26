@@ -27,7 +27,9 @@
         "Title": "ヘルプ",
         "KeyboardShortcuts": "キーボードショートカット",
         "Reference": "リファレンス（英語）",
-        "About": "ウェブエディタについて"
+        "ReportBug": "バグ報告",
+        "ChatOnDiscord": "Discordでチャット",
+        "PostOnTheForum": "フォーラムに投稿"
       },
       "Lang": "言語",
       "BackEditor": "エディタに戻る",
@@ -177,7 +179,16 @@
       "PlainText": "プレーンテキスト",
       "TextOutputARIA": "テキスト出力 オン",
       "TableText": "テーブルテキスト",
-      "TableOutputARIA": "テーブルテキスト出力 オン"
+      "TableOutputARIA": "テーブルテキスト出力 オン",
+      "LibraryManagement": "ライブラリ管理",
+      "LibraryVersion": "p5.js バージョン",
+      "SoundAddon": "p5.sound.js アドオン・ライブラリ",
+      "PreloadAddon": "p5.js 1.x 互換性アドオン・ライブラリ — Preload",
+      "ShapesAddon": "p5.js 1.x 互換性アドオン・ライブラリ — Shapes",
+      "DataAddon": "p5.js 1.x 互換性アドオン・ライブラリ — Data & Events",
+      "AddonOnARIA": "オン",
+      "AddonOffARIA": "オフ",
+      "TitleHelmet": "p5.js ウェブエディタ | 設定"
     },
     "KeyboardShortcuts": {
       "Title": " キーボードショートカット",

@@ -28,7 +28,9 @@
         "Title": "Aide",
         "KeyboardShortcuts": "Raccourcis clavier",
         "Reference": "Référence",
-        "About": "À propos"
+        "ReportBug": "Signaler un bogue",
+        "ChatOnDiscord": "Discuter sur Discord",
+        "PostOnTheForum": "Publier sur le forum"
       },
       "Lang": "Langue",
       "BackEditor": "Retour à l'éditeur",
