@@ -55,6 +55,7 @@
   "CodemirrorFindAndReplace": {
     "ToggleReplace": "टॉगल बदली करें",
     "FindPlaceholder": "फ़ाइलों में खोजें",
+    "Find": "खोज",
     "Replace": "बदली करें",
     "ReplaceAll": "सबको बदली करें",
     "ReplacePlaceholder": "बदलने के लिए पाठ",

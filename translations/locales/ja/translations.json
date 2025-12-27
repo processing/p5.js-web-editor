@@ -188,7 +188,14 @@
       "DataAddon": "p5.js 1.x 互換性アドオン・ライブラリ — Data & Events",
       "AddonOnARIA": "オン",
       "AddonOffARIA": "オフ",
-      "TitleHelmet": "p5.js ウェブエディタ | 設定"
+      "TitleHelmet": "p5.js ウェブエディタ | 設定",
+      "LibraryVersionInfo": "p5.jsの[新しい2.0リリース](https://github.com/processing/p5.js/releases/)が利用可能です！2026年8月にはデフォルトになる予定ですので、この機会にテストしてバグを報告してください。スケッチを1.xから2.0へ移行することに興味がありますか？[互換性と移行のリソース](https://github.com/processing/p5.js-compatibility)を確認してください。",
+      "CustomVersionTitle": "独自のライブラリを管理していますか？素晴らしい！",
+      "CustomVersionInfo": "p5.jsのバージョンは現在index.htmlのコード内で管理されています。つまり、このタブからは調整できません。",
+      "CustomVersionReset": "デフォルトのライブラリを使用したい場合は、index.htmlのスクリプトタグを以下のものに置き換えることができます。",
+      "SoundReference": "p5.js {{version}} と互換性のある p5.sound のリファレンスを表示",
+      "CopyToClipboardSuccess": "クリップボードにコピーしました！",
+      "CopyToClipboardFailure": "テキストをコピーできませんでした。手動で選択してコピーしてください。"
     },
     "KeyboardShortcuts": {
       "Title": " キーボードショートカット",
