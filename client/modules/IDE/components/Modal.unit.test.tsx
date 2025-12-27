@@ -1,6 +1,6 @@
 import React from 'react';
 import { fireEvent, render, screen } from '../../../test-utils';
-import Modal from './Modal';
+import { Modal } from './Modal';
 
 describe('Modal', () => {
   it('can render title', () => {

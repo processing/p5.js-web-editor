@@ -8,7 +8,7 @@ import IDEKeyHandlers from '../components/IDEKeyHandlers';
 import Sidebar from '../components/Sidebar';
 import PreviewFrame from '../components/PreviewFrame';
 import Console from '../components/Console';
-import Toast from '../components/Toast';
+import { Toast } from '../components/Toast';
 import { updateFileContent } from '../actions/files';
 import {
   autosaveProject,

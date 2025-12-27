@@ -1,19 +1,25 @@
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { useModalClose } from '../../../common/useModalClose';
 import ExitIcon from '../../../images/exit.svg';
 
-// Common logic from NewFolderModal, NewFileModal, UploadFileModal
+interface ModalProps {
+  title: string;
+  onClose: () => void;
+  closeAriaLabel: string;
+  contentClassName?: string;
+  children: ReactNode;
+}
 
-const Modal = ({
+// Common logic from NewFolderModal, NewFileModal, UploadFileModal
+export const Modal = ({
   title,
   onClose,
   closeAriaLabel,
-  contentClassName,
+  contentClassName = '',
   children
-}) => {
-  const modalRef = useModalClose(onClose);
+}: ModalProps) => {
+  const modalRef = useModalClose<HTMLElement>(onClose);
 
   return (
     <section className="modal" ref={modalRef}>
@@ -33,17 +39,3 @@ const Modal = ({
     </section>
   );
 };
-
-Modal.propTypes = {
-  title: PropTypes.string.isRequired,
-  onClose: PropTypes.func.isRequired,
-  closeAriaLabel: PropTypes.string.isRequired,
-  contentClassName: PropTypes.string,
-  children: PropTypes.node.isRequired
-};
-
-Modal.defaultProps = {
-  contentClassName: ''
-};
-
-export default Modal;
