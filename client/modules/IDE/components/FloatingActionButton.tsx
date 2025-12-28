@@ -2,11 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import classNames from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 import PlayIcon from '../../../images/triangle-arrow-right.svg';
 import StopIcon from '../../../images/stop.svg';
 import { prop, remSize } from '../../../theme';
 import { startSketch, stopSketch } from '../actions/ide';
+import { RootState } from '../../../reducers';
 
 const Button = styled.button`
   position: fixed;
@@ -38,8 +38,16 @@ const Button = styled.button`
   }
 `;
 
-const FloatingActionButton = ({ syncFileContent, offsetBottom }) => {
-  const isPlaying = useSelector((state) => state.ide.isPlaying);
+interface FloatingActionButtonProps {
+  syncFileContent: () => void;
+  offsetBottom: number;
+}
+
+export const FloatingActionButton = ({
+  syncFileContent,
+  offsetBottom
+}: FloatingActionButtonProps) => {
+  const isPlaying = useSelector((state: RootState) => state.ide.isPlaying);
   const dispatch = useDispatch();
 
   return (
@@ -53,17 +61,16 @@ const FloatingActionButton = ({ syncFileContent, offsetBottom }) => {
         if (!isPlaying) {
           syncFileContent();
           dispatch(startSketch());
-        } else dispatch(stopSketch());
+        } else {
+          dispatch(stopSketch());
+        }
       }}
     >
-      {isPlaying ? <StopIcon /> : <PlayIcon />}
+      {isPlaying ? (
+        <StopIcon focusable="false" aria-hidden="true" />
+      ) : (
+        <PlayIcon focusable="false" aria-hidden="true" />
+      )}
     </Button>
   );
 };
-
-FloatingActionButton.propTypes = {
-  syncFileContent: PropTypes.func.isRequired,
-  offsetBottom: PropTypes.number.isRequired
-};
-
-export default FloatingActionButton;

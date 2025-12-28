@@ -28,7 +28,7 @@ import { updateFileContent } from '../../actions/files';
 import { CmControllerContext } from '../../pages/IDEView';
 import Stars from '../Stars';
 import { Admonition } from '../Admonition';
-import TextArea from '../TextArea';
+import { TextArea } from '../TextArea';
 
 export default function Preferences() {
   const { t } = useTranslation();
