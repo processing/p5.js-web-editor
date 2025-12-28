@@ -27,9 +27,7 @@
       "Title": "帮助",
       "KeyboardShortcuts": "快捷键",
       "Reference": "参考文档",
-      "ReportBug": "报告问题",
-      "ChatOnDiscord": "在 Discord 上聊天",
-      "PostOnTheForum": "在论坛上发布"
+      "About": "关于"
     },
     "Lang": "语言",
     "BackEditor": "回到编辑器",
@@ -182,23 +180,7 @@
     "PlainText": "纯文本",
     "TextOutputARIA": "打开文字输出",
     "TableText": "表格文本",
-    "TableOutputARIA": "打开表格文本",
-    "TitleHelmet": "p5.js 在线编辑器 | 设置",
-    "LibraryManagement": "库管理",
-    "LibraryVersion": "p5.js 版本",
-    "LibraryVersionInfo": "p5.js 的 [新 2.0 版本](https://github.com/processing/p5.js/releases/) 已发布！它将在 2026 年 8 月成为默认版本，因此请花点时间测试并报告错误。有兴趣将项目从 1.x 迁移到 2.0 吗？查看 [兼容性和迁移资源。](https://github.com/processing/p5.js-compatibility)",
-    "CustomVersionTitle": "正在管理您自己的库？太棒了！",
-    "CustomVersionInfo": "p5.js 的版本目前正在 index.html 的代码中进行管理。这意味着它不能从此标签页中进行调整。",
-    "CustomVersionReset": "如果您想使用默认库，可以将 index.html 中的 script 标签替换为以下内容：",
-    "SoundAddon": "p5.sound.js Add-on 库",
-    "PreloadAddon": "p5.js 1.x 兼容性 Add-on 库 — Preload",
-    "ShapesAddon": "p5.js 1.x 兼容性 Add-on 库 — Shapes",
-    "DataAddon": "p5.js 1.x 兼容性 Add-on 库 — Data & Events",
-    "AddonOnARIA": "开启",
-    "AddonOffARIA": "关闭",
-    "SoundReference": "查看与 p5.js {{version}} 兼容的 p5.sound 参考文档",
-    "CopyToClipboardSuccess": "已复制到剪贴板！",
-    "CopyToClipboardFailure": "我们无法复制文本，请尝试手动选择并复制。"
+    "TableOutputARIA": "打开表格文本"
   },
   "KeyboardShortcuts": {
     "Title": "快捷键",

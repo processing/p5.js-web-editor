@@ -27,9 +27,7 @@
       "Title": "Ayuda",
       "KeyboardShortcuts": "Atajos",
       "Reference": "Referencia",
-      "ReportBug": "Reportar un error",
-      "ChatOnDiscord": "Chat en Discord",
-      "PostOnTheForum": "Publicar en el foro"
+      "About": "Acerca de"
     },
     "Lang": "Lenguaje",
     "BackEditor": "Regresa al editor",
@@ -186,16 +184,7 @@
     "SoundAddon": "p5.sound.js Add-on Biblioteca",
     "PreloadAddon": "p5.js 1.x Compatibility Add-on Biblioteca — Precarga",
     "ShapesAddon": "p5.js 1.x Compatibility Add-on Biblioteca — formas",
-    "DataAddon": "p5.js 1.x Compatibility Add-on Biblioteca — Estructuras de datos",
-    "AddonOnARIA": "activado",
-    "AddonOffARIA": "desactivado",
-    "TitleHelmet": "Editor Web p5.js | Preferencias",
-    "CustomVersionTitle": "¿Gestionando tus propias bibliotecas? ¡Genial!",
-    "CustomVersionInfo": "La versión de p5.js se está gestionando actualmente en el código de index.html. Esto significa que no se puede ajustar desde esta pestaña.",
-    "CustomVersionReset": "Si deseas utilizar las bibliotecas predeterminadas, puedes reemplazar las etiquetas de script en index.html por las siguientes:",
-    "SoundReference": "Ver la referencia de p5.sound compatible con p5.js {{version}}",
-    "CopyToClipboardSuccess": "¡Copiado al portapapeles!",
-    "CopyToClipboardFailure": "No pudimos copiar el texto, intenta seleccionarlo y copiarlo manualmente."
+    "DataAddon": "p5.js 1.x Compatibility Add-on Biblioteca — Estructuras de datos"
   },
   "KeyboardShortcuts": {
     "Title": " Atajos de teclado",

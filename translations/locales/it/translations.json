@@ -27,9 +27,7 @@
       "Title": "Aiuto",
       "KeyboardShortcuts": "Scorciatoie tastiera",
       "Reference": "Riferimenti",
-      "ReportBug": "Segnala un bug",
-      "ChatOnDiscord": "Chatta su Discord",
-      "PostOnTheForum": "Posta sul forum"
+      "About": "Informazioni"
     },
     "Lang": "Lingua",
     "BackEditor": "Torna a Editor",
@@ -140,7 +138,6 @@
     "OpenARIA": "Apri terminale"
   },
   "Preferences": {
-    "TitleHelmet": "p5.js Web Editor | Preferenze",
     "Settings": "Impostazioni",
     "GeneralSettings": "Impostazioni generali",
     "Accessibility": "Accessibilità",
@@ -186,18 +183,10 @@
     "TableOutputARIA": "Testo in tabella attivo",
     "LibraryVersion": "Versione di p5.js",
     "LibraryVersionInfo": "È disponibile una [nuova versione 2.0](https://github.com/processing/p5.js/releases/) di p5.js! Diventerà la versione predefinita ad agosto 2026, quindi approfitta di questo tempo per provarla e segnalare eventuali bug. Interessato a migrare gli schizzi da 1.x a 2.0? Consulta le [risorse di compatibilità e transizione.](https://github.com/processing/p5.js-compatibility)",
-    "CustomVersionTitle": "Gestisci le tue librerie? Ottimo!",
-    "CustomVersionInfo": "La versione di p5.js è attualmente gestita nel codice di index.html. Ciò significa che non può essere regolata da questa scheda.",
-    "CustomVersionReset": "Se desideri utilizzare le librerie predefinite, puoi sostituire i tag script in index.html con i seguenti:",
     "SoundAddon": "p5.sound.js Add-on",
     "PreloadAddon": "p5.js 1.x Compatibility Add-on Library — Precaricamento",
     "ShapesAddon": "p5.js 1.x Compatibility Add-on Library — Forme",
-    "DataAddon": "p5.js 1.x Compatibility Add-on Library — Strutture di dati",
-    "AddonOnARIA": "attivo",
-    "AddonOffARIA": "disattivo",
-    "SoundReference": "Visualizza il riferimento per p5.sound compatibile con p5.js {{version}}",
-    "CopyToClipboardSuccess": "Copiato negli appunti!",
-    "CopyToClipboardFailure": "Non è stato possibile copiare il testo, prova a selezionarlo e copiarlo manualmente."
+    "DataAddon": "p5.js 1.x Compatibility Add-on Library — Strutture di dati"
   },
   "KeyboardShortcuts": {
     "Title": " Scorciatoie tastiera",

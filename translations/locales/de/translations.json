@@ -27,9 +27,7 @@
       "Title": "Hilfe",
       "KeyboardShortcuts": "Tastenkürzel",
       "Reference": "Referenz",
-      "ReportBug": "Fehler melden",
-      "ChatOnDiscord": "Auf Discord chatten",
-      "PostOnTheForum": "Im Forum posten"
+      "About": "Über"
     },
     "Lang": "Sprache",
     "BackEditor": "Zurück zum Editor",
@@ -137,11 +135,9 @@
     "OpenARIA": "Konsole öffnen"
   },
   "Preferences": {
-    "TitleHelmet": "p5.js Web Editor | Einstellungen",
     "Settings": "Einstellungen",
     "GeneralSettings": "Allgemeine Einstellungen",
     "Accessibility": "Bedienungshilfen",
-    "LibraryManagement": "Bibliotheksverwaltung",
     "Theme": "Erscheinungsbild",
     "LightTheme": "Hell",
     "LightThemeARIA": "Erscheinungsbild Hell an",
@@ -178,21 +174,7 @@
     "PlainText": "Nur Text",
     "TextOutputARIA": "Text Ausgabe an",
     "TableText": "Tabellarisch",
-    "TableOutputARIA": "Tabellarische Ausgabe an",
-    "LibraryVersion": "p5.js Version",
-    "LibraryVersionInfo": "Es gibt ein [neues 2.0 Release](https://github.com/processing/p5.js/releases/) von p5.js! Im August 2026 wird es zum Standard, also nimm dir Zeit, es auszuprobieren und Fehler zu melden. Möchtest du Sketche von 1.x auf 2.0 umstellen? Schau dir die [Ressourcen für Kompatibilität und Übergang an.](https://github.com/processing/p5.js-compatibility)",
-    "CustomVersionTitle": "Eigene Bibliotheken verwalten? Schön!",
-    "CustomVersionInfo": "Die Version von p5.js wird derzeit im Code von index.html verwaltet. Das bedeutet, dass sie nicht über diesen Reiter angepasst werden kann.",
-    "CustomVersionReset": "Wenn du die Standardbibliotheken verwenden möchtest, kannst du die Script-Tags in index.html durch die folgenden ersetzen:",
-    "SoundAddon": "p5.sound.js Add-on Bibliothek",
-    "PreloadAddon": "p5.js 1.x Kompatibilitäts-Add-on-Bibliothek — Preload",
-    "ShapesAddon": "p5.js 1.x Kompatibilitäts-Add-on-Bibliothek — Shapes",
-    "DataAddon": "p5.js 1.x Kompatibilitäts-Add-on-Bibliothek — Data & Events",
-    "AddonOnARIA": "ein",
-    "AddonOffARIA": "aus",
-    "SoundReference": "Sieh dir die Referenz für p5.sound an, die mit p5.js {{version}} kompatibel ist",
-    "CopyToClipboardSuccess": "In die Zwischenablage kopiert!",
-    "CopyToClipboardFailure": "Der Text konnte nicht kopiert werden. Versuche, ihn manuell auszuwählen und zu kopieren."
+    "TableOutputARIA": "Tabellarische Ausgabe an"
   },
   "KeyboardShortcuts": {
     "Title": "Tastenkürzel",
