@@ -6,7 +6,7 @@ import { showReduxDevTools } from '../../store';
 import DevTools from './components/DevTools';
 import { setPreviousPath } from '../IDE/actions/ide';
 import { setLanguage } from '../IDE/actions/preferences';
-import CookieConsent from '../User/components/CookieConsent';
+import { CookieConsent } from '../User/components/CookieConsent';
 
 function hideCookieConsent(pathname) {
   if (pathname.includes('/full/') || pathname.includes('/embed/')) {

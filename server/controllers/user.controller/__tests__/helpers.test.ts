@@ -10,14 +10,17 @@ import { UserDocument } from '../../../types';
 
 jest.mock('../../../models/user');
 
-const mockFullUser = createMockUser({
-  // sensitive fields to be removed:
-  name: 'bob dylan',
-  tokens: [],
-  password: 'password12314',
-  resetPasswordToken: 'wijroaijwoer',
-  banned: true
-});
+const mockFullUser = createMockUser(
+  {
+    // sensitive fields to be removed:
+    name: 'bob dylan',
+    tokens: [],
+    password: 'password12314',
+    resetPasswordToken: 'wijroaijwoer',
+    banned: true
+  },
+  true
+) as UserDocument;
 
 const {
   name,

@@ -1,17 +1,18 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { orderBy } from 'lodash';
 import { useTranslation } from 'react-i18next';
-
-import { APIKeyPropType } from './APIKeyForm';
-
+import type { SanitisedApiKey } from '../../../../common/types';
 import {
   distanceInWordsToNow,
   formatDateToString
 } from '../../../utils/formatDate';
 import TrashCanIcon from '../../../images/trash-can.svg';
 
-function APIKeyList({ apiKeys, onRemove }) {
+export interface APIKeyListProps {
+  apiKeys: SanitisedApiKey[];
+  onRemove: (key: SanitisedApiKey) => void;
+}
+export function APIKeyList({ apiKeys, onRemove }: APIKeyListProps) {
   const { t } = useTranslation();
   return (
     <table className="api-key-list">
@@ -50,10 +51,3 @@ function APIKeyList({ apiKeys, onRemove }) {
     </table>
   );
 }
-
-APIKeyList.propTypes = {
-  apiKeys: PropTypes.arrayOf(PropTypes.shape(APIKeyPropType)).isRequired,
-  onRemove: PropTypes.func.isRequired
-};
-
-export default APIKeyList;

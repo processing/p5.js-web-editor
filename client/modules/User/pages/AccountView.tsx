@@ -1,22 +1,27 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router-dom';
 import { parse } from 'query-string';
-import AccountForm from '../components/AccountForm';
-import SocialAuthButton from '../components/SocialAuthButton';
-import APIKeyForm from '../components/APIKeyForm';
+import { AccountForm } from '../components/AccountForm';
+import {
+  SocialAuthButton,
+  SocialAuthServices
+} from '../components/SocialAuthButton';
+import { APIKeyForm } from '../components/APIKeyForm';
 import Nav from '../../IDE/components/Header/Nav';
 import ErrorModal from '../../IDE/components/ErrorModal';
+import { hideErrorModal } from '../../IDE/actions/ide';
 import Overlay from '../../App/components/Overlay';
 import Toast from '../../IDE/components/Toast';
+import { RootState } from '../../../reducers';
 
 function SocialLoginPanel() {
   const { t } = useTranslation();
-  const isGithub = useSelector((state) => !!state.user.github);
-  const isGoogle = useSelector((state) => !!state.user.google);
+  const isGithub = useSelector((state: RootState) => !!state.user.github);
+  const isGoogle = useSelector((state: RootState) => !!state.user.google);
   return (
     <React.Fragment>
       <AccountForm />
@@ -28,12 +33,12 @@ function SocialLoginPanel() {
       </p>
       <div className="account__social-stack">
         <SocialAuthButton
-          service={SocialAuthButton.services.github}
+          service={SocialAuthServices.github}
           linkStyle
           isConnected={isGithub}
         />
         <SocialAuthButton
-          service={SocialAuthButton.services.google}
+          service={SocialAuthServices.google}
           linkStyle
           isConnected={isGoogle}
         />
@@ -42,13 +47,13 @@ function SocialLoginPanel() {
   );
 }
 
-function AccountView() {
+export function AccountView() {
   const { t } = useTranslation();
-
+  const dispatch = useDispatch();
   const location = useLocation();
   const queryParams = parse(location.search);
   const showError = !!queryParams.error;
-  const errorType = queryParams.error;
+  const errorType = queryParams.error as string;
   const accessTokensUIEnabled = window.process.env.UI_ACCESS_TOKEN_ENABLED;
   const history = useHistory();
 
@@ -69,7 +74,11 @@ function AccountView() {
             history.push(location.pathname);
           }}
         >
-          <ErrorModal type="oauthError" service={errorType} />
+          <ErrorModal
+            type="oauthError"
+            service={errorType}
+            closeModal={() => dispatch(hideErrorModal())}
+          />
         </Overlay>
       )}
 
@@ -108,5 +117,3 @@ function AccountView() {
     </div>
   );
 }
-
-export default AccountView;

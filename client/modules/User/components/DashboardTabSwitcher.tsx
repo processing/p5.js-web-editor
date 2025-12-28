@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
@@ -10,11 +9,11 @@ import { Options } from '../../IDE/components/Header/MobileNav';
 import { toggleDirectionForField } from '../../IDE/actions/sorting';
 import useIsMobile from '../../IDE/hooks/useIsMobile';
 
-export const TabKey = {
-  assets: 'assets',
-  collections: 'collections',
-  sketches: 'sketches'
-};
+export enum TabKey {
+  assets = 'assets',
+  collections = 'collections',
+  sketches = 'sketches'
+}
 
 // It is good for right now, because we need to separate the nav dropdown logic from the navBar before we can use it here
 const FilterOptions = styled(Options)`
@@ -25,7 +24,16 @@ const FilterOptions = styled(Options)`
   }
 `;
 
-const DashboardTabSwitcher = ({ currentTab, isOwner, username }) => {
+export interface DashboardTabSwitcherProps {
+  currentTab: TabKey;
+  isOwner: string;
+  username: string;
+}
+export const DashboardTabSwitcher = ({
+  currentTab,
+  isOwner,
+  username
+}: DashboardTabSwitcherProps) => {
   const isMobile = useIsMobile();
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -89,11 +97,3 @@ const DashboardTabSwitcher = ({ currentTab, isOwner, username }) => {
     </div>
   );
 };
-
-DashboardTabSwitcher.propTypes = {
-  currentTab: PropTypes.string.isRequired,
-  isOwner: PropTypes.bool.isRequired,
-  username: PropTypes.string.isRequired
-};
-
-export default DashboardTabSwitcher;

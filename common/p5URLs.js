@@ -1,5 +1,5 @@
 export const p5SoundURLOldTemplate =
-  'https://cdnjs.cloudflare.com/ajax/libs/p5.js/$VERSION/addons/p5.sound.min.js';
+  'https://cdn.jsdelivr.net/npm/p5@$VERSION/lib/addons/p5.sound.min.js';
 export const p5SoundURL =
   'https://cdn.jsdelivr.net/npm/p5.sound@0.2.0/dist/p5.sound.min.js';
 export const p5PreloadAddonURL =
