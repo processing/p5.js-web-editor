@@ -1,19 +1,25 @@
 import React from 'react';
-import { render, screen } from '../../../test-utils';
+import { render, screen } from '@testing-library/react';
 import { Admonition } from './Admonition';
 
-describe('Admonition', () => {
-  it('renders the title', () => {
-    render(<Admonition title="Important" />);
-    expect(screen.getByText('Important')).toBeVisible();
+describe('Admonition Component', () => {
+  it('renders with the correct title', () => {
+    render(<Admonition title="Important Note" />);
+    expect(screen.getByText('Important Note')).toBeInTheDocument();
   });
 
-  it('renders children', () => {
+  it('renders the children content correctly', () => {
     render(
       <Admonition title="Warning">
-        <span>Be careful!</span>
+        <p>This is a warning message.</p>
       </Admonition>
     );
-    expect(screen.getByText('Be careful!')).toBeVisible();
+    expect(screen.getByText('This is a warning message.')).toBeInTheDocument();
+  });
+
+  it('renders the title as a bold element', () => {
+    const { container } = render(<Admonition title="Bold Title" />);
+    const strongElement = container.querySelector('strong');
+    expect(strongElement).toHaveTextContent('Bold Title');
   });
 });
