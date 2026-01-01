@@ -140,7 +140,7 @@ describe('index.jsx integration', () => {
   });
 
   it('sidebar exists', () => {
-    expect(screen.getByText('Sketch Files')).toBeInTheDocument();
+    expect(screen.getByText('Sketch files')).toBeInTheDocument();
   });
 
   // this test doesn't make sense anymore :/
