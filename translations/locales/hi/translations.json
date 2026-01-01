@@ -229,8 +229,8 @@
     "PreloadAddon": "p5.js 1.x Compatibility Add-on लाइब्रेरी — प्रीलोड",
     "ShapesAddon": "p5.js 1.x Compatibility Add-on लाइब्रेरी — आकार",
     "DataAddon": "p5.js 1.x Compatibility Add-on लाइब्रेरी — डेटा संरचनाएँ",
-    "AddonOnARIA": "ऐड-ऑन चालू (सक्रिय)",
-    "AddonOffARIA": "ऐड-ऑन बंद (निष्क्रिय)",
+    "AddonOnARIA": "ऐड-ऑन चालू",
+    "AddonOffARIA": "ऐड-ऑन बंद",
     "SoundReference": "p5.sound के लिए संदर्भ देखें जो p5.js {{version}} के साथ संगत है",
     "CopyToClipboardSuccess": "क्लिपबोर्ड में कॉपी किया गया!",
     "CopyToClipboardFailure": "हम पाठ को कॉपी करने में असमर्थ थे, कृपया इसे चुनने और मैन्युअल रूप से कॉपी करने का प्रयास करें।"
