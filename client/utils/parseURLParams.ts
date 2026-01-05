@@ -1,6 +1,13 @@
 import { p5Versions, currentP5Version } from '../../common/p5Versions';
 
-const DEFAULTS = {
+interface defaultsTypes {
+  sound: boolean;
+  preload: boolean;
+  shapes: boolean;
+  data: boolean;
+}
+
+const DEFAULTS: defaultsTypes = {
   sound: true,
   preload: false,
   shapes: false,
@@ -12,7 +19,8 @@ const DEFAULTS = {
  * @param {string[]} versions - Array of version strings (e.g., ['1.11.2', '1.11.1'])
  * @returns {string} The highest version from the array
  */
-function getNewestVersion(versions) {
+
+function getNewestVersion(versions: string[]): string {
   return versions.sort((a, b) => {
     const pa = a.split('.').map((n) => parseInt(n, 10));
     const pb = b.split('.').map((n) => parseInt(n, 10));
@@ -25,7 +33,7 @@ function getNewestVersion(versions) {
   })[0];
 }
 
-function validateVersion(version) {
+function validateVersion(version: string | null): string {
   if (!version) return currentP5Version;
 
   const ver = String(version).trim();
@@ -36,7 +44,10 @@ function validateVersion(version) {
   const majorMinorMatch = /^(\d+)\.(\d+)$/.exec(ver);
   if (majorMinorMatch) {
     const [, major, minor] = majorMinorMatch;
-    const matches = p5Versions.filter((v) => {
+    const versionStrings = p5Versions.map((v) =>
+      typeof v === 'string' ? v : v.version
+    );
+    const matches = versionStrings.filter((v) => {
       const parts = v.split('.');
       return parts[0] === major && parts[1] === minor;
     });
@@ -49,7 +60,10 @@ function validateVersion(version) {
   const majorOnlyMatch = /^(\d+)$/.exec(ver);
   if (majorOnlyMatch) {
     const [, major] = majorOnlyMatch;
-    const matches = p5Versions.filter((v) => v.split('.')[0] === major);
+    const versionStrings = p5Versions.map((v) =>
+      typeof v === 'string' ? v : v.version
+    );
+    const matches = versionStrings.filter((v) => v.split('.')[0] === major);
     if (matches.length) {
       return getNewestVersion(matches);
     }
@@ -58,7 +72,7 @@ function validateVersion(version) {
   return currentP5Version;
 }
 
-function validateBool(value, defaultValue) {
+function validateBool(value: string | null, defaultValue: boolean): boolean {
   if (!value) return defaultValue;
 
   const v = String(value).trim().toLowerCase();
@@ -72,7 +86,15 @@ function validateBool(value, defaultValue) {
   return defaultValue;
 }
 
-export function parseUrlParams(url) {
+export interface ParsedUrlParams {
+  version: string;
+  sound: boolean;
+  preload: boolean;
+  shapes: boolean;
+  data: boolean;
+}
+
+export function parseUrlParams(url: string): ParsedUrlParams {
   const params = new URLSearchParams(
     new URL(url, 'https://dummy.origin').search
   );
