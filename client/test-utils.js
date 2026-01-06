@@ -23,7 +23,7 @@ import { Context as ResponsiveContext } from 'react-responsive';
 
 import i18n from './i18n-test';
 import ThemeProvider from './modules/App/components/ThemeProvider';
-import configureStore from './store';
+import { setupStore } from './store';
 import theme, { Theme } from './theme';
 
 export const history = createMemoryHistory();
@@ -95,7 +95,7 @@ Providers.propTypes = {
  */
 function reduxRender(
   ui,
-  { initialState, store = configureStore(initialState), ...renderOptions } = {}
+  { initialState, store = setupStore(initialState), ...renderOptions } = {}
 ) {
   function Wrapper({ children }) {
     return (

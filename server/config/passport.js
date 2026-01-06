@@ -8,7 +8,7 @@ import LocalStrategy from 'passport-local';
 import GoogleStrategy from 'passport-google-oauth20';
 import { BasicStrategy } from 'passport-http';
 
-import User from '../models/user';
+import { User } from '../models/user';
 
 const accountSuspensionMessage =
   'Account has been suspended. Please contact privacy@p5js.org if you believe this is an error.';
@@ -61,7 +61,8 @@ passport.use(
           await user.save();
 
           return done(null, user);
-        } else { // eslint-disable-line
+        } else {
+          // eslint-disable-line
           return done(null, false, { msg: 'Invalid email or password' });
         }
       } catch (err) {
@@ -161,7 +162,7 @@ passport.use(
           if (!req.user.github) {
             req.user.github = profile.id;
             req.user.tokens.push({ kind: 'github', accessToken });
-            req.user.verified = User.EmailConfirmation.Verified;
+            req.user.verified = User.EmailConfirmation().Verified;
           }
           await req.user.save();
           return done(null, req.user);
@@ -192,7 +193,7 @@ passport.use(
           existingEmailUser.tokens.push({ kind: 'github', accessToken });
           existingEmailUser.name =
             existingEmailUser.name || profile.displayName;
-          existingEmailUser.verified = User.EmailConfirmation.Verified;
+          existingEmailUser.verified = User.EmailConfirmation().Verified;
 
           await existingEmailUser.save();
           return done(null, existingEmailUser);
@@ -213,7 +214,7 @@ passport.use(
         user.username = profile.username;
         user.tokens.push({ kind: 'github', accessToken });
         user.name = profile.displayName;
-        user.verified = User.EmailConfirmation.Verified;
+        user.verified = User.EmailConfirmation().Verified;
         await user.save();
 
         return done(null, user);
@@ -263,7 +264,7 @@ passport.use(
           if (!req.user.google) {
             req.user.google = profile._json.emails[0].value;
             req.user.tokens.push({ kind: 'google', accessToken });
-            req.user.verified = User.EmailConfirmation.Verified;
+            req.user.verified = User.EmailConfirmation().Verified;
           }
           await req.user.save();
           return done(null, req.user);
@@ -292,7 +293,7 @@ passport.use(
           });
           existingEmailUser.name =
             existingEmailUser.name || profile._json.displayName;
-          existingEmailUser.verified = User.EmailConfirmation.Verified;
+          existingEmailUser.verified = User.EmailConfirmation().Verified;
 
           await existingEmailUser.save();
           return done(null, existingEmailUser);
@@ -304,7 +305,7 @@ passport.use(
         user.username = username;
         user.tokens.push({ kind: 'google', accessToken });
         user.name = profile._json.displayName;
-        user.verified = User.EmailConfirmation.Verified;
+        user.verified = User.EmailConfirmation().Verified;
 
         await user.save();
         return done(null, user);

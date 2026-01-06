@@ -17,23 +17,25 @@ jest.mock('../../../../components/Menubar/Menubar', () => ({
 
 // mock MenubarSubmenu
 jest.mock('../../../../components/Menubar/MenubarSubmenu', () => {
-  function MenubarSubmenu({ children, title }) {
-    return (
-      <li className="nav__item">
-        <span role="menuitem">{title}</span>
-        <ul role="menu" aria-label={`${title} menu`}>
-          {children}
-        </ul>
-      </li>
-    );
-  }
+  const MenubarSubmenu = ({ children, title }) => (
+    <li className="nav__item">
+      <span role="menuitem">{title}</span>
+      <ul role="menu" aria-label={`${title} menu`}>
+        {children}
+      </ul>
+    </li>
+  );
 
-  MenubarSubmenu.useMenuProps = () => ({
+  const useMenuProps = () => ({
     isOpen: false,
     handlers: {}
   });
 
-  return MenubarSubmenu;
+  return {
+    __esModule: true,
+    MenubarSubmenu,
+    useMenuProps
+  };
 });
 
 // mock MenubarItem

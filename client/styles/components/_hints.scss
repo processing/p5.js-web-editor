@@ -33,4 +33,9 @@
       display: none;
     }
   }
+
+  .CodeMirror-hint.blacklisted {
+    height: auto;
+    min-height: 3.2rem; // enough to show the warning + content
+  }
 }

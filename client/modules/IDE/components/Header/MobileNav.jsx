@@ -455,7 +455,7 @@ const MoreMenu = () => {
           <MobileMenuItem href="https://p5js.org/reference/">
             {t('Nav.Help.Reference')}
           </MobileMenuItem>
-          <MobileMenuItem href="/about">{t('Nav.Help.About')}</MobileMenuItem>
+          <MobileMenuItem href="/about">{t('About.Title')}</MobileMenuItem>
         </ParentMenuContext.Provider>
       </ul>
     </div>

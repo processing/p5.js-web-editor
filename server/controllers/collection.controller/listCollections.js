@@ -1,5 +1,5 @@
 import Collection from '../../models/collection';
-import User from '../../models/user';
+import { User } from '../../models/user';
 
 async function getOwnerUserId(req) {
   if (req.params.username) {

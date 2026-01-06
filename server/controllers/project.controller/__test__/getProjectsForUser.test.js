@@ -3,7 +3,7 @@
  */
 import { Request, Response } from 'jest-express';
 
-import User from '../../../models/user';
+import { User } from '../../../models/user';
 import getProjectsForUser, {
   apiGetProjectsForUser
 } from '../getProjectsForUser';

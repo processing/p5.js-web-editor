@@ -1,7 +1,7 @@
 import React from 'react';
 import thunk from 'redux-thunk';
 import configureStore from 'redux-mock-store';
-import LoginForm from './LoginForm';
+import { LoginForm } from './LoginForm';
 import * as actions from '../actions';
 import { initialTestState } from '../../../testData/testReduxStore';
 import { reduxRender, screen, fireEvent, act } from '../../../test-utils';

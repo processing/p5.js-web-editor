@@ -3,24 +3,22 @@ import React, { useContext, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { currentP5Version, p5Versions } from '../../../../common/p5Versions';
+import {
+  p5SoundURLOldTemplate,
+  p5SoundURL,
+  p5PreloadAddonURL,
+  p5ShapesAddonURL,
+  p5DataAddonURL,
+  p5URLTemplate
+} from '../../../../common/p5URLs';
 
 export const majorVersion = (version) => version.split('.')[0];
 
-export const p5SoundURLOldTemplate =
-  'https://cdnjs.cloudflare.com/ajax/libs/p5.js/$VERSION/addons/p5.sound.min.js';
 export const p5SoundURLOld = p5SoundURLOldTemplate.replace(
   '$VERSION',
   currentP5Version
 );
-export const p5SoundURL =
-  'https://cdn.jsdelivr.net/npm/p5.sound@0.2.0/dist/p5.sound.min.js';
-export const p5PreloadAddonURL =
-  'https://cdn.jsdelivr.net/npm/p5.js-compatibility@0.1.2/src/preload.js';
-export const p5ShapesAddonURL =
-  'https://cdn.jsdelivr.net/npm/p5.js-compatibility@0.1.2/src/shapes.js';
-export const p5DataAddonURL =
-  'https://cdn.jsdelivr.net/npm/p5.js-compatibility@0.1.2/src/data.js';
-export const p5URL = `https://cdn.jsdelivr.net/npm/p5@${currentP5Version}/lib/p5.js`;
+export const p5URL = p5URLTemplate.replace('$VERSION', currentP5Version);
 
 const P5VersionContext = React.createContext({});
 
@@ -62,7 +60,10 @@ export function P5VersionProvider(props) {
         if (!match) return null;
 
         // See if this is a version we recognize
-        if (p5Versions.includes(match[1])) {
+        const versionExists = p5Versions.some((v) =>
+          typeof v === 'string' ? v === match[1] : v.version === match[1]
+        );
+        if (versionExists) {
           return { version: match[1], minified: !!match[2], scriptNode };
         }
         return null;

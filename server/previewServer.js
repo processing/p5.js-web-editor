@@ -8,7 +8,7 @@ import webpackHotMiddleware from '@gatsbyjs/webpack-hot-middleware';
 import config from '../webpack/config.dev';
 import embedRoutes from './routes/embed.routes';
 import assetRoutes from './routes/asset.routes';
-import renderPreviewIndex from './views/previewIndex';
+import { renderPreviewIndex } from './views/previewIndex';
 
 const app = new Express();
 

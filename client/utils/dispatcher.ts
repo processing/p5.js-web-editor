@@ -25,7 +25,7 @@ export enum MessageTypes {
  */
 export interface Message {
   type: MessageTypes;
-  payload?: any;
+  payload?: unknown;
 }
 
 let listener: ((message: Message) => void) | null = null;

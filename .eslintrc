@@ -135,7 +135,7 @@
         "import/no-extraneous-dependencies": "off",
         "no-unused-vars": "off",
         "import/no-default-export": "warn",
-        "no-underscore-dangle": "warn",
+        "no-underscore-dangle": "off",
         "react/require-default-props": "off",
         "no-shadow": "off",
         "@typescript-eslint/no-shadow": "error"
