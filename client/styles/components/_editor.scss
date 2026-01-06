@@ -4,21 +4,55 @@
   font-family: Inconsolata, monospace;
   height: 100%;
 
+  @include themify() {
+    color: getThemifyVariable('primary-text-color');
+  }
+
   .cm-content {
     padding-top: #{math.div(25, $base-font-size)}rem;
 
     .cm-activeLine {
-      @include themify() {
-        background-color: getThemifyVariable("active-line-background-color");
+      // Needed to place the active line highlight behind the selection highlight.
+      position: relative;
+      background-color: transparent;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -10;
+
+        @include themify() {
+          background-color: getThemifyVariable('activeline-background-color');
+        }
       }
+    }
+  }
+
+  .cm-focused > .cm-scroller .cm-selectionLayer .cm-selectionBackground,
+  .cm-selectionLayer .cm-selectionBackground,
+  ::selection {
+    @include themify() {
+      background-color: getThemifyVariable(
+        'selected-background-color'
+      ) !important;
+    }
+  }
+
+  .cm-cursorLayer .cm-cursor {
+    @include themify() {
+      border-left-color: getThemifyVariable('primary-text-color');
     }
   }
 }
 
 .cm-gutters {
   @include themify() {
-    background-color: getThemifyVariable("editor-gutter-color");
-    border-color: getThemifyVariable("ide-border-color");
+    background-color: getThemifyVariable('editor-gutter-color');
+    border-color: getThemifyVariable('ide-border-color');
   }
   width: #{math.div(48, $base-font-size)}rem;
   position: relative;
@@ -29,7 +63,7 @@
 
   .cm-lineNumbers {
     @include themify() {
-      color: getThemifyVariable("inactive-text-color");
+      color: getThemifyVariable('inactive-text-color');
     }
     pointer-events: none;
   }
@@ -46,7 +80,7 @@
 
     .cm-activeLineGutter {
       @include themify() {
-        background-color: getThemifyVariable("active-line-background-color");
+        background-color: getThemifyVariable('active-line-background-color');
       }
     }
 
@@ -56,7 +90,7 @@
   }
 
   .cm-lint-marker {
-    content: "";
+    content: '';
     width: 100%;
     height: 100%;
     opacity: 0.2;
@@ -73,22 +107,22 @@
 
 .cm-tooltip-lint {
   @include themify() {
-    background-color: getThemifyVariable("modal-background-color");
-    border: 1px solid getThemifyVariable("modal-border-color");
-    box-shadow: 0 12px 12px getThemifyVariable("shadow-color");
-    color: getThemifyVariable("primary-text-color");
+    background-color: getThemifyVariable('modal-background-color');
+    border: 1px solid getThemifyVariable('modal-border-color');
+    box-shadow: 0 12px 12px getThemifyVariable('shadow-color');
+    color: getThemifyVariable('primary-text-color');
   }
   border-radius: 2px;
   font-family: Montserrat, sans-serif;
 }
 
 /** Search dialog */
-.cm-search.cm-panel{  
+.cm-search.cm-panel {
   @include themify() {
-    color: getThemifyVariable("primary-text-color");
-    background-color: getThemifyVariable("modal-background-color");
-    box-shadow: 0 12px 12px 0 getThemifyVariable("shadow-color");
-    border: solid 0.5px getThemifyVariable("modal-border-color");
+    color: getThemifyVariable('primary-text-color');
+    background-color: getThemifyVariable('modal-background-color');
+    box-shadow: 0 12px 12px 0 getThemifyVariable('shadow-color');
+    border: solid 0.5px getThemifyVariable('modal-border-color');
   }
   font-family: Montserrat, sans-serif;
 
@@ -107,11 +141,11 @@
 
   input.cm-textfield {
     @include themify() {
-      color: getThemifyVariable("input-text-color");
-      background-color: getThemifyVariable("input-secondary-background-color");
-      border: solid 0.5px getThemifyVariable("button-border-color");
+      color: getThemifyVariable('input-text-color');
+      background-color: getThemifyVariable('input-secondary-background-color');
+      border: solid 0.5px getThemifyVariable('button-border-color');
       &::placeholder {
-        color: getThemifyVariable("inactive-text-color");
+        color: getThemifyVariable('inactive-text-color');
       }
     }
   }
@@ -134,7 +168,7 @@
   width: 100%;
   position: absolute;
   @include themify() {
-    border: 1px solid getThemifyVariable("ide-border-color");
+    border: 1px solid getThemifyVariable('ide-border-color');
   }
   &.editor-holder--hidden .CodeMirror {
     display: none;
@@ -147,7 +181,7 @@
 
 .editor__file-name {
   @include themify() {
-    color: getThemifyVariable("primary-text-color");
+    color: getThemifyVariable('primary-text-color');
   }
   height: #{math.div(29, $base-font-size)}rem;
   padding-top: #{math.div(7, $base-font-size)}rem;
@@ -160,7 +194,7 @@
 
 .editor__library-version {
   @include themify() {
-    color: getThemifyVariable("primary-text-color");
+    color: getThemifyVariable('primary-text-color');
   }
   position: absolute;
   top: 0;
@@ -179,7 +213,7 @@
 .emmet-preview.cm-tooltip {
   @extend %modal;
   @include themify() {
-    background: getThemifyVariable("background-color");
+    background: getThemifyVariable('background-color');
   }
   .cm-content {
     padding: 0;
@@ -188,65 +222,89 @@
 
 // Used for comment, lineComment, blockComment, docComment, docString
 .cm-comment {
-  @include themify() { color: getThemifyVariable("highlight-style-comment-color"); }
+  @include themify() {
+    color: getThemifyVariable('highlight-style-comment-color');
+  }
 }
 
 // Used for name, variableName, typeName
 .cm-variable {
-  @include themify() { color: getThemifyVariable("highlight-style-variable-color"); }
+  @include themify() {
+    color: getThemifyVariable('highlight-style-variable-color');
+  }
 }
 
 // Used for string, character, attributeValue
 .cm-string {
-  @include themify() { color: getThemifyVariable("highlight-style-string-color"); }
+  @include themify() {
+    color: getThemifyVariable('highlight-style-string-color');
+  }
 }
 
 // Used for regexp
 .cm-regexp {
-  @include themify() { color: getThemifyVariable("highlight-style-regexp-color"); }
+  @include themify() {
+    color: getThemifyVariable('highlight-style-regexp-color');
+  }
 }
 
 // Used for number, integer, float
 .cm-number {
-  @include themify() { color: getThemifyVariable("highlight-style-number-color"); }
+  @include themify() {
+    color: getThemifyVariable('highlight-style-number-color');
+  }
 }
 
 // Used for bool, atom, null
 .cm-atom {
-  @include themify() { color: getThemifyVariable("highlight-style-atom-color"); }
+  @include themify() {
+    color: getThemifyVariable('highlight-style-atom-color');
+  }
 }
 
 // Used for keyword, self, function, className
 .cm-keyword {
-  @include themify() { color: getThemifyVariable("highlight-style-keyword-color"); }
+  @include themify() {
+    color: getThemifyVariable('highlight-style-keyword-color');
+  }
 }
 
 // Used for operatorKeyword, controlKeyword, operator, derefOperator, arithmeticOperator,
 // logicOperator, bitwiseOperator, compareOperator, updateOperator, typeOperator
 // controlOperator
 .cm-operator {
-  @include themify() { color: getThemifyVariable("highlight-style-operator-color"); }
+  @include themify() {
+    color: getThemifyVariable('highlight-style-operator-color');
+  }
 }
 
 // Used for definitionKeyword, definition, const, local
 .cm-def {
-  @include themify() { color: getThemifyVariable("highlight-style-def-color"); }
+  @include themify() {
+    color: getThemifyVariable('highlight-style-def-color');
+  }
 }
 
 // tagName, heading, heading1, heading2, heading3, heading4, heading5, heading6,
 // list, quote, emphasis, strong, link
 .cm-tag {
-  @include themify() { color: getThemifyVariable("highlight-style-tag-color"); }
+  @include themify() {
+    color: getThemifyVariable('highlight-style-tag-color');
+  }
 }
 
 // Used for propertyName
 .cm-property {
-  @include themify() { color: getThemifyVariable("highlight-style-property-color"); }
+  @include themify() {
+    color: getThemifyVariable('highlight-style-property-color');
+  }
 }
 
 // Used for attributeName
 .cm-attribute {
-  @include themify() { color: getThemifyVariable("highlight-style-attribute-color"); }
+  @include themify() {
+    color: getThemifyVariable('highlight-style-attribute-color');
+  }
 }
 
 // .cm-qualifier {
@@ -266,17 +324,27 @@
 //   @include themify() { color: getThemifyVariable("p5-variable-color"); }
 // }
 
-
 // Unassigned: literal, escape, color, url, unit, modifier, punctuation, separator
 // bracket, angleBracket, squareBracket, paren, brace, content
 // contentSeparator, monospace, strikethrough, inserted, deleted, changed, invalid, meta,
 // documentMeta, annotation, processingInstruction, standard, special, macroName
 
-// TODO: Matching bracket code
-// .cm-matchingbracket {
-//   @include themify() {
-//     outline: 1px solid getThemifyVariable("highlight-style-matchingbracket-outline-color");
-//     outline-offset: 1px;
-//     color: getThemifyVariable("highlight-style-default-color") !important;
-//   }
-// }
+
+// Additional matching selection styling
+.cm-matchingBracket {
+  @include themify() {
+    outline: 1px solid getThemifyVariable('primary-text-color');
+    outline-offset: 1px;
+    background-color: transparent !important;
+  }
+}
+
+.cm-selectionMatch,
+.cm-searchMatch,
+.cm-searchMatch-selected {
+  @include themify() {
+    background-color: getThemifyVariable(
+      'highlight-style-matching-selection-background-color'
+    );
+  }
+}
