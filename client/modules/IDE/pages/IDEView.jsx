@@ -28,6 +28,7 @@ import IDEOverlays from '../components/IDEOverlays';
 import useIsMobile from '../hooks/useIsMobile';
 import Banner from '../components/Banner';
 import { P5VersionProvider } from '../hooks/useP5Version';
+import { dispatchMessage, MessageTypes } from '../../../utils/dispatcher';
 
 const BANNER_DISMISS_KEY = 'bannerLastDismissedAt';
 const BANNER_COOLDOWN_MINUTES = 30;
@@ -47,6 +48,13 @@ function isAuth(pathname) {
 
 function isOverlay(pathname) {
   return pathname === '/feedback';
+}
+
+function resize(delta) {
+  dispatchMessage({
+    type: MessageTypes.RESIZE_CANVAS,
+    payload: delta
+  });
 }
 
 function WarnIfUnsavedChanges() {
@@ -301,10 +309,26 @@ const IDEView = () => {
                   <Console />
                 </SplitPane>
                 <section className="preview-frame-holder">
-                  <header className="preview-frame__header">
+                  <header
+                    className="preview-frame__header"
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      minHeight: 36,
+                      paddingRight: 8,
+                      zIndex: 2
+                    }}
+                  >
                     <h2 className="preview-frame__title">
                       {t('Toolbar.Preview')}
                     </h2>
+                    <button
+                      style={{ marginLeft: 'auto' }}
+                      onClick={() => resize(+50)}
+                    >
+                      +
+                    </button>
+                    <button onClick={() => resize(-50)}>−</button>
                   </header>
                   <div className="preview-frame__content">
                     <PreviewFrame

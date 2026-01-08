@@ -14,7 +14,8 @@ export enum MessageTypes {
   FILES = 'FILES',
   SKETCH = 'SKETCH',
   REGISTER = 'REGISTER',
-  EXECUTE = 'EXECUTE'
+  EXECUTE = 'EXECUTE',
+  RESIZE_CANVAS = 'RESIZE_CANVAS'
 }
 /* eslint-enable no-shadow */
 

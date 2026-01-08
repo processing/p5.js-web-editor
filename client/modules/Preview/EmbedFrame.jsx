@@ -238,6 +238,48 @@ p5.prototype.registerMethod('afterSetup', p5.prototype.ensureAccessibleCanvas);`
   previewScripts.setAttribute('crossorigin', '');
   sketchDoc.head.appendChild(previewScripts);
 
+  const resizeHelper = sketchDoc.createElement('script');
+  resizeHelper.innerHTML = `
+    (function () {
+      if (!window.p5) return;
+
+      let currentP5 = null;
+
+      p5.prototype.registerMethod('afterSetup', function () {
+        currentP5 = this;
+
+        window.__resizeP5Canvas = function (delta) {
+          if (!currentP5 || typeof delta !== 'number') return;
+
+          try {
+            const minSize = 50;
+            const maxSize = 5000;
+
+            const newWidth = Math.min(
+              maxSize,
+              Math.max(minSize, currentP5.width + delta)
+            );
+
+            const newHeight = Math.min(
+              maxSize,
+              Math.max(minSize, currentP5.height + delta)
+            );
+
+            currentP5.resizeCanvas(newWidth, newHeight);
+          } catch (e) {
+            console.warn('Canvas resize failed', e);
+          }
+        };
+      });
+
+      window.addEventListener('unload', () => {
+        delete window.__resizeP5Canvas;
+        currentP5 = null;
+      });
+    })();
+  `;
+  sketchDoc.head.appendChild(resizeHelper);
+
   const sketchDocString = `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
   scriptOffs = getAllScriptOffsets(sketchDocString);
   const consoleErrorsScript = sketchDoc.createElement('script');
@@ -261,11 +303,12 @@ function EmbedFrame({ files, isPlaying, basePath, gridOutput, textOutput }) {
   const iframe = useRef();
   const htmlFile = useMemo(() => getHtmlFile(files), [files]);
   const srcRef = useRef();
+  const previewOrigin = getConfig('PREVIEW_URL');
 
   useEffect(() => {
     const unsubscribe = registerFrame(
       iframe.current.contentWindow,
-      window.origin
+      previewOrigin
     );
     return () => {
       unsubscribe();

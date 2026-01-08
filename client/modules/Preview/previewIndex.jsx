@@ -18,13 +18,26 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
+function callSketchResize(delta) {
+  const sketchFrame = document.querySelector(
+    'iframe[aria-label="Sketch Preview"]'
+  );
+
+  if (!sketchFrame || !sketchFrame.contentWindow) return;
+
+  sketchFrame.contentWindow.__resizeP5Canvas?.(delta);
+}
+
 const App = () => {
   const [state, dispatch] = useReducer(filesReducer, [], initialState);
   const [isPlaying, setIsPlaying] = useState(false);
   const [basePath, setBasePath] = useState('');
   const [textOutput, setTextOutput] = useState(false);
   const [gridOutput, setGridOutput] = useState(false);
-  registerFrame(window.parent, getConfig('EDITOR_URL'));
+  useEffect(() => {
+    const unregister = registerFrame(window.parent, getConfig('EDITOR_URL'));
+    return unregister;
+  }, []);
 
   function handleMessageEvent(message) {
     const { type, payload } = message;
@@ -47,6 +60,9 @@ const App = () => {
       case MessageTypes.EXECUTE:
         dispatchMessage(payload);
         break;
+      case MessageTypes.RESIZE_CANVAS:
+        callSketchResize(payload);
+        break;
       default:
         break;
     }
@@ -66,11 +82,9 @@ const App = () => {
   }
 
   useEffect(() => {
-    const unsubscribe = listen(handleMessageEvent);
-    return function cleanup() {
-      unsubscribe();
-    };
-  });
+    const unlisten = listen(handleMessageEvent);
+    return unlisten;
+  }, []);
   return (
     <React.Fragment>
       <GlobalStyle />
