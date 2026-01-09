@@ -17,8 +17,7 @@ import {
   foldKeymap,
   bracketMatching,
   indentOnInput,
-  syntaxHighlighting,
-  defaultHighlightStyle
+  syntaxHighlighting
 } from '@codemirror/language';
 import {
   autocompletion,
