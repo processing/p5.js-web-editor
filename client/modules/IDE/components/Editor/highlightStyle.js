@@ -51,8 +51,8 @@ export const highlightStyle = HighlightStyle.define([
   { tag: tags.link, class: 'cm-tag' },
   { tag: tags.propertyName, class: 'cm-property' },
   { tag: tags.attributeName, class: 'cm-attribute' }
-  // { tag: tags.special(tags.variableName), class: 'p5-variable' }
-  // { tag: tags.definition, class: 'cm-def' },
-  // { tag: tags.const, class: 'cm-def' },
-  // { tag: tags.local, class: 'cm-def' },
+
+  // TODO(connie): Add p5 specific highlighting, like .p5-variable
+  // There might be a way to do this with Lezer's special tags like
+  // special(), definition(), const(), local()
 ]);

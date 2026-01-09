@@ -307,28 +307,12 @@
   }
 }
 
-// .cm-qualifier {
-//   @include themify() { color: getThemifyVariable("highlight-style-variable-color"); }
-// }
-
-// .cm-builtin {
-//   @include themify() { color: getThemifyVariable("highlight-style-variable-color"); }
-// }
-
-// .cm-p5-function {
-//   @include themify() { color: getThemifyVariable("p5-function-color"); }
-//   font-weight: bold;
-// }
-
-// .cm-p5-variable {
-//   @include themify() { color: getThemifyVariable("p5-variable-color"); }
-// }
-
-// Unassigned: literal, escape, color, url, unit, modifier, punctuation, separator
-// bracket, angleBracket, squareBracket, paren, brace, content
+// Unassigned Lezer tags: literal, escape, color, url, unit, modifier, punctuation,
+// separator, bracket, angleBracket, squareBracket, paren, brace, content
 // contentSeparator, monospace, strikethrough, inserted, deleted, changed, invalid, meta,
 // documentMeta, annotation, processingInstruction, standard, special, macroName
 
+// TODO(connie): Add p5 specific highlighting styles, like .cm-p5-function, .cm-p5-variable
 
 // Additional matching selection styling
 .cm-matchingBracket {
