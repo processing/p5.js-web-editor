@@ -17,8 +17,10 @@ If you run into any issues while setting up your environment, take some time to 
 
 _Note_: The installation steps assume you are using a Unix-like shell. If you are using Windows, you will need to use `copy` instead of `cp`.
 
-1. Install Node.js. The recommended way is to Node through [nvm](https://github.com/nvm-sh/nvm), which is a command-line tool that helps you manage different versions of Node.js on your system. You can install nvm by using [nvm's installation guide](https://github.com/nvm-sh/nvm?tab=readme-ov-file#installing-and-updating).
-      - You can also install [node.js](https://nodejs.org/download/release/v18.20.8/) version 18.20.8 directly from the Node.js website. To check if you already have Node installed on your computer, run `$ node -v`.
+1. Install Node.js. The recommended way is to install Node through a version manager.
+      - Mac/Linux: Use nvm. You can install it using nvm's installation guide.
+      - Windows: Use nvm-windows. Download the nvm-setup.zip from the releases page.
+      - Alternatively, you can install node.js version 18.20.8 directly from the Node.js website. To check if you already have Node installed on your computer, run $ node -v.
 2. [Fork](https://help.github.com/articles/fork-a-repo) the [p5.js Web Editor repository](https://github.com/processing/p5.js-web-editor) into your own GitHub account.
 3. [Clone](https://help.github.com/articles/cloning-a-repository/) your new fork of the repository from GitHub onto your local computer.
 
@@ -37,7 +39,9 @@ _Note_: The installation steps assume you are using a Unix-like shell. If you ar
 7. Install MongoDB and make sure it is running
    * For Mac OSX with [homebrew](http://brew.sh/): `brew tap mongodb/brew` then `brew install mongodb-community` and finally start the server with `brew services start mongodb-community` or you can visit the installation guide here [Installation Guide For MacOS](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/)
    * For Windows and Linux: [MongoDB Installation](https://docs.mongodb.com/manual/installation/)
-8. `$ cp .env.example .env`
+8. Create your environment configuration file:
+   - Mac/Linux: $ cp .env.example .env
+   - Windows: $ copy .env.example .env
 9. (Optional) Update `.env` with necessary keys to enable certain app behaviors, i.e. add Github ID and Github Secret if you want to be able to log in with Github.
    * See the [GitHub API Configuration](#github-api-configuration) section for information on how to authenticate with Github.
    * See the [S3 Bucket Configuration](#s3-bucket-configuration) section for information on how to set up an S3 bucket
@@ -63,7 +67,9 @@ Note that this takes up a significant amount of space on your machine. Make sure
 3. Clone this repository and cd into it
 4. `$ docker-compose -f docker-compose-development.yml build`
    * Note: Depending on which version of Docker Compose you are using, the base command will be either `docker-compose` or `docker compose`. More information about it can be found in Docker Compose's documentation for their [V1 to V2 transition](https://github.com/docker/compose/tree/v1?tab=readme-ov-file#v1-vs-v2-transition-hourglass_flowing_sand). 
-5. `$ cp .env.example .env`
+5. Create your environment configuration file:
+   - Mac/Linux: $ cp .env.example .env
+   - Windows: $ copy .env.example .env
 6. (Optional) Update `.env` with necessary keys to enable certain app behaviors, i.e. add Github ID and Github Secret if you want to be able to log in with Github.
    * See the [GitHub API Configuration](#github-api-configuration) section for information on how to authenticate with Github.
    * See the [S3 Bucket Configuration](#s3-bucket-configuration) section for information on how to set up an S3 bucket
