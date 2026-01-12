@@ -112,6 +112,7 @@
 
 .nav__item--no-icon {
   padding-left: #{math.div(15, $base-font-size)}rem;
+  height:100%
 }
 
 .nav__item-header-triangle polygon,
@@ -277,4 +278,13 @@
 
 .nav__back-link {
   display: flex;
+  height: 100%;
+  &:hover .nav__back-icon {
+    & g, & path {
+      @include themify() {
+        fill: getThemifyVariable('button-hover-color');
+      }
+    }
+  }
 }
+
