@@ -48,6 +48,77 @@ _Note_: The installation steps assume you are using a Unix-like shell. If you ar
 14. Install the [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en)
 15. Open and close the Redux DevTools using `ctrl+h`, and move them with `ctrl+w`
 
+## Installation Guide for Windows Users
+ _Note_:If you're using Windows, follow these steps instead of the manual installation guide above. This guide walks you     through setting up the p5.js Web Editor without needing WSL or nvm.
+What you'll need
+     1. Windows 10 or later
+     2. Admin rights to install software
+     3. About 30 minutes
+
+Step-by-step setup
+1. Get Node.js
+Instead of using nvm (which needs extra setup on Windows), just download Node.js directly:
+
+Go to https://nodejs.org/download/release/v18.20.8/
+Download the .msi file for your system (most likely node-v18.20.8-x64.msi)
+Run it and click through the installer - the defaults are fine
+Make sure "Add to PATH" stays checked
+
+Open Command Prompt (search cmd in the Start menu) and type:
+node -v
+You should see v18.20.8
+2. Update npm
+Still in Command Prompt:
+`npm install -g npm@10.8.2`
+Check it worked:
+`npm -v`
+Should show 10.8.2
+3. Install Git
+Download from `https://git-scm.com/download/win` and install with the default settings. This gives you Git Bash, which you'll use for the rest of the setup.
+4. Fork and clone the repo
+
+Go to `https://github.com/processing/p5.js-web-editor`
+Click Fork (top right)
+Open Git Bash and go where you want the project:
+
+  cd ~/Documents
+
+Clone your fork (use your GitHub username):
+
+  git clone https://github.com/YOUR_USERNAME/p5.js-web-editor.git
+5. Install dependencies
+In Git Bash:
+cd p5.js-web-editor
+`npm install`
+This takes a few minutes. Grab some coffee.
+6. Set up MongoDB
+
+Download from `https://www.mongodb.com/try/download/community`
+Pick Windows, download the MSI
+Run it, choose Complete installation
+Check "Install MongoDB as a Service"
+
+To verify it's running, open Command Prompt as admin and type:
+net start MongoDB
+7. Set up your environment file
+Back in Git Bash:
+`cp .env.example .env`
+This creates your local config file. You can edit .env later if you need GitHub login or file uploads.
+8. Start the server
+`npm start`
+Wait until you see "Server is running on port 8000"
+9. Check it works
+Open your browser and go to `http://localhost:8000`
+You should see the p5.js Web Editor!
+Troubleshooting
+
+"node is not recognized" - Restart Command Prompt after installing Node
+npm install errors - Try deleting the node_modules folder and running npm install again
+MongoDB won't start - Run Command Prompt as administrator
+Port 8000 already in use - Close any other servers or check Task Manager
+
+
+
 ## Docker Installation
 
 _Note_: The installation steps assume you are using a Unix-like shell. If you are using Windows, you will need to use `copy` instead of `cp`.
