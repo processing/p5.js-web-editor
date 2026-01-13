@@ -29,6 +29,40 @@ $dark: #333; // primary
 $darker: #1C1C1C;
 $darkest: #000;
 
+// Light highlight styles
+$p5-light-selected: $medium-light;
+$p5-light-activeline: #cfcfcf44;
+$p5-light-brown: #7A5A3A;
+$p5-light-black: #333333;
+$p5-light-pink: #D52889;
+$p5-light-gray: #666;
+$p5-light-blue: #0B7CA9;
+$p5-light-orange: #A06801;
+$p5-light-lightgray: $middle-gray;
+$p5-light-green: #47820A;
+
+// Dark highlight styles
+$p5-dark-selected: $medium-dark;
+$p5-dark-activeline: #cfcfcf22;
+$p5-dark-pink: #DE4A9B;
+$p5-dark-gray: #9B9B9B;
+$p5-dark-lightblue: #0F9DD7;
+$p5-dark-white: #FDFDFD;
+$p5-dark-orange: #EE9900;
+$p5-dark-green: #58a10b;
+$p5-dark-goldbrown: #b58318;
+
+// Contrast highlight styles
+$p5-contrast-selected: $middle-dark;
+$p5-contrast-activeline: #333333AA;
+$p5-contrast-white: #FDFDFD;
+$p5-contrast-lightgray: #C1C1C1;
+$p5-contrast-blue: #00FFFF;
+$p5-contrast-green: #2DE9B6;
+$p5-contrast-yellow: #F5DC23;
+$p5-contrast-orange: #FFA95D;
+$p5-contrast-pink: #FFA9D9;
+
 $themes: (
   light: (
     logo-color: $p5js-pink,
@@ -130,6 +164,23 @@ $themes: (
     admonition-border: #22C8ED,
     admonition-background: #E4F8FF,
     admonition-text: #075769,
+
+    selected-background-color: $p5-light-selected,
+    activeline-background-color: $p5-light-activeline,
+
+    highlight-style-comment-color: $p5-light-lightgray,
+    highlight-style-variable-color: $p5-light-blue,
+    highlight-style-string-color: $p5-light-green,
+    highlight-style-regexp-color: $p5-light-orange,
+    highlight-style-number-color: $p5-light-black,
+    highlight-style-atom-color: $p5-light-pink,
+    highlight-style-keyword-color: $p5-light-brown,
+    highlight-style-operator-color: $p5-light-brown,
+    highlight-style-def-color: $p5-light-blue,
+    highlight-style-tag-color: $p5-light-pink,
+    highlight-style-property-color: $p5-light-black,
+    highlight-style-attribute-color: $p5-light-black,
+    highlight-style-matching-selection-background-color: $p5js-pink-opacity,
   ),
   dark: (
     logo-color: $p5js-pink,
@@ -229,6 +280,23 @@ $themes: (
     admonition-border: #22C8ED,
     admonition-background: #105A7F,
     admonition-text: #FFFFFF,
+
+    selected-background-color: $p5-dark-selected,
+    activeline-background-color: $p5-dark-activeline,
+
+    highlight-style-comment-color: $p5-dark-gray,
+    highlight-style-variable-color: $p5-dark-lightblue,
+    highlight-style-string-color: $p5-dark-green,
+    highlight-style-regexp-color: $p5-dark-orange,
+    highlight-style-number-color: $p5-dark-white,
+    highlight-style-atom-color: $p5-dark-pink,
+    highlight-style-keyword-color: $p5-dark-goldbrown,
+    highlight-style-operator-color: $p5-dark-goldbrown,
+    highlight-style-def-color: $p5-dark-lightblue,
+    highlight-style-tag-color: $p5-dark-pink,
+    highlight-style-property-color: $p5-dark-white,
+    highlight-style-attribute-color: $p5-dark-lightblue,
+    highlight-style-matching-selection-background-color: $p5js-pink-opacity,
   ),
   contrast: (
     logo-color: $yellow,
@@ -328,6 +396,23 @@ $themes: (
     admonition-border: #22C8ED,
     admonition-background: #000000,
     admonition-text: #ffffff,
+
+    selected-background-color: $p5-contrast-selected,
+    activeline-background-color: $p5-contrast-activeline,
+
+    highlight-style-comment-color: $p5-contrast-lightgray,
+    highlight-style-variable-color: $p5-contrast-blue,
+    highlight-style-string-color: $p5-contrast-green,
+    highlight-style-regexp-color: $p5-contrast-green,
+    highlight-style-number-color: $p5-contrast-pink,
+    highlight-style-atom-color: $p5-contrast-pink,
+    highlight-style-keyword-color: $p5-contrast-yellow,
+    highlight-style-operator-color: $p5-contrast-lightgray,
+    highlight-style-def-color: $p5-contrast-blue,
+    highlight-style-tag-color: $p5-contrast-orange,
+    highlight-style-property-color: $p5-contrast-white,
+    highlight-style-attribute-color: $p5-contrast-white,
+    highlight-style-matching-selection-background-color: $medium-dark,
   )
 );
 
