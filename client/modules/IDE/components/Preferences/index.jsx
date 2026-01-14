@@ -27,8 +27,8 @@ import VersionPicker from '../VersionPicker';
 import { updateFileContent } from '../../actions/files';
 import { CmControllerContext } from '../../pages/IDEView';
 import Stars from '../Stars';
-import Admonition from '../Admonition';
-import TextArea from '../TextArea';
+import { Admonition } from '../Admonition';
+import { TextArea } from '../TextArea';
 
 export default function Preferences() {
   const { t } = useTranslation();
@@ -151,7 +151,7 @@ export default function Preferences() {
   return (
     <section className="preferences">
       <Helmet>
-        <title>p5.js Web Editor | Preferences</title>
+        <title>{t('Preferences.TitleHelmet')}</title>
       </Helmet>
       <Tabs selectedIndex={tabIndex} onSelect={changeTab}>
         <TabList>
@@ -584,7 +584,7 @@ export default function Preferences() {
                       updateHTML(versionInfo.setP5Sound(true));
                     }}
                     aria-label={`${t('Preferences.SoundAddon')} ${t(
-                      'Preferences.AddonOn'
+                      'Preferences.AddonOnARIA'
                     )}`}
                     name="soundaddon"
                     id="soundaddon-on"
@@ -601,7 +601,7 @@ export default function Preferences() {
                       updateHTML(versionInfo.setP5Sound(false));
                     }}
                     aria-label={`${t('Preferences.SoundAddon')} ${t(
-                      'Preferences.AddonOff'
+                      'Preferences.AddonOffARIA'
                     )}`}
                     name="soundaddon"
                     id="soundaddon-off"
@@ -641,7 +641,7 @@ export default function Preferences() {
                       updateHTML(versionInfo.setP5PreloadAddon(true))
                     }
                     aria-label={`${t('Preferences.PreloadAddon')} ${t(
-                      'Preferences.AddonOn'
+                      'Preferences.AddonOnARIA'
                     )}`}
                     name="preloadaddon"
                     id="preloadaddon-on"
@@ -661,7 +661,7 @@ export default function Preferences() {
                       updateHTML(versionInfo.setP5PreloadAddon(false))
                     }
                     aria-label={`${t('Preferences.PreloadAddon')} ${t(
-                      'Preferences.AddonOff'
+                      'Preferences.AddonOffARIA'
                     )}`}
                     name="preloadaddon"
                     id="preloadaddon-off"
@@ -688,7 +688,7 @@ export default function Preferences() {
                       updateHTML(versionInfo.setP5ShapesAddon(true))
                     }
                     aria-label={`${t('Preferences.ShapesAddon')} ${t(
-                      'Preferences.AddonOn'
+                      'Preferences.AddonOnARIA'
                     )}`}
                     name="shapesaddon"
                     id="shapesaddon-on"
@@ -708,7 +708,7 @@ export default function Preferences() {
                       updateHTML(versionInfo.setP5ShapesAddon(false))
                     }
                     aria-label={`${t('Preferences.ShapesAddon')} ${t(
-                      'Preferences.AddonOff'
+                      'Preferences.AddonOffARIA'
                     )}`}
                     name="shapesaddon"
                     id="shapesaddon-off"
@@ -735,7 +735,7 @@ export default function Preferences() {
                       updateHTML(versionInfo.setP5DataAddon(true))
                     }
                     aria-label={`${t('Preferences.DataAddon')} ${t(
-                      'Preferences.AddonOn'
+                      'Preferences.AddonOnARIA'
                     )}`}
                     name="dataaddon"
                     id="dataaddon-on"
@@ -752,7 +752,7 @@ export default function Preferences() {
                       updateHTML(versionInfo.setP5DataAddon(false))
                     }
                     aria-label={`${t('Preferences.DataAddon')} ${t(
-                      'Preferences.AddonOff'
+                      'Preferences.AddonOffARIA'
                     )}`}
                     name="dataaddon"
                     id="dataaddon-off"

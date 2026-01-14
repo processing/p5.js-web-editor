@@ -8,7 +8,7 @@ import IDEKeyHandlers from '../components/IDEKeyHandlers';
 import Sidebar from '../components/Sidebar';
 import PreviewFrame from '../components/PreviewFrame';
 import Console from '../components/Console';
-import Toast from '../components/Toast';
+import { Toast } from '../components/Toast';
 import { updateFileContent } from '../actions/files';
 import {
   autosaveProject,
@@ -18,7 +18,7 @@ import {
 import { getIsUserOwner } from '../selectors/users';
 import { RootPage } from '../../../components/RootPage';
 import Header from '../components/Header';
-import FloatingActionButton from '../components/FloatingActionButton';
+import { FloatingActionButton } from '../components/FloatingActionButton';
 import Editor from '../components/Editor';
 import {
   EditorSidebarWrapper,

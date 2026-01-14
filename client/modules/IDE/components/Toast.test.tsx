@@ -7,7 +7,7 @@ import {
   waitFor
 } from '../../../test-utils';
 import { showToast } from '../actions/toast';
-import Toast from './Toast';
+import { Toast } from './Toast';
 
 describe(`Toast`, () => {
   it('is hidden by default', () => {

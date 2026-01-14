@@ -7,7 +7,7 @@ import { getConfig } from '../../../utils/getConfig';
 import { closeUploadFileModal } from '../actions/ide';
 import FileUploader from './FileUploader';
 import { getreachedTotalSizeLimit } from '../selectors/users';
-import Modal from './Modal';
+import { Modal } from './Modal';
 import { parseNumber } from '../../../utils/parseStringToType';
 
 const limit = parseNumber(getConfig('UPLOAD_LIMIT')) || 250000000;

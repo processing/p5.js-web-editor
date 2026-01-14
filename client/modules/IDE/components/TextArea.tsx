@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
@@ -16,9 +15,15 @@ const CornerButton = styled.button`
   right: 0.5rem;
 `;
 
-export default function TextArea({ src, className }) {
+interface TextAreaProps {
+  src: string;
+  className?: string;
+}
+
+export const TextArea = ({ src, className }: TextAreaProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+
   const copyTextToClipboard = async () => {
     try {
       await navigator.clipboard.writeText(src);
@@ -30,19 +35,10 @@ export default function TextArea({ src, className }) {
 
   return (
     <TextAreaWrapper>
-      <textarea className={className}>{src}</textarea>
+      <textarea className={className} readOnly value={src} />
       <CornerButton onClick={copyTextToClipboard}>
         <CopyIcon aria-label="Copy" />
       </CornerButton>
     </TextAreaWrapper>
   );
-}
-
-TextArea.propTypes = {
-  src: PropTypes.string.isRequired,
-  className: PropTypes.string
-};
-
-TextArea.defaultProps = {
-  className: undefined
 };
