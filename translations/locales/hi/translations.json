@@ -27,9 +27,10 @@
       "Title": "मदद",
       "KeyboardShortcuts": "कीबोर्ड शॉर्टकट",
       "Reference": "रिफरेन्स",
-      "ReportBug": "बग रिपोर्ट करें",
-      "ChatOnDiscord": "डिस्कॉर्ड पर चैट करें",
-      "PostOnTheForum": "फ़ोरम पर पोस्ट करें"
+      "About": "अधिक जानकारी",
+      "ReportBug": "बग रपरट कर",
+      "ChatOnDiscord": "डसकरड पर चट कर",
+      "PostOnTheForum": "फरम पर पसट कर"
     },
     "Lang": "भाषा",
     "BackEditor": "एडिटर पर वापस जाएं",
@@ -55,17 +56,17 @@
   "CodemirrorFindAndReplace": {
     "ToggleReplace": "टॉगल बदली करें",
     "FindPlaceholder": "फ़ाइलों में खोजें",
-    "Find": "खोज",
     "Replace": "बदली करें",
     "ReplaceAll": "सबको बदली करें",
     "ReplacePlaceholder": "बदलने के लिए पाठ",
-    "Regex": "रेगुलर एक्सप्रेशन",
-    "CaseSensitive": "केस सेंसिटिव",
-    "WholeWords": "संपूर्ण शब्द",
+    "Regex": "रगलर एकसपरशन",
+    "CaseSensitive": "कस ससटव",
+    "WholeWords": "सपरण शबद",
     "Previous": "पिछला",
     "Next": "अगला",
-    "NoResults": "कोई परिणाम नहीं",
-    "Close": "बंद करे"
+    "NoResults": "कई परणम नह",
+    "Close": "बंद करे",
+    "Find": "खज"
   },
   "LoginForm": {
     "UsernameOrEmail": "ईमेल या यूजरनेम",
@@ -84,7 +85,9 @@
     "SignUp": "साइन अप",
     "DontHaveAccount": "अकाउंट नहीं है? ",
     "ForgotPassword": "पासवर्ड भूल गए? ",
-    "ResetPassword": "पासवर्ड रीसेट करें"
+    "ResetPassword": "पासवर्ड रीसेट करें",
+    "Email": "ईमल",
+    "Username": "यजरनम"
   },
   "SocialAuthButton": {
     "Connect": "कनेक्ट {{serviceauth}} अकाउंट",
@@ -135,7 +138,8 @@
       "Discord": "समुदाय द्वारा बनाई गई लाइब्रेरीज़ के साथ p5.js की संभावनाओं का विस्तार करें।"
     },
     "EmailAddress": "hello@p5js.org",
-    "Contact": "संपर्क करें"
+    "Contact": "संपर्क करें",
+    "Learn": "सख"
   },
   "Toast": {
     "OpenedNewSketch": "नया स्केच खोला",
@@ -169,10 +173,11 @@
     "Clear": "साफ़ करें",
     "ClearARIA": "कंसोल साफ़ करें",
     "CloseARIA": "कंसोल बंद करें",
-    "OpenARIA": "कंसोल खोलें"
+    "OpenARIA": "कंसोल खोलें",
+    "Close": "बद कर",
+    "Open": "खल"
   },
   "Preferences": {
-    "TitleHelmet": "p5.js वेब एडिटर | प्राथमिकताएँ",
     "Settings": "सेटिंग्स",
     "GeneralSettings": "सामान्य सेटिंग्स",
     "Accessibility": "ऐक्सेसबिलिटी",
@@ -225,14 +230,14 @@
     "PreloadAddon": "p5.js 1.x Compatibility Add-on लाइब्रेरी — प्रीलोड",
     "ShapesAddon": "p5.js 1.x Compatibility Add-on लाइब्रेरी — आकार",
     "DataAddon": "p5.js 1.x Compatibility Add-on लाइब्रेरी — डेटा संरचनाएँ",
-    "AddonOnARIA": "चालू",
-    "AddonOffARIA": "बंद",
     "CustomVersionTitle": "अपनी लाइब्रेरीज़ का प्रबंधन स्वयं कर रहे हैं? अच्छा!",
     "CustomVersionInfo": "p5.js का संस्करण वर्तमान में index.html के कोड में प्रबंधित किया जा रहा है। इसका मतलब है कि इसे इस टैब से समायोजित नहीं किया जा सकता है।",
     "CustomVersionReset": "यदि आप डिफ़ॉल्ट लाइब्रेरीज़ का उपयोग करना चाहते हैं, तो आप index.html में स्क्रिप्ट टैग्स को निम्नलिखित से बदल सकते हैं:",
     "SoundReference": "p5.sound के लिए संदर्भ देखें जो p5.js {{version}} के साथ संगत है",
     "CopyToClipboardSuccess": "क्लिपबोर्ड में कॉपी किया गया!",
-    "CopyToClipboardFailure": "हम पाठ को कॉपी करने में असमर्थ थे, कृपया इसे चुनने और मैन्युअल रूप से कॉपी करने का प्रयास करें।"
+    "CopyToClipboardFailure": "हम पाठ को कॉपी करने में असमर्थ थे, कृपया इसे चुनने और मैन्युअल रूप से कॉपी करने का प्रयास करें।",
+    "AddonOnARIA": "चल",
+    "AddonOffARIA": "बद"
   },
   "KeyboardShortcuts": {
     "Title": " कीबोर्ड शॉर्टकट",
@@ -250,7 +255,9 @@
       "CodeEditing": "कोड संपादन",
       "ColorPicker": "इनलाइन कलर पिकर दिखाएँ",
       "CreateNewFile": "नया फ़ाइल बनाएँ",
-      "RenameVariable": "चरण का नाम बदलें"
+      "RenameVariable": "चरण का नाम बदलें",
+      "FindNextMatch": "अगल मलन खज",
+      "FindPrevMatch": "पछल मलन खज"
     },
     "General": "सामान्य",
     "GeneralSelection": {
@@ -351,7 +358,10 @@
   "NewPasswordView": {
     "Title": "p5.js वेब एडिटर | नया पासवर्ड",
     "Description": "नया पासवर्ड सेट करें",
-    "TokenInvalidOrExpired": "पासवर्ड रीसेट टोकन अमान्य है या एक्सपायर हो गया है।"
+    "TokenInvalidOrExpired": "पासवर्ड रीसेट टोकन अमान्य है या एक्सपायर हो गया है।",
+    "EmptyPassword": "कपय पसवरड दरज कर",
+    "PasswordConfirmation": "कपय अपन पसवरड कनफरम कर",
+    "PasswordMismatch": "पसवरड क मल खन अनवरय ह"
   },
   "AccountForm": {
     "Email": "ईमेल",
@@ -440,8 +450,48 @@
     "HeaderSketch": "स्केच",
     "maximum": "अधिकतम"
   },
+  "Edit": {
+    "Title": "संपादित करे",
+    "TidyCode": "कोड साफ़ करें",
+    "Find": "खोज",
+    "Replace": "बदली करें"
+  },
+  "Sketch": {
+    "Title": "चित्र",
+    "AddFile": "फाइल जोड़ें",
+    "AddFolder": "फोल्डर जोड़ें",
+    "Run": "चलाएं",
+    "Stop": "रोकें"
+  },
+  "Help": {
+    "Title": "मदद",
+    "KeyboardShortcuts": "कीबोर्ड शॉर्टकट",
+    "Reference": "रिफरेन्स",
+    "ReportBug": "बग रिपोर्ट करें",
+    "ChatOnDiscord": "डिस्कॉर्ड पर चैट करें",
+    "PostOnTheForum": "फ़ोरम पर पोस्ट करें"
+  },
+  "BackEditor": "एडिटर पर वापस जाएं",
+  "WarningUnsavedChanges": "क्या आप इस पेज को छोड़ना चाहते हैं? आपके पास अनसेव्ड परिवर्तन हैं।",
+  "Login": "लॉग इन",
+  "LoginOr": "या",
+  "SignUp": "साइन अप",
+  "Auth": {
+    "Hello": "नमस्ते",
+    "MyAccount": "मेरा अकाउंट",
+    "MySketches": "मेरे स्केच",
+    "MyCollections": "मेरे संग्रह",
+    "MyAssets": "मेरे ऐसेट",
+    "LogOut": "लॉग आउट"
+  },
   "Feedback": {
-    "Title": "p5.js वेब एडिटर | फीडबैक"
+    "Title": "p5.js वेब एडिटर | फीडबैक",
+    "ViaGithubHeader": "गटहब क मधयम स",
+    "ViaGithubDescription": "गटहब बग क रपरट करन क लए हमर पसदद तरक ह यद आप गटहब स परचत नह ह, त इसक बजय गगल फरम क उपयग कर",
+    "GoToGithub": "गटहब पर जए",
+    "ViaGoogleHeader": "गगल फरम क मधयम स",
+    "ViaGoogleDescription": "गगल फरम हम बग जनकर इकटठ करन क अनमत दत ह",
+    "GoToForm": "फरम पर जए"
   },
   "Searchbar": {
     "SearchSketch": "सर्च स्केच...",
@@ -493,11 +543,14 @@
     "DirectionAscendingARIA": "आरोही",
     "DirectionDescendingARIA": "अवरोही",
     "ButtonLabelAscendingARIA": "{{displayName}} आरोही क्रम में।",
-    "ButtonLabelDescendingARIA": "{{displayName}} अवरोही क्रम में।"
+    "ButtonLabelDescendingARIA": "{{displayName}} अवरोही क्रम में।",
+    "Description": "ववरण",
+    "NumSketches_plural": "{{count}} सकच"
   },
   "AddToCollectionList": {
     "Title": "p5.js वेब एडिटर | मेरे संग्रह",
-    "Empty": "कोई संग्रह नहीं"
+    "Empty": "कोई संग्रह नहीं",
+    "AnothersTitle": "p5.js वब एडटर | {{anotheruser}} क सगरह"
   },
   "CollectionCreate": {
     "Title": "p5.js वेब एडिटर | संग्रह बनाएँ",
@@ -533,7 +586,10 @@
     "DirectionDescendingARIA": "अवरोही",
     "ButtonLabelAscendingARIA": "{{displayName}} आरोही क्रम में।",
     "ButtonLabelDescendingARIA": "{{displayName}} अवरोही क्रम में।",
-    "AddSketch": "स्केच जोड़ें"
+    "AddSketch": "स्केच जोड़ें",
+    "HeaderCreatedAt_mobile": "बनय गय",
+    "HeaderUpdatedAt_mobile": "अपडट कय गय",
+    "HeaderNumItems_mobile": "# सकच"
   },
   "CollectionListRow": {
     "ToggleCollectionOptionsARIA": "संग्रह ओपेन/क्लोज़ टॉगल ऑप्शन्ज़",
@@ -567,11 +623,15 @@
     "HeaderName": "स्केच",
     "HeaderCreatedAt": "बनाने की तारीख",
     "HeaderUpdatedAt": "अपडेट करने की तारिख",
-    "NoSketches": "कोई स्केच नहीं"
+    "NoSketches": "कोई स्केच नहीं",
+    "View": "दख",
+    "HeaderCreatedAt_mobile": "बनय गय",
+    "HeaderUpdatedAt_mobile": "अपडट कय गय"
   },
   "AddToCollectionSketchList": {
     "Title": "p5.js वेब एडिटर | मेरे स्केच",
-    "NoCollections": "कोई संग्रह नहीं"
+    "NoCollections": "कोई संग्रह नहीं",
+    "AnothersTitle": "p5.js वब एडटर | {{anotheruser}} क सकच"
   },
   "Editor": {
     "OpenSketchARIA": "स्केच फ़ाइलों का नेविगेशन खोलें",
@@ -594,7 +654,8 @@
     "Ago": "{{timeAgo}} पहले"
   },
   "CopyableInput": {
-    "CopiedARIA": "क्लिपबोर्ड पर कॉपी किया!"
+    "CopiedARIA": "क्लिपबोर्ड पर कॉपी किया!",
+    "OpenViewTabARIA": "{{label}} वय क नए टब म खल"
   },
   "EditableInput": {
     "EditValue": "एडीट {{display}} वैल्यू",
@@ -607,7 +668,23 @@
   "MobilePreferences": {
     "Settings": "सेटिंग्स",
     "Preferences": "प्राथमिकताएँ",
-    "Language": "भाषा"
+    "Language": "भाषा",
+    "GeneralSettings": "समनय सटगस",
+    "Accessibility": "ऐकससबलट",
+    "AccessibleOutput": "ऐकससबल आउटपट",
+    "Theme": "थम",
+    "LightTheme": "लइट",
+    "DarkTheme": "डरक",
+    "HighContrastTheme": "जयद कटरसट",
+    "Autosave": "ऑटसव",
+    "AutocompleteHinter": "ऑटकमपलट हटर",
+    "WordWrap": "वरड रप",
+    "LineNumbers": "लइन नमबरज",
+    "LintWarningSound": "लनट वरनग सउनड",
+    "UsedScreenReader": "सकरन रडर क सथ उपयग कय",
+    "PlainText": "पलन-टकसट",
+    "TableText": "टबल-टकसट",
+    "Sound": "सउनड"
   },
   "PreferenceCreators": {
     "On": "ऑन",
@@ -638,5 +715,21 @@
       "Label": "निजी"
     },
     "Changed": "'{{projectName}}' अब {{newVisibility}} है..."
+  },
+  "CollectionView": {
+    "TitleCreate": "p5.js वब एडटर | सगरह बनए",
+    "TitleDefault": "p5.js वब एडटर | मर सगरह"
+  },
+  "MobileDashboardView": {
+    "Examples": "उदहरण",
+    "Sketches": "सकच",
+    "Collections": "सगरह",
+    "Assets": "ऐसटस",
+    "MyStuff": "मर समगर",
+    "CreateSketch": "सकच बनए",
+    "CreateCollection": "सगरह बनए"
+  },
+  "Explorer": {
+    "Files": "फइल"
   }
 }
