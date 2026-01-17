@@ -8,6 +8,7 @@ const mockProjects = [
     _id: 'testid1',
     updatedAt: '2021-02-26T04:58:29',
     files: [],
+    previewImage: null,
     createdAt: '2021-02-26T04:58:14',
     id: 'testid1',
     visibility: 'Public'
@@ -17,6 +18,7 @@ const mockProjects = [
     _id: 'testid2',
     updatedAt: '2021-02-23T17:40:43',
     files: [],
+    previewImage: null,
     createdAt: '2021-02-23T17:40:43',
     id: 'testid2',
     visibility: 'Public'
@@ -68,7 +70,8 @@ const initialTestState: RootState = {
   project: {
     name: 'Zealous sunflower',
     updatedAt: '',
-    isSaving: false
+    isSaving: false,
+    previewImage: null
   },
   sketches: mockProjects,
   search: {

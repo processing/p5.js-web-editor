@@ -33,7 +33,7 @@ const createCoreHandler = (mapProjectsToResponse) => async (req, res) => {
 
     const projects = await Project.find(filter)
       .sort('-createdAt')
-      .select('name files id createdAt updatedAt visibility')
+      .select('name files id createdAt updatedAt visibility previewImage')
       .exec();
 
     const response = mapProjectsToResponse(projects);

@@ -134,7 +134,8 @@ function getSynchedProject(currentState, responseProject) {
 export function saveProject(
   selectedFile = null,
   autosave = false,
-  mobile = false
+  mobile = false,
+  previewImage = null
 ) {
   return (dispatch, getState) => {
     const state = getState();
@@ -151,6 +152,9 @@ export function saveProject(
     }
     const formParams = Object.assign({}, state.project);
     formParams.files = [...state.files];
+    if (previewImage) {
+      formParams.previewImage = previewImage;
+    }
 
     if (selectedFile) {
       const fileToUpdate = formParams.files.find(
@@ -331,6 +335,9 @@ export function cloneProject(project) {
           { name: `${projectName} copy` },
           { files: newFiles }
         );
+        if (project?.previewImage) {
+          formParams.previewImage = project.previewImage;
+        }
         apiClient
           .post('/projects', formParams)
           .then((response) => {

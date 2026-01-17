@@ -120,8 +120,22 @@ const SketchListRowBase = ({
     </>
   );
 
+  const previewAlt = t('SketchList.PreviewAlt', { name: sketch.name });
+  const previewCell = sketch.previewImage ? (
+    <img
+      className="sketches-table__preview-image"
+      src={sketch.previewImage}
+      alt={previewAlt}
+    />
+  ) : (
+    <div className="sketches-table__preview-placeholder">
+      {t('SketchList.NoPreview')}
+    </div>
+  );
+
   return (
     <tr className="sketches-table__row">
+      <td className="sketches-table__preview-cell">{previewCell}</td>
       <th scope="row">{name}</th>
       <td>{formatDateCell(sketch.createdAt, mobile)}</td>
       <td>{formatDateCell(sketch.updatedAt, mobile)}</td>
@@ -166,6 +180,7 @@ SketchListRowBase.propTypes = {
     name: PropTypes.string.isRequired,
     createdAt: PropTypes.string.isRequired,
     updatedAt: PropTypes.string.isRequired,
+    previewImage: PropTypes.string,
     visibility: PropTypes.string
   }).isRequired,
   username: PropTypes.string.isRequired,

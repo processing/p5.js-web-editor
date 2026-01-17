@@ -120,6 +120,17 @@
             align-items: center;
           }
 
+          .sketches-table__preview-cell {
+            width: 100%;
+            padding-left: 0;
+          }
+
+          .sketches-table__preview-image,
+          .sketches-table__preview-placeholder {
+            width: 100%;
+            height: #{math.div(180, $base-font-size)}rem;
+          }
+
           .sketch-list__dropdown-column {
             position: absolute;
             top: 0;
@@ -188,10 +199,6 @@
   }
 }
 
-.sketches-table thead th:nth-child(1) {
-  padding-left: #{math.div(12, $base-font-size)}rem;
-}
-
 .sketches-table__row {
   margin: #{math.div(10, $base-font-size)}rem;
   height: #{math.div(72, $base-font-size)}rem;
@@ -204,7 +211,7 @@
   }
 }
 
-.sketches-table__row>th:nth-child(1) {
+.sketches-table__row>th:nth-child(2) {
   padding-left: #{math.div(12, $base-font-size)}rem;
 }
 
@@ -240,6 +247,35 @@
 .sketches-table__name {
   display: flex;
   align-items: center;
+}
+
+.sketches-table__preview-header {
+  padding-left: #{math.div(12, $base-font-size)}rem;
+}
+
+.sketches-table__preview-cell {
+  width: #{math.div(120, $base-font-size)}rem;
+}
+
+.sketches-table__preview-image,
+.sketches-table__preview-placeholder {
+  width: #{math.div(96, $base-font-size)}rem;
+  height: #{math.div(64, $base-font-size)}rem;
+  border-radius: #{math.div(6, $base-font-size)}rem;
+  object-fit: cover;
+  display: block;
+}
+
+.sketches-table__preview-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: #{math.div(12, $base-font-size)}rem;
+  @include themify() {
+    background: getThemifyVariable("search-background-color");
+    color: getThemifyVariable("inactive-text-color");
+    border: 1px dashed getThemifyVariable("modal-border-color");
+  }
 }
 
 .sketches-table__icon-cell {

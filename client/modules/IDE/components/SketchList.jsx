@@ -135,6 +135,9 @@ const SketchList = ({
         >
           <thead>
             <tr>
+              <th scope="col" className="sketches-table__preview-header">
+                {t('SketchList.HeaderPreview')}
+              </th>
               {renderFieldHeader('name', t('SketchList.HeaderName'))}
               {renderFieldHeader(
                 'createdAt',
@@ -193,6 +196,7 @@ SketchList.propTypes = {
       name: PropTypes.string.isRequired,
       createdAt: PropTypes.string.isRequired,
       updatedAt: PropTypes.string.isRequired,
+      previewImage: PropTypes.string,
       visibility: PropTypes.string
     })
   ).isRequired,

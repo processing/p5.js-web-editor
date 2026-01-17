@@ -590,12 +590,15 @@
     "ButtonLabelDescendingARIA": "Sort by {{displayName}} descending.",
     "AddToCollectionOverlayTitle": "Add to collection",
     "TableSummary": "table containing all saved projects",
+    "HeaderPreview": "Preview",
     "HeaderName": "Sketch",
     "HeaderCreatedAt": "Date Created",
     "HeaderCreatedAt_mobile": "Created",
     "HeaderUpdatedAt": "Date Updated",
     "HeaderUpdatedAt_mobile": "Updated",
-    "NoSketches": "No sketches."
+    "NoSketches": "No sketches.",
+    "NoPreview": "No preview",
+    "PreviewAlt": "{{name}} preview"
   },
   "AddToCollectionSketchList": {
     "Title": "p5.js Web Editor | My sketches",

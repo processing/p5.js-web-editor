@@ -36,6 +36,7 @@ const projectSchema = new Schema(
     },
     user: { type: Schema.Types.ObjectId, ref: 'User' },
     serveSecure: { type: Boolean, default: false },
+    previewImage: { type: String },
     files: { type: [fileSchema] },
     _id: { type: String, default: shortid.generate },
     visibility: {
@@ -93,7 +94,7 @@ projectSchema.statics.getProjectsForUserId = async function getProjectsForUserId
   return project
     .find({ user: userId })
     .sort('-createdAt')
-    .select('name files id createdAt updatedAt')
+    .select('name files id createdAt updatedAt previewImage visibility')
     .exec();
 };
 
