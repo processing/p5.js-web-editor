@@ -124,19 +124,31 @@ export default function SideBar() {
                     {t('Sidebar.AddFile')}
                   </button>
                 </li>
-                {isAuthenticated && (
-                  <li>
-                    <button
-                      aria-label={t('Sidebar.UploadFileARIA')}
-                      onClick={() => {
+                <li>
+                  <button
+                    className={classNames(
+                      !isAuthenticated && 'tooltipped-no-delay',
+                      !isAuthenticated && 'tooltipped',
+                      !isAuthenticated && 'tooltipped-s'
+                    )}
+                    aria-label={
+                      !isAuthenticated
+                        ? t('Sidebar.UploadFileTooltip')
+                        : t('Sidebar.UploadFileARIA')
+                    }
+                    disabled={!isAuthenticated}
+                    onClick={() => {
+                      if (!isAuthenticated) {
+                        window.location.href = '/login';
+                      } else {
                         dispatch(openUploadFileModal(rootFile.id));
                         setTimeout(() => dispatch(closeProjectOptions()), 300);
-                      }}
-                    >
-                      {t('Sidebar.UploadFile')}
-                    </button>
-                  </li>
-                )}
+                      }
+                    }}
+                  >
+                    {t('Sidebar.UploadFile')}
+                  </button>
+                </li>
               </ul>
             )}
           </div>

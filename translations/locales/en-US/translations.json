@@ -275,7 +275,8 @@
     "AddFile": "Create file",
     "AddFileARIA": "add file",
     "UploadFile": "Upload file",
-    "UploadFileARIA": "upload file"
+    "UploadFileARIA": "upload file",
+    "UploadFileTooltip": "Log in to upload file"
   },
   "FileNode": {
     "OpenFolderARIA": "Open folder contents",
