@@ -134,8 +134,8 @@ const DashboardMenu = () => {
   const editorLink = useSelector(selectSketchPath);
   return (
     <ul className="nav__items-left" role="group">
-      <li className="nav__item nav__item--no-icon">
-        <Link to={editorLink} className="nav__back-link">
+      <li className="nav__item--no-icon">
+        <Link to={editorLink} className="nav__back-link nav__item">
           <CaretLeftIcon
             className="nav__back-icon"
             focusable="false"

@@ -31,10 +31,10 @@ exports[`Nav renders dashboard version for desktop 1`] = `
           role="group"
         >
           <li
-            class="nav__item nav__item--no-icon"
+            class="nav__item--no-icon"
           >
             <a
-              class="nav__back-link"
+              class="nav__back-link nav__item"
               href="/"
             >
               <test-file-stub
