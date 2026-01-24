@@ -14,7 +14,7 @@ import { APIKeyForm } from '../components/APIKeyForm';
 import Nav from '../../IDE/components/Header/Nav';
 import ErrorModal from '../../IDE/components/ErrorModal';
 import { hideErrorModal } from '../../IDE/actions/ide';
-import Overlay from '../../App/components/Overlay';
+import { Overlay } from '../../App/components/Overlay';
 import Toast from '../../IDE/components/Toast';
 import { RootState } from '../../../reducers';
 

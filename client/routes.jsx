@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Route as RouterRoute, Switch } from 'react-router-dom';
 
-import App from './modules/App/App';
+import { App } from './modules/App/App';
 import IDEView from './modules/IDE/pages/IDEView';
 import FullView from './modules/IDE/pages/FullView';
 import { About } from './modules/About/pages/About';

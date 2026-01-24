@@ -1,7 +1,7 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
 
-import { Button, ButtonDisplays, ButtonKinds, ButtonTypes } from './Button';
+import { Button, ButtonDisplays, ButtonTypes } from './Button';
 import { GithubIcon, DropdownArrowIcon, PlusIcon } from './icons';
 
 export default {

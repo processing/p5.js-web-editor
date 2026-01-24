@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import Loader from '../../App/components/loader';
+import { Loader } from '../../App/components/Loader';
 import {
   addToCollection,
   getCollections,
