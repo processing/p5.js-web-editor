@@ -113,7 +113,7 @@ const IDEView = () => {
   const [sidebarSize, setSidebarSize] = useState(160);
   const [isOverlayVisible, setIsOverlayVisible] = useState(false);
   const [MaxSize, setMaxSize] = useState(window.innerWidth);
-  const [displayBanner, setDisplayBanner] = useState(true);
+  const [displayBanner, setDisplayBanner] = useState(false); // set to true if in use
 
   const cmRef = useRef({});
 
@@ -177,12 +177,12 @@ const IDEView = () => {
     const lastClosedAt = stored ? Number(stored) : null;
 
     if (!lastClosedAt) {
-      setDisplayBanner(true);
+      setDisplayBanner(false); // set to true if in use
       return;
     }
 
     if (minutesSince(lastClosedAt) >= BANNER_COOLDOWN_MINUTES) {
-      setDisplayBanner(true);
+      setDisplayBanner(false); // set to true if in use
     } else {
       setDisplayBanner(false);
     }

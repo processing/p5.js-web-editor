@@ -1,35 +1,49 @@
-import PropTypes from 'prop-types';
 import React, { useCallback, useRef } from 'react';
-import MediaQuery from 'react-responsive';
+import { useMediaQuery } from 'react-responsive';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useModalClose } from '../../../common/useModalClose';
+import type { RootState } from '../../../reducers';
 
 import ExitIcon from '../../../images/exit.svg';
 
-const Overlay = ({
+type OverlayProps = {
+  children?: React.ReactNode;
+  actions?: React.ReactNode;
+  closeOverlay?: () => void;
+  title?: string;
+  ariaLabel?: string;
+  isFixedHeight?: boolean;
+};
+
+export const Overlay = ({
   actions,
-  ariaLabel,
+  ariaLabel = 'modal',
   children,
   closeOverlay,
-  isFixedHeight,
-  title
-}) => {
+  isFixedHeight = false,
+  title = 'Modal'
+}: OverlayProps) => {
   const { t } = useTranslation();
 
-  const previousPath = useSelector((state) => state.ide.previousPath);
+  const previousPath = useSelector(
+    (state: RootState) => state.ide.previousPath
+  );
 
-  const ref = useRef(null);
+  const ref = useRef<HTMLElement>(null);
 
   const browserHistory = useHistory();
+
+  const isDesktop = useMediaQuery({ minWidth: 770 });
+  const isMobile = useMediaQuery({ maxWidth: 769 });
 
   const close = useCallback(() => {
     const node = ref.current;
     if (!node) return;
     // Only close if it is the last (and therefore the topmost overlay)
     const overlays = document.getElementsByClassName('overlay');
-    if (node.parentElement.parentElement !== overlays[overlays.length - 1])
+    if (node.parentElement?.parentElement !== overlays[overlays.length - 1])
       return;
 
     if (!closeOverlay) {
@@ -55,7 +69,7 @@ const Overlay = ({
           <header className="overlay__header">
             <h2 className="overlay__title">{title}</h2>
             <div className="overlay__actions">
-              <MediaQuery minWidth={770}>{actions}</MediaQuery>
+              {isDesktop && actions}
               <button
                 className="overlay__close-button"
                 onClick={close}
@@ -65,34 +79,12 @@ const Overlay = ({
               </button>
             </div>
           </header>
-          <MediaQuery maxWidth={769}>
-            {actions && (
-              <div className="overlay__actions-mobile">{actions}</div>
-            )}
-          </MediaQuery>
+          {isMobile && actions && (
+            <div className="overlay__actions-mobile">{actions}</div>
+          )}
           {children}
         </section>
       </div>
     </div>
   );
 };
-
-Overlay.propTypes = {
-  children: PropTypes.element,
-  actions: PropTypes.element,
-  closeOverlay: PropTypes.func,
-  title: PropTypes.string,
-  ariaLabel: PropTypes.string,
-  isFixedHeight: PropTypes.bool
-};
-
-Overlay.defaultProps = {
-  children: null,
-  actions: null,
-  title: 'Modal',
-  closeOverlay: null,
-  ariaLabel: 'modal',
-  isFixedHeight: false
-};
-
-export default Overlay;

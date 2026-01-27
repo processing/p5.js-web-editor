@@ -9,4 +9,4 @@ const devTools = (
   </DockMonitor>
 );
 
-export default createDevTools(devTools);
+export const DevTools = createDevTools(devTools);

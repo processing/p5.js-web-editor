@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { RouterTab } from '../../../common/RouterTab';
 import { RootPage } from '../../../components/RootPage';
 import { remSize } from '../../../theme';
-import Loader from '../../App/components/loader';
+import { Loader } from '../../App/components/Loader';
 import Nav from '../../IDE/components/Header/Nav';
 import { PolicyContainer } from '../components/PolicyContainer';
 

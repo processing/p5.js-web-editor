@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { addToCollection, removeFromCollection } from '../actions/collections';
 import { getProjects } from '../actions/projects';
 import getSortedSketches from '../selectors/projects';
-import Loader from '../../App/components/loader';
+import { Loader } from '../../App/components/Loader';
 import QuickAddList from './QuickAddList';
 import {
   CollectionAddSketchWrapper,
