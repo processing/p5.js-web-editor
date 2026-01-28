@@ -8,7 +8,13 @@
       "Open": "Open",
       "Download": "Download",
       "AddToCollection": "Add to Collection",
-      "Examples": "Examples"
+      "Examples": "Examples",
+      "SaveTooltipUnauthenticated": "Log in to save your sketch",
+      "DuplicateTooltipUnauthenticated": "Log in to duplicate this sketch",
+      "OpenTooltipUnauthenticated": "Log in to open your sketches",
+      "AddToCollectionTooltipUnauthenticated": "Log in to add to collections",
+      "ShareTooltipUnsaved": "Save your sketch before sharing",
+      "DownloadTooltipUnsaved": "Save your sketch before downloading"
     },
     "Edit": {
       "Title": "Edit",

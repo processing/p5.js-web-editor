@@ -16,6 +16,7 @@ import { getAuthenticated, selectCanEditSketch } from '../selectors/users';
 import ConnectedFileNode from './FileNode';
 import { PlusIcon } from '../../../common/icons';
 import { FileDrawer } from './Editor/MobileEditor';
+import { Tooltip } from '../../../common/Tooltip';
 
 // TODO: use a generic Dropdown UI component
 

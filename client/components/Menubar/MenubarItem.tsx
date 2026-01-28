@@ -1,6 +1,7 @@
 import React, { useEffect, useContext, useRef } from 'react';
 import { MenubarContext, SubmenuContext, ParentMenuContext } from './contexts';
 import { ButtonOrLink, ButtonOrLinkProps } from '../../common/ButtonOrLink';
+import { Tooltip, TooltipProps } from '../../common/Tooltip';
 
 export enum MenubarItemRole {
   MENU_ITEM = 'menuitem',
@@ -13,6 +14,7 @@ export interface MenubarItemProps extends Omit<ButtonOrLinkProps, 'role'> {
    */
   role?: MenubarItemRole;
   selected?: boolean;
+  tooltipContent?: TooltipProps['content'];
 }
 
 /**
@@ -54,6 +56,7 @@ export function MenubarItem({
   role: customRole = MenubarItemRole.MENU_ITEM,
   isDisabled = false,
   selected = false,
+  tooltipContent,
   ...rest
 }: MenubarItemProps) {
   const { createMenuItemHandlers, hasFocus } = useContext(MenubarContext);
@@ -94,15 +97,29 @@ export function MenubarItem({
       ref={menuItemRef}
       onMouseEnter={handleMouseEnter}
     >
-      <ButtonOrLink
-        {...rest}
-        {...handlers}
-        {...ariaSelected}
-        role={role}
-        tabIndex={-1}
-        id={id}
-        isDisabled={isDisabled}
-      />
+      {tooltipContent ? (
+        <Tooltip content={tooltipContent}>
+          <ButtonOrLink
+            {...rest}
+            {...handlers}
+            {...ariaSelected}
+            role={role}
+            tabIndex={-1}
+            id={id}
+            isDisabled={isDisabled}
+          />
+        </Tooltip>
+      ) : (
+        <ButtonOrLink
+          {...rest}
+          {...handlers}
+          {...ariaSelected}
+          role={role}
+          tabIndex={-1}
+          id={id}
+          isDisabled={isDisabled}
+        />
+      )}
     </li>
   );
 }
