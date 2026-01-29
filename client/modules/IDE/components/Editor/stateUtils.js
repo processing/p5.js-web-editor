@@ -230,6 +230,34 @@ function makeJsLinter(callback) {
   };
 }
 
+function makeJsonLinter(callback) {
+  return (view) => {
+    const documentContent = view.state.doc.toString();
+    const diagnostics = [];
+
+    try {
+      JSON.parse(documentContent);
+    } catch (e) {
+      let pos = 0;
+      const match = e.message.match(/at position (\d+)/);
+      if (match) {
+        pos = parseInt(match[1], 10);
+      }
+
+      diagnostics.push({
+        from: pos,
+        to: pos + 1,
+        severity: 'error',
+        message: e.message
+      });
+    }
+
+    if (callback) callback(diagnostics);
+
+    return diagnostics;
+  };
+}
+
 function getFileLinter(fileName, callback) {
   const fileMode = getFileMode(fileName);
 
@@ -240,6 +268,8 @@ function getFileLinter(fileName, callback) {
       return linter(makeHtmlLinter(callback));
     case 'css':
       return linter(makeCssLinter(callback));
+    case 'application/json':
+      return linter(makeJsonLinter(callback));
     default:
       return null;
   }
