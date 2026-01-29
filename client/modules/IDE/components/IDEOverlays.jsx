@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
-import Overlay from '../../App/components/Overlay';
+import { Overlay } from '../../App/components/Overlay';
 import {
   closeKeyboardShortcutModal,
   closePreferences,
@@ -33,8 +33,7 @@ export default function IDEOverlays() {
     preferencesIsVisible,
     keyboardShortcutVisible,
     shareModalVisible,
-    errorType,
-    previousPath
+    errorType
   } = useSelector((state) => state.ide);
 
   return (
@@ -51,7 +50,6 @@ export default function IDEOverlays() {
       {location.pathname === '/feedback' && (
         <Overlay
           title={t('IDEView.SubmitFeedback')}
-          previousPath={previousPath}
           ariaLabel={t('IDEView.SubmitFeedbackARIA')}
         >
           <Feedback />
@@ -61,7 +59,6 @@ export default function IDEOverlays() {
         <Overlay
           ariaLabel={t('IDEView.AddCollectionARIA')}
           title={t('IDEView.AddCollectionTitle')}
-          previousPath={previousPath}
           actions={<CollectionSearchbar />}
           isFixedHeight
         >

@@ -296,6 +296,12 @@ export async function changeProjectVisibility(req, res) {
         .json({ success: false, message: 'No project found.' });
     }
 
+    if (!project.user.equals(req.user._id)) {
+      return res
+        .status(403)
+        .json({ success: false, message: 'Unauthorized action.' });
+    }
+
     if (newVisibility !== 'Private' && newVisibility !== 'Public') {
       return res.status(400).json({ success: false, message: 'Invalid data.' });
     }

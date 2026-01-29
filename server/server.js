@@ -195,6 +195,20 @@ app.get('*', async (req, res) => {
   res.type('txt').send('Not found.');
 });
 
+// Global error handler for unhandled errors
+app.use((error, req, res, next) => {
+  console.error('Unhandled error:', error);
+
+  if (res.headersSent) {
+    return next(error);
+  }
+
+  const statusCode = error.status || 500;
+  return res.status(statusCode).json({
+    error: 'Internal server error'
+  });
+});
+
 // start app
 app.listen(process.env.PORT, (error) => {
   if (!error) {
