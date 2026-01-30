@@ -27,29 +27,26 @@
       "Title": "সাহায্য",
       "KeyboardShortcuts": "কীবোর্ড শর্টকাট",
       "Reference": "রেফারেন্স",
-      "About": "আমাদের সম্পর্কে"
+      "ReportBug": "বাগ রিপোর্ট করুন",
+      "ChatOnDiscord": "ডিসকর্ডে চ্যাট করুন",
+      "PostOnTheForum": "ফোরামে পোস্ট করুন"
     },
-    "Lang": "ভাষা",
     "BackEditor": "এডিটরে ফিরুন",
     "WarningUnsavedChanges": "আপনি কি এই পেইজ ছাড়তে চান? আপনি ফাইল সেইভ করেননি।",
     "Login": "লগ ইন",
     "LoginOr": "অথবা",
     "SignUp": "সাইন আপ করুন",
     "Auth": {
-      "Welcome": "স্বাগত",
       "Hello": "হ্যালো",
       "MyAccount": "আমার অ্যাকাউন্ট",
-      "My": "আমার",
       "MySketches": "আমার স্কেচ",
       "MyCollections": "আমার সংগ্রহ",
-      "Asset": "সম্পদ",
       "MyAssets": "আমার সম্পদ",
       "LogOut": "লগ আউট"
     }
   },
   "CodemirrorFindAndReplace": {
     "ToggleReplace": "প্রতিস্থাপন টগল করুন",
-    "Find": "খুঁজুন",
     "FindPlaceholder": "ফাইলে খুঁজুন",
     "Replace": "প্রতিস্থাপন করুন",
     "ReplaceAll": "সব প্রতিস্থাপন করুন",
@@ -77,18 +74,15 @@
     "Login": "লগ ইন করুন",
     "LoginOr": "অথবা",
     "SignUp": "সাইন আপ করুন",
-    "Email": "ই-মেইল",
-    "Username": "ব্যবহারকারীর নাম",
     "DontHaveAccount": " অ্যাকাউন্ট নেই? ",
     "ForgotPassword": "আপনি কি পাসওয়ার্ড ভুলে গিয়েছেন? ",
     "ResetPassword": "আপনার পাসওয়ার্ড রিসেট করুন"
   },
   "SocialAuthButton": {
     "Connect": "{{serviceauth}} সাথে যোগাযোগ করুন",
-    "ConnectWith": "{{serviceauth}} সাথে যোগাযোগ করুন",
-    "SignUpWith": "{{serviceauth}} সাথে সাইন আপ করুন",
-    "LoginWith": "{{serviceauth}} সাথে লগ ইন করুন",
-    "ContinueWith": "{{serviceauth}} সাথে চলুন"
+    "Unlink": "{{serviceauth}} অ্যাকাউন্ট আনলিঙ্ক করুন",
+    "Login": "{{serviceauth}} সহ লগ ইন করুন",
+    "LogoARIA": "{{serviceauth}} লোগো"
   },
   "About": {
     "Title": "সম্পর্কে",
@@ -96,8 +90,6 @@
     "Contribute": "অবদান রাখুন",
     "NewP5": "p5.js এ নতুন?",
     "Report": "একটি বাগ রিপোর্ট করুন",
-    "Learn": "শেখা",
-    "Twitter": "টুইটারে",
     "Home": "হোম",
     "Instagram": "ইনস্টাগ্রাম",
     "Discord": "ডিসকর্ড",
@@ -108,7 +100,34 @@
     "Examples": "উদাহরণসমূহ",
     "PrivacyPolicy": "গোপনীয়তা নীতি",
     "TermsOfUse": "ব্যবহারের শর্তাবলী",
-    "CodeOfConduct": "আচরণবিধি"
+    "CodeOfConduct": "আচরণবিধি",
+    "Headline": "p5.js Editor দিয়ে p5.js স্কেচ তৈরি করুন, শেয়ার করুন এবং রিমিক্স করুন।",
+    "IntroDescription1": "p5.js হল কোডিং এবং শিল্পকর্ম তৈরি শেখার জন্য একটি বিনামূল্যের, ওপেন-সোর্স জাভাস্ক্রিপ্ট লাইব্রেরি। p5.js Editor ব্যবহার করে, আপনি কিছু ডাউনলোড বা কনফিগার না করেই p5.js স্কেচ তৈরি, শেয়ার এবং রিমিক্স করতে পারেন।",
+    "IntroDescription2": "আমরা বিশ্বাস করি সফ্টওয়্যার শেখার সরঞ্জামগুলি যতটা সম্ভব উন্মুক্ত এবং অন্তর্ভুক্ত হওয়া উচিত। আপনি প্রসেসিং ফাউন্ডেশনকে অনুদান দিয়ে এই কাজকে সমর্থন করতে পারেন, যে সংস্থা p5.js সমর্থন করে। আপনার অনুদান p5.js এর জন্য সফ্টওয়্যার ডেভেলপমেন্ট, কোড উদাহরণ এবং টিউটোরিয়াল, ফেলোশিপ এবং কমিউনিটি ইভেন্টের মতো শিক্ষা সংস্থানগুলিকে সমর্থন করে।",
+    "Donate": "অনুদান দিন",
+    "X": "X",
+    "DiscordCTA": "ডিসকর্ডে যোগ দিন",
+    "Youtube": "Youtube",
+    "Github": "Github",
+    "GetInvolved": "জড়িত হন",
+    "Reference": "তথ্যসূত্র",
+    "ForumCTA": "ফোরামে যোগদান করুন",
+    "Email": "ইমেইল",
+    "EmailAddress": "hello@p5js.org",
+    "Socials": "সামাজিক যোগাযোগ করুন",
+    "LinkDescriptions": {
+      "Home": "p5.js এবং আমাদের সম্প্রদায় সম্পর্কে আরও জানুন।",
+      "Examples": "ছোট উদাহরণ সহ p5.js এর সম্ভাবনাগুলি অন্বেষণ করুন।",
+      "CodeOfConduct": "আমাদের সম্প্রদায়ের বিবৃতি এবং আচরণবিধি পড়ুন।",
+      "Libraries": "কমিউনিটি-নির্মিত লাইব্রেরিগুলির সাহায্যে p5.js-এর সম্ভাবনাগুলি প্রসারিত করুন।",
+      "Reference": "p5.js কোডের প্রতিটি অংশের সহজ ব্যাখ্যা খুঁজুন।",
+      "Donate": "প্রসেসিং ফাউন্ডেশনে অনুদান দিয়ে এই কাজে সহায়তা করুন।",
+      "Contribute": "Github-এর ওপেন-সোর্স p5.js এডিটরে অবদান রাখুন।",
+      "Report": "p5.js এডিটরের সাথে ভাঙা বা ভুল আচরণের প্রতিবেদন করুন।",
+      "Forum": "প্রশ্ন জিজ্ঞাসা করুন, স্কেচ শেয়ার করুন এবং p5.js কমিউনিটির সাহায্য নিন।",
+      "Discord": "p5.js কমিউনিটির সাথে চ্যাট করুন এবং দ্রুত সাহায্য পান।"
+    },
+    "Contact": "আমাদের সাথে যোগাযোগ করুন"
   },
   "Toast": {
     "OpenedNewSketch": "নতুন স্কেচ খোলা হয়েছে।",
@@ -116,7 +135,12 @@
     "SketchFailedSave": "স্কেচ সেইভ ব্যর্থ হয়েছে।",
     "AutosaveEnabled": "অটোসেইভ চালু হয়েছে।",
     "LangChange": "ভাষা পরিবর্তন হয়েছে",
-    "SettingsSaved": "সেটিংস সেইভ হয়েছে।"
+    "SettingsSaved": "সেটিংস সেইভ হয়েছে।",
+    "EmptyCurrentPass": "বর্তমান পাসওয়ার্ড ক্ষেত্রটি খালি।",
+    "IncorrectCurrentPass": "বর্তমান পাসওয়ার্ডটি ভুল।",
+    "DefaultError": "কিছু সমস্যা হয়েছে।",
+    "UserNotFound": "ব্যবহারকারী খুঁজে পাওয়া যায়নি",
+    "NetworkError": "নেটওয়ার্ক ত্রুটি"
   },
   "Toolbar": {
     "Preview": "ফলাফল",
@@ -127,15 +151,16 @@
     "StopSketchARIA": "স্কেচ বন্ধ করুন",
     "EditSketchARIA": "স্কেচের নাম এডিট করুন",
     "NewSketchNameARIA": "নতুন স্কেচের নাম",
-    "By": " দ্বারা "
+    "By": " দ্বারা ",
+    "CustomLibraryVersion": "কাস্টম p5.js সংস্করণ",
+    "VersionPickerARIA": "সংস্করণ চয়নকারী",
+    "NewVersionPickerARIA": "সংস্করণ চয়নকারী"
   },
   "Console": {
     "Title": "কনসোল",
     "Clear": "ক্লিয়ার",
     "ClearARIA": "কনসোল ক্লিয়ার করুন",
-    "Close": "বন্ধ",
     "CloseARIA": "কনসোল বন্ধ করুন",
-    "Open": "খোলা",
     "OpenARIA": "কনসোল খোলুন"
   },
   "Preferences": {
@@ -183,7 +208,20 @@
     "PlainText": "সাধারণ টেক্সট",
     "TextOutputARIA": "টেক্সট আউটপুট অন",
     "TableText": "টেবিল-টেক্সট",
-    "TableOutputARIA": "টেবিল আউটপুট অন"
+    "TableOutputARIA": "টেবিল আউটপুট অন",
+    "LibraryManagement": "লাইব্রেরি ব্যবস্থাপনা",
+    "LibraryVersion": "p5.js সংস্করণ",
+    "LibraryVersionInfo": "p5.js এর একটি [নতুন 2.0 রিলিজ](https://github.com/processing/p5.js/releases/) উপলব্ধ! এটি আগস্ট, 2026 এ ডিফল্ট হয়ে যাবে, তাই এটি পরীক্ষা করে দেখার জন্য এবং বাগ রিপোর্ট করার জন্য এই সময় নিন। 1.x থেকে 2.0 এ স্কেচ রূপান্তর করতে আগ্রহী? [সামঞ্জস্যতা এবং রূপান্তর সংস্থানগুলি দেখুন।](https://github.com/processing/p5.js-compatibility)",
+    "CustomVersionTitle": "আপনার নিজস্ব লাইব্রেরি পরিচালনা করছেন? দারুন!",
+    "CustomVersionInfo": "p5.js এর সংস্করণটি বর্তমানে index.html কোডে পরিচালিত হচ্ছে। এর অর্থ হল এটি এই ট্যাব থেকে সামঞ্জস্য করা যাবে না।",
+    "CustomVersionReset": "আপনি যদি ডিফল্ট লাইব্রেরি ব্যবহার করতে চান, তাহলে আপনি index.html-এ স্ক্রিপ্ট ট্যাগগুলি নিম্নলিখিত দিয়ে প্রতিস্থাপন করতে পারেন:",
+    "SoundAddon": "p5.sound.js অ্যাড-অন লাইব্রেরি",
+    "PreloadAddon": "p5.js 1.x সামঞ্জস্যপূর্ণ অ্যাড-অন লাইব্রেরি — প্রিলোড",
+    "ShapesAddon": "p5.js 1.x সামঞ্জস্যপূর্ণ অ্যাড-অন লাইব্রেরি — আকার",
+    "DataAddon": "p5.js 1.x সামঞ্জস্যপূর্ণ অ্যাড-অন লাইব্রেরি — ডেটা এবং ইভেন্ট",
+    "SoundReference": "p5.js {{version}} এর সাথে সামঞ্জস্যপূর্ণ p5.sound এর রেফারেন্স দেখুন।",
+    "CopyToClipboardSuccess": "ক্লিপবোর্ডে কপি করা হয়েছে!",
+    "CopyToClipboardFailure": "আমরা লেখাটি কপি করতে পারিনি, আপনি এটি নির্বাচন করে ম্যানুয়ালি কপি করার চেষ্টা করুন।"
   },
   "KeyboardShortcuts": {
     "Title": "কীবোর্ড শর্টকাট",
@@ -192,8 +230,6 @@
     "CodeEditing": {
       "Tidy": "টাইডি",
       "FindText": "টেক্সট খোঁজুন",
-      "FindNextMatch": "পরবর্তী ম্যাচ খোঁজুন",
-      "FindPrevMatch": "পূর্বের ম্যাচ খোঁজুন",
       "ReplaceTextMatch": "টেক্সট ম্যাচ প্রতিস্থাপন",
       "IndentCodeLeft": "কোড বামে ইনডেন্ট",
       "IndentCodeRight": "কোড ডানে ইনডেন্ট",
@@ -201,14 +237,18 @@
       "FindNextTextMatch": "পরবর্তী টেক্সট ম্যাচ খোঁজুন",
       "FindPreviousTextMatch": "পূর্বের টেক্সট ম্যাচ খোঁজুন",
       "CodeEditing": "কোড এডিটিং",
-      "ColorPicker": "ইনলাইন রঙ নির্বাচক দেখান"
+      "ColorPicker": "ইনলাইন রঙ নির্বাচক দেখান",
+      "CreateNewFile": "নতুন ফাইল তৈরি করুন",
+      "RenameVariable": "চলকটির নাম পরিবর্তন করুন"
     },
     "GeneralSelection": {
       "StartSketch": "স্কেচ শুরু",
       "StopSketch": "স্কেচ বন্ধ",
       "TurnOnAccessibleOutput": "ব্যবহারযোগ্য আউটপুট চালু করুন",
-      "TurnOffAccessibleOutput": "ব্যবহারযোগ্য আউটপুট বন্ধ করুন"
-    }
+      "TurnOffAccessibleOutput": "ব্যবহারযোগ্য আউটপুট বন্ধ করুন",
+      "Reference": "হিন্টারে নির্বাচিত আইটেমের জন্য রেফারেন্সে যান।"
+    },
+    "General": "General"
   },
   "Sidebar": {
     "Title": "স্কেচ ফাইলগুলি",
@@ -238,7 +278,8 @@
     "ErrorARIA": "ত্রুটি",
     "Save": "সেইভ",
     "p5logoARIA": "p5.js লোগো",
-    "DeleteConfirmation": "{{name}} ডিলিট করতে আপনি কি নিশ্চিত?"
+    "DeleteConfirmation": "{{name}} ডিলিট করতে আপনি কি নিশ্চিত?",
+    "SiteName": "p5.js ওয়েব এডিটর"
   },
   "IDEView": {
     "SubmitFeedback": "মন্তব্য জমা দিন",
@@ -293,15 +334,13 @@
     "errorNewPasswordRepeat": "নতুন পাসওয়ার্ডটি বর্তমান পাসওয়ার্ড এর থেকে অবশ্যই আলাদা হতে হবে।",
     "errorEmptyUsername": "দয়া করে একটি ইউজারনেম লিখুন",
     "errorLongUsername": "ইউজারনেম সর্বোচ্চ 20 টি অক্ষর হতে পারবে",
-    "errorValidUsername": "ইউজারনেম কেবলমাত্র সংখ্যা, অক্ষর, দোতলা, ড্যাশ, এবং আন্ডারস্কোর থাকতে পারে"
+    "errorValidUsername": "ইউজারনেম কেবলমাত্র সংখ্যা, অক্ষর, দোতলা, ড্যাশ, এবং আন্ডারস্কোর থাকতে পারে",
+    "errorEmptyEmailorUserName": "অনুগ্রহ করে একটি ইমেল বা ব্যবহারকারীর নাম লিখুন।"
   },
   "NewPasswordView": {
     "Title": "p5.js ওয়েব এডিটর | নতুন পাসওয়ার্ড",
     "Description": "নতুন পাসওয়ার্ড সেট করুন",
-    "TokenInvalidOrExpired": "পাসওয়ার্ড রিসেট টোকেন ভুল বা মেয়াদ উত্তীর্ণ হয়েছে।",
-    "EmptyPassword": "দয়া করে একটি পাসওয়ার্ড লিখুন",
-    "PasswordConfirmation": "দয়া করে আপনার পাসওয়ার্ড কনফার্ম করুন",
-    "PasswordMismatch": "একই পাসওয়ার্ড দেওয়া আবশ্যক"
+    "TokenInvalidOrExpired": "পাসওয়ার্ড রিসেট টোকেন ভুল বা মেয়াদ উত্তীর্ণ হয়েছে।"
   },
   "AccountForm": {
     "Email": "ই-মেইল",
@@ -369,7 +408,7 @@
     "Or": "অথবা",
     "AlreadyHave": "ইতিমধ্যে একটি অ্যাকাউন্ট আছে?",
     "Login": "লগ ইন",
-    "Warning":"সাইন আপ করে , আপনি p5.js এডিটরের <0>ব্যবহারের শর্তাবলী</0> এবং <1>গোপনীয়তা নীতিতে </1> সম্মত হবেন|"
+    "Warning": "সাইন আপ করে , আপনি p5.js এডিটরের <0>ব্যবহারের শর্তাবলী</0> এবং <1>গোপনীয়তা নীতিতে </1> সম্মত হবেন|"
   },
   "EmailVerificationView": {
     "Title": "p5.js ওয়েব এডিটর | ই-মেইল যাচাই",
@@ -387,16 +426,11 @@
     "NoUploadedAssets": "কোনও আপলোড করা সম্পত্তি নেই।",
     "HeaderName": "নাম",
     "HeaderSize": "সাইজ",
-    "HeaderSketch": "স্কেচ"
+    "HeaderSketch": "স্কেচ",
+    "maximum": "সর্বোচ্চ"
   },
   "Feedback": {
-    "Title": "p5.js ওয়েব এডিটর | মন্তব্য করুন",
-    "ViaGithubHeader": "গিটহাব ইস্যু'র মাধ্যমে",
-    "ViaGithubDescription": "গিটহাবে বাগ রিপোর্ট পদ্ধতি।",
-    "GoToGithub": "গিটহাবে যান",
-    "ViaGoogleHeader": "গুগল ফর্মের মাধ্যমে",
-    "ViaGoogleDescription": "আপনি এই ফর্ম জমা দিতে পারেন।",
-    "GoToForm": "ফর্মে যান"
+    "Title": "p5.js ওয়েব এডিটর | মন্তব্য করুন"
   },
   "Searchbar": {
     "SearchSketch": "স্কেচ অনুসন্ধান করুন...",
@@ -428,10 +462,6 @@
     "Fullscreen": "পূর্ণাঙ্গ",
     "Edit": "এডিট"
   },
-  "CollectionView": {
-    "TitleCreate": "সংগ্রহ তৈরি করুন",
-    "TitleDefault": "সংগ্রহ"
-  },
   "Collection": {
     "Title": "p5.js Web এডিটর | আমার সংগ্রহগুলি",
     "AnothersTitle": "p5.js Web এডিটর | {{anotheruser}}'s সংগ্রহগুলি",
@@ -442,9 +472,7 @@
     "SketchDeleted": "স্কেচ ডিলিট হয়েছে",
     "SketchRemoveARIA": "সংগ্রহ থেকে স্কেচ রিমুভ করুন",
     "DescriptionPlaceholder": "বর্ণনা যোগ করুন",
-    "Description": "বর্ণনা",
     "NumSketches": "{{count}} স্কেচ",
-    "NumSketches_plural": "{{count}} স্কেচ",
     "By": "সংগ্রহ করেছেন ",
     "NoSketches": "সংগ্রহে কোন স্কেচ নেই",
     "TableSummary": "সমস্ত সংগ্রহ ধারণ করা টেবিল",
@@ -458,7 +486,6 @@
   },
   "AddToCollectionList": {
     "Title": "p5.js Web এডিটর | আমার সংগ্রহগুলি",
-    "AnothersTitle": "p5.js Web এডিটর | {{anotheruser}}'s সংগ্রহগুলি",
     "Empty": "কোন সংগ্রহ নেই"
   },
   "CollectionCreate": {
@@ -489,11 +516,8 @@
     "TableSummary": "সমস্ত সংগ্রহ ধারণ করা টেবিল",
     "HeaderName": "নাম",
     "HeaderCreatedAt": "তৈরির তারিখ",
-    "HeaderCreatedAt_mobile": "তৈরি হয়েছে",
     "HeaderUpdatedAt": "আপডেটর তারিখ",
-    "HeaderUpdatedAt_mobile": "আপডেট",
     "HeaderNumItems": "# স্কেচ",
-    "HeaderNumItems_mobile": "# স্কেচ",
     "DirectionAscendingARIA": "ঊর্ধ্বগামী",
     "DirectionDescendingARIA": "নিম্নগামী",
     "ButtonLabelAscendingARIA": "{{displayName}} দ্বারা ঊর্ধ্বগামী করুন।",
@@ -515,7 +539,6 @@
     "View": "দেখুন"
   },
   "SketchList": {
-    "View": "দৃশ্য",
     "Title": "p5.js ওয়েব এডিটর | আমার স্কেচগুলি",
     "AnothersTitle": "p5.js ওয়েব এডিটর | {{anotheruser}} এর স্কেচগুলি",
     "ToggleLabelARIA": "স্কেচ অপশন খোলা/বন্ধ করুন",
@@ -532,14 +555,11 @@
     "TableSummary": "সমস্ত সংরক্ষিত প্রকল্প থাকা টেবিল",
     "HeaderName": "স্কেচ",
     "HeaderCreatedAt": "তারিখ তৈরি হয়েছে",
-    "HeaderCreatedAt_mobile": "তৈরি হয়েছে",
     "HeaderUpdatedAt": "তারিখ আপডেট হয়েছে",
-    "HeaderUpdatedAt_mobile": "আপডেট",
     "NoSketches": "কোন স্কেচ নেই।"
   },
   "AddToCollectionSketchList": {
     "Title": "p5.js ওয়েব এডিটর | আমার স্কেচগুলি",
-    "AnothersTitle": "p5.js ওয়েব এডিটর | {{anotheruser}} এর স্কেচগুলি",
     "NoCollections": "কোন সংগ্রহ নেই।"
   },
   "Editor": {
@@ -563,8 +583,7 @@
     "Ago": "{{timeAgo}} আগে"
   },
   "CopyableInput": {
-    "CopiedARIA": "ক্লিপবোর্ডে কপি করা হয়েছে!",
-    "OpenViewTabARIA": "{{label}} দেখুন নতুন ট্যাবে"
+    "CopiedARIA": "ক্লিপবোর্ডে কপি করা হয়েছে!"
   },
   "EditableInput": {
     "EditValue": "{{display}} ভ্যালু এডিট করুন",
@@ -576,38 +595,12 @@
   },
   "MobilePreferences": {
     "Settings": "সেটিংস",
-    "GeneralSettings": "সাধারিত সেটিংস",
-    "Accessibility": "ব্যবহারযোগ্যতা ",
-    "AccessibleOutput": "ব্যবহারযোগ্যতা আউটপুট",
-    "Theme": "থিম",
-    "LightTheme": "সাদা",
-    "DarkTheme": "ডার্ক",
-    "HighContrastTheme": "স্পষ্ট রঙের থিম",
-    "Autosave": "অটোসেইভ",
-    "AutocompleteHinter": "অটোকমপ্লিট হিন্টার",
-    "WordWrap": "শব্দ বিন্যাস",
-    "LineNumbers": "লাইন নম্বর",
-    "LintWarningSound": "লিন্ট সতর্কতা শব্দ",
-    "UsedScreenReader": "স্ক্রিন রিডার সাথে ব্যবহৃত",
-    "PlainText": "সাধারণ টেক্সট",
-    "TableText": "টেবিল টেক্সট",
-    "Sound": "শব্দ"
+    "Preferences": "পছন্দসমূহ",
+    "Language": "ভাষা"
   },
   "PreferenceCreators": {
     "On": "চালু",
     "Off": "বন্ধ"
-  },
-  "MobileDashboardView": {
-    "Examples": "উদাহরণসমূহ",
-    "Sketches": "স্কেচসমূহ",
-    "Collections": "সংগ্রহসমূহ",
-    "Assets": "সম্পত্তি",
-    "MyStuff": "আমার জিনিসপত্র",
-    "CreateSketch": "স্কেচ তৈরি করুন",
-    "CreateCollection": "সংগ্রহ তৈরি করুন"
-  },
-  "Explorer": {
-    "Files": "ফাইলস"
   },
   "Cookies": {
     "Header": "কুকিজ",
@@ -619,5 +612,20 @@
     "PrivacyPolicy": "গোপনীয়তা নীতি",
     "TermsOfUse": "ব্যবহারের শর্তাবলি",
     "CodeOfConduct": "আচরণ-বিধির নীতি"
+  },
+  "SkipLink": {
+    "PlaySketch": "স্কেচ চালাতে যান"
+  },
+  "Visibility": {
+    "Label": "দৃশ্যমানতা",
+    "Public": {
+      "Description": "যে কেউ এই স্কেচটি দেখতে পারেন।",
+      "Label": "পাবলিক"
+    },
+    "Private": {
+      "Description": "এই স্কেচটি কেবল আপনিই দেখতে পাবেন।",
+      "Label": "ব্যক্তিগত"
+    },
+    "Changed": "'{{projectName}}' এখন {{newVisibility}}..."
   }
 }

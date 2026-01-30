@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 import { Button } from '../../../common/Button';
 import Nav from '../../IDE/components/Header/Nav';
-import Overlay from '../../App/components/Overlay';
+import { Overlay } from '../../App/components/Overlay';
 import AssetList from '../../IDE/components/AssetList';
 import AssetSize from '../../IDE/components/AssetSize';
 import CollectionList from '../../IDE/components/CollectionList';
@@ -18,7 +18,8 @@ import {
 } from '../../IDE/components/Searchbar';
 
 import CollectionCreate from '../components/CollectionCreate';
-import DashboardTabSwitcherPublic, {
+import {
+  DashboardTabSwitcher,
   TabKey
 } from '../components/DashboardTabSwitcher';
 import useIsMobile from '../../IDE/hooks/useIsMobile';
@@ -123,7 +124,7 @@ const DashboardView = () => {
         <div className="dashboard-header__header">
           <h2 className="dashboard-header__header__title">{ownerName()}</h2>
           <div className="dashboard-header__nav">
-            <DashboardTabSwitcherPublic
+            <DashboardTabSwitcher
               currentTab={currentTab}
               isOwner={isOwner()}
               username={params.username}

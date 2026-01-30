@@ -23,12 +23,14 @@
         "Run": "चलाएं",
         "Stop": "रोकें"
       },
-      "Help": {
-        "Title": "मदद",
-        "KeyboardShortcuts": "कीबोर्ड शॉर्टकट",
-        "Reference": "रिफरेन्स",
-        "About": "अधिक जानकारी"
-      },
+     "Help": {
+      "Title": "मदद",
+      "KeyboardShortcuts": "कीबोर्ड शॉर्टकट",
+      "Reference": "रिफरेन्स",
+      "ReportBug": "बग रिपोर्ट करें",
+      "ChatOnDiscord": "डिस्कॉर्ड पर चैट करें",
+      "PostOnTheForum": "फ़ोरम पर पोस्ट करें"
+    },
       "Lang": "भाषा",
       "BackEditor": "एडिटर पर वापस जाएं",
       "WarningUnsavedChanges": "क्या आप इस पेज को छोड़ना चाहते हैं? आपके पास अनसेव्ड परिवर्तन हैं।",
@@ -43,9 +45,12 @@
         "MySketches": "मेरे स्केच",
         "MyCollections": "मेरे संग्रह",
         "Asset": "संपत्ति",
-        "MyAssets": "मेरे ऐसेट",
+        "MyAssets": "मेरी संपत्तियाँ",
         "LogOut": "लॉग आउट"
       }
+    },
+    "Banner": {
+      "Copy": "<bold>Donate Today!</bold> Support p5.js and the Processing Foundation."
     },
     "CodemirrorFindAndReplace": {
       "ToggleReplace": "टॉगल बदली करें",
@@ -278,8 +283,8 @@
     },
     "Common": {
       "SiteName": "p5.js वेब एडिटर",
-      "Error": "एरर",
-      "ErrorARIA": "एरर",
+      "Error": "ग़लती",
+      "ErrorARIA": "ग़लती",
       "Save": "सेव",
       "p5logoARIA": "p5.js लोगो",
       "DeleteConfirmation": "क्या आप पक्का {{name}} को डिलीट करना चाहते हैं?"
@@ -434,237 +439,231 @@
       "HeaderSize": "साइज़",
       "HeaderSketch": "स्केच"
     },
-    "Feedback": {
-      "Title": "p5.js वेब एडिटर | फीडबैक",
-      "ViaGithubHeader": "Github Issues द्वारा",
-      "ViaGithubDescription": "यदि आप Github से परिचित हैं, तो बग रिपोर्ट और फीडबैक प्राप्त करने के लिए यह हमारा पसंदीदा तरीका है।",
-      "GoToGithub": "Github पर जाएं",
-      "ViaGoogleHeader": "Google फॉर्म द्वारा",
-      "ViaGoogleDescription": "आप इस फॉर्म को भी जमा कर सकते हैं।",
-      "GoToForm": "फॉर्म पर जाएं"
+    "Edit": {
+      "Title": "संपादित करे",
+      "TidyCode": "कोड साफ़ करें",
+      "Find": "खोज",
+      "Replace": "बदली करें"
     },
-    "Searchbar": {
-      "SearchSketch": "सर्च स्केच...",
-      "SearchCollection": "सर्च संग्रह...",
-      "ClearTerm": "क्लियर"
+    "Sketch": {
+      "Title": "चित्र",
+      "AddFile": "फाइल जोड़ें",
+      "AddFolder": "फोल्डर जोड़ें",
+      "Run": "चलाएं",
+      "Stop": "रोकें"
     },
-    "UploadFileModal": {
-      "Title": "अपलोड फाइल",
-      "CloseButtonARIA": "अपलोड फाइल मोडल बंद करें",
-      "SizeLimitError": "एरर: आप कोई और फाइल अपलोड नहीं कर सकते। आप {{sizeLimit}} की सीमा तक पहुँच चुके हैं।.\n                यदि आप और अपलोड करना चाहते हैं, तो कृपया उन फ़ाइलों को हटा दें जिन्हें आप उपयोग नहीं कर रहे हैं। "
+    
+    "BackEditor": "एडिटर पर वापस जाएं",
+    "WarningUnsavedChanges": "क्या आप इस पेज को छोड़ना चाहते हैं? आपके पास अनसेव्ड परिवर्तन हैं।",
+    "Login": "लॉग इन",
+    "LoginOr": "या",
+    "SignUp": "साइन अप",
+    "Auth": {
+      "Hello": "नमस्ते",
+      "MyAccount": "मेरा अकाउंट",
+      "MySketches": "मेरे स्केच",
+      "MyCollections": "मेरे संग्रह",
+      "MyAssets": "मेरे ऐसेट",
+      "LogOut": "लॉग आउट"
     },
-    "FileUploader": {
-      "DictDefaultMessage": "फ़ाइलों को यहाँ ड्रॉप करें या फ़ाइल ब्राउज़र का उपयोग करने के लिए क्लिक करें"
-    },
-    "ErrorModal": {
-      "MessageLogin": "स्केच सेव करने के लिए, आपका लॉग इन करना अनिवार्य है। कृप्या ",
-      "Login": "लॉग इन",
-      "LoginOr": " या ",
-      "SignUp": "साइन अप",
-      "MessageLoggedOut": "ऐसा लगता है कि आप लॉग आउट हो चुके हैं। कृप्या ",
-      "LogIn": "लॉग इन",
-      "SavedDifferentWindow": "आपने जिस प्रोजेक्ट को सेव करने का प्रयास किया है, उसे किसी अन्य विंडो में सेव किया गया है।\n        कृपया नवीनतम संस्करण देखने के लिए पेज रीफ़्रेश करें।",
-      "LinkTitle": "अकाउंट लिंक करने में एरर",
-      "LinkMessage": "आपका {{serviceauth}} अकाउंट p5.js वेब एडिटर अकाउंट से जोड़ने में असमर्थ। आपका {{serviceauth}} अकाउंट पहले ही किसी अन्य p5.js वेब एडिटर अकाउंट से लिंक हो चुका है।"
-    },
-    "ShareModal": {
-      "Embed": "एम्बेड",
-      "Present": "प्रेजेंट",
-      "Fullscreen": "फुलस्क्रीन",
-      "Edit": "एडीट"
-    },
-    "CollectionView": {
-      "TitleCreate": "संग्रह बनाएँ",
-      "TitleDefault": "संग्रह"
-    },
-    "Collection": {
-      "Title": "p5.js वेब एडिटर | मेरे संग्रह",
-      "AnothersTitle": "p5.js वेब एडिटर | {{anotheruser}} के संग्रह",
-      "Share": "शेयर",
-      "URLLink": "संग्रह का लिंक",
-      "AddSketch": "स्केच जोड़ें",
-      "DeleteFromCollection": "क्या आप वाकई {{name_sketch}} को इस संग्रह से हटाना चाहते हो?",
-      "SketchDeleted": "स्केच डिलीट किया",
-      "SketchRemoveARIA": "स्केच संग्रह से हटाएं",
-      "DescriptionPlaceholder": "विवरण लिखें",
-      "Description": "विवरण",
-      "NumSketches": "{{count}} स्केच",
-      "NumSketches_plural": "{{count}} स्केच",
-      "By":"संग्रह का ओनर ",
-      "NoSketches": "संग्रह मे कोई स्केच नहीं",
-      "TableSummary": "सभी संग्रहों की तालिका",
-      "HeaderName": "नाम",
-      "HeaderCreatedAt": "ऐड करने की तारीख",
-      "HeaderUser": "ओनर",
-      "DirectionAscendingARIA": "आरोही",
-      "DirectionDescendingARIA": "अवरोही",
-      "ButtonLabelAscendingARIA": "{{displayName}} आरोही क्रम में।",
-      "ButtonLabelDescendingARIA": "{{displayName}} अवरोही क्रम में।"
-    },
-    "AddToCollectionList": {
-      "Title": "p5.js वेब एडिटर | मेरे संग्रह",
-      "AnothersTitle": "p5.js वेब एडिटर | {{anotheruser}} के संग्रह",
-      "Empty": "कोई संग्रह नहीं"
-    },
-    "CollectionCreate": {
-      "Title": "p5.js वेब एडिटर | संग्रह बनाएँ",
-      "FormError": "संग्रह बनाने में असमर्थ",
-      "FormLabel": "संग्रह का नाम",
-      "FormLabelARIA": "नाम",
-      "NameRequired": "संग्रह का नाम अनिवार्य है",
-      "Description": "विवरण (वैकल्पिक)",
-      "DescriptionARIA": "विवरण",
-      "DescriptionPlaceholder": "मेरे पसंदीदा स्केच",
-      "SubmitCollectionCreate": "संग्रह बनाएँ"
-    },
-    "DashboardView": {
-      "CreateCollection": "संग्रह बनाएँ",
-      "NewSketch": "नया स्केच",
-      "CreateCollectionOverlay": "संग्रह बनाएँ"
-    },
-    "DashboardTabSwitcher": {
-      "Sketches": "स्केच",
-      "Collections": "संग्रह",
-      "Assets": "ऐसेट्स"
-    },
-    "CollectionList": {
-      "Title": "p5.js वेब एडिटर | मेरे संग्रह",
-      "AnothersTitle": "p5.js वेब एडिटर | {{anotheruser}} के संग्रह",
-      "NoCollections": "कोई संग्रह नहीं",
-      "TableSummary": "सभी संग्रह युक्त तालिका",
-      "HeaderName": "नाम",
-      "HeaderCreatedAt": "बनाने की तारीख",
-      "HeaderCreatedAt_mobile": "बनाया गया",
-      "HeaderUpdatedAt": "अपडेट करने की तारिख",
-      "HeaderUpdatedAt_mobile": "अपडेट किया",
-      "HeaderNumItems": "# स्केच",
-      "HeaderNumItems_mobile": "# स्केच",
-      "DirectionAscendingARIA": "आरोही",
-      "DirectionDescendingARIA": "अवरोही",
-      "ButtonLabelAscendingARIA": "{{displayName}} आरोही क्रम में।",
-      "ButtonLabelDescendingARIA": "{{displayName}} अवरोही क्रम में।",
-      "AddSketch": "स्केच जोड़ें"
-    },
-    "CollectionListRow": {
-      "ToggleCollectionOptionsARIA": "संग्रह ओपेन/क्लोज़ टॉगल ऑप्शन्ज़",
-      "AddSketch": "स्केच जोड़ें",
-      "Delete": "डिलीट",
-      "Rename": "नाम बदलें"
-    },
-    "Overlay": {
-      "AriaLabel": "{{title}} ओवरले क्लोज करें"
-    },
-    "QuickAddList":{
-      "ButtonRemoveARIA": "संग्रह से हटाएं",
-      "ButtonAddToCollectionARIA": "संग्रह में जोड़ें",
-      "View": "देखें"
-    },
-    "SketchList": {
-      "View": "देखें",
-      "Title": "p5.js वेब एडिटर | मेरे स्केच",
-      "AnothersTitle": "p5.js वेब एडिटर | {{anotheruser}} के स्केच",
-      "ToggleLabelARIA": "स्केच ओपेन/क्लोज़ टॉगल ऑप्शन्ज़",
-      "DropdownRename": "नाम बदलें",
-      "DropdownDownload": "डाउनलोड",
-      "DropdownDuplicate": "डुप्लिकेट",
-      "DropdownAddToCollection": "संग्रह में जोड़ें",
-      "DropdownDelete": "डिलीट",
-      "DirectionAscendingARIA": "आरोही",
-      "DirectionDescendingARIA": "अवरोही",
-      "ButtonLabelAscendingARIA": "{{displayName}} आरोही क्रम में।",
-      "ButtonLabelDescendingARIA": "{{displayName}} अवरोही क्रम में।",
-      "AddToCollectionOverlayTitle": "संग्रह में जोड़ें",
-      "TableSummary": "सभी सेव किये गए स्केच की तालिका",
-      "HeaderName": "स्केच",
-      "HeaderCreatedAt": "बनाने की तारीख",
-      "HeaderCreatedAt_mobile": "बनाया गया",
-      "HeaderUpdatedAt": "अपडेट करने की तारिख",
-      "HeaderUpdatedAt_mobile": "अपडेट किया",
-      "NoSketches": "कोई स्केच नहीं"
-    },
-    "AddToCollectionSketchList": {
-      "Title": "p5.js वेब एडिटर | मेरे स्केच",
-      "AnothersTitle": "p5.js वेब एडिटर | {{anotheruser}} के स्केच",
-      "NoCollections": "कोई संग्रह नहीं"
-    },
-    "Editor": {
-      "OpenSketchARIA": "स्केच फ़ाइलों का नेविगेशन खोलें",
-      "CloseSketchARIA": "स्केच फ़ाइलों का नेविगेशन बंद करें",
-      "UnsavedChangesARIA": "स्केच में अनसेव्ड परिवर्तन हैं",
-      "KeyUpLineNumber": "लाइन {{lineNumber}}"
-    },
-    "EditorAccessibility": {
-      "NoLintMessages": "कोई लिंट मैसेज नहीं",
-      "CurrentLine": "वर्तमान लाइन"
-    },
-    "Timer": {
-      "SavedAgo": "सेव किया: {{timeAgo}}"
-    },
-    "formatDate": {
-      "JustNow": "अभी अभी",
-      "15Seconds": "१५ सेकंड पहले",
-      "25Seconds": "२५ सेकंड पहले",
-      "35Seconds": "३५ सेकंड पहले",
-      "Ago": "{{timeAgo}} पहले"
-    },
-    "CopyableInput": {
-      "CopiedARIA": "क्लिपबोर्ड पर कॉपी किया!",
-      "OpenViewTabARIA": "{{label}} व्यू नए टैब में खोलें"
-    },
-    "EditableInput": {
-      "EditValue": "एडीट {{display}} वैल्यू",
-      "EmptyPlaceholder": "कोई वैल्यू नहीं"
-    },
-    "PreviewNav": {
-      "EditSketchARIA": "एडीट स्केच",
-      "ByUser": "द्वारा"
-    },
-    "MobilePreferences": {
-      "Settings": "सेटिंग्स",
-      "GeneralSettings": "सामान्य सेटिंग्स",
-      "Accessibility": "ऐक्सेसबिलिटी",
-      "AccessibleOutput": "ऐक्सेसबल आउटपुट",
-      "Theme": "थीम",
-      "LightTheme": "लाइट",
-      "DarkTheme": "डार्क",
-      "HighContrastTheme": "ज़्यादा कंट्रास्ट",
-      "Autosave": "ऑटोसेव",
-      "AutocompleteHinter": "ऑटोकंप्लीट हिंटर",
-      "WordWrap": "वर्ड रैप",
-      "LineNumbers": "लाइन नम्बर्ज़",
-      "LintWarningSound": "लिन्ट वॉर्निंग साउन्ड",
-      "UsedScreenReader": "स्क्रीन रीडर के साथ उपयोग किया",
-      "PlainText": "प्लेन-टेक्स्ट",
-      "TableText": "टेबल-टेक्स्ट",
-      "Sound": "ध्वनि"
-    },
-    "PreferenceCreators": {
-      "On": "ऑन",
-      "Off": "औफ"
-    },
-    "MobileDashboardView": {
-      "Examples": "उदाहरण",
-      "Sketches": "स्केच",
-      "Collections": "संग्रह",
-      "Assets": "ऐसेट्स",
-      "MyStuff": "मेरा स्टफ",
-      "CreateSketch": "स्केच बनाएँ",
-      "CreateCollection": "संग्रह बनाएँ"
-    },
-    "Explorer": {
-      "Files": "फ़ाइलें"
-    },
-    "Cookies": {
-      "Header": "कुकीज",
-      "Body": "p5.js संपादक कुकीज़ का उपयोग करता है। कुछ वेबसाइट की कार्यक्षमता के लिए आवश्यक हैं और आपको खाता और प्राथमिकताएँ प्रबंधित करने की अनुमति देते हैं। अन्य आवश्यक नहीं हैं - उनका उपयोग विश्लेषण के लिए किया जाता है और हमें अपने समुदाय के बारे में अधिक जानने की अनुमति मिलती है। <strong> हम इस डेटा को कभी नहीं बेचते हैं या विज्ञापन के लिए इसका उपयोग नहीं करते हैं। </strong> आप यह तय कर सकते हैं कि आप किन कुकीज़ को अनुमति देना चाहते हैं, और हमारी <0>गोपनीयता नीति<0> में और अधिक जान सकते हैं।",
-      "AllowAll": "सभी को अनुमति दें",
-      "AllowEssential": "आवश्यक अनुमति दें"
-    },
-    "Legal": {
-      "PrivacyPolicy": "गोपनीयता नीति",
-      "TermsOfUse": "उपयोग की शर्तें",
-      "CodeOfConduct": "आचार संहिता"
-    },
-    "Contact": "संपर्क"
-  }
  
+    "Feedback": {
+    "Title": "p5.js वेब एडिटर | फीडबैक"
+  },
+  "Searchbar": {
+    "SearchSketch": "सर्च स्केच...",
+    "SearchCollection": "सर्च संग्रह...",
+    "ClearTerm": "क्लियर"
+  },
+  "UploadFileModal": {
+    "Title": "अपलोड फाइल",
+    "CloseButtonARIA": "अपलोड फाइल मोडल बंद करें",
+    "SizeLimitError": "एरर: आप कोई और फाइल अपलोड नहीं कर सकते। आप {{sizeLimit}} की सीमा तक पहुँच चुके हैं।.\n                यदि आप और अपलोड करना चाहते हैं, तो कृपया उन फ़ाइलों को हटा दें जिन्हें आप उपयोग नहीं कर रहे हैं। "
+  },
+  "FileUploader": {
+    "DictDefaultMessage": "फ़ाइलों को यहाँ ड्रॉप करें या फ़ाइल ब्राउज़र का उपयोग करने के लिए क्लिक करें"
+  },
+  "ErrorModal": {
+    "MessageLogin": "स्केच सेव करने के लिए, आपका लॉग इन करना अनिवार्य है। कृप्या ",
+    "Login": "लॉग इन",
+    "LoginOr": " या ",
+    "SignUp": "साइन अप",
+    "MessageLoggedOut": "ऐसा लगता है कि आप लॉग आउट हो चुके हैं। कृप्या ",
+    "LogIn": "लॉग इन",
+    "SavedDifferentWindow": "आपने जिस प्रोजेक्ट को सेव करने का प्रयास किया है, उसे किसी अन्य विंडो में सेव किया गया है।\n        कृपया नवीनतम संस्करण देखने के लिए पेज रीफ़्रेश करें।",
+    "LinkTitle": "अकाउंट लिंक करने में एरर",
+    "LinkMessage": "आपका {{serviceauth}} अकाउंट p5.js वेब एडिटर अकाउंट से जोड़ने में असमर्थ। आपका {{serviceauth}} अकाउंट पहले ही किसी अन्य p5.js वेब एडिटर अकाउंट से लिंक हो चुका है।"
+  },
+  "ShareModal": {
+    "Embed": "एम्बेड",
+    "Present": "प्रेजेंट",
+    "Fullscreen": "फुलस्क्रीन",
+    "Edit": "एडीट"
+  },
+  "Collection": {
+    "Title": "p5.js वेब एडिटर | मेरे संग्रह",
+    "AnothersTitle": "p5.js वेब एडिटर | {{anotheruser}} के संग्रह",
+    "Share": "शेयर",
+    "URLLink": "संग्रह का लिंक",
+    "AddSketch": "स्केच जोड़ें",
+    "DeleteFromCollection": "क्या आप वाकई {{name_sketch}} को इस संग्रह से हटाना चाहते हो?",
+    "SketchDeleted": "स्केच डिलीट किया",
+    "SketchRemoveARIA": "स्केच संग्रह से हटाएं",
+    "DescriptionPlaceholder": "विवरण लिखें",
+    "NumSketches": "{{count}} स्केच",
+    "By": "संग्रह का ओनर ",
+    "NoSketches": "संग्रह मे कोई स्केच नहीं",
+    "TableSummary": "सभी संग्रहों की तालिका",
+    "HeaderName": "नाम",
+    "HeaderCreatedAt": "ऐड करने की तारीख",
+    "HeaderUser": "ओनर",
+    "DirectionAscendingARIA": "आरोही",
+    "DirectionDescendingARIA": "अवरोही",
+    "ButtonLabelAscendingARIA": "{{displayName}} आरोही क्रम में।",
+    "ButtonLabelDescendingARIA": "{{displayName}} अवरोही क्रम में।"
+  },
+  "AddToCollectionList": {
+    "Title": "p5.js वेब एडिटर | मेरे संग्रह",
+    "Empty": "कोई संग्रह नहीं"
+  },
+  "CollectionCreate": {
+    "Title": "p5.js वेब एडिटर | संग्रह बनाएँ",
+    "FormError": "संग्रह बनाने में असमर्थ",
+    "FormLabel": "संग्रह का नाम",
+    "FormLabelARIA": "नाम",
+    "NameRequired": "संग्रह का नाम अनिवार्य है",
+    "Description": "विवरण (वैकल्पिक)",
+    "DescriptionARIA": "विवरण",
+    "DescriptionPlaceholder": "मेरे पसंदीदा स्केच",
+    "SubmitCollectionCreate": "संग्रह बनाएँ"
+  },
+  "DashboardView": {
+    "CreateCollection": "संग्रह बनाएँ",
+    "NewSketch": "नया स्केच",
+    "CreateCollectionOverlay": "संग्रह बनाएँ"
+  },
+  "DashboardTabSwitcher": {
+    "Sketches": "स्केच",
+    "Collections": "संग्रह",
+    "Assets": "ऐसेट्स"
+  },
+  "CollectionList": {
+    "Title": "p5.js वेब एडिटर | मेरे संग्रह",
+    "AnothersTitle": "p5.js वेब एडिटर | {{anotheruser}} के संग्रह",
+    "NoCollections": "कोई संग्रह नहीं",
+    "TableSummary": "सभी संग्रह युक्त तालिका",
+    "HeaderName": "नाम",
+    "HeaderCreatedAt": "बनाने की तारीख",
+    "HeaderUpdatedAt": "अपडेट करने की तारिख",
+    "HeaderNumItems": "# स्केच",
+    "DirectionAscendingARIA": "आरोही",
+    "DirectionDescendingARIA": "अवरोही",
+    "ButtonLabelAscendingARIA": "{{displayName}} आरोही क्रम में।",
+    "ButtonLabelDescendingARIA": "{{displayName}} अवरोही क्रम में।",
+    "AddSketch": "स्केच जोड़ें"
+  },
+  "CollectionListRow": {
+    "ToggleCollectionOptionsARIA": "संग्रह ओपेन/क्लोज़ टॉगल ऑप्शन्ज़",
+    "AddSketch": "स्केच जोड़ें",
+    "Delete": "डिलीट",
+    "Rename": "नाम बदलें"
+  },
+  "Overlay": {
+    "AriaLabel": "{{title}} ओवरले क्लोज करें"
+  },
+  "QuickAddList": {
+    "ButtonRemoveARIA": "संग्रह से हटाएं",
+    "ButtonAddToCollectionARIA": "संग्रह में जोड़ें",
+    "View": "देखें"
+  },
+  "SketchList": {
+    "Title": "p5.js वेब एडिटर | मेरे स्केच",
+    "AnothersTitle": "p5.js वेब एडिटर | {{anotheruser}} के स्केच",
+    "ToggleLabelARIA": "स्केच ओपेन/क्लोज़ टॉगल ऑप्शन्ज़",
+    "DropdownRename": "नाम बदलें",
+    "DropdownDownload": "डाउनलोड",
+    "DropdownDuplicate": "डुप्लिकेट",
+    "DropdownAddToCollection": "संग्रह में जोड़ें",
+    "DropdownDelete": "डिलीट",
+    "DirectionAscendingARIA": "आरोही",
+    "DirectionDescendingARIA": "अवरोही",
+    "ButtonLabelAscendingARIA": "{{displayName}} आरोही क्रम में।",
+    "ButtonLabelDescendingARIA": "{{displayName}} अवरोही क्रम में।",
+    "AddToCollectionOverlayTitle": "संग्रह में जोड़ें",
+    "TableSummary": "सभी सेव किये गए स्केच की तालिका",
+    "HeaderName": "स्केच",
+    "HeaderCreatedAt": "बनाने की तारीख",
+    "HeaderUpdatedAt": "अपडेट करने की तारिख",
+    "NoSketches": "कोई स्केच नहीं"
+  },
+  "AddToCollectionSketchList": {
+    "Title": "p5.js वेब एडिटर | मेरे स्केच",
+    "NoCollections": "कोई संग्रह नहीं"
+  },
+  "Editor": {
+    "OpenSketchARIA": "स्केच फ़ाइलों का नेविगेशन खोलें",
+    "CloseSketchARIA": "स्केच फ़ाइलों का नेविगेशन बंद करें",
+    "UnsavedChangesARIA": "स्केच में अनसेव्ड परिवर्तन हैं",
+    "KeyUpLineNumber": "लाइन {{lineNumber}}"
+  },
+  "EditorAccessibility": {
+    "NoLintMessages": "कोई लिंट मैसेज नहीं",
+    "CurrentLine": "वर्तमान लाइन"
+  },
+  "Timer": {
+    "SavedAgo": "सेव किया: {{timeAgo}}"
+  },
+  "formatDate": {
+    "JustNow": "अभी अभी",
+    "15Seconds": "१५ सेकंड पहले",
+    "25Seconds": "२५ सेकंड पहले",
+    "35Seconds": "३५ सेकंड पहले",
+    "Ago": "{{timeAgo}} पहले"
+  },
+  "CopyableInput": {
+    "CopiedARIA": "क्लिपबोर्ड पर कॉपी किया!"
+  },
+  "EditableInput": {
+    "EditValue": "एडीट {{display}} वैल्यू",
+    "EmptyPlaceholder": "कोई वैल्यू नहीं"
+  },
+  "PreviewNav": {
+    "EditSketchARIA": "एडीट स्केच",
+    "ByUser": "द्वारा"
+  },
+  "MobilePreferences": {
+    "Settings": "सेटिंग्स",
+    "Preferences": "प्राथमिकताएँ",
+    "Language": "भाषा"
+  },
+  "PreferenceCreators": {
+    "On": "ऑन",
+    "Off": "औफ"
+  },
+  "Cookies": {
+    "Header": "कुकीज",
+    "Body": "p5.js संपादक कुकीज़ का उपयोग करता है। कुछ वेबसाइट की कार्यक्षमता के लिए आवश्यक हैं और आपको खाता और प्राथमिकताएँ प्रबंधित करने की अनुमति देते हैं। अन्य आवश्यक नहीं हैं - उनका उपयोग विश्लेषण के लिए किया जाता है और हमें अपने समुदाय के बारे में अधिक जानने की अनुमति मिलती है। <strong> हम इस डेटा को कभी नहीं बेचते हैं या विज्ञापन के लिए इसका उपयोग नहीं करते हैं। </strong> आप यह तय कर सकते हैं कि आप किन कुकीज़ को अनुमति देना चाहते हैं, और हमारी <0>गोपनीयता नीति<0> में और अधिक जान सकते हैं।",
+    "AllowAll": "सभी को अनुमति दें",
+    "AllowEssential": "आवश्यक अनुमति दें"
+  },
+  "Legal": {
+    "PrivacyPolicy": "गोपनीयता नीति",
+    "TermsOfUse": "उपयोग की शर्तें",
+    "CodeOfConduct": "आचार संहिता"
+  },
+  "SkipLink": {
+    "PlaySketch": "स्केच चलाने के लिए स्किप करें"
+  },
+  "Visibility": {
+    "Label": "दृश्यता",
+    "Public": {
+      "Description": "कोई भी इस स्केच को देख सकता है।",
+      "Label": "सार्वजनिक"
+    },
+    "Private": {
+      "Description": "केवल आप इस स्केच को देख सकते हैं।",
+      "Label": "निजी"
+    },
+    "Changed": "'{{projectName}}' अब {{newVisibility}} है..."
+  }
+}

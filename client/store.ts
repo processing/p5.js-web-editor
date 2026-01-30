@@ -1,16 +1,17 @@
 import { configureStore } from '@reduxjs/toolkit';
 import listenerMiddleware from './middleware';
-import DevTools from './modules/App/components/DevTools';
+import { DevTools } from './modules/App/components/DevTools';
 import rootReducer from './reducers';
 import type { RootState } from './reducers';
 import { clearState, loadState } from './persistState';
 import { getConfig } from './utils/getConfig';
+import { parseBoolean } from './utils/parseStringToType';
 
 // Enable DevTools only when rendering on client and during development.
 // Display the dock monitor only if no browser extension is found.
 export function showReduxDevTools() {
   return (
-    getConfig('CLIENT') &&
+    parseBoolean(getConfig('CLIENT'), true) &&
     getConfig('NODE_ENV') === 'development' &&
     !window.__REDUX_DEVTOOLS_EXTENSION__
   );

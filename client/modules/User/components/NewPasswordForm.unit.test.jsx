@@ -4,7 +4,7 @@ import configureStore from 'redux-mock-store';
 import { fireEvent } from '@storybook/testing-library';
 import { reduxRender, screen, act, waitFor } from '../../../test-utils';
 import { initialTestState } from '../../../testData/testReduxStore';
-import NewPasswordForm from './NewPasswordForm';
+import { NewPasswordForm } from './NewPasswordForm';
 
 const mockStore = configureStore([thunk]);
 const store = mockStore(initialTestState);

@@ -8,7 +8,13 @@
       "Open": "Open",
       "Download": "Download",
       "AddToCollection": "Add to Collection",
-      "Examples": "Examples"
+      "Examples": "Examples",
+      "SaveTooltipUnauthenticated": "Log in to save your sketch",
+      "DuplicateTooltipUnauthenticated": "Log in to duplicate this sketch",
+      "OpenTooltipUnauthenticated": "Log in to open your sketches",
+      "AddToCollectionTooltipUnauthenticated": "Log in to add to collections",
+      "ShareTooltipUnsaved": "Save your sketch before sharing",
+      "DownloadTooltipUnsaved": "Save your sketch before downloading"
     },
     "Edit": {
       "Title": "Edit",
@@ -48,6 +54,9 @@
       "MyAssets": "My Assets",
       "LogOut": "Log Out"
     }
+  },
+  "Banner": {
+    "Copy": "<bold>Donate Today!</bold> Support p5.js and the Processing Foundation."
   },
   "CodemirrorFindAndReplace": {
     "ToggleReplace": "Toggle Replace",
@@ -272,7 +281,8 @@
     "AddFile": "Create file",
     "AddFileARIA": "add file",
     "UploadFile": "Upload file",
-    "UploadFileARIA": "upload file"
+    "UploadFileARIA": "upload file",
+    "UploadFileTooltipUnauthenticated": "Log in to upload files"
   },
   "FileNode": {
     "OpenFolderARIA": "Open folder contents",

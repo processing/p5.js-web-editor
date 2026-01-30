@@ -1,6 +1,6 @@
 import * as ActionTypes from '../../../constants';
 import type { PreferencesState } from '../reducers/preferences';
-import type { RootState } from '../../../reducers';
+import type { GetRootState } from '../../../reducers';
 
 // Value Definitions:
 export type SetPreferencesTabValue = PreferencesState['tabIndex'];
@@ -112,5 +112,3 @@ export type PreferencesThunk = (
   dispatch: UpdatePreferencesDispatch,
   getState: GetRootState
 ) => void;
-
-export type GetRootState = () => RootState;

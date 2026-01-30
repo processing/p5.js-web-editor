@@ -67,7 +67,8 @@ export const createApiKey: RequestHandler<
     await user.save();
 
     const apiKeys = user.apiKeys.map((apiKey, index) => {
-      const fields = apiKey.toObject!();
+      const fields = apiKey.toObject();
+      // only include the token of the most recently made apiKey to display in the copiable field
       const shouldIncludeToken = index === addedApiKeyIndex - 1;
 
       return shouldIncludeToken ? { ...fields, token: keyToBeHashed } : fields;
