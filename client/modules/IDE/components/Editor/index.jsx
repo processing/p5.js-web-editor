@@ -32,7 +32,11 @@ import { FolderIcon } from '../../../../common/icons';
 import { IconButton } from '../../../../common/IconButton';
 
 import useCodeMirror from './codemirror';
-import { useEffectWithComparison } from '../../hooks/custom-hooks';
+
+import {
+  addErrorDecoration,
+  removeErrorDecorations
+} from './consoleErrorDecoration';
 
 function Editor({
   provideController,
@@ -57,8 +61,6 @@ function Editor({
   autocloseBracketsQuotes,
   fontSize,
   consoleEvents,
-  hideRuntimeErrorWarning,
-  runtimeErrorWarningVisible,
   expandConsole,
   isExpanded,
   t,
@@ -85,7 +87,7 @@ function Editor({
   const {
     setupCodeMirrorOnContainerMounted,
     teardownCodeMirror,
-    // cmInstance,
+    codemirrorView,
     getContent,
     tidyCode,
     showSearch
@@ -95,7 +97,6 @@ function Editor({
     linewrap,
     autocloseBracketsQuotes,
     setUnsavedChanges,
-    hideRuntimeErrorWarning,
     updateFileContent,
     file,
     files,
@@ -133,53 +134,31 @@ function Editor({
   }, []);
 
   // Updates the error console.
-  // TODO: Need to revisit this functionality for v6.
-  useEffectWithComparison(
-    (_, prevProps) => {
-      if (runtimeErrorWarningVisible) {
-        if (
-          prevProps.consoleEvents &&
-          consoleEvents.length !== prevProps.consoleEvents.length
-        ) {
-          consoleEvents.forEach((consoleEvent) => {
-            if (consoleEvent.method === 'error') {
-              // It doesn't work if you create a new Error, but this works
-              // LOL
-              const errorObj = { stack: consoleEvent.data[0].toString() };
-              StackTrace.fromError(errorObj).then((stackLines) => {
-                expandConsole();
-                const line = stackLines.find(
-                  (l) => l.fileName && l.fileName.startsWith('/')
-                );
-                if (!line) return;
-                const fileNameArray = line.fileName.split('/');
-                const fileName = fileNameArray.slice(-1)[0];
-                const filePath = fileNameArray.slice(0, -1).join('/');
-                const fileWithError = files.find(
-                  (f) => f.name === fileName && f.filePath === filePath
-                );
-                setSelectedFile(fileWithError.id);
-                // cmInstance.current.addLineClass(
-                //   line.lineNumber - 1,
-                //   'background',
-                //   'line-runtime-error'
-                // );
-              });
-            }
-          });
-        } else {
-          // for (let i = 0; i < cmInstance.current.lineCount(); i += 1) {
-          //   cmInstance.current.removeLineClass(
-          //     i,
-          //     'background',
-          //     'line-runtime-error'
-          //   );
-          // }
-        }
-      }
-    },
-    [consoleEvents, runtimeErrorWarningVisible]
-  );
+  useEffect(() => {
+    const consoleErrors = consoleEvents.filter((e) => e.method === 'error');
+
+    if (consoleErrors.length > 0) {
+      const firstError = consoleErrors[0];
+      const errorObj = { stack: firstError.data[0].toString() };
+      StackTrace.fromError(errorObj).then((stackLines) => {
+        expandConsole();
+        const line = stackLines.find(
+          (l) => l.fileName && l.fileName.startsWith('/')
+        );
+        if (!line) return;
+        const fileNameArray = line.fileName.split('/');
+        const fileName = fileNameArray.slice(-1)[0];
+        const filePath = fileNameArray.slice(0, -1).join('/');
+        const fileWithError = files.find(
+          (f) => f.name === fileName && f.filePath === filePath
+        );
+        setSelectedFile(fileWithError.id);
+        addErrorDecoration(codemirrorView.current, line.lineNumber);
+      });
+    } else {
+      removeErrorDecorations(codemirrorView.current);
+    }
+  }, [consoleEvents]);
 
   const editorSectionClass = classNames({
     editor: true,
@@ -304,8 +283,6 @@ Editor.propTypes = {
   closeProjectOptions: PropTypes.func.isRequired,
   expandSidebar: PropTypes.func.isRequired,
   clearConsole: PropTypes.func.isRequired,
-  hideRuntimeErrorWarning: PropTypes.func.isRequired,
-  runtimeErrorWarningVisible: PropTypes.bool.isRequired,
   provideController: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
   setSelectedFile: PropTypes.func.isRequired,

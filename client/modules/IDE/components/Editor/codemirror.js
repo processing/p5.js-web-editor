@@ -21,7 +21,6 @@ import { useEffectWithComparison } from '../../hooks/custom-hooks';
 import tidyCodeWithPrettier from './tidier';
 
 // ----- GENERAL TODOS (in order of priority) -----
-// - color themes
 // - any features lost in the p5 conversion git merge
 // - javascript color picker (extension works for css but needs to be forked for js)
 // - revisit keymap differences, esp around sublime
@@ -38,7 +37,6 @@ export default function useCodeMirror({
   autocloseBracketsQuotes,
   setUnsavedChanges,
   setCurrentLine,
-  hideRuntimeErrorWarning,
   updateFileContent,
   file,
   files,
@@ -63,7 +61,6 @@ export default function useCodeMirror({
   // When the file changes, update the file content and save status.
   function onChange() {
     setUnsavedChanges(true);
-    hideRuntimeErrorWarning();
     updateFileContent(fileId.current, cmView.current.state.doc.toString());
     if (autorefresh && isPlaying) {
       clearConsole();
@@ -220,6 +217,7 @@ export default function useCodeMirror({
     teardownCodeMirror,
     getContent,
     tidyCode,
-    showSearch
+    showSearch,
+    codemirrorView: cmView
   };
 }
