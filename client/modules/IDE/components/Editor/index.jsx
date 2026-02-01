@@ -133,7 +133,7 @@ function Editor({
     };
   }, []);
 
-  // Updates the error console.
+  // Updates the runtime error console.
   useEffect(() => {
     const consoleErrors = consoleEvents.filter((e) => e.method === 'error');
 

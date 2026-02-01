@@ -6,7 +6,8 @@ const ADD_ERROR_DECORATION = StateEffect.define();
 const FILTER_ERROR_DECORATION = StateEffect.define();
 
 // An extension for managing error line decorations
-// You can call this by calling addErrorDecoration and removeErrorDecorations
+// Mostly adapted from the Marked Text demo in https://codemirror.net/docs/migration/
+// You can affect this by calling addErrorDecoration and removeErrorDecorations
 export const errorDecorationStateField = StateField.define({
   // Start with an empty set of decorations
   create() {
@@ -16,7 +17,6 @@ export const errorDecorationStateField = StateField.define({
   update(value, transaction) {
     // Move the decorations to account for document changes
     let newValue = value.map(transaction.changes);
-    // If this transaction adds or removes decorations, apply those changes
     for (let i = 0; i < transaction.effects.length; i++) {
       const effect = transaction.effects[i];
       if (effect.is(ADD_ERROR_DECORATION))
@@ -31,9 +31,10 @@ export const errorDecorationStateField = StateField.define({
 });
 
 const ERROR_DECORATION = Decoration.line({
-  class: 'cm-errorLine'
+  class: 'cm-errorLine' // Defined in _editor.scss
 });
 
+// Add an error decoration to a specific line number
 export function addErrorDecoration(view, lineNumber) {
   const docLineNumber = view.state.doc.line(lineNumber);
   view.dispatch({
@@ -43,6 +44,7 @@ export function addErrorDecoration(view, lineNumber) {
   });
 }
 
+// Remove all error decorations
 export function removeErrorDecorations(view) {
   view.dispatch({
     effects: FILTER_ERROR_DECORATION.of(() => false)
