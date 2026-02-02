@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React, { useRef, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 import loopProtect from 'loop-protect';
-import { JSHINT } from 'jshint';
+import { Linter } from 'eslint-linter-browserify';
 import decomment from 'decomment';
 import { resolvePathToFile } from '../../../server/utils/filePath';
 import { getConfig } from '../../utils/getConfig';
@@ -34,6 +34,15 @@ const Frame = styled.iframe`
   `}
 `;
 
+const linter = new Linter();
+const eslintConfig = {
+  parserOptions: {
+    ecmaVersion: 2022,
+    sourceType: 'script'
+  },
+  rules: {}
+};
+
 function resolveCSSLinksInString(content, files) {
   let newContent = content;
   let cssFileStrings = content.match(STRING_REGEX);
@@ -60,9 +69,10 @@ function jsPreprocess(jsText) {
   let newContent = jsText;
   // check the code for js errors before sending it to strip comments
   // or loops.
-  JSHINT(newContent);
+  const messages = linter.verify(newContent, eslintConfig);
+  const errors = messages.filter((m) => m.severity === 2);
 
-  if (JSHINT.errors.length === 0) {
+  if (errors.length === 0) {
     newContent = decomment(newContent, {
       ignore: /\/\/\s*noprotect/g,
       space: true
