@@ -42,7 +42,6 @@ function Editor({
   provideController,
   files,
   file,
-  theme,
   linewrap,
   lineNumbers,
   closeProjectOptions,
@@ -92,7 +91,6 @@ function Editor({
     tidyCode,
     showSearch
   } = useCodeMirror({
-    theme,
     lineNumbers,
     linewrap,
     autocloseBracketsQuotes,
@@ -270,7 +268,6 @@ Editor.propTypes = {
   startSketch: PropTypes.func.isRequired,
   autorefresh: PropTypes.bool.isRequired,
   isPlaying: PropTypes.bool.isRequired,
-  theme: PropTypes.string.isRequired,
   files: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,

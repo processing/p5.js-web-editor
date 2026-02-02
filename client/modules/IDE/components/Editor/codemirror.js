@@ -31,7 +31,6 @@ import tidyCodeWithPrettier from './tidier';
 
 /** This is a custom React hook that manages CodeMirror state. */
 export default function useCodeMirror({
-  theme,
   lineNumbers,
   linewrap,
   autocloseBracketsQuotes,
@@ -99,7 +98,6 @@ export default function useCodeMirror({
   }
 
   // When settings change, we pass those changes into CodeMirror.
-  // TODO: There should be a useEffect hook for when the theme changes.
   useEffect(() => {
     cmView.current.dom.style['font-size'] = `${fontSize}px`;
   }, [fontSize]);
