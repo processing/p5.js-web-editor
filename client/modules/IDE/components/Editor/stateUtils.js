@@ -56,11 +56,11 @@ import { emmetConfig } from '@emmetio/codemirror6-plugin';
 import p5JavaScript from './p5JavaScript';
 import tidyCodeWithPrettier from './tidier';
 import { highlightStyle } from './highlightStyle';
+import { errorDecorationStateField } from './consoleErrorDecoration';
 
 // ----- TODOS -----
 // - JSON linter
 // - shader syntax highlighting
-// - should we add xml specific language support?
 // - add docstrings for all exported functions
 
 /** Detects what mode the file is based on the name. */
@@ -337,6 +337,7 @@ export function createNewFileState(filename, document, settings) {
     indentOnInput(),
     bracketMatching(),
     colorPicker,
+    errorDecorationStateField,
 
     // Setup the event listeners on the CodeMirror instance.
     EditorView.updateListener.of(onViewUpdate)

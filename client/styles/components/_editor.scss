@@ -30,8 +30,12 @@
         }
       }
     }
-  }
 
+    .cm-errorLine.cm-activeLine, 
+    .cm-errorLine {
+      background-color: rgb(255 95 82 / 30%);
+    }
+  }
   .cm-focused > .cm-scroller .cm-selectionLayer .cm-selectionBackground,
   .cm-selectionLayer .cm-selectionBackground,
   ::selection {
@@ -152,16 +156,6 @@
 }
 
 // TODO: Add fold gutter styling back.
-
-.line-runtime-error + .CodeMirror-activeline-gutter {
-  background-color: rgb(255, 95, 82);
-  opacity: 0.3;
-}
-
-.line-runtime-error {
-  background-color: rgb(255, 95, 82) !important;
-  opacity: 0.3;
-}
 
 .editor-holder {
   height: calc(100% - #{math.div(29, $base-font-size)}rem);
