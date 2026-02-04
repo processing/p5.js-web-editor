@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Loader } from '../../App/components/Loader';
+import CollectionCreate from '../../User/components/CollectionCreate';
 import {
   addToCollection,
   getCollections,
@@ -63,7 +64,7 @@ const AddToCollectionList = ({ projectId }) => {
     if (showLoader) {
       return <Loader />;
     } else if (collections.length === 0) {
-      return t('AddToCollectionList.Empty');
+      return <CollectionCreate />;
     }
     return (
       <QuickAddList
