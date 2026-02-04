@@ -323,13 +323,15 @@ import CodeMirror from 'codemirror';
       return `<div class="hint-container">${hintHTML}</div>`;
     }
   }
-
+  
+  
   function getInlineHintSuggestion(cm, focus, token) {
     let tokenLength = token.string.length;
     if (token.string === '.') {
       tokenLength -= 1;
     }
     const name = focus.item?.text;
+
     const suggestionItem = focus.item;
     // builds the remainder of the suggestion excluding what user already typed
     const baseCompletion = `<span class="inline-hinter-suggestion">${suggestionItem.text.slice(

@@ -51,7 +51,17 @@ Then ask git about the latest changes.
     git status       
 
 ## Pull Request Templates
-Once you've opened your pull request, please ensure that you follow the guidelines.
+
+Once you've opened your pull request, please ensure that you follow the guidelines **and verify the following before submitting for review:**
+
+- ✅ Your code has no linting errors (`npm run lint`)
+- ✅ All tests pass successfully (`npm run test`)
+- ✅ Your branch name is unique and based off the latest `develop` branch
+- ✅ The pull request title and description clearly describe the change
+- ✅ Your pull request links to the related issue number (e.g., `Fixes #1234`)
+- ✅ Screenshots or videos are included if the change affects the user interface
+
+Following these steps helps maintain code quality and makes it easier for maintainers to review and merge your contribution.
 
 ## CONFLICTS
 You may have some conflicts! It's okay. Feel free to ask for help. If merging with the latest upstream `develop` branch causes conflicts, you can always make a pull request with the upstream repository, which makes the merge conflicts public.
