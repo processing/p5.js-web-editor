@@ -1,4 +1,10 @@
-import React, { useReducer, useState, useEffect } from 'react';
+import React, {
+  useReducer,
+  useState,
+  useEffect,
+  useRef,
+  useCallback
+} from 'react';
 import { render } from 'react-dom';
 import { createGlobalStyle } from 'styled-components';
 import {
@@ -24,7 +30,54 @@ const App = () => {
   const [basePath, setBasePath] = useState('');
   const [textOutput, setTextOutput] = useState(false);
   const [gridOutput, setGridOutput] = useState(false);
+  const sketchFrameRef = useRef(null);
   registerFrame(window.parent, getConfig('EDITOR_URL'));
+
+  const sendPreviewImage = useCallback(() => {
+    try {
+      const iframeDocument = sketchFrameRef.current?.contentDocument;
+      const canvas = iframeDocument?.querySelector('canvas');
+      if (!canvas || !canvas.width || !canvas.height) {
+        dispatchMessage({
+          type: MessageTypes.PREVIEW_IMAGE,
+          payload: { image: null }
+        });
+        return;
+      }
+
+      const maxDimension = 400;
+      const scale = Math.min(
+        maxDimension / canvas.width,
+        maxDimension / canvas.height,
+        1
+      );
+      const targetWidth = Math.max(1, Math.floor(canvas.width * scale));
+      const targetHeight = Math.max(1, Math.floor(canvas.height * scale));
+      const previewCanvas = document.createElement('canvas');
+      previewCanvas.width = targetWidth;
+      previewCanvas.height = targetHeight;
+      const ctx = previewCanvas.getContext('2d');
+      if (!ctx) {
+        dispatchMessage({
+          type: MessageTypes.PREVIEW_IMAGE,
+          payload: { image: null }
+        });
+        return;
+      }
+      ctx.drawImage(canvas, 0, 0, targetWidth, targetHeight);
+      const image = previewCanvas.toDataURL('image/png');
+
+      dispatchMessage({
+        type: MessageTypes.PREVIEW_IMAGE,
+        payload: { image }
+      });
+    } catch (error) {
+      dispatchMessage({
+        type: MessageTypes.PREVIEW_IMAGE,
+        payload: { image: null }
+      });
+    }
+  }, []);
 
   function handleMessageEvent(message) {
     const { type, payload } = message;
@@ -46,6 +99,9 @@ const App = () => {
         break;
       case MessageTypes.EXECUTE:
         dispatchMessage(payload);
+        break;
+      case MessageTypes.REQUEST_PREVIEW_IMAGE:
+        sendPreviewImage();
         break;
       default:
         break;
@@ -75,6 +131,7 @@ const App = () => {
     <React.Fragment>
       <GlobalStyle />
       <EmbedFrame
+        frameRef={sketchFrameRef}
         files={addCacheBustingToAssets(state)}
         isPlaying={isPlaying}
         basePath={basePath}

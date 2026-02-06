@@ -11,6 +11,7 @@ import {
 import { showToast } from '../actions/toast';
 import { showErrorModal, showShareModal } from '../actions/ide';
 import { selectCanEditSketch } from '../selectors/users';
+import capturePreviewImage from '../utils/capturePreviewImage';
 
 const useSketchActions = () => {
   const unsavedChanges = useSelector((state) => state.ide.unsavedChanges);
@@ -32,9 +33,12 @@ const useSketchActions = () => {
     }
   }
 
-  function saveSketch(cmController) {
+  async function saveSketch(cmController) {
     if (authenticated) {
-      dispatch(saveProject(cmController?.getContent()));
+      const previewImage = await capturePreviewImage();
+      dispatch(
+        saveProject(cmController?.getContent(), false, false, previewImage)
+      );
     } else {
       dispatch(showErrorModal('forceAuthentication'));
     }

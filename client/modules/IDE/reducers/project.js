@@ -8,6 +8,7 @@ const initialState = () => {
   return {
     name: generatedName,
     updatedAt: '',
+    previewImage: null,
     isSaving: false,
     visibility: 'Public'
   };
@@ -31,6 +32,7 @@ const project = (state, action) => {
         id: action.project.id,
         name: action.project.name,
         updatedAt: action.project.updatedAt,
+        previewImage: action.project.previewImage || null,
         owner: action.owner,
         isSaving: false,
         visibility: action.project.visibility
@@ -40,6 +42,7 @@ const project = (state, action) => {
         id: action.project.id,
         name: action.project.name,
         updatedAt: action.project.updatedAt,
+        previewImage: action.project.previewImage || null,
         owner: action.owner,
         isSaving: false,
         visibility: action.project.visibility

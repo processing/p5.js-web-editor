@@ -14,7 +14,9 @@ export enum MessageTypes {
   FILES = 'FILES',
   SKETCH = 'SKETCH',
   REGISTER = 'REGISTER',
-  EXECUTE = 'EXECUTE'
+  EXECUTE = 'EXECUTE',
+  REQUEST_PREVIEW_IMAGE = 'REQUEST_PREVIEW_IMAGE',
+  PREVIEW_IMAGE = 'PREVIEW_IMAGE'
 }
 /* eslint-enable no-shadow */
 

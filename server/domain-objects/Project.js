@@ -131,7 +131,7 @@ export function toModel(object) {
     throw new FileValidationError("'files' must be an object");
   }
 
-  const projectValues = pick(object, ['user', 'name', 'slug']);
+  const projectValues = pick(object, ['user', 'name', 'slug', 'previewImage']);
   projectValues.files = files;
 
   return new Project(projectValues);

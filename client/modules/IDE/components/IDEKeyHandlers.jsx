@@ -19,6 +19,7 @@ import {
   getIsUserOwner,
   getSketchOwner
 } from '../selectors/users';
+import capturePreviewImage from '../utils/capturePreviewImage';
 
 export const useIDEKeyHandlers = ({ getContent }) => {
   const dispatch = useDispatch();
@@ -40,11 +41,12 @@ export const useIDEKeyHandlers = ({ getContent }) => {
   };
 
   useKeyDownHandlers({
-    'ctrl-s': (e) => {
+    'ctrl-s': async (e) => {
       e.preventDefault();
       e.stopPropagation();
       if (isUserOwner || (isAuthenticated && !sketchOwner)) {
-        dispatch(saveProject(getContent()));
+        const previewImage = await capturePreviewImage();
+        dispatch(saveProject(getContent(), false, false, previewImage));
       } else if (isAuthenticated) {
         dispatch(cloneProject());
       } else {

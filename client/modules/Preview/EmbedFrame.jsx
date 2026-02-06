@@ -257,7 +257,14 @@ function getHtmlFile(files) {
   return files.filter((file) => file.name.match(/.*\.html$/i))[0];
 }
 
-function EmbedFrame({ files, isPlaying, basePath, gridOutput, textOutput }) {
+function EmbedFrame({
+  files,
+  isPlaying,
+  basePath,
+  gridOutput,
+  textOutput,
+  frameRef
+}) {
   const iframe = useRef();
   const htmlFile = useMemo(() => getHtmlFile(files), [files]);
   const srcRef = useRef();
@@ -271,6 +278,16 @@ function EmbedFrame({ files, isPlaying, basePath, gridOutput, textOutput }) {
       unsubscribe();
     };
   });
+
+  useEffect(() => {
+    if (!frameRef) {
+      return () => {};
+    }
+    frameRef.current = iframe.current;
+    return () => {
+      frameRef.current = null;
+    };
+  }, [frameRef]);
 
   function renderSketch() {
     const doc = iframe.current;
@@ -321,7 +338,14 @@ EmbedFrame.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
   basePath: PropTypes.string.isRequired,
   gridOutput: PropTypes.bool.isRequired,
-  textOutput: PropTypes.bool.isRequired
+  textOutput: PropTypes.bool.isRequired,
+  frameRef: PropTypes.shape({
+    current: PropTypes.instanceOf(Element)
+  })
+};
+
+EmbedFrame.defaultProps = {
+  frameRef: null
 };
 
 export default EmbedFrame;
