@@ -48,6 +48,162 @@ _Note_: The installation steps assume you are using a Unix-like shell. If you ar
 14. Install the [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en)
 15. Open and close the Redux DevTools using `ctrl+h`, and move them with `ctrl+w`
 
+## Installation Guide for Windows Users
+
+The manual installation steps above assume a Unix-like shell environment. This section provides Windows-specific instructions to help contributors set up the development environment more easily on Windows systems.
+
+---
+
+### 1. Install Node.js
+
+Download and install **Node.js v18.20.8** from the official Node.js website:
+
+[https://nodejs.org/](https://nodejs.org/)
+
+During installation, make sure the option **“Add to PATH”** is selected.
+
+Verify installation:
+
+```
+node -v
+npm -v
+```
+
+---
+
+### Optional: Using nvm for Windows
+
+Advanced users who want to manage multiple Node.js versions can install **nvm-windows**:
+
+[https://github.com/coreybutler/nvm-windows](https://github.com/coreybutler/nvm-windows)
+
+After installing nvm, run:
+
+```
+nvm install 18.20.8
+nvm use 18.20.8
+```
+
+Verify:
+
+```
+node -v
+npm -v
+```
+
+Using nvm is optional. Installing Node.js directly is recommended for beginners.
+
+---
+
+### 2. Fork and Clone the Repository
+
+Fork the repository to your GitHub account, then clone it locally:
+
+```
+git clone https://github.com/YOUR_USERNAME/p5.js-web-editor.git
+cd p5.js-web-editor
+```
+
+---
+
+### 3. Ensure Correct npm Version
+
+Check npm version:
+
+```
+npm -v
+```
+
+If needed, install the required version:
+
+```
+npm install -g npm@10.8.2
+```
+
+---
+
+### 4. Install Project Dependencies
+
+```
+npm install
+```
+
+---
+
+### 5. Install MongoDB
+
+Download and install MongoDB Community Server for Windows:
+
+[https://www.mongodb.com/try/download/community](https://www.mongodb.com/try/download/community)
+
+After installation, ensure the MongoDB service is running.
+
+---
+
+### 6. Create Environment File
+
+Using Command Prompt:
+
+```
+copy .env.example .env
+```
+
+Using PowerShell:
+
+```
+Copy-Item .env.example .env
+```
+
+---
+
+### 7. (Optional) Configure Environment Variables
+
+Update `.env` with necessary keys if you want to enable certain features such as GitHub login.
+
+Refer to:
+
+* GitHub API Configuration section
+* S3 Bucket Configuration section
+
+---
+
+### 8. Fetch Example Sketches (Optional)
+
+```
+npm run fetch-examples
+```
+
+This requires GitHub API credentials to be configured.
+
+---
+
+### 9. Start the Development Server
+
+```
+npm start
+```
+
+---
+
+### 10. Open the Application
+
+Navigate to:
+
+```
+http://localhost:8000
+```
+
+---
+
+### Notes
+
+* Installing Node.js directly is the simplest approach for Windows beginners.
+* Ensure MongoDB is running before starting the server.
+* Use PowerShell or Command Prompt to run commands.
+
+
+
+
 ## Docker Installation
 
 _Note_: The installation steps assume you are using a Unix-like shell. If you are using Windows, you will need to use `copy` instead of `cp`.
