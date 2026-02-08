@@ -261,7 +261,7 @@
     "jsdom": "^20.0.0",
     "jshint": "^2.13.0",
     "jszip": "^3.10.1",
-    "lodash": "^4.17.21",
+    "lodash": "^4.17.23",
     "loop-protect": "github:catarak/loop-protect",
     "mime": "^3.0.0",
     "mjml": "^4.14.1",
