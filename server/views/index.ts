@@ -12,6 +12,15 @@ export function renderIndex() {
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name="keywords" content="p5.js, p5.js web editor, web editor, processing, code editor" />
       <meta name="description" content="A web editor for p5.js, a JavaScript library with the goal of making coding accessible to artists, designers, educators, and beginners." />
+      <meta property="og:title" content="p5.js Web Editor" />
+      <meta property="og:description" content="A web editor for p5.js, a JavaScript library with the goal of making coding accessible to artists, designers, educators, and beginners." />
+      <meta property="og:image" content="https://editor.p5js.org/p5js-square-logo.png" />
+      <meta property="og:url" content="https://editor.p5js.org/" />
+      <meta property="og:type" content="website" />
+      <meta name="twitter:card" content="summary" />
+      <meta name="twitter:title" content="p5.js Web Editor" />
+      <meta name="twitter:description" content="A web editor for p5.js, a JavaScript library with the goal of making coding accessible to artists, designers, educators, and beginners." />
+      <meta name="twitter:image" content="https://editor.p5js.org/p5js-square-logo.png" />
       <title>p5.js Web Editor</title>
       ${
         process.env.NODE_ENV === 'production'
@@ -87,7 +96,18 @@ export function renderProjectIndex(username: string, projectName: string) {
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name="keywords" content="p5.js, p5.js web editor, web editor, processing, code editor" />
       <meta name="description" content="A web editor for p5.js, a JavaScript library with the goal of making coding accessible to artists, designers, educators, and beginners." />
-      <title>${`${projectName} by ${username} -`}p5.js Web Editor</title>
+      <meta property="og:title" content="${projectName} by ${username} - p5.js Web Editor" />
+      <meta property="og:description" content="A web editor for p5.js, a JavaScript library with the goal of making coding accessible to artists, designers, educators, and beginners." />
+      <meta property="og:image" content="https://editor.p5js.org/p5js-square-logo.png" />
+      <meta property="og:url" content="https://editor.p5js.org/${encodeURIComponent(
+        username
+      )}/${encodeURIComponent(projectName)}" />
+      <meta property="og:type" content="website" />
+      <meta name="twitter:card" content="summary" />
+      <meta name="twitter:title" content="${projectName} by ${username} - p5.js Web Editor" />
+      <meta name="twitter:description" content="A web editor for p5.js, a JavaScript library with the goal of making coding accessible to artists, designers, educators, and beginners." />
+      <meta name="twitter:image" content="https://editor.p5js.org/p5js-square-logo.png" />
+      <title>${projectName} by ${username} - p5.js Web Editor</title>
       ${
         process.env.NODE_ENV === 'production'
           ? `<link rel='stylesheet' href='${assetsManifest['/app.css']}' />`
