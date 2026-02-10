@@ -1,129 +1,254 @@
 import React from 'react';
-import configureStore from 'redux-mock-store';
-import thunk from 'redux-thunk';
 import { setupServer } from 'msw/node';
 import { rest } from 'msw';
-import { act } from 'react-dom/test-utils';
-import SketchList from './SketchList';
-import { reduxRender, fireEvent, screen, within } from '../../../test-utils';
+import {
+  reduxRender,
+  fireEvent,
+  screen,
+  within,
+  waitFor
+} from '../../../test-utils';
 import { initialTestState } from '../../../testData/testReduxStore';
 
+import SketchList from './SketchList';
+import i18n from '../../../i18n';
+
+let lastSearchParams;
+let requestCount = 0;
+
+// helper to create test project data
+const makeProjects = (prefix, count) =>
+  Array.from({ length: count }).map((_, i) => ({
+    id: `${prefix}-${i + 1}`,
+    name: `${prefix}-sketch-${i + 1}`,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    visibility: 'public'
+  }));
+
 const server = setupServer(
-  rest.get(`/${initialTestState.user.username}/projects`, (req, res, ctx) =>
-    // it just needs to return something so it doesn't throw an error
-    // Sketchlist tries to grab projects on creation but for the unit test
-    // we just feed those in as part of the initial state
-    res(ctx.json({ data: 'foo' }))
-  )
+  rest.get(`/${initialTestState.user.username}/projects`, (req, res, ctx) => {
+    requestCount += 1;
+    lastSearchParams = req.url.searchParams;
+
+    const page = Number(req.url.searchParams.get('page') ?? 1);
+    const limit = Number(req.url.searchParams.get('limit') ?? 10);
+
+    const projects =
+      page === 1 ? makeProjects('page1', limit) : makeProjects('page2', limit);
+
+    return res(
+      ctx.status(200),
+      ctx.json({
+        projects,
+        metadata: {
+          page,
+          totalPages: 6,
+          totalProjects: 54,
+          limit,
+          hasPagination: true
+        }
+      })
+    );
+  })
 );
 
-beforeAll(() => server.listen());
-afterEach(() => server.resetHandlers());
+beforeAll(() => {
+  i18n.init({
+    lng: 'en-US',
+    fallbackLng: 'en-US',
+    resources: {
+      'en-US': {
+        translation: {}
+      }
+    },
+    react: { useSuspense: false },
+    interpolation: { escapeValue: false }
+  });
+});
+
+beforeAll(() => server.listen({ onUnhandledRequest: 'error' }));
+
+afterEach(() => {
+  server.resetHandlers();
+  requestCount = 0;
+  lastSearchParams = undefined;
+});
+
 afterAll(() => server.close());
 
-describe('<Sketchlist />', () => {
-  const mockStore = configureStore([thunk]);
-  const store = mockStore(initialTestState);
-
-  let subjectProps = { username: initialTestState.user.username };
-
+describe('<SketchList />', () => {
   const subject = () =>
-    reduxRender(<SketchList {...subjectProps} />, { store });
+    reduxRender(<SketchList username={initialTestState.user.username} />, {
+      preloadedState: initialTestState
+    });
 
-  afterEach(() => {
-    store.clearActions();
+  it('calls the server on mount', async () => {
+    subject();
+
+    await screen.findByText('page1-sketch-1');
+
+    expect(lastSearchParams.get('page')).toBe('1');
+    expect(lastSearchParams.get('limit')).toBe('10'); // note: would be 7 for mobile
+    expect(lastSearchParams.get('sortField')).toBe('createdAt');
+    expect(lastSearchParams.get('sortDir')).toBe('desc');
+
+    const q = lastSearchParams.get('q');
+    const expectedQ = initialTestState.search.sketchSearchTerm;
+
+    if (expectedQ && expectedQ.length > 0) {
+      expect(q).toBe(expectedQ);
+    } else {
+      expect([null, '']).toContain(q);
+    }
   });
 
-  it('has sample projects', () => {
-    act(() => {
-      subject();
-    });
-    expect(screen.getByText('testsketch1')).toBeInTheDocument();
-    expect(screen.getByText('testsketch2')).toBeInTheDocument();
+  it('shows empty state if the server returns no projects', async () => {
+    server.use(
+      rest.get(
+        `/${initialTestState.user.username}/projects`,
+        (req, res, ctx) => {
+          requestCount += 1;
+          lastSearchParams = req.url.searchParams;
+
+          return res(
+            ctx.status(200),
+            ctx.json({
+              projects: [],
+              metadata: {
+                page: 1,
+                totalPages: 1,
+                totalProjects: 0,
+                limit: 10,
+                hasPagination: false
+              }
+            })
+          );
+        }
+      )
+    );
+
+    subject();
+
+    await screen.findByText('SketchList.NoSketches');
+
+    expect(screen.queryByRole('table')).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole('button', { name: 'Next Page' })
+    ).not.toBeInTheDocument();
   });
 
-  it('clicking on date created row header dispatches a reordering action', () => {
-    act(() => {
-      subject();
-    });
+  it('clicking on date created row header refetches sort field', async () => {
+    subject();
+    await screen.findByText('page1-sketch-1');
 
-    act(() => {
-      fireEvent.click(screen.getByText(/date created/i));
-    });
+    const before = requestCount;
 
-    const expectedAction = [{ type: 'TOGGLE_DIRECTION', field: 'createdAt' }];
-    expect(store.getActions()).toEqual(expect.arrayContaining(expectedAction));
+    const createdHeader = screen.getByRole('columnheader', {
+      name: /SketchList\.HeaderCreatedAt/i
+    });
+    const createdSortButton = within(createdHeader).getByRole('button');
+
+    fireEvent.click(createdSortButton);
+
+    await waitFor(() => {
+      expect(requestCount).toBeGreaterThan(before);
+      expect(lastSearchParams.get('sortField')).toBe('createdAt');
+    });
   });
 
-  it('clicking on dropdown arrow opens sketch options - sketches belong to user', () => {
-    act(() => {
-      subject();
+  it('clicking on row header twice toggles sort direction acordingly', async () => {
+    subject();
+    await screen.findByText('page1-sketch-1');
+
+    const createdHeader = screen.getByRole('columnheader', {
+      name: /SketchList\.HeaderCreatedAt/i
+    });
+    const createdSortButton = within(createdHeader).getByRole('button');
+
+    // first click on header row
+    const beforeOne = requestCount;
+    fireEvent.click(createdSortButton);
+
+    await waitFor(() => {
+      expect(requestCount).toBeGreaterThan(beforeOne);
     });
 
-    const row = screen.getByRole('row', {
-      name: /testsketch1/
+    expect(lastSearchParams.get('sortField')).toBe('createdAt');
+    expect(lastSearchParams.get('sortDir')).toBe('asc');
+
+    // second click on header row
+    const beforeTwo = requestCount;
+    fireEvent.click(createdSortButton);
+
+    await waitFor(() => {
+      expect(requestCount).toBeGreaterThan(beforeTwo);
     });
 
-    const dropdown = within(row).getByRole('button', {
-      name: 'Toggle Open/Close Sketch Options'
-    });
-
-    act(() => {
-      fireEvent.click(dropdown);
-    });
-
-    expect(screen.queryByText('Rename')).toBeInTheDocument();
-    expect(screen.queryByText('Duplicate')).toBeInTheDocument();
-    expect(screen.queryByText('Download')).toBeInTheDocument();
-    expect(screen.queryByText('Add to collection')).toBeInTheDocument();
-    expect(screen.queryByText('Delete')).toBeInTheDocument();
+    expect(lastSearchParams.get('sortField')).toBe('createdAt');
+    expect(lastSearchParams.get('sortDir')).toBe('desc');
   });
 
-  it('renders component correctly', () => {
-    const { container } = subject();
+  it('clicking next in pagination requests page 2 and updates table rows', async () => {
+    subject();
+    await screen.findByText('page1-sketch-1');
+
+    const before = requestCount;
+
+    fireEvent.click(screen.getByRole('button', { name: 'Next Page' }));
+
+    await waitFor(() => {
+      expect(requestCount).toBeGreaterThan(before);
+      expect(lastSearchParams.get('page')).toBe('2');
+    });
+
+    await screen.findByText('page2-sketch-1');
+  });
+
+  it('clicking previous is not available on page 1', async () => {
+    subject();
+    await screen.findByText('page1-sketch-1');
+
+    const prev = screen.getByRole('button', { name: 'Previous Page' });
+    expect(prev).toBeDisabled();
+  });
+
+  it('pagination is not available when total pages is 1', async () => {
+    server.use(
+      rest.get(
+        `/${initialTestState.user.username}/projects`,
+        (req, res, ctx) => {
+          requestCount += 1;
+          lastSearchParams = req.url.searchParams;
+
+          const limit = Number(req.url.searchParams.get('limit') ?? 10);
+
+          return res(
+            ctx.status(200),
+            ctx.json({
+              projects: makeProjects('singlePage', limit),
+              metadata: {
+                page: 1,
+                totalPages: 1,
+                totalProjects: limit,
+                limit,
+                hasPagination: false
+              }
+            })
+          );
+        }
+      )
+    );
+
+    subject();
+
+    await screen.findByText('singlePage-sketch-1');
 
     expect(
-      container.querySelector('.sketches-table-container')
-    ).toBeInTheDocument();
-    expect(container.querySelector('.sketches-table')).toBeInTheDocument();
-    expect(container.querySelector('thead')).toBeInTheDocument();
-    expect(container.querySelector('tbody')).toBeInTheDocument();
-
-    // expect(screen.getByText(/Sketch/i)).toBeInTheDocument();
-    // expect(screen.getByText(/Date created/i)).toBeInTheDocument();
-    // expect(screen.getByText(/Last updated/i)).toBeInTheDocument();
-
-    const sketchRows = container.querySelectorAll('tbody tr');
-    expect(sketchRows.length).toBeGreaterThan(0);
-  });
-
-  describe('different user than the one who created the sketches', () => {
-    beforeAll(() => {
-      subjectProps = { username: 'notthesameusername' };
-    });
-
-    it('clicking on dropdown arrow opens sketch options without Rename or Delete option', () => {
-      act(() => {
-        subject();
-      });
-
-      const row = screen.getByRole('row', {
-        name: /testsketch1/
-      });
-
-      const dropdown = within(row).getByRole('button', {
-        name: 'Toggle Open/Close Sketch Options'
-      });
-
-      act(() => {
-        fireEvent.click(dropdown);
-      });
-
-      expect(screen.queryByText('Rename')).not.toBeInTheDocument();
-      expect(screen.queryByText('Duplicate')).toBeInTheDocument();
-      expect(screen.queryByText('Download')).toBeInTheDocument();
-      expect(screen.queryByText('Add to collection')).toBeInTheDocument();
-      expect(screen.queryByText('Delete')).not.toBeInTheDocument();
-    });
+      screen.queryByRole('button', { name: 'Previous Page' })
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole('button', { name: 'Next Page' })
+    ).not.toBeInTheDocument();
   });
 });

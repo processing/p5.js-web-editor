@@ -576,6 +576,11 @@
     "ButtonAddToCollectionARIA": "संग्रह में जोड़ें",
     "View": "देखें"
   },
+  "Pagination": {
+    "Next": "Next",
+    "Previous": "Previous",
+    "Of": "of"
+  },
   "SketchList": {
     "Title": "p5.js वेब एडिटर | मेरे स्केच",
     "AnothersTitle": "p5.js वेब एडिटर | {{anotheruser}} के स्केच",

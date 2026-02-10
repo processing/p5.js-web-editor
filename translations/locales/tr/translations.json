@@ -511,6 +511,11 @@
     "ButtonAddToCollectionARIA": "Koleksiyona ekle",
     "View": "Görüntüle"
   },
+  "Pagination": {
+    "Next": "Next",
+    "Previous": "Previous",
+    "Of": "of"
+  },
   "SketchList": {
     "View": "Görünüm",
     "Title": "p5.js Web Editörü | Benim eskizlerim",

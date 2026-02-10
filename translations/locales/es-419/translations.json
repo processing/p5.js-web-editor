@@ -514,6 +514,11 @@
     "ButtonAddToCollectionARIA": "Agregar a colección",
     "View": "Ver"
   },
+  "Pagination": {
+    "Next": "Next",
+    "Previous": "Previous",
+    "Of": "of"
+  },
   "SketchList": {
     "View": "Ver",
     "Title": "p5.js Web Editor | Mis bosquejos",

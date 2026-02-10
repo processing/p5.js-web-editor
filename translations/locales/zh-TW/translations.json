@@ -510,6 +510,11 @@
     "ButtonAddToCollectionARIA": "加入作品集",
     "View": "檢視"
   },
+  "Pagination": {
+    "Next": "Next",
+    "Previous": "Previous",
+    "Of": "of"
+  },
   "SketchList": {
     "View": "檢視",
     "Title": "p5.js 網頁編輯器 | 我的草稿",
