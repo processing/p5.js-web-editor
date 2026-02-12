@@ -5,6 +5,8 @@ import { Error, RouteParam } from './express';
 // -------- MONGOOSE --------
 /** Full Api Key interface */
 export interface IApiKey extends VirtualId, MongooseTimestamps {
+  _id: Types.ObjectId;
+  __v: number;
   label: string;
   lastUsedAt?: Date;
   hashedKey: string;
