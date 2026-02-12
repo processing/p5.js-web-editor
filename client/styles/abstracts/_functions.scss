@@ -1,3 +1,5 @@
+@use "variables";
+
 @function map-fetch($map, $keys) {
   $key: nth($keys, 1);
   $length: length($keys);

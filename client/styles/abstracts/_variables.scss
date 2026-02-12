@@ -95,8 +95,10 @@ $themes: (
     table-button-hover-color: $lightest,
     table-button-background-hover-color: $p5js-pink,
 
-    progress-bar-background-color: $middle-gray,
+    progress-bar-background-color: $light,
     progress-bar-active-color: $p5js-active-pink,
+
+    progress-bar-border-color:$middle-gray,
 
     form-title-color: rgba(51, 51, 51, 0.87),
     form-secondary-title-color: $medium-dark,
@@ -196,8 +198,10 @@ $themes: (
     table-button-hover-color: $lightest,
     table-button-background-hover-color: $p5js-pink,
 
-    progress-bar-background-color: $middle-gray,
+    progress-bar-background-color: $darker,
     progress-bar-active-color: $p5js-active-pink,
+
+    progress-bar-border-color:$middle-dark,
 
     form-title-color: $lightest,
     form-secondary-title-color: $medium-light,
@@ -295,8 +299,10 @@ $themes: (
     table-button-hover-color: $dark,
     table-button-background-hover-color: $yellow,
 
-    progress-bar-background-color: $middle-gray,
-    progress-bar-active-color: $p5js-active-pink,
+    progress-bar-background-color: $darker,
+    progress-bar-active-color: $yellow,
+
+    progress-bar-border-color:$middle-light,
 
     form-title-color: $lightest,
     form-secondary-title-color: $medium-light,
@@ -333,4 +339,3 @@ $themes: (
 
 $toast-background-color: $medium-dark;
 $toast-text-color: $lightest;
-
