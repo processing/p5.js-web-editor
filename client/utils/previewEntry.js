@@ -20,7 +20,7 @@ if (window.loopProtect && typeof window.loopProtect.hit === 'function') {
   const origHit = window.loopProtect.hit;
   window.loopProtect.hit = function (line) {
     // Show warning in browser console and in-app console
-    const msg = `Exiting potential infinite loop at line ${line}. To disable loop protection: add "// noprotect" to your code`;
+    const msg = `Exiting potential infinite loop at line ${line}.`;
     // This will be picked up by console-feed and sent to the parent as an error (red)
     console.error(msg);
     return origHit.call(this, line);
