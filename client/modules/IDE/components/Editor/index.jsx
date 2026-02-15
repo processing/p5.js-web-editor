@@ -225,7 +225,7 @@ class Editor extends React.Component {
         const projectId = this.props.project?.id || 'unsaved';
         saveLocalBackup(projectId, this.props.files);
 
-        if (this.props.autorefresh && this.props.isPlaying) {
+        if (this.props.autorefresh) {
           this.props.clearConsole();
           this.props.startSketch();
         }
@@ -741,7 +741,6 @@ Editor.propTypes = {
   setUnsavedChanges: PropTypes.func.isRequired,
   startSketch: PropTypes.func.isRequired,
   autorefresh: PropTypes.bool.isRequired,
-  isPlaying: PropTypes.bool.isRequired,
   theme: PropTypes.string.isRequired,
   unsavedChanges: PropTypes.bool.isRequired,
   files: PropTypes.arrayOf(
