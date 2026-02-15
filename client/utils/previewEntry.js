@@ -23,7 +23,9 @@ if (window.loopProtect && typeof window.loopProtect.hit === 'function') {
     const msg = `Exiting potential infinite loop at line ${line}.`;
     // This will be picked up by console-feed and sent to the parent as an error (red)
     console.error(msg);
-    return origHit.call(this, line);
+    // Don't call origHit to prevent duplicate messages
+    // The loop protection still works, we just handle the messaging ourselves
+    return true; // Return true to indicate loop was detected
   };
 }
 
