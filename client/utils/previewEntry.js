@@ -14,8 +14,18 @@ const htmlOffset = 12;
 window.objectUrls[window.location.href] = '/index.html';
 const blobPath = window.location.href.split('/').pop();
 window.objectPaths[blobPath] = 'index.html';
-
+// Monkey-patch loopProtect to send infinite loop warnings to the in-app console
 window.loopProtect = loopProtect;
+if (window.loopProtect && typeof window.loopProtect.hit === 'function') {
+  const origHit = window.loopProtect.hit;
+  window.loopProtect.hit = function (line) {
+    // Show warning in browser console and in-app console
+    const msg = `Exiting potential infinite loop at line ${line}. To disable loop protection: add "// noprotect" to your code`;
+    // This will be picked up by console-feed and sent to the parent as an error (red)
+    console.error(msg);
+    return origHit.call(this, line);
+  };
+}
 
 const consoleBuffer = [];
 const LOGWAIT = 500;
