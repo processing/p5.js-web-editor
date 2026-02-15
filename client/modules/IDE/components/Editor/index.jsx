@@ -72,6 +72,7 @@ import UnsavedChangesIndicator from '../UnsavedChangesIndicator';
 import { EditorContainer, EditorHolder } from './MobileEditor';
 import { FolderIcon } from '../../../../common/icons';
 import { IconButton } from '../../../../common/IconButton';
+import { saveLocalBackup } from '../../utils/localBackup';
 
 import contextAwareHinter from '../../../../utils/contextAwareHinter';
 import showRenameDialog from '../../../../utils/showRenameDialog';
@@ -217,6 +218,13 @@ class Editor extends React.Component {
         this.props.setUnsavedChanges(true);
         this.props.hideRuntimeErrorWarning();
         this.props.updateFileContent(this.props.file.id, this._cm.getValue());
+
+        // Save a local backup to localStorage for crash recovery (#3891).
+        // This ensures work is recoverable even if the tab crashes
+        // (e.g. from an infinite loop) before the server autosave fires.
+        const projectId = this.props.project?.id || 'unsaved';
+        saveLocalBackup(projectId, this.props.files);
+
         if (this.props.autorefresh && this.props.isPlaying) {
           this.props.clearConsole();
           this.props.startSketch();
@@ -756,11 +764,15 @@ Editor.propTypes = {
   provideController: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
   setSelectedFile: PropTypes.func.isRequired,
-  expandConsole: PropTypes.func.isRequired
+  expandConsole: PropTypes.func.isRequired,
+  project: PropTypes.shape({
+    id: PropTypes.string
+  })
 };
 
 Editor.defaultProps = {
-  htmlFile: null
+  htmlFile: null,
+  project: {}
 };
 
 function mapStateToProps(state) {
