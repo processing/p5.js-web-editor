@@ -569,6 +569,11 @@
     "ButtonAddToCollectionARIA": "Додати у колекцію",
     "View": "Перегляд"
   },
+  "Pagination": {
+    "Next": "Next",
+    "Previous": "Previous",
+    "Of": "of"
+  },
   "SketchList": {
     "View": "Перегляд",
     "Title": "p5.js вебредактор | Мої скетчі",

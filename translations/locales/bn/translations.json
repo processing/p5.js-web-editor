@@ -538,6 +538,11 @@
     "ButtonAddToCollectionARIA": "সংগ্রহে যোগ করুন",
     "View": "দেখুন"
   },
+  "Pagination": {
+    "Next": "Next",
+    "Previous": "Previous",
+    "Of": "of"
+  },
   "SketchList": {
     "Title": "p5.js ওয়েব এডিটর | আমার স্কেচগুলি",
     "AnothersTitle": "p5.js ওয়েব এডিটর | {{anotheruser}} এর স্কেচগুলি",

@@ -230,7 +230,7 @@
       background-color: getThemifyVariable('button-background-hover-color');
       color: getThemifyVariable('button-hover-color')
 		}
-		& button, & a {
+		& button, & a, & .tooltip-wrapper button {
       @include themify() {
         color: getThemifyVariable('button-hover-color');
       }

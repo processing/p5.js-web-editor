@@ -505,6 +505,11 @@
     "ButtonAddToCollectionARIA": "Zur Sammlung hinzufügen",
     "View": "Öffnen"
   },
+  "Pagination": {
+    "Next": "Next",
+    "Previous": "Previous",
+    "Of": "of"
+  },
   "SketchList": {
     "View": "Öffnen",
     "Title": "p5.js Web Editor | Meine Sketche",

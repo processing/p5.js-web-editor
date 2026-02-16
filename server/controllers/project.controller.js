@@ -234,10 +234,12 @@ async function addFileToZip(file, files, zip) {
   } else if (file.url) {
     try {
       const res = await axios.get(file.url, {
-        responseType: 'arraybuffer'
+        responseType: 'arraybuffer',
+        timeout: 30000 // 30 second timeout to prevent hanging requests
       });
       zip.file(file.name, res.data);
     } catch (e) {
+      console.warn(`Failed to fetch file from ${file.url}:`, e.message);
       zip.file(file.name, new ArrayBuffer(0));
     }
   } else {
@@ -261,25 +263,48 @@ async function buildZip(project, req, res) {
 
     const base64 = await zip.generateAsync({ type: 'base64' });
     const buff = Buffer.from(base64, 'base64');
+
+    // nityam Check if response was already sent (e.g., client disconnected)
+    if (res.headersSent) {
+      return;
+    }
+
     res.writeHead(200, {
       'Content-Type': 'application/zip',
       'Content-disposition': `attachment; filename=${zipFileName}`
     });
     res.end(buff);
   } catch (err) {
-    console.error(err);
-    res.status(500).send(err);
+    console.error('Error building zip file:', err);
+    // Only send error if response hasn't been sent yet
+    if (!res.headersSent) {
+      res.status(500).json({
+        success: false,
+        message: 'Failed to generate zip file. Please try again.'
+      });
+    }
   }
 }
 
 export async function downloadProjectAsZip(req, res) {
-  const project = await Project.findById(req.params.project_id).exec();
-  if (!project) {
-    res.status(404).send({ message: 'Project with that id does not exist' });
-    return;
+  try {
+    const project = await Project.findById(req.params.project_id).exec();
+    if (!project) {
+      res.status(404).send({ message: 'Project with that id does not exist' });
+      return;
+    }
+    // Await buildZip to ensure it completes before the function returns
+    await buildZip(project, req, res);
+  } catch (err) {
+    console.error('Error in downloadProjectAsZip:', err);
+    // Only send error if response hasn't been sent yet
+    if (!res.headersSent) {
+      res.status(500).json({
+        success: false,
+        message: 'Failed to download project. Please try again.'
+      });
+    }
   }
-  // save project to some path
-  buildZip(project, req, res);
 }
 
 export async function changeProjectVisibility(req, res) {

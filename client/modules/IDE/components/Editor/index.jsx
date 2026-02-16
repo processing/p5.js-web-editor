@@ -471,6 +471,17 @@ class Editor extends React.Component {
     this._cm.execCommand('findPersistent');
   }
 
+  // temporary until p5.js 2.0 becomes default
+  // checks if sketch is using p5.js 2.0 to pass correct base url for autocomplete hinter reference
+  getReferenceBaseUrl = () => {
+    const html = this.props.htmlFile?.content || '';
+
+    const isV2 =
+      /https:\/\/beta\.p5js\.org\b/i.test(html) || /\bp5(@|-)2\./i.test(html);
+
+    return isV2 ? 'https://beta.p5js.org' : 'https://p5js.org';
+  };
+
   showHint(_cm) {
     if (!_cm) return;
 
@@ -510,6 +521,7 @@ class Editor extends React.Component {
 
     const hintOptions = {
       _fontSize: this.props.fontSize,
+      referenceBaseUrl: this.getReferenceBaseUrl(),
       completeSingle: false,
       extraKeys: {
         'Shift-Right': (cm, e) => {
@@ -781,6 +793,9 @@ Editor.propTypes = {
       content: PropTypes.string.isRequired
     })
   ).isRequired,
+  htmlFile: PropTypes.shape({
+    content: PropTypes.string
+  }),
   isExpanded: PropTypes.bool.isRequired,
   collapseSidebar: PropTypes.func.isRequired,
   closeProjectOptions: PropTypes.func.isRequired,
@@ -792,6 +807,10 @@ Editor.propTypes = {
   t: PropTypes.func.isRequired,
   setSelectedFile: PropTypes.func.isRequired,
   expandConsole: PropTypes.func.isRequired
+};
+
+Editor.defaultProps = {
+  htmlFile: null
 };
 
 function mapStateToProps(state) {
