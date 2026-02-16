@@ -17,51 +17,48 @@ window.objectPaths[blobPath] = 'index.html';
 // Monkey-patch loopProtect to send infinite loop warnings to the in-app console
 window.loopProtect = loopProtect;
 if (window.loopProtect && typeof window.loopProtect.hit === 'function') {
-  const origHit = window.loopProtect.hit;
   let hitCount = 0;
   let lastHitTime = 0;
-  let detectedLines = {}; // Track lines and their loop counts
-  let summaryShown = false;
-  window.loopProtect.hit = function (line) {
+  let firstLine = null;
+  let stopTimeout = null;
+  window.loopProtect.hit = function handleLoopHit(line) {
     const now = Date.now();
     // Reset counters if more than 1 second has passed
     if (now - lastHitTime > 1000) {
       hitCount = 0;
-      detectedLines = {};
-      summaryShown = false;
+      firstLine = null;
+      if (stopTimeout) {
+        clearTimeout(stopTimeout);
+        stopTimeout = null;
+      }
     }
     hitCount++;
     lastHitTime = now;
 
-    // Track loops per line
-    if (!detectedLines[line]) {
-      detectedLines[line] = 0;
-    }
-    detectedLines[line]++;
-
-    // Show individual message for each loop
-    if (detectedLines[line] === 1) {
-      const msg = `Exiting potential infinite loop at line ${line}.`;
-      console.error(msg);
-    } else {
-      // Multiple loops on same line
-      const msg = `Multiple infinite loops detected at line ${line} (${detectedLines[line]} loops).`;
-      console.error(msg);
+    // Track first line for single loop case
+    if (hitCount === 1) {
+      firstLine = line;
+      // Wait briefly to see if more loops are detected (minimal delay)
+      stopTimeout = setTimeout(() => {
+        if (hitCount === 1) {
+          // Only one loop detected - show line number
+          const msg = `Infinite loop detected at line ${firstLine}. Stopping execution.`;
+          throw new Error(msg);
+        }
+        // If hitCount > 1, another loop already threw the error
+      }, 30);
     }
 
-    // If multiple loops detected, show summary and stop
-    if (hitCount > 1 && !summaryShown) {
-      summaryShown = true;
-      const linesList = Object.keys(detectedLines)
-        .map((l) => {
-          const count = detectedLines[l];
-          return count > 1 ? `line ${l} (${count} loops)` : `line ${l}`;
-        })
-        .join(', ');
-      const summaryMsg = `Multiple infinite loops detected (${hitCount} total) at ${linesList}. Stopping execution.`;
-      console.error(summaryMsg);
-      // Force stop by throwing an error that will be caught
-      throw new Error(summaryMsg);
+    // If multiple loops detected, stop immediately without waiting
+    if (hitCount > 1) {
+      // Clear single loop timeout since we have multiple
+      if (stopTimeout) {
+        clearTimeout(stopTimeout);
+        stopTimeout = null;
+      }
+      // Stop immediately - multiple loops exist
+      const msg = 'Multiple infinite loops detected. Stopping execution.';
+      throw new Error(msg);
     }
 
     // Don't call origHit to prevent duplicate messages
