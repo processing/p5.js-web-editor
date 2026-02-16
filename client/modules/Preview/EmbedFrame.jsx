@@ -63,6 +63,15 @@ function jsPreprocess(jsText) {
     return newContent;
   }
 
+  // Detect and fix multiple consecutive loops on the same line (e.g. "for(){}for(){}")
+  // which can bypass loop protection. Add semicolons between them so each loop
+  // is properly wrapped by loopProtect. See #3891.
+  // Match: for/while/do-while loops followed immediately by another loop
+  newContent = newContent.replace(
+    /((?:for|while)\s*\([^)]*\)\s*\{[^}]*\})((?:for|while)\s*\([^)]*\)\s*\{[^}]*\})/g,
+    '$1; $2'
+  );
+
   // Always apply loop protection to prevent infinite loops from crashing
   // the browser tab. Previously, loop protection was skipped when JSHINT
   // found errors, but this left users vulnerable to infinite loops in

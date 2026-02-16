@@ -18,11 +18,32 @@ window.objectPaths[blobPath] = 'index.html';
 window.loopProtect = loopProtect;
 if (window.loopProtect && typeof window.loopProtect.hit === 'function') {
   const origHit = window.loopProtect.hit;
+  let hitCount = 0;
+  let lastHitTime = 0;
   window.loopProtect.hit = function (line) {
+    const now = Date.now();
+    // Reset counter if more than 1 second has passed
+    if (now - lastHitTime > 1000) {
+      hitCount = 0;
+    }
+    hitCount++;
+    lastHitTime = now;
+
     // Show warning in browser console and in-app console
     const msg = `Exiting potential infinite loop at line ${line}.`;
     // This will be picked up by console-feed and sent to the parent as an error (red)
     console.error(msg);
+
+    // If multiple loops detected quickly (e.g. two loops on same line),
+    // stop execution immediately to prevent hanging
+    if (hitCount > 1) {
+      console.error(
+        `Multiple infinite loops detected (${hitCount}). Stopping execution.`
+      );
+      // Force stop by throwing an error that will be caught
+      throw new Error('Multiple infinite loops detected. Execution stopped.');
+    }
+
     // Don't call origHit to prevent duplicate messages
     // The loop protection still works, we just handle the messaging ourselves
     return true; // Return true to indicate loop was detected
