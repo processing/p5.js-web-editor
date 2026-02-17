@@ -71,7 +71,13 @@ export const createUser: RequestHandler<
         res.json(userResponse(user));
       } catch (mailErr) {
         console.error(mailErr);
-        res.status(500).json({ error: 'Failed to send verification email.' });
+        // In development, still return success so signup UX matches production
+        // (redirect to home, user logged in). Email may be unconfigured locally.
+        if (process.env.NODE_ENV !== 'production') {
+          res.json(userResponse(user));
+        } else {
+          res.status(500).json({ error: 'Failed to send verification email.' });
+        }
       }
     });
   } catch (err) {

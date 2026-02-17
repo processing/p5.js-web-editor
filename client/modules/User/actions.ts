@@ -92,7 +92,11 @@ export function validateAndLoginUser(formProps: {
               })
             );
             dispatch(justOpenedProject());
-            browserHistory.push(previousPath);
+            const path =
+              previousPath === '/signup' || previousPath === '/login'
+                ? '/'
+                : previousPath;
+            browserHistory.push(path);
             resolve();
           })
           .catch((error) =>
@@ -123,7 +127,11 @@ export function validateAndSignUpUser(formValues: CreateUserRequestBody) {
         .then((response) => {
           dispatch(authenticateUser(response.data));
           dispatch(justOpenedProject());
-          browserHistory.push(previousPath);
+          const path =
+            previousPath === '/signup' || previousPath === '/login'
+              ? '/'
+              : previousPath;
+          browserHistory.push(path);
           resolve();
         })
         .catch((error) => {
