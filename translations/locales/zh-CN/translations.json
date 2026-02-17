@@ -510,6 +510,11 @@
     "ButtonAddToCollectionARIA": "添加到集合",
     "View": "查看"
   },
+  "Pagination": {
+    "Next": "Next",
+    "Previous": "Previous",
+    "Of": "of"
+  },
   "SketchList": {
     "View": "查看",
     "Title": "p5.js 在线编辑器 ｜ 我的项目",

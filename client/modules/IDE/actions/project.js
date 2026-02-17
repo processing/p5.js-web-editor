@@ -386,7 +386,7 @@ export function changeProjectName(id, newName) {
 }
 
 export function deleteProject(id) {
-  return (dispatch, getState) => {
+  return (dispatch, getState) =>
     apiClient
       .delete(`/projects/${id}`)
       .then(() => {
@@ -411,7 +411,6 @@ export function deleteProject(id) {
           });
         }
       });
-  };
 }
 export function changeVisibility(projectId, projectName, visibility, t) {
   return (dispatch, getState) => {

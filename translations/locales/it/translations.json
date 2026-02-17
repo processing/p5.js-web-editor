@@ -517,6 +517,11 @@
     "ButtonAddToCollectionARIA": "Aggiungi alla collezione",
     "View": "Vista"
   },
+  "Pagination": {
+    "Next": "Next",
+    "Previous": "Previous",
+    "Of": "of"
+  },
   "SketchList": {
     "View": "Vista",
     "Title": "p5.js redattore web | I miei sketch",

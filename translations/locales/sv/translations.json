@@ -507,6 +507,11 @@
     "ButtonAddToCollectionARIA": "Lägg till i samling",
     "View": "Granska"
   },
+  "Pagination": {
+    "Next": "Next",
+    "Previous": "Previous",
+    "Of": "of"
+  },
   "SketchList": {
     "View": "Granska",
     "Title": "p5.js Webb editor | Mina sketcher",

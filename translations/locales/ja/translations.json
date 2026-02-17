@@ -508,6 +508,11 @@
       "ButtonAddToCollectionARIA": "コレクションへ追加",
       "View": "表示"
     },
+    "Pagination": {
+      "Next": "Next",
+      "Previous": "Previous",
+      "Of": "of"
+    },
     "SketchList": {
       "View": "表示",
       "Title": "p5.js ウェブエディター | マイスケッチ",

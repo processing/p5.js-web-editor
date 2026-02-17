@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import slugify from 'slugify';
 import get404Sketch from './404Page';
 
 export function renderIndex() {
@@ -79,6 +80,8 @@ export function renderIndex() {
 export function renderProjectIndex(username: string, projectName: string) {
   const assetsManifest =
     process.env.webpackAssets && JSON.parse(process.env.webpackAssets);
+  const projectSlug = slugify(projectName, { strict: true });
+  const usernameSlug = slugify(username, { strict: true });
   return `
   <!DOCTYPE html>
   <html lang="en">
@@ -87,7 +90,7 @@ export function renderProjectIndex(username: string, projectName: string) {
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name="keywords" content="p5.js, p5.js web editor, web editor, processing, code editor" />
       <meta name="description" content="A web editor for p5.js, a JavaScript library with the goal of making coding accessible to artists, designers, educators, and beginners." />
-      <title>${`${projectName} by ${username} -`}p5.js Web Editor</title>
+      <title>${`${projectSlug} by ${usernameSlug} -`}p5.js Web Editor</title>
       ${
         process.env.NODE_ENV === 'production'
           ? `<link rel='stylesheet' href='${assetsManifest['/app.css']}' />`

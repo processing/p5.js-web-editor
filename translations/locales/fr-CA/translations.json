@@ -518,6 +518,11 @@
       "ButtonAddToCollectionARIA": "Ajouter à la collection",
       "View": "Voir"
     },
+    "Pagination": {
+      "Next": "Next",
+      "Previous": "Previous",
+      "Of": "of"
+    },
     "SketchList": {
       "View": "Voir",
       "Title": "Éditeur web p5.js | Mes croquis",

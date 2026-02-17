@@ -508,6 +508,11 @@
       "ButtonAddToCollectionARIA": "مجموعہ میں شامل کریں۔",
       "View": "دیکھیں"
     },
+    "Pagination": {
+      "Next": "Next",
+      "Previous": "Previous",
+      "Of": "of"
+    },
     "SketchList": {
       "View": "دیکھیں",
       "Title": "p5.js ویب ایڈیٹر | ",
