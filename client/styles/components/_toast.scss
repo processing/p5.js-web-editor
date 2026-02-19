@@ -3,17 +3,19 @@
 .toast {
   background-color: $toast-background-color;
   color: $toast-text-color;
-  padding: #{math.div(10, $base-font-size)}rem;
+  padding: #{math.div(10, $base-font-size)}rem #{math.div(20, $base-font-size)}rem;
   position: fixed;
-  top: 0;
+  top: #{math.div(20, $base-font-size)}rem; 
   left: 50%;
-  transform: translate(-50%, 0);
-  min-width: #{math.div(375, $base-font-size)}rem; //500px
-  font-size: #{math.div(20, $base-font-size)}rem;
+  transform: translateX(-50%);
+  min-width: #{math.div(360, $base-font-size)}rem; 
+  font-size: #{math.div(16, $base-font-size)}rem;
+  border-radius: #{math.div(8, $base-font-size)}rem;
   display: flex;
-  z-index: 9999;
   align-items: center;
   justify-content: space-between;
+  z-index: 9999;
+  transition: all 0.3s ease-in-out;
   box-shadow: 0 6px 6px 0 rgba(0,0,0,0.10);
 }
 
@@ -21,6 +23,12 @@
   @include themify() {
     @extend %icon-toast;
   }
-  padding-top: #{math.div(10, $base-font-size)}rem;
-  margin-left: #{math.div(40, $base-font-size)}rem;
+  padding-top: #{math.div(6, $base-font-size)}rem;
+  margin-left: #{math.div(24, $base-font-size)}rem;
+  cursor: pointer;
+  opacity: 0.7;
+
+  &:hover {
+    opacity: 1;
+  }
 }
