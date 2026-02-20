@@ -268,7 +268,7 @@
     }
   },
   "Sidebar": {
-    "Title": "Sketch Files",
+    "Title": "Sketch something today",
     "ToggleARIA": "Toggle open/close sketch file options",
     "AddFolder": "Create folder",
     "AddFolderARIA": "add folder",
@@ -506,6 +506,7 @@
     "NumSketches": "{{count}} sketch",
     "NumSketches_plural": "{{count}} sketches",
     "By": "Collection by ",
+    "RemoveFromCollection": "Remove from Collection",
     "NoSketches": "No sketches in collection",
     "TableSummary": "table containing all collections",
     "HeaderName": "Name",
