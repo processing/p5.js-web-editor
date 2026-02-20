@@ -55,7 +55,6 @@ $themes: (
     modal-border-color: $middle-light,
     icon-color: $middle-gray,
     icon-hover-color: $darker,
-    icon-toast-hover-color: $lightest,
     shadow-color: rgba(0, 0, 0, 0.16),
     console-background-color: $light,
     console-input-background-color: $lightest,
@@ -130,6 +129,9 @@ $themes: (
     admonition-border: #22C8ED,
     admonition-background: #E4F8FF,
     admonition-text: #075769,
+
+    toast-background-color: $medium-dark,
+    toast-text-color: $lightest,
   ),
   dark: (
     logo-color: $p5js-pink,
@@ -156,7 +158,6 @@ $themes: (
     modal-border-color: $middle-dark,
     icon-color: $middle-light,
     icon-hover-color: $lightest,
-    icon-toast-hover-color: $lightest,
     shadow-color: rgba(0, 0, 0, 0.16),
     console-background-color: $dark,
     console-input-background-color: $darker,
@@ -229,6 +230,9 @@ $themes: (
     admonition-border: #22C8ED,
     admonition-background: #105A7F,
     admonition-text: #FFFFFF,
+
+    toast-background-color: $medium-light,
+    toast-text-color: $dark,
   ),
   contrast: (
     logo-color: $yellow,
@@ -255,7 +259,6 @@ $themes: (
     modal-border-color: $middle-dark,
     icon-color: $medium-light,
     icon-hover-color: $yellow,
-    icon-toast-hover-color: $yellow,
     shadow-color: rgba(0, 0, 0, 0.16),
     console-background-color: $dark,
     console-input-background-color: $darker,
@@ -328,9 +331,9 @@ $themes: (
     admonition-border: #22C8ED,
     admonition-background: #000000,
     admonition-text: #ffffff,
+
+    toast-background-color: $medium-light,
+    toast-text-color: $darker,
+
   )
 );
-
-$toast-background-color: $medium-dark;
-$toast-text-color: $lightest;
-

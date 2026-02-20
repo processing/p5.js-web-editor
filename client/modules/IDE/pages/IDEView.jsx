@@ -34,6 +34,7 @@ import IDEOverlays from '../components/IDEOverlays';
 import useIsMobile from '../hooks/useIsMobile';
 import Banner from '../components/Banner';
 import { P5VersionProvider } from '../hooks/useP5Version';
+import { stopSketch } from '../actions/ide';
 
 const BANNER_DISMISS_KEY = 'bannerLastDismissedAt';
 const BANNER_COOLDOWN_MINUTES = 30;
@@ -185,6 +186,17 @@ const IDEView = () => {
       }
     };
   }, [shouldAutosave, dispatch]);
+  const prevIsMobile = useRef(isMobile);
+
+  useEffect(() => {
+    if (prevIsMobile.current !== isMobile) {
+      prevIsMobile.current = isMobile;
+
+      if (ide.isPlaying) {
+        dispatch(stopSketch());
+      }
+    }
+  }, [isMobile, ide.isPlaying, dispatch]);
 
   useEffect(() => {
     const updateInnerWidth = (e) => {
