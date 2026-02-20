@@ -541,6 +541,11 @@
     "ButtonAddToCollectionARIA": "Adicionar à coleção",
     "View": "Ver"
   },
+  "Pagination": {
+    "Next": "Next",
+    "Previous": "Previous",
+    "Of": "of"
+  },
   "SketchList": {
     "Title": "Editor Web p5.js | Meus esboços",
     "AnothersTitle": "Editor Web p5.js | Esboços de {{anotheruser}}",

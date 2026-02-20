@@ -34,15 +34,15 @@
 
 %icon-toast{
 	@include themify() {
-		color: $toast-text-color
+		color: getThemifyVariable('toast-text-color');
 		& g, & path {
-			fill: $toast-text-color
+			fill: getThemifyVariable('toast-text-color');
 		}
 		&:hover {
-			color: getThemifyVariable('icon-toast-hover-color');
+			color: getThemifyVariable('toast-text-color');
 			& g, & path {
 				opacity: 1;
-				fill: getThemifyVariable('icon-toast-hover-color');
+				fill: getThemifyVariable('toast-text-color');
 			}
 		}
 	}
@@ -230,7 +230,7 @@
       background-color: getThemifyVariable('button-background-hover-color');
       color: getThemifyVariable('button-hover-color')
 		}
-		& button, & a {
+		& button, & a, & .tooltip-wrapper button {
       @include themify() {
         color: getThemifyVariable('button-hover-color');
       }

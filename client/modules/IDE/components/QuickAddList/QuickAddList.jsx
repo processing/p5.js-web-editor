@@ -37,6 +37,7 @@ const Item = ({ isAdded, onSelect, name, url }) => {
         className="quick-add__item-view"
         to={url}
         target="_blank"
+        rel="noopener noreferrer"
         onClick={(e) => e.stopPropagation()}
       >
         {t('QuickAddList.View')}
