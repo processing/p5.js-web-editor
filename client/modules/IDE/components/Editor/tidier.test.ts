@@ -60,4 +60,20 @@ describe('tidyCodeWithPrettier', () => {
     expect(newCursor).toBeGreaterThan(0);
     expect(newCursor).toBeLessThanOrEqual(formattedCss.length);
   });
+
+  it('handles an empty document without errors', () => {
+    const cmView = createEditor('');
+    expect(() => tidyCodeWithPrettier(cmView, 'javascript')).not.toThrow();
+    expect(getDocText(cmView)).toBe('');
+  });
+
+  it('leaves the cursor unmoved if the code is already formatted', () => {
+    const cleanCode = 'function foo() {}\n';
+    const cmView = createEditor(cleanCode);
+    cmView.dispatch({ selection: { anchor: 5 } });
+
+    tidyCodeWithPrettier(cmView, 'javascript');
+
+    expect(getCursor(cmView)).toBe(5);
+  });
 });
