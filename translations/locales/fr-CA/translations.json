@@ -116,7 +116,8 @@
       "SketchFailedSave": "Echec de la sauvegarde du croquis.",
       "AutosaveEnabled": "Sauvegarde automatique activée.",
       "LangChange": "Langue changée.",
-      "SettingsSaved": "Paramètres sauvegardés."
+      "SettingsSaved": "Paramètres sauvegardés.",
+      "CloseAlertARIA": "Close Alert"
     },
     "Toolbar": {
       "Preview": "Aperçu",
@@ -127,7 +128,8 @@
       "StopSketchARIA": "Arrêter le croquis",
       "EditSketchARIA": "Éditer le nom du croquis",
       "NewSketchNameARIA": "Nouveau nom de croquis",
-      "By": " par "
+      "By": " par ",
+      "SelectVersionARIA": "Select p5.js version"
     },
     "Console": {
       "Title": "Console",
@@ -521,7 +523,9 @@
     "Pagination": {
       "Next": "Next",
       "Previous": "Previous",
-      "Of": "of"
+      "Of": "of",
+      "PreviousPageARIA": "Previous Page",
+      "NextPageARIA": "Next Page"
     },
     "SketchList": {
       "View": "Voir",
@@ -616,6 +620,9 @@
     },
     "Explorer": {
       "Files": "Fichiers"
+    },
+    "TextArea": {
+      "CopyARIA": "Copy"
     }
   }
   
