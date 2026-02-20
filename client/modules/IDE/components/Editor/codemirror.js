@@ -23,7 +23,6 @@ import tidyCodeWithPrettier from './tidier';
 // ----- GENERAL TODOS (in order of priority) -----
 // - color themes
 // - any features lost in the p5 conversion git merge
-// - javascript color picker (extension works for css but needs to be forked for js)
 // - revisit keymap differences, esp around sublime
 // - emmet doesn't trigger if text is copy pasted in
 // - need to re-implement emmet auto rename tag

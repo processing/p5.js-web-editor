@@ -37,7 +37,6 @@ import {
   indentLess
 } from '@codemirror/commands';
 import { lintGutter } from '@codemirror/lint';
-import { color as colorPicker } from '@uiw/codemirror-extensions-color';
 import {
   expandAbbreviation,
   abbreviationTracker
@@ -53,6 +52,7 @@ import { HTMLHint } from 'htmlhint';
 import { CSSLint } from 'csslint';
 import { emmetConfig } from '@emmetio/codemirror6-plugin';
 
+import { color as colorPicker } from './colorpicker';
 import p5JavaScript from './p5JavaScript';
 import tidyCodeWithPrettier from './tidier';
 import { highlightStyle } from './highlightStyle';
@@ -99,6 +99,7 @@ function getFileLanguage(fileName) {
     case 'xml':
       return xml;
     case 'application/json':
+      console.log('returning json language support');
       return json;
     default:
       return null;
