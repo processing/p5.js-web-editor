@@ -1,8 +1,7 @@
 import React from 'react';
 import thunk from 'redux-thunk';
 import configureStore from 'redux-mock-store';
-import userEvent from '@testing-library/user-event';
-import { reduxRender, screen, act } from '../../../test-utils';
+import { reduxRender, screen, fireEvent, act } from '../../../test-utils';
 import { initialTestState } from '../../../testData/testReduxStore';
 import CollectionItemRow from './CollectionItemRow';
 
@@ -59,9 +58,7 @@ describe('<CollectionItemRow />', () => {
 
   it('shows the remove button when user is the owner', () => {
     subject();
-    expect(
-      screen.getByRole('button', { name: /remove/i })
-    ).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /remove/i })).toBeInTheDocument();
   });
 
   describe('when user is not the owner', () => {
@@ -82,12 +79,11 @@ describe('<CollectionItemRow />', () => {
   });
 
   it('wraps the remove button with a tooltip', async () => {
-    const user = userEvent.setup();
     subject();
 
     const button = screen.getByRole('button', { name: /remove/i });
     await act(async () => {
-      await user.hover(button);
+      fireEvent.mouseEnter(button);
     });
     expect(button).toHaveClass('tooltipped');
   });
