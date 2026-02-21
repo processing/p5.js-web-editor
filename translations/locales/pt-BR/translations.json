@@ -143,7 +143,8 @@
     "IncorrectCurrentPass": "A senha atual está incorreta",
     "DefaultError": "Algo deu errado",
     "UserNotFound": "Usuário não encontrado",
-    "NetworkError": "Erro de rede"
+    "NetworkError": "Erro de rede",
+    "CloseAlertARIA": "Close Alert"
   },
   "Toolbar": {
     "Preview": "Pré-visualização",
@@ -157,7 +158,8 @@
     "By": " por ",
     "CustomLibraryVersion": "Versão personalizada do p5.js",
     "VersionPickerARIA": "Selecionador de versão",
-    "NewVersionPickerARIA": "Novo selecionador de versão"
+    "NewVersionPickerARIA": "Novo selecionador de versão",
+    "SelectVersionARIA": "Select p5.js version"
   },
   "Console": {
     "Title": "Terminal",
@@ -544,7 +546,9 @@
   "Pagination": {
     "Next": "Next",
     "Previous": "Previous",
-    "Of": "of"
+    "Of": "of",
+    "PreviousPageARIA": "Previous Page",
+    "NextPageARIA": "Next Page"
   },
   "SketchList": {
     "Title": "Editor Web p5.js | Meus esboços",
@@ -635,5 +639,8 @@
       "Label": "Privado"
     },
     "Changed": "'{{projectName}}' agora é {{newVisibility}}..."
+  },
+  "TextArea": {
+    "CopyARIA": "Copy"
   }
 }

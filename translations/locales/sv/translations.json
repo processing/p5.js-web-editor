@@ -115,7 +115,8 @@
     "SketchFailedSave": "Misslyckades spara sketch.",
     "AutosaveEnabled": "Autospara aktiverat.",
     "LangChange": "Språk bytt.",
-    "SettingsSaved": "Sparat inställningar."
+    "SettingsSaved": "Sparat inställningar.",
+    "CloseAlertARIA": "Close Alert"
   },
   "Toolbar": {
     "Preview": "Förhandsvisning",
@@ -126,7 +127,8 @@
     "StopSketchARIA": "Stoppa sketch",
     "EditSketchARIA": "Redigera sketchnamn",
     "NewSketchNameARIA": "Nytt sketchnamn",
-    "By": " av "
+    "By": " av ",
+    "SelectVersionARIA": "Select p5.js version"
   },
   "Console": {
     "Title": "Konsoll",
@@ -238,9 +240,9 @@
     "SubmitFeedback": "Skicka feedback",
     "SubmitFeedbackARIA": "skicka-feedback",
     "AddCollectionTitle": "Lägg till i samling",
-    "AddCollectionARIA":"lägg till i samling",
+    "AddCollectionARIA": "lägg till i samling",
     "ShareTitle": "Dela",
-    "ShareARIA":"dela"
+    "ShareARIA": "dela"
   },
   "NewFileModal": {
     "Title": "Skapa fil",
@@ -284,7 +286,7 @@
     "errorShortPassword": "Lösenordet måste vara minst 6 tecken",
     "errorConfirmPassword": "Ange en lösenordsbekräftelse",
     "errorNewPassword": "Ange ett nytt lösenord eller lämna det nuvarande lösenordet tomt.",
-    "errorNewPasswordRepeat":"Your New Password must differ from the current one.",
+    "errorNewPasswordRepeat": "Your New Password must differ from the current one.",
     "errorEmptyUsername": "Ange ett användarnamn.",
     "errorLongUsername": "Användarnamnet får innehålla högst 19 tecken.",
     "errorValidUsername": "Användarnamnet får bara innehålla siffror, bokstäver, punkter, bindestreck och understreck."
@@ -438,7 +440,7 @@
     "Description": "beskrivning",
     "NumSketches": "{{count}} sketch",
     "NumSketches_plural": "{{count}} sketcher",
-    "By":"Samling av ",
+    "By": "Samling av ",
     "NoSketches": "Inga sketcher i samling",
     "TableSummary": "tabell med alla samlingar",
     "HeaderName": "Namn",
@@ -502,7 +504,7 @@
   "Overlay": {
     "AriaLabel": "Stäng {{title}} övre lager"
   },
-  "QuickAddList":{
+  "QuickAddList": {
     "ButtonRemoveARIA": "Ta bort från samling",
     "ButtonAddToCollectionARIA": "Lägg till i samling",
     "View": "Granska"
@@ -510,7 +512,9 @@
   "Pagination": {
     "Next": "Next",
     "Previous": "Previous",
-    "Of": "of"
+    "Of": "of",
+    "PreviousPageARIA": "Previous Page",
+    "NextPageARIA": "Next Page"
   },
   "SketchList": {
     "View": "Granska",
@@ -616,6 +620,8 @@
     "PrivacyPolicy": "Integritetspolicy",
     "TermsOfUse": "Villkor för användning",
     "CodeOfConduct": "Uppförandekod"
+  },
+  "TextArea": {
+    "CopyARIA": "Copy"
   }
 }
-

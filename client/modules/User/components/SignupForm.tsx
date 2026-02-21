@@ -158,7 +158,11 @@ export function SignupForm() {
                       className="form__eye__icon"
                       type="button"
                       onClick={handleVisibility}
-                      aria-hidden="true"
+                      aria-label={t(
+                        showPassword
+                          ? 'SignupForm.HidePasswordARIA'
+                          : 'SignupForm.ShowPasswordARIA'
+                      )}
                     >
                       {showPassword ? (
                         <AiOutlineEyeInvisible />
@@ -194,7 +198,11 @@ export function SignupForm() {
                       className="form__eye__icon"
                       type="button"
                       onClick={handleConfirmVisibility}
-                      aria-hidden="true"
+                      aria-label={t(
+                        showConfirmPassword
+                          ? 'SignupForm.HideConfirmPasswordARIA'
+                          : 'SignupForm.ShowConfirmPasswordARIA'
+                      )}
                     >
                       {showConfirmPassword ? (
                         <AiOutlineEyeInvisible />
