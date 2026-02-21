@@ -26,7 +26,7 @@ const Pagination = ({
             className="page-link"
             onClick={() => onPageChange(page - 1)}
             disabled={page === 1}
-            aria-label="Previous Page"
+            aria-label={t('Pagination.PreviousPageARIA')}
           >
             {t('Pagination.Previous')}
           </button>
@@ -51,7 +51,7 @@ const Pagination = ({
               onPageChange(page + 1);
             }}
             disabled={page === totalPages}
-            aria-label="Next Page"
+            aria-label={t('Pagination.NextPageARIA')}
           >
             {t('Pagination.Next')}
           </button>
