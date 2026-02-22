@@ -87,7 +87,11 @@ export function LoginForm() {
                       className="form__eye__icon"
                       type="button"
                       onClick={handleVisibility}
-                      aria-hidden="true"
+                      aria-label={t(
+                        showPassword
+                          ? 'LoginForm.HidePasswordARIA'
+                          : 'LoginForm.ShowPasswordARIA'
+                      )}
                     >
                       {showPassword ? (
                         <AiOutlineEyeInvisible />

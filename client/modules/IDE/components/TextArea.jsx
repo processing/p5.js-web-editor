@@ -32,7 +32,7 @@ export default function TextArea({ src, className }) {
     <TextAreaWrapper>
       <textarea className={className}>{src}</textarea>
       <CornerButton onClick={copyTextToClipboard}>
-        <CopyIcon aria-label="Copy" />
+        <CopyIcon aria-label={t('TextArea.CopyARIA')} />
       </CornerButton>
     </TextAreaWrapper>
   );

@@ -140,7 +140,8 @@
     "IncorrectCurrentPass": "বর্তমান পাসওয়ার্ডটি ভুল।",
     "DefaultError": "কিছু সমস্যা হয়েছে।",
     "UserNotFound": "ব্যবহারকারী খুঁজে পাওয়া যায়নি",
-    "NetworkError": "নেটওয়ার্ক ত্রুটি"
+    "NetworkError": "নেটওয়ার্ক ত্রুটি",
+    "CloseAlertARIA": "Close Alert"
   },
   "Toolbar": {
     "Preview": "ফলাফল",
@@ -154,7 +155,8 @@
     "By": " দ্বারা ",
     "CustomLibraryVersion": "কাস্টম p5.js সংস্করণ",
     "VersionPickerARIA": "সংস্করণ চয়নকারী",
-    "NewVersionPickerARIA": "সংস্করণ চয়নকারী"
+    "NewVersionPickerARIA": "সংস্করণ চয়নকারী",
+    "SelectVersionARIA": "Select p5.js version"
   },
   "Console": {
     "Title": "কনসোল",
@@ -541,7 +543,9 @@
   "Pagination": {
     "Next": "Next",
     "Previous": "Previous",
-    "Of": "of"
+    "Of": "of",
+    "PreviousPageARIA": "Previous Page",
+    "NextPageARIA": "Next Page"
   },
   "SketchList": {
     "Title": "p5.js ওয়েব এডিটর | আমার স্কেচগুলি",
@@ -632,5 +636,8 @@
       "Label": "ব্যক্তিগত"
     },
     "Changed": "'{{projectName}}' এখন {{newVisibility}}..."
+  },
+  "TextArea": {
+    "CopyARIA": "Copy"
   }
 }
