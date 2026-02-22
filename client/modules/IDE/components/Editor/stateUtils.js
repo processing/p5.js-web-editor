@@ -359,6 +359,15 @@ export function createNewFileState(filename, document, settings) {
   if (fileEmmetConfig) {
     extensions.push(fileEmmetConfig);
     extensions.push(abbreviationTracker());
+    extensions.push(
+      EditorView.domEventHandlers({
+        paste(event, view) {
+          setTimeout(() => {
+            expandAbbreviation(view);
+          }, 0);
+        }
+      })
+    );
     keymaps.push(emmetKeymaps);
   }
 
