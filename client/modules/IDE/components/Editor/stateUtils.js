@@ -44,7 +44,7 @@ import {
 } from '@emmetio/codemirror6-plugin';
 
 import { css } from '@codemirror/lang-css';
-import { html } from '@codemirror/lang-html';
+import { html, autoCloseTags } from '@codemirror/lang-html';
 import { json } from '@codemirror/lang-json';
 import { xml } from '@codemirror/lang-xml';
 import { linter } from '@codemirror/lint';
@@ -52,6 +52,8 @@ import { JSHINT } from 'jshint';
 import { HTMLHint } from 'htmlhint';
 import { CSSLint } from 'csslint';
 import { emmetConfig } from '@emmetio/codemirror6-plugin';
+import { syntaxTree } from '@codemirror/language';
+import { Annotation } from '@codemirror/state';
 
 import p5JavaScript from './p5JavaScript';
 import tidyCodeWithPrettier from './tidier';
@@ -269,6 +271,56 @@ export const AUTOCOMPLETE_OPTIONS = {
   closeOnBlur: false
 };
 
+const tagSyncAnnotation = Annotation.define();
+const tagSyncExtension = EditorView.updateListener.of((update) => {
+  if (!update.docChanged) return;
+  if (update.transactions.some((tr) => tr.annotation(tagSyncAnnotation)))
+    return;
+
+  update.transactions.forEach((tr) => {
+    if (!tr.isUserEvent('input') && !tr.isUserEvent('delete')) return;
+
+    const tree = syntaxTree(update.state);
+    const { doc } = update.state;
+
+    tr.changes.iterChanges((_fromA, _toA, fromB, _toB) => {
+      const node = tree.resolveInner(fromB, -1);
+      if (node.type.name !== 'TagName') return;
+
+      const openTag = node.parent;
+      if (!openTag || openTag.type.name !== 'OpenTag') return;
+
+      const elementNode = openTag.parent;
+      if (!elementNode || elementNode.type.name !== 'Element') return;
+
+      const closeTag =
+        elementNode.getChild('EndTag') ||
+        elementNode.getChild('MismatchedCloseTag');
+      if (!closeTag) return;
+
+      const closeTagName = closeTag.getChild('TagName');
+      if (!closeTagName) return;
+
+      const newTagName = doc.sliceString(node.from, node.to);
+      const currentCloseName = doc.sliceString(
+        closeTagName.from,
+        closeTagName.to
+      );
+
+      if (!newTagName || currentCloseName === newTagName) return;
+
+      update.view.dispatch({
+        changes: {
+          from: closeTagName.from,
+          to: closeTagName.to,
+          insert: newTagName
+        },
+        annotations: tagSyncAnnotation.of(true)
+      });
+    });
+  });
+});
+
 /**
  * Creates a new CodeMirror editor state with configurations,
  * extensions, and keymaps tailored to the file type and settings.
@@ -359,6 +411,10 @@ export function createNewFileState(filename, document, settings) {
   if (fileEmmetConfig) {
     extensions.push(fileEmmetConfig);
     extensions.push(abbreviationTracker());
+    if (getFileMode(filename) === 'html') {
+      extensions.push(autoCloseTags);
+      extensions.push(tagSyncExtension);
+    }
     keymaps.push(emmetKeymaps);
   }
 
