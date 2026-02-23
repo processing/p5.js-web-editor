@@ -1,4 +1,4 @@
-import { EditorState, Compartment } from '@codemirror/state';
+import { EditorState, Compartment, Annotation } from '@codemirror/state';
 import {
   EditorView,
   lineNumbers as lineNumbersExt,
@@ -17,7 +17,8 @@ import {
   foldKeymap,
   bracketMatching,
   indentOnInput,
-  syntaxHighlighting
+  syntaxHighlighting,
+  syntaxTree
 } from '@codemirror/language';
 import {
   autocompletion,
@@ -52,8 +53,6 @@ import { JSHINT } from 'jshint';
 import { HTMLHint } from 'htmlhint';
 import { CSSLint } from 'csslint';
 import { emmetConfig } from '@emmetio/codemirror6-plugin';
-import { syntaxTree } from '@codemirror/language';
-import { Annotation } from '@codemirror/state';
 
 import p5JavaScript from './p5JavaScript';
 import tidyCodeWithPrettier from './tidier';
@@ -293,28 +292,76 @@ const tagSyncExtension = EditorView.updateListener.of((update) => {
       const elementNode = openTag.parent;
       if (!elementNode || elementNode.type.name !== 'Element') return;
 
-      const closeTag =
-        elementNode.getChild('EndTag') ||
-        elementNode.getChild('MismatchedCloseTag');
-      if (!closeTag) return;
-
-      const closeTagName = closeTag.getChild('TagName');
-      if (!closeTagName) return;
-
       const newTagName = doc.sliceString(node.from, node.to);
-      const currentCloseName = doc.sliceString(
-        closeTagName.from,
-        closeTagName.to
-      );
+      if (!newTagName) return;
 
-      if (!newTagName || currentCloseName === newTagName) return;
+      const oldPos = tr.isUserEvent('delete')
+        ? tr.changes.mapPos(fromB, 1)
+        : tr.changes.mapPos(fromB, -1);
+
+      const oldTree = syntaxTree(update.startState);
+      const oldNode = oldTree.resolveInner(oldPos, -1);
+      if (oldNode.type.name !== 'TagName') return;
+
+      const originalTagName = update.startState.doc.sliceString(
+        oldNode.from,
+        oldNode.to
+      );
+      if (!originalTagName || originalTagName === newTagName) return;
+
+      const oldOpenTag = oldNode.parent;
+      if (!oldOpenTag || oldOpenTag.type.name !== 'OpenTag') return;
+
+      const oldElementNode = oldOpenTag.parent;
+      if (!oldElementNode || oldElementNode.type.name !== 'Element') return;
+
+      const oldParentElement = oldElementNode.parent;
+
+      let oldCloseTag = null;
+      let child = oldElementNode.firstChild;
+      while (child) {
+        if (child.type.name === 'EndTag' || child.type.name === 'CloseTag') {
+          oldCloseTag = child;
+          break;
+        }
+        child = child.nextSibling;
+      }
+      if (!oldCloseTag) return;
+
+      let parentHasCloseTag = false;
+      let parentChild = oldParentElement?.firstChild;
+      while (parentChild) {
+        if (
+          parentChild.type.name === 'EndTag' ||
+          parentChild.type.name === 'CloseTag'
+        ) {
+          parentHasCloseTag = true;
+          break;
+        }
+        parentChild = parentChild.nextSibling;
+      }
+      if (!parentHasCloseTag) return;
+
+      const textBetween = update.startState.doc.sliceString(
+        oldOpenTag.to,
+        oldCloseTag.from
+      );
+      const opensInBetween = (
+        textBetween.match(new RegExp(`<${originalTagName}[\\s>]`, 'gi')) || []
+      ).length;
+      const closesInBetween = (
+        textBetween.match(new RegExp(`<\\/${originalTagName}\\s*>`, 'gi')) || []
+      ).length;
+      if (opensInBetween !== closesInBetween) return;
+
+      const oldCloseTagName = oldCloseTag.getChild('TagName');
+      if (!oldCloseTagName) return;
+
+      const newCloseStart = tr.changes.mapPos(oldCloseTagName.from);
+      const newCloseEnd = tr.changes.mapPos(oldCloseTagName.to);
 
       update.view.dispatch({
-        changes: {
-          from: closeTagName.from,
-          to: closeTagName.to,
-          insert: newTagName
-        },
+        changes: { from: newCloseStart, to: newCloseEnd, insert: newTagName },
         annotations: tagSyncAnnotation.of(true)
       });
     });

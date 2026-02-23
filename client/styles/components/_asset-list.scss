@@ -35,6 +35,7 @@
   margin: #{math.div(10, $base-font-size)}rem;
   height: #{math.div(72, $base-font-size)}rem;
   font-size: #{math.div(16, $base-font-size)}rem;
+  text-decoration: underline;
 }
 
 .asset-table__row:nth-child(odd) {
