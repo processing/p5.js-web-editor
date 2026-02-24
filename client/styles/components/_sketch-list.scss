@@ -133,6 +133,47 @@
   }
 }
 
+.pagination {
+  width: 100%;
+  position: absolute;
+  z-index: 1;
+  bottom: 1.5rem;
+  left: 0;
+
+  .pagination-ul {
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+
+    > li {
+      margin: 0 0.2rem;
+
+      .page-link {
+        font-weight: 800;
+        padding: 0 1rem;
+      }
+    }
+
+    .bold-text {
+      font-weight: bold;
+    }
+  }
+
+  .page-link:disabled,
+  .page-item.disabled .page-link {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}
+
+.pagination-overlay {
+  bottom: 1rem;
+}
+
+.pagination-ul > li button:hover {
+  text-decoration: underline;
+}
+
 .sketches-table {
   width: 100%;
 

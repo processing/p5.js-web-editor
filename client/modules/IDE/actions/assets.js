@@ -30,7 +30,10 @@ export function getAssets() {
 export function deleteAssetRequest(assetKey) {
   return async (dispatch) => {
     try {
-      await apiClient.delete(`/S3/${assetKey}`);
+      const path = assetKey.split('/').pop();
+      await apiClient.delete(
+        `/S3/delete?objectKey=${encodeURIComponent(path)}`
+      );
       dispatch(deleteAsset(assetKey));
     } catch (error) {
       dispatch({

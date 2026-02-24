@@ -18,7 +18,7 @@ export default function Toast() {
       <button
         className="toast__close"
         onClick={() => dispatch(hideToast())}
-        aria-label="Close Alert"
+        aria-label={t('Toast.CloseAlertARIA')}
       >
         <ExitIcon focusable="false" aria-hidden="true" />
       </button>
