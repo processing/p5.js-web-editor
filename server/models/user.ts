@@ -286,12 +286,8 @@ userSchema.statics.findByEmailOrUsername = async function findByEmailOrUsername(
     ? options.valueType === 'email'
     : value.indexOf('@') > -1;
 
-  // do the case insensitive stuff
-  if (
-    arguments.length === 2 &&
-    typeof options === 'object' &&
-    options.caseInsensitive
-  ) {
+  // do the case insensitive stuff when explicitly requested via options
+  if (options && typeof options === 'object' && options.caseInsensitive) {
     const query = isEmail ? { email: value } : { username: value };
     const foundUser = await user
       .findOne(query)
