@@ -296,11 +296,12 @@ import CodeMirror from 'codemirror';
   }
 
   // hintsElement is the parent for hints and el is the clicked element within that container
-  function displayHint(name, type, p5, isBlacklistedFunction) {
+  function displayHint(name, type, p5, isBlacklistedFunction, referenceBaseUrl) {
+    const base = referenceBaseUrl || 'https://p5js.org';
+    const refName = typeof p5 === 'string' ? p5 : name;
+
     const linkOrPlaceholder = p5
-      ? `<a href="https://p5js.org/reference/p5/${
-          typeof p5 === 'string' ? p5 : name
-        }" role="link" onclick="event.stopPropagation()" target="_blank">
+      ? `<a href="${base}/reference/p5/${refName}" role="link" onclick="event.stopPropagation()" target="_blank">
       <span class="hint-hidden">open ${name} reference</span>
       <span aria-hidden="true" class="arrow-icon">➔</span>
     </a>`
@@ -323,13 +324,15 @@ import CodeMirror from 'codemirror';
       return `<div class="hint-container">${hintHTML}</div>`;
     }
   }
-
+  
+  
   function getInlineHintSuggestion(cm, focus, token) {
     let tokenLength = token.string.length;
     if (token.string === '.') {
       tokenLength -= 1;
     }
     const name = focus.item?.text;
+
     const suggestionItem = focus.item;
     // builds the remainder of the suggestion excluding what user already typed
     const baseCompletion = `<span class="inline-hinter-suggestion">${suggestionItem.text.slice(
@@ -398,6 +401,8 @@ import CodeMirror from 'codemirror';
     hints.className = 'CodeMirror-hints ' + theme;
     this.selectedHint = data.selectedHint || 0;
 
+    const referenceBaseUrl = completion.options.referenceBaseUrl || 'https://p5js.org';
+
     // Show inline hint
     changeInlineHint(cm, data.list[this.selectedHint]);
 
@@ -428,7 +433,8 @@ import CodeMirror from 'codemirror';
             name,
             cur.item.type,
             cur.item.p5,
-            cur.isBlacklisted
+            cur.isBlacklisted,
+            referenceBaseUrl
           );
         }
 

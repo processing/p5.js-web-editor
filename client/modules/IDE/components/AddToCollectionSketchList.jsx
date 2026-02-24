@@ -4,9 +4,9 @@ import { Helmet } from 'react-helmet';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { addToCollection, removeFromCollection } from '../actions/collections';
-import { getProjects } from '../actions/projects';
-import getSortedSketches from '../selectors/projects';
+import { getProjectsForCollectionList } from '../actions/projects';
 import { Loader } from '../../App/components/Loader';
+import Pagination from './Pagination';
 import QuickAddList from './QuickAddList';
 import {
   CollectionAddSketchWrapper,
@@ -20,7 +20,20 @@ const AddToCollectionSketchList = ({ collection }) => {
 
   const username = useSelector((state) => state.user.username);
 
-  const sketches = useSelector(getSortedSketches);
+  const sketches = useSelector(
+    (state) => state.collectionsListProjects.projects
+  );
+
+  const paginationMeta = useSelector(
+    (state) => state.collectionsListProjects.metadata
+  );
+
+  const q = useSelector((state) => state.search.sketchSearchTerm);
+
+  const hasSketches = () => sketches?.length > 0;
+
+  const [page, setPage] = useState(1);
+  const limit = 10;
 
   // TODO: improve loading state
   const loading = useSelector((state) => state.loading);
@@ -28,8 +41,18 @@ const AddToCollectionSketchList = ({ collection }) => {
   const showLoader = loading && !hasLoadedData;
 
   useEffect(() => {
-    dispatch(getProjects(username)).then(() => setHasLoadedData(true));
-  }, [dispatch, username]);
+    dispatch(
+      getProjectsForCollectionList(username, {
+        page,
+        limit,
+        q
+      })
+    ).finally(() => setHasLoadedData(true));
+  }, [dispatch, username, page, q]);
+
+  useEffect(() => {
+    setPage(1);
+  }, [q]);
 
   const handleCollectionAdd = (sketch) => {
     dispatch(addToCollection(collection.id, sketch.id));
@@ -43,7 +66,8 @@ const AddToCollectionSketchList = ({ collection }) => {
     ...sketch,
     url: `/${username}/sketches/${sketch.id}`,
     isAdded: collection.items.some(
-      (item) => item.projectId === sketch.id && !item.isDeleted
+      (item) =>
+        (item.projectId || item.project?.id) === sketch.id && !item.isDeleted
     )
   }));
 
@@ -55,11 +79,23 @@ const AddToCollectionSketchList = ({ collection }) => {
       return t('AddToCollectionSketchList.NoCollections');
     }
     return (
-      <QuickAddList
-        items={sketchesWithAddedStatus}
-        onAdd={handleCollectionAdd}
-        onRemove={handleCollectionRemove}
-      />
+      <>
+        <QuickAddList
+          items={sketchesWithAddedStatus}
+          onAdd={handleCollectionAdd}
+          onRemove={handleCollectionRemove}
+        />
+        {hasSketches() && (
+          <Pagination
+            page={page}
+            totalPages={paginationMeta.totalPages}
+            onPageChange={setPage}
+            limit={limit}
+            totalSketches={paginationMeta.totalProjects}
+            isOverlay
+          />
+        )}
+      </>
     );
   };
 
@@ -81,7 +117,10 @@ AddToCollectionSketchList.propTypes = {
     name: PropTypes.string.isRequired,
     items: PropTypes.arrayOf(
       PropTypes.shape({
-        projectId: PropTypes.string.isRequired,
+        projectId: PropTypes.string,
+        project: PropTypes.shape({
+          id: PropTypes.string
+        }),
         isDeleted: PropTypes.bool
       })
     )

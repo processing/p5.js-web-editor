@@ -62,6 +62,7 @@
 .overlay__close-button {
   @include icon();
   padding: #{math.div(3, $base-font-size)}rem 0 #{math.div(3, $base-font-size)}rem;
+  margin-left: #{math.div(12, $base-font-size)}rem;
 }
 
 /* Fixed height overlay */

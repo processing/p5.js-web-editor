@@ -174,8 +174,8 @@
 .nav__dropdown {
   @extend %dropdown-open-left;
   display: none;
-  max-height: 60vh;
-  overflow-y: auto;
+  max-height: none;
+  overflow: visible;
   .nav__item--open & {
     display: flex;
   }
@@ -212,12 +212,23 @@
 
 .nav__dropdown-item {
   & button,
-  & a {
+  & a,
+  & .tooltip-wrapper button,
+  & .tooltip-wrapper a {
     width: 100%;
     height: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+
+  &:hover {
+    & .tooltip-wrapper button,
+    & .tooltip-wrapper a {
+      @include themify() {
+        color: getThemifyVariable('button-hover-color');
+      }
+    }
   }
 }
 
@@ -253,6 +264,7 @@
 .nav__keyboard-shortcut {
   font-size: #{math.div(12, $base-font-size)}rem;
   font-family: Inconsololata, monospace;
+  margin-left: auto;
 
   @include themify() {
     color: getThemifyVariable('keyboard-shortcut-color');

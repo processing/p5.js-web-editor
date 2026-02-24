@@ -77,7 +77,7 @@ const VersionPicker = React.forwardRef(({ onChangeVersion }, ref) => {
   return (
     <VersionDropdownMenu
       className="versionPicker"
-      aria-label="Select p5.js version"
+      aria-label={t('Toolbar.SelectVersionARIA')}
       anchor={
         <VersionPickerButton ref={ref}>
           <VersionPickerText>
