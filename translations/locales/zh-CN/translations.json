@@ -107,7 +107,7 @@
     "Examples": "范例",
     "PrivacyPolicy": "隐私政策",
     "TermsOfUse": "使用条款",
-   "CodeOfConduct": "行为准则"
+    "CodeOfConduct": "行为准则"
   },
   "Toast": {
     "OpenedNewSketch": "打开了新项目。",
@@ -115,7 +115,8 @@
     "SketchFailedSave": "项目保存失败。",
     "AutosaveEnabled": "自动保存已打开。",
     "LangChange": "语言已更改",
-    "SettingsSaved": "设置保存成功。"
+    "SettingsSaved": "设置保存成功。",
+    "CloseAlertARIA": "Close Alert"
   },
   "Toolbar": {
     "Preview": "预览",
@@ -126,7 +127,8 @@
     "StopSketchARIA": "停止运行",
     "EditSketchARIA": "修改项目名称",
     "NewSketchNameARIA": "新项目名称",
-    "By": "作者 "
+    "By": "作者 ",
+    "SelectVersionARIA": "Select p5.js version"
   },
   "Console": {
     "Title": "控制台",
@@ -241,9 +243,9 @@
     "SubmitFeedback": "提交反馈",
     "SubmitFeedbackARIA": "提交反馈",
     "AddCollectionTitle": "添加到集合",
-    "AddCollectionARIA":"添加到集合",
+    "AddCollectionARIA": "添加到集合",
     "ShareTitle": "分享",
-    "ShareARIA":"分享"
+    "ShareARIA": "分享"
   },
   "NewFileModal": {
     "Title": "新建文件",
@@ -287,7 +289,7 @@
     "errorShortPassword": "密码至少六位",
     "errorConfirmPassword": "请再次输入密码以确认",
     "errorNewPassword": "请输入一个新密码或保持当前密码为空",
-    "errorNewPasswordRepeat":"Your New Password must differ from the current one.",
+    "errorNewPasswordRepeat": "Your New Password must differ from the current one.",
     "errorEmptyUsername": "请输入一个用户名",
     "errorLongUsername": "用户名至多20位",
     "errorValidUsername": "用户名只能含有数字，字母，和某些标点符号（. - _）。"
@@ -441,7 +443,7 @@
     "Description": "描述",
     "NumSketches": "{{count}} 个项目",
     "NumSketches_plural": "{{count}} 个项目",
-    "By":"集合创建者 ",
+    "By": "集合创建者 ",
     "NoSketches": "集合中没有项目",
     "TableSummary": "包含所有集合的表格",
     "HeaderName": "名称",
@@ -505,7 +507,7 @@
   "Overlay": {
     "AriaLabel": "关闭 {{title}} 覆盖"
   },
-  "QuickAddList":{
+  "QuickAddList": {
     "ButtonRemoveARIA": "从集合中移除",
     "ButtonAddToCollectionARIA": "添加到集合",
     "View": "查看"
@@ -513,7 +515,9 @@
   "Pagination": {
     "Next": "Next",
     "Previous": "Previous",
-    "Of": "of"
+    "Of": "of",
+    "PreviousPageARIA": "Previous Page",
+    "NextPageARIA": "Next Page"
   },
   "SketchList": {
     "View": "查看",
@@ -609,5 +613,8 @@
   },
   "Explorer": {
     "Files": "文件"
+  },
+  "TextArea": {
+    "CopyARIA": "Copy"
   }
 }
