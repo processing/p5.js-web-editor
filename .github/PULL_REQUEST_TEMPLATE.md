@@ -1,8 +1,14 @@
-Fixes #issue-number
+### Issue:
+Fixes # 
+<!-- Please add the issue this relates to, and a provide a brief description of the current state of the codebase and what this PR attempts to fix. -->
 
-Changes:
+### Demo:
+<!-- Please add a screenshot for UI related changes -->
 
-I have verified that this pull request:
+### Changes:
+<!-- Summarise your changes -->
+
+### I have verified that this pull request:
 
 * [ ] has no linting errors (`npm run lint`)
 * [ ] has no test errors (`npm run test`)

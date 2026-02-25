@@ -115,7 +115,8 @@
     "SketchFailedSave": "草稿儲存失敗",
     "AutosaveEnabled": "已啟用自動儲存",
     "LangChange": "已變更語系",
-    "SettingsSaved": "已儲存設定"
+    "SettingsSaved": "已儲存設定",
+    "CloseAlertARIA": "Close Alert"
   },
   "Toolbar": {
     "Preview": "預覽",
@@ -126,7 +127,8 @@
     "StopSketchARIA": "停止",
     "EditSketchARIA": "編輯草稿名稱",
     "NewSketchNameARIA": "新草稿名稱",
-    "By": " 作者： "
+    "By": " 作者： ",
+    "SelectVersionARIA": "Select p5.js version"
   },
   "Console": {
     "Title": "主控台",
@@ -241,9 +243,9 @@
     "SubmitFeedback": "提交回饋資訊",
     "SubmitFeedbackARIA": "提交回饋資訊",
     "AddCollectionTitle": "加入作品集",
-    "AddCollectionARIA":"加入作品即",
+    "AddCollectionARIA": "加入作品即",
     "ShareTitle": "分享",
-    "ShareARIA":"分享"
+    "ShareARIA": "分享"
   },
   "NewFileModal": {
     "Title": "建立檔案",
@@ -287,7 +289,7 @@
     "errorShortPassword": "密碼至少要有 6 個字元",
     "errorConfirmPassword": "請再輸入一次密碼確認正確性",
     "errorNewPassword": "請輸入新密碼或讓目前密碼欄位留空",
-    "errorNewPasswordRepeat":"Your New Password must differ from the current one.",
+    "errorNewPasswordRepeat": "Your New Password must differ from the current one.",
     "errorEmptyUsername": "請輸入使用者名稱",
     "errorLongUsername": "使用者名稱最多只能 20 個字元",
     "errorValidUsername": "使用者名稱只能有數字、字母、英文句點、減號以及底線符號"
@@ -441,7 +443,7 @@
     "Description": "說明",
     "NumSketches": "{{count}} 個草稿",
     "NumSketches_plural": "{{count}} 個草稿",
-    "By":"作品集作者：",
+    "By": "作品集作者：",
     "NoSketches": "作品集中沒有草稿",
     "TableSummary": "作品集彙總表",
     "HeaderName": "名稱",
@@ -505,7 +507,7 @@
   "Overlay": {
     "AriaLabel": "關閉 {{title}} 重疊"
   },
-  "QuickAddList":{
+  "QuickAddList": {
     "ButtonRemoveARIA": "從作品集中移除",
     "ButtonAddToCollectionARIA": "加入作品集",
     "View": "檢視"
@@ -513,7 +515,9 @@
   "Pagination": {
     "Next": "Next",
     "Previous": "Previous",
-    "Of": "of"
+    "Of": "of",
+    "PreviousPageARIA": "Previous Page",
+    "NextPageARIA": "Next Page"
   },
   "SketchList": {
     "View": "檢視",
@@ -609,5 +613,8 @@
   },
   "Explorer": {
     "Files": "檔案"
+  },
+  "TextArea": {
+    "CopyARIA": "Copy"
   }
 }
