@@ -41,7 +41,9 @@ export function ResetPasswordForm() {
                   {...field.input}
                 />
                 {field.meta.touched && field.meta.error && (
-                  <span className="form-error">{field.meta.error}</span>
+                  <span className="form-error" aria-live="polite">
+                    {field.meta.error}
+                  </span>
                 )}
               </p>
             )}
