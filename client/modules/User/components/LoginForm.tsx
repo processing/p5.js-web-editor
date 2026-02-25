@@ -87,7 +87,11 @@ export function LoginForm() {
                       className="form__eye__icon"
                       type="button"
                       onClick={handleVisibility}
-                      aria-hidden="true"
+                      aria-label={t(
+                        showPassword
+                          ? 'LoginForm.HidePasswordARIA'
+                          : 'LoginForm.ShowPasswordARIA'
+                      )}
                     >
                       {showPassword ? (
                         <AiOutlineEyeInvisible />
@@ -105,7 +109,7 @@ export function LoginForm() {
               )}
             </Field>
             {submitError && !modifiedSinceLastSubmit && (
-              <span className="form-error">
+              <span className="form-error" aria-live="assertive">
                 {t('LoginForm.Errors.invalidCredentials')}
               </span>
             )}

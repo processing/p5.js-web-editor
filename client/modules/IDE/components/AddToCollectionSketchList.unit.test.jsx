@@ -119,7 +119,9 @@ describe('<AddToCollectionSketchList />', () => {
 
     const before = requestCount;
 
-    fireEvent.click(screen.getByRole('button', { name: 'Next Page' }));
+    fireEvent.click(
+      screen.getByRole('button', { name: 'Pagination.NextPageARIA' })
+    );
 
     await waitFor(() => {
       expect(requestCount).toBeGreaterThan(before);
@@ -134,7 +136,7 @@ describe('<AddToCollectionSketchList />', () => {
     await screen.findByText('page1-sketch-1');
 
     expect(
-      screen.getByRole('button', { name: 'Previous Page' })
+      screen.getByRole('button', { name: 'Pagination.PreviousPageARIA' })
     ).toBeDisabled();
   });
 
@@ -165,7 +167,7 @@ describe('<AddToCollectionSketchList />', () => {
     await screen.findByText('AddToCollectionSketchList.NoCollections');
 
     expect(
-      screen.queryByRole('button', { name: 'Next Page' })
+      screen.queryByRole('button', { name: 'Pagination.NextPageARIA' })
     ).not.toBeInTheDocument();
   });
 
@@ -253,13 +255,17 @@ describe('<AddToCollectionSketchList />', () => {
     let info = document.querySelector('.pagination-info');
     expect(info.textContent.replace(/\s+/g, ' ').trim()).toContain('1 - 10');
 
-    fireEvent.click(screen.getByRole('button', { name: 'Next Page' }));
+    fireEvent.click(
+      screen.getByRole('button', { name: 'Pagination.NextPageARIA' })
+    );
     await screen.findByText('page2-sketch-1');
 
     info = document.querySelector('.pagination-info');
     expect(info.textContent.replace(/\s+/g, ' ').trim()).toContain('11 - 20');
 
-    fireEvent.click(screen.getByRole('button', { name: 'Next Page' }));
+    fireEvent.click(
+      screen.getByRole('button', { name: 'Pagination.NextPageARIA' })
+    );
     await screen.findByText('page3-sketch-1');
 
     info = document.querySelector('.pagination-info');

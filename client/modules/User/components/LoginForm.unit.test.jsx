@@ -47,7 +47,7 @@ describe('<LoginForm/>', () => {
     const passwordTextElement = screen.getByText(/password/i);
     expect(passwordTextElement).toBeInTheDocument();
 
-    const passwordInputElement = screen.getByLabelText(/password/i);
+    const passwordInputElement = screen.getByLabelText(/^password$/i);
     expect(passwordInputElement).toBeInTheDocument();
 
     const loginButtonElement = screen.getByRole('button', {
@@ -67,7 +67,7 @@ describe('<LoginForm/>', () => {
       }
     });
 
-    const passwordElement = screen.getByLabelText(/password/i);
+    const passwordElement = screen.getByLabelText(/^password$/i);
 
     fireEvent.change(passwordElement, {
       target: {
