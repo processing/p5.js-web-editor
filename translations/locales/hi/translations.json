@@ -1,445 +1,20 @@
 {
-    "Nav": {
-      "File": {
-        "Title": "फाइल",
-        "New": "नई",
-        "Share": "भेजें",
-        "Duplicate": "प्रतिलिपि बनाएँ",
-        "Open": "खोलें",
-        "Download": "डाउनलोड",
-        "AddToCollection": "संग्रह में जोड़ें",
-        "Examples": "उदाहरण"
-      },
-      "Edit": {
-        "Title": "संपादित करे",
-        "TidyCode": "कोड साफ़ करें",
-        "Find": "खोज",
-        "Replace": "बदली करें"
-      },
-      "Sketch": {
-        "Title": "चित्र",
-        "AddFile": "फाइल जोड़ें",
-        "AddFolder": "फोल्डर जोड़ें",
-        "Run": "चलाएं",
-        "Stop": "रोकें"
-      },
-     "Help": {
-      "Title": "मदद",
-      "KeyboardShortcuts": "कीबोर्ड शॉर्टकट",
-      "Reference": "रिफरेन्स",
-      "ReportBug": "बग रिपोर्ट करें",
-      "ChatOnDiscord": "डिस्कॉर्ड पर चैट करें",
-      "PostOnTheForum": "फ़ोरम पर पोस्ट करें"
-    },
-      "Lang": "भाषा",
-      "BackEditor": "एडिटर पर वापस जाएं",
-      "WarningUnsavedChanges": "क्या आप इस पेज को छोड़ना चाहते हैं? आपके पास अनसेव्ड परिवर्तन हैं।",
-      "Login": "लॉग इन",
-      "LoginOr": "या",
-      "SignUp": "साइन अप",
-      "Auth": {
-        "Welcome": "स्वागत है",
-        "Hello": "नमस्ते",
-        "MyAccount": "मेरा अकाउंट",
-        "My": "मेरा",
-        "MySketches": "मेरे स्केच",
-        "MyCollections": "मेरे संग्रह",
-        "Asset": "संपत्ति",
-        "MyAssets": "मेरी संपत्तियाँ",
-        "LogOut": "लॉग आउट"
-      }
-    },
-    "Banner": {
-      "Copy": "<bold>Donate Today!</bold> Support p5.js and the Processing Foundation."
-    },
-    "CodemirrorFindAndReplace": {
-      "ToggleReplace": "टॉगल बदली करें",
-      "Find": "खोज",
-      "FindPlaceholder": "फ़ाइलों में खोजें",
-      "Replace": "बदली करें",
-      "ReplaceAll": "सबको बदली करें",
-      "ReplacePlaceholder": "बदलने के लिए पाठ",
-      "Regex": "रेगुलर एक्सप्रेशन",
-      "CaseSensitive": "केस सेंसिटिव",
-      "WholeWords": "संपूर्ण शब्द",
-      "Previous": "पिछला",
-      "Next": "अगला",
-      "NoResults": "कोई परिणाम नहीं",
-      "Close": "बंद करे"
-    },
-    "LoginForm": {
-      "UsernameOrEmail": "ईमेल या यूजरनेम",
-      "UsernameOrEmailARIA": "ईमेल या यूजरनेम",
-      "Password": "पासवर्ड",
-      "PasswordARIA": "पासवर्ड",
-      "Submit": "लॉग इन",
-        "Errors": {
-          "invalidCredentials": "अमान्य ईमेल या पासवर्ड।"
-        }
-    },
-    "LoginView": {
-      "Title": "p5.js वेब एडिटर | लॉग इन",
-      "Login": "लॉग इन",
-      "LoginOr": "या",
-      "SignUp": "साइन अप",
-      "Email": "ईमेल",
-      "Username": "यूजरनेम",
-      "DontHaveAccount": "अकाउंट नहीं है? ",
-      "ForgotPassword": "पासवर्ड भूल गए? ",
-      "ResetPassword": "पासवर्ड रीसेट करें"
-    },
-    "SocialAuthButton": {
-      "Connect": "कनेक्ट {{serviceauth}} अकाउंट",
-      "Unlink": "अनलिंक {{serviceauth}} अकाउंट",
-      "Login": "{{serviceauth}} से लोगिन करें",
-      "LogoARIA": "{{serviceauth}} प्रतीक चिन्ह"
-    },
-    "About": {
-      "Title": "के बारे में",
-      "TitleHelmet": "p5.js वेब एडिटर | के बारे में",
-      "Headline": "p5.js एडिटर के साथ p5.js स्केच बनाएं, शेयर करें और रीमिक्स करें।",
-      "IntroDescription1": "p5.js एक मुफ्त, ओपन-सोर्स जावास्क्रिप्ट लाइब्रेरी है जिससे कोडिंग सीखने और कला बनाने में मदद मिलती है। p5.js एडिटर का उपयोग करके, आप बिना कुछ भी डाउनलोड या कॉन्फ़िगर किए p5.js स्केच बना सकते हैं, शेयर कर सकते हैं और रीमिक्स कर सकते हैं।",
-      "IntroDescription2": "हमारा मानना है कि सॉफ़्टवेयर और इसे सीखने के उपकरण यथासंभव खुले और समावेशी होने चाहिए। आप प्रोसेसिंग फाउंडेशन को दान करके इस कार्य का समर्थन कर सकते हैं, जो संगठन p5.js का समर्थन करता है। आपका दान p5.js के लिए सॉफ़्टवेयर विकास, कोड उदाहरण और ट्यूटोरियल जैसे शिक्षा संसाधन, फेलोशिप और सामुदायिक कार्यक्रमों का समर्थन करता है।",
-      "Contribute": "योगदान",
-      "NewP5": "p5.js पर नये?",
-      "Report": "बग रिपोर्ट",
-      "Learn": "सीखें",
-      "WebEditor": "वेब संपादक",
-      "Resources": "साधन",
-      "Libraries": "लाइब्रेरीज़",
-      "Forum": "समूह",
-      "Examples": "उदाहरण",
-      "Home": "होम",
-      "Twitter": "ट्विटर",
-      "Instagram": "इंस्टाग्राम",
-      "Discord": "डिस्कॉर्ड",
-      "PrivacyPolicy": "गोपनीयता नीति",
-      "TermsOfUse": "उपयोग की शर्तें",
-      "CodeOfConduct": "आचार संहिता",
-      "DiscordCTA": "डिस्कॉर्ड से जुड़ें",
-      "ForumCTA": "समूह से जुड़ें",
-      "Socials": "सोशल मीडिया",
-      "Email": "ईमेल",
-      "Youtube": "यूट्यूब",
-      "Github": "गिटहब",
-      "Reference": "रेफरेंस",
-      "Donate": "दान करें",
-      "GetInvolved": "शामिल हों",
-      "X": "एक्स",
-      "LinkDescriptions": {
-        "Home": "p5.js और हमारे समुदाय के बारे में अधिक जानें।",
-        "Examples": "संक्षिप्त उदाहरणों के साथ p5.js की संभावनाओं का पता लगाएं।",
-        "CodeOfConduct": "हमारी सामुदायिक स्थिति और आचार संहिता पढ़ें।",
-        "Libraries": "समुदाय द्वारा बनाई गई लाइब्रेरीज़ के साथ p5.js की संभावनाओं का विस्तार करें।",
-        "Reference": "p5.js कोड के हर हिस्से के लिए आसान व्याख्याएं खोजें।",
-        "Donate": "प्रोसेसिंग फाउंडेशन को दान देकर इस काम का समर्थन करें।",
-        "Contribute": "गिटहब पर ओपन-सोर्स p5.js एडिटर में योगदान दें।",
-        "Report": "p5.js एडिटर के साथ टूटे या गलत व्यवहार की रिपोर्ट करें।",
-        "Forum": "समुदाय द्वारा बनाई गई लाइब्रेरीज़ के साथ p5.js की संभावनाओं का विस्तार करें।",
-        "Discord": "समुदाय द्वारा बनाई गई लाइब्रेरीज़ के साथ p5.js की संभावनाओं का विस्तार करें।"
-      }
-    },
-    "Toast": {
-      "OpenedNewSketch": "नया स्केच खोला",
-      "SketchSaved": "स्केच सेव किया",
-      "SketchFailedSave": "स्केच सेव करने में असमर्थ",
-      "AutosaveEnabled": "ऑटोसेव चालू",
-      "LangChange": "भाषा बदली",
-      "SettingsSaved": "सेटिंग्स सेव की",
-      "EmptyCurrentPass": "वर्तमान पासवर्ड फ़ील्ड खाली है",
-      "IncorrectCurrentPass": "वर्तमान पासवर्ड गलत है ",
-      "DefaultError":"कुछ गलत हो गया",
-      "UserNotFound": "उपयोगकर्ता नहीं मिला",
-      "NetworkError": "नेटवर्क त्रुटि",
-      "CloseAlertARIA": "Close Alert"
-    },
-    "Toolbar": {
-      "Preview": "पूर्वावलोकन",
-      "Auto-refresh": "ऑटो-रिफ़्रेश",
-      "OpenPreferencesARIA": "प्राथमिकताएँ खोलें",
-      "PlaySketchARIA": "स्केच चलाएं",
-      "PlayOnlyVisualSketchARIA": "केवल दृश्य स्केच चलाएं",
-      "StopSketchARIA": "स्केच बंद करे",
-      "EditSketchARIA": "स्केच का नाम संपादित करें",
-      "NewSketchNameARIA": "नया स्केच नाम",
-      "By": " द्वारा ",
-      "CustomLibraryVersion": "कस्टम p5.js संस्करण",
-      "VersionPickerARIA": "संस्करण चयनकर्ता",
-      "NewVersionPickerARIA": "संस्करण चयनकर्ता",
-      "SelectVersionARIA": "Select p5.js version"
-    },
-    "Console": {
-      "Title": "कंसोल",
-      "Clear": "साफ़ करें",
-      "ClearARIA": "कंसोल साफ़ करें",
-      "Close": "बंद करें",
-      "CloseARIA": "कंसोल बंद करें",
+  "Nav": {
+    "File": {
+      "Title": "फाइल",
+      "New": "नई",
+      "Share": "भेजें",
+      "Duplicate": "प्रतिलिपि बनाएँ",
       "Open": "खोलें",
-      "OpenARIA": "कंसोल खोलें"
-    },
-    "Preferences": {
-      "Settings": "सेटिंग्स",
-      "GeneralSettings": "सामान्य सेटिंग्स",
-      "Accessibility": "ऐक्सेसबिलिटी",
-      "LibraryManagement": "लाइब्रेरी प्रबंधन",
-      "Theme": "थीम",
-      "LightTheme": "लाइट",
-      "LightThemeARIA": "लाइट थीम चालू",
-      "DarkTheme": "डार्क",
-      "DarkThemeARIA": "डार्क थीम चालू",
-      "HighContrastTheme": "ज़्यादा कंट्रास्ट",
-      "HighContrastThemeARIA": "ज़्यादा कंट्रास्ट थीम चालू",
-      "TextSize": "शब्दों का साइज",
-      "DecreaseFont": "कम करें",
-      "DecreaseFontARIA": "फॉन्ट साइज़ कम करें",
-      "IncreaseFont": "बढ़ाएं",
-      "IncreaseFontARIA": "फॉन्ट साइज़ बढ़ाएं",
-      "FontSize": "फ़ॉन्ट आकार",
-      "SetFontSize": "फ़ॉन्ट आकार सेट करें",
-      "Autosave": "ऑटोसेव",
-      "On": "चालू",
-      "AutosaveOnARIA": "ऑटोसेव चालू",
-      "Off": "बंद",
-      "AutosaveOffARIA": "ऑटोसेव बंद",
-      "AutocloseBracketsQuotes": "ऑटोक्लोज ब्रैकिट और क्वोट",
-      "AutocloseBracketsQuotesOnARIA": "ऑटोक्लोज ब्रैकिट और क्वोट चालू",
-      "AutocloseBracketsQuotesOffARIA": "ऑटोक्लोज ब्रैकिट और क्वोट बंद",
-      "AutocompleteHinter": "ऑटोकम्प्लीट हिंटर",
-      "AutocompleteHinterOnARIA": "ऑटोकम्प्लीट हिंटर चालू",
-      "AutocompleteHinterOffARIA": "ऑटोकम्प्लीट हिंटर बंद",
-      "WordWrap": "वर्ड रैप",
-      "WordWrapOnARIA": "वर्डरैप चालू",
-      "WordWrapOffARIA": "वर्डरैप बंद",
-      "LineNumbers": "लाइन नम्बर्ज़",
-      "LineNumbersOnARIA": "लाइन नम्बर्ज़ चालू",
-      "LineNumbersOffARIA": "लाइन नम्बर्ज़ बंद",
-      "LintWarningSound": "लिन्ट वॉर्निंग साउन्ड",
-      "LintWarningOnARIA": "लिन्ट वॉर्निंग चालू",
-      "LintWarningOffARIA": "लिन्ट वॉर्निंग बंद",
-      "PreviewSound": "प्रीव्यू साउन्ड",
-      "PreviewSoundARIA": "प्रीव्यू साउन्ड",
-      "AccessibleTextBasedCanvas": "ऐक्सेसबल टेक्स्ट-आधारित कैन्वस",
-      "UsedScreenReader": "स्क्रीन रीडर के साथ उपयोग किया",
-      "PlainText": "प्लेन-टेक्स्ट",
-      "TextOutputARIA": "टेक्स्ट आउटपुट चालू",
-      "TableText": "टेबल-टेक्स्ट",
-      "TableOutputARIA": "टेबल आउटपुट चालू",
-      "LibraryVersion": "p5.js संस्करण",
-      "LibraryVersionInfo": "p5.js का एक [नया 2.0 संस्करण](https://github.com/processing/p5.js/releases/) उपलब्ध है! यह अगस्त 2026 में डिफ़ॉल्ट बन जाएगा, इसलिए इस समय का उपयोग इसे आज़माने और बग्स की रिपोर्ट करने के लिए करें। क्या आप 1.x से 2.0 में स्केच को स्थानांतरित करने में रुचि रखते हैं? [संगतता और स्थानांतरण संसाधनों](https://github.com/processing/p5.js-compatibility) को देखें।",
-      "SoundAddon": "p5.sound.js Add-on लाइब्रेरी",
-      "PreloadAddon": "p5.js 1.x Compatibility Add-on लाइब्रेरी — प्रीलोड",
-      "ShapesAddon": "p5.js 1.x Compatibility Add-on लाइब्रेरी — आकार",
-      "DataAddon": "p5.js 1.x Compatibility Add-on लाइब्रेरी — डेटा संरचनाएँ"
-    },
-    "KeyboardShortcuts": {
-      "Title": " कीबोर्ड शॉर्टकट",
-      "ShortcutsFollow": "कोड संपादन कीबोर्ड शॉर्टकट अनुसरण करते हैं",
-      "SublimeText": "सबलाइम टेक्स्ट शॉर्टकट",
-      "CodeEditing": {
-        "Tidy": "साफ",
-        "FindText": "शब्द ढूंढे",
-        "FindNextMatch": "अगला मिलान खोजें",
-        "FindPrevMatch": "पिछला मिलान ढूंढें",
-        "ReplaceTextMatch": "शब्द मिलान बदलें",
-        "IndentCodeLeft": "इंडेंट कोड लेफ्ट",
-        "IndentCodeRight": "इंडेंट कोड राइट",
-        "CommentLine": "टिप्पणी लाइन",
-        "FindNextTextMatch": "अगला शब्द मिलान खोजें",
-        "FindPreviousTextMatch": "पिछला शब्द मिलान खोजें",
-        "CodeEditing": "कोड संपादन",
-        "ColorPicker": "इनलाइन कलर पिकर दिखाएँ",
-        "CreateNewFile": "नया फ़ाइल बनाएँ"
-
-      },
-      "General": "सामान्य",
-      "GeneralSelection": {
-        "StartSketch": "स्केच शुरू करें",
-        "StopSketch": "स्केच रोकें",
-        "TurnOnAccessibleOutput": "सुलभ आउटपुट चालू करें",
-        "TurnOffAccessibleOutput": "सुलभ आउटपुट बंद करें",
-        "Reference": "हिंटर में चुने गए आइटम के लिए रेफरेंस जाएँ"
-      }
-    },
-    "Sidebar": {
-      "Title": "स्केच फ़ाइलें",
-      "ToggleARIA": "खुले / बंद स्केच विकल्प टॉगल करें",
-      "AddFolder": "फ़ोल्डर बनाएँ",
-      "AddFolderARIA": "फ़ोल्डर जोड़ें",
-      "AddFile": "फ़ाइल बनाएँ",
-      "AddFileARIA": "फ़ाइल जोड़ें",
-      "UploadFile": "फ़ाइल अपलोड करें",
-      "UploadFileARIA": "फ़ाइल अपलोड करें"
-    },
-    "FileNode": {
-      "OpenFolderARIA": "फ़ोल्डर सामग्री खोलें",
-      "CloseFolderARIA": "फ़ोल्डर सामग्री बंद करें",
-      "ToggleFileOptionsARIA": "खुले / बंद फ़ाइल विकल्प टॉगल करें",
-      "AddFolder": "फ़ोल्डर बनाएँ",
-      "AddFolderARIA": "फ़ोल्डर जोड़ें",
-      "AddFile": "फ़ाइल बनाएँ",
-      "AddFileARIA": "फ़ाइल जोड़ें",
-      "UploadFile": "फ़ाइल अपलोड करें",
-      "UploadFileARIA": "फ़ाइल अपलोड करें",
-      "Rename": "नाम बदलने",
-      "Delete": "मिटाना"
-    },
-    "Common": {
-      "SiteName": "p5.js वेब एडिटर",
-      "Error": "ग़लती",
-      "ErrorARIA": "ग़लती",
-      "Save": "सेव",
-      "p5logoARIA": "p5.js लोगो",
-      "DeleteConfirmation": "क्या आप पक्का {{name}} को डिलीट करना चाहते हैं?"
-    },
-    "IDEView": {
-      "SubmitFeedback": "प्रतिपुष्टि दें",
-      "SubmitFeedbackARIA": "प्रतिपुष्टि दें",
-      "AddCollectionTitle": "संग्रह में जोड़े",
-      "AddCollectionARIA":"संग्रह में जोड़े",
-      "ShareTitle": "शेयर",
-      "ShareARIA":"शेयर"
-    },
-    "NewFileModal": {
-      "Title": "फ़ाइल बनाएँ",
-      "CloseButtonARIA": "नई फ़ाइल मोडल बंद करें",
-      "EnterName": "कृपया एक नाम दर्ज करें",
-      "InvalidType": "अमान्य फ़ाइल प्रकार। मान्य एक्सटेंशन हैं .js, .css, .json, .xml, .stl, .txt, .csv, .tsv, .mtl, .frag, और .vert."
-    },
-    "NewFileForm": {
-      "AddFileSubmit": "फाइल जोडें",
-      "Placeholder": "नाम"
-    },
-    "NewFolderModal": {
-      "Title": "फोल्डर बनाएं",
-      "CloseButtonARIA": "नया फ़ोल्डर मोडल बंद करें",
-      "EnterName": "कृपया नाम दर्ज करें",
-      "EmptyName": "फ़ोल्डर नाम में केवल रिक्त स्थान नहीं हो सकते",
-      "InvalidExtension": "फ़ोल्डर नाम में एक्सटेंशन नहीं हो सकता"
-    },
-    "NewFolderForm": {
-      "AddFolderSubmit": "फोल्डर जोड़ें",
-      "Placeholder": "नाम"
-    },
-    "ResetPasswordForm": {
-      "Email": "रेजिस्ट्रेशन के लिए उपयोग किया गया ईमेल",
-      "EmailARIA": "ईमेल",
-      "Submit": "पासवर्ड रीसेट ईमेल भेजें"
-    },
-    "ResetPasswordView": {
-      "Title": "p5.js वेब एडिटर | रीसेट पासवर्ड",
-      "Reset": "अपना पासवर्ड रीसेट करें",
-      "Submitted": "आपका पासवर्ड रीसेट ईमेल शीघ्र ही आ जाना चाहिए। यदि ईमेल ना दिखे, तो अपने स्पैम फ़ोल्डर जांचें।",
-      "Login": "लॉग इन",
-      "LoginOr": "या",
-      "SignUp": "साइन अप"
-    },
-    "ReduxFormUtils": {
-      "errorInvalidEmail": "कृपया वैध ईमेल एड्रेस लिखें",
-      "errorEmptyEmail": "कृपया ईमेल एड्रेस लिखें",
-      "errorPasswordMismatch": "पासवर्डों को मेल खाना अनिवार्य है",
-      "errorEmptyPassword": "कृपया पासवर्ड लिखें",
-      "errorShortPassword": "पासवर्ड कम से कम ६ अक्षरों का होना चाहिए",
-      "errorConfirmPassword": "कृपया पासवर्ड कान्फर्मेशन दर्ज करें",
-      "errorNewPassword": "कृपया एक नया पासवर्ड दर्ज करें या वर्तमान पासवर्ड को खाली छोड़ दें।",
-      "errorEmptyUsername": "कृपया यूजरनेम लिखें",
-      "errorLongUsername": "यूजरनेम २० अक्षरों से कम होना चाहिए।",
-      "errorValidUsername": "यूजरनेम में केवल संख्या, अक्षर, पिरीअड्, डैश और अंडरस्कोर शामिल होना चाहिए।",
-      "errorNewPasswordRepeat":"नया पासवर्ड वर्तमान पासवर्ड से भिन्न होना चाहिए।."
-
-    },
-    "NewPasswordView": {
-      "Title": "p5.js वेब एडिटर | नया पासवर्ड",
-      "Description": "नया पासवर्ड सेट करें",
-      "TokenInvalidOrExpired":"पासवर्ड रीसेट टोकन अमान्य है या एक्सपायर हो गया है।",
-      "EmptyPassword": "कृपया पासवर्ड दर्ज करें",
-      "PasswordConfirmation": "कृपया पासवर्ड कान्फर्मेशन दर्ज करें",
-      "PasswordMismatch": "पासवर्डों को मेल खाना अनिवार्य है"
-    },
-    "AccountForm": {
-      "Email": "ईमेल",
-      "EmailARIA": "ईमेल",
-      "Unconfirmed": "कन्फर्म नहीं है",
-      "EmailSent": "कान्फर्मेशन भेज दिया, अपना ईमेल देखें",
-      "Resend": "कान्फर्मेशन ईमेल दोबारा भेजें",
-      "UserName": "यूजरनेम",
-      "UserNameARIA": "यूजरनेम",
-      "CurrentPassword": "वर्तमान पासवर्ड",
-      "CurrentPasswordARIA": "वर्तमान पासवर्ड",
-      "NewPassword": "नया पासवर्ड",
-      "NewPasswordARIA": "नया पासवर्ड",
-      "SaveAccountDetails": "खाता विवरण सहेजें"
-    },
-    "AccountView": {
-      "SocialLogin": "सामाजिक लॉग इन",
-      "SocialLoginDescription": "p5.js वेब संपादक में लॉग इन करने के लिए अपने GitHub या Google खाते का उपयोग करें।",
-      "Title": "p5.js वेब संपादक | खाता सेटिंग्स",
-      "Settings": "मेरा खाता",
-      "AccountTab": "खाता",
-      "AccessTokensTab": "टोकन का उपयोग"
-    },
-    "APIKeyForm": {
-      "ConfirmDelete": "क्या आप वाकई {{key_label}} को डिलीट करना चाहते हैं ?",
-      "Summary": "पर्सनल एक्सेस टोकन पासवर्ड की तरह काम करते हैं और ऑटोमेटिड स्क्रिप्ट को एडिटर API की अनुमति देते हैं।\n प्रत्येक स्क्रिप्ट जिसे एक्सेस की आवश्यकता है, उसके लिए एक टोकन बनाएं।",
-      "CreateToken": "नया टोकन बनाएं",
-      "TokenLabel": "यह टोकन किस लिए है?",
-      "TokenPlaceholder": "यह टोकन किस लिए है? उदाहरण इम्पोर्ट स्क्रिप्ट",
-      "CreateTokenSubmit": "बनाएँ",
-      "NoTokens": "आपके पास कोई मौजूदा टोकन नहीं है।",
-      "NewTokenTitle": "आपका नया एक्सेस टोकन",
-      "NewTokenInfo": "अपना नया पर्सनल एक्सेस टोकन कॉपी करना सुनिश्चित करें।\n आप इसे फिर से नहीं देख पाएंगे!",
-      "ExistingTokensTitle": "मौजूदा टोकन"
-    },
-    "APIKeyList": {
-      "Name": "नाम",
-      "Created": "बनाने की तारीख",
-      "LastUsed": "आखरी इस्तेमाल",
-      "Actions": "ऐक्शन्ज़",
-      "Never": "कभी नहीं",
-      "DeleteARIA": "डिलीट API Key"
-    },
-    "NewPasswordForm": {
-      "Title": "पासवर्ड",
-      "TitleARIA": "पासवर्ड",
-      "ConfirmPassword": "कन्फर्म पासवर्ड",
-      "ConfirmPasswordARIA": "कन्फर्म पासवर्ड",
-      "SubmitSetNewPassword": "नया पासवर्ड सेट करें"
-    },
-    "SignupForm": {
-      "Title": "यूजरनेम",
-      "TitleARIA": "यूजरनेम",
-      "Email": "ईमेल",
-      "EmailARIA": "ईमेल",
-      "Password": "पासवर्ड",
-      "PasswordARIA": "पासवर्ड",
-      "ConfirmPassword": "कन्फर्म पासवर्ड",
-      "ConfirmPasswordARIA": "कन्फर्म पासवर्ड",
-      "SubmitSignup": "साइन अप"
-    },
-    "SignupView": {
-      "Title": "p5.js वेब एडिटर | साइन अप",
-      "Description": "साइन अप",
-      "Or": "या",
-      "AlreadyHave": "पहले से ही अकाउंट है?",
-      "Login": "लॉग इन",
-      "Warning": "साइन अप करके, आप p5.js संपादक की उपयोग की <0>शर्तों</0> और <1>गोपनीयता नीति</1> से सहमत होते हैं।"
-    },
-    "EmailVerificationView": {
-      "Title": "p5.js वेब एडिटर | ईमेल वेरीफिकेशन",
-      "Verify": "अपना ईमेल व्हेरिफाय करें",
-      "InvalidTokenNull": "वह लिंक अमान्य है।",
-      "Checking": "टोकन की पुष्टि की जा रही है, कृपया प्रतीक्षा करें...",
-      "Verified": "सबकुछ ठीक है। आपके ईमेल का पुष्टीकरण हो चुका है।",
-      "InvalidState": "टोकन अमान्य है या समाप्त हो गया है।"
-    },
-    "AssetList": {
-      "Title": "p5.js वेब एडिटर | मेरे ऐसेट",
-      "ToggleOpenCloseARIA": "टॉगल ओपेन/क्लोज़ ऐसेट ऑप्शन्ज़",
-      "Delete": "डिलीट",
-      "OpenNewTab": "नये टैब में खोलें",
-      "NoUploadedAssets": "कोई ऐसेट अपलोड नही की।",
-      "HeaderName": "नाम",
-      "HeaderSize": "साइज़",
-      "HeaderSketch": "स्केच"
+      "Download": "डाउनलोड",
+      "AddToCollection": "संग्रह में जोड़ें",
+      "Examples": "उदाहरण",
+      "SaveTooltipUnauthenticated": "Log in to save your sketch",
+      "DuplicateTooltipUnauthenticated": "Log in to duplicate this sketch",
+      "OpenTooltipUnauthenticated": "Log in to open your sketches",
+      "AddToCollectionTooltipUnauthenticated": "Log in to add to collections",
+      "ShareTooltipUnsaved": "Save your sketch before sharing",
+      "DownloadTooltipUnsaved": "Save your sketch before downloading"
     },
     "Edit": {
       "Title": "संपादित करे",
@@ -454,23 +29,476 @@
       "Run": "चलाएं",
       "Stop": "रोकें"
     },
-    
+    "Help": {
+      "Title": "मदद",
+      "KeyboardShortcuts": "कीबोर्ड शॉर्टकट",
+      "Reference": "रिफरेन्स",
+      "ReportBug": "बग रिपोर्ट करें",
+      "ChatOnDiscord": "डिस्कॉर्ड पर चैट करें",
+      "PostOnTheForum": "फ़ोरम पर पोस्ट करें"
+    },
+    "Lang": "भाषा",
     "BackEditor": "एडिटर पर वापस जाएं",
     "WarningUnsavedChanges": "क्या आप इस पेज को छोड़ना चाहते हैं? आपके पास अनसेव्ड परिवर्तन हैं।",
     "Login": "लॉग इन",
     "LoginOr": "या",
     "SignUp": "साइन अप",
     "Auth": {
+      "Welcome": "स्वागत है",
       "Hello": "नमस्ते",
       "MyAccount": "मेरा अकाउंट",
+      "My": "मेरा",
       "MySketches": "मेरे स्केच",
       "MyCollections": "मेरे संग्रह",
-      "MyAssets": "मेरे ऐसेट",
+      "Asset": "संपत्ति",
+      "MyAssets": "मेरी संपत्तियाँ",
       "LogOut": "लॉग आउट"
+    }
+  },
+  "Banner": {
+    "Copy": "<bold>Donate Today!</bold> Support p5.js and the Processing Foundation."
+  },
+  "CodemirrorFindAndReplace": {
+    "ToggleReplace": "टॉगल बदली करें",
+    "Find": "खोज",
+    "FindPlaceholder": "फ़ाइलों में खोजें",
+    "Replace": "बदली करें",
+    "ReplaceAll": "सबको बदली करें",
+    "ReplacePlaceholder": "बदलने के लिए पाठ",
+    "Regex": "रेगुलर एक्सप्रेशन",
+    "CaseSensitive": "केस सेंसिटिव",
+    "WholeWords": "संपूर्ण शब्द",
+    "Previous": "पिछला",
+    "Next": "अगला",
+    "NoResults": "कोई परिणाम नहीं",
+    "Close": "बंद करे"
+  },
+  "LoginForm": {
+    "UsernameOrEmail": "ईमेल या यूजरनेम",
+    "UsernameOrEmailARIA": "ईमेल या यूजरनेम",
+    "Password": "पासवर्ड",
+    "PasswordARIA": "पासवर्ड",
+    "Submit": "लॉग इन",
+    "Errors": {
+      "invalidCredentials": "अमान्य ईमेल या पासवर्ड।"
     },
- 
-    "Feedback": {
-    "Title": "p5.js वेब एडिटर | फीडबैक"
+    "ShowPasswordARIA": "Show password as plain text",
+    "HidePasswordARIA": "Hide password"
+  },
+  "LoginView": {
+    "Title": "p5.js वेब एडिटर | लॉग इन",
+    "Login": "लॉग इन",
+    "LoginOr": "या",
+    "SignUp": "साइन अप",
+    "Email": "ईमेल",
+    "Username": "यूजरनेम",
+    "DontHaveAccount": "अकाउंट नहीं है? ",
+    "ForgotPassword": "पासवर्ड भूल गए? ",
+    "ResetPassword": "पासवर्ड रीसेट करें"
+  },
+  "SocialAuthButton": {
+    "Connect": "कनेक्ट {{serviceauth}} अकाउंट",
+    "Unlink": "अनलिंक {{serviceauth}} अकाउंट",
+    "Login": "{{serviceauth}} से लोगिन करें",
+    "LogoARIA": "{{serviceauth}} प्रतीक चिन्ह"
+  },
+  "About": {
+    "Title": "के बारे में",
+    "TitleHelmet": "p5.js वेब एडिटर | के बारे में",
+    "Headline": "p5.js एडिटर के साथ p5.js स्केच बनाएं, शेयर करें और रीमिक्स करें।",
+    "IntroDescription1": "p5.js एक मुफ्त, ओपन-सोर्स जावास्क्रिप्ट लाइब्रेरी है जिससे कोडिंग सीखने और कला बनाने में मदद मिलती है। p5.js एडिटर का उपयोग करके, आप बिना कुछ भी डाउनलोड या कॉन्फ़िगर किए p5.js स्केच बना सकते हैं, शेयर कर सकते हैं और रीमिक्स कर सकते हैं।",
+    "IntroDescription2": "हमारा मानना है कि सॉफ़्टवेयर और इसे सीखने के उपकरण यथासंभव खुले और समावेशी होने चाहिए। आप प्रोसेसिंग फाउंडेशन को दान करके इस कार्य का समर्थन कर सकते हैं, जो संगठन p5.js का समर्थन करता है। आपका दान p5.js के लिए सॉफ़्टवेयर विकास, कोड उदाहरण और ट्यूटोरियल जैसे शिक्षा संसाधन, फेलोशिप और सामुदायिक कार्यक्रमों का समर्थन करता है।",
+    "Contribute": "योगदान",
+    "NewP5": "p5.js पर नये?",
+    "Report": "बग रिपोर्ट",
+    "Learn": "सीखें",
+    "WebEditor": "वेब संपादक",
+    "Resources": "साधन",
+    "Libraries": "लाइब्रेरीज़",
+    "Forum": "समूह",
+    "Examples": "उदाहरण",
+    "Home": "होम",
+    "Twitter": "ट्विटर",
+    "Instagram": "इंस्टाग्राम",
+    "Discord": "डिस्कॉर्ड",
+    "PrivacyPolicy": "गोपनीयता नीति",
+    "TermsOfUse": "उपयोग की शर्तें",
+    "CodeOfConduct": "आचार संहिता",
+    "DiscordCTA": "डिस्कॉर्ड से जुड़ें",
+    "ForumCTA": "समूह से जुड़ें",
+    "Socials": "सोशल मीडिया",
+    "Email": "ईमेल",
+    "Youtube": "यूट्यूब",
+    "Github": "गिटहब",
+    "Reference": "रेफरेंस",
+    "Donate": "दान करें",
+    "GetInvolved": "शामिल हों",
+    "X": "एक्स",
+    "LinkDescriptions": {
+      "Home": "p5.js और हमारे समुदाय के बारे में अधिक जानें।",
+      "Examples": "संक्षिप्त उदाहरणों के साथ p5.js की संभावनाओं का पता लगाएं।",
+      "CodeOfConduct": "हमारी सामुदायिक स्थिति और आचार संहिता पढ़ें।",
+      "Libraries": "समुदाय द्वारा बनाई गई लाइब्रेरीज़ के साथ p5.js की संभावनाओं का विस्तार करें।",
+      "Reference": "p5.js कोड के हर हिस्से के लिए आसान व्याख्याएं खोजें।",
+      "Donate": "प्रोसेसिंग फाउंडेशन को दान देकर इस काम का समर्थन करें।",
+      "Contribute": "गिटहब पर ओपन-सोर्स p5.js एडिटर में योगदान दें।",
+      "Report": "p5.js एडिटर के साथ टूटे या गलत व्यवहार की रिपोर्ट करें।",
+      "Forum": "समुदाय द्वारा बनाई गई लाइब्रेरीज़ के साथ p5.js की संभावनाओं का विस्तार करें।",
+      "Discord": "समुदाय द्वारा बनाई गई लाइब्रेरीज़ के साथ p5.js की संभावनाओं का विस्तार करें।"
+    },
+    "EmailAddress": "hello@p5js.org",
+    "Contact": "Contact Us"
+  },
+  "Toast": {
+    "OpenedNewSketch": "नया स्केच खोला",
+    "SketchSaved": "स्केच सेव किया",
+    "SketchFailedSave": "स्केच सेव करने में असमर्थ",
+    "AutosaveEnabled": "ऑटोसेव चालू",
+    "LangChange": "भाषा बदली",
+    "SettingsSaved": "सेटिंग्स सेव की",
+    "EmptyCurrentPass": "वर्तमान पासवर्ड फ़ील्ड खाली है",
+    "IncorrectCurrentPass": "वर्तमान पासवर्ड गलत है ",
+    "DefaultError": "कुछ गलत हो गया",
+    "UserNotFound": "उपयोगकर्ता नहीं मिला",
+    "NetworkError": "नेटवर्क त्रुटि",
+    "CloseAlertARIA": "Close Alert"
+  },
+  "Toolbar": {
+    "Preview": "पूर्वावलोकन",
+    "Auto-refresh": "ऑटो-रिफ़्रेश",
+    "OpenPreferencesARIA": "प्राथमिकताएँ खोलें",
+    "PlaySketchARIA": "स्केच चलाएं",
+    "PlayOnlyVisualSketchARIA": "केवल दृश्य स्केच चलाएं",
+    "StopSketchARIA": "स्केच बंद करे",
+    "EditSketchARIA": "स्केच का नाम संपादित करें",
+    "NewSketchNameARIA": "नया स्केच नाम",
+    "By": " द्वारा ",
+    "CustomLibraryVersion": "कस्टम p5.js संस्करण",
+    "VersionPickerARIA": "संस्करण चयनकर्ता",
+    "NewVersionPickerARIA": "संस्करण चयनकर्ता",
+    "SelectVersionARIA": "Select p5.js version"
+  },
+  "Console": {
+    "Title": "कंसोल",
+    "Clear": "साफ़ करें",
+    "ClearARIA": "कंसोल साफ़ करें",
+    "Close": "बंद करें",
+    "CloseARIA": "कंसोल बंद करें",
+    "Open": "खोलें",
+    "OpenARIA": "कंसोल खोलें"
+  },
+  "Preferences": {
+    "Settings": "सेटिंग्स",
+    "GeneralSettings": "सामान्य सेटिंग्स",
+    "Accessibility": "ऐक्सेसबिलिटी",
+    "LibraryManagement": "लाइब्रेरी प्रबंधन",
+    "Theme": "थीम",
+    "LightTheme": "लाइट",
+    "LightThemeARIA": "लाइट थीम चालू",
+    "DarkTheme": "डार्क",
+    "DarkThemeARIA": "डार्क थीम चालू",
+    "HighContrastTheme": "ज़्यादा कंट्रास्ट",
+    "HighContrastThemeARIA": "ज़्यादा कंट्रास्ट थीम चालू",
+    "TextSize": "शब्दों का साइज",
+    "DecreaseFont": "कम करें",
+    "DecreaseFontARIA": "फॉन्ट साइज़ कम करें",
+    "IncreaseFont": "बढ़ाएं",
+    "IncreaseFontARIA": "फॉन्ट साइज़ बढ़ाएं",
+    "FontSize": "फ़ॉन्ट आकार",
+    "SetFontSize": "फ़ॉन्ट आकार सेट करें",
+    "Autosave": "ऑटोसेव",
+    "On": "चालू",
+    "AutosaveOnARIA": "ऑटोसेव चालू",
+    "Off": "बंद",
+    "AutosaveOffARIA": "ऑटोसेव बंद",
+    "AutocloseBracketsQuotes": "ऑटोक्लोज ब्रैकिट और क्वोट",
+    "AutocloseBracketsQuotesOnARIA": "ऑटोक्लोज ब्रैकिट और क्वोट चालू",
+    "AutocloseBracketsQuotesOffARIA": "ऑटोक्लोज ब्रैकिट और क्वोट बंद",
+    "AutocompleteHinter": "ऑटोकम्प्लीट हिंटर",
+    "AutocompleteHinterOnARIA": "ऑटोकम्प्लीट हिंटर चालू",
+    "AutocompleteHinterOffARIA": "ऑटोकम्प्लीट हिंटर बंद",
+    "WordWrap": "वर्ड रैप",
+    "WordWrapOnARIA": "वर्डरैप चालू",
+    "WordWrapOffARIA": "वर्डरैप बंद",
+    "LineNumbers": "लाइन नम्बर्ज़",
+    "LineNumbersOnARIA": "लाइन नम्बर्ज़ चालू",
+    "LineNumbersOffARIA": "लाइन नम्बर्ज़ बंद",
+    "LintWarningSound": "लिन्ट वॉर्निंग साउन्ड",
+    "LintWarningOnARIA": "लिन्ट वॉर्निंग चालू",
+    "LintWarningOffARIA": "लिन्ट वॉर्निंग बंद",
+    "PreviewSound": "प्रीव्यू साउन्ड",
+    "PreviewSoundARIA": "प्रीव्यू साउन्ड",
+    "AccessibleTextBasedCanvas": "ऐक्सेसबल टेक्स्ट-आधारित कैन्वस",
+    "UsedScreenReader": "स्क्रीन रीडर के साथ उपयोग किया",
+    "PlainText": "प्लेन-टेक्स्ट",
+    "TextOutputARIA": "टेक्स्ट आउटपुट चालू",
+    "TableText": "टेबल-टेक्स्ट",
+    "TableOutputARIA": "टेबल आउटपुट चालू",
+    "LibraryVersion": "p5.js संस्करण",
+    "LibraryVersionInfo": "p5.js का एक [नया 2.0 संस्करण](https://github.com/processing/p5.js/releases/) उपलब्ध है! यह अगस्त 2026 में डिफ़ॉल्ट बन जाएगा, इसलिए इस समय का उपयोग इसे आज़माने और बग्स की रिपोर्ट करने के लिए करें। क्या आप 1.x से 2.0 में स्केच को स्थानांतरित करने में रुचि रखते हैं? [संगतता और स्थानांतरण संसाधनों](https://github.com/processing/p5.js-compatibility) को देखें।",
+    "SoundAddon": "p5.sound.js Add-on लाइब्रेरी",
+    "PreloadAddon": "p5.js 1.x Compatibility Add-on लाइब्रेरी — प्रीलोड",
+    "ShapesAddon": "p5.js 1.x Compatibility Add-on लाइब्रेरी — आकार",
+    "DataAddon": "p5.js 1.x Compatibility Add-on लाइब्रेरी — डेटा संरचनाएँ",
+    "CustomVersionTitle": "Managing your own libraries? Nice!",
+    "CustomVersionInfo": "The version of p5.js is currently being managed in the code of index.html. This means it can't be adjusted from this tab.",
+    "CustomVersionReset": "If you'd like to use the default libraries, you can replace the script tags in index.html with the following:",
+    "AddonOnARIA": "on",
+    "AddonOffARIA": "off",
+    "SoundReference": "View the reference for p5.sound compatible with p5.js {{version}}",
+    "CopyToClipboardSuccess": "Copied to clipboard!",
+    "CopyToClipboardFailure": "We weren't able to copy the text, try selecting it and copying it manually."
+  },
+  "KeyboardShortcuts": {
+    "Title": " कीबोर्ड शॉर्टकट",
+    "ShortcutsFollow": "कोड संपादन कीबोर्ड शॉर्टकट अनुसरण करते हैं",
+    "SublimeText": "सबलाइम टेक्स्ट शॉर्टकट",
+    "CodeEditing": {
+      "Tidy": "साफ",
+      "FindText": "शब्द ढूंढे",
+      "FindNextMatch": "अगला मिलान खोजें",
+      "FindPrevMatch": "पिछला मिलान ढूंढें",
+      "ReplaceTextMatch": "शब्द मिलान बदलें",
+      "IndentCodeLeft": "इंडेंट कोड लेफ्ट",
+      "IndentCodeRight": "इंडेंट कोड राइट",
+      "CommentLine": "टिप्पणी लाइन",
+      "FindNextTextMatch": "अगला शब्द मिलान खोजें",
+      "FindPreviousTextMatch": "पिछला शब्द मिलान खोजें",
+      "CodeEditing": "कोड संपादन",
+      "ColorPicker": "इनलाइन कलर पिकर दिखाएँ",
+      "CreateNewFile": "नया फ़ाइल बनाएँ",
+      "RenameVariable": "Rename Variable"
+    },
+    "General": "सामान्य",
+    "GeneralSelection": {
+      "StartSketch": "स्केच शुरू करें",
+      "StopSketch": "स्केच रोकें",
+      "TurnOnAccessibleOutput": "सुलभ आउटपुट चालू करें",
+      "TurnOffAccessibleOutput": "सुलभ आउटपुट बंद करें",
+      "Reference": "हिंटर में चुने गए आइटम के लिए रेफरेंस जाएँ"
+    }
+  },
+  "Sidebar": {
+    "Title": "स्केच फ़ाइलें",
+    "ToggleARIA": "खुले / बंद स्केच विकल्प टॉगल करें",
+    "AddFolder": "फ़ोल्डर बनाएँ",
+    "AddFolderARIA": "फ़ोल्डर जोड़ें",
+    "AddFile": "फ़ाइल बनाएँ",
+    "AddFileARIA": "फ़ाइल जोड़ें",
+    "UploadFile": "फ़ाइल अपलोड करें",
+    "UploadFileARIA": "फ़ाइल अपलोड करें",
+    "UploadFileTooltipUnauthenticated": "Log in to upload files"
+  },
+  "FileNode": {
+    "OpenFolderARIA": "फ़ोल्डर सामग्री खोलें",
+    "CloseFolderARIA": "फ़ोल्डर सामग्री बंद करें",
+    "ToggleFileOptionsARIA": "खुले / बंद फ़ाइल विकल्प टॉगल करें",
+    "AddFolder": "फ़ोल्डर बनाएँ",
+    "AddFolderARIA": "फ़ोल्डर जोड़ें",
+    "AddFile": "फ़ाइल बनाएँ",
+    "AddFileARIA": "फ़ाइल जोड़ें",
+    "UploadFile": "फ़ाइल अपलोड करें",
+    "UploadFileARIA": "फ़ाइल अपलोड करें",
+    "Rename": "नाम बदलने",
+    "Delete": "मिटाना"
+  },
+  "Common": {
+    "SiteName": "p5.js वेब एडिटर",
+    "Error": "ग़लती",
+    "ErrorARIA": "ग़लती",
+    "Save": "सेव",
+    "p5logoARIA": "p5.js लोगो",
+    "DeleteConfirmation": "क्या आप पक्का {{name}} को डिलीट करना चाहते हैं?"
+  },
+  "IDEView": {
+    "SubmitFeedback": "प्रतिपुष्टि दें",
+    "SubmitFeedbackARIA": "प्रतिपुष्टि दें",
+    "AddCollectionTitle": "संग्रह में जोड़े",
+    "AddCollectionARIA": "संग्रह में जोड़े",
+    "ShareTitle": "शेयर",
+    "ShareARIA": "शेयर"
+  },
+  "NewFileModal": {
+    "Title": "फ़ाइल बनाएँ",
+    "CloseButtonARIA": "नई फ़ाइल मोडल बंद करें",
+    "EnterName": "कृपया एक नाम दर्ज करें",
+    "InvalidType": "अमान्य फ़ाइल प्रकार। मान्य एक्सटेंशन हैं .js, .css, .json, .xml, .stl, .txt, .csv, .tsv, .mtl, .frag, और .vert."
+  },
+  "NewFileForm": {
+    "AddFileSubmit": "फाइल जोडें",
+    "Placeholder": "नाम"
+  },
+  "NewFolderModal": {
+    "Title": "फोल्डर बनाएं",
+    "CloseButtonARIA": "नया फ़ोल्डर मोडल बंद करें",
+    "EnterName": "कृपया नाम दर्ज करें",
+    "EmptyName": "फ़ोल्डर नाम में केवल रिक्त स्थान नहीं हो सकते",
+    "InvalidExtension": "फ़ोल्डर नाम में एक्सटेंशन नहीं हो सकता"
+  },
+  "NewFolderForm": {
+    "AddFolderSubmit": "फोल्डर जोड़ें",
+    "Placeholder": "नाम"
+  },
+  "ResetPasswordForm": {
+    "Email": "रेजिस्ट्रेशन के लिए उपयोग किया गया ईमेल",
+    "EmailARIA": "ईमेल",
+    "Submit": "पासवर्ड रीसेट ईमेल भेजें"
+  },
+  "ResetPasswordView": {
+    "Title": "p5.js वेब एडिटर | रीसेट पासवर्ड",
+    "Reset": "अपना पासवर्ड रीसेट करें",
+    "Submitted": "आपका पासवर्ड रीसेट ईमेल शीघ्र ही आ जाना चाहिए। यदि ईमेल ना दिखे, तो अपने स्पैम फ़ोल्डर जांचें।",
+    "Login": "लॉग इन",
+    "LoginOr": "या",
+    "SignUp": "साइन अप"
+  },
+  "ReduxFormUtils": {
+    "errorInvalidEmail": "कृपया वैध ईमेल एड्रेस लिखें",
+    "errorEmptyEmail": "कृपया ईमेल एड्रेस लिखें",
+    "errorPasswordMismatch": "पासवर्डों को मेल खाना अनिवार्य है",
+    "errorEmptyPassword": "कृपया पासवर्ड लिखें",
+    "errorShortPassword": "पासवर्ड कम से कम ६ अक्षरों का होना चाहिए",
+    "errorConfirmPassword": "कृपया पासवर्ड कान्फर्मेशन दर्ज करें",
+    "errorNewPassword": "कृपया एक नया पासवर्ड दर्ज करें या वर्तमान पासवर्ड को खाली छोड़ दें।",
+    "errorEmptyUsername": "कृपया यूजरनेम लिखें",
+    "errorLongUsername": "यूजरनेम २० अक्षरों से कम होना चाहिए।",
+    "errorValidUsername": "यूजरनेम में केवल संख्या, अक्षर, पिरीअड्, डैश और अंडरस्कोर शामिल होना चाहिए।",
+    "errorNewPasswordRepeat": "नया पासवर्ड वर्तमान पासवर्ड से भिन्न होना चाहिए।.",
+    "errorEmptyEmailorUserName": "Please enter an email or username"
+  },
+  "NewPasswordView": {
+    "Title": "p5.js वेब एडिटर | नया पासवर्ड",
+    "Description": "नया पासवर्ड सेट करें",
+    "TokenInvalidOrExpired": "पासवर्ड रीसेट टोकन अमान्य है या एक्सपायर हो गया है।",
+    "EmptyPassword": "कृपया पासवर्ड दर्ज करें",
+    "PasswordConfirmation": "कृपया पासवर्ड कान्फर्मेशन दर्ज करें",
+    "PasswordMismatch": "पासवर्डों को मेल खाना अनिवार्य है"
+  },
+  "AccountForm": {
+    "Email": "ईमेल",
+    "EmailARIA": "ईमेल",
+    "Unconfirmed": "कन्फर्म नहीं है",
+    "EmailSent": "कान्फर्मेशन भेज दिया, अपना ईमेल देखें",
+    "Resend": "कान्फर्मेशन ईमेल दोबारा भेजें",
+    "UserName": "यूजरनेम",
+    "UserNameARIA": "यूजरनेम",
+    "CurrentPassword": "वर्तमान पासवर्ड",
+    "CurrentPasswordARIA": "वर्तमान पासवर्ड",
+    "NewPassword": "नया पासवर्ड",
+    "NewPasswordARIA": "नया पासवर्ड",
+    "SaveAccountDetails": "खाता विवरण सहेजें"
+  },
+  "AccountView": {
+    "SocialLogin": "सामाजिक लॉग इन",
+    "SocialLoginDescription": "p5.js वेब संपादक में लॉग इन करने के लिए अपने GitHub या Google खाते का उपयोग करें।",
+    "Title": "p5.js वेब संपादक | खाता सेटिंग्स",
+    "Settings": "मेरा खाता",
+    "AccountTab": "खाता",
+    "AccessTokensTab": "टोकन का उपयोग"
+  },
+  "APIKeyForm": {
+    "ConfirmDelete": "क्या आप वाकई {{key_label}} को डिलीट करना चाहते हैं ?",
+    "Summary": "पर्सनल एक्सेस टोकन पासवर्ड की तरह काम करते हैं और ऑटोमेटिड स्क्रिप्ट को एडिटर API की अनुमति देते हैं।\n प्रत्येक स्क्रिप्ट जिसे एक्सेस की आवश्यकता है, उसके लिए एक टोकन बनाएं।",
+    "CreateToken": "नया टोकन बनाएं",
+    "TokenLabel": "यह टोकन किस लिए है?",
+    "TokenPlaceholder": "यह टोकन किस लिए है? उदाहरण इम्पोर्ट स्क्रिप्ट",
+    "CreateTokenSubmit": "बनाएँ",
+    "NoTokens": "आपके पास कोई मौजूदा टोकन नहीं है।",
+    "NewTokenTitle": "आपका नया एक्सेस टोकन",
+    "NewTokenInfo": "अपना नया पर्सनल एक्सेस टोकन कॉपी करना सुनिश्चित करें।\n आप इसे फिर से नहीं देख पाएंगे!",
+    "ExistingTokensTitle": "मौजूदा टोकन"
+  },
+  "APIKeyList": {
+    "Name": "नाम",
+    "Created": "बनाने की तारीख",
+    "LastUsed": "आखरी इस्तेमाल",
+    "Actions": "ऐक्शन्ज़",
+    "Never": "कभी नहीं",
+    "DeleteARIA": "डिलीट API Key"
+  },
+  "NewPasswordForm": {
+    "Title": "पासवर्ड",
+    "TitleARIA": "पासवर्ड",
+    "ConfirmPassword": "कन्फर्म पासवर्ड",
+    "ConfirmPasswordARIA": "कन्फर्म पासवर्ड",
+    "SubmitSetNewPassword": "नया पासवर्ड सेट करें"
+  },
+  "SignupForm": {
+    "Title": "यूजरनेम",
+    "TitleARIA": "यूजरनेम",
+    "Email": "ईमेल",
+    "EmailARIA": "ईमेल",
+    "Password": "पासवर्ड",
+    "PasswordARIA": "पासवर्ड",
+    "ConfirmPassword": "कन्फर्म पासवर्ड",
+    "ConfirmPasswordARIA": "कन्फर्म पासवर्ड",
+    "SubmitSignup": "साइन अप",
+    "ShowPasswordARIA": "Show password as plain text",
+    "HidePasswordARIA": "Hide password",
+    "ShowConfirmPasswordARIA": "Show confirm password as plain text",
+    "HideConfirmPasswordARIA": "Hide confirm password"
+  },
+  "SignupView": {
+    "Title": "p5.js वेब एडिटर | साइन अप",
+    "Description": "साइन अप",
+    "Or": "या",
+    "AlreadyHave": "पहले से ही अकाउंट है?",
+    "Login": "लॉग इन",
+    "Warning": "साइन अप करके, आप p5.js संपादक की उपयोग की <0>शर्तों</0> और <1>गोपनीयता नीति</1> से सहमत होते हैं।"
+  },
+  "EmailVerificationView": {
+    "Title": "p5.js वेब एडिटर | ईमेल वेरीफिकेशन",
+    "Verify": "अपना ईमेल व्हेरिफाय करें",
+    "InvalidTokenNull": "वह लिंक अमान्य है।",
+    "Checking": "टोकन की पुष्टि की जा रही है, कृपया प्रतीक्षा करें...",
+    "Verified": "सबकुछ ठीक है। आपके ईमेल का पुष्टीकरण हो चुका है।",
+    "InvalidState": "टोकन अमान्य है या समाप्त हो गया है।"
+  },
+  "AssetList": {
+    "Title": "p5.js वेब एडिटर | मेरे ऐसेट",
+    "ToggleOpenCloseARIA": "टॉगल ओपेन/क्लोज़ ऐसेट ऑप्शन्ज़",
+    "Delete": "डिलीट",
+    "OpenNewTab": "नये टैब में खोलें",
+    "NoUploadedAssets": "कोई ऐसेट अपलोड नही की।",
+    "HeaderName": "नाम",
+    "HeaderSize": "साइज़",
+    "HeaderSketch": "स्केच",
+    "maximum": "Maximum"
+  },
+  "Edit": {
+    "Title": "संपादित करे",
+    "TidyCode": "कोड साफ़ करें",
+    "Find": "खोज",
+    "Replace": "बदली करें"
+  },
+  "Sketch": {
+    "Title": "चित्र",
+    "AddFile": "फाइल जोड़ें",
+    "AddFolder": "फोल्डर जोड़ें",
+    "Run": "चलाएं",
+    "Stop": "रोकें"
+  },
+  "BackEditor": "एडिटर पर वापस जाएं",
+  "WarningUnsavedChanges": "क्या आप इस पेज को छोड़ना चाहते हैं? आपके पास अनसेव्ड परिवर्तन हैं।",
+  "Login": "लॉग इन",
+  "LoginOr": "या",
+  "SignUp": "साइन अप",
+  "Auth": {
+    "Hello": "नमस्ते",
+    "MyAccount": "मेरा अकाउंट",
+    "MySketches": "मेरे स्केच",
+    "MyCollections": "मेरे संग्रह",
+    "MyAssets": "मेरे ऐसेट",
+    "LogOut": "लॉग आउट"
+  },
+  "Feedback": {
+    "Title": "p5.js वेब एडिटर | फीडबैक",
+    "ViaGithubHeader": "Via Github Issues",
+    "ViaGithubDescription": "If you're familiar with Github, this is our preferred method for receiving bug reports and feedback.",
+    "GoToGithub": "Go to Github",
+    "ViaGoogleHeader": "Via Google Form",
+    "ViaGoogleDescription": "You can also submit this quick form.",
+    "GoToForm": "Go to Form"
   },
   "Searchbar": {
     "SearchSketch": "सर्च स्केच...",
@@ -522,11 +550,15 @@
     "DirectionAscendingARIA": "आरोही",
     "DirectionDescendingARIA": "अवरोही",
     "ButtonLabelAscendingARIA": "{{displayName}} आरोही क्रम में।",
-    "ButtonLabelDescendingARIA": "{{displayName}} अवरोही क्रम में।"
+    "ButtonLabelDescendingARIA": "{{displayName}} अवरोही क्रम में।",
+    "RemoveFromCollection": "Remove from Collection",
+    "Description": "description",
+    "NumSketches_plural": "{{count}} sketches"
   },
   "AddToCollectionList": {
     "Title": "p5.js वेब एडिटर | मेरे संग्रह",
-    "Empty": "कोई संग्रह नहीं"
+    "Empty": "कोई संग्रह नहीं",
+    "AnothersTitle": "p5.js Web Editor | {{anotheruser}}'s collections"
   },
   "CollectionCreate": {
     "Title": "p5.js वेब एडिटर | संग्रह बनाएँ",
@@ -562,7 +594,10 @@
     "DirectionDescendingARIA": "अवरोही",
     "ButtonLabelAscendingARIA": "{{displayName}} आरोही क्रम में।",
     "ButtonLabelDescendingARIA": "{{displayName}} अवरोही क्रम में।",
-    "AddSketch": "स्केच जोड़ें"
+    "AddSketch": "स्केच जोड़ें",
+    "HeaderCreatedAt_mobile": "Created",
+    "HeaderUpdatedAt_mobile": "Updated",
+    "HeaderNumItems_mobile": "# sketches"
   },
   "CollectionListRow": {
     "ToggleCollectionOptionsARIA": "संग्रह ओपेन/क्लोज़ टॉगल ऑप्शन्ज़",
@@ -603,11 +638,15 @@
     "HeaderName": "स्केच",
     "HeaderCreatedAt": "बनाने की तारीख",
     "HeaderUpdatedAt": "अपडेट करने की तारिख",
-    "NoSketches": "कोई स्केच नहीं"
+    "NoSketches": "कोई स्केच नहीं",
+    "View": "View",
+    "HeaderCreatedAt_mobile": "Created",
+    "HeaderUpdatedAt_mobile": "Updated"
   },
   "AddToCollectionSketchList": {
     "Title": "p5.js वेब एडिटर | मेरे स्केच",
-    "NoCollections": "कोई संग्रह नहीं"
+    "NoCollections": "कोई संग्रह नहीं",
+    "AnothersTitle": "p5.js Web Editor | {{anotheruser}}'s sketches"
   },
   "Editor": {
     "OpenSketchARIA": "स्केच फ़ाइलों का नेविगेशन खोलें",
@@ -630,7 +669,8 @@
     "Ago": "{{timeAgo}} पहले"
   },
   "CopyableInput": {
-    "CopiedARIA": "क्लिपबोर्ड पर कॉपी किया!"
+    "CopiedARIA": "क्लिपबोर्ड पर कॉपी किया!",
+    "OpenViewTabARIA": "Open {{label}} view in new tab"
   },
   "EditableInput": {
     "EditValue": "एडीट {{display}} वैल्यू",
@@ -643,7 +683,24 @@
   "MobilePreferences": {
     "Settings": "सेटिंग्स",
     "Preferences": "प्राथमिकताएँ",
-    "Language": "भाषा"
+    "Language": "भाषा",
+    "SelectLanguage": "भाषा चुनें",
+    "GeneralSettings": "General settings",
+    "Accessibility": "Accessibility",
+    "AccessibleOutput": "Accessible Output",
+    "Theme": "Theme",
+    "LightTheme": "Light",
+    "DarkTheme": "Dark",
+    "HighContrastTheme": "High Contrast",
+    "Autosave": "Autosave",
+    "AutocompleteHinter": "Autocomplete Hinter",
+    "WordWrap": "Word Wrap",
+    "LineNumbers": "Line numbers",
+    "LintWarningSound": "Lint warning sound",
+    "UsedScreenReader": "Used with screen reader",
+    "PlainText": "Plain-text",
+    "TableText": "Table-text",
+    "Sound": "Sound"
   },
   "PreferenceCreators": {
     "On": "ऑन",
@@ -677,5 +734,21 @@
   },
   "TextArea": {
     "CopyARIA": "Copy"
+  },
+  "CollectionView": {
+    "TitleCreate": "Create collection",
+    "TitleDefault": "collection"
+  },
+  "MobileDashboardView": {
+    "Examples": "Examples",
+    "Sketches": "Sketches",
+    "Collections": "Collections",
+    "Assets": "Assets",
+    "MyStuff": "मेरी सामग्री",
+    "CreateSketch": "Create Sketch",
+    "CreateCollection": "Create Collection"
+  },
+  "Explorer": {
+    "Files": "Files"
   }
 }

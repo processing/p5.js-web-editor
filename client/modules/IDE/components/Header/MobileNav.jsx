@@ -237,7 +237,7 @@ const MobileNav = () => {
       case 'examples':
         return t('Nav.File.Examples');
       case 'myStuff':
-        return 'My Stuff';
+        return t('MobileDashboardView.MyStuff');
       default:
         return project.name;
     }
@@ -256,7 +256,11 @@ const MobileNav = () => {
       </LogoContainer>
       <Title>
         <h1>{title === project?.name ? <ProjectName /> : title}</h1>
-        {showOwner && <h5>by {project?.owner?.username}</h5>}
+        {showOwner && (
+          <h5>
+            {t('PreviewNav.ByUser')} {project?.owner?.username}
+          </h5>
+        )}
       </Title>
 
       {/* check if the user is in login page */}
@@ -333,6 +337,7 @@ const StuffMenu = () => {
 const AccountMenu = () => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const { isOpen, handlers } = useMenuProps('account');
 
@@ -343,11 +348,13 @@ const AccountMenu = () => {
         <ParentMenuContext.Provider value="account">
           <li className="user">{user.username}</li>
           <MobileMenuItem href={`/${user.username}/sketches`}>
-            My Stuff
+            {t('MobileDashboardView.MyStuff')}
           </MobileMenuItem>
-          <MobileMenuItem href="/account">Settings</MobileMenuItem>
+          <MobileMenuItem href="/account">
+            {t('MobilePreferences.Settings')}
+          </MobileMenuItem>
           <MobileMenuItem onClick={() => dispatch(logoutUser())}>
-            Log Out
+            {t('Nav.Auth.LogOut')}
           </MobileMenuItem>
         </ParentMenuContext.Provider>
       </ul>
@@ -382,9 +389,8 @@ const MoreMenu = () => {
     <div>
       {isLanguageModalVisible && (
         <Overlay
-          // TODO: add translations
-          title="Select Language"
-          ariaLabel="Select Language"
+          title={t('MobilePreferences.SelectLanguage')}
+          ariaLabel={t('MobilePreferences.SelectLanguage')}
           closeOverlay={() => setIsLanguageModalVisible(false)}
         >
           <LanguageSelect>

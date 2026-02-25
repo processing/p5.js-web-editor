@@ -8,7 +8,13 @@
       "Open": "খুলুন",
       "Download": "ডাউনলোড",
       "AddToCollection": "সংগ্রহে যোগ করুন",
-      "Examples": "উদাহরণ সমূহ"
+      "Examples": "উদাহরণ সমূহ",
+      "SaveTooltipUnauthenticated": "Log in to save your sketch",
+      "DuplicateTooltipUnauthenticated": "Log in to duplicate this sketch",
+      "OpenTooltipUnauthenticated": "Log in to open your sketches",
+      "AddToCollectionTooltipUnauthenticated": "Log in to add to collections",
+      "ShareTooltipUnsaved": "Save your sketch before sharing",
+      "DownloadTooltipUnsaved": "Save your sketch before downloading"
     },
     "Edit": {
       "Title": "এডিট",
@@ -42,8 +48,12 @@
       "MySketches": "আমার স্কেচ",
       "MyCollections": "আমার সংগ্রহ",
       "MyAssets": "আমার সম্পদ",
-      "LogOut": "লগ আউট"
-    }
+      "LogOut": "লগ আউট",
+      "Welcome": "Welcome",
+      "My": "My",
+      "Asset": "Asset"
+    },
+    "Lang": "Language"
   },
   "CodemirrorFindAndReplace": {
     "ToggleReplace": "প্রতিস্থাপন টগল করুন",
@@ -57,7 +67,8 @@
     "Previous": "পূর্ববর্তী",
     "Next": "পরবর্তী",
     "NoResults": "কোন ফলাফল নেই",
-    "Close": "বন্ধ"
+    "Close": "বন্ধ",
+    "Find": "Find"
   },
   "LoginForm": {
     "UsernameOrEmail": "ই-মেইল অথবা ব্যবহারকারীর নাম",
@@ -67,7 +78,9 @@
     "Submit": "লগ ইন করুন",
     "Errors": {
       "invalidCredentials": "ভুল ই-মেইল বা পাসওয়ার্ড।"
-    }
+    },
+    "ShowPasswordARIA": "Show password as plain text",
+    "HidePasswordARIA": "Hide password"
   },
   "LoginView": {
     "Title": "p5.js ওয়েব এডিটর | লগ ইন",
@@ -76,7 +89,9 @@
     "SignUp": "সাইন আপ করুন",
     "DontHaveAccount": " অ্যাকাউন্ট নেই? ",
     "ForgotPassword": "আপনি কি পাসওয়ার্ড ভুলে গিয়েছেন? ",
-    "ResetPassword": "আপনার পাসওয়ার্ড রিসেট করুন"
+    "ResetPassword": "আপনার পাসওয়ার্ড রিসেট করুন",
+    "Email": "email",
+    "Username": "username"
   },
   "SocialAuthButton": {
     "Connect": "{{serviceauth}} সাথে যোগাযোগ করুন",
@@ -127,7 +142,8 @@
       "Forum": "প্রশ্ন জিজ্ঞাসা করুন, স্কেচ শেয়ার করুন এবং p5.js কমিউনিটির সাহায্য নিন।",
       "Discord": "p5.js কমিউনিটির সাথে চ্যাট করুন এবং দ্রুত সাহায্য পান।"
     },
-    "Contact": "আমাদের সাথে যোগাযোগ করুন"
+    "Contact": "আমাদের সাথে যোগাযোগ করুন",
+    "Learn": "Learn"
   },
   "Toast": {
     "OpenedNewSketch": "নতুন স্কেচ খোলা হয়েছে।",
@@ -163,7 +179,9 @@
     "Clear": "ক্লিয়ার",
     "ClearARIA": "কনসোল ক্লিয়ার করুন",
     "CloseARIA": "কনসোল বন্ধ করুন",
-    "OpenARIA": "কনসোল খোলুন"
+    "OpenARIA": "কনসোল খোলুন",
+    "Close": "Close",
+    "Open": "Open"
   },
   "Preferences": {
     "Settings": "সেটিংস",
@@ -223,7 +241,9 @@
     "DataAddon": "p5.js 1.x সামঞ্জস্যপূর্ণ অ্যাড-অন লাইব্রেরি — ডেটা এবং ইভেন্ট",
     "SoundReference": "p5.js {{version}} এর সাথে সামঞ্জস্যপূর্ণ p5.sound এর রেফারেন্স দেখুন।",
     "CopyToClipboardSuccess": "ক্লিপবোর্ডে কপি করা হয়েছে!",
-    "CopyToClipboardFailure": "আমরা লেখাটি কপি করতে পারিনি, আপনি এটি নির্বাচন করে ম্যানুয়ালি কপি করার চেষ্টা করুন।"
+    "CopyToClipboardFailure": "আমরা লেখাটি কপি করতে পারিনি, আপনি এটি নির্বাচন করে ম্যানুয়ালি কপি করার চেষ্টা করুন।",
+    "AddonOnARIA": "on",
+    "AddonOffARIA": "off"
   },
   "KeyboardShortcuts": {
     "Title": "কীবোর্ড শর্টকাট",
@@ -241,7 +261,9 @@
       "CodeEditing": "কোড এডিটিং",
       "ColorPicker": "ইনলাইন রঙ নির্বাচক দেখান",
       "CreateNewFile": "নতুন ফাইল তৈরি করুন",
-      "RenameVariable": "চলকটির নাম পরিবর্তন করুন"
+      "RenameVariable": "চলকটির নাম পরিবর্তন করুন",
+      "FindNextMatch": "Find Next Match",
+      "FindPrevMatch": "Find Previous Match"
     },
     "GeneralSelection": {
       "StartSketch": "স্কেচ শুরু",
@@ -260,7 +282,8 @@
     "AddFile": "ফাইল তৈরি করুন",
     "AddFileARIA": "ফাইল যোগ করুন",
     "UploadFile": "ফাইল আপলোড করুন",
-    "UploadFileARIA": "ফাইল আপলোড করুন"
+    "UploadFileARIA": "ফাইল আপলোড করুন",
+    "UploadFileTooltipUnauthenticated": "Log in to upload files"
   },
   "FileNode": {
     "OpenFolderARIA": "ফোল্ডার সামগ্রী খোলুন",
@@ -342,7 +365,10 @@
   "NewPasswordView": {
     "Title": "p5.js ওয়েব এডিটর | নতুন পাসওয়ার্ড",
     "Description": "নতুন পাসওয়ার্ড সেট করুন",
-    "TokenInvalidOrExpired": "পাসওয়ার্ড রিসেট টোকেন ভুল বা মেয়াদ উত্তীর্ণ হয়েছে।"
+    "TokenInvalidOrExpired": "পাসওয়ার্ড রিসেট টোকেন ভুল বা মেয়াদ উত্তীর্ণ হয়েছে।",
+    "EmptyPassword": "Please enter a password",
+    "PasswordConfirmation": "Please confirm your password",
+    "PasswordMismatch": "Passwords must match"
   },
   "AccountForm": {
     "Email": "ই-মেইল",
@@ -402,7 +428,11 @@
     "PasswordARIA": "পাসওয়ার্ড",
     "ConfirmPassword": "পাসওয়ার্ড নিশ্চিত করুন",
     "ConfirmPasswordARIA": "পাসওয়ার্ড নিশ্চিত করুন",
-    "SubmitSignup": "নিবন্ধন করুন"
+    "SubmitSignup": "নিবন্ধন করুন",
+    "ShowPasswordARIA": "Show password as plain text",
+    "HidePasswordARIA": "Hide password",
+    "ShowConfirmPasswordARIA": "Show confirm password as plain text",
+    "HideConfirmPasswordARIA": "Hide confirm password"
   },
   "SignupView": {
     "Title": "p5.js ওয়েব এডিটর | সাইন আপ করুন",
@@ -432,7 +462,13 @@
     "maximum": "সর্বোচ্চ"
   },
   "Feedback": {
-    "Title": "p5.js ওয়েব এডিটর | মন্তব্য করুন"
+    "Title": "p5.js ওয়েব এডিটর | মন্তব্য করুন",
+    "ViaGithubHeader": "Via Github Issues",
+    "ViaGithubDescription": "If you're familiar with Github, this is our preferred method for receiving bug reports and feedback.",
+    "GoToGithub": "Go to Github",
+    "ViaGoogleHeader": "Via Google Form",
+    "ViaGoogleDescription": "You can also submit this quick form.",
+    "GoToForm": "Go to Form"
   },
   "Searchbar": {
     "SearchSketch": "স্কেচ অনুসন্ধান করুন...",
@@ -484,11 +520,15 @@
     "DirectionAscendingARIA": "ঊর্ধ্বগামী",
     "DirectionDescendingARIA": "নিম্নগামী",
     "ButtonLabelAscendingARIA": "{{displayName}} দ্বারা ঊর্ধ্বগামী করুন।",
-    "ButtonLabelDescendingARIA": "{{displayName}} দ্বারা নিম্নগামী করুন।"
+    "ButtonLabelDescendingARIA": "{{displayName}} দ্বারা নিম্নগামী করুন।",
+    "RemoveFromCollection": "Remove from Collection",
+    "Description": "description",
+    "NumSketches_plural": "{{count}} sketches"
   },
   "AddToCollectionList": {
     "Title": "p5.js Web এডিটর | আমার সংগ্রহগুলি",
-    "Empty": "কোন সংগ্রহ নেই"
+    "Empty": "কোন সংগ্রহ নেই",
+    "AnothersTitle": "p5.js Web Editor | {{anotheruser}}'s collections"
   },
   "CollectionCreate": {
     "Title": "p5.js Web এডিটর | সংগ্রহ তৈরি করুন",
@@ -524,7 +564,10 @@
     "DirectionDescendingARIA": "নিম্নগামী",
     "ButtonLabelAscendingARIA": "{{displayName}} দ্বারা ঊর্ধ্বগামী করুন।",
     "ButtonLabelDescendingARIA": "{{displayName}} দ্বারা নিম্নগামী করুন।",
-    "AddSketch": "স্কেচ যোগ করুন"
+    "AddSketch": "স্কেচ যোগ করুন",
+    "HeaderCreatedAt_mobile": "Created",
+    "HeaderUpdatedAt_mobile": "Updated",
+    "HeaderNumItems_mobile": "# sketches"
   },
   "CollectionListRow": {
     "ToggleCollectionOptionsARIA": "সংগ্রহ বিকল্পগুলি খোলা/বন্ধ করুন",
@@ -565,11 +608,15 @@
     "HeaderName": "স্কেচ",
     "HeaderCreatedAt": "তারিখ তৈরি হয়েছে",
     "HeaderUpdatedAt": "তারিখ আপডেট হয়েছে",
-    "NoSketches": "কোন স্কেচ নেই।"
+    "NoSketches": "কোন স্কেচ নেই।",
+    "View": "View",
+    "HeaderCreatedAt_mobile": "Created",
+    "HeaderUpdatedAt_mobile": "Updated"
   },
   "AddToCollectionSketchList": {
     "Title": "p5.js ওয়েব এডিটর | আমার স্কেচগুলি",
-    "NoCollections": "কোন সংগ্রহ নেই।"
+    "NoCollections": "কোন সংগ্রহ নেই।",
+    "AnothersTitle": "p5.js Web Editor | {{anotheruser}}'s sketches"
   },
   "Editor": {
     "OpenSketchARIA": "স্কেচ ফাইল নেভিগেশন খোলুন",
@@ -592,7 +639,8 @@
     "Ago": "{{timeAgo}} আগে"
   },
   "CopyableInput": {
-    "CopiedARIA": "ক্লিপবোর্ডে কপি করা হয়েছে!"
+    "CopiedARIA": "ক্লিপবোর্ডে কপি করা হয়েছে!",
+    "OpenViewTabARIA": "Open {{label}} view in new tab"
   },
   "EditableInput": {
     "EditValue": "{{display}} ভ্যালু এডিট করুন",
@@ -605,7 +653,24 @@
   "MobilePreferences": {
     "Settings": "সেটিংস",
     "Preferences": "পছন্দসমূহ",
-    "Language": "ভাষা"
+    "Language": "ভাষা",
+    "SelectLanguage": "ভাষা নির্বাচন করুন",
+    "GeneralSettings": "General settings",
+    "Accessibility": "Accessibility",
+    "AccessibleOutput": "Accessible Output",
+    "Theme": "Theme",
+    "LightTheme": "Light",
+    "DarkTheme": "Dark",
+    "HighContrastTheme": "High Contrast",
+    "Autosave": "Autosave",
+    "AutocompleteHinter": "Autocomplete Hinter",
+    "WordWrap": "Word Wrap",
+    "LineNumbers": "Line numbers",
+    "LintWarningSound": "Lint warning sound",
+    "UsedScreenReader": "Used with screen reader",
+    "PlainText": "Plain-text",
+    "TableText": "Table-text",
+    "Sound": "Sound"
   },
   "PreferenceCreators": {
     "On": "চালু",
@@ -639,5 +704,24 @@
   },
   "TextArea": {
     "CopyARIA": "Copy"
+  },
+  "Banner": {
+    "Copy": "<bold>Donate Today!</bold> Support p5.js and the Processing Foundation."
+  },
+  "CollectionView": {
+    "TitleCreate": "Create collection",
+    "TitleDefault": "collection"
+  },
+  "MobileDashboardView": {
+    "Examples": "Examples",
+    "Sketches": "Sketches",
+    "Collections": "Collections",
+    "Assets": "Assets",
+    "MyStuff": "My Stuff",
+    "CreateSketch": "Create Sketch",
+    "CreateCollection": "Create Collection"
+  },
+  "Explorer": {
+    "Files": "Files"
   }
 }

@@ -8,7 +8,13 @@
       "Open": "Abrir",
       "Download": "Baixar",
       "AddToCollection": "Adicionar à Coleção",
-      "Examples": "Exemplos"
+      "Examples": "Exemplos",
+      "SaveTooltipUnauthenticated": "Log in to save your sketch",
+      "DuplicateTooltipUnauthenticated": "Log in to duplicate this sketch",
+      "OpenTooltipUnauthenticated": "Log in to open your sketches",
+      "AddToCollectionTooltipUnauthenticated": "Log in to add to collections",
+      "ShareTooltipUnsaved": "Save your sketch before sharing",
+      "DownloadTooltipUnsaved": "Save your sketch before downloading"
     },
     "Edit": {
       "Title": "Editar",
@@ -42,8 +48,12 @@
       "MySketches": "Meus Esboços",
       "MyCollections": "Minhas Coleções",
       "MyAssets": "Meus Ativos",
-      "LogOut": "Sair"
-    }
+      "LogOut": "Sair",
+      "Welcome": "Welcome",
+      "My": "My",
+      "Asset": "Asset"
+    },
+    "Lang": "Language"
   },
   "Banner": {
     "Copy": "<bold>Donate Today!</bold> Support p5.js and the Processing Foundation."
@@ -60,7 +70,8 @@
     "Previous": "Anterior",
     "Next": "Próximo",
     "NoResults": "Não há resultados",
-    "Close": "Fechar"
+    "Close": "Fechar",
+    "Find": "Find"
   },
   "LoginForm": {
     "UsernameOrEmail": "Email ou Nome de Usuário",
@@ -70,7 +81,9 @@
     "Submit": "Entrar",
     "Errors": {
       "invalidCredentials": "Email ou senha inválido."
-    }
+    },
+    "ShowPasswordARIA": "Show password as plain text",
+    "HidePasswordARIA": "Hide password"
   },
   "LoginView": {
     "Title": "Editor Web p5.js | Entrar",
@@ -79,7 +92,9 @@
     "SignUp": "Registrar-se",
     "DontHaveAccount": "Não tem uma conta? ",
     "ForgotPassword": "Esqueceu sua senha? ",
-    "ResetPassword": "Recuperar sua senha"
+    "ResetPassword": "Recuperar sua senha",
+    "Email": "email",
+    "Username": "username"
   },
   "SocialAuthButton": {
     "Connect": "Conectar conta {{serviceauth}}",
@@ -130,7 +145,8 @@
       "Forum": "Expanda as possibilidades do p5.js com bibliotecas criadas pela comunidade.",
       "Discord": "Expanda as possibilidades do p5.js com bibliotecas criadas pela comunidade."
     },
-    "Contact": "Entre em Contato"
+    "Contact": "Entre em Contato",
+    "Learn": "Learn"
   },
   "Toast": {
     "OpenedNewSketch": "Novo esboço aberto.",
@@ -166,7 +182,9 @@
     "Clear": "Limpar",
     "ClearARIA": "Limpar terminal",
     "CloseARIA": "Fechar terminal",
-    "OpenARIA": "Abrir terminal"
+    "OpenARIA": "Abrir terminal",
+    "Close": "Close",
+    "Open": "Open"
   },
   "Preferences": {
     "Settings": "Configurações",
@@ -226,7 +244,9 @@
     "DataAddon": "Biblioteca adicional de Compatibilidade p5.js 1.x — Estruturas de Dados",
     "SoundReference": "Ver a referência para p5.sound compatível com p5.js {{version}}",
     "CopyToClipboardSuccess": "Copiado para a área de transferência!",
-    "CopyToClipboardFailure": "Não conseguimos copiar o texto, tente selecioná-lo e copiá-lo manualmente."
+    "CopyToClipboardFailure": "Não conseguimos copiar o texto, tente selecioná-lo e copiá-lo manualmente.",
+    "AddonOnARIA": "on",
+    "AddonOffARIA": "off"
   },
   "KeyboardShortcuts": {
     "Title": " Atalhos de Teclado",
@@ -244,7 +264,9 @@
       "CodeEditing": "Edição de código",
       "ColorPicker": "Mostrar ferramenta seletora de cores",
       "CreateNewFile": "Criar novo arquivo",
-      "RenameVariable": "Renomear variável"
+      "RenameVariable": "Renomear variável",
+      "FindNextMatch": "Find Next Match",
+      "FindPrevMatch": "Find Previous Match"
     },
     "GeneralSelection": {
       "StartSketch": "Começar esboço",
@@ -263,7 +285,8 @@
     "AddFile": "Criar arquivo",
     "AddFileARIA": "adicionar arquivo",
     "UploadFile": "Carregar arquivo",
-    "UploadFileARIA": "carregar arquivo"
+    "UploadFileARIA": "carregar arquivo",
+    "UploadFileTooltipUnauthenticated": "Log in to upload files"
   },
   "FileNode": {
     "OpenFolderARIA": "Abrir conteúdos da pasta",
@@ -345,7 +368,10 @@
   "NewPasswordView": {
     "Title": "Editor Web p5.js | Nova Senha",
     "Description": "Definir a Nova Senha",
-    "TokenInvalidOrExpired": "O token de recuperação de senha é inválido ou expirou."
+    "TokenInvalidOrExpired": "O token de recuperação de senha é inválido ou expirou.",
+    "EmptyPassword": "Please enter a password",
+    "PasswordConfirmation": "Please confirm your password",
+    "PasswordMismatch": "Passwords must match"
   },
   "AccountForm": {
     "Email": "Email",
@@ -405,7 +431,11 @@
     "PasswordARIA": "senha",
     "ConfirmPassword": "Confirmar Senha",
     "ConfirmPasswordARIA": "Confirmar Senha",
-    "SubmitSignup": "Entrar"
+    "SubmitSignup": "Entrar",
+    "ShowPasswordARIA": "Show password as plain text",
+    "HidePasswordARIA": "Hide password",
+    "ShowConfirmPasswordARIA": "Show confirm password as plain text",
+    "HideConfirmPasswordARIA": "Hide confirm password"
   },
   "SignupView": {
     "Title": "Editor Web p5.js | Criar Conta",
@@ -435,7 +465,13 @@
     "maximum": "Máximo"
   },
   "Feedback": {
-    "Title": "Editor Web p5.js | Feedback"
+    "Title": "Editor Web p5.js | Feedback",
+    "ViaGithubHeader": "Via Github Issues",
+    "ViaGithubDescription": "If you're familiar with Github, this is our preferred method for receiving bug reports and feedback.",
+    "GoToGithub": "Go to Github",
+    "ViaGoogleHeader": "Via Google Form",
+    "ViaGoogleDescription": "You can also submit this quick form.",
+    "GoToForm": "Go to Form"
   },
   "Searchbar": {
     "SearchSketch": "Localizar esboços...",
@@ -487,11 +523,15 @@
     "DirectionAscendingARIA": "Ascendente",
     "DirectionDescendingARIA": "Descendente",
     "ButtonLabelAscendingARIA": "Ordenar por {{displayName}} ascendente.",
-    "ButtonLabelDescendingARIA": "Ordenar por {{displayName}} descendente."
+    "ButtonLabelDescendingARIA": "Ordenar por {{displayName}} descendente.",
+    "RemoveFromCollection": "Remove from Collection",
+    "Description": "description",
+    "NumSketches_plural": "{{count}} sketches"
   },
   "AddToCollectionList": {
     "Title": "Editor Web p5.js | Minhas coleções",
-    "Empty": "Não há coleções"
+    "Empty": "Não há coleções",
+    "AnothersTitle": "p5.js Web Editor | {{anotheruser}}'s collections"
   },
   "CollectionCreate": {
     "Title": "Editor Web p5.js | Criar coleção",
@@ -527,7 +567,10 @@
     "DirectionDescendingARIA": "Descendente",
     "ButtonLabelAscendingARIA": "Ordenar por {{displayName}} ascendente.",
     "ButtonLabelDescendingARIA": "Ordenar por {{displayName}} descendente.",
-    "AddSketch": "Adicionar esboço"
+    "AddSketch": "Adicionar esboço",
+    "HeaderCreatedAt_mobile": "Created",
+    "HeaderUpdatedAt_mobile": "Updated",
+    "HeaderNumItems_mobile": "# sketches"
   },
   "CollectionListRow": {
     "ToggleCollectionOptionsARIA": "Alternar entre abrir/fechar opções das coleções",
@@ -568,11 +611,15 @@
     "HeaderName": "Esboço",
     "HeaderCreatedAt": "Data adicionada",
     "HeaderUpdatedAt": "Data atualizada",
-    "NoSketches": "Nenhum esboço foi encontrado."
+    "NoSketches": "Nenhum esboço foi encontrado.",
+    "View": "View",
+    "HeaderCreatedAt_mobile": "Created",
+    "HeaderUpdatedAt_mobile": "Updated"
   },
   "AddToCollectionSketchList": {
     "Title": "Editor Web p5.js | Meus esboços",
-    "NoCollections": "Nenhuma coleção foi encontrada."
+    "NoCollections": "Nenhuma coleção foi encontrada.",
+    "AnothersTitle": "p5.js Web Editor | {{anotheruser}}'s sketches"
   },
   "Editor": {
     "OpenSketchARIA": "Abrir navegação de arquivos do esboço",
@@ -595,7 +642,8 @@
     "Ago": "{{timeAgo}} atrás"
   },
   "CopyableInput": {
-    "CopiedARIA": "Copiado para a Área de Transferência!"
+    "CopiedARIA": "Copiado para a Área de Transferência!",
+    "OpenViewTabARIA": "Open {{label}} view in new tab"
   },
   "EditableInput": {
     "EditValue": "Editar valor de {{display}}",
@@ -608,7 +656,24 @@
   "MobilePreferences": {
     "Settings": "Configurações",
     "Preferences": "Preferências",
-    "Language": "Idioma"
+    "Language": "Idioma",
+    "SelectLanguage": "Selecionar idioma",
+    "GeneralSettings": "General settings",
+    "Accessibility": "Accessibility",
+    "AccessibleOutput": "Accessible Output",
+    "Theme": "Theme",
+    "LightTheme": "Light",
+    "DarkTheme": "Dark",
+    "HighContrastTheme": "High Contrast",
+    "Autosave": "Autosave",
+    "AutocompleteHinter": "Autocomplete Hinter",
+    "WordWrap": "Word Wrap",
+    "LineNumbers": "Line numbers",
+    "LintWarningSound": "Lint warning sound",
+    "UsedScreenReader": "Used with screen reader",
+    "PlainText": "Plain-text",
+    "TableText": "Table-text",
+    "Sound": "Sound"
   },
   "PreferenceCreators": {
     "On": "Ligado",
@@ -642,5 +707,21 @@
   },
   "TextArea": {
     "CopyARIA": "Copy"
+  },
+  "CollectionView": {
+    "TitleCreate": "Create collection",
+    "TitleDefault": "collection"
+  },
+  "MobileDashboardView": {
+    "Examples": "Examples",
+    "Sketches": "Sketches",
+    "Collections": "Collections",
+    "Assets": "Assets",
+    "MyStuff": "My Stuff",
+    "CreateSketch": "Create Sketch",
+    "CreateCollection": "Create Collection"
+  },
+  "Explorer": {
+    "Files": "Files"
   }
 }

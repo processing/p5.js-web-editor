@@ -677,6 +677,7 @@
     "PlainText": "Plain-text",
     "TableText": "Table-text",
     "Sound": "Sound",
+    "SelectLanguage": "Select Language",
     "Preferences": "Preferences",
     "Language": "Language"
   },
