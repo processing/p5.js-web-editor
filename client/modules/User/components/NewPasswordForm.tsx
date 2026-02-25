@@ -39,7 +39,9 @@ export function NewPasswordForm(props: { resetPasswordToken: string }) {
                   {...field.input}
                 />
                 {field.meta.touched && field.meta.error && (
-                  <span className="form-error">{field.meta.error}</span>
+                  <span className="form-error" aria-live="polite">
+                    {field.meta.error}
+                  </span>
                 )}
               </p>
             )}
@@ -59,7 +61,9 @@ export function NewPasswordForm(props: { resetPasswordToken: string }) {
                   {...field.input}
                 />
                 {field.meta.touched && field.meta.error && (
-                  <span className="form-error">{field.meta.error}</span>
+                  <span className="form-error" aria-live="polite">
+                    {field.meta.error}
+                  </span>
                 )}
               </p>
             )}
