@@ -93,7 +93,17 @@ const initialTestState: RootState = {
     totalSize: 0
   },
   loading: false,
-  collections: []
+  collections: [],
+  collectionsListProjects: {
+    projects: [],
+    metadata: {
+      page: 1,
+      totalPages: 1,
+      totalProjects: 0,
+      limit: 10,
+      hasPagination: true
+    }
+  }
 };
 
 export { mockProjects, initialTestState };

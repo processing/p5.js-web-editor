@@ -65,8 +65,9 @@ export async function deleteObjectsFromS3(keyList) {
 }
 
 export async function deleteObjectFromS3(req, res) {
-  const { objectKey, userId } = req.params;
-  const fullObjectKey = userId ? `${userId}/${objectKey}` : objectKey;
+  const userId = req.user.id;
+  const { objectKey } = req.query;
+  const fullObjectKey = `${userId}/${objectKey}`;
 
   try {
     await deleteObjectsFromS3([fullObjectKey]);

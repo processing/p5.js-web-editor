@@ -1,5 +1,13 @@
 import { p5Versions, currentP5Version } from '../../common/p5Versions';
 
+export interface ParsedUrlParams {
+  version: string;
+  sound: boolean;
+  preload: boolean;
+  shapes: boolean;
+  data: boolean;
+}
+
 const DEFAULTS = {
   sound: true,
   preload: false,
@@ -7,12 +15,15 @@ const DEFAULTS = {
   data: false
 };
 
-/**
- * Sorts version strings in descending order and returns the highest version
- * @param {string[]} versions - Array of version strings (e.g., ['1.11.2', '1.11.1'])
- * @returns {string} The highest version from the array
- */
-function getNewestVersion(versions) {
+function getVersionString(
+  item: string | { version: string; label: string }
+): string {
+  return typeof item === 'string' ? item : item.version;
+}
+
+const p5VersionStrings = p5Versions.map(getVersionString);
+
+function getNewestVersion(versions: string[]): string {
   return versions.sort((a, b) => {
     const pa = a.split('.').map((n) => parseInt(n, 10));
     const pb = b.split('.').map((n) => parseInt(n, 10));
@@ -25,18 +36,18 @@ function getNewestVersion(versions) {
   })[0];
 }
 
-function validateVersion(version) {
+function validateVersion(version: string | null): string {
   if (!version) return currentP5Version;
 
   const ver = String(version).trim();
 
-  if (p5Versions.includes(ver)) return ver;
+  if (p5VersionStrings.includes(ver)) return ver;
 
   // if only major.minor provided like "1.11"
   const majorMinorMatch = /^(\d+)\.(\d+)$/.exec(ver);
   if (majorMinorMatch) {
     const [, major, minor] = majorMinorMatch;
-    const matches = p5Versions.filter((v) => {
+    const matches = p5VersionStrings.filter((v) => {
       const parts = v.split('.');
       return parts[0] === major && parts[1] === minor;
     });
@@ -49,7 +60,7 @@ function validateVersion(version) {
   const majorOnlyMatch = /^(\d+)$/.exec(ver);
   if (majorOnlyMatch) {
     const [, major] = majorOnlyMatch;
-    const matches = p5Versions.filter((v) => v.split('.')[0] === major);
+    const matches = p5VersionStrings.filter((v) => v.split('.')[0] === major);
     if (matches.length) {
       return getNewestVersion(matches);
     }
@@ -58,7 +69,7 @@ function validateVersion(version) {
   return currentP5Version;
 }
 
-function validateBool(value, defaultValue) {
+function validateBool(value: string | null, defaultValue: boolean): boolean {
   if (!value) return defaultValue;
 
   const v = String(value).trim().toLowerCase();
@@ -72,7 +83,13 @@ function validateBool(value, defaultValue) {
   return defaultValue;
 }
 
-export function parseUrlParams(url) {
+/**
+ * Parses URL parameters for version and boolean flags.
+ *
+ * @param url - The URL string to parse.
+ * @returns Parsed and validated URL parameters including version and library flags.
+ */
+export function parseUrlParams(url: string): ParsedUrlParams {
   const params = new URLSearchParams(
     new URL(url, 'https://dummy.origin').search
   );
