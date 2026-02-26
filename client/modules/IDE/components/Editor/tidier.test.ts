@@ -19,46 +19,34 @@ describe('tidyCodeWithPrettier', () => {
   it('formats JavaScript correctly and keeps cursor stable', () => {
     const messyJs = `function foo(){console.log("hi")}`;
     const cmView = createEditor(messyJs);
-
     cmView.dispatch({ selection: { anchor: 14 } });
 
     tidyCodeWithPrettier(cmView, 'javascript');
 
-    const formattedJs = getDocText(cmView);
-    expect(formattedJs).toContain('console.log("hi");');
+    const expectedJs = 'function foo() {\n  console.log("hi");\n}\n';
+    expect(getDocText(cmView)).toBe(expectedJs);
+
     const newCursor = getCursor(cmView);
     expect(newCursor).toBeGreaterThan(0);
-    expect(newCursor).toBeLessThanOrEqual(formattedJs.length);
   });
 
   it('formats HTML correctly and keeps cursor stable', () => {
     const messyHtml = `<div><p>hello</p></div>`;
     const cmView = createEditor(messyHtml);
-
-    cmView.dispatch({ selection: { anchor: 5 } });
-
     tidyCodeWithPrettier(cmView, 'html');
 
-    const formattedHtml = getDocText(cmView);
-    expect(formattedHtml).toContain('<p>hello</p>');
-    const newCursor = getCursor(cmView);
-    expect(newCursor).toBeGreaterThan(0);
-    expect(newCursor).toBeLessThanOrEqual(formattedHtml.length);
+    const expectedHtml = '<div>\n  <p>hello</p>\n</div>\n';
+    expect(getDocText(cmView)).toBe(expectedHtml);
   });
 
   it('formats CSS correctly and keeps cursor stable', () => {
     const messyCss = `body{margin:0;padding:0;}`;
     const cmView = createEditor(messyCss);
 
-    cmView.dispatch({ selection: { anchor: 6 } });
-
     tidyCodeWithPrettier(cmView, 'css');
 
-    const formattedCss = getDocText(cmView);
-    expect(formattedCss).toContain('margin: 0;');
-    const newCursor = getCursor(cmView);
-    expect(newCursor).toBeGreaterThan(0);
-    expect(newCursor).toBeLessThanOrEqual(formattedCss.length);
+    const expectedCss = 'body {\n  margin: 0;\n  padding: 0;\n}\n';
+    expect(getDocText(cmView)).toBe(expectedCss);
   });
 
   it('handles an empty document without errors', () => {

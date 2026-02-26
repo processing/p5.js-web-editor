@@ -5,11 +5,11 @@ import cssParser from 'prettier/parser-postcss';
 import type { EditorView } from '@codemirror/view';
 import type { Plugin } from 'prettier';
 
-type parserTypes = 'babel' | 'html' | 'css';
+type ParserTypes = 'babel' | 'html' | 'css';
 type FormatMode = 'html' | 'css' | 'javascript';
 
 function prettierFormatWithCursor(
-  parser: parserTypes,
+  parser: ParserTypes,
   plugins: Plugin[],
   cmView: EditorView
 ) {
