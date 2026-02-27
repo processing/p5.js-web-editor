@@ -6,10 +6,19 @@ import mime from 'mime';
 import isAfter from 'date-fns/isAfter';
 import axios from 'axios';
 import slugify from 'slugify';
+import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3';
 import Project from '../models/project';
 import { User } from '../models/user';
 import { resolvePathToFile } from '../utils/filePath';
 import { generateFileSystemSafeName } from '../utils/generateFileSystemSafeName';
+
+const s3Client = new S3Client({
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY,
+    secretAccessKey: process.env.AWS_SECRET_KEY
+  },
+  region: process.env.AWS_REGION
+});
 
 export {
   default as createProject,
@@ -48,10 +57,18 @@ export async function updateProject(req, res) {
       });
       return;
     }
+    // only allow whitelisted fields so ownership/slug etc can't be overwritten
+    const allowedFields = ['name', 'files', 'updatedAt', 'visibility'];
+    const updateData = {};
+    allowedFields.forEach((field) => {
+      if (req.body[field] !== undefined) {
+        updateData[field] = req.body[field];
+      }
+    });
     const updatedProject = await Project.findByIdAndUpdate(
       req.params.project_id,
       {
-        $set: req.body
+        $set: updateData
       },
       {
         new: true,
@@ -158,7 +175,7 @@ export async function projectExists(projectId) {
 
 /**
  * @param {string} username
- * @param {string} projectId - the database id or the slug or the project
+ * @param {string} projectId
  * @return {Promise<boolean>}
  */
 export async function projectForUserExists(username, projectId) {
@@ -189,13 +206,14 @@ export async function getProjectForUser(username, projectId) {
 }
 
 /**
- * Adds URLs referenced in <script> tags to the `files` array of the project
- * so that they can be downloaded along with other remote files from S3.
  * @param {object} project
- * @void - modifies the `project` parameter
  */
 function bundleExternalLibs(project) {
   const indexHtml = project.files.find((file) => file.name === 'index.html');
+  if (!indexHtml || !indexHtml.content) {
+    return;
+  }
+
   const { window } = new JSDOM(indexHtml.content);
   const scriptTags = window.document.getElementsByTagName('script');
 
@@ -204,6 +222,10 @@ function bundleExternalLibs(project) {
 
     const path = src.split('/');
     const filename = path[path.length - 1];
+
+    if (project.files.some((f) => f.name === filename && f.url === src)) {
+      return;
+    }
 
     project.files.push({
       name: filename,
@@ -216,31 +238,65 @@ function bundleExternalLibs(project) {
 }
 
 /**
- * Recursively adds a file and all of its children to the JSZip instance.
+ * @param {string} url - S3 URL
+ * @return {Promise<Readable>}
+ */
+async function getStreamFromS3Url(url) {
+  const urlObj = new URL(url);
+  let bucket;
+  let key;
+
+  if (urlObj.hostname.includes('s3')) {
+    if (urlObj.hostname.startsWith('s3')) {
+      const pathParts = urlObj.pathname.split('/').filter(Boolean);
+      [bucket] = pathParts;
+      key = pathParts.slice(1).join('/');
+    } else {
+      [bucket] = urlObj.hostname.split('.');
+      key = urlObj.pathname.substring(1);
+    }
+
+    const command = new GetObjectCommand({ Bucket: bucket, Key: key });
+    const response = await s3Client.send(command);
+    return response.Body;
+  }
+
+  const response = await axios.get(url, {
+    responseType: 'stream',
+    timeout: 30000
+  });
+  return response.data;
+}
+
+/**
  * @param {object} file
  * @param {Array<object>} files
  * @param {JSZip} zip
- * @return {Promise<void>} - modifies the `zip` parameter
+ * @return {Promise<void>}
  */
 async function addFileToZip(file, files, zip) {
   if (file.fileType === 'folder') {
     const folderZip = file.name === 'root' ? zip : zip.folder(file.name);
-    await Promise.all(
-      file.children.map((fileId) => {
-        const childFile = files.find((f) => f.id === fileId);
-        return addFileToZip(childFile, files, folderZip);
-      })
-    );
+    await file.children.reduce(async (previousPromise, fileId) => {
+      await previousPromise;
+      const childFile = files.find((f) => f.id === fileId);
+      return addFileToZip(childFile, files, folderZip);
+    }, Promise.resolve());
   } else if (file.url) {
     try {
-      const res = await axios.get(file.url, {
-        responseType: 'arraybuffer',
-        timeout: 30000 // 30 second timeout to prevent hanging requests
-      });
-      zip.file(file.name, res.data);
+      if (file.url.includes('s3') && file.url.includes('amazonaws.com')) {
+        const stream = await getStreamFromS3Url(file.url);
+        zip.file(file.name, stream, { binary: true });
+      } else {
+        const response = await axios.get(file.url, {
+          responseType: 'stream',
+          timeout: 30000
+        });
+        zip.file(file.name, response.data, { binary: true });
+      }
     } catch (e) {
       console.warn(`Failed to fetch file from ${file.url}:`, e.message);
-      zip.file(file.name, new ArrayBuffer(0));
+      zip.file(file.name, Buffer.alloc(0));
     }
   } else {
     zip.file(file.name, file.content);
@@ -248,6 +304,8 @@ async function addFileToZip(file, files, zip) {
 }
 
 async function buildZip(project, req, res) {
+  let keepaliveInterval;
+
   try {
     const zip = new JSZip();
     const currentTime = format(new Date(), 'yyyy_MM_dd_HH_mm_ss');
@@ -258,30 +316,77 @@ async function buildZip(project, req, res) {
     const { files } = project;
     const root = files.find((file) => file.name === 'root');
 
-    bundleExternalLibs(project);
-    await addFileToZip(root, files, zip);
-
-    const base64 = await zip.generateAsync({ type: 'base64' });
-    const buff = Buffer.from(base64, 'base64');
-
-    // nityam Check if response was already sent (e.g., client disconnected)
-    if (res.headersSent) {
-      return;
+    if (!root) {
+      throw new Error('Project has no root folder');
     }
+
+    bundleExternalLibs(project);
 
     res.writeHead(200, {
       'Content-Type': 'application/zip',
-      'Content-disposition': `attachment; filename=${zipFileName}`
+      'Content-disposition': `attachment; filename=${zipFileName}`,
+      'Transfer-Encoding': 'chunked'
     });
-    res.end(buff);
+
+    let keepaliveCounter = 0;
+    keepaliveInterval = setInterval(() => {
+      if (!res.writableEnded) {
+        res.write(Buffer.alloc(0));
+        keepaliveCounter++;
+        if (keepaliveCounter % 10 === 0) {
+          console.log(
+            `Keepalive: Building ZIP file list (${keepaliveCounter}s elapsed)...`
+          );
+        }
+      }
+    }, 1000);
+
+    await addFileToZip(root, files, zip);
+
+    clearInterval(keepaliveInterval);
+    keepaliveInterval = null;
+
+    const zipStream = zip.generateNodeStream({
+      type: 'nodebuffer',
+      streamFiles: true,
+      compression: 'DEFLATE',
+      compressionOptions: { level: 6 }
+    });
+
+    zipStream.pipe(res);
+
+    zipStream.on('error', (err) => {
+      console.error('Error streaming zip file:', err);
+      if (!res.headersSent) {
+        res.status(500).json({
+          success: false,
+          message: 'Failed to generate zip file. Please try again.'
+        });
+      } else {
+        res.end();
+      }
+    });
+
+    await new Promise((resolve, reject) => {
+      zipStream.on('end', resolve);
+      zipStream.on('error', reject);
+      res.on('error', reject);
+      res.on('close', () => reject(new Error('Client disconnected')));
+    });
   } catch (err) {
     console.error('Error building zip file:', err);
-    // Only send error if response hasn't been sent yet
+
+    if (keepaliveInterval) {
+      clearInterval(keepaliveInterval);
+    }
+
     if (!res.headersSent) {
       res.status(500).json({
         success: false,
         message: 'Failed to generate zip file. Please try again.'
       });
+    } else {
+      res.end();
     }
   }
 }
@@ -293,11 +398,9 @@ export async function downloadProjectAsZip(req, res) {
       res.status(404).send({ message: 'Project with that id does not exist' });
       return;
     }
-    // Await buildZip to ensure it completes before the function returns
     await buildZip(project, req, res);
   } catch (err) {
     console.error('Error in downloadProjectAsZip:', err);
-    // Only send error if response hasn't been sent yet
     if (!res.headersSent) {
       res.status(500).json({
         success: false,
