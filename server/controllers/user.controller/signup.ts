@@ -96,7 +96,14 @@ export const duplicateUserCheck: RequestHandler<
   DuplicateUserCheckQuery
 > = async (req, res) => {
   const checkType = req.query.check_type;
-  const value = req.query[checkType];
+
+  if (checkType !== 'email' && checkType !== 'username') {
+    return res
+      .status(400)
+      .json({ error: 'Invalid check_type. Must be email or username.' });
+  }
+
+  const value = checkType === 'email' ? req.query.email : req.query.username;
   const options = { caseInsensitive: true, valueType: checkType };
   const user = await User.findByEmailOrUsername(value!, options);
   if (user) {
