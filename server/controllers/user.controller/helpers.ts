@@ -67,7 +67,8 @@ export async function saveUser(res: Response, user: UserDocument) {
     await user.save();
     res.json(userResponse(user));
   } catch (error) {
-    res.status(500).json({ error });
+    console.error('Could not save user:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
 }
 
