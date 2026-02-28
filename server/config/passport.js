@@ -240,8 +240,21 @@ passport.use(
     },
     async (req, accessToken, refreshToken, profile, done) => {
       try {
+        const emailEntries = profile?.emails || profile?._json?.emails || [];
+        const primaryEmail = (
+          emailEntries.find(
+            (email) => typeof email?.value === 'string' && email.value.trim()
+          ) || {}
+        ).value;
+
+        if (!primaryEmail) {
+          return done(null, false, {
+            msg: 'Google account does not provide an email address.'
+          });
+        }
+
         const existingUser = await User.findOne({
-          google: profile._json.emails[0].value
+          google: primaryEmail
         }).exec();
 
         if (existingUser) {
@@ -258,18 +271,16 @@ passport.use(
           return done(null, existingUser);
         }
 
-        const primaryEmail = profile._json.emails[0].value;
-
         if (req.user) {
           if (!req.user.google) {
-            req.user.google = profile._json.emails[0].value;
+            req.user.google = primaryEmail;
             req.user.tokens.push({ kind: 'google', accessToken });
             req.user.verified = User.EmailConfirmation().Verified;
           }
           await req.user.save();
           return done(null, req.user);
         }
-        let username = profile._json.emails[0].value.split('@')[0];
+        let username = primaryEmail.split('@')[0];
         const existingEmailUser = await User.findByEmail(primaryEmail);
         const existingUsernameUser = await User.findByUsername(username, {
           caseInsensitive: true
@@ -285,14 +296,16 @@ passport.use(
             return done(null, false, { msg: accountSuspensionMessage });
           }
           existingEmailUser.email = existingEmailUser.email || primaryEmail;
-          existingEmailUser.google = profile._json.emails[0].value;
+          existingEmailUser.google = primaryEmail;
           existingEmailUser.username = existingEmailUser.username || username;
           existingEmailUser.tokens.push({
             kind: 'google',
             accessToken
           });
           existingEmailUser.name =
-            existingEmailUser.name || profile._json.displayName;
+            existingEmailUser.name ||
+            profile.displayName ||
+            profile._json?.displayName;
           existingEmailUser.verified = User.EmailConfirmation().Verified;
 
           await existingEmailUser.save();
@@ -301,10 +314,10 @@ passport.use(
 
         const user = new User();
         user.email = primaryEmail;
-        user.google = profile._json.emails[0].value;
+        user.google = primaryEmail;
         user.username = username;
         user.tokens.push({ kind: 'google', accessToken });
-        user.name = profile._json.displayName;
+        user.name = profile.displayName || profile._json?.displayName;
         user.verified = User.EmailConfirmation().Verified;
 
         await user.save();
