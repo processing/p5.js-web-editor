@@ -102,7 +102,7 @@ function colorDecorations(view: EditorView) {
             }),
             side: 0
           });
-          // console.log('pushing widget for rgb', { r, g, b, a, hex });
+          console.log('pushing widget for rgb', { r, g, b, a, hex });
           widgets.push(widget.range(from));
         } else if (matchingTypes.includes(type.name) && hslMatcher(callExp)) {
           /**
@@ -185,65 +185,71 @@ function colorDecorations(view: EditorView) {
   return Decoration.set(widgets);
 }
 
-function pickColor(e: Event, view: EditorView) {
-  const target = e.target as HTMLInputElement;
-  console.log(
-    'pick color event',
-    e,
-    target,
-    target.dataset.color,
-    target.dataset.colorraw
-  );
-  if (
-    target.nodeName !== 'INPUT' ||
-    !target.parentElement ||
-    (!target.dataset.color && !target.dataset.colorraw)
-  )
-    return false;
-  const data = colorState.get(target)!;
-  const value = target.value;
-  const rgb = hexToRgb(value);
-  const colorraw = target.dataset.colorraw;
-  const slash = (target.dataset.colorraw || '').indexOf('/') > 4;
-  const comma = (target.dataset.colorraw || '').indexOf(',') > 4;
-  let converted = target.value;
-  if (data.colorType === ColorType.rgb) {
-    // console.log({ colorraw, slash, comma });
-    let funName = colorraw?.match(/^(rgba?)/)
-      ? colorraw?.match(/^(rgba?)/)![0]
-      : undefined;
-    if (comma) {
-      converted = rgb
-        ? `${funName}(${rgb.r}, ${rgb.g}, ${rgb.b}${
-            data.alpha ? ', ' + data.alpha.trim() : ''
-          })`
-        : value;
-    } else if (slash) {
-      converted = rgb
-        ? `${funName}(${rgb.r} ${rgb.g} ${rgb.b}${
-            data.alpha ? ' / ' + data.alpha.trim() : ''
-          })`
-        : value;
-    } else {
-      converted = rgb ? `${funName}(${rgb.r} ${rgb.g} ${rgb.b})` : value;
-    }
-  } else if (data.colorType === ColorType.hsl) {
+function pickColor(dispatch: boolean) {
+  return function f(e: Event, view: EditorView) {
+    const target = e.target as HTMLInputElement;
+    console.log(
+      'pick color event',
+      e,
+      target,
+      target.dataset.color,
+      target.dataset.colorraw
+    );
+    if (
+      target.nodeName !== 'INPUT' ||
+      !target.parentElement ||
+      (!target.dataset.color && !target.dataset.colorraw)
+    )
+      return false;
+    const data = colorState.get(target)!;
+    const value = target.value;
     const rgb = hexToRgb(value);
-    if (rgb) {
-      const { h, s, l } = RGBToHSL(rgb?.r, rgb?.g, rgb?.b);
-      converted = `hsl(${h}deg ${s}% ${l}%${
-        data.alpha ? ' / ' + data.alpha : ''
-      })`;
+    const colorraw = target.dataset.colorraw;
+    const slash = (target.dataset.colorraw || '').indexOf('/') > 4;
+    const comma = (target.dataset.colorraw || '').indexOf(',') > 4;
+    let converted = target.value;
+    if (data.colorType === ColorType.rgb) {
+      // console.log({ colorraw, slash, comma });
+      let funName = colorraw?.match(/^(rgba?)/)
+        ? colorraw?.match(/^(rgba?)/)![0]
+        : undefined;
+      if (comma) {
+        converted = rgb
+          ? `${funName}(${rgb.r}, ${rgb.g}, ${rgb.b}${
+              data.alpha ? ', ' + data.alpha.trim() : ''
+            })`
+          : value;
+      } else if (slash) {
+        converted = rgb
+          ? `${funName}(${rgb.r} ${rgb.g} ${rgb.b}${
+              data.alpha ? ' / ' + data.alpha.trim() : ''
+            })`
+          : value;
+      } else {
+        converted = rgb ? `${funName}(${rgb.r} ${rgb.g} ${rgb.b})` : value;
+      }
+    } else if (data.colorType === ColorType.hsl) {
+      const rgb = hexToRgb(value);
+      if (rgb) {
+        const { h, s, l } = RGBToHSL(rgb?.r, rgb?.g, rgb?.b);
+        converted = `hsl(${h}deg ${s}% ${l}%${
+          data.alpha ? ' / ' + data.alpha : ''
+        })`;
+      }
     }
-  }
-  view.dispatch({
-    changes: {
-      from: data.from,
-      to: data.to,
-      insert: converted
+    if (dispatch) {
+      view.dispatch({
+        changes: {
+          from: data.from,
+          to: data.to,
+          insert: converted
+        }
+      });
+      data.to = data.from + converted.length;
     }
-  });
-  return true;
+
+    return true;
+  };
 }
 
 class ColorWidget extends WidgetType {
@@ -267,10 +273,7 @@ class ColorWidget extends WidgetType {
   eq(other: ColorWidget) {
     return (
       other.state.colorType === this.state.colorType &&
-      other.color === this.color &&
-      other.state.from === this.state.from &&
-      other.state.to === this.state.to &&
-      other.state.alpha === this.state.alpha
+      other.state.from === this.state.from
     );
   }
   toDOM() {
@@ -300,32 +303,33 @@ export const colorView = (showPicker: boolean = true) =>
       }
       update(update: ViewUpdate) {
         if (update.docChanged || update.viewportChanged) {
+          console.log('updating decorations for color widget');
           this.decorations = colorDecorations(update.view);
         }
-        const readOnly = update.view.contentDOM.ariaReadOnly === 'true';
-        const editable = update.view.contentDOM.contentEditable === 'true';
+        // const readOnly = update.view.contentDOM.ariaReadOnly === 'true';
+        // const editable = update.view.contentDOM.contentEditable === 'true';
 
-        const canBeEdited = readOnly === false && editable;
-        this.changePicker(update.view, canBeEdited);
+        // const canBeEdited = readOnly === false && editable;
+        // this.changePicker(update.view, canBeEdited);
       }
-      changePicker(view: EditorView, canBeEdited: boolean) {
-        const doms = view.contentDOM.querySelectorAll('input[type=color]');
-        doms.forEach((inp) => {
-          if (!showPicker) {
-            inp.setAttribute('disabled', '');
-          } else {
-            canBeEdited
-              ? inp.removeAttribute('disabled')
-              : inp.setAttribute('disabled', '');
-          }
-        });
-      }
+      // changePicker(view: EditorView, canBeEdited: boolean) {
+      //   const doms = view.contentDOM.querySelectorAll('input[type=color]');
+      //   doms.forEach((inp) => {
+      //     if (!showPicker) {
+      //       inp.setAttribute('disabled', '');
+      //     } else {
+      //       canBeEdited
+      //         ? inp.removeAttribute('disabled')
+      //         : inp.setAttribute('disabled', '');
+      //     }
+      //   });
+      // }
     },
     {
       decorations: (v) => v.decorations,
       eventHandlers: {
-        change: pickColor,
-        blur: pickColor
+        change: pickColor(true),
+        input: pickColor(true)
       }
     }
   );
