@@ -1,6 +1,6 @@
 import { EditorState } from '@codemirror/state';
 import { EditorView } from '@codemirror/view';
-import tidyCodeWithPrettier from './tidier';
+import { tidyCodeWithPrettier } from './tidier';
 
 describe('tidyCodeWithPrettier', () => {
   function createEditor(content: string) {
@@ -31,11 +31,11 @@ describe('tidyCodeWithPrettier', () => {
   });
 
   it('formats HTML correctly and keeps cursor stable', () => {
-    const messyHtml = `<div><p>hello</p></div>`;
+    const messyHtml = `<html><body>hello</body></html>`;
     const cmView = createEditor(messyHtml);
     tidyCodeWithPrettier(cmView, 'html');
 
-    const expectedHtml = '<div>\n  <p>hello</p>\n</div>\n';
+    const expectedHtml = '<html>\n  <body>\n    hello\n  </body>\n</html>\n';
     expect(getDocText(cmView)).toBe(expectedHtml);
   });
 

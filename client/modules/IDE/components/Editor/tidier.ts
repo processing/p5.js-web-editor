@@ -33,10 +33,7 @@ function prettierFormatWithCursor(
 }
 
 /** Runs prettier on the codemirror instance, depending on the mode. */
-export default function tidyCodeWithPrettier(
-  cmView: EditorView,
-  mode: FormatMode
-) {
+export function tidyCodeWithPrettier(cmView: EditorView, mode: FormatMode) {
   if (mode === 'javascript') {
     prettierFormatWithCursor('babel', [babelParser], cmView);
   } else if (mode === 'css') {

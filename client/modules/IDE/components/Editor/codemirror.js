@@ -18,7 +18,7 @@ import {
   AUTOCOMPLETE_OPTIONS
 } from './stateUtils';
 import { useEffectWithComparison } from '../../hooks/custom-hooks';
-import tidyCodeWithPrettier from './tidier';
+import { tidyCodeWithPrettier } from './tidier';
 
 // ----- GENERAL TODOS (in order of priority) -----
 // - any features lost in the p5 conversion git merge
