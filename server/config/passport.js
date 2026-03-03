@@ -241,15 +241,13 @@ passport.use(
     async (req, accessToken, refreshToken, profile, done) => {
       try {
         const emailEntries = profile?.emails || profile?._json?.emails || [];
-        const primaryEmail = (
-          emailEntries.find(
-            (email) => typeof email?.value === 'string' && email.value.trim()
-          ) || {}
-        ).value;
-
+        const primaryEmailEntry = emailEntries.find(
+          (email) => typeof email?.value === 'string'
+        );
+        const primaryEmail = primaryEmailEntry?.value?.trim();
         if (!primaryEmail) {
           return done(null, false, {
-            msg: 'Google account does not provide an email address.'
+            msg: 'Google account does not provide a valid email address.'
           });
         }
 
