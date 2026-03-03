@@ -61,7 +61,9 @@ function NewFolderForm() {
             </Field>
           </div>
           {touched.submitButton && errors.name && (
-            <span className="form-error">{errors.name}</span>
+            <span className="form-error" aria-live="polite">
+              {errors.name}
+            </span>
           )}
         </form>
       )}
