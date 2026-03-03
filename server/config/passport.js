@@ -136,7 +136,8 @@ const getGooglePrimaryEmail = (googleEmails) => {
   ) {
     return null;
   }
-  return googleEmails[0]?.value || null;
+  const primaryEmail = googleEmails[0]?.value?.trim();
+  return primaryEmail || null;
 };
 
 /**
