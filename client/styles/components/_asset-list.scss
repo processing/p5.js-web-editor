@@ -49,6 +49,7 @@
 
 .asset-table__row a {
   @include themify() {
+    text-decoration: underline;
     color: getThemifyVariable('primary-text-color');
   }
 }
@@ -77,4 +78,7 @@
   @include themify() {
     background-color: getThemifyVariable('background-color');
   }
+}
+.asset-table__row a:hover {
+  text-decoration-thickness: 0.1em;
 }
