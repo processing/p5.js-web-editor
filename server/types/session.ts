@@ -10,6 +10,6 @@ export type CreateSessionResponseBody = PublicUser | { message: string };
 export type GetSessionResponseBody =
   | { user: null }
   | PublicUser
-  | GenericResponseBody;
+  | { message: string };
 
 export type DestroySessionResponseBody = { success: boolean };

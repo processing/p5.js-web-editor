@@ -1,6 +1,5 @@
 import passport from 'passport';
 import { RequestHandler } from 'express';
-import type { Request, Response, NextFunction } from 'express';
 import { userResponse } from './user.controller';
 import type { UserDocument } from '../types';
 import {
@@ -23,7 +22,7 @@ export const createSession: RequestHandler<
   {},
   CreateSessionResponseBody,
   CreateSessionRequestBody
-> = (req: Request, res: Response, next: NextFunction) => {
+> = (req, res, next) => {
   passport.authenticate(
     'local',
     (err: Error | null, user: UserDocument | false) => {
@@ -41,7 +40,7 @@ export const createSession: RequestHandler<
           next(innerErr);
           return;
         }
-        res.json(userResponse(req.user!));
+        res.json(userResponse(user));
       });
     }
   )(req, res, next);
@@ -57,8 +56,8 @@ export const createSession: RequestHandler<
  *   - Returns the current session user, or null if not logged in
  */
 export const getSession: RequestHandler<{}, GetSessionResponseBody> = (
-  req: Request,
-  res: Response
+  req,
+  res
 ) => {
   if (!req.user) {
     return res.status(200).send({ user: null });
@@ -80,9 +79,9 @@ export const getSession: RequestHandler<{}, GetSessionResponseBody> = (
  *   - Logs out the user and destroys the session
  */
 export const destroySession: RequestHandler<{}, DestroySessionResponseBody> = (
-  req: Request,
-  res: Response,
-  next: NextFunction
+  req,
+  res,
+  next
 ) => {
   req.logout((err: Error | null) => {
     if (err) {
