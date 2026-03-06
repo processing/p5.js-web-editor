@@ -5,7 +5,10 @@ import { DropdownMenu, DropdownMenuAlignment } from './DropdownMenu';
 describe('DropdownMenu', () => {
   const renderDropdown = () => {
     render(
-      <DropdownMenu aria-label="More options" align={DropdownMenuAlignment.RIGHT}>
+      <DropdownMenu
+        aria-label="More options"
+        align={DropdownMenuAlignment.RIGHT}
+      >
         <li role="menuitem">Item One</li>
         <li role="menuitem">Item Two</li>
         <li role="menuitem">Item Three</li>
