@@ -1,8 +1,10 @@
 @use "sass:math";
 
 .toast {
-  background-color: $toast-background-color;
-  color: $toast-text-color;
+  @include themify() {
+    color: getThemifyVariable('toast-text-color');
+    background-color: getThemifyVariable('toast-background-color');
+  }
   padding: #{math.div(10, $base-font-size)}rem;
   position: fixed;
   top: 0;

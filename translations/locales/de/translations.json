@@ -87,7 +87,7 @@
     "LogoARIA": "{{serviceauth}} logo"
   },
   "About": {
-    "Title": "Über",  
+    "Title": "Über",
     "TitleHelmet": "p5.js Web Editor | Über",
     "Contribute": "Mitwirken",
     "NewP5": "Neu bei p5.js?",
@@ -112,7 +112,8 @@
     "SketchFailedSave": "Fehler beim Sichern Deines Sketches.",
     "AutosaveEnabled": "Automatisches Sichern aktiviert.",
     "LangChange": "Sprache geändert",
-    "SettingsSaved": "Einstellungen gespeichert."
+    "SettingsSaved": "Einstellungen gespeichert.",
+    "CloseAlertARIA": "Close Alert"
   },
   "Toolbar": {
     "Preview": "Vorschau",
@@ -123,7 +124,8 @@
     "StopSketchARIA": "Sketch stoppen",
     "EditSketchARIA": "Sketch Namen bearbeiten",
     "NewSketchNameARIA": "Neuer Sketch name",
-    "By": " von "
+    "By": " von ",
+    "SelectVersionARIA": "Select p5.js version"
   },
   "Console": {
     "Title": "Konsole",
@@ -280,7 +282,7 @@
     "errorEmptyPassword": "Gib bitte ein Passwort ein",
     "errorShortPassword": "Das Passwort muss mindestens aus 6 Zeichen bestehen",
     "errorConfirmPassword": "Gib bitte das Passwort erneut ein",
-    "errorNewPasswordRepeat":"Your New Password must differ from the current one.",
+    "errorNewPasswordRepeat": "Your New Password must differ from the current one.",
     "errorNewPassword": "Gib bitte ein neues Passwort ein oder lass dieses Feld frei.",
     "errorEmptyUsername": "Gib bitte einen Nutzernamen ein.",
     "errorLongUsername": "Der Nutzername muss weniger als 20 Zeichen haben.",
@@ -401,7 +403,6 @@
   "FileUploader": {
     "DictDefaultMessage": "Ziehe Dateien hierhin oder klicke um den Dateibrowser zu verwenden."
   },
-
   "ErrorModal": {
     "MessageLogin": "Um Deinen Sketch sichern zu können musst Du angemeldet sein. Bitte ",
     "Login": "Melde Dich an",
@@ -508,7 +509,9 @@
   "Pagination": {
     "Next": "Next",
     "Previous": "Previous",
-    "Of": "of"
+    "Of": "of",
+    "PreviousPageARIA": "Previous Page",
+    "NextPageARIA": "Next Page"
   },
   "SketchList": {
     "View": "Öffnen",
@@ -593,8 +596,8 @@
     "Off": "Aus"
   },
   "MobileDashboardView": {
-    "Examples":  "Beispiele",
-    "Sketches":  "Sketche",
+    "Examples": "Beispiele",
+    "Sketches": "Sketche",
     "Collections": "Sammlungen",
     "Assets": "Assets",
     "MyStuff": "Mein Zeug",
@@ -603,6 +606,8 @@
   },
   "Explorer": {
     "Files": "Dateien"
+  },
+  "TextArea": {
+    "CopyARIA": "Copy"
   }
 }
-

@@ -110,7 +110,8 @@
       "SketchFailedSave": "خاکہ محفوظ کرنے میں ناکام۔",
       "AutosaveEnabled": "خودکار محفوظ کرنا فعال ہے۔",
       "LangChange": "زبان بدل گئی۔",
-      "SettingsSaved": "ترتیبات محفوظ ہو گئیں۔"
+      "SettingsSaved": "ترتیبات محفوظ ہو گئیں۔",
+      "CloseAlertARIA": "Close Alert"
     },
     "Toolbar": {
         "Preview": "پیش نظارہ",
@@ -121,7 +122,8 @@
         "StopSketchARIA": "خاکہ بنانا بند کریں",
         "EditSketchARIA": "خاکے کے نام میں ترمیم کریں۔",
         "NewSketchNameARIA": "خاکے کا نیا نام",
-        "By": " کی طرف سے "
+        "By": " کی طرف سے ",
+        "SelectVersionARIA": "Select p5.js version"
       },      
     "Console": {
       "Title": "تسلی",
@@ -511,7 +513,9 @@
     "Pagination": {
       "Next": "Next",
       "Previous": "Previous",
-      "Of": "of"
+      "Of": "of",
+      "PreviousPageARIA": "Previous Page",
+      "NextPageARIA": "Next Page"
     },
     "SketchList": {
       "View": "دیکھیں",
@@ -618,6 +622,9 @@
       "PrivacyPolicy": "رازداری کی پالیسی",
       "TermsOfUse": "استعمال کرنے کی شرائط",
       "CodeOfConduct": "ضابطہ اخلاق"
+    },
+    "TextArea": {
+      "CopyARIA": "Copy"
     }
   }
   
