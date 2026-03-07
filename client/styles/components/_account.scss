@@ -29,6 +29,7 @@
   padding-bottom: #{math.div(15, $base-font-size)}rem;
 }
 
+
 .account__social-stack {
   display: flex;
   @media (max-width: 770px) {
@@ -36,8 +37,7 @@
     align-items: center;
     gap: #{math.div(15, $base-font-size)}rem;
 
-    button,
-    a {
+    button, a {
       width: 100% !important;
       margin-right: 0;
     }
