@@ -172,7 +172,7 @@ userSchema.methods.findMatchingKey = async function findMatchingKey(
   for (const k of this.apiKeys) {
     try {
       /* eslint-disable no-await-in-loop */
-      const foundOne = await bcrypt.compareSync(candidateKey, k.hashedKey);
+      const foundOne = await bcrypt.compare(candidateKey, k.hashedKey);
 
       if (foundOne) {
         keyObj = { isMatch: true, keyDocument: k };

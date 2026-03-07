@@ -37,7 +37,7 @@ const CollectionCreate = () => {
       <div className="sketches-table-container">
         <form className="form" onSubmit={handleCreateCollection}>
           {creationError && (
-            <span className="form-error">
+            <span className="form-error" aria-live="assertive">
               {t('CollectionCreate.FormError')}
             </span>
           )}
@@ -55,7 +55,7 @@ const CollectionCreate = () => {
               onChange={(e) => setName(e.target.value)}
             />
             {invalid && (
-              <span className="form-error">
+              <span className="form-error" aria-live="polite">
                 {t('CollectionCreate.NameRequired')}
               </span>
             )}

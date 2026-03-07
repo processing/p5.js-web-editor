@@ -21,7 +21,8 @@
     }
 ]
 ```
-3. In permissions, add the following bucket policy. Change "YOUR_BUCKET_NAME" to reflect name of the S3 bucket.
+3. Uncheck "Block all public access" under "Block public access (bucket settings)".
+4. In permissions, add the following bucket policy. Change "YOUR_BUCKET_NAME" to reflect name of the S3 bucket.
 ```
 {
 	"Version": "2008-10-17",
@@ -39,7 +40,6 @@
 	]
 }
 ```
-4. Uncheck "Block all public access" under "Block public access (bucket settings)".
 5. Under "Object Ownership", check "ACLs enabled" and set "Object Ownership" to "Object writer"
 6. Locate your AWS key and Secret Key. You can find this in the top AWS navigation under your name -> Security Credentials.
 7. Update the following lines to your .env file:
@@ -48,6 +48,7 @@ AWS_ACCESS_KEY={AWS_ACCESS_KEY}
 AWS_REGION={S3_BUCKET_REGION}
 AWS_SECRET_KEY={AWS_SECRET_KEY}
 S3_BUCKET={S3_BUCKET_NAME}
+S3_BUCKET_URL_BASE=https://{S3_BUCKET_NAME}.s3.{S3_BUCKET_REGION}.amazonaws.com/
 ```
 
 If your S3 bucket is in the US East (N Virginia) region (us-east-1), you'll

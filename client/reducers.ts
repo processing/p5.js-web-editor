@@ -4,7 +4,7 @@ import ide from './modules/IDE/reducers/ide';
 import { preferences } from './modules/IDE/reducers/preferences';
 import project from './modules/IDE/reducers/project';
 import editorAccessibility from './modules/IDE/reducers/editorAccessibility';
-import user from './modules/User/reducers';
+import { user } from './modules/User/reducers';
 import sketches from './modules/IDE/reducers/projects';
 import toast from './modules/IDE/reducers/toast';
 import console from './modules/IDE/reducers/console';
@@ -13,6 +13,7 @@ import search from './modules/IDE/reducers/search';
 import sorting from './modules/IDE/reducers/sorting';
 import loading from './modules/IDE/reducers/loading';
 import collections from './modules/IDE/reducers/collections';
+import collectionsListProjects from './modules/IDE/reducers/collectionsListProjects';
 
 const rootReducer = combineReducers({
   ide,
@@ -28,11 +29,15 @@ const rootReducer = combineReducers({
   console,
   assets,
   loading,
-  collections
+  collections,
+  collectionsListProjects
 });
 
 // Type for entire redux state
 export type RootState = ReturnType<typeof rootReducer>;
+
+// Type for functions that get root state
+export type GetRootState = () => RootState;
 
 // eslint-disable-next-line import/no-default-export
 export default rootReducer;

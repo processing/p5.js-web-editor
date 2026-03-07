@@ -34,7 +34,7 @@ const projectSchema = new Schema(
       default: "Hello p5.js, it's the server",
       maxlength: 128
     },
-    user: { type: Schema.Types.ObjectId, ref: 'User' },
+    user: { type: Schema.Types.ObjectId, ref: 'User', immutable: true },
     serveSecure: { type: Boolean, default: false },
     files: { type: [fileSchema] },
     _id: { type: String, default: shortid.generate },
@@ -43,7 +43,7 @@ const projectSchema = new Schema(
       enum: ['Private', 'Public'],
       default: 'Public'
     },
-    slug: { type: String }
+    slug: { type: String, immutable: true }
   },
   { timestamps: true }
 );

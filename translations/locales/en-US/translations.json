@@ -8,7 +8,13 @@
       "Open": "Open",
       "Download": "Download",
       "AddToCollection": "Add to Collection",
-      "Examples": "Examples"
+      "Examples": "Examples",
+      "SaveTooltipUnauthenticated": "Log in to save your sketch",
+      "DuplicateTooltipUnauthenticated": "Log in to duplicate this sketch",
+      "OpenTooltipUnauthenticated": "Log in to open your sketches",
+      "AddToCollectionTooltipUnauthenticated": "Log in to add to collections",
+      "ShareTooltipUnsaved": "Save your sketch before sharing",
+      "DownloadTooltipUnsaved": "Save your sketch before downloading"
     },
     "Edit": {
       "Title": "Edit",
@@ -49,6 +55,9 @@
       "LogOut": "Log Out"
     }
   },
+  "Banner": {
+    "Copy": "<bold>Donate Today!</bold> Support p5.js and the Processing Foundation."
+  },
   "CodemirrorFindAndReplace": {
     "ToggleReplace": "Toggle Replace",
     "Find": "Find",
@@ -69,6 +78,8 @@
     "UsernameOrEmailARIA": "Email or Username",
     "Password": "Password",
     "PasswordARIA": "Password",
+    "ShowPasswordARIA": "Show password as plain text",
+    "HidePasswordARIA": "Hide password",
     "Submit": "Log In",
     "Errors": {
       "invalidCredentials": "Invalid email or password."
@@ -148,7 +159,8 @@
     "IncorrectCurrentPass": "Current password is incorrect",
     "DefaultError": "Something went wrong",
     "UserNotFound": "User not found",
-    "NetworkError": "Network error"
+    "NetworkError": "Network error",
+    "CloseAlertARIA": "Close Alert"
   },
   "Toolbar": {
     "Preview": "Preview",
@@ -162,7 +174,8 @@
     "By": " by ",
     "CustomLibraryVersion": "Custom p5.js version",
     "VersionPickerARIA": "Version picker",
-    "NewVersionPickerARIA": "Version picker"
+    "NewVersionPickerARIA": "Version picker",
+    "SelectVersionARIA": "Select p5.js version"
   },
   "Console": {
     "Title": "Console",
@@ -272,7 +285,8 @@
     "AddFile": "Create file",
     "AddFileARIA": "add file",
     "UploadFile": "Upload file",
-    "UploadFileARIA": "upload file"
+    "UploadFileARIA": "upload file",
+    "UploadFileTooltipUnauthenticated": "Log in to upload files"
   },
   "FileNode": {
     "OpenFolderARIA": "Open folder contents",
@@ -415,8 +429,12 @@
     "EmailARIA": "email",
     "Password": "Password",
     "PasswordARIA": "password",
+    "ShowPasswordARIA": "Show password as plain text",
+    "HidePasswordARIA": "Hide password",
     "ConfirmPassword": "Confirm Password",
     "ConfirmPasswordARIA": "Confirm password",
+    "ShowConfirmPasswordARIA": "Show confirm password as plain text",
+    "HideConfirmPasswordARIA": "Hide confirm password",
     "SubmitSignup": "Sign Up"
   },
   "SignupView": {
@@ -566,10 +584,20 @@
   "Overlay": {
     "AriaLabel": "Close {{title}} overlay"
   },
+  "TextArea": {
+    "CopyARIA": "Copy"
+  },
   "QuickAddList": {
     "ButtonRemoveARIA": "Remove from collection",
     "ButtonAddToCollectionARIA": "Add to collection",
     "View": "View"
+  },
+  "Pagination": {
+    "Next": "Next",
+    "Previous": "Previous",
+    "Of": "of",
+    "PreviousPageARIA": "Previous Page",
+    "NextPageARIA": "Next Page"
   },
   "SketchList": {
     "View": "View",

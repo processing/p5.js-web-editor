@@ -8,7 +8,7 @@ import {
   act,
   waitFor
 } from '../../../test-utils';
-import AccountForm from './AccountForm';
+import { AccountForm } from './AccountForm';
 import { initialTestState } from '../../../testData/testReduxStore';
 import * as actions from '../actions';
 

@@ -7,7 +7,11 @@ import { Types } from 'mongoose';
 
 import { User } from '../../../models/user';
 import { createApiKey, removeApiKey } from '../apiKey';
-import type { ApiKeyDocument, RemoveApiKeyRequestParams } from '../../../types';
+import type {
+  ApiKeyDocument,
+  RemoveApiKeyRequestParams,
+  UserDocument
+} from '../../../types';
 import { createMockUser } from '../__testUtils__';
 
 jest.mock('../../../models/user');
@@ -31,7 +35,7 @@ describe('user.controller > api key', () => {
 
   describe('createApiKey', () => {
     it("returns an error if user doesn't exist", async () => {
-      request.user = createMockUser({ id: '1234' });
+      request.user = createMockUser({ id: '1234' }, true);
 
       User.findById = jest.fn().mockResolvedValue(null);
 
@@ -48,7 +52,7 @@ describe('user.controller > api key', () => {
     });
 
     it('returns an error if label not provided', async () => {
-      request.user = createMockUser({ id: '1234' });
+      request.user = createMockUser({ id: '1234' }, true);
       request.body = {};
 
       const user = new User();
@@ -98,7 +102,7 @@ describe('user.controller > api key', () => {
 
   describe('removeApiKey', () => {
     it("returns an error if user doesn't exist", async () => {
-      request.user = createMockUser({ id: '1234' });
+      request.user = createMockUser({ id: '1234' }, true);
 
       User.findById = jest.fn().mockResolvedValue(null);
 
@@ -115,7 +119,7 @@ describe('user.controller > api key', () => {
     });
 
     it("returns an error if specified key doesn't exist", async () => {
-      request.user = createMockUser({ id: '1234' });
+      request.user = createMockUser({ id: '1234' }, true);
       request.params = { keyId: 'not-a-real-key' };
       const user = new User();
       user.apiKeys = ([] as unknown) as Types.DocumentArray<ApiKeyDocument>;
@@ -145,11 +149,14 @@ describe('user.controller > api key', () => {
       apiKeys.find = Array.prototype.find;
       apiKeys.pull = jest.fn();
 
-      const user = createMockUser({
-        id: '1234',
-        apiKeys,
-        save: jest.fn()
-      });
+      const user = createMockUser(
+        {
+          id: '1234',
+          apiKeys,
+          save: jest.fn()
+        },
+        true
+      ) as UserDocument;
 
       request.user = user;
       request.params = { keyId: 'id1' };

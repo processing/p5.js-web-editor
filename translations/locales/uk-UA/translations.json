@@ -47,6 +47,9 @@
       "LogOut": "Вийти"
     }
   },
+  "Banner": {
+    "Copy": "<bold>Donate Today!</bold> Support p5.js and the Processing Foundation."
+  },
   "CodemirrorFindAndReplace": {
     "ToggleReplace": "Увімкнути заміну",
     "Find": "Знайти",
@@ -145,7 +148,8 @@
     "IncorrectCurrentPass": "Поточний пароль неправильний",
     "DefaultError": "Щось пішло не так",
     "UserNotFound": "Користувача не знайдено",
-    "NetworkError": "Помилка мережі"
+    "NetworkError": "Помилка мережі",
+    "CloseAlertARIA": "Close Alert"
   },
   "Toolbar": {
     "Preview": "Перегляд",
@@ -159,7 +163,8 @@
     "By": " користувачем ",
 	"CustomLibraryVersion": "Вибрана версія p5.js",
     "VersionPickerARIA": "Вибір версії",
-    "NewVersionPickerARIA": "Вибір версії"
+    "NewVersionPickerARIA": "Вибір версії",
+    "SelectVersionARIA": "Select p5.js version"
   },
   "Console": {
     "Title": "Консоль",
@@ -566,6 +571,13 @@
     "ButtonAddToCollectionARIA": "Додати у колекцію",
     "View": "Перегляд"
   },
+  "Pagination": {
+    "Next": "Next",
+    "Previous": "Previous",
+    "Of": "of",
+    "PreviousPageARIA": "Previous Page",
+    "NextPageARIA": "Next Page"
+  },
   "SketchList": {
     "View": "Перегляд",
     "Title": "p5.js вебредактор | Мої скетчі",
@@ -674,5 +686,8 @@
   },
   "SkipLink": {
     "PlaySketch": "Запустити скетч"
+  },
+  "TextArea": {
+    "CopyARIA": "Copy"
   }
 }

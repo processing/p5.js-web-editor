@@ -6,7 +6,7 @@
   flex: 1;
   overflow: hidden;
   max-width: #{math.div(1012, $base-font-size)}rem;
-  margin: 0 auto;
+  margin: 0 auto 2rem auto;
   width: 100%;
 
   @media (min-width: 770px) {

@@ -22,7 +22,7 @@ const AssetMenu = ({ item: asset }) => {
   return (
     <TableDropdown aria-label={t('AssetList.ToggleOpenCloseARIA')}>
       <MenuItem onClick={handleAssetDelete}>{t('AssetList.Delete')}</MenuItem>
-      <MenuItem href={asset.url} target="_blank">
+      <MenuItem href={asset.url} target="_blank" rel="noopener noreferrer">
         {t('AssetList.OpenNewTab')}
       </MenuItem>
     </TableDropdown>

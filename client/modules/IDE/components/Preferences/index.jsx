@@ -21,12 +21,8 @@ import {
   setLinewrap,
   setPreferencesTab
 } from '../../actions/preferences';
-import {
-  majorVersion,
-  p5SoundURL,
-  p5URL,
-  useP5Version
-} from '../../hooks/useP5Version';
+import { majorVersion, p5URL, useP5Version } from '../../hooks/useP5Version';
+import { p5SoundURL } from '../../../../../common/p5URLs';
 import VersionPicker from '../VersionPicker';
 import { updateFileContent } from '../../actions/files';
 import { CmControllerContext } from '../../pages/IDEView';
@@ -122,7 +118,7 @@ export default function Preferences() {
   const markdownComponents = useMemo(() => {
     // eslint-disable-next-line react/no-unstable-nested-components
     const ExternalLink = ({ children, ...props }) => (
-      <a {...props} target="_blank">
+      <a {...props} target="_blank" rel="noopener noreferrer">
         {children}
       </a>
     );
@@ -622,7 +618,7 @@ export default function Preferences() {
                   <legend className="preference__warning">
                     <a
                       target="_blank"
-                      rel="noreferrer"
+                      rel="noopener noreferrer"
                       href={`https://${
                         versionInfo.isVersion2 ? 'beta.' : ''
                       }p5js.org/reference/p5.sound`}

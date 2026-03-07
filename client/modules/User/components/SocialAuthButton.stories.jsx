@@ -1,6 +1,6 @@
 import React from 'react';
 
-import SocialAuthButton from './SocialAuthButton';
+import { SocialAuthButton, SocialAuthServices } from './SocialAuthButton';
 
 export default {
   title: 'User/components/SocialAuthButton',
@@ -8,13 +8,13 @@ export default {
 };
 
 export const Github = () => (
-  <SocialAuthButton service={SocialAuthButton.services.github}>
+  <SocialAuthButton service={SocialAuthServices.github}>
     Log in with Github
   </SocialAuthButton>
 );
 
 export const Google = () => (
-  <SocialAuthButton service={SocialAuthButton.services.google}>
+  <SocialAuthButton service={SocialAuthServices.google}>
     Sign up with Google
   </SocialAuthButton>
 );

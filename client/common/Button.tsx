@@ -80,7 +80,7 @@ export interface ButtonProps extends React.HTMLAttributes<HTMLElement> {
   /**
    * If using a native button, specifies on an onClick action
    */
-  onClick?: () => void;
+  onClick?: (evt: React.MouseEvent<HTMLButtonElement>) => void;
   /**
    * If using a button, then type is defines the type of button
    */

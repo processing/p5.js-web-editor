@@ -54,7 +54,11 @@ const initialTestState: RootState = {
   user: {
     email: 'happydog@example.com',
     username: 'happydog',
-    preferences: {},
+    preferences: {
+      ...initialPrefState,
+      indentationAmount: 2,
+      isTabIndent: true
+    },
     apiKeys: [],
     verified: 'sent',
     id: '123456789',
@@ -89,7 +93,17 @@ const initialTestState: RootState = {
     totalSize: 0
   },
   loading: false,
-  collections: []
+  collections: [],
+  collectionsListProjects: {
+    projects: [],
+    metadata: {
+      page: 1,
+      totalPages: 1,
+      totalProjects: 0,
+      limit: 10,
+      hasPagination: true
+    }
+  }
 };
 
 export { mockProjects, initialTestState };

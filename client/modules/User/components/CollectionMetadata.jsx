@@ -5,13 +5,13 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Button } from '../../../common/Button';
-import Overlay from '../../App/components/Overlay';
+import { Overlay } from '../../App/components/Overlay';
 import { editCollection } from '../../IDE/actions/collections';
 import AddToCollectionSketchList from '../../IDE/components/AddToCollectionSketchList';
 import EditableInput from '../../IDE/components/EditableInput';
 import { SketchSearchbar } from '../../IDE/components/Searchbar';
 import { getCollection } from '../../IDE/selectors/collections';
-import ShareURL from './CollectionShareButton';
+import { ShareURL } from './CollectionShareButton';
 
 function CollectionMetadata({ collectionId }) {
   const { t } = useTranslation();

@@ -177,7 +177,7 @@ passport.use(
           // with emails that are connected to the same GitHub account
           if (existingEmailUsers.length > 1) {
             existingEmailUser = existingEmailUsers.find(
-              (u) => (u.email = primaryEmail)
+              (u) => u.email === primaryEmail
             );
           } else {
             [existingEmailUser] = existingEmailUsers;

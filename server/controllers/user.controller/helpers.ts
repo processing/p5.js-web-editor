@@ -1,19 +1,33 @@
 import crypto from 'crypto';
 import type { Response } from 'express';
 import { User } from '../../models/user';
-import { PublicUser, UserDocument } from '../../types';
+import {
+  ApiKeyDocument,
+  PublicUser,
+  SanitisedApiKey,
+  UserDocument
+} from '../../types';
+
+export function sanitiseApiKey(key: ApiKeyDocument): SanitisedApiKey {
+  return {
+    id: key.id,
+    label: key.label,
+    lastUsedAt: key.lastUsedAt,
+    createdAt: key.createdAt
+  };
+}
 
 /**
  * Sanitise user objects to remove sensitive fields
  * @param user
  * @returns Sanitised user
  */
-export function userResponse(user: PublicUser | UserDocument): PublicUser {
+export function userResponse(user: UserDocument): PublicUser {
   return {
     email: user.email,
     username: user.username,
     preferences: user.preferences,
-    apiKeys: user.apiKeys,
+    apiKeys: user.apiKeys.map((el) => sanitiseApiKey(el)),
     verified: user.verified,
     id: user.id,
     totalSize: user.totalSize,
