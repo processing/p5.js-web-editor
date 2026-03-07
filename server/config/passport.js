@@ -129,11 +129,7 @@ const getPrimaryEmail = (githubEmails) =>
  * Returns the first email if available, or null if emails array is missing/empty.
  */
 const getGooglePrimaryEmail = (googleEmails) => {
-  if (
-    !googleEmails ||
-    !Array.isArray(googleEmails) ||
-    googleEmails.length === 0
-  ) {
+  if (!Array.isArray(googleEmails) || googleEmails.length === 0) {
     return null;
   }
   const primaryEmail = googleEmails[0]?.value?.trim();
