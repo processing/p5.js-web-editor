@@ -29,7 +29,6 @@
   padding-bottom: #{math.div(15, $base-font-size)}rem;
 }
 
-
 .account__social-stack {
   display: flex;
   @media (max-width: 770px) {
@@ -37,7 +36,8 @@
     align-items: center;
     gap: #{math.div(15, $base-font-size)}rem;
 
-    button, a {
+    button,
+    a {
       width: 100% !important;
       margin-right: 0;
     }
@@ -46,4 +46,32 @@
 
 .account__social-stack > * {
   margin-right: #{math.div(15, $base-font-size)}rem;
+}
+
+.account__inline-label {
+  font-size: #{math.div(12, $base-font-size)}rem;
+  margin-top: #{math.div(10, $base-font-size)}rem;
+  margin-bottom: #{math.div(7, $base-font-size)}rem;
+  display: block;
+  @include themify() {
+    color: getThemifyVariable('form-secondary-title-color');
+  }
+}
+
+.account__danger-zone {
+  padding-bottom: #{math.div(40, $base-font-size)}rem;
+}
+
+.account__action-stack {
+  display: flex;
+  justify-content: flex-start;
+  gap: #{math.div(15, $base-font-size)}rem;
+  @media (max-width: 770px) {
+    flex-direction: column;
+    align-items: stretch;
+
+    button {
+      width: 100% !important;
+    }
+  }
 }

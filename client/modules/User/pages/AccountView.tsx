@@ -11,6 +11,7 @@ import {
   SocialAuthServices
 } from '../components/SocialAuthButton';
 import { APIKeyForm } from '../components/APIKeyForm';
+import { DangerZone } from '../components/DangerZone';
 import Nav from '../../IDE/components/Header/Nav';
 import ErrorModal from '../../IDE/components/ErrorModal';
 import { hideErrorModal } from '../../IDE/actions/ide';
@@ -106,13 +107,19 @@ export function AccountView() {
             </TabList>
             <TabPanel>
               <SocialLoginPanel />
+              <DangerZone />
             </TabPanel>
             <TabPanel>
               <APIKeyForm />
             </TabPanel>
           </Tabs>
         )}
-        {!accessTokensUIEnabled && <SocialLoginPanel />}
+        {!accessTokensUIEnabled && (
+          <React.Fragment>
+            <SocialLoginPanel />
+            <DangerZone />
+          </React.Fragment>
+        )}
       </main>
     </div>
   );

@@ -45,6 +45,8 @@ router.get('/reset-password/:token', UserController.validateResetPasswordToken);
 router.post('/reset-password/:token', UserController.updatePassword);
 // PUT /account (updating username, email or password while logged in)
 router.put('/account', isAuthenticated, UserController.updateSettings);
+// DELETE /account (delete user account)
+router.delete('/account', isAuthenticated, UserController.deleteAccount);
 // DELETE /auth/github
 router.delete('/auth/github', UserController.unlinkGithub);
 // DELETE /auth/google

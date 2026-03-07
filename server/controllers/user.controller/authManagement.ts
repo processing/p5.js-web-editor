@@ -1,7 +1,10 @@
 import { RequestHandler } from 'express';
+import Project from '../../models/project';
+import Collection from '../../models/collection';
 import { User } from '../../models/user';
 import { saveUser, generateToken, userResponse } from './helpers';
 import {
+  DeleteAccountRequestBody,
   GenericResponseBody,
   PublicUserOrErrorOrGeneric,
   UnlinkThirdPartyResponseBody,
@@ -13,6 +16,7 @@ import {
 } from '../../types';
 import { mailerService } from '../../utils/mail';
 import { renderResetPassword, renderEmailConfirmation } from '../../views/mail';
+import { deleteObjectsFromS3, getObjectKey } from '../aws.controller';
 
 /**
  * - Method: `POST`
@@ -257,4 +261,83 @@ export const unlinkGoogle: RequestHandler<
     success: false,
     message: 'You must be logged in to complete this action.'
   });
+};
+
+/**
+ * - Method: `DELETE`
+ * - Endpoint: `/account`
+ * - Authenticated: `true`
+ * - Id: `UserController.deleteAccount`
+ *
+ * Description:
+ *   - Permanently delete the authenticated user's account, all their projects
+ *     (including S3 assets) and all their collections.
+ *   - Users with a password must supply it in the request body for confirmation.
+ */
+export const deleteAccount: RequestHandler<
+  {},
+  GenericResponseBody,
+  DeleteAccountRequestBody
+> = async (req, res) => {
+  try {
+    const user = await User.findById(req.user!.id);
+    if (!user) {
+      res.status(404).json({ success: false, message: 'User not found.' });
+      return;
+    }
+
+    if (user.password) {
+      if (!req.body.password) {
+        res
+          .status(401)
+          .json({ success: false, message: 'Password is required.' });
+        return;
+      }
+      const isMatch = await user.comparePassword(req.body.password);
+      if (!isMatch) {
+        res.status(401).json({ success: false, message: 'Invalid password.' });
+        return;
+      }
+    }
+
+    const projects = await Project.find({ user: user._id }).exec();
+
+    const s3Keys = projects.flatMap((project: any) =>
+      (project.files as any[])
+        .filter(
+          (file: any) =>
+            file.url &&
+            (file.url.includes(process.env.S3_BUCKET_URL_BASE || '') ||
+              file.url.includes(process.env.S3_BUCKET || ''))
+        )
+        .map((file: any) => getObjectKey(file.url))
+    );
+
+    if (s3Keys.length > 0) {
+      try {
+        await deleteObjectsFromS3(s3Keys);
+      } catch (err) {
+        console.error(
+          'Failed to delete S3 assets during account deletion',
+          err
+        );
+      }
+    }
+
+    await Project.deleteMany({ user: user._id }).exec();
+    await Collection.deleteMany({ owner: user._id }).exec();
+
+    req.logout((logoutErr) => {
+      if (logoutErr) {
+        console.error('Error during logout on account deletion', logoutErr);
+      }
+      (req as any).session?.destroy(() => {});
+    });
+
+    await user.deleteOne();
+
+    res.json({ success: true, message: 'Account successfully deleted.' });
+  } catch (err) {
+    res.status(500).json({ success: false, message: 'Internal server error.' });
+  }
 };

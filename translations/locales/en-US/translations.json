@@ -721,5 +721,16 @@
       "Label": "Private"
     },
     "Changed": "'{{projectName}}' is now {{newVisibility}}..."
+  },
+  "DangerZone": {
+    "Title": "Danger Zone",
+    "DeleteAccount": "Delete Account",
+    "DeleteAccountDescription": "Permanently delete your account and all associated sketches, collections, and assets. This action cannot be undone.",
+    "PasswordLabel": "Confirm your password",
+    "PasswordARIA": "Password",
+    "Confirm": "Permanently Delete Account",
+    "Cancel": "Cancel",
+    "InvalidPassword": "Invalid password.",
+    "PasswordRequired": "Password is required."
   }
 }
