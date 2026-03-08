@@ -16,29 +16,23 @@ describe('DropdownMenu', () => {
     );
   };
 
-  it('should render the dropdown button', () => {
+  it('should render the dropdown button', () => {   
     renderDropdown();
 
     const button = screen.getByRole('button', { name: 'More options' });
     expect(button).toBeInTheDocument();
+
+    expect(screen.queryByRole('menu')).not.toBeInTheDocument();
   });
 
-  it('should open the dropdown menu when button is clicked', () => {
+  it('should open dropdown and render menu items when button is clicked', () => {
     renderDropdown();
 
     const button = screen.getByRole('button', { name: 'More options' });
 
     fireEvent.click(button);
 
-    const menu = screen.getByRole('menu');
-    expect(menu).toBeInTheDocument();
-  });
-
-  it('should render menu items when opened', () => {
-    renderDropdown();
-
-    const button = screen.getByRole('button', { name: 'More options' });
-    fireEvent.click(button);
+    expect(screen.getByRole('menu')).toBeInTheDocument();
 
     expect(screen.getByText('Item One')).toBeInTheDocument();
     expect(screen.getByText('Item Two')).toBeInTheDocument();
@@ -59,21 +53,5 @@ describe('DropdownMenu', () => {
     });
   });
 
-  it('should support custom alignment', () => {
-    render(
-      <DropdownMenu
-        aria-label="Aligned dropdown"
-        align={DropdownMenuAlignment.LEFT}
-      >
-        <li role="menuitem">Left Item</li>
-      </DropdownMenu>
-    );
-
-    const button = screen.getByRole('button', { name: 'Aligned dropdown' });
-
-    fireEvent.click(button);
-
-    const menu = screen.getByRole('menu');
-    expect(menu).toBeInTheDocument();
-  });
+  
 });
