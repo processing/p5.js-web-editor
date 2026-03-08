@@ -54,7 +54,7 @@ import { CSSLint } from 'csslint';
 import { emmetConfig } from '@emmetio/codemirror6-plugin';
 
 import p5JavaScript from './p5JavaScript';
-import tidyCodeWithPrettier from './tidier';
+import { tidyCodeWithPrettier } from './tidier';
 import { highlightStyle } from './highlightStyle';
 import { errorDecorationStateField } from './consoleErrorDecoration';
 
