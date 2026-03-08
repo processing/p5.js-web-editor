@@ -41,7 +41,7 @@ _Note_: The installation steps assume you are using a Unix-like shell. If you ar
       - Navigate to [mongodb.com](https://www.mongodb.com/) and sign up or log in.
       - Create a new project. Give it any name, and either add a key-value pair or skip that step.
       - Create a cluster by choosing the free tier. Give your cluster a name, choose a region, and keep the provider as AWS.
-      - Set a username and password for your database user—these will be part of your connection string.
+      - Set a username and password for your database-user, these will be part of your connection string.
       - Choose **Node.js** as the driver for your connection method. You will see a connection string, with or without the password filled in.
       - Copy the string and use it as your `MONGO_URL` in the `.env` file.
 8. `$ cp .env.example .env`
