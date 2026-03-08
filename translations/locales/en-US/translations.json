@@ -509,6 +509,8 @@
   },
   "Collection": {
     "Title": "p5.js Web Editor | My collections",
+    "NameARIA": "Collection Name",
+    "DescriptionARIA": "Collection Description",
     "AnothersTitle": "p5.js Web Editor | {{anotheruser}}'s collections",
     "Share": "Share",
     "URLLink": "Link to Collection",
@@ -566,6 +568,7 @@
     "HeaderCreatedAt": "Date Created",
     "HeaderCreatedAt_mobile": "Created",
     "HeaderUpdatedAt": "Date Updated",
+    "EditCollectionARIA": "Edit Collection name",
     "HeaderUpdatedAt_mobile": "Updated",
     "HeaderNumItems": "# sketches",
     "HeaderNumItems_mobile": "# sketches",
