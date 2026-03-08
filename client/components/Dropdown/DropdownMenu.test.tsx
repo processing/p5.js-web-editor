@@ -16,7 +16,7 @@ describe('DropdownMenu', () => {
     );
   };
 
-  it('should render the dropdown button', () => {   
+  it('should render the dropdown button', () => {
     renderDropdown();
 
     const button = screen.getByRole('button', { name: 'More options' });
@@ -52,6 +52,4 @@ describe('DropdownMenu', () => {
       expect(screen.queryByRole('menu')).not.toBeInTheDocument();
     });
   });
-
-  
 });
