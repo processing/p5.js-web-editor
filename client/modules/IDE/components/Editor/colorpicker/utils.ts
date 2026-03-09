@@ -8,6 +8,7 @@
 /* eslint-disable no-multi-assign */
 /* eslint-disable one-var */
 /* eslint-disable default-case */
+/* eslint-disable consistent-return */
 
 export function toFullHex(color: string): string[] {
   if (color.length === 4) {
@@ -82,4 +83,14 @@ export function RGBToHSL(r: number, g: number, b: number) {
     s: Math.floor(s * 100),
     l: Math.floor(l * 100)
   };
+}
+
+export function hasStringFormatting(rawColor: string): string | undefined {
+  if (rawColor.startsWith("'") && rawColor.endsWith("'")) {
+    return "'";
+  }
+  if (rawColor.startsWith('"') && rawColor.endsWith('"')) {
+    return '"';
+  }
+  return undefined;
 }

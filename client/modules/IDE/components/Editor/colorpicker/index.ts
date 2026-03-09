@@ -19,8 +19,14 @@ import { Extension, Range } from '@codemirror/state';
 import { syntaxTree } from '@codemirror/language';
 import colors from 'colors-named';
 import hexs from 'colors-named-hex';
-import hslMatcher, { hlsStringToRGB, RGBAColor } from 'hsl-matcher';
-import { toFullHex, rgbToHex, hexToRgb, RGBToHSL } from './utils';
+import { hlsStringToRGB, RGBAColor } from 'hsl-matcher';
+import {
+  toFullHex,
+  rgbToHex,
+  hexToRgb,
+  RGBToHSL,
+  hasStringFormatting
+} from './utils';
 
 export enum ColorType {
   rgb = 'RGB',
@@ -34,6 +40,7 @@ export interface ColorState {
   to: number;
   alpha: string;
   colorType: ColorType;
+  stringFormatCharacter?: string;
 }
 
 const colorState = new WeakMap<HTMLInputElement, ColorState>();
@@ -42,7 +49,7 @@ type GetArrayElementType<
   T extends readonly any[]
 > = T extends readonly (infer U)[] ? U : never;
 
-const matchingTypes = ['CallExpression', 'String'];
+const matchingTypes = ['CallExpression', 'String', 'ColorLiteral'];
 
 function colorDecorations(view: EditorView) {
   const widgets: Array<Range<Decoration>> = [];
@@ -52,8 +59,10 @@ function colorDecorations(view: EditorView) {
       to: range.to,
       enter: ({ type, from, to }) => {
         const rawCallExp: string = view.state.doc.sliceString(from, to);
-        const callExp =
-          type.name === 'String' ? rawCallExp.replaceAll('"', '') : rawCallExp;
+        const stringFormatCharacter = hasStringFormatting(rawCallExp);
+        const callExp = stringFormatCharacter
+          ? rawCallExp.replaceAll(stringFormatCharacter, '')
+          : rawCallExp;
         /**
          * ```
          * rgb(0 107   128, .5);         ❌ ❌ ❌
@@ -72,15 +81,11 @@ function colorDecorations(view: EditorView) {
          * rgba( 255 255 255 /  );       ❌ ❌ ❌
          * ```
          */
-        // console.log(
-        //   'checking',
-        //   { type: type.name, callExp },
-        //   matchingTypes.includes(type.name)
-        // );
-        // console.log('checking', callExp.startsWith('rgb'));
 
-        if (matchingTypes.includes(type.name) && callExp.startsWith('rgb')) {
-          // console.log('rgb matched', callExp);
+        if (
+          matchingTypes.includes(type.name) &&
+          callExp.toLowerCase().startsWith('rgb')
+        ) {
           const match =
             /rgba?\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,?\s*(\d{1,3})\s*(,\s*\d*\.\d*\s*)?\)/i.exec(
               callExp
@@ -98,13 +103,16 @@ function colorDecorations(view: EditorView) {
               colorRaw: callExp,
               from,
               to,
-              alpha: a ? a.replace(/(\/|,)/g, '') : ''
+              alpha: a ? a.replace(/(\/|,)/g, '') : '',
+              stringFormatCharacter
             }),
             side: 0
           });
-          console.log('pushing widget for rgb', { r, g, b, a, hex });
           widgets.push(widget.range(from));
-        } else if (matchingTypes.includes(type.name) && hslMatcher(callExp)) {
+        } else if (
+          matchingTypes.includes(type.name) &&
+          callExp.toLowerCase().startsWith('hsl')
+        ) {
           /**
            * # valid
            * hsl(240, 100%, 50%)                           // ✅ comma separated
@@ -141,12 +149,16 @@ function colorDecorations(view: EditorView) {
               colorRaw: callExp,
               from,
               to,
-              alpha: match.a ? match.a.toString() : ''
+              alpha: match.a ? match.a.toString() : '',
+              stringFormatCharacter
             }),
             side: 0
           });
           widgets.push(widget.range(from));
-        } else if (type.name === 'ColorLiteral') {
+        } else if (
+          matchingTypes.includes(type.name) &&
+          callExp.startsWith('#')
+        ) {
           const [color, alpha] = toFullHex(callExp);
           const widget = Decoration.widget({
             widget: new ColorWidget({
@@ -155,7 +167,8 @@ function colorDecorations(view: EditorView) {
               colorRaw: callExp,
               from,
               to,
-              alpha
+              alpha,
+              stringFormatCharacter
             }),
             side: 0
           });
@@ -172,7 +185,8 @@ function colorDecorations(view: EditorView) {
                 colorRaw: callExp,
                 from,
                 to,
-                alpha: ''
+                alpha: '',
+                stringFormatCharacter
               }),
               side: 0
             });
@@ -188,13 +202,6 @@ function colorDecorations(view: EditorView) {
 function pickColor(dispatch: boolean) {
   return function f(e: Event, view: EditorView) {
     const target = e.target as HTMLInputElement;
-    console.log(
-      'pick color event',
-      e,
-      target,
-      target.dataset.color,
-      target.dataset.colorraw
-    );
     if (
       target.nodeName !== 'INPUT' ||
       !target.parentElement ||
@@ -209,7 +216,6 @@ function pickColor(dispatch: boolean) {
     const comma = (target.dataset.colorraw || '').indexOf(',') > 4;
     let converted = target.value;
     if (data.colorType === ColorType.rgb) {
-      // console.log({ colorraw, slash, comma });
       let funName = colorraw?.match(/^(rgba?)/)
         ? colorraw?.match(/^(rgba?)/)![0]
         : undefined;
@@ -232,11 +238,14 @@ function pickColor(dispatch: boolean) {
       const rgb = hexToRgb(value);
       if (rgb) {
         const { h, s, l } = RGBToHSL(rgb?.r, rgb?.g, rgb?.b);
-        converted = `hsl(${h}deg ${s}% ${l}%${
-          data.alpha ? ' / ' + data.alpha : ''
+        converted = `hsl(${h}, ${s}%, ${l}%${
+          data.alpha ? `, ${data.alpha}` : ''
         })`;
       }
     }
+    converted = data.stringFormatCharacter
+      ? `${data.stringFormatCharacter}${converted}${data.stringFormatCharacter}`
+      : converted;
     if (dispatch) {
       view.dispatch({
         changes: {
@@ -256,6 +265,7 @@ class ColorWidget extends WidgetType {
   private readonly state: ColorState;
   private readonly color: string;
   private readonly colorRaw: string;
+  private wrapper?: HTMLElement;
 
   constructor({
     color,
@@ -273,8 +283,15 @@ class ColorWidget extends WidgetType {
   eq(other: ColorWidget) {
     return (
       other.state.colorType === this.state.colorType &&
-      other.state.from === this.state.from
+      other.color === this.color &&
+      other.state.from === this.state.from &&
+      other.state.to === this.state.to &&
+      other.state.alpha === this.state.alpha
     );
+  }
+  updateDOM(dom: HTMLElement, view: EditorView): boolean {
+    dom.style.backgroundColor = this.colorRaw;
+    return true;
   }
   toDOM() {
     const picker = document.createElement('input');
@@ -303,27 +320,26 @@ export const colorView = (showPicker: boolean = true) =>
       }
       update(update: ViewUpdate) {
         if (update.docChanged || update.viewportChanged) {
-          console.log('updating decorations for color widget');
           this.decorations = colorDecorations(update.view);
         }
-        // const readOnly = update.view.contentDOM.ariaReadOnly === 'true';
-        // const editable = update.view.contentDOM.contentEditable === 'true';
+        const readOnly = update.view.contentDOM.ariaReadOnly === 'true';
+        const editable = update.view.contentDOM.contentEditable === 'true';
 
-        // const canBeEdited = readOnly === false && editable;
-        // this.changePicker(update.view, canBeEdited);
+        const canBeEdited = readOnly === false && editable;
+        this.changePicker(update.view, canBeEdited);
       }
-      // changePicker(view: EditorView, canBeEdited: boolean) {
-      //   const doms = view.contentDOM.querySelectorAll('input[type=color]');
-      //   doms.forEach((inp) => {
-      //     if (!showPicker) {
-      //       inp.setAttribute('disabled', '');
-      //     } else {
-      //       canBeEdited
-      //         ? inp.removeAttribute('disabled')
-      //         : inp.setAttribute('disabled', '');
-      //     }
-      //   });
-      // }
+      changePicker(view: EditorView, canBeEdited: boolean) {
+        const doms = view.contentDOM.querySelectorAll('input[type=color]');
+        doms.forEach((inp) => {
+          if (!showPicker) {
+            inp.setAttribute('disabled', '');
+          } else {
+            canBeEdited
+              ? inp.removeAttribute('disabled')
+              : inp.setAttribute('disabled', '');
+          }
+        });
+      }
     },
     {
       decorations: (v) => v.decorations,
