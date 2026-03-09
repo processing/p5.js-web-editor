@@ -1,4 +1,4 @@
-import { EditorState, Compartment } from '@codemirror/state';
+import { EditorState, Compartment, Annotation } from '@codemirror/state';
 import {
   EditorView,
   lineNumbers as lineNumbersExt,
@@ -17,7 +17,8 @@ import {
   foldKeymap,
   bracketMatching,
   indentOnInput,
-  syntaxHighlighting
+  syntaxHighlighting,
+  syntaxTree
 } from '@codemirror/language';
 import {
   autocompletion,
@@ -44,7 +45,7 @@ import {
 } from '@emmetio/codemirror6-plugin';
 
 import { css } from '@codemirror/lang-css';
-import { html } from '@codemirror/lang-html';
+import { html, autoCloseTags } from '@codemirror/lang-html';
 import { json } from '@codemirror/lang-json';
 import { xml } from '@codemirror/lang-xml';
 import { linter } from '@codemirror/lint';
@@ -269,6 +270,104 @@ export const AUTOCOMPLETE_OPTIONS = {
   closeOnBlur: false
 };
 
+const tagSyncAnnotation = Annotation.define();
+const tagSyncExtension = EditorView.updateListener.of((update) => {
+  if (!update.docChanged) return;
+  if (update.transactions.some((tr) => tr.annotation(tagSyncAnnotation)))
+    return;
+
+  update.transactions.forEach((tr) => {
+    if (!tr.isUserEvent('input') && !tr.isUserEvent('delete')) return;
+
+    const tree = syntaxTree(update.state);
+    const { doc } = update.state;
+
+    tr.changes.iterChanges((_fromA, _toA, fromB, _toB) => {
+      const node = tree.resolveInner(fromB, -1);
+      if (node.type.name !== 'TagName') return;
+
+      const openTag = node.parent;
+      if (!openTag || openTag.type.name !== 'OpenTag') return;
+
+      const elementNode = openTag.parent;
+      if (!elementNode || elementNode.type.name !== 'Element') return;
+
+      const newTagName = doc.sliceString(node.from, node.to);
+      if (!newTagName) return;
+
+      const oldPos = tr.isUserEvent('delete')
+        ? tr.changes.mapPos(fromB, 1)
+        : tr.changes.mapPos(fromB, -1);
+
+      const oldTree = syntaxTree(update.startState);
+      const oldNode = oldTree.resolveInner(oldPos, -1);
+      if (oldNode.type.name !== 'TagName') return;
+
+      const originalTagName = update.startState.doc.sliceString(
+        oldNode.from,
+        oldNode.to
+      );
+      if (!originalTagName || originalTagName === newTagName) return;
+
+      const oldOpenTag = oldNode.parent;
+      if (!oldOpenTag || oldOpenTag.type.name !== 'OpenTag') return;
+
+      const oldElementNode = oldOpenTag.parent;
+      if (!oldElementNode || oldElementNode.type.name !== 'Element') return;
+
+      const oldParentElement = oldElementNode.parent;
+
+      let oldCloseTag = null;
+      let child = oldElementNode.firstChild;
+      while (child) {
+        if (child.type.name === 'EndTag' || child.type.name === 'CloseTag') {
+          oldCloseTag = child;
+          break;
+        }
+        child = child.nextSibling;
+      }
+      if (!oldCloseTag) return;
+
+      let parentHasCloseTag = false;
+      let parentChild = oldParentElement?.firstChild;
+      while (parentChild) {
+        if (
+          parentChild.type.name === 'EndTag' ||
+          parentChild.type.name === 'CloseTag'
+        ) {
+          parentHasCloseTag = true;
+          break;
+        }
+        parentChild = parentChild.nextSibling;
+      }
+      if (!parentHasCloseTag) return;
+
+      const textBetween = update.startState.doc.sliceString(
+        oldOpenTag.to,
+        oldCloseTag.from
+      );
+      const opensInBetween = (
+        textBetween.match(new RegExp(`<${originalTagName}[\\s>]`, 'gi')) || []
+      ).length;
+      const closesInBetween = (
+        textBetween.match(new RegExp(`<\\/${originalTagName}\\s*>`, 'gi')) || []
+      ).length;
+      if (opensInBetween !== closesInBetween) return;
+
+      const oldCloseTagName = oldCloseTag.getChild('TagName');
+      if (!oldCloseTagName) return;
+
+      const newCloseStart = tr.changes.mapPos(oldCloseTagName.from);
+      const newCloseEnd = tr.changes.mapPos(oldCloseTagName.to);
+
+      update.view.dispatch({
+        changes: { from: newCloseStart, to: newCloseEnd, insert: newTagName },
+        annotations: tagSyncAnnotation.of(true)
+      });
+    });
+  });
+});
+
 /**
  * Creates a new CodeMirror editor state with configurations,
  * extensions, and keymaps tailored to the file type and settings.
@@ -359,6 +458,10 @@ export function createNewFileState(filename, document, settings) {
   if (fileEmmetConfig) {
     extensions.push(fileEmmetConfig);
     extensions.push(abbreviationTracker());
+    if (getFileMode(filename) === 'html') {
+      extensions.push(autoCloseTags);
+      extensions.push(tagSyncExtension);
+    }
     keymaps.push(emmetKeymaps);
   }
 
