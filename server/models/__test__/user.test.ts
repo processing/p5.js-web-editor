@@ -8,9 +8,7 @@ jest.setTimeout(30000); // give enough time for MongoMemoryServer
 let mongoServer: MongoMemoryServer;
 
 beforeAll(async () => {
-  mongoServer = await MongoMemoryServer.create({
-    binary: { version: '7.0.0' } // or latest supported stable version
-  });
+  mongoServer = await MongoMemoryServer.create();
   const uri = mongoServer.getUri();
   await mongoose.connect(uri);
 });
