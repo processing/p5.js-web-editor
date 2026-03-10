@@ -37,6 +37,13 @@ _Note_: The installation steps assume you are using a Unix-like shell. If you ar
 7. Install MongoDB and make sure it is running
    * For Mac OSX with [homebrew](http://brew.sh/): `brew tap mongodb/brew` then `brew install mongodb-community` and finally start the server with `brew services start mongodb-community` or you can visit the installation guide here [Installation Guide For MacOS](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/)
    * For Windows and Linux: [MongoDB Installation](https://docs.mongodb.com/manual/installation/)
+   * If you have trouble setting up MongoDB locally, an alternative is to use [MongoDB Atlas](https://cloud.mongodb.com/) to get a connection string that you can use as your `MONGO_URL` in the `.env` file. To get your connection string:
+      - Navigate to [mongodb.com](https://www.mongodb.com/) and sign up or log in.
+      - Create a new project. Give it any name, and either add a key-value pair or skip that step.
+      - Create a cluster by choosing the free tier. Give your cluster a name, choose a region, and keep the provider as AWS.
+      - Set a username and password for your database-user, these will be part of your connection string.
+      - Choose **Node.js** as the driver for your connection method. You will see a connection string, with or without the password filled in.
+      - Copy the string and use it as your `MONGO_URL` in the `.env` file.
 8. `$ cp .env.example .env`
 9. (Optional) Update `.env` with necessary keys to enable certain app behaviors, i.e. add Github ID and Github Secret if you want to be able to log in with Github.
    * See the [GitHub API Configuration](#github-api-configuration) section for information on how to authenticate with Github.
