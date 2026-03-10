@@ -131,6 +131,14 @@ export async function getProjectAsset(req, res) {
       .send({ message: 'Project with that id does not exist' });
   }
 
+  // Check visibility and ownership for private projects
+  if (
+    project.visibility === 'Private' &&
+    (!req.user || !project.user._id.equals(req.user._id))
+  ) {
+    return res.status(403).send({ message: 'Project is private' });
+  }
+
   const filePath = req.params[0];
   const resolvedFile = resolvePathToFile(filePath, project.files);
   if (!resolvedFile) {
