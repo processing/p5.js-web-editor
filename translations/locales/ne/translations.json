@@ -1,0 +1,712 @@
+{
+  "Nav": {
+    "File": {
+      "Title": "फाइल",
+      "New": "नयाँ",
+      "Share": "सेयर गर्नुहोस्",
+      "Duplicate": "प्रतिलिपि बनाउनुहोस्",
+      "Open": "खोल्नुहोस्",
+      "Download": "डाउनलोड",
+      "AddToCollection": "कलेक्सनमामा थप्नुहोस्",
+      "Examples": "उदाहरणहरू",
+      "SaveTooltipUnauthenticated": "स्केच सेभ गर्न लगइन गर्नुहोस्",
+      "DuplicateTooltipUnauthenticated": "यो स्केचको प्रतिलिपि बनाउन लगइन गर्नुहोस्",
+      "OpenTooltipUnauthenticated": "आफ्ना स्केचहरू खोल्न लगइन गर्नुहोस्",
+      "AddToCollectionTooltipUnauthenticated": "कलेक्सनमामा थप्न लगइन गर्नुहोस्",
+      "ShareTooltipUnsaved": "सेयर गर्नु अघि स्केच सेभ गर्नुहोस्",
+      "DownloadTooltipUnsaved": "डाउनलोड गर्नु अघि स्केच सेभ गर्नुहोस्"
+    },
+    "Edit": {
+      "Title": "सम्पादन",
+      "TidyCode": "कोड सफा गर्नुहोस्",
+      "Find": "खोज्नुहोस्",
+      "Replace": "बदल्नुहोस्"
+    },
+    "Sketch": {
+      "Title": "स्केच",
+      "AddFile": "फाइल थप्नुहोस्",
+      "AddFolder": "फोल्डर थप्नुहोस्",
+      "Run": "चलाउनुहोस्",
+      "Stop": "रोक्नुहोस्"
+    },
+    "Help": {
+      "Title": "सहयोग",
+      "KeyboardShortcuts": "किबोर्ड सर्टकटहरू",
+      "Reference": "रेफरेन्स",
+      "ReportBug": "बग रिपोर्ट गर्नुहोस्",
+      "ChatOnDiscord": "डिस्कर्डमा च्याट गर्नुहोस्",
+      "PostOnTheForum": "फोरममा पोस्ट गर्नुहोस्"
+    },
+    "Lang": "भाषा",
+    "BackEditor": "एडिटरमा फर्कनुहोस्",
+    "WarningUnsavedChanges": "के तपाईं यो पेज छोड्न चाहनुहुन्छ? तपाईंसँग सेभ नभएका परिवर्तनहरू छन्।",
+    "Login": "लगइन",
+    "LoginOr": "वा",
+    "SignUp": "साइन अप",
+    "Auth": {
+      "Welcome": "स्वागत छ",
+      "Hello": "नमस्कार",
+      "MyAccount": "मेरो अकाउन्ट",
+      "My": "मेरो",
+      "MySketches": "मेरा स्केचहरू",
+      "MyCollections": "मेरा कलेक्सनमाहरू",
+      "Asset": "एसेट",
+      "MyAssets": "मेरा एसेटहरू",
+      "LogOut": "लगआउट"
+    }
+  },
+  "Banner": {
+    "Copy": "<bold>आज डोनेट गर्नुहोस्!</bold> p5.js र Processing Foundation लाई सपोर्ट गर्नुहोस्।"
+  },
+  "CodemirrorFindAndReplace": {
+    "ToggleReplace": "रिप्लेस टगल गर्नुहोस्",
+    "Find": "खोज्नुहोस्",
+    "FindPlaceholder": "फाइलहरूमा खोज्नुहोस्",
+    "Replace": "बदल्नुहोस्",
+    "ReplaceAll": "सबै बदल्नुहोस्",
+    "ReplacePlaceholder": "बदल्ने टेक्स्ट",
+    "Regex": "रेगुलर एक्सप्रेसन",
+    "CaseSensitive": "केस संवेदनशील",
+    "WholeWords": "पूर्ण शब्दहरू",
+    "Previous": "अघिल्लो",
+    "Next": "अर्को",
+    "NoResults": "कुनै परिणाम छैन",
+    "Close": "बन्द गर्नुहोस्"
+  },
+  "LoginForm": {
+    "UsernameOrEmail": "इमेल वा युजरनेम",
+    "UsernameOrEmailARIA": "इमेल वा युजरनेम",
+    "Password": "पासवर्ड",
+    "PasswordARIA": "पासवर्ड",
+    "Submit": "लगइन",
+    "Errors": {
+      "invalidCredentials": "गलत इमेल वा पासवर्ड।"
+    }
+  },
+  "LoginView": {
+    "Title": "p5.js वेब एडिटर | लगइन",
+    "Login": "लगइन",
+    "LoginOr": "वा",
+    "SignUp": "साइन अप",
+    "Email": "इमेल",
+    "Username": "युजरनेम",
+    "DontHaveAccount": "अकाउन्ट छैन? ",
+    "ForgotPassword": "पासवर्ड बिर्सनुभयो? ",
+    "ResetPassword": "पासवर्ड रिसेट गर्नुहोस्"
+  },
+  "SocialAuthButton": {
+    "Connect": "{{serviceauth}} अकाउन्ट कनेक्ट गर्नुहोस्",
+    "Unlink": "{{serviceauth}} अकाउन्ट अनलिङ्क गर्नुहोस्",
+    "Login": "{{serviceauth}} बाट लगइन गर्नुहोस्",
+    "LogoARIA": "{{serviceauth}} लोगो"
+  },
+  "About": {
+    "Title": "हाम्रो बारेमा",
+    "TitleHelmet": "p5.js वेब एडिटर | बारेमा",
+    "Headline": "p5.js एडिटरसँग p5.js स्केच बनाउनुहोस्, सेयर गर्नुहोस् र रिमिक्स गर्नुहोस्।",
+    "Contribute": "कन्ट्रिब्यूट गर्नुहोस्",
+    "IntroDescription1": "p5.js कोडिङ सिक्न र कला बनाउनको लागि फ्री, ओपन-सोर्स JavaScript लाइब्रेरी हो। p5.js एडिटर प्रयोग गरेर, तपाईं केही पनि डाउनलोड वा कन्फिगर नगरिकन p5.js स्केच बनाउन, सेयर गर्न र रिमिक्स गर्न सक्नुहुन्छ।",
+    "IntroDescription2": "हाम्रो विश्वास छ कि सफ्टवेयर र यसलाई सिक्ने टूलहरू सकेसम्म ओपन र इन्क्लुसिभ हुनुपर्छ। तपाईंले यो कामलाई सपोर्ट गर्न Processing Foundation लाई डोनेसन दिन सक्नुहुन्छ, जसले p5.js लाई सपोर्ट गर्छ। तपाईंको डोनेसनले p5.js को लागि सफ्टवेयर डेभलपमेन्ट, कोड एक्जाम्पल र ट्युटोरियल जस्ता एजुकेसन रिसोर्सहरू, फेलोशिप र कम्युनिटी प्रोग्रामहरूलाई सपोर्ट गर्छ।",
+    "Donate": "डोनेट गर्नुहोस्",
+    "NewP5": "p5.js मा नयाँ हुनुहुन्छ?",
+    "Report": "बग रिपोर्ट गर्नुहोस्",
+    "Learn": "सिक्नुहोस्",
+    "X": "एक्स",
+    "Home": "p5.js होम",
+    "Instagram": "इन्स्टाग्राम",
+    "Discord": "डिस्कर्ड",
+    "DiscordCTA": "डिस्कर्डमा जोइन गर्नुहोस्",
+    "Youtube": "युट्युब",
+    "Github": "गिटहब",
+    "GetInvolved": "इन्भोल्भ हुनुहोस्",
+    "WebEditor": "वेब एडिटर",
+    "Resources": "रिसोर्सहरू",
+    "Reference": "रेफरेन्स",
+    "Libraries": "लाइब्रेरीहरू",
+    "Forum": "फोरम",
+    "ForumCTA": "फोरम जोइन गर्नुहोस्",
+    "Examples": "उदाहरणहरू",
+    "PrivacyPolicy": "प्राइभेसी पोलिसी",
+    "TermsOfUse": "टर्म्स अफ यूज",
+    "CodeOfConduct": "कोड अफ कन्डक्ट",
+    "Email": "इमेल",
+    "EmailAddress": "hello@p5js.org",
+    "Socials": "सोसल मिडिया",
+    "Contact": "हामीलाई सम्पर्क गर्नुहोस्",
+    "LinkDescriptions": {
+      "Home": "p5.js र हाम्रो कम्युनिटीबारे थप जान्नुहोस्।",
+      "Examples": "छोटो उदाहरणहरूसँग p5.js का सम्भावनाहरू एक्सप्लोर गर्नुहोस्।",
+      "CodeOfConduct": "हाम्रो कम्युनिटी स्टेटमेन्ट र कोड अफ कन्डक्ट पढ्नुहोस्।",
+      "Libraries": "कम्युनिटीद्वारा बनाइएका लाइब्रेरीहरूसँग p5.js का सम्भावनाहरू विस्तार गर्नुहोस्।",
+      "Reference": "p5.js कोडका हरेक भागको लागि सजिलो व्याख्या खोज्नुहोस्।",
+      "Donate": "Processing Foundation लाई डोनेसन दिएर यो कामलाई सपोर्ट गर्नुहोस्।",
+      "Contribute": "गिटहबमा ओपन-सोर्स p5.js एडिटरमा कन्ट्रिब्यूट गर्नुहोस्।",
+      "Report": "p5.js एडिटरसँग ब्रोकन वा गलत बिहेभियरहरू रिपोर्ट गर्नुहोस्।",
+      "Forum": "p5.js कम्युनिटीबाट प्रश्नहरू सोध्नुहोस्, स्केचहरू सेयर गर्नुहोस् र हेल्प लिनुहोस्।",
+      "Discord": "p5.js कम्युनिटीसँग च्याट गर्नुहोस् र छिटो हेल्प लिनुहोस्।"
+    }
+  },
+  "Toast": {
+    "OpenedNewSketch": "नयाँ स्केच ओपन भयो।",
+    "SketchSaved": "स्केच सेभ भयो।",
+    "SketchFailedSave": "स्केच सेभ गर्न फेल भयो।",
+    "AutosaveEnabled": "अटोसेभ इनेबल भयो।",
+    "LangChange": "भाषा चेन्ज भयो",
+    "SettingsSaved": "सेटिङहरू सेभ भयो।",
+    "EmptyCurrentPass": "हालको पासवर्ड फिल्ड खाली छ",
+    "IncorrectCurrentPass": "हालको पासवर्ड गलत छ",
+    "DefaultError": "केही गलत भयो",
+    "UserNotFound": "युजर फेला परेन",
+    "NetworkError": "नेटवर्क एरर"
+  },
+  "Toolbar": {
+    "Preview": "प्रिभ्यू",
+    "Auto-refresh": "अटो-रिफ्रेस",
+    "OpenPreferencesARIA": "प्रिफरेन्सहरू ओपन गर्नुहोस्",
+    "PlaySketchARIA": "स्केच प्ले गर्नुहोस्",
+    "PlayOnlyVisualSketchARIA": "केवल भिजुअल स्केच प्ले गर्नुहोस्",
+    "StopSketchARIA": "स्केच स्टप गर्नुहोस्",
+    "EditSketchARIA": "स्केच नेम एडिट गर्नुहोस्",
+    "NewSketchNameARIA": "नयाँ स्केच नेम",
+    "By": " द्वारा ",
+    "CustomLibraryVersion": "कस्टम p5.js भर्जन",
+    "VersionPickerARIA": "भर्जन पिकर",
+    "NewVersionPickerARIA": "भर्जन पिकर"
+  },
+  "Console": {
+    "Title": "कन्सोल",
+    "Clear": "क्लियर गर्नुहोस्",
+    "ClearARIA": "कन्सोल क्लियर गर्नुहोस्",
+    "Close": "बन्द गर्नुहोस्",
+    "CloseARIA": "कन्सोल बन्द गर्नुहोस्",
+    "Open": "ओपन गर्नुहोस्",
+    "OpenARIA": "कन्सोल ओपन गर्नुहोस्"
+  },
+  "Preferences": {
+    "Settings": "सेटिङहरू",
+    "GeneralSettings": "सामान्य सेटिङहरू",
+    "Accessibility": "पहुँच सुविधा",
+    "LibraryManagement": "लाइब्रेरी म्यानेजमेन्ट",
+    "Theme": "थिम",
+    "LightTheme": "लाइट",
+    "LightThemeARIA": "लाइट थिम अन",
+    "DarkTheme": "डार्क",
+    "DarkThemeARIA": "डार्क थिम अन",
+    "HighContrastTheme": "हाई कन्ट्रास्ट",
+    "HighContrastThemeARIA": "हाई कन्ट्रास्ट थिम अन",
+    "TextSize": "टेक्स्ट साइज",
+    "DecreaseFont": "कम गर्नुहोस्",
+    "DecreaseFontARIA": "फन्ट साइज कम गर्नुहोस्",
+    "IncreaseFont": "बढाउनुहोस्",
+    "IncreaseFontARIA": "फन्ट साइज बढाउनुहोस्",
+    "FontSize": "फन्ट साइज",
+    "SetFontSize": "फन्ट साइज सेट गर्नुहोस्",
+    "Autosave": "अटोसेभ",
+    "On": "अन",
+    "AutosaveOnARIA": "अटोसेभ अन",
+    "Off": "अफ",
+    "AutosaveOffARIA": "अटोसेभ अफ",
+    "AutocloseBracketsQuotes": "अटोक्लोज ब्र्याकेट्स एन्ड कोट्स",
+    "AutocloseBracketsQuotesOnARIA": "अटोक्लोज ब्र्याकेट्स एन्ड कोट्स अन",
+    "AutocloseBracketsQuotesOffARIA": "अटोक्लोज ब्र्याकेट्स एन्ड कोट्स अफ",
+    "AutocompleteHinter": "अटोकम्प्लिट हिन्टर",
+    "AutocompleteHinterOnARIA": "अटोकम्प्लिट हिन्टर अन",
+    "AutocompleteHinterOffARIA": "अटोकम्प्लिट हिन्टर अफ",
+    "WordWrap": "वर्ड र्याप",
+    "WordWrapOnARIA": "वर्ड र्याप अन",
+    "WordWrapOffARIA": "वर्ड र्याप अफ",
+    "LineNumbers": "लाइन नम्बरहरू",
+    "LineNumbersOnARIA": "लाइन नम्बरहरू अन",
+    "LineNumbersOffARIA": "लाइन नम्बरहरू अफ",
+    "LintWarningSound": "लिन्ट वार्निङ आवाज",
+    "LintWarningOnARIA": "लिन्ट वार्निङ अन",
+    "LintWarningOffARIA": "लिन्ट वार्निङ अफ",
+    "PreviewSound": "प्रिभ्यू आवाज",
+    "PreviewSoundARIA": "प्रिभ्यू आवाज",
+    "AccessibleTextBasedCanvas": "एक्सेसिबल टेक्स्ट-बेसड क्यानभास",
+    "UsedScreenReader": "स्क्रिन रिडरसँग यूज गरिएको",
+    "PlainText": "प्लेन-टेक्स्ट",
+    "TextOutputARIA": "टेक्स्ट आउटपुट अन",
+    "TableText": "टेबल-टेक्स्ट",
+    "TableOutputARIA": "टेबल आउटपुट अन",
+    "LibraryVersion": "p5.js भर्जन",
+    "LibraryVersionInfo": "p5.js को [नयाँ २.० रिलिज](https://github.com/processing/p5.js/releases/) अभेलेबल छ! यो अगस्ट २०२६ मा डिफल्ट बन्नेछ, त्यसैले यो समय यसलाई टेस्ट गर्न र बगहरू रिपोर्ट गर्न यूज गर्नुहोस्। १.x बाट २.० मा स्केच ट्रान्जिसन गर्न इन्टरेस्ट छ? [कम्प्याटिबिलिटी र ट्रान्जिसन रिसोर्सहरू](https://github.com/processing/p5.js-compatibility) चेक आउट गर्नुहोस्।",
+    "CustomVersionTitle": "आफ्नै लाइब्रेरीहरू म्यानेज गर्दै हुनुहुन्छ? राम्रो!",
+    "CustomVersionInfo": "p5.js को भर्जन हाल index.html को कोडमा म्यानेज भइरहेको छ। यसको मतलब यो ट्याबबाट एडजस्ट गर्न मिल्दैन।",
+    "CustomVersionReset": "यदि तपाईं डिफल्ट लाइब्रेरीहरू प्रयोग गर्न चाहनुहुन्छ भने, तपाईं index.html मा स्क्रिप्ट ट्यागहरूलाई निम्नसँग रिप्लेस गर्न सक्नुहुन्छ:",
+    "SoundAddon": "p5.sound.js एड-अन लाइब्रेरी",
+    "PreloadAddon": "p5.js १.x कम्प्याटिबिलिटी एड-अन लाइब्रेरी — प्रिलोड",
+    "ShapesAddon": "p5.js १.x कम्प्याटिबिलिटी एड-अन लाइब्रेरी — सेप्स",
+    "DataAddon": "p5.js १.x कम्प्याटिबिलिटी एड-अन लाइब्रेरी — डाटा एन्ड इभेन्ट्स",
+    "AddonOnARIA": "अन",
+    "AddonOffARIA": "अफ",
+    "SoundReference": "p5.js {{version}} सँग कम्प्याटिबल p5.sound को रेफरेन्स हेर्नुहोस्",
+    "CopyToClipboardSuccess": "क्लिपबोर्डमा कपी भयो!",
+    "CopyToClipboardFailure": "हामी टेक्स्ट कपी गर्न सकेनौं, यसलाई सेलेक्ट गरेर म्यानुअल रूपमा कपी गर्ने प्रयास गर्नुहोस्।"
+  },
+  "KeyboardShortcuts": {
+    "Title": "किबोर्ड सर्टकटहरू",
+    "ShortcutsFollow": "कोड एडिटिङ किबोर्ड सर्टकटहरू",
+    "SublimeText": "Sublime Text सर्टकटहरू",
+    "CodeEditing": {
+      "Tidy": "सुव्यवस्थित",
+      "FindText": "टेक्स्ट खोज्नुहोस्",
+      "FindNextMatch": "अर्को म्याच खोज्नुहोस्",
+      "FindPrevMatch": "अघिल्लो म्याच खोज्नुहोस्",
+      "ReplaceTextMatch": "टेक्स्ट म्याच बदल्नुहोस्",
+      "IndentCodeLeft": "कोड बायाँ इन्डेन्ट गर्नुहोस्",
+      "IndentCodeRight": "कोड दायाँ इन्डेन्ट गर्नुहोस्",
+      "CommentLine": "लाइन कमेन्ट गर्नुहोस्",
+      "FindNextTextMatch": "अर्को टेक्स्ट म्याच खोज्नुहोस्",
+      "FindPreviousTextMatch": "अघिल्लो टेक्स्ट म्याच खोज्नुहोस्",
+      "CodeEditing": "कोड एडिटिङ",
+      "ColorPicker": "इनलाइन कलर पिकर",
+      "CreateNewFile": "नयाँ फाइल बनाउनुहोस्",
+      "RenameVariable": "भेरिएबल रिनेम गर्नुहोस्"
+    },
+    "General": "सामान्य",
+    "GeneralSelection": {
+      "StartSketch": "स्केच स्टार्ट गर्नुहोस्",
+      "StopSketch": "स्केच स्टप गर्नुहोस्",
+      "TurnOnAccessibleOutput": "एक्सेसिबल आउटपुट अन गर्नुहोस्",
+      "TurnOffAccessibleOutput": "एक्सेसिबल आउटपुट अफ गर्नुहोस्",
+      "Reference": "हिन्टरमा सेलेक्ट गरिएको आइटमको रेफरेन्समा जानुहोस्"
+    }
+  },
+  "Sidebar": {
+    "Title": "स्केच फाइलहरू",
+    "ToggleARIA": "स्केच फाइल अप्सनहरू ओपन/क्लोज टगल गर्नुहोस्",
+    "AddFolder": "फोल्डर बनाउनुहोस्",
+    "AddFolderARIA": "फोल्डर थप्नुहोस्",
+    "AddFile": "फाइल बनाउनुहोस्",
+    "AddFileARIA": "फाइल थप्नुहोस्",
+    "UploadFile": "फाइल अपलोड गर्नुहोस्",
+    "UploadFileARIA": "फाइल अपलोड गर्नुहोस्",
+    "UploadFileTooltipUnauthenticated": "फाइलहरू अपलोड गर्न लगइन गर्नुहोस्"
+  },
+  "FileNode": {
+    "OpenFolderARIA": "फोल्डर कन्टेन्ट ओपन गर्नुहोस्",
+    "CloseFolderARIA": "फोल्डर कन्टेन्ट बन्द गर्नुहोस्",
+    "ToggleFileOptionsARIA": "फाइल अप्सनहरू ओपन/क्लोज टगल गर्नुहोस्",
+    "AddFolder": "फोल्डर बनाउनुहोस्",
+    "AddFolderARIA": "फोल्डर थप्नुहोस्",
+    "AddFile": "फाइल बनाउनुहोस्",
+    "AddFileARIA": "फाइल थप्नुहोस्",
+    "UploadFile": "फाइल अपलोड गर्नुहोस्",
+    "UploadFileARIA": "फाइल अपलोड गर्नुहोस्",
+    "Rename": "रिनेम गर्नुहोस्",
+    "Delete": "डिलिट गर्नुहोस्"
+  },
+  "Common": {
+    "SiteName": "p5.js वेब एडिटर",
+    "Error": "एरर",
+    "ErrorARIA": "एरर",
+    "Save": "सेभ",
+    "p5logoARIA": "p5.js लोगो",
+    "DeleteConfirmation": "के तपाईं पक्का {{name}} डिलिट गर्न चाहनुहुन्छ?"
+  },
+  "IDEView": {
+    "SubmitFeedback": "प्रतिक्रिया सबमिट गर्नुहोस्",
+    "SubmitFeedbackARIA": "प्रतिक्रिया पेश गर्नुहोस्",
+    "AddCollectionTitle": "कलेक्सनमा थप्नुहोस्",
+    "AddCollectionARIA": "कलेक्सनमा थप्नुहोस्",
+    "ShareTitle": "सेयर गर्नुहोस्",
+    "ShareARIA": "सेयर गर्नुहोस्"
+  },
+  "NewFileModal": {
+    "Title": "फाइल बनाउनुहोस्",
+    "CloseButtonARIA": "नयाँ फाइल मोडल बन्द गर्नुहोस्",
+    "EnterName": "कृपया नाम राख्नुहोस्",
+    "InvalidType": "गलत फाइल प्रकार। मान्य एक्सटेन्सनहरू .js, .css, .json, .xml, .stl, .txt, .csv, .tsv, .mtl, .frag, र .vert हुन्।"
+  },
+  "NewFileForm": {
+    "AddFileSubmit": "फाइल थप्नुहोस्",
+    "Placeholder": "नाम"
+  },
+  "NewFolderModal": {
+    "Title": "फोल्डर बनाउनुहोस्",
+    "CloseButtonARIA": "नयाँ फोल्डर मोडल बन्द गर्नुहोस्",
+    "EnterName": "कृपया नाम राख्नुहोस्",
+    "EmptyName": "फोल्डर नाममा केवल स्पेस मात्र हुन सक्दैन",
+    "InvalidExtension": "फोल्डर नाममा एक्सटेन्सन हुन सक्दैन"
+  },
+  "NewFolderForm": {
+    "AddFolderSubmit": "फोल्डर थप्नुहोस्",
+    "Placeholder": "नाम"
+  },
+  "ResetPasswordForm": {
+    "Email": "रजिस्ट्रेसनको लागि यूज गरिएको इमेल",
+    "EmailARIA": "इमेल",
+    "Submit": "पासवर्ड रिसेट इमेल पठाउनुहोस्"
+  },
+  "ResetPasswordView": {
+    "Title": "p5.js वेब एडिटर | पासवर्ड रिसेट",
+    "Reset": "आफ्नो पासवर्ड रिसेट गर्नुहोस्",
+    "Submitted": "तपाईंको पासवर्ड रिसेट इमेल चाँडै आउनेछ। यदि तपाईंले देख्नुभएन भने, spam फोल्डरमा हेर्नुहोस् किनभने कहिलेकाहीं त्यहाँ जान सक्छ।",
+    "Login": "लगइन",
+    "LoginOr": "वा",
+    "SignUp": "साइन अप"
+  },
+  "ReduxFormUtils": {
+    "errorInvalidEmail": "कृपया सही इमेल एड्रेस राख्नुहोस्",
+    "errorEmptyEmail": "कृपया इमेल राख्नुहोस्",
+    "errorEmptyEmailorUserName": "कृपया इमेल वा युजरनेम राख्नुहोस्",
+    "errorPasswordMismatch": "पासवर्डहरू म्याच हुनुपर्छ",
+    "errorEmptyPassword": "कृपया पासवर्ड राख्नुहोस्",
+    "errorShortPassword": "पासवर्ड कम्तिमा ६ अक्षरहरूको हुनुपर्छ",
+    "errorConfirmPassword": "कृपया आफ्नो पासवर्ड पक्का गर्नुहोस्",
+    "errorNewPassword": "कृपया नयाँ पासवर्ड राख्नुहोस् वा हालको पासवर्ड खाली छोड्नुहोस्।",
+    "errorNewPasswordRepeat": "तपाईंको नयाँ पासवर्ड हालको भन्दा फरक हुनुपर्छ।",
+    "errorEmptyUsername": "कृपया युजरनेम राख्नुहोस्।",
+    "errorLongUsername": "युजरनेम २० अक्षरहभन्दा कम हुनुपर्छ।",
+    "errorValidUsername": "युजरनेममा केवल नम्बर, अक्षर, डट, ड्यास र अन्डरस्कोर मात्र हुनुपर्छ।"
+  },
+  "NewPasswordView": {
+    "Title": "p5.js वेब एडिटर | नयाँ पासवर्ड",
+    "Description": "नयाँ पासवर्ड सेट गर्नुहोस्",
+    "TokenInvalidOrExpired": "पासवर्ड रिसेट टोकन गलत छ वा एक्सपायर भएको छ।",
+    "EmptyPassword": "कृपया पासवर्ड राख्नुहोस्",
+    "PasswordConfirmation": "कृपया आफ्नो पासवर्ड पक्का गर्नुहोस्",
+    "PasswordMismatch": "पासवर्डहरू म्याच हुनुपर्छ"
+  },
+  "AccountForm": {
+    "Email": "इमेल",
+    "EmailARIA": "इमेल",
+    "Unconfirmed": "पुष्टि नभएको।",
+    "EmailSent": "कन्फर्मेसन पठाइयो, आफ्नो इमेल चेक गर्नुहोस्।",
+    "Resend": "कन्फर्मेसन इमेल रिसेन्ड गर्नुहोस्",
+    "UserName": "युजर नेम",
+    "UserNameARIA": "युजरनेम",
+    "CurrentPassword": "हालको पासवर्ड",
+    "CurrentPasswordARIA": "हालको पासवर्ड",
+    "NewPassword": "नयाँ पासवर्ड",
+    "NewPasswordARIA": "नयाँ पासवर्ड",
+    "SaveAccountDetails": "अकाउन्ट डिटेल्स सेभ गर्नुहोस्"
+  },
+  "AccountView": {
+    "SocialLogin": "सोसल लगइन",
+    "SocialLoginDescription": "p5.js वेब एडिटरमा लगइन गर्न आफ्नो GitHub वा Google अकाउन्ट प्रयोग गर्नुहोस्।",
+    "Title": "p5.js वेब एडिटर | अकाउन्ट सेटिङहरू",
+    "Settings": "मेरो अकाउन्ट",
+    "AccountTab": "अकाउन्ट",
+    "AccessTokensTab": "एक्सेस टोकनहरू"
+  },
+  "APIKeyForm": {
+    "ConfirmDelete": "के तपाईं पक्का {{key_label}} डिलिट गर्न चाहनुहुन्छ?",
+    "Summary": "पर्सनल एक्सेस टोकनहरू तपाईंको पासवर्ड जस्तै काम गरेर अटोमेटेड स्क्रिप्टहरूलाई एडिटर API एक्सेस गर्न दिन्छ। एक्सेस चाहिने हरेक स्क्रिप्टको लागि टोकन बनाउनुहोस्।",
+    "CreateToken": "नयाँ टोकन बनाउनुहोस्",
+    "TokenLabel": "यो टोकन के को लागि हो?",
+    "TokenPlaceholder": "यो टोकन के को लागि हो? जस्तै: उदाहरण इम्पोर्ट स्क्रिप्ट",
+    "CreateTokenSubmit": "बनाउनुहोस्",
+    "NoTokens": "तपाईंसँग कुनै अवस्थित टोकनहरू छैनन्।",
+    "NewTokenTitle": "तपाईंको नयाँ एक्सेस टोकन",
+    "NewTokenInfo": "अब आफ्नो नयाँ पर्सनल एक्सेस टोकन कपी गर्न नबिर्सनुहोस्। तपाईं यसलाई फेरि हेर्न सक्नुहुन्न!",
+    "ExistingTokensTitle": "अवस्थित टोकनहरू"
+  },
+  "APIKeyList": {
+    "Name": "नाम",
+    "Created": "बनाइएको मिति",
+    "LastUsed": "अन्तिम पटक प्रयोग गरिएको",
+    "Actions": "एक्सनहरू",
+    "Never": "कहिल्यै",
+    "DeleteARIA": "API Key डिलिट गर्नुहोस्"
+  },
+  "NewPasswordForm": {
+    "Title": "पासवर्ड",
+    "TitleARIA": "पासवर्ड",
+    "ConfirmPassword": "पासवर्ड कन्फर्म गर्नुहोस्",
+    "ConfirmPasswordARIA": "पासवर्ड कन्फर्म गर्नुहोस्",
+    "SubmitSetNewPassword": "नयाँ पासवर्ड सेट गर्नुहोस्"
+  },
+  "SignupForm": {
+    "Title": "युजर नेम",
+    "TitleARIA": "युजरनेम",
+    "Email": "इमेल",
+    "EmailARIA": "इमेल",
+    "Password": "पासवर्ड",
+    "PasswordARIA": "पासवर्ड",
+    "ConfirmPassword": "पासवर्ड कन्फर्म गर्नुहोस्",
+    "ConfirmPasswordARIA": "पासवर्ड कन्फर्म गर्नुहोस्",
+    "SubmitSignup": "साइन अप"
+  },
+  "SignupView": {
+    "Title": "p5.js वेब एडिटर | साइन अप",
+    "Description": "साइन अप",
+    "Or": "वा",
+    "AlreadyHave": "पहिले देखि अकाउन्ट छ?",
+    "Login": "लगइन",
+    "Warning": "साइन अप गरेर, तपाईं p5.js एडिटरको <0>टर्म्स अफ यूज</0> र <1>प्राइभेसी पोलिसी</1> मान्नुहुन्छ।"
+  },
+  "EmailVerificationView": {
+    "Title": "p5.js वेब एडिटर | इमेल प्रमाणीकरण",
+    "Verify": "आफ्नो इमेल प्रमाणित गर्नुहोस्",
+    "InvalidTokenNull": "त्यो लिङ्क गलत छ।",
+    "Checking": "टोकन भ्यालिडेट गर्दै, कृपया पर्खनुहोस्...",
+    "Verified": "सम्पन्न भयो, तपाईंको इमेल एड्रेस प्रमाणित भयो।",
+    "InvalidState": "टोकन गलत छ वा एक्सपायर भएको छ।"
+  },
+  "AssetList": {
+    "Title": "p5.js वेब एडिटर | मेरा एसेटहरू",
+    "ToggleOpenCloseARIA": "एसेट अप्सनहरू ओपन/क्लोज टगल गर्नुहोस्",
+    "Delete": "डिलिट गर्नुहोस्",
+    "OpenNewTab": "नयाँ ट्याबमा ओपन गर्नुहोस्",
+    "NoUploadedAssets": "कुनै अपलोड गरिएका एसेटहरू छैनन्।",
+    "HeaderName": "नाम",
+    "HeaderSize": "साइज",
+    "HeaderSketch": "स्केच",
+    "maximum": "अधिकतम"
+  },
+  "Feedback": {
+    "Title": "p5.js वेब एडिटर | प्रतिक्रिया",
+    "ViaGithubHeader": "Github इस्युहरू मार्फत",
+    "ViaGithubDescription": "यदि तपाईं Github सँग परिचित हुनुहुन्छ भने, यो हाम्रो बग रिपोर्ट र प्रतिक्रिया प्राप्त गर्ने प्राथमिक तरिका हो।",
+    "GoToGithub": "Github मा जानुहोस्",
+    "ViaGoogleHeader": "Google Form मार्फत",
+    "ViaGoogleDescription": "तपाईं यो छिटो फर्म पनि पेश गर्न सक्नुहुन्छ।",
+    "GoToForm": "फर्ममा जानुहोस्"
+  },
+  "Searchbar": {
+    "SearchSketch": "स्केचहरू खोज्नुहोस्...",
+    "SearchCollection": "कलेक्सनहरू खोज्नुहोस्...",
+    "ClearTerm": "क्लियर गर्नुहोस्"
+  },
+  "UploadFileModal": {
+    "Title": "फाइल अपलोड गर्नुहोस्",
+    "CloseButtonARIA": "अपलोड फाइल मोडल बन्द गर्नुहोस्",
+    "SizeLimitError": "एरर: तपाईं अरू फाइलहरू अपलोड गर्न सक्नुहुन्न। तपाईं कुल साइज लिमिट {{sizeLimit}} पुगिसक्नुभएको छ। यदि तपाईं अरू अपलोड गर्न चाहनुहुन्छ भने, कृपया यूज नगरिने फाइलहरूलाई हटाउनुहोस्"
+  },
+  "FileUploader": {
+    "DictDefaultMessage": "यहाँ फाइलहरू ड्रप गर्नुहोस् वा फाइल ब्राउजर यूज गर्न क्लिक गर्नुहोस्"
+  },
+  "ErrorModal": {
+    "MessageLogin": "स्केचहरू सेभ गर्नको लागि, तपाईं लगइन हुनुपर्छ। कृपया ",
+    "Login": "लगइन",
+    "LoginOr": " वा ",
+    "SignUp": "साइन अप",
+    "MessageLoggedOut": "तपाईं लगआउट भएको जस्तो देखिन्छ। कृपया ",
+    "LogIn": "लगइन",
+    "SavedDifferentWindow": "तपाईंले सेभ गर्ने प्रयास गर्नुभएको प्रोजेक्ट अर्को विन्डोबाट सेभ भइसकेको छ। लेटेस्ट भर्जन हेर्नको लागि कृपया पेज रिफ्रेस गर्नुहोस्।",
+    "LinkTitle": "एरर लिङ्किङ अकाउन्ट",
+    "LinkMessage": "तपाईंको {{serviceauth}} अकाउन्टलाई p5.js वेब एडिटर अकाउन्टमा लिङ्क गर्नमा समस्या भयो। तपाईंको {{serviceauth}} अकाउन्ट पहिले नै अर्को p5.js वेब एडिटर अकाउन्टमा लिङ्क भइसकेको छ।"
+  },
+  "ShareModal": {
+    "Embed": "स्केच इम्बेड गर्नुहोस्",
+    "Present": "प्रेजेन्ट गर्नुहोस्",
+    "Fullscreen": "स्केचलाई भ्यू-ओन्ली मोडमा सेयर गर्नुहोस्",
+    "Edit": "स्केच सेयर गर्नुहोस् र एडिटिङ अनुमति दिनुहोस्"
+  },
+  "CollectionView": {
+    "TitleCreate": "कलेक्सन बनाउनुहोस्",
+    "TitleDefault": "कलेक्सन"
+  },
+  "Collection": {
+    "Title": "p5.js वेब एडिटर | मेरा कलेक्सनहरू",
+    "AnothersTitle": "p5.js वेब एडिटर | {{anotheruser}} का कलेक्सनहरू",
+    "Share": "सेयर गर्नुहोस्",
+    "URLLink": "कलेक्सनको लिङ्क",
+    "AddSketch": "स्केच थप्नुहोस्",
+    "DeleteFromCollection": "के तपाईं पक्का यो कलेक्सनबाट {{name_sketch}} हटाउन चाहनुहुन्छ?",
+    "SketchDeleted": "स्केच डिलिट भयो",
+    "SketchRemoveARIA": "कलेक्सनबाट स्केच हटाउनुहोस्",
+    "DescriptionPlaceholder": "विवरण थप्नुहोस्",
+    "Description": "विवरण",
+    "NumSketches": "{{count}} स्केच",
+    "NumSketches_plural": "{{count}} स्केचहरू",
+    "By": "कलेक्सन बनाउने ",
+    "NoSketches": "कलेक्सनमा कुनै स्केच छैन",
+    "TableSummary": "सबै कलेक्सनहरू भएको टेबल",
+    "HeaderName": "नाम",
+    "HeaderCreatedAt": "थपिएको मिति",
+    "HeaderUser": "मालिक",
+    "DirectionAscendingARIA": "बढ्दो क्रम",
+    "DirectionDescendingARIA": "घट्दो क्रम",
+    "ButtonLabelAscendingARIA": "{{displayName}} बढ्दो क्रम मिलाउनुहोस्।",
+    "ButtonLabelDescendingARIA": "{{displayName}} घट्दो क्रम मिलाउनुहोस्।"
+  },
+  "AddToCollectionList": {
+    "Title": "p5.js वेब एडिटर | मेरा कलेक्सनहरू",
+    "AnothersTitle": "p5.js वेब एडिटर | {{anotheruser}} का कलेक्सनहरू",
+    "Empty": "कुनै कलेक्सन छैन"
+  },
+  "CollectionCreate": {
+    "Title": "p5.js वेब एडिटर | कलेक्सन बनाउनुहोस्",
+    "FormError": "कलेक्सन बनाउन सकेन",
+    "FormLabel": "कलेक्सन नाम",
+    "FormLabelARIA": "नाम",
+    "NameRequired": "कलेक्सन नाम आवश्यक छ",
+    "Description": "विवरण (ऐच्छिक)",
+    "DescriptionARIA": "विवरण",
+    "DescriptionPlaceholder": "मेरा मनपर्ने स्केचहरू",
+    "SubmitCollectionCreate": "कलेक्सन बनाउनुहोस्"
+  },
+  "DashboardView": {
+    "CreateCollection": "कलेक्सन बनाउनुहोस्",
+    "NewSketch": "नयाँ स्केच",
+    "CreateCollectionOverlay": "कलेक्सन बनाउनुहोस्"
+  },
+  "DashboardTabSwitcher": {
+    "Sketches": "स्केचहरू",
+    "Collections": "कलेक्सनहरू",
+    "Assets": "एसेटहरू"
+  },
+  "CollectionList": {
+    "Title": "p5.js वेब एडिटर | मेरा कलेक्सनहरू",
+    "AnothersTitle": "p5.js वेब एडिटर | {{anotheruser}} का कलेक्सनहरू",
+    "NoCollections": "कुनै कलेक्सन छैन।",
+    "TableSummary": "सबै कलेक्सनहरू भएको टेबल",
+    "HeaderName": "नाम",
+    "HeaderCreatedAt": "बनाइएको मिति",
+    "HeaderCreatedAt_mobile": "बनाइयो",
+    "HeaderUpdatedAt": "अपडेट गरिएको मिति",
+    "HeaderUpdatedAt_mobile": "अपडेट",
+    "HeaderNumItems": "# स्केचहरू",
+    "HeaderNumItems_mobile": "# स्केचहरू",
+    "DirectionAscendingARIA": "बढ्दो क्रम",
+    "DirectionDescendingARIA": "घट्दो क्रम",
+    "ButtonLabelAscendingARIA": "{{displayName}} बढ्दो क्रम मिलाउनुहोस्।",
+    "ButtonLabelDescendingARIA": "{{displayName}} घट्दो क्रम मिलाउनुहोस्।",
+    "AddSketch": "स्केच थप्नुहोस्"
+  },
+  "CollectionListRow": {
+    "ToggleCollectionOptionsARIA": "कलेक्सन अप्सनहरू ओपन/क्लोज टगल गर्नुहोस्",
+    "AddSketch": "स्केच थप्नुहोस्",
+    "Delete": "डिलिट गर्नुहोस्",
+    "Rename": "रिनेम गर्नुहोस्"
+  },
+  "Overlay": {
+    "AriaLabel": "{{title}} ओभरले बन्द गर्नुहोस्"
+  },
+  "QuickAddList": {
+    "ButtonRemoveARIA": "कलेक्सनबाट हटाउनुहोस्",
+    "ButtonAddToCollectionARIA": "कलेक्सनमा थप्नुहोस्",
+    "View": "हेर्नुहोस्"
+  },
+  "Pagination": {
+    "Next": "अर्को",
+    "Previous": "अघिल्लो",
+    "Of": "को"
+  },
+  "SketchList": {
+    "View": "हेर्नुहोस्",
+    "Title": "p5.js वेब एडिटर | मेरा स्केचहरू",
+    "AnothersTitle": "p5.js वेब एडिटर | {{anotheruser}} का स्केचहरू",
+    "ToggleLabelARIA": "स्केच अप्सनहरू ओपन/क्लोज टगल गर्नुहोस्",
+    "DropdownRename": "रिनेम गर्नुहोस्",
+    "DropdownDownload": "डाउनलोड गर्नुहोस्",
+    "DropdownDuplicate": "डुप्लिकेट गर्नुहोस्",
+    "DropdownAddToCollection": "कलेक्सनमा थप्नुहोस्",
+    "DropdownDelete": "डिलिट गर्नुहोस्",
+    "DirectionAscendingARIA": "बढ्दो क्रम",
+    "DirectionDescendingARIA": "घट्दो क्रम",
+    "ButtonLabelAscendingARIA": "{{displayName}} बढ्दो क्रम मिलाउनुहोस्।",
+    "ButtonLabelDescendingARIA": "{{displayName}} घट्दो क्रम मिलाउनुहोस्।",
+    "AddToCollectionOverlayTitle": "कलेक्सनमा थप्नुहोस्",
+    "TableSummary": "सबै सेभ गरिएका प्रोजेक्टहरू भएको टेबल",
+    "HeaderName": "स्केच",
+    "HeaderCreatedAt": "बनाइएको मिति",
+    "HeaderCreatedAt_mobile": "बनाइयो",
+    "HeaderUpdatedAt": "अपडेट गरिएको मिति",
+    "HeaderUpdatedAt_mobile": "अपडेट",
+    "NoSketches": "कुनै स्केच छैन।"
+  },
+  "AddToCollectionSketchList": {
+    "Title": "p5.js वेब एडिटर | मेरा स्केचहरू",
+    "AnothersTitle": "p5.js वेब एडिटर | {{anotheruser}} का स्केचहरू",
+    "NoCollections": "कुनै कलेक्सन छैन।"
+  },
+  "Editor": {
+    "OpenSketchARIA": "स्केच फाइल नेभिगेसन ओपन गर्नुहोस्",
+    "CloseSketchARIA": "स्केच फाइल नेभिगेसन बन्द गर्नुहोस्",
+    "UnsavedChangesARIA": "स्केचमा सेभ नभएका परिवर्तनहरू छन्",
+    "KeyUpLineNumber": "लाइन {{lineNumber}}"
+  },
+  "EditorAccessibility": {
+    "NoLintMessages": "कुनै लिन्ट मेसेजहरू छैनन्",
+    "CurrentLine": "हालको लाइन"
+  },
+  "Timer": {
+    "SavedAgo": "सेभ भयो: {{timeAgo}}"
+  },
+  "formatDate": {
+    "JustNow": "भर्खरै",
+    "15Seconds": "१५ सेकेन्ड अघि",
+    "25Seconds": "२५ सेकेन्ड अघि",
+    "35Seconds": "३५ सेकेन्ड अघि",
+    "Ago": "{{timeAgo}} अघि"
+  },
+  "CopyableInput": {
+    "CopiedARIA": "क्लिपबोर्डमा कपी भयो!",
+    "OpenViewTabARIA": "नयाँ ट्याबमा {{label}} भ्यू ओपन गर्नुहोस्"
+  },
+  "EditableInput": {
+    "EditValue": "{{display}} भ्यालु एडिट गर्नुहोस्",
+    "EmptyPlaceholder": "कुनै भ्यालु छैन"
+  },
+  "PreviewNav": {
+    "EditSketchARIA": "स्केच एडिट गर्नुहोस्",
+    "ByUser": "बनाउने"
+  },
+  "MobilePreferences": {
+    "Settings": "सेटिङहरू",
+    "GeneralSettings": "सामान्य सेटिङहरू",
+    "Accessibility": "पहुँच सुविधा",
+    "AccessibleOutput": "एक्सेसिबल आउटपुट",
+    "Theme": "थिम",
+    "LightTheme": "लाइट",
+    "DarkTheme": "डार्क",
+    "HighContrastTheme": "हाई कन्ट्रास्ट",
+    "Autosave": "अटोसेभ",
+    "AutocompleteHinter": "अटोकम्प्लिट हिन्टर",
+    "WordWrap": "वर्ड र्याप",
+    "LineNumbers": "लाइन नम्बरहरू",
+    "LintWarningSound": "लिन्ट वार्निङ आवाज",
+    "UsedScreenReader": "स्क्रिन रिडरसँग यूज गरिएको",
+    "PlainText": "प्लेन-टेक्स्ट",
+    "TableText": "टेबल-टेक्स्ट",
+    "Sound": "आवाज",
+    "Preferences": "प्रिफरेन्सहरू",
+    "Language": "भाषा"
+  },
+  "PreferenceCreators": {
+    "On": "अन",
+    "Off": "अफ"
+  },
+  "MobileDashboardView": {
+    "Examples": "उदाहरणहरू",
+    "Sketches": "स्केचहरू",
+    "Collections": "कलेक्सनहरू",
+    "Assets": "एसेटहरू",
+    "MyStuff": "मेरा सामानहरू",
+    "CreateSketch": "स्केच बनाउनुहोस्",
+    "CreateCollection": "कलेक्सन बनाउनुहोस्"
+  },
+  "Explorer": {
+    "Files": "फाइलहरू"
+  },
+  "Cookies": {
+    "Header": "कुकीजहरू",
+    "Body": "p5.js एडिटरले कुकीजहरू यूज गर्छ। केही वेबसाइट कार्यक्षमताहरूका लागि आवश्यक छन् र तपाईंलाई अकाउन्ट र प्रिफरेन्सहरू म्यानेज गर्न दिन्छ। अरूहरू आवश्यक छैनन्—तिनीहरू एनालिटिक्सका लागि यूज हुन्छन् र हामीलाई हाम्रो कम्युनिटीबारे थप जान्न मद्दत गर्छ। <strong> हामी यो डाटा कहिल्यै बेच्दैनौं वा एड्भर्टाइजिङको लागि यूज गर्दैनौं। </strong> तपाईं कुन कुकीजहरू अनुमति दिने भन्ने निर्णय गर्न सक्नुहुन्छ, र हाम्रो <0>प्राइभेसी पोलिसी<0> मा थप जान्न सक्नुहुन्छ।",
+    "AllowAll": "सबै अनुमति दिनुहोस्",
+    "AllowEssential": "आवश्यक मात्र अनुमति दिनुहोस्"
+  },
+  "Legal": {
+    "PrivacyPolicy": "प्राइभेसी पोलिसी",
+    "TermsOfUse": "टर्म्स अफ यूज",
+    "CodeOfConduct": "कोड अफ कन्डक्ट"
+  },
+  "SkipLink": {
+    "PlaySketch": "प्ले स्केचमा स्किप गर्नुहोस्"
+  },
+  "Visibility": {
+    "Label": "विजिबिलिटी",
+    "Public": {
+      "Description": "जो कोहीले यो स्केच हेर्न सक्छ।",
+      "Label": "पब्लिक"
+    },
+    "Private": {
+      "Description": "केवल तपाईंले मात्र यो स्केच हेर्न सक्नुहुन्छ।",
+      "Label": "प्राइभेट"
+    },
+    "Changed": "'{{projectName}}' अब {{newVisibility}} भयो..."
+  }
+}
