@@ -75,8 +75,8 @@ export const createUser: RequestHandler<
       }
     });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: err });
+    console.error('Could not create user:', err);
+    res.status(500).json({ error: 'Internal server error' });
   }
 };
 
@@ -176,7 +176,8 @@ export const emailVerificationInitiate: RequestHandler<
 
     res.json(userResponse(req.user!));
   } catch (err) {
-    res.status(500).json({ error: err });
+    console.error('Could not initiate email verification:', err);
+    res.status(500).json({ error: 'Internal server error' });
   }
 };
 
