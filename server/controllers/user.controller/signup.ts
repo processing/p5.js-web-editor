@@ -98,7 +98,6 @@ export const duplicateUserCheck: RequestHandler<
   const checkType = req.query.check_type;
   const allowedCheckTypes = ['email', 'username'] as const;
 
-  // Validate check_type to prevent prototype pollution
   if (
     !checkType ||
     !allowedCheckTypes.includes(checkType as 'email' | 'username')
@@ -110,7 +109,6 @@ export const duplicateUserCheck: RequestHandler<
 
   const value = req.query[checkType];
 
-  // Validate that the corresponding value exists
   if (!value || typeof value !== 'string' || value.trim().length === 0) {
     return res.status(400).json({
       error: `Missing or invalid ${checkType} value.`
