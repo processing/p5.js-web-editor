@@ -223,7 +223,7 @@ passport.use(
         const user = new User();
         user.email = primaryEmail;
         user.github = profile.id;
-        user.username = profile.username;
+        user.username = username;
         user.tokens.push({ kind: 'github', accessToken });
         user.name = profile.displayName;
         user.verified = User.EmailConfirmation().Verified;
