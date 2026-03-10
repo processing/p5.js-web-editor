@@ -300,6 +300,12 @@ export const deleteAccount: RequestHandler<
       }
     }
 
+    user.github = undefined;
+    user.google = undefined;
+    user.tokens = user.tokens.filter(
+      (token) => token.kind !== 'github' && token.kind !== 'google'
+    );
+
     const projects = await Project.find({ user: user._id }).exec();
 
     const s3Keys = projects.flatMap((project: any) =>
