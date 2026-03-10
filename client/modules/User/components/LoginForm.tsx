@@ -109,7 +109,7 @@ export function LoginForm() {
               )}
             </Field>
             {submitError && !modifiedSinceLastSubmit && (
-              <span className="form-error">
+              <span className="form-error" aria-live="assertive">
                 {t('LoginForm.Errors.invalidCredentials')}
               </span>
             )}
