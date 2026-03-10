@@ -181,6 +181,26 @@ export async function moveObjectToUserInS3(url, userId) {
   return `${s3Bucket}${userId}/${newFilename}`;
 }
 
+export async function deleteAllObjectsForUser(userId) {
+  try {
+    const params = {
+      Bucket: process.env.S3_BUCKET,
+      Prefix: `${userId}/`
+    };
+    const data = await s3Client.send(new ListObjectsCommand(params));
+    const keys = (data.Contents || []).map((object) => object.Key);
+    if (keys.length > 0) {
+      await deleteObjectsFromS3(keys);
+    }
+  } catch (error) {
+    if (error instanceof TypeError) {
+      return;
+    }
+    console.error('Error deleting all S3 objects for user: ', error);
+    throw error;
+  }
+}
+
 export async function listObjectsInS3ForUser(userId) {
   try {
     let assets = [];

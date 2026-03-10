@@ -16,7 +16,7 @@ import {
 } from '../../types';
 import { mailerService } from '../../utils/mail';
 import { renderResetPassword, renderEmailConfirmation } from '../../views/mail';
-import { deleteObjectsFromS3, getObjectKey } from '../aws.controller';
+import { deleteAllObjectsForUser } from '../aws.controller';
 
 /**
  * - Method: `POST`
@@ -306,28 +306,10 @@ export const deleteAccount: RequestHandler<
       (token) => token.kind !== 'github' && token.kind !== 'google'
     );
 
-    const projects = await Project.find({ user: user._id }).exec();
-
-    const s3Keys = projects.flatMap((project: any) =>
-      (project.files as any[])
-        .filter(
-          (file: any) =>
-            file.url &&
-            (file.url.includes(process.env.S3_BUCKET_URL_BASE || '') ||
-              file.url.includes(process.env.S3_BUCKET || ''))
-        )
-        .map((file: any) => getObjectKey(file.url))
-    );
-
-    if (s3Keys.length > 0) {
-      try {
-        await deleteObjectsFromS3(s3Keys);
-      } catch (err) {
-        console.error(
-          'Failed to delete S3 assets during account deletion',
-          err
-        );
-      }
+    try {
+      await deleteAllObjectsForUser(user._id.toString());
+    } catch (err) {
+      console.error('Failed to delete S3 assets during account deletion', err);
     }
 
     await Project.deleteMany({ user: user._id }).exec();
