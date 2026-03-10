@@ -172,7 +172,7 @@ userSchema.methods.findMatchingKey = async function findMatchingKey(
   for (const k of this.apiKeys) {
     try {
       /* eslint-disable no-await-in-loop */
-      const foundOne = await bcrypt.compareSync(candidateKey, k.hashedKey);
+      const foundOne = await bcrypt.compare(candidateKey, k.hashedKey);
 
       if (foundOne) {
         keyObj = { isMatch: true, keyDocument: k };
@@ -287,11 +287,7 @@ userSchema.statics.findByEmailOrUsername = async function findByEmailOrUsername(
     : value.indexOf('@') > -1;
 
   // do the case insensitive stuff
-  if (
-    arguments.length === 2 &&
-    typeof options === 'object' &&
-    options.caseInsensitive
-  ) {
+  if (options?.caseInsensitive) {
     const query = isEmail ? { email: value } : { username: value };
     const foundUser = await user
       .findOne(query)

@@ -79,8 +79,8 @@ export const createUser: RequestHandler<
       }
     });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: err });
+    console.error('Could not create user:', err);
+    res.status(500).json({ error: 'Internal server error' });
   }
 };
 
@@ -100,9 +100,27 @@ export const duplicateUserCheck: RequestHandler<
   DuplicateUserCheckQuery
 > = async (req, res) => {
   const checkType = req.query.check_type;
+  const allowedCheckTypes = ['email', 'username'] as const;
+
+  if (
+    !checkType ||
+    !allowedCheckTypes.includes(checkType as 'email' | 'username')
+  ) {
+    return res.status(400).json({
+      error: 'Invalid check_type. Must be either "email" or "username".'
+    });
+  }
+
   const value = req.query[checkType];
+
+  if (!value || typeof value !== 'string' || value.trim().length === 0) {
+    return res.status(400).json({
+      error: `Missing or invalid ${checkType} value.`
+    });
+  }
+
   const options = { caseInsensitive: true, valueType: checkType };
-  const user = await User.findByEmailOrUsername(value!, options);
+  const user = await User.findByEmailOrUsername(value, options);
   if (user) {
     return res.json({
       exists: true,
@@ -162,7 +180,8 @@ export const emailVerificationInitiate: RequestHandler<
 
     res.json(userResponse(req.user!));
   } catch (err) {
-    res.status(500).json({ error: err });
+    console.error('Could not initiate email verification:', err);
+    res.status(500).json({ error: 'Internal server error' });
   }
 };
 
