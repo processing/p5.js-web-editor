@@ -51,7 +51,7 @@ const CollectionItemRow = ({ collection, item, isOwner }) => {
         {isOwner && (
           <TableDropdown aria-label={t('Collection.SketchRemoveARIA')}>
             <MenuItem onClick={handleSketchRemove}>
-              {t('Remove collection')}
+              {t('Collection.RemoveFromCollection')}
             </MenuItem>
           </TableDropdown>
         )}
