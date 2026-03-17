@@ -149,7 +149,8 @@ export async function copyObjectInS3RequestHandler(req, res) {
     const newUrl = await copyObjectInS3(url, req.user.id);
     res.json({ url: newUrl });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error('Error copying object in S3:', error.message);
+    res.status(500).json({ error: 'Internal server error' });
   }
 }
 
