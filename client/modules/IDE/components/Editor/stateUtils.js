@@ -37,7 +37,6 @@ import {
   indentLess
 } from '@codemirror/commands';
 import { lintGutter } from '@codemirror/lint';
-import { color as colorPicker } from '@uiw/codemirror-extensions-color';
 import {
   expandAbbreviation,
   abbreviationTracker
@@ -52,6 +51,7 @@ import { JSHINT } from 'jshint';
 import { HTMLHint } from 'htmlhint';
 import { CSSLint } from 'csslint';
 import { emmetConfig } from '@emmetio/codemirror6-plugin';
+import { color as colorPicker } from '@connieye/codemirror-color-picker';
 
 import p5JavaScript from './p5JavaScript';
 import { tidyCodeWithPrettier } from './tidier';
@@ -336,12 +336,18 @@ export function createNewFileState(filename, document, settings) {
     // Misc extensions
     indentOnInput(),
     bracketMatching(),
-    colorPicker,
     errorDecorationStateField,
 
     // Setup the event listeners on the CodeMirror instance.
     EditorView.updateListener.of(onViewUpdate)
   ];
+
+  // Only enable the color picker for Javascript and CSS, which
+  // have both been tested.
+  const fileMode = getFileMode(filename);
+  if (fileMode === 'javascript' || fileMode === 'css') {
+    extensions.push(colorPicker);
+  }
 
   const fileLanguage = getFileLanguage(filename);
   const fileLinter = getFileLinter(filename, onUpdateLinting);
