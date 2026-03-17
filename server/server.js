@@ -8,6 +8,7 @@ import MongoStore from 'connect-mongo';
 import passport from 'passport';
 import path from 'path';
 import basicAuth from 'express-basic-auth';
+import { createProxyMiddleware } from 'http-proxy-middleware';
 
 // Webpack Requirements
 import webpack from 'webpack';
@@ -33,12 +34,19 @@ import { get404Sketch } from './views/404Page';
 
 const app = new Express();
 
+app.use((req, res, next) => {
+  res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+  res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
+  res.setHeader('Cross-Origin-Resource-Policy', 'same-origin');
+  next();
+});
+
 app.get('/health', (req, res) => res.json({ success: true }));
 
 const allowedCorsOrigins = [
   /p5js\.org$/,
   process.env.EDITOR_URL,
-  process.env.PREVIEW_URL
+  process.env.PREVIEW_SERVER_URL
 ];
 
 // to allow client-only development
@@ -175,6 +183,19 @@ app.use('/api', (error, req, res, next) => {
 
   next(error);
 });
+
+app.use(
+  '/preview',
+  createProxyMiddleware({
+    target: process.env.PREVIEW_SERVER_URL,
+    changeOrigin: true,
+    onProxyRes(proxyRes) {
+      proxyRes.headers['Cross-Origin-Opener-Policy'] = 'same-origin';
+      proxyRes.headers['Cross-Origin-Embedder-Policy'] = 'require-corp';
+      proxyRes.headers['Cross-Origin-Resource-Policy'] = 'same-origin';
+    }
+  })
+);
 
 // Handle missing routes.
 app.get('*', async (req, res) => {
