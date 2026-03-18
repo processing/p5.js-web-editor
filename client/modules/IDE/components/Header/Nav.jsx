@@ -323,7 +323,7 @@ const ProjectMenu = () => {
         </MenubarItem>
         <MenubarItem
           id="help-discord"
-          href="https://discord.com/invite/SHQ8dH25r9"
+          href="https://discord.p5js.org"
         >
           {t('Nav.Help.ChatOnDiscord')}
         </MenubarItem>
