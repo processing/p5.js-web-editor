@@ -9,13 +9,13 @@ These guides aren't exhaustive, and do not cover all the possible ways you can c
 - [Contribution Guide](https://github.com/processing/p5.js-web-editor/blob/develop/.github/CONTRIBUTING.md) - A place to get started!
 - [Installation](installation.md) - A guide for setting up your development environment.
 - [Development](development.md) - A guide for contributing code to the codebase.
-- [Testing](./testing.md) - A guide for writing and running tests in the codebase.
+- [Testing](testing.md) - A guide for writing and running tests in the codebase.
 - [Preparing an Issue](preparing_an_issue.md) - Instructions for creating and navigating issues.
 - [Preparing a Pull Request](preparing_a_pull_request.md) - Instructions for making a pull-request.
 - [Accessibility Guidelines](accessibility.md) - Guidelines for writing code to create an accessible application.
 - [Translations Guidelines](translations.md) - Guidelines for translating the p5.js editor.
 - [Deployment](deployment.md) - A guide to production deployment, and all platforms that are being used.
-- [Release](./release.md) - A guide to creating a production release.
+- [Release](release.md) - A guide to creating a production release.
 - [Typescript Migration](typescript_migration.md) - About the Typescript Migration project.
 - [Public API](public_api.md) - The current Web Editor programmatic API for uploading sketches and working with files.
 - [Proposed Public API](public_api_proposed.md) - Proposed API extensions and design notes for future endpoints.
