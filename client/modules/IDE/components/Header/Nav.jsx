@@ -321,10 +321,7 @@ const ProjectMenu = () => {
         >
           {t('Nav.Help.ReportBug')}
         </MenubarItem>
-        <MenubarItem
-          id="help-discord"
-          href="https://discord.p5js.org"
-        >
+        <MenubarItem id="help-discord" href="https://discord.p5js.org">
           {t('Nav.Help.ChatOnDiscord')}
         </MenubarItem>
         <MenubarItem
