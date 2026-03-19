@@ -148,7 +148,7 @@ export function AccountForm() {
             <Field name="currentPassword">
               {(field) => (
                 <p className="form__field">
-                  <label htmlFor="currentPassword" className="form__label">
+                  <label htmlFor = "currentPassword" className="form__label">
                     {t('AccountForm.CurrentPassword')}
                   </label>
                   <input
@@ -172,7 +172,7 @@ export function AccountForm() {
             <Field name="newPassword">
               {(field) => (
                 <p className="form__field">
-                  <label htmlFor="newPassword" className="form__label">
+                  <label htmlFor = "newPassword" className="form__label">
                     {t('AccountForm.NewPassword')}
                   </label>
                   <input
