@@ -168,7 +168,7 @@ export function AccountForm() {
               )}
             </Field>
           )}
-          {user.github === undefined && user.google === undefined &&  (
+          {user.github === undefined && user.google === undefined && (
             <Field name="newPassword">
               {(field) => (
                 <p className="form__field">
