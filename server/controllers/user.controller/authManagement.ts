@@ -201,7 +201,8 @@ export const updateSettings: RequestHandler<
       await saveUser(res, user);
     }
   } catch (err) {
-    res.status(500).json({ error: err });
+    console.error('Could not save settings:', err);
+    res.status(500).json({ error: 'Internal server error' });
   }
 };
 
