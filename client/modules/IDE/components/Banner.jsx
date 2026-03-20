@@ -37,8 +37,8 @@ const Banner = ({ onClose }) => {
   const bannerTempCopy = (
     <>
       p5js.org will be undergoing scheduled maintenance on{' '}
-      <strong>Sunday March 22, 2026 2026 8:00am CET</strong>. The editor and the
-      website may be down for up to 24 hours.
+      <strong>Sunday March 22, 2026 8:00am CET</strong>. The p5.js website may
+      be down for up to 24 hours.
     </>
   );
 
