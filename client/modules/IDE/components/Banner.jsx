@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Trans } from 'react-i18next';
+// import { Trans } from 'react-i18next';
 import { CrossIcon } from '../../../common/icons';
 
 /**
@@ -24,7 +24,7 @@ import { CrossIcon } from '../../../common/icons';
 
 const Banner = ({ onClose }) => {
   // URL can be updated depending on the opportunity or announcement.
-  const bannerURL = 'https://processingfoundation.org/donate';
+  // const bannerURL = 'https://processingfoundation.org/donate';
 
   // currently holds donation copy, will switch back when temp maintenance is done
   // const bannerCopy = (
