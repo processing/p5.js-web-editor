@@ -258,6 +258,39 @@ function getFileEmmetConfig(fileName) {
   }
 }
 
+function getColorPickerAtSelection(view) {
+  const { head } = view.state.selection.main;
+  const { node } = view.domAtPos(head);
+
+  const startEl =
+    node.nodeType === Node.ELEMENT_NODE ? node : node.parentElement;
+
+  const lineEl = startEl?.closest('.cm-line');
+
+  return (
+    lineEl?.querySelector('input[type="color"]:not(:disabled)') ||
+    view.contentDOM.querySelector('input[type="color"]:not(:disabled)')
+  );
+}
+
+function openColorPickerWithKeyboard(view) {
+  const picker = getColorPickerAtSelection(view);
+
+  if (!picker || picker.disabled) {
+    return false;
+  }
+
+  picker.focus();
+
+  if (typeof picker.showPicker === 'function') {
+    picker.showPicker();
+  } else {
+    picker.click();
+  }
+
+  return true;
+}
+
 // Extra custom keymaps.
 // TODO: We need to add sublime mappings + other missing extra mappings here.
 const extraKeymaps = [{ key: 'Tab', run: insertTab, shift: indentLess }];
@@ -291,13 +324,26 @@ export function createNewFileState(filename, document, settings) {
 
   // Depending on the file mode, we have a different tidier function.
   const mode = getFileMode(filename);
-  extraKeymaps.push({
+  const fileExtraKeymaps = [...extraKeymaps];
+
+  fileExtraKeymaps.push({
+    key: 'Mod-k',
+    run: (view) => {
+      if (mode !== 'css') {
+        return false;
+      }
+
+      return openColorPickerWithKeyboard(view);
+    }
+  });
+
+  fileExtraKeymaps.push({
     key: `Shift-Mod-F`,
     run: (cmView) => tidyCodeWithPrettier(cmView, mode)
   });
 
   const keymaps = [
-    extraKeymaps,
+    fileExtraKeymaps,
     closeBracketsKeymap,
     defaultKeymap,
     historyKeymap,
