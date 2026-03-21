@@ -165,6 +165,7 @@
     left: 0;
     content: '';
     width: 100%;
+    pointer-events: none;
   }
   @include themify() {
     color: map-get($theme-map, 'primary-text-color');
