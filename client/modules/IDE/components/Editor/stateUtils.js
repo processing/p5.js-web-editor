@@ -45,7 +45,7 @@ import {
 
 import { css } from '@codemirror/lang-css';
 import { html } from '@codemirror/lang-html';
-import { json } from '@codemirror/lang-json';
+import { json, jsonParseLinter } from '@codemirror/lang-json';
 import { xml } from '@codemirror/lang-xml';
 import { linter } from '@codemirror/lint';
 import { JSHINT } from 'jshint';
@@ -231,29 +231,10 @@ function makeJsLinter(callback) {
 }
 
 function makeJsonLinter(callback) {
+  const baseJsonLinter = jsonParseLinter();
   return (view) => {
-    const documentContent = view.state.doc.toString();
-    const diagnostics = [];
-
-    try {
-      JSON.parse(documentContent);
-    } catch (e) {
-      let pos = 0;
-      const match = e.message.match(/at position (\d+)/);
-      if (match) {
-        pos = parseInt(match[1], 10);
-      }
-
-      diagnostics.push({
-        from: pos,
-        to: pos + 1,
-        severity: 'error',
-        message: e.message
-      });
-    }
-
+    const diagnostics = baseJsonLinter(view);
     if (callback) callback(diagnostics);
-
     return diagnostics;
   };
 }
