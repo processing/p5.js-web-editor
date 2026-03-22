@@ -197,6 +197,7 @@ class Editor extends React.Component {
       [`Shift-${metaKey}-Enter`]: () => null,
       [`${metaKey}-F`]: 'findPersistent',
       [`Shift-${metaKey}-F`]: this.tidyCode,
+      [`${metaKey}-Space`]: () => this.showHint(this._cm),
       [`${metaKey}-G`]: 'findPersistentNext',
       [`Shift-${metaKey}-G`]: 'findPersistentPrev',
       [replaceCommand]: 'replace',

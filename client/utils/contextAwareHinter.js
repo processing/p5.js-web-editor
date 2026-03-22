@@ -1,6 +1,7 @@
 import getContext from './getContext';
 import p5CodeAstAnalyzer from './p5CodeAstAnalyzer';
 import classMap from './p5-instance-methods-and-creators.json';
+import * as hints from './p5-hinter';
 
 const scopeMap = require('./p5-scope-function-access-map.json');
 
@@ -86,7 +87,17 @@ export default function contextAwareHinter(cm, options = {}) {
   const currentWord = string.trim();
 
   const currentContext = getContext(cm);
-  const allHints = hinter.search(currentWord);
+
+  let allHints;
+
+  if (!currentWord) {
+    allHints = hints.p5Hinter;
+    allHints = allHints.map((h) => ({
+      item: h
+    }));
+  } else {
+    allHints = hinter.search(currentWord);
+  }
 
   // const whitelist = scopeMap[currentContext]?.whitelist || [];
   const blacklist = scopeMap[currentContext]?.blacklist || [];
