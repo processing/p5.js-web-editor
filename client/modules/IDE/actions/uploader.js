@@ -82,6 +82,23 @@ export function dropzoneCompleteCallback(file) {
         content: file.content
       };
       dispatch(handleCreateFile(formParams, false));
+    } else if (file.status === 'error' || file.xhr.status >= 400) {
+      let uploadFileErrorMessage = 'Uploading file to AWS failed.';
+      if (file.xhr?.response) {
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(file.xhr.response, 'text/xml');
+        const message = xmlDoc.getElementsByTagName('Message')[0]?.textContent;
+        const code = xmlDoc.getElementsByTagName('Code')[0]?.textContent;
+        uploadFileErrorMessage = `${code}: ${message}`;
+      }
+      file.previewElement.classList.add('dz-error');
+      file.previewElement.classList.remove('dz-success');
+      const dzErrorMessageElement = file.previewElement?.querySelector(
+        '[data-dz-errormessage]'
+      );
+      if (dzErrorMessageElement) {
+        dzErrorMessageElement.textContent = uploadFileErrorMessage;
+      }
     }
   };
 }
