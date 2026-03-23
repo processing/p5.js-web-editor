@@ -4,7 +4,7 @@ import { p5Hinter } from '../../../../utils/p5-hinter';
 import { p5CompletionPreview } from './p5CompletionPreview';
 import contextAwareHinter from '../../../../utils/contextAwareHinter';
 
-function testCompletions(context) {
+function addCompletions(context) {
   const word = context.matchBefore(/\w*/);
 
   if (!word && !context.explicit) {
@@ -21,7 +21,7 @@ export default function p5JavaScript() {
   return new LanguageSupport(jsLang.language, [
     jsLang.extension,
     jsLang.language.data.of({
-      autocomplete: testCompletions
+      autocomplete: addCompletions
     }),
     p5CompletionPreview()
   ]);
