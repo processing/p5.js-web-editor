@@ -73,6 +73,7 @@ const Toolbar = (props) => {
       <button
         className={playButtonClass}
         id="play-sketch"
+        data-testid="play-button"
         onClick={() => {
           props.syncFileContent();
           dispatch(startSketch());
@@ -85,6 +86,7 @@ const Toolbar = (props) => {
       </button>
       <button
         className={stopButtonClass}
+        data-testid="stop-button"
         onClick={() => dispatch(stopSketch())}
         aria-label={t('Toolbar.StopSketchARIA')}
         title={t('Toolbar.StopSketchARIA')}
