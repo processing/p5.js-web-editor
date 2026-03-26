@@ -78,6 +78,8 @@
     "UsernameOrEmailARIA": "Email or Username",
     "Password": "Password",
     "PasswordARIA": "Password",
+    "ShowPasswordARIA": "Show password as plain text",
+    "HidePasswordARIA": "Hide password",
     "Submit": "Log In",
     "Errors": {
       "invalidCredentials": "Invalid email or password."
@@ -157,7 +159,8 @@
     "IncorrectCurrentPass": "Current password is incorrect",
     "DefaultError": "Something went wrong",
     "UserNotFound": "User not found",
-    "NetworkError": "Network error"
+    "NetworkError": "Network error",
+    "CloseAlertARIA": "Close Alert"
   },
   "Toolbar": {
     "Preview": "Preview",
@@ -171,7 +174,8 @@
     "By": " by ",
     "CustomLibraryVersion": "Custom p5.js version",
     "VersionPickerARIA": "Version picker",
-    "NewVersionPickerARIA": "Version picker"
+    "NewVersionPickerARIA": "Version picker",
+    "SelectVersionARIA": "Select p5.js version"
   },
   "Console": {
     "Title": "Console",
@@ -425,8 +429,12 @@
     "EmailARIA": "email",
     "Password": "Password",
     "PasswordARIA": "password",
+    "ShowPasswordARIA": "Show password as plain text",
+    "HidePasswordARIA": "Hide password",
     "ConfirmPassword": "Confirm Password",
     "ConfirmPasswordARIA": "Confirm password",
+    "ShowConfirmPasswordARIA": "Show confirm password as plain text",
+    "HideConfirmPasswordARIA": "Hide confirm password",
     "SubmitSignup": "Sign Up"
   },
   "SignupView": {
@@ -576,6 +584,9 @@
   "Overlay": {
     "AriaLabel": "Close {{title}} overlay"
   },
+  "TextArea": {
+    "CopyARIA": "Copy"
+  },
   "QuickAddList": {
     "ButtonRemoveARIA": "Remove from collection",
     "ButtonAddToCollectionARIA": "Add to collection",
@@ -584,7 +595,9 @@
   "Pagination": {
     "Next": "Next",
     "Previous": "Previous",
-    "Of": "of"
+    "Of": "of",
+    "PreviousPageARIA": "Previous Page",
+    "NextPageARIA": "Next Page"
   },
   "SketchList": {
     "View": "View",

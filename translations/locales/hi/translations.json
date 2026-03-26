@@ -150,7 +150,8 @@
       "IncorrectCurrentPass": "वर्तमान पासवर्ड गलत है ",
       "DefaultError":"कुछ गलत हो गया",
       "UserNotFound": "उपयोगकर्ता नहीं मिला",
-      "NetworkError": "नेटवर्क त्रुटि"
+      "NetworkError": "नेटवर्क त्रुटि",
+      "CloseAlertARIA": "Close Alert"
     },
     "Toolbar": {
       "Preview": "पूर्वावलोकन",
@@ -164,7 +165,8 @@
       "By": " द्वारा ",
       "CustomLibraryVersion": "कस्टम p5.js संस्करण",
       "VersionPickerARIA": "संस्करण चयनकर्ता",
-      "NewVersionPickerARIA": "संस्करण चयनकर्ता"
+      "NewVersionPickerARIA": "संस्करण चयनकर्ता",
+      "SelectVersionARIA": "Select p5.js version"
     },
     "Console": {
       "Title": "कंसोल",
@@ -579,7 +581,9 @@
   "Pagination": {
     "Next": "Next",
     "Previous": "Previous",
-    "Of": "of"
+    "Of": "of",
+    "PreviousPageARIA": "Previous Page",
+    "NextPageARIA": "Next Page"
   },
   "SketchList": {
     "Title": "p5.js वेब एडिटर | मेरे स्केच",
@@ -670,5 +674,8 @@
       "Label": "निजी"
     },
     "Changed": "'{{projectName}}' अब {{newVisibility}} है..."
+  },
+  "TextArea": {
+    "CopyARIA": "Copy"
   }
 }

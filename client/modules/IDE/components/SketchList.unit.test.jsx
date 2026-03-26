@@ -134,7 +134,7 @@ describe('<SketchList />', () => {
 
     expect(screen.queryByRole('table')).not.toBeInTheDocument();
     expect(
-      screen.queryByRole('button', { name: 'Next Page' })
+      screen.queryByRole('button', { name: 'Pagination.NextPageARIA' })
     ).not.toBeInTheDocument();
   });
 
@@ -195,7 +195,9 @@ describe('<SketchList />', () => {
 
     const before = requestCount;
 
-    fireEvent.click(screen.getByRole('button', { name: 'Next Page' }));
+    fireEvent.click(
+      screen.getByRole('button', { name: 'Pagination.NextPageARIA' })
+    );
 
     await waitFor(() => {
       expect(requestCount).toBeGreaterThan(before);
@@ -209,7 +211,9 @@ describe('<SketchList />', () => {
     subject();
     await screen.findByText('page1-sketch-1');
 
-    const prev = screen.getByRole('button', { name: 'Previous Page' });
+    const prev = screen.getByRole('button', {
+      name: 'Pagination.PreviousPageARIA'
+    });
     expect(prev).toBeDisabled();
   });
 
@@ -245,10 +249,10 @@ describe('<SketchList />', () => {
     await screen.findByText('singlePage-sketch-1');
 
     expect(
-      screen.queryByRole('button', { name: 'Previous Page' })
+      screen.queryByRole('button', { name: 'Pagination.PreviousPageARIA' })
     ).not.toBeInTheDocument();
     expect(
-      screen.queryByRole('button', { name: 'Next Page' })
+      screen.queryByRole('button', { name: 'Pagination.NextPageARIA' })
     ).not.toBeInTheDocument();
   });
 });

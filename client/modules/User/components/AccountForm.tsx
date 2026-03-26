@@ -90,7 +90,9 @@ export function AccountForm() {
                   {...field.input}
                 />
                 {field.meta.touched && field.meta.error && (
-                  <span className="form-error">{field.meta.error}</span>
+                  <span className="form-error" aria-live="polite">
+                    {field.meta.error}
+                  </span>
                 )}
               </p>
             )}
@@ -135,7 +137,9 @@ export function AccountForm() {
                   {...field.input}
                 />
                 {field.meta.touched && field.meta.error && (
-                  <span className="form-error">{field.meta.error}</span>
+                  <span className="form-error" aria-live="polite">
+                    {field.meta.error}
+                  </span>
                 )}
               </p>
             )}
@@ -144,7 +148,7 @@ export function AccountForm() {
             <Field name="currentPassword">
               {(field) => (
                 <p className="form__field">
-                  <label htmlFor="current password" className="form__label">
+                  <label htmlFor="currentPassword" className="form__label">
                     {t('AccountForm.CurrentPassword')}
                   </label>
                   <input
@@ -156,7 +160,9 @@ export function AccountForm() {
                     {...field.input}
                   />
                   {field.meta.touched && field.meta.error && (
-                    <span className="form-error">{field.meta.error}</span>
+                    <span className="form-error" aria-live="polite">
+                      {field.meta.error}
+                    </span>
                   )}
                 </p>
               )}
@@ -166,7 +172,7 @@ export function AccountForm() {
             <Field name="newPassword">
               {(field) => (
                 <p className="form__field">
-                  <label htmlFor="new password" className="form__label">
+                  <label htmlFor="newPassword" className="form__label">
                     {t('AccountForm.NewPassword')}
                   </label>
                   <input
@@ -178,7 +184,9 @@ export function AccountForm() {
                     {...field.input}
                   />
                   {field.meta.touched && field.meta.error && (
-                    <span className="form-error">{field.meta.error}</span>
+                    <span className="form-error" aria-live="polite">
+                      {field.meta.error}
+                    </span>
                   )}
                 </p>
               )}

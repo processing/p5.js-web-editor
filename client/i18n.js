@@ -19,7 +19,8 @@ import {
   uk,
   sv,
   tr,
-  enIN
+  enIN,
+  ne
 } from 'date-fns/locale';
 
 import { getPreferredLanguage } from './utils/language-utils';
@@ -43,7 +44,8 @@ export const availableLanguages = [
   'zh-CN',
   'zh-TW',
   'tr',
-  'ur'
+  'ur',
+  'ne'
 ];
 
 const detectedLanguage = getPreferredLanguage(
@@ -79,7 +81,8 @@ export function languageKeyToLabel(lang) {
     'zh-CN': '简体中文',
     'zh-TW': '正體中文',
     tr: 'Türkçe',
-    ur: 'اردو'
+    ur: 'اردو',
+    ne: 'नेपाली'
   };
   return languageMap[lang];
 }
@@ -102,7 +105,8 @@ export function languageKeyToDateLocale(lang) {
     'zh-CN': zhCN,
     'zh-TW': zhTW,
     tr,
-    ur: enIN
+    ur: enIN,
+    ne
   };
   return languageMap[lang];
 }
