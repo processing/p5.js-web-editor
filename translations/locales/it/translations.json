@@ -438,7 +438,8 @@
     "TitleDefault": "collezione"
   },
   "Collection": {
-    "Title": "p5.js redattore web | Mie collezioni",
+    "RemoveFromCollection":"Remove from Collection ",
+    "Title": "p5.js redattore web | My collezioni",
     "AnothersTitle": "p5.js redattore web | Le collezioni di {{anotheruser}}",
     "Share": "Condividi",
     "URLLink": "Collegamento alla collezione",
