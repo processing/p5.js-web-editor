@@ -2,7 +2,6 @@ import { StateField, RangeSetBuilder } from '@codemirror/state';
 import { Decoration, EditorView, WidgetType } from '@codemirror/view';
 import { selectedCompletion, completionStatus } from '@codemirror/autocomplete';
 
-// TODO: Review
 class GhostTextWidget extends WidgetType {
   constructor(text) {
     super();
@@ -44,6 +43,9 @@ function getCurrentWord(state) {
 }
 
 function buildGhostText(state) {
+  // only show ghost text if autocomplete is on,
+  // user is typing, and if preview matches typed text
+
   if (completionStatus(state) !== 'active') return null;
 
   const selected = selectedCompletion(state);
@@ -72,11 +74,11 @@ const ghostTextField = StateField.define({
   },
 
   update(deco, tr) {
-    const builder = new RangeSetBuilder();
+    const decorationBuilder = new RangeSetBuilder();
     const ghost = buildGhostText(tr.state);
 
     if (ghost) {
-      builder.add(
+      decorationBuilder.add(
         ghost.pos,
         ghost.pos,
         Decoration.widget({
@@ -86,7 +88,7 @@ const ghostTextField = StateField.define({
       );
     }
 
-    return builder.finish();
+    return decorationBuilder.finish();
   },
 
   provide: (field) => EditorView.decorations.from(field)
