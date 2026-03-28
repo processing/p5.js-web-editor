@@ -14,7 +14,10 @@
   padding: 0.5rem 0.75rem;
   max-width: 250px;
   width: max-content;
-  white-space: normal;
+  white-space: nowrap;
+  position:absolute;
+  bottom: 100%;
+  margin-bottom: 8px;
   left: auto;
   right: -0.5rem;
   transform: translateX(0);
@@ -28,7 +31,17 @@
     color: getThemifyVariable('button-background-hover-color');
     border-top-color: getThemifyVariable('button-background-hover-color');
   }
+  content: "";
   left: auto;
+  position: absolute;
+  bottom: 100%;
+  margin-bottom: 2px;
   right: 0.25rem;
   transform: translateX(0);
+  border: 6px solid transparent;
+  @include themify() {
+    border-top-color: getThemifyVariable('button-background-hover-color');
+  }
 }
+
+

@@ -3,10 +3,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { Tooltip } from '../../../common/Tooltip';
-import { removeFromCollection } from '../../IDE/actions/collections';
+import { TableDropdown } from '../../../components/Dropdown/TableDropdown';
+import { MenuItem } from '../../../components/Dropdown/MenuItem';
 import { formatDateToString } from '../../../utils/formatDate';
 import RemoveIcon from '../../../images/close.svg';
+import { removeFromCollection } from '../../IDE/actions/collections';
 
 const CollectionItemRow = ({ collection, item, isOwner }) => {
   const { t } = useTranslation();
@@ -45,18 +46,18 @@ const CollectionItemRow = ({ collection, item, isOwner }) => {
       }`}
     >
       <th scope="row">{name}</th>
+
       <td>{formatDateToString(item.createdAt)}</td>
+
       <td>{sketchOwnerUsername}</td>
+
       <td className="collection-row__action-column">
         {isOwner && (
-          <Tooltip content={t('RemoveFromCollection')}>
-            <button
-              className="collection-row__remove-button"
-              onClick={handleSketchRemove}
-            >
-              <RemoveIcon focusable="false" aria-hidden="true" />
-            </button>
-          </Tooltip>
+          <TableDropdown aria-label={t('SketchList.ToggleLabelARIA')}>
+            <MenuItem onClick={handleSketchRemove}>
+              {t('RemoveFromCollection')}
+            </MenuItem>
+          </TableDropdown>
         )}
       </td>
     </tr>
