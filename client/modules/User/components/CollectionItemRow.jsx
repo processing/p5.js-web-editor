@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
+import { Tooltip } from '../../../common/Tooltip';
 import { removeFromCollection } from '../../IDE/actions/collections';
 import { formatDateToString } from '../../../utils/formatDate';
 import RemoveIcon from '../../../images/close.svg';
@@ -48,13 +49,14 @@ const CollectionItemRow = ({ collection, item, isOwner }) => {
       <td>{sketchOwnerUsername}</td>
       <td className="collection-row__action-column">
         {isOwner && (
-          <button
-            className="collection-row__remove-button"
-            onClick={handleSketchRemove}
-            aria-label={t('Collection.SketchRemoveARIA')}
-          >
-            <RemoveIcon focusable="false" aria-hidden="true" />
-          </button>
+          <Tooltip content={t('RemoveFromCollection')}>
+            <button
+              className="collection-row__remove-button"
+              onClick={handleSketchRemove}
+            >
+              <RemoveIcon focusable="false" aria-hidden="true" />
+            </button>
+          </Tooltip>
         )}
       </td>
     </tr>
