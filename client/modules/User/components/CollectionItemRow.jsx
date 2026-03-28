@@ -5,6 +5,8 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { TableDropdown } from '../../../components/Dropdown/TableDropdown';
 import { MenuItem } from '../../../components/Dropdown/MenuItem';
+import { Tooltip } from '../../../common/Tooltip';
+import { removeFromCollection } from '../../IDE/actions/collections';
 import { formatDateToString } from '../../../utils/formatDate';
 import RemoveIcon from '../../../images/close.svg';
 import { removeFromCollection } from '../../IDE/actions/collections';
@@ -58,6 +60,14 @@ const CollectionItemRow = ({ collection, item, isOwner }) => {
               {t('RemoveFromCollection')}
             </MenuItem>
           </TableDropdown>
+          <Tooltip content={t('RemoveFromCollection')}>
+            <button
+              className="collection-row__remove-button"
+              onClick={handleSketchRemove}
+            >
+              <RemoveIcon focusable="false" aria-hidden="true" />
+            </button>
+          </Tooltip>
         )}
       </td>
     </tr>
