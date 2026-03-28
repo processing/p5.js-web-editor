@@ -12,12 +12,14 @@
   font-family: Montserrat, sans-serif;
   font-size: 1rem;
   padding: 0.5rem 0.75rem;
-  max-width: none;
-  white-space: nowrap;
-  left: 1rem;
-  right: auto;
+  max-width: 250px;
+  width: max-content;
+  white-space: normal;
+  left: auto;
+  right: -0.5rem;
   transform: translateX(0);
-  text-align: left;
+  text-align: right;
+  word-wrap: break-word;
 }
 
 .tooltip-wrapper .tooltipped-n::before,
@@ -26,7 +28,7 @@
     color: getThemifyVariable('button-background-hover-color');
     border-top-color: getThemifyVariable('button-background-hover-color');
   }
-  left: 1.75rem;
-  right: auto;
+  left: auto;
+  right: 0.25rem;
   transform: translateX(0);
 }
