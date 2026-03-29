@@ -1,0 +1,16 @@
+name: Main Workflow
+on: [push, pull_request]
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Validate translation keys
+        run: |
+          # Validate translation keys
+          node ./scripts/validate-translation-keys.js
+      - name: Run tests
+        run: |
+          # Run tests
+          npm run test
