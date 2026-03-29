@@ -250,6 +250,34 @@ p5.prototype.registerMethod('afterSetup', p5.prototype.ensureAccessibleCanvas);`
   addLoopProtect(sketchDoc);
   sketchDoc.head.prepend(consoleErrorsScript);
 
+  //Add basic eyedropper debugging feature (RGBA hover)
+  const eyedropperScript = sketchDoc.createElement('script');
+
+eyedropperScript.innerHTML = `
+document.addEventListener("mousemove", function(e) {
+  const canvas = document.querySelector("canvas");
+  if (!canvas) return;
+
+  const rect = canvas.getBoundingClientRect();
+  const x = Math.floor(e.clientX - rect.left);
+  const y = Math.floor(e.clientY - rect.top);
+
+  if (x < 0 || y < 0 || x >= canvas.width || y >= canvas.height) return;
+
+  const ctx = canvas.getContext("2d");
+  const pixel = ctx.getImageData(x, y, 1, 1).data;
+
+  const r = (pixel[0] / 255).toFixed(2);
+  const g = (pixel[1] / 255).toFixed(2);
+  const b = (pixel[2] / 255).toFixed(2);
+  const a = (pixel[3] / 255).toFixed(2);
+
+  console.log("RGBA:", r, g, b, a);
+});
+`;
+
+sketchDoc.body.appendChild(eyedropperScript);
+
   return `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
 }
 
