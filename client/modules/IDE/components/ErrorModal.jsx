@@ -6,7 +6,7 @@ import prettyBytes from 'pretty-bytes';
 import { getConfig } from '../../../utils/getConfig';
 import { parseNumber } from '../../../utils/parseStringToType';
 
-const uploadLimit = parseNumber(getConfig('UPLOAD_LIMIT'));
+const uploadLimit = parseNumber(getConfig('UPLOAD_LIMIT')) || 250000000;
 const uploadLimitText = prettyBytes(uploadLimit);
 
 const ErrorModal = ({ type, service, closeModal }) => {
