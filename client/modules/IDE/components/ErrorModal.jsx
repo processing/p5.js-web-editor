@@ -2,6 +2,12 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import prettyBytes from 'pretty-bytes';
+import { getConfig } from '../../../utils/getConfig';
+import { parseNumber } from '../../../utils/parseStringToType';
+
+const uploadLimit = parseNumber(getConfig('UPLOAD_LIMIT'));
+const uploadLimitText = prettyBytes(uploadLimit);
 
 const ErrorModal = ({ type, service, closeModal }) => {
   const { t } = useTranslation();
@@ -51,6 +57,18 @@ const ErrorModal = ({ type, service, closeModal }) => {
     return <p>{t('ErrorModal.SavedDifferentWindow')}</p>;
   }
 
+  function uploadLimitReached() {
+    return (
+      <p>
+        {t('UploadFileModal.SizeLimitError', { sizeLimit: uploadLimitText })}
+        <Link to="/assets" onClick={closeModal}>
+          assets
+        </Link>
+        .
+      </p>
+    );
+  }
+
   return (
     <div className="error-modal__content">
       {(() => { // eslint-disable-line
@@ -60,6 +78,8 @@ const ErrorModal = ({ type, service, closeModal }) => {
           return staleSession();
         } else if (type === 'staleProject') {
           return staleProject();
+        } else if (type === 'uploadLimit') {
+          return uploadLimitReached();
         } else if (type === 'oauthError') {
           return oauthError();
         }
@@ -73,7 +93,8 @@ ErrorModal.propTypes = {
     'forceAuthentication',
     'staleSession',
     'staleProject',
-    'oauthError'
+    'oauthError',
+    'uploadLimit'
   ]).isRequired,
   closeModal: PropTypes.func.isRequired,
   service: PropTypes.oneOf(['google', 'github'])
