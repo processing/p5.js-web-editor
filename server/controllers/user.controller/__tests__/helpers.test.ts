@@ -87,7 +87,7 @@ describe('user.controller > helpers', () => {
       );
       expect(response.status).toHaveBeenCalledWith(500);
       expect(response.json).toHaveBeenCalledWith({
-        error: 'async error'
+        error: 'Internal server error'
       });
     });
   });
