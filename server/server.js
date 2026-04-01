@@ -170,7 +170,8 @@ app.get('/', (req, res) => {
 // Handle API errors
 app.use('/api', (error, req, res, next) => {
   if (error && error.code && !res.headersSent) {
-    res.status(error.code).json({ error: error.message });
+    console.error('API error:', error.message);
+    res.status(error.code).json({ error: 'Internal server error' });
     return;
   }
 
