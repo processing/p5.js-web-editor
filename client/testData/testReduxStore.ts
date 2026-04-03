@@ -46,7 +46,6 @@ const initialTestState: RootState = {
     justOpenedProject: false,
     previousPath: '/',
     errorType: undefined,
-    runtimeErrorWarningVisible: true,
     parentId: undefined
   },
   files: initialFilesState(),

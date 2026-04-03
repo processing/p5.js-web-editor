@@ -22,7 +22,9 @@ import {
 import {
   autocompletion,
   closeBrackets,
-  closeBracketsKeymap
+  closeBracketsKeymap,
+  completionStatus,
+  selectedCompletionIndex
 } from '@codemirror/autocomplete';
 import {
   highlightSelectionMatches,
@@ -37,7 +39,6 @@ import {
   indentLess
 } from '@codemirror/commands';
 import { lintGutter } from '@codemirror/lint';
-import { color as colorPicker } from '@uiw/codemirror-extensions-color';
 import {
   expandAbbreviation,
   abbreviationTracker
@@ -52,15 +53,16 @@ import { JSHINT } from 'jshint';
 import { HTMLHint } from 'htmlhint';
 import { CSSLint } from 'csslint';
 import { emmetConfig } from '@emmetio/codemirror6-plugin';
+import { color as colorPicker } from '@connieye/codemirror-color-picker';
 
 import p5JavaScript from './p5JavaScript';
-import tidyCodeWithPrettier from './tidier';
+import { tidyCodeWithPrettier } from './tidier';
 import { highlightStyle } from './highlightStyle';
+import { errorDecorationStateField } from './consoleErrorDecoration';
 
 // ----- TODOS -----
 // - JSON linter
 // - shader syntax highlighting
-// - should we add xml specific language support?
 // - add docstrings for all exported functions
 
 /** Detects what mode the file is based on the name. */
@@ -269,15 +271,136 @@ function getFileEmmetConfig(fileName) {
   }
 }
 
+function focusOnReferenceArrow(view) {
+  if (completionStatus(view.state) !== 'active') return false;
+
+  const selectedIndex = selectedCompletionIndex(view.state);
+  if (selectedIndex == null || selectedIndex < 0) return false;
+
+  const tooltip = view.dom.querySelector('.cm-tooltip-autocomplete');
+  if (!tooltip) return false;
+
+  const options = tooltip.querySelectorAll('li.CodeMirror-hint');
+  const selectedOption = options[selectedIndex];
+  if (!selectedOption) return false;
+
+  const link = selectedOption.querySelector('.cm-completionRefLink');
+  if (!link) return false;
+
+  link.focus();
+  link.classList.add('focused-hint-link');
+
+  const cleanup = () => {
+    link.classList.remove('focused-hint-link');
+    link.removeEventListener('blur', cleanup);
+  };
+  link.addEventListener('blur', cleanup);
+
+  return true;
+}
+
 // Extra custom keymaps.
 // TODO: We need to add sublime mappings + other missing extra mappings here.
-const extraKeymaps = [{ key: 'Tab', run: insertTab, shift: indentLess }];
+const extraKeymaps = [
+  { key: 'ArrowRight', run: focusOnReferenceArrow },
+  { key: 'Tab', run: insertTab, shift: indentLess }
+];
 const emmetKeymaps = [{ key: 'Tab', run: expandAbbreviation }];
 
 export const AUTOCOMPLETE_OPTIONS = {
   tooltipClass: () => 'CodeMirror-hints',
-  optionClass: () => 'CodeMirror-hint',
-  closeOnBlur: false
+  closeOnBlur: false,
+  icons: false,
+
+  // handle css classes
+  optionClass(completion) {
+    let className = 'CodeMirror-hint';
+
+    if (completion.type) {
+      className += ` hint-type-${completion.type}`;
+    }
+
+    if (completion.p5DocPath) {
+      className += ' has-doc-link';
+    }
+
+    return className;
+  },
+
+  addToOptions: [
+    {
+      position: 60,
+      render(completion) {
+        const kind = document.createElement('span');
+        kind.className = 'cm-completionKind';
+        kind.textContent = completion.kindLabel || completion.type || '';
+        return kind;
+      }
+    },
+    {
+      position: 80,
+      render(completion, state, view) {
+        if (!completion.p5DocPath) return null;
+
+        // TODO: add in reference url version switching
+        const link = document.createElement('a');
+        link.className = 'cm-completionRefLink';
+        link.href = `https://p5js.org/reference/p5/${completion.p5DocPath}`;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        link.tabIndex = -1;
+        link.setAttribute('aria-label', `Open ${completion.label} reference`);
+
+        link.innerHTML = `
+          <span class="hint-hidden">open ${completion.label} reference</span>
+          <span aria-hidden="true">&#10132;</span>
+        `;
+
+        link.addEventListener('mousedown', (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+        });
+
+        link.addEventListener('click', (event) => {
+          event.stopPropagation();
+        });
+
+        link.addEventListener('keydown', (event) => {
+          if (event.key === 'ArrowLeft' || event.key === 'Escape') {
+            event.preventDefault();
+            event.stopPropagation();
+            link.classList.remove('focused-hint-link');
+            view.focus();
+          }
+        });
+
+        return link;
+      }
+    },
+    {
+      position: 100,
+      render(completion) {
+        if (!completion.blacklisted) return null;
+
+        const warning = document.createElement('div');
+        warning.className = 'cm-completionWarning';
+
+        const icon = document.createElement('span');
+        icon.className = 'cm-completionWarningIcon';
+        icon.setAttribute('aria-hidden', 'true');
+        icon.textContent = '⚠️';
+
+        const text = document.createElement('span');
+        text.className = 'cm-completionWarningText';
+        text.textContent = 'use with caution in this context';
+
+        warning.appendChild(icon);
+        warning.appendChild(text);
+
+        return warning;
+      }
+    }
+  ]
 };
 
 /**
@@ -347,11 +470,18 @@ export function createNewFileState(filename, document, settings) {
     // Misc extensions
     indentOnInput(),
     bracketMatching(),
-    colorPicker,
+    errorDecorationStateField,
 
     // Setup the event listeners on the CodeMirror instance.
     EditorView.updateListener.of(onViewUpdate)
   ];
+
+  // Only enable the color picker for Javascript and CSS, which
+  // have both been tested.
+  const fileMode = getFileMode(filename);
+  if (fileMode === 'javascript' || fileMode === 'css') {
+    extensions.push(colorPicker);
+  }
 
   const fileLanguage = getFileLanguage(filename);
   const fileLinter = getFileLinter(filename, onUpdateLinting);
