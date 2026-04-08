@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
 import { distanceInWordsToNow } from '../../../utils/formatDate';
-import useInterval from '../hooks/useInterval';
+import { useInterval } from '../hooks/useInterval';
 import { getIsUserOwner } from '../selectors/users';
 
 const Timer = () => {

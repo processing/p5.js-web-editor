@@ -1,3 +1,4 @@
+import type { Message as ConsoleMessage } from 'console-feed/lib/definitions/Console';
 // Inspired by
 // https://github.com/codesandbox/codesandbox-client/blob/master/packages/codesandbox-api/src/dispatcher/index.ts
 
@@ -28,7 +29,7 @@ export interface Message {
   payload?: unknown;
 }
 
-let listener: ((message: Message) => void) | null = null;
+let listener: ((message: Message | ConsoleMessage) => void) | null = null;
 
 /**
  * Registers a frame to receive future dispatched messages.
@@ -48,7 +49,7 @@ export function registerFrame(
   };
 }
 
-function notifyListener(message: Message): void {
+function notifyListener(message: Message | ConsoleMessage): void {
   if (listener) listener(message);
 }
 
@@ -74,7 +75,9 @@ export function dispatchMessage(message: Message | undefined | null): void {
 /**
  * Call callback to remove listener
  */
-export function listen(callback: (message: Message) => void): () => void {
+export function listen(
+  callback: (message: Message | ConsoleMessage) => void
+): () => void {
   listener = callback;
   return () => {
     listener = null;

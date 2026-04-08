@@ -7,7 +7,7 @@ import { IconButton } from '../../../common/IconButton';
 import { RouterTab } from '../../../common/RouterTab';
 import { Options } from '../../IDE/components/Header/MobileNav';
 import { toggleDirectionForField } from '../../IDE/actions/sorting';
-import useIsMobile from '../../IDE/hooks/useIsMobile';
+import { useIsMobile } from '../../IDE/hooks';
 
 export enum TabKey {
   assets = 'assets',

@@ -1,3 +1,15 @@
+declare module '*.svg?byUrl' {
+  const url: string;
+  // eslint-disable-next-line import/no-default-export
+  export default url;
+}
+
+declare module '*.svg?byContent' {
+  const content: string;
+  // eslint-disable-next-line import/no-default-export
+  export default content;
+}
+
 declare module '*.svg' {
   import * as React from 'react';
 

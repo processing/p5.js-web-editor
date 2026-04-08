@@ -11,10 +11,9 @@ import DownArrowIcon from '../../../images/down-arrow.svg';
 
 import * as IDEActions from '../actions/ide';
 import * as ConsoleActions from '../actions/console';
-import { useDidUpdate } from '../hooks/custom-hooks';
-import useHandleMessageEvent from '../hooks/useHandleMessageEvent';
+import { useDidUpdate, useHandleMessageEvent } from '../hooks';
 import { listen } from '../../../utils/dispatcher';
-import getConsoleFeedStyle from '../utils/consoleStyles';
+import { getConsoleFeedStyle } from '../utils/consoleStyles';
 
 const Console = () => {
   const { t } = useTranslation();

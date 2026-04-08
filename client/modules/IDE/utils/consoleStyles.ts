@@ -150,7 +150,7 @@ const CONSOLE_FEED_CONTRAST_ICONS = {
   LOG_RESULT_ICON: `url(${resultContrastUrl})`
 };
 
-const getConsoleFeedStyle = (theme, fontSize) => {
+export const getConsoleFeedStyle = (theme: string, fontSize: number) => {
   const CONSOLE_FEED_SIZES = {
     TREENODE_LINE_HEIGHT: 1.2,
     BASE_FONT_SIZE: `${fontSize}px`,
@@ -184,5 +184,3 @@ const getConsoleFeedStyle = (theme, fontSize) => {
       );
   }
 };
-
-export default getConsoleFeedStyle;

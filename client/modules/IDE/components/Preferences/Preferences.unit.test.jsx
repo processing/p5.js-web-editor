@@ -3,6 +3,7 @@ import { act, fireEvent, reduxRender, screen } from '../../../../test-utils';
 import { initialState } from '../../reducers/preferences';
 import Preferences from './index';
 import * as PreferencesActions from '../../actions/preferences';
+import { P5VersionProvider } from '../../hooks/useP5Version';
 
 describe('<Preferences />', () => {
   // For backwards compatibility, spy on each action creator to see when it was dispatched.
@@ -14,14 +15,19 @@ describe('<Preferences />', () => {
   );
 
   const subject = (initialPreferences = {}) =>
-    reduxRender(<Preferences />, {
-      initialState: {
-        preferences: {
-          ...initialState,
-          ...initialPreferences
+    reduxRender(
+      <P5VersionProvider>
+        <Preferences />
+      </P5VersionProvider>,
+      {
+        initialState: {
+          preferences: {
+            ...initialState,
+            ...initialPreferences
+          }
         }
       }
-    });
+    );
 
   afterEach(() => {
     jest.clearAllMocks();

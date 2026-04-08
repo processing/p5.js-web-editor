@@ -11,6 +11,7 @@ import {
 } from '../../../../test-utils';
 import { selectProjectName } from '../../selectors/project';
 import ToolbarComponent from './Toolbar';
+import { P5VersionProvider } from '../../hooks/useP5Version';
 
 const server = setupServer(
   rest.put(`/projects/id`, (req, res, ctx) => res(ctx.json(req.body)))
@@ -49,7 +50,12 @@ const renderComponent = (extraState = {}) => {
 
   return {
     ...props,
-    ...reduxRender(<ToolbarComponent {...props} />, { initialState })
+    ...reduxRender(
+      <P5VersionProvider>
+        <ToolbarComponent {...props} />
+      </P5VersionProvider>,
+      { initialState }
+    )
   };
 };
 

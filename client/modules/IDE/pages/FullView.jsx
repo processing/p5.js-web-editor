@@ -11,7 +11,7 @@ import {
   dispatchMessage,
   MessageTypes
 } from '../../../utils/dispatcher';
-import useInterval from '../hooks/useInterval';
+import { useInterval } from '../hooks';
 import { RootPage } from '../../../components/RootPage';
 
 function FullView() {

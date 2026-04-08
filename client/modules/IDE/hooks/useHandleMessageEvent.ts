@@ -1,18 +1,25 @@
 import { useDispatch } from 'react-redux';
 import { Decode } from 'console-feed';
+import { Message } from 'console-feed/lib/definitions/Console';
 import { dispatchConsoleEvent } from '../actions/console';
 import { stopSketch, expandConsole } from '../actions/ide';
 
-export default function useHandleMessageEvent() {
+type SafeValue = string | number | boolean | null | SafeObject | SafeArray;
+interface SafeObject {
+  [key: string]: SafeValue;
+}
+interface SafeArray extends Array<SafeValue> {}
+
+export function useHandleMessageEvent() {
   const dispatch = useDispatch();
 
   const safeStringify = (
-    obj,
+    obj: unknown,
     depth = 0,
     maxDepth = 10,
-    seen = new WeakMap()
-  ) => {
-    if (typeof obj !== 'object' || obj === null) return obj;
+    seen = new WeakMap<object, boolean>()
+  ): SafeValue => {
+    if (typeof obj !== 'object' || obj === null) return obj as SafeValue;
 
     if (depth >= maxDepth) {
       if (seen.has(obj)) return '[Circular Reference]';
@@ -30,9 +37,13 @@ export default function useHandleMessageEvent() {
         );
   };
 
-  const handleMessageEvent = (data) => {
+  const handleMessageEvent = (data: Message['data']) => {
     if (!data || typeof data !== 'object') return;
-    const { source, messages } = data;
+
+    const { source, messages } = data as {
+      source?: string;
+      messages?: { log?: unknown }[];
+    };
     if (source !== 'sketch' || !Array.isArray(messages)) return;
 
     const decodedMessages = messages.map((message) => {
@@ -48,8 +59,8 @@ export default function useHandleMessageEvent() {
     // Detect infinite loop warnings
     const hasInfiniteLoop = decodedMessages.some(
       (message) =>
-        message?.data &&
-        Object.values(message.data).some(
+        (message as SafeObject)?.data &&
+        Object.values((message as SafeObject)?.data as SafeObject).some(
           (arg) =>
             typeof arg === 'string' &&
             arg.includes('Exiting potential infinite loop')
