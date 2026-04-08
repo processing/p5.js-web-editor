@@ -471,6 +471,7 @@
     "URLLink": "সংগ্রহের লিঙ্ক",
     "AddSketch": "স্কেচ যোগ করুন",
     "DeleteFromCollection": "{{name_sketch}} কে এই সংগ্রহ থেকে সরাতে চান কি না?",
+    "RemoveFromCollection": "Remove from Collection",
     "SketchDeleted": "স্কেচ ডিলিট হয়েছে",
     "SketchRemoveARIA": "সংগ্রহ থেকে স্কেচ রিমুভ করুন",
     "DescriptionPlaceholder": "বর্ণনা যোগ করুন",
