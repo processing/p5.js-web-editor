@@ -521,6 +521,7 @@
     "NumSketches": "{{count}} sketch",
     "NumSketches_plural": "{{count}} sketches",
     "By": "Collection by ",
+    "RemoveFromCollection": "Remove from Collection",
     "NoSketches": "No sketches in collection",
     "TableSummary": "table containing all collections",
     "HeaderName": "Name",

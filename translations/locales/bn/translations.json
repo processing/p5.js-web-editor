@@ -476,6 +476,7 @@
     "DescriptionPlaceholder": "বর্ণনা যোগ করুন",
     "NumSketches": "{{count}} স্কেচ",
     "By": "সংগ্রহ করেছেন ",
+    "RemoveFromCollection": "Remove from Collection",
     "NoSketches": "সংগ্রহে কোন স্কেচ নেই",
     "TableSummary": "সমস্ত সংগ্রহ ধারণ করা টেবিল",
     "HeaderName": "নাম",
