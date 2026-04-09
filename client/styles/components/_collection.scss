@@ -148,6 +148,22 @@
 .collection-row__action-column {
   width: #{math.div(60, $base-font-size)}rem;
   position: relative;
+
+  .tooltip-wrapper {
+    display: inline-flex;
+    width: auto;
+
+    .tooltipped::after {
+      right: 0;
+      left: auto;
+    }
+
+    .tooltipped-n::before,
+    .tooltipped::before {
+      right: #{math.div(10, $base-font-size)}rem;
+      left: auto;
+    }
+  }
 }
 
 .collection-row__remove-button {
