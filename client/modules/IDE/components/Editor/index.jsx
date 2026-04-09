@@ -236,20 +236,72 @@ class Editor extends React.Component {
       this._cm.on('keyup', this.handleKeyUp);
     }
 
-    this._cm.on('keydown', (_cm, e) => {
-      // Skip hinting if the user is pasting (Ctrl/Cmd+V) or using modifier keys (Ctrl/Alt)
-      if (
-        ((e.ctrlKey || e.metaKey) && e.key === 'v') ||
-        e.ctrlKey ||
-        e.altKey
-      ) {
-        return;
+    // Mobile autocomplete support (CM5 IME + contenteditable input)
+    const triggerHint = (cm) => {
+      const mode = cm.getOption('mode');
+      if (mode !== 'css' && mode !== 'javascript') return;
+
+      const cursor = cm.getCursor();
+      const token = cm.getTokenAt(cursor);
+
+      // Android keyboards often append a trailing space after each word.
+      // When that happens, stripping the space so the hinter sees the word.
+      if (token.string === ' ' && cursor.ch > 0 && cursor.ch === token.end) {
+        const prevToken = cm.getTokenAt({
+          line: cursor.line,
+          ch: cursor.ch - 1
+        });
+        if (prevToken.string && /[a-z]/i.test(prevToken.string)) {
+          cm.replaceRange(
+            '',
+            { line: cursor.line, ch: cursor.ch - 1 },
+            cursor,
+            '+trimHint'
+          );
+          this.showHint(cm);
+          return;
+        }
       }
-      const mode = this._cm.getOption('mode');
-      if (/^[a-z]$/i.test(e.key) && (mode === 'css' || mode === 'javascript')) {
-        this.showHint(_cm);
+      if (token.string && /[a-z]/i.test(token.string)) {
+        this.showHint(cm);
+      }
+    };
+
+    // Desktop: fires on each keystroke via CM5's textarea input path.
+    this._cm.on('change', (_cm, changeObj) => {
+      if (changeObj.origin !== '+input') return;
+      if (/[a-z]/i.test(changeObj.text.join(''))) {
+        triggerHint(_cm);
       }
     });
+
+    // Mobile (word commit): fires when a composed word is accepted.
+    this._compositionEndHandler = () => {
+      setTimeout(() => {
+        if (this._cm) triggerHint(this._cm);
+      }, 150);
+    };
+    this._cm
+      .getInputField()
+      .addEventListener('compositionend', this._compositionEndHandler);
+
+    // Mobile (per-character): forces CM5 to process composing text
+    // during typing so autocomplete appears before keyboard dismissal.
+    this._compositionFlushTimer = null;
+    this._compositionUpdateHandler = (e) => {
+      if (!e.data || !/[a-z]/i.test(e.data)) return;
+      clearTimeout(this._compositionFlushTimer);
+      this._compositionFlushTimer = setTimeout(() => {
+        const display = this._cm && this._cm.display;
+        if (display && display.input && display.input.composing) {
+          display.input.composing.done = true;
+          display.input.readFromDOMSoon();
+        }
+      }, 200);
+    };
+    this._cm
+      .getInputField()
+      .addEventListener('compositionupdate', this._compositionUpdateHandler);
 
     this._cm.getWrapperElement().style[
       'font-size'
@@ -380,6 +432,20 @@ class Editor extends React.Component {
   componentWillUnmount() {
     if (this._cm) {
       this._cm.off('keyup', this.handleKeyUp);
+      const inputField = this._cm.getInputField();
+      if (this._compositionEndHandler) {
+        inputField.removeEventListener(
+          'compositionend',
+          this._compositionEndHandler
+        );
+      }
+      if (this._compositionUpdateHandler) {
+        inputField.removeEventListener(
+          'compositionupdate',
+          this._compositionUpdateHandler
+        );
+      }
+      clearTimeout(this._compositionFlushTimer);
     }
     this.props.provideController(null);
   }
