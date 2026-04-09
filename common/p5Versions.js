@@ -1,4 +1,4 @@
-export const currentP5Version = '1.11.12'; // Don't update to 2.x until 2026
+export const currentP5Version = '1.11.13'; // Don't update to 2.x until 2026
 
 // Generated from https://www.npmjs.com/package/p5?activeTab=versions
 // Run this in the console:
