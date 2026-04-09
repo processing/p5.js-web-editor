@@ -65,6 +65,32 @@ export function createCollection(collection) {
   };
 }
 
+export function createCollectionAndRefresh(collection, username) {
+  return (dispatch) => {
+    dispatch(startLoader());
+    const url = '/collections';
+    return apiClient
+      .post(url, collection)
+      .then((response) => {
+        dispatch({ type: ActionTypes.CREATE_COLLECTION });
+        dispatch(stopLoader());
+
+        const newCollection = response.data;
+        dispatch(setToastText(`Created "${newCollection.name}"`));
+        dispatch(showToast(TOAST_DISPLAY_TIME_MS));
+
+        return dispatch(getCollections(username));
+      })
+      .catch((error) => {
+        dispatch({
+          type: ActionTypes.ERROR,
+          error: error?.response?.data
+        });
+        dispatch(stopLoader());
+      });
+  };
+}
+
 export function addToCollection(collectionId, projectId) {
   return (dispatch) => {
     dispatch(startLoader());

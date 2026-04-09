@@ -534,7 +534,10 @@
   "AddToCollectionList": {
     "Title": "p5.js Web Editor | My collections",
     "AnothersTitle": "p5.js Web Editor | {{anotheruser}}'s collections",
-    "Empty": "No collections"
+    "Empty": "No collections",
+    "CreateCollection": "Create collection",
+    "CreateSubmit": "Create",
+    "CollectionNameARIA": "Collection name"
   },
   "CollectionCreate": {
     "Title": "p5.js Web Editor | Create collection",
