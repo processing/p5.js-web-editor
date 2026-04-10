@@ -49,14 +49,15 @@ import { html } from '@codemirror/lang-html';
 import { json, jsonParseLinter } from '@codemirror/lang-json';
 import { xml } from '@codemirror/lang-xml';
 import { linter } from '@codemirror/lint';
-import { JSHINT } from 'jshint';
 import { HTMLHint } from 'htmlhint';
 import { CSSLint } from 'csslint';
 import { emmetConfig } from '@emmetio/codemirror6-plugin';
 import { color as colorPicker } from '@connieye/codemirror-color-picker';
 
-import p5JavaScript from './p5JavaScript';
+import { esLint } from '@codemirror/lang-javascript';
+import { Linter as ESLinter } from 'eslint-linter-browserify';
 import { tidyCodeWithPrettier } from './tidier';
+import p5JavaScript from './p5JavaScript';
 import { highlightStyle } from './highlightStyle';
 import { errorDecorationStateField } from './consoleErrorDecoration';
 
@@ -184,53 +185,17 @@ function makeHtmlLinter(callback) {
   };
 }
 
-const JSHINT_OPTIONS = {
-  asi: true,
-  eqeqeq: false,
-  '-W041': false,
-  esversion: 11
+const ESLINT_CONFIG = {
+  languageOptions: {
+    ecmaVersion: 2021
+  },
+  rules: {
+    semi: 'off',
+    eqeqeq: 'off'
+  }
 };
 
-// TODO: Consider using ESLINT instead
-function makeJsLinter(callback) {
-  return (view) => {
-    const documentContent = view.state.doc.toString();
-
-    // Run JSHINT
-    JSHINT(documentContent, JSHINT_OPTIONS);
-    const { errors } = JSHINT;
-
-    // Return errors
-    const diagnostics = [];
-    errors.forEach((error) => {
-      if (!error) return;
-
-      const { line: errorLine, character: errorCharacter, evidence } = error;
-      const cmLine = view.state.doc.line(errorLine);
-
-      // https://github.com/codemirror/codemirror5/blob/master/addon/lint/javascript-lint.js
-      const start = errorCharacter - 1;
-      let end = start + 1;
-      if (evidence) {
-        const index = evidence.substring(start).search(/.\b/);
-        if (index > -1) {
-          end += index;
-        }
-      }
-
-      diagnostics.push({
-        from: cmLine.from + start,
-        to: cmLine.from + end,
-        severity: error.code.startsWith('W') ? 'warning' : 'error',
-        message: error.reason
-      });
-    });
-
-    if (callback) callback(diagnostics);
-
-    return diagnostics;
-  };
-}
+const eslint = new ESLinter();
 
 function makeJsonLinter(callback) {
   const baseJsonLinter = jsonParseLinter();
@@ -246,7 +211,7 @@ function getFileLinter(fileName, callback) {
 
   switch (fileMode) {
     case 'javascript':
-      return linter(makeJsLinter(callback));
+      return linter(esLint(eslint, ESLINT_CONFIG));
     case 'html':
       return linter(makeHtmlLinter(callback));
     case 'css':
