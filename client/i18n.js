@@ -41,7 +41,8 @@ export const availableLanguages = [
   'zh-CN',
   'zh-TW',
   'tr',
-  'ur'
+  'ur',
+  'ne'
 ];
 
 const detectedLanguage = getPreferredLanguage(
@@ -76,7 +77,8 @@ export function languageKeyToLabel(lang) {
     'zh-CN': '简体中文',
     'zh-TW': '正體中文',
     tr: 'Türkçe',
-    ur: 'اردو'
+    ur: 'اردو',
+    ne: 'नेपाली'
   };
   return languageMap[lang];
 }

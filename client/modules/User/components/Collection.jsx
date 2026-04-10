@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import * as CollectionsActions from '../../IDE/actions/collections';
 import * as SortingActions from '../../IDE/actions/sorting';
 import { getCollection } from '../../IDE/selectors/collections';
-import Loader from '../../App/components/loader';
+import { Loader } from '../../App/components/Loader';
 import ArrowUpIcon from '../../../images/sort-arrow-up.svg';
 import ArrowDownIcon from '../../../images/sort-arrow-down.svg';
 import CollectionMetadata from './CollectionMetadata';

@@ -26,7 +26,11 @@ router.get('/:username/projects', ProjectController.getProjectsForUser);
 
 router.get('/projects/:project_id/zip', ProjectController.downloadProjectAsZip);
 
-router.patch('/project/visibility', ProjectController.changeProjectVisibility);
+router.patch(
+  '/project/visibility',
+  isAuthenticated,
+  ProjectController.changeProjectVisibility
+);
 
 // eslint-disable-next-line import/no-default-export
 export default router;

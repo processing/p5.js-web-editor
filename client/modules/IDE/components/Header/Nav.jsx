@@ -183,7 +183,12 @@ const ProjectMenu = () => {
           isDisabled={
             !user.authenticated ||
             !isLoginEnabled ||
-            (project?.owner && !isUserOwner)
+            (!!project?.owner && !isUserOwner)
+          }
+          tooltipContent={
+            !user.authenticated || !isLoginEnabled
+              ? t('Nav.File.SaveTooltipUnauthenticated')
+              : undefined
           }
           onClick={() => saveSketch(cmRef.current)}
         >
@@ -192,7 +197,12 @@ const ProjectMenu = () => {
         </MenubarItem>
         <MenubarItem
           id="file-duplicate"
-          isDisabled={isUnsaved || !user.authenticated}
+          isDisabled={!user.authenticated || isUnsaved}
+          tooltipContent={
+            !user.authenticated
+              ? t('Nav.File.DuplicateTooltipUnauthenticated')
+              : undefined
+          }
           onClick={() => dispatch(cloneProject())}
         >
           {t('Nav.File.Duplicate')}
@@ -200,6 +210,9 @@ const ProjectMenu = () => {
         <MenubarItem
           id="file-share"
           isDisabled={isUnsaved}
+          tooltipContent={
+            isUnsaved ? t('Nav.File.ShareTooltipUnsaved') : undefined
+          }
           onClick={shareSketch}
         >
           {t('Nav.File.Share')}
@@ -207,6 +220,9 @@ const ProjectMenu = () => {
         <MenubarItem
           id="file-download"
           isDisabled={isUnsaved}
+          tooltipContent={
+            isUnsaved ? t('Nav.File.DownloadTooltipUnsaved') : undefined
+          }
           onClick={downloadSketch}
         >
           {t('Nav.File.Download')}
@@ -214,6 +230,11 @@ const ProjectMenu = () => {
         <MenubarItem
           id="file-open"
           isDisabled={!user.authenticated}
+          tooltipContent={
+            !user.authenticated
+              ? t('Nav.File.OpenTooltipUnauthenticated')
+              : undefined
+          }
           href={`/${user.username}/sketches`}
         >
           {t('Nav.File.Open')}
@@ -221,7 +242,12 @@ const ProjectMenu = () => {
         <MenubarItem
           id="file-add-to-collection"
           isDisabled={
-            !isUiCollectionsEnabled || !user.authenticated || isUnsaved
+            !user.authenticated || !isUiCollectionsEnabled || isUnsaved
+          }
+          tooltipContent={
+            !user.authenticated
+              ? t('Nav.File.AddToCollectionTooltipUnauthenticated')
+              : undefined
           }
           href={`/${user.username}/sketches/${project?.id}/add-to-collection`}
         >

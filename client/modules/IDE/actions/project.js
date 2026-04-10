@@ -386,7 +386,7 @@ export function changeProjectName(id, newName) {
 }
 
 export function deleteProject(id) {
-  return (dispatch, getState) => {
+  return (dispatch, getState) =>
     apiClient
       .delete(`/projects/${id}`)
       .then(() => {
@@ -411,7 +411,6 @@ export function deleteProject(id) {
           });
         }
       });
-  };
 }
 export function changeVisibility(projectId, projectName, visibility, t) {
   return (dispatch, getState) => {
@@ -421,12 +420,12 @@ export function changeVisibility(projectId, projectName, visibility, t) {
       .patch('/project/visibility', { projectId, visibility })
       .then((response) => {
         if (response.status === 200) {
-          const { visibility: newVisibility, updatedAt } = response.data;
+          const { visibility: newVisibility, updatedAt, id } = response.data;
 
           dispatch({
             type: ActionTypes.CHANGE_VISIBILITY,
             payload: {
-              id: response.data.id,
+              id,
               visibility: newVisibility
             }
           });

@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 import CloseIcon from '../../../../images/close.svg';
 import CheckIcon from '../../../../images/check_encircled.svg';
 
 const Icons = ({ isAdded }) => {
+  const { t } = useTranslation();
   const classes = [
     'quick-add__icon',
     isAdded
@@ -16,13 +18,13 @@ const Icons = ({ isAdded }) => {
       <CloseIcon
         className="quick-add__remove-icon"
         role="img"
-        aria-label="Descending"
+        aria-label={t('QuickAddList.ButtonRemoveARIA')}
         focusable="false"
       />
       <CheckIcon
         className="quick-add__add-icon"
         role="img"
-        aria-label="Descending"
+        aria-label={t('QuickAddList.ButtonAddToCollectionARIA')}
         focusable="false"
       />
     </div>

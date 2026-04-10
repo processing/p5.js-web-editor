@@ -168,7 +168,8 @@ app.get('/', (req, res) => {
 // Handle API errors
 app.use('/api', (error, req, res, next) => {
   if (error && error.code && !res.headersSent) {
-    res.status(error.code).json({ error: error.message });
+    console.error('API error:', error.message);
+    res.status(error.code).json({ error: 'Internal server error' });
     return;
   }
 
@@ -193,6 +194,20 @@ app.get('*', async (req, res) => {
     return;
   }
   res.type('txt').send('Not found.');
+});
+
+// Global error handler for unhandled errors
+app.use((error, req, res, next) => {
+  console.error('Unhandled error:', error);
+
+  if (res.headersSent) {
+    return next(error);
+  }
+
+  const statusCode = error.status || 500;
+  return res.status(statusCode).json({
+    error: 'Internal server error'
+  });
 });
 
 // start app
