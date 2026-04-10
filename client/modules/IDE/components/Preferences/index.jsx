@@ -154,22 +154,18 @@ export default function Preferences() {
         <title>p5.js Web Editor | Preferences</title>
       </Helmet>
       <Tabs selectedIndex={tabIndex} onSelect={changeTab}>
-        <TabList>
-          <div className="tabs__titles">
-            <Tab>
-              <h4 className="tabs__title">
-                {t('Preferences.GeneralSettings')}
-              </h4>
-            </Tab>
-            <Tab>
-              <h4 className="tabs__title">{t('Preferences.Accessibility')}</h4>
-            </Tab>
-            <Tab>
-              <h4 className="tabs__title">
-                {t('Preferences.LibraryManagement')}
-              </h4>
-            </Tab>
-          </div>
+        <TabList className="tabs__titles">
+          <Tab tabIndex={tabIndex === 0 ? 0 : -1}>
+            <h4 className="tabs__title">{t('Preferences.GeneralSettings')}</h4>
+          </Tab>
+          <Tab tabIndex={tabIndex === 1 ? 0 : -1}>
+            <h4 className="tabs__title">{t('Preferences.Accessibility')}</h4>
+          </Tab>
+          <Tab tabIndex={tabIndex === 2 ? 0 : -1}>
+            <h4 className="tabs__title">
+              {t('Preferences.LibraryManagement')}
+            </h4>
+          </Tab>
         </TabList>
         <TabPanel>
           <div className="preference">
