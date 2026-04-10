@@ -3,6 +3,7 @@ import { apiClient } from '../../../utils/apiClient';
 import { getConfig } from '../../../utils/getConfig';
 import { isTestEnvironment } from '../../../utils/checkTestEnv';
 import { handleCreateFile } from './files';
+import { showErrorModal } from './ide';
 
 const s3BucketUrlBase = getConfig('S3_BUCKET_URL_BASE');
 const awsRegion = getConfig('AWS_REGION');
@@ -22,7 +23,7 @@ function isS3Upload(file) {
   return !TEXT_FILE_REGEX.test(file.name) || file.size >= MAX_LOCAL_FILE_SIZE;
 }
 
-export async function dropzoneAcceptCallback(userId, file, done) {
+export async function dropzoneAcceptCallback(userId, file, done, dispatch) {
   // if a user would want to edit this file as text, local interceptor
   if (!isS3Upload(file)) {
     try {
@@ -51,6 +52,13 @@ export async function dropzoneAcceptCallback(userId, file, done) {
       file.postData = response.data;
       done();
     } catch (error) {
+      if (error?.response?.status === 403) {
+        if (dispatch) {
+          dispatch(showErrorModal('uploadLimit'));
+        }
+        done('Upload limit reached.');
+        return;
+      }
       done(
         error?.response?.data?.responseText?.message ||
           error?.message ||

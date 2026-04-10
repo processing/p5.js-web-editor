@@ -14,8 +14,58 @@ const htmlOffset = 12;
 window.objectUrls[window.location.href] = '/index.html';
 const blobPath = window.location.href.split('/').pop();
 window.objectPaths[blobPath] = 'index.html';
-
+// Monkey-patch loopProtect to send infinite loop warnings to the in-app console
 window.loopProtect = loopProtect;
+if (window.loopProtect && typeof window.loopProtect.hit === 'function') {
+  let hitCount = 0;
+  let lastHitTime = 0;
+  let firstLine = null;
+  let stopTimeout = null;
+  window.loopProtect.hit = function handleLoopHit(line) {
+    const now = Date.now();
+    // Reset counters if more than 1 second has passed
+    if (now - lastHitTime > 1000) {
+      hitCount = 0;
+      firstLine = null;
+      if (stopTimeout) {
+        clearTimeout(stopTimeout);
+        stopTimeout = null;
+      }
+    }
+    hitCount++;
+    lastHitTime = now;
+
+    // Track first line for single loop case
+    if (hitCount === 1) {
+      firstLine = line;
+      // Wait briefly to see if more loops are detected (minimal delay)
+      stopTimeout = setTimeout(() => {
+        if (hitCount === 1) {
+          // Only one loop detected - show line number
+          const msg = `Infinite loop detected at line ${firstLine}. Stopping execution.`;
+          throw new Error(msg);
+        }
+        // If hitCount > 1, another loop already threw the error
+      }, 30);
+    }
+
+    // If multiple loops detected, stop immediately without waiting
+    if (hitCount > 1) {
+      // Clear single loop timeout since we have multiple
+      if (stopTimeout) {
+        clearTimeout(stopTimeout);
+        stopTimeout = null;
+      }
+      // Stop immediately - multiple loops exist
+      const msg = 'Multiple infinite loops detected. Stopping execution.';
+      throw new Error(msg);
+    }
+
+    // Don't call origHit to prevent duplicate messages
+    // The loop protection still works, we just handle the messaging ourselves
+    return true; // Return true to indicate loop was detected
+  };
+}
 
 const consoleBuffer = [];
 const LOGWAIT = 500;
