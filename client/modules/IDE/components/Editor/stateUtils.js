@@ -46,7 +46,7 @@ import {
 
 import { css } from '@codemirror/lang-css';
 import { html } from '@codemirror/lang-html';
-import { json } from '@codemirror/lang-json';
+import { json, jsonParseLinter } from '@codemirror/lang-json';
 import { xml } from '@codemirror/lang-xml';
 import { linter } from '@codemirror/lint';
 import { JSHINT } from 'jshint';
@@ -232,6 +232,14 @@ function makeJsLinter(callback) {
   };
 }
 
+function makeJsonLinter(callback) {
+  const baseJsonLinter = jsonParseLinter();
+  return (view) => {
+    const diagnostics = baseJsonLinter(view);
+    return diagnostics;
+  };
+}
+
 function getFileLinter(fileName, callback) {
   const fileMode = getFileMode(fileName);
 
@@ -242,6 +250,8 @@ function getFileLinter(fileName, callback) {
       return linter(makeHtmlLinter(callback));
     case 'css':
       return linter(makeCssLinter(callback));
+    case 'application/json':
+      return linter(makeJsonLinter(callback));
     default:
       return null;
   }
