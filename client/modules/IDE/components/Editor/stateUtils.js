@@ -55,7 +55,7 @@ import { emmetConfig } from '@emmetio/codemirror6-plugin';
 import { color as colorPicker } from '@connieye/codemirror-color-picker';
 
 import { esLint } from '@codemirror/lang-javascript';
-import { Linter } from 'eslint-linter-browserify';
+import { Linter as ESLinter } from 'eslint-linter-browserify';
 import { tidyCodeWithPrettier } from './tidier';
 import p5JavaScript from './p5JavaScript';
 import { highlightStyle } from './highlightStyle';
@@ -195,11 +195,7 @@ const ESLINT_CONFIG = {
   }
 };
 
-const eslint = new Linter();
-
-function makeJsLinter(callback) {
-  return linter(esLint(eslint, ESLINT_CONFIG));
-}
+const eslint = new ESLinter();
 
 function makeJsonLinter(callback) {
   const baseJsonLinter = jsonParseLinter();
@@ -215,7 +211,7 @@ function getFileLinter(fileName, callback) {
 
   switch (fileMode) {
     case 'javascript':
-      return makeJsLinter(callback);
+      return linter(esLint(eslint, ESLINT_CONFIG));
     case 'html':
       return linter(makeHtmlLinter(callback));
     case 'css':
