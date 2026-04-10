@@ -23,13 +23,36 @@ const StyledUploader = styled.div`
   .dz-preview.dz-image-preview {
     background-color: transparent;
   }
+  .dz-image img {
+    width: 100%;
+    height: auto;
+  }
+  .dz-details .dz-filename:hover {
+    overflow: hidden;
+  }
+  .dz-error-message span {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    display: block;
+  }
+  .dz-error-mark:hover {
+    cursor: pointer !important;
+  }
 `;
 
 function FileUploader() {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.user.id);
-
+  const deleteUploadErrorFiles = (uploader, file) => {
+    if (file.status === 'error') {
+      file.previewElement.addEventListener('click', (e) => {
+        e.stopPropagation();
+        uploader.removeFile(file);
+      });
+    }
+  };
   useEffect(() => {
     const uploader = new Dropzone('div#uploader', {
       url: s3BucketHttps,
@@ -46,12 +69,13 @@ function FileUploader() {
       acceptedFiles: fileExtensionsAndMimeTypes,
       dictDefaultMessage: t('FileUploader.DictDefaultMessage'),
       accept: (file, done) => {
-        dropzoneAcceptCallback(userId, file, done);
+        dropzoneAcceptCallback(userId, file, done, dispatch);
       },
       sending: dropzoneSendingCallback
     });
     uploader.on('complete', (file) => {
       dispatch(dropzoneCompleteCallback(file));
+      deleteUploadErrorFiles(uploader, file);
     });
     return () => {
       uploader.destroy();

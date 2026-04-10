@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { Helmet } from 'react-helmet';
@@ -17,6 +17,7 @@ import { hideErrorModal } from '../../IDE/actions/ide';
 import { Overlay } from '../../App/components/Overlay';
 import Toast from '../../IDE/components/Toast';
 import { RootState } from '../../../reducers';
+import { resetPasswordReset } from '../actions';
 
 function SocialLoginPanel() {
   const { t } = useTranslation();
@@ -50,6 +51,10 @@ function SocialLoginPanel() {
 export function AccountView() {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(resetPasswordReset());
+  }, [dispatch]);
   const location = useLocation();
   const queryParams = parse(location.search);
   const showError = !!queryParams.error;
