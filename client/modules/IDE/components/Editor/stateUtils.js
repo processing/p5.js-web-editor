@@ -296,7 +296,7 @@ const extraKeymaps = [
 ];
 const emmetKeymaps = [{ key: 'Tab', run: expandAbbreviation }];
 
-export const AUTOCOMPLETE_OPTIONS = {
+export const createAutocompleteOptions = (referenceBaseUrl) => ({
   tooltipClass: () => 'CodeMirror-hints',
   closeOnBlur: false,
   icons: false,
@@ -334,7 +334,7 @@ export const AUTOCOMPLETE_OPTIONS = {
         // TODO: add in reference url version switching
         const link = document.createElement('a');
         link.className = 'cm-completionRefLink';
-        link.href = `https://p5js.org/reference/p5/${completion.p5DocPath}`;
+        link.href = `${referenceBaseUrl}/reference/p5/${completion.p5DocPath}`;
         link.target = '_blank';
         link.rel = 'noopener noreferrer';
         link.tabIndex = -1;
@@ -390,7 +390,7 @@ export const AUTOCOMPLETE_OPTIONS = {
       }
     }
   ]
-};
+});
 
 /**
  * Creates a new CodeMirror editor state with configurations,
@@ -405,7 +405,8 @@ export function createNewFileState(filename, document, settings) {
     autocomplete,
     autocloseBracketsQuotes,
     onUpdateLinting,
-    onViewUpdate
+    onViewUpdate,
+    referenceBaseUrl
   } = settings;
   const lineNumbersCpt = new Compartment();
   const lineWrappingCpt = new Compartment();
@@ -435,7 +436,9 @@ export function createNewFileState(filename, document, settings) {
     lineWrappingCpt.of(linewrap ? EditorView.lineWrapping : []),
     closeBracketsCpt.of(autocloseBracketsQuotes ? closeBrackets() : []),
     autocompleteCpt.of(
-      autocomplete ? autocompletion(AUTOCOMPLETE_OPTIONS) : []
+      autocomplete
+        ? autocompletion(createAutocompleteOptions(referenceBaseUrl))
+        : []
     ),
 
     // Everything below here should always be on.
