@@ -236,6 +236,7 @@ function makeJsonLinter(callback) {
   const baseJsonLinter = jsonParseLinter();
   return (view) => {
     const diagnostics = baseJsonLinter(view);
+    if (callback) callback(diagnostics);
     return diagnostics;
   };
 }
