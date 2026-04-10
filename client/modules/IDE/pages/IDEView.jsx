@@ -15,6 +15,12 @@ import {
   clearPersistedState,
   getProject
 } from '../actions/project';
+import { setUnsavedChanges } from '../actions/ide';
+import {
+  getLocalBackup,
+  clearLocalBackup,
+  hasNewerLocalBackup
+} from '../utils/localBackup';
 import { getIsUserOwner } from '../selectors/users';
 import { RootPage } from '../../../components/RootPage';
 import Header from '../components/Header';
@@ -135,6 +141,27 @@ const IDEView = () => {
       dispatch(getProject(id, username));
     }
   }, [dispatch, params, project.id]);
+
+  // Check for local backup on project load (crash recovery, #3891)
+  useEffect(() => {
+    if (!project.id || !project.updatedAt) return;
+
+    if (hasNewerLocalBackup(project.id, project.updatedAt)) {
+      const backup = getLocalBackup(project.id);
+      if (backup && backup.files) {
+        // Restore each file's content from the local backup
+        backup.files.forEach((backupFile) => {
+          dispatch(updateFileContent(backupFile.id, backupFile.content));
+        });
+        dispatch(setUnsavedChanges(true));
+        // Auto-trigger a server save so the recovered content is persisted
+        dispatch(autosaveProject());
+      }
+    }
+    // Clear the backup once the project is loaded — it has either been
+    // recovered or is no longer needed.
+    clearLocalBackup(project.id);
+  }, [project.id]); // eslint-disable-line
 
   const autosaveAllowed = isUserOwner && project.id && preferences.autosave;
   const shouldAutosave = autosaveAllowed && ide.unsavedChanges;
