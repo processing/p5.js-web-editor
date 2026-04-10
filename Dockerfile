@@ -25,7 +25,7 @@ RUN npm run build
 
 FROM base AS production
 ENV NODE_ENV=production
-COPY package.json package-lock.json index.js ./
+COPY package.json package-lock.json index.js .eslintrc ./
 RUN npm install --production
 COPY --from=build $APP_HOME/dist ./dist
 CMD ["npm", "run", "start:prod"]

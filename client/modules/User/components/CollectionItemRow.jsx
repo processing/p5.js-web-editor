@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { removeFromCollection } from '../../IDE/actions/collections';
 import { formatDateToString } from '../../../utils/formatDate';
 import RemoveIcon from '../../../images/close.svg';
+import { Tooltip } from '../../../common/Tooltip';
 
 const CollectionItemRow = ({ collection, item, isOwner }) => {
   const { t } = useTranslation();
@@ -48,13 +49,15 @@ const CollectionItemRow = ({ collection, item, isOwner }) => {
       <td>{sketchOwnerUsername}</td>
       <td className="collection-row__action-column">
         {isOwner && (
-          <button
-            className="collection-row__remove-button"
-            onClick={handleSketchRemove}
-            aria-label={t('Collection.SketchRemoveARIA')}
-          >
-            <RemoveIcon focusable="false" aria-hidden="true" />
-          </button>
+          <Tooltip content={t('Collection.SketchRemoveARIA')}>
+            <button
+              className="collection-row__remove-button"
+              onClick={handleSketchRemove}
+              aria-label={t('Collection.SketchRemoveARIA')}
+            >
+              <RemoveIcon focusable="false" aria-hidden="true" />
+            </button>
+          </Tooltip>
         )}
       </td>
     </tr>
