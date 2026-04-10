@@ -1,13 +1,6 @@
 import { useRef, useEffect } from 'react';
 import { EditorView, lineNumbers as lineNumbersExt } from '@codemirror/view';
 import { autocompletion, closeBrackets } from '@codemirror/autocomplete';
-
-// TODO: Check what the v6 variants of these addons are.
-// import 'codemirror/addon/search/searchcursor';
-// import 'codemirror/addon/search/matchesonscrollbar';
-// import 'codemirror/addon/search/match-highlighter';
-// import 'codemirror/addon/search/jump-to-line';
-
 import { debounce } from 'lodash';
 import { openSearchPanel } from '@codemirror/search';
 
@@ -147,7 +140,7 @@ export default function useCodeMirror({
       file,
       reconfigureEffect
     });
-  }, [autocompleteHinter]);
+  }, [autocompleteHinter, referenceBaseUrl]);
 
   // Initializes the files as CodeMirror states.
   function initializeDocuments() {

@@ -61,9 +61,7 @@ import { highlightStyle } from './highlightStyle';
 import { errorDecorationStateField } from './consoleErrorDecoration';
 
 // ----- TODOS -----
-// - JSON linter
 // - shader syntax highlighting
-// - add docstrings for all exported functions
 
 /** Detects what mode the file is based on the name. */
 export function getFileMode(fileName) {
@@ -307,6 +305,7 @@ const extraKeymaps = [
 ];
 const emmetKeymaps = [{ key: 'Tab', run: expandAbbreviation }];
 
+/** Returns completion options configured for autocomplete. */
 export const createAutocompleteOptions = (referenceBaseUrl) => ({
   tooltipClass: () => 'CodeMirror-hints',
   closeOnBlur: false,
