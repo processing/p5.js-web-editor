@@ -78,109 +78,6 @@ export async function deleteObjectFromS3(req, res) {
   }
 }
 
-export function signS3(req, res) {
-  const limit = process.env.UPLOAD_LIMIT || 250000000;
-  if (req.user.totalSize > limit) {
-    res
-      .status(403)
-      .send({ message: 'user has uploaded the maximum size of assets.' });
-    return;
-  }
-  const fileExtension = getExtension(req.body.name);
-  const filename = uuidv4() + fileExtension;
-  const acl = 'public-read';
-  const policy = S3Policy.generate({
-    acl,
-    key: `${req.body.userId}/${filename}`,
-    bucket: process.env.S3_BUCKET,
-    contentType: req.body.type,
-    region: process.env.AWS_REGION,
-    accessKey: process.env.AWS_ACCESS_KEY,
-    secretKey: process.env.AWS_SECRET_KEY,
-    metadata: []
-  });
-  res.json(policy);
-}
-
-export async function copyObjectInS3(url, userId) {
-  const objectKey = getObjectKey(url);
-  const fileExtension = getExtension(objectKey);
-  const newFilename = uuidv4() + fileExtension;
-  const headParams = {
-    Bucket: process.env.S3_BUCKET,
-    Key: objectKey
-  };
-
-  try {
-    await s3Client.send(new HeadObjectCommand(headParams));
-  } catch (error) {
-    // temporary error handling for sketches with missing assets
-    if (error instanceof TypeError) {
-      return null;
-    }
-    console.error('Error retrieving object metadat:', error);
-    throw error;
-  }
-
-  const params = {
-    Bucket: process.env.S3_BUCKET,
-    CopySource: `${process.env.S3_BUCKET}/${objectKey}`,
-    Key: `${userId}/${newFilename}`,
-    ACL: 'public-read'
-  };
-
-  try {
-    await s3Client.send(new CopyObjectCommand(params));
-  } catch (error) {
-    // temporary error handling for sketches with missing assets
-    if (error instanceof TypeError) {
-      return null;
-    }
-    console.error('Error copying object:', error);
-    throw error;
-  }
-
-  return `${s3Bucket}${userId}/${newFilename}`;
-}
-
-export async function copyObjectInS3RequestHandler(req, res) {
-  try {
-    const { url } = req.body;
-    const newUrl = await copyObjectInS3(url, req.user.id);
-    res.json({ url: newUrl });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-}
-
-export async function moveObjectToUserInS3(url, userId) {
-  const objectKey = getObjectKey(url);
-  const fileExtension = getExtension(objectKey);
-  const newFilename = uuidv4() + fileExtension;
-
-  try {
-    const headParams = {
-      Bucket: process.env.S3_BUCKET,
-      Key: objectKey
-    };
-    await s3Client.send(new HeadObjectCommand(headParams));
-  } catch (headErr) {
-    throw new Error(
-      `Object with key ${process.env.S3_BUCKET}/${objectKey} does not exist.`
-    );
-  }
-
-  const params = {
-    Bucket: process.env.S3_BUCKET,
-    CopySource: `${process.env.S3_BUCKET}/${objectKey}`,
-    Key: `${userId}/${newFilename}`,
-    ACL: 'public-read'
-  };
-
-  await s3Client.send(new CopyObjectCommand(params));
-  return `${s3Bucket}${userId}/${newFilename}`;
-}
-
 export async function listObjectsInS3ForUser(userId) {
   try {
     let assets = [];
@@ -237,6 +134,121 @@ export async function listObjectsInS3ForUser(userId) {
     console.error('Got an error: ', error);
     throw error;
   }
+}
+
+export async function signS3(req, res) {
+  const limit = Number(process.env.UPLOAD_LIMIT) || 250000000;
+
+  try {
+    const objects = await listObjectsInS3ForUser(req.user.id);
+    const currentSize = Number(objects?.totalSize ?? req.user.totalSize) || 0;
+    const incomingSize = Number(req.body.size) || 0;
+
+    if (currentSize >= limit || currentSize + incomingSize > limit) {
+      res
+        .status(403)
+        .send({ message: 'user has uploaded the maximum size of assets.' });
+      return;
+    }
+
+    const fileExtension = getExtension(req.body.name);
+    const filename = uuidv4() + fileExtension;
+    const acl = 'public-read';
+    const policy = S3Policy.generate({
+      acl,
+      key: `${req.body.userId}/${filename}`,
+      bucket: process.env.S3_BUCKET,
+      contentType: req.body.type,
+      region: process.env.AWS_REGION,
+      accessKey: process.env.AWS_ACCESS_KEY,
+      secretKey: process.env.AWS_SECRET_KEY,
+      metadata: []
+    });
+    res.json(policy);
+  } catch (error) {
+    console.error('Error signing upload policy:', error);
+    res.status(500).json({ error: 'Failed to sign upload policy' });
+  }
+}
+
+export async function copyObjectInS3(url, userId) {
+  const objectKey = getObjectKey(url);
+  const fileExtension = getExtension(objectKey);
+  const newFilename = uuidv4() + fileExtension;
+  const headParams = {
+    Bucket: process.env.S3_BUCKET,
+    Key: objectKey
+  };
+
+  try {
+    await s3Client.send(new HeadObjectCommand(headParams));
+  } catch (error) {
+    // temporary error handling for sketches with missing assets
+    if (error instanceof TypeError) {
+      return null;
+    }
+    console.error('Error retrieving object metadat:', error);
+    throw error;
+  }
+
+  const params = {
+    Bucket: process.env.S3_BUCKET,
+    CopySource: `${process.env.S3_BUCKET}/${objectKey}`,
+    Key: `${userId}/${newFilename}`,
+    ACL: 'public-read'
+  };
+
+  try {
+    await s3Client.send(new CopyObjectCommand(params));
+  } catch (error) {
+    // temporary error handling for sketches with missing assets
+    if (error instanceof TypeError) {
+      return null;
+    }
+    console.error('Error copying object:', error);
+    throw error;
+  }
+
+  return `${s3Bucket}${userId}/${newFilename}`;
+}
+
+export async function copyObjectInS3RequestHandler(req, res) {
+  try {
+    const { url } = req.body;
+    const newUrl = await copyObjectInS3(url, req.user.id);
+    res.json({ url: newUrl });
+  } catch (error) {
+    console.error('Error copying object in S3:', error.message);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+}
+
+export async function moveObjectToUserInS3(url, userId) {
+  const objectKey = getObjectKey(url);
+  const fileExtension = getExtension(objectKey);
+  const newFilename = uuidv4() + fileExtension;
+
+  try {
+    const headParams = {
+      Bucket: process.env.S3_BUCKET,
+      Key: objectKey
+    };
+    await s3Client.send(new HeadObjectCommand(headParams));
+  } catch (headErr) {
+    throw new Error(
+      `Object with key ${process.env.S3_BUCKET}/${objectKey} does not exist.`
+    );
+  }
+
+  const params = {
+    Bucket: process.env.S3_BUCKET,
+    CopySource: `${process.env.S3_BUCKET}/${objectKey}`,
+    Key: `${userId}/${newFilename}`,
+    ACL: 'public-read'
+  };
+
+  await s3Client.send(new CopyObjectCommand(params));
+  return `${s3Bucket}${userId}/${newFilename}`;
 }
 
 export async function listObjectsInS3ForUserRequestHandler(req, res) {

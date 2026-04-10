@@ -7,7 +7,7 @@ import { CrossIcon } from '../../../common/icons';
  * Banner displays a dismissible announcement bar with a link and a close icon.
  * It's typically used to highlight opportunities, but use and design can be flexible.
  *
- * This component is **presentational only** — visibility logic (open/close state) should be
+ * This component is presentational only — visibility logic (open/close state) should be
  * controlled by the parent via the `onClose` handler.
  *
  * @param {Object} props
@@ -26,6 +26,7 @@ const Banner = ({ onClose }) => {
   // URL can be updated depending on the opportunity or announcement.
   const bannerURL = 'https://processingfoundation.org/donate';
 
+  // currently holds donation copy, will switch back when temp maintenance is done
   const bannerCopy = (
     <>
       <Trans i18nKey="Banner.Copy" components={{ bold: <strong /> }} />
