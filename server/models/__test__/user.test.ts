@@ -8,20 +8,19 @@ jest.setTimeout(30000); // give enough time for MongoMemoryServer
 let mongoServer: MongoMemoryServer;
 
 beforeAll(async () => {
-  await mongoose.disconnect(); // kill any previous connection
-
-  mongoServer = await MongoMemoryServer.create();
+  mongoServer = await MongoMemoryServer.create({
+    binary: { version: '7.0.0' } // or latest supported stable version
+  });
   const uri = mongoServer.getUri();
-
   await mongoose.connect(uri);
 });
 
 afterAll(async () => {
-  await mongoose.disconnect();
-  if (mongoServer) {
-    await mongoServer.stop();
-  }
+  await mongoose.connection.dropDatabase();
+  await mongoose.connection.close();
+  await mongoServer.stop();
 });
+
 beforeEach(async () => {
   await User.deleteMany({});
 });
