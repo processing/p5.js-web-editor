@@ -5,12 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Loader from '../../App/components/loader';
-import {
-  addToCollection,
-  getCollections,
-  removeFromCollection
-} from '../actions/collections';
-// import getSortedCollections from '../selectors/collections';
+import { addToCollection, removeFromCollection } from '../actions/collections';
 import { getCollectionsForCollectionList } from '../actions/collections';
 import QuickAddList from './QuickAddList';
 import { remSize } from '../../../theme';
