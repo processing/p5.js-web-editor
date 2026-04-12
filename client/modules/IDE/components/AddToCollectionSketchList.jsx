@@ -19,7 +19,6 @@ const AddToCollectionSketchList = ({ collection }) => {
   const dispatch = useDispatch();
 
   const username = useSelector((state) => state.user.username);
-
   const sketches = useSelector(getSortedSketches);
 
   // TODO: improve loading state

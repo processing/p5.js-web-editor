@@ -13,6 +13,7 @@ import search from './modules/IDE/reducers/search';
 import sorting from './modules/IDE/reducers/sorting';
 import loading from './modules/IDE/reducers/loading';
 import collections from './modules/IDE/reducers/collections';
+import collectionsListCollections from './modules/IDE/reducers/CollectionsListCollection';
 
 const rootReducer = combineReducers({
   ide,
@@ -28,7 +29,8 @@ const rootReducer = combineReducers({
   console,
   assets,
   loading,
-  collections
+  collections,
+  collectionsListCollections
 });
 
 // Type for entire redux state

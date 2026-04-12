@@ -10,9 +10,11 @@ import {
   getCollections,
   removeFromCollection
 } from '../actions/collections';
-import getSortedCollections from '../selectors/collections';
+// import getSortedCollections from '../selectors/collections';
+import { getCollectionsForCollectionList } from '../actions/collections';
 import QuickAddList from './QuickAddList';
 import { remSize } from '../../../theme';
+import Pagination from './Pagination';
 
 export const CollectionAddSketchWrapper = styled.div`
   width: ${remSize(600)};
@@ -34,7 +36,19 @@ const AddToCollectionList = ({ projectId }) => {
 
   const username = useSelector((state) => state.user.username);
 
-  const collections = useSelector(getSortedCollections);
+  const collections = useSelector(
+    (state) => state.collectionsListCollections.collections
+  );
+
+  const paginationMeta = useSelector(
+    (state) => state.collectionsListCollections.metadata
+  );
+
+  const q = useSelector((state) => state.search.collectionSearchTerm);
+  const hasCollections = () => collections?.length > 0;
+
+  const [page, setPage] = useState(1);
+  const limit = 10;
 
   // TODO: improve loading state
   const loading = useSelector((state) => state.loading);
@@ -42,8 +56,18 @@ const AddToCollectionList = ({ projectId }) => {
   const showLoader = loading && !hasLoadedData;
 
   useEffect(() => {
-    dispatch(getCollections(username)).then(() => setHasLoadedData(true));
-  }, [dispatch, username]);
+    dispatch(
+      getCollectionsForCollectionList(username, {
+        page,
+        limit,
+        q
+      })
+    ).finally(() => setHasLoadedData(true));
+  }, [dispatch, username, page, q]);
+
+  useEffect(() => {
+    setPage(1);
+  }, [q]);
 
   const handleCollectionAdd = (collection) => {
     dispatch(addToCollection(collection.id, projectId));
@@ -66,11 +90,23 @@ const AddToCollectionList = ({ projectId }) => {
       return t('AddToCollectionList.Empty');
     }
     return (
-      <QuickAddList
-        items={collectionWithSketchStatus}
-        onAdd={handleCollectionAdd}
-        onRemove={handleCollectionRemove}
-      />
+      <>
+        <QuickAddList
+          items={collectionWithSketchStatus}
+          onAdd={handleCollectionAdd}
+          onRemove={handleCollectionRemove}
+        />
+        {hasCollections() && (
+          <Pagination
+            page={page}
+            totalPages={paginationMeta.totalPages}
+            onPageChange={setPage}
+            limit={limit}
+            totalCollections={paginationMeta.totalCollections}
+            isOverlay
+          />
+        )}
+      </>
     );
   };
 

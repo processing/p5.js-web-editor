@@ -3,7 +3,15 @@ import differenceInMilliseconds from 'date-fns/differenceInMilliseconds';
 import { find, orderBy } from 'lodash';
 import { DIRECTION } from '../actions/sorting';
 
-const getCollections = (state) => state.collections;
+/** List API returns `{ collections, metadata }`; this slice may also be a legacy plain array. */
+function collectionsFromSlice(slice) {
+  if (slice == null) return [];
+  if (Array.isArray(slice)) return slice;
+  if (Array.isArray(slice.collections)) return slice.collections;
+  return [];
+}
+
+const getCollections = (state) => collectionsFromSlice(state.collections);
 const getField = (state) => state.sorting.field;
 const getDirection = (state) => state.sorting.direction;
 const getSearchTerm = (state) => state.search.collectionSearchTerm;
