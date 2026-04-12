@@ -3,10 +3,28 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
+import styled from 'styled-components';
 import { removeFromCollection } from '../../IDE/actions/collections';
 import { formatDateToString } from '../../../utils/formatDate';
-import RemoveIcon from '../../../images/close.svg';
-import { Tooltip } from '../../../common/Tooltip';
+import { TableDropdown } from '../../../components/Dropdown/TableDropdown';
+import { MenuItem } from '../../../components/Dropdown/MenuItem';
+import { remSize } from '../../../theme';
+
+const SketchlistDropdownColumn = styled.td`
+  &&& {
+    position: relative;
+    width: ${remSize(60)};
+  }
+  @media (max-width: 770px) {
+    &&& {
+      position: absolute;
+      top: 0;
+      right: ${remSize(4)};
+      width: auto !important;
+      margin: ${remSize(8)};
+    }
+  }
+`;
 
 const CollectionItemRow = ({ collection, item, isOwner }) => {
   const { t } = useTranslation();
@@ -47,19 +65,15 @@ const CollectionItemRow = ({ collection, item, isOwner }) => {
       <th scope="row">{name}</th>
       <td>{formatDateToString(item.createdAt)}</td>
       <td>{sketchOwnerUsername}</td>
-      <td className="collection-row__action-column">
+      <SketchlistDropdownColumn>
         {isOwner && (
-          <Tooltip content={t('Collection.SketchRemoveARIA')}>
-            <button
-              className="collection-row__remove-button"
-              onClick={handleSketchRemove}
-              aria-label={t('Collection.SketchRemoveARIA')}
-            >
-              <RemoveIcon focusable="false" aria-hidden="true" />
-            </button>
-          </Tooltip>
+          <TableDropdown aria-label={t('SketchList.ToggleLabelARIA')}>
+            <MenuItem onClick={handleSketchRemove}>
+              {t('Collection.SketchRemoveARIA')}
+            </MenuItem>
+          </TableDropdown>
         )}
-      </td>
+      </SketchlistDropdownColumn>
     </tr>
   );
 };

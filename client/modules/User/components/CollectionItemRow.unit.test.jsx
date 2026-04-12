@@ -1,7 +1,7 @@
 import React from 'react';
 import thunk from 'redux-thunk';
 import configureStore from 'redux-mock-store';
-import { reduxRender, screen, fireEvent, act } from '../../../test-utils';
+import { reduxRender, screen } from '../../../test-utils';
 import { initialTestState } from '../../../testData/testReduxStore';
 import CollectionItemRow from './CollectionItemRow';
 
@@ -56,9 +56,11 @@ describe('<CollectionItemRow />', () => {
     expect(screen.getByText('testuser')).toBeInTheDocument();
   });
 
-  it('shows the remove button when user is the owner', () => {
+  it('shows the dropdown menu when user is the owner', () => {
     subject();
-    expect(screen.getByRole('button', { name: /remove/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: /toggle/i })
+    ).toBeInTheDocument();
   });
 
   describe('when user is not the owner', () => {
@@ -70,22 +72,12 @@ describe('<CollectionItemRow />', () => {
       subjectProps = { ...subjectProps, isOwner: true };
     });
 
-    it('does not show the remove button', () => {
+    it('does not show the dropdown menu', () => {
       subject();
       expect(
-        screen.queryByRole('button', { name: /remove/i })
+        screen.queryByRole('button', { name: /toggle/i })
       ).not.toBeInTheDocument();
     });
-  });
-
-  it('wraps the remove button with a tooltip', async () => {
-    subject();
-
-    const button = screen.getByRole('button', { name: /remove/i });
-    await act(async () => {
-      fireEvent.mouseEnter(button);
-    });
-    expect(button).toHaveClass('tooltipped');
   });
 
   describe('when the project is deleted', () => {

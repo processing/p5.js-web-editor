@@ -4,7 +4,7 @@
   padding: #{math.div(24, $base-font-size)}rem #{math.div(66, $base-font-size)}rem;
   position: relative;
   flex: 1;
-  overflow: hidden;
+  overflow: visible;
   display: flex;
   flex-direction:column;
 
@@ -116,7 +116,7 @@
   display: flex;
   flex-direction: column;
   flex: 1;
-  overflow: hidden;
+  overflow: visible;
   max-width: #{math.div(1012, $base-font-size)}rem;
   margin: 0 auto;
   width: 100%;
@@ -127,7 +127,6 @@
 }
 
 .collection-table-wrapper {
-  overflow-y: auto;
   max-width: 100%;
   min-height: 100%;
 }
@@ -145,57 +144,3 @@
   font-size: #{math.div(16, $base-font-size)}rem;
 }
 
-.collection-row__action-column {
-  width: #{math.div(60, $base-font-size)}rem;
-  position: relative;
-
-  .tooltip-wrapper {
-    display: inline-flex;
-    width: auto;
-
-    .tooltipped::after {
-      right: 0;
-      left: auto;
-    }
-
-    .tooltipped-n::before,
-    .tooltipped::before {
-      right: #{math.div(10, $base-font-size)}rem;
-      left: auto;
-    }
-  }
-}
-
-.collection-row__remove-button {
-  display: inline-block;
-  width:#{math.div(35, $base-font-size)}rem;
-  height:#{math.div(35, $base-font-size)}rem;
-  @include icon();
-  @include themify() {
-    // icon graphic
-    path {
-      fill: getThemifyVariable('table-button-color');
-    }
-
-    // icon background circle
-    path:first-child {
-      fill: getThemifyVariable('table-button-background-color');
-    }
-
-    & svg {
-      width:#{math.div(35, $base-font-size)}rem;
-      height:#{math.div(35, $base-font-size)}rem;
-    }
-
-    &:hover,
-    &:focus {
-      path {
-        fill: getThemifyVariable('table-button-hover-color');
-      }
-
-      path:first-child {
-        fill: getThemifyVariable('table-button-background-hover-color');
-      }
-    }
-  }
-}
