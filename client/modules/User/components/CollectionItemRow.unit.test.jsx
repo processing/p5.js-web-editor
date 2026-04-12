@@ -58,9 +58,7 @@ describe('<CollectionItemRow />', () => {
 
   it('shows the dropdown menu when user is the owner', () => {
     subject();
-    expect(
-      screen.getByRole('button', { name: /toggle/i })
-    ).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /toggle/i })).toBeInTheDocument();
   });
 
   describe('when user is not the owner', () => {
