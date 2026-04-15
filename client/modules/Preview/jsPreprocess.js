@@ -29,51 +29,6 @@ function collectShaderFunctionNames(ast) {
   return names;
 }
 
-function collectLoopsToProtect(ast, shaderNames) {
-  const loops = [];
-
-  function visitNode(node, ancestors) {
-    const isInsideShader = ancestors.some((ancestor, idx) => {
-      if (
-        ancestor.type === 'FunctionDeclaration' &&
-        shaderNames.has(ancestor.id?.name)
-      ) {
-        return true;
-      }
-      if (
-        ancestor.type === 'FunctionExpression' ||
-        ancestor.type === 'ArrowFunctionExpression'
-      ) {
-        const parent = ancestors[idx - 1];
-        if (
-          parent?.type === 'CallExpression' &&
-          isShaderCall(parent) &&
-          parent.arguments.includes(ancestor)
-        ) {
-          return true;
-        }
-        if (
-          parent?.type === 'VariableDeclarator' &&
-          shaderNames.has(parent.id?.name)
-        ) {
-          return true;
-        }
-      }
-      return false;
-    });
-
-    if (!isInsideShader) loops.push(node);
-  }
-
-  walk.ancestor(ast, {
-    ForStatement: visitNode,
-    WhileStatement: visitNode,
-    DoWhileStatement: visitNode
-  });
-
-  return loops;
-}
-
 function makeVarDecl(varName) {
   return {
     type: 'VariableDeclaration',
@@ -152,58 +107,74 @@ function makeCheckStatement(varName, line) {
   };
 }
 
-function injectProtection(loop, idx) {
-  const varName = `_LP${idx}`;
-  const { line } = loop.loc.start;
-  const check = makeCheckStatement(varName, line);
+function protectLoops(ast, shaderNames) {
+  let loopCount = 0;
 
-  if (loop.body.type === 'BlockStatement') {
-    loop.body.body.unshift(check);
-  } else {
-    loop.body = {
-      type: 'BlockStatement',
-      body: [check, loop.body]
-    };
+  function visitNode(node, ancestors) {
+    const isInsideShader = ancestors.some((ancestor, idx) => {
+      if (
+        ancestor.type === 'FunctionDeclaration' &&
+        shaderNames.has(ancestor.id?.name)
+      ) {
+        return true;
+      }
+      if (
+        ancestor.type === 'FunctionExpression' ||
+        ancestor.type === 'ArrowFunctionExpression'
+      ) {
+        const parent = ancestors[idx - 1];
+        if (
+          parent?.type === 'CallExpression' &&
+          isShaderCall(parent) &&
+          parent.arguments.includes(ancestor)
+        ) {
+          return true;
+        }
+        if (
+          parent?.type === 'VariableDeclarator' &&
+          shaderNames.has(parent.id?.name)
+        ) {
+          return true;
+        }
+      }
+      return false;
+    });
+
+    if (isInsideShader) return;
+
+    const varName = `_LP${loopCount++}`;
+    const { line } = node.loc.start;
+    const check = makeCheckStatement(varName, line);
+
+    if (node.body.type === 'BlockStatement') {
+      node.body.body.unshift(check);
+    } else {
+      node.body = { type: 'BlockStatement', body: [check, node.body] };
+    }
+
+    const varDecl = makeVarDecl(varName);
+    for (let i = ancestors.length - 1; i >= 0; i--) {
+      const ancestor = ancestors[i];
+      if (
+        ancestor !== node &&
+        (ancestor.type === 'BlockStatement' || ancestor.type === 'Program')
+      ) {
+        const nodeIdx = ancestor.body.indexOf(node);
+        if (nodeIdx !== -1) {
+          ancestor.body.splice(nodeIdx, 0, varDecl);
+          break;
+        }
+      }
+    }
   }
 
-  return makeVarDecl(varName);
-}
-
-function insertVarDeclsIntoBlock(blockBody, loopsWithVarDecls) {
-  loopsWithVarDecls.forEach(({ loop, varDecl }) => {
-    const idx = blockBody.indexOf(loop);
-    if (idx !== -1) {
-      blockBody.splice(idx, 0, varDecl);
-    }
-  });
-}
-
-function injectVarDeclsIntoAst(ast, loops) {
-  const loopToVarDecl = new Map();
-  loops.forEach((loop, idx) => {
-    loopToVarDecl.set(loop, injectProtection(loop, idx));
+  walk.ancestor(ast, {
+    ForStatement: visitNode,
+    WhileStatement: visitNode,
+    DoWhileStatement: visitNode
   });
 
-  walk.simple(ast, {
-    BlockStatement(node) {
-      const loopsWithVarDecls = node.body
-        .filter((child) => loopToVarDecl.has(child))
-        .map((loop) => ({ loop, varDecl: loopToVarDecl.get(loop) }));
-      if (loopsWithVarDecls.length > 0) {
-        insertVarDeclsIntoBlock(node.body, loopsWithVarDecls);
-        loopsWithVarDecls.forEach(({ loop }) => loopToVarDecl.delete(loop));
-      }
-    },
-    Program(node) {
-      const loopsWithVarDecls = node.body
-        .filter((child) => loopToVarDecl.has(child))
-        .map((loop) => ({ loop, varDecl: loopToVarDecl.get(loop) }));
-      if (loopsWithVarDecls.length > 0) {
-        insertVarDeclsIntoBlock(node.body, loopsWithVarDecls);
-        loopsWithVarDecls.forEach(({ loop }) => loopToVarDecl.delete(loop));
-      }
-    }
-  });
+  return loopCount;
 }
 
 function parseJs(jsText) {
@@ -228,11 +199,9 @@ export function jsPreprocess(jsText) {
   if (!ast) return jsText;
 
   const shaderNames = collectShaderFunctionNames(ast);
-  const loops = collectLoopsToProtect(ast, shaderNames);
+  const loopCount = protectLoops(ast, shaderNames);
 
-  if (loops.length === 0) return jsText;
-
-  injectVarDeclsIntoAst(ast, loops);
+  if (loopCount === 0) return jsText;
 
   return escodegen.generate(ast);
 }
