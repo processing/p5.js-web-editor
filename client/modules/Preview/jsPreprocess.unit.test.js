@@ -32,6 +32,15 @@ describe('jsPreprocess', () => {
       const code = 'this is not valid javascript @@@@';
       expect(jsPreprocess(code)).toBe(code);
     });
+
+    it('handles module scripts with import statements', () => {
+      const code = `
+        import something from 'somewhere';
+        for (let i = 0; i < 10; i++) {}
+      `;
+      const result = jsPreprocess(code);
+      expect(result).toContain('window.loopProtect.hit');
+    });
   });
 
   describe('shader strings', () => {
@@ -104,6 +113,17 @@ describe('jsPreprocess', () => {
     it('skips loop protection for function passed to base*Shader().modify()', () => {
       const code = `
         blur = baseFilterShader().modify(doBlur);
+        function doBlur() {
+          for (let i = 0; i < 20; i++) {}
+        }
+      `;
+      const result = jsPreprocess(code);
+      expect(result).not.toContain('window.loopProtect.hit');
+    });
+
+    it('skips loop protection for function passed to any .modify() call', () => {
+      const code = `
+        blur = someCustomShader().modify(doBlur);
         function doBlur() {
           for (let i = 0; i < 20; i++) {}
         }

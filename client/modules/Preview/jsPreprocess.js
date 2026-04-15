@@ -1,5 +1,6 @@
 import * as acorn from 'acorn';
 import * as walk from 'acorn-walk';
+import escodegen from 'escodegen';
 
 const LOOP_TIMEOUT_MS = 100;
 
@@ -7,13 +8,9 @@ function isShaderCall(node) {
   const { callee } = node;
   const isBuildShader =
     callee.type === 'Identifier' && /^build\w*Shader$/.test(callee.name);
-  const isBaseShaderModify =
-    callee.type === 'MemberExpression' &&
-    callee.property.name === 'modify' &&
-    callee.object.type === 'CallExpression' &&
-    callee.object.callee.type === 'Identifier' &&
-    /^base\w*Shader$/.test(callee.object.callee.name);
-  return isBuildShader || isBaseShaderModify;
+  const isModifyCall =
+    callee.type === 'MemberExpression' && callee.property.name === 'modify';
+  return isBuildShader || isModifyCall;
 }
 
 function collectShaderFunctionNames(ast) {
@@ -77,56 +74,165 @@ function collectLoopsToProtect(ast, shaderNames) {
   return loops;
 }
 
+function makeVarDecl(varName) {
+  return {
+    type: 'VariableDeclaration',
+    kind: 'var',
+    declarations: [
+      {
+        type: 'VariableDeclarator',
+        id: { type: 'Identifier', name: varName },
+        init: {
+          type: 'CallExpression',
+          callee: {
+            type: 'MemberExpression',
+            object: { type: 'Identifier', name: 'Date' },
+            property: { type: 'Identifier', name: 'now' },
+            computed: false
+          },
+          arguments: []
+        }
+      }
+    ]
+  };
+}
+
+function makeCheckStatement(varName, line) {
+  return {
+    type: 'IfStatement',
+    test: {
+      type: 'BinaryExpression',
+      operator: '>',
+      left: {
+        type: 'BinaryExpression',
+        operator: '-',
+        left: {
+          type: 'CallExpression',
+          callee: {
+            type: 'MemberExpression',
+            object: { type: 'Identifier', name: 'Date' },
+            property: { type: 'Identifier', name: 'now' },
+            computed: false
+          },
+          arguments: []
+        },
+        right: { type: 'Identifier', name: varName }
+      },
+      right: {
+        type: 'Literal',
+        value: LOOP_TIMEOUT_MS,
+        raw: String(LOOP_TIMEOUT_MS)
+      }
+    },
+    consequent: {
+      type: 'BlockStatement',
+      body: [
+        {
+          type: 'ExpressionStatement',
+          expression: {
+            type: 'CallExpression',
+            callee: {
+              type: 'MemberExpression',
+              object: {
+                type: 'MemberExpression',
+                object: { type: 'Identifier', name: 'window' },
+                property: { type: 'Identifier', name: 'loopProtect' },
+                computed: false
+              },
+              property: { type: 'Identifier', name: 'hit' },
+              computed: false
+            },
+            arguments: [{ type: 'Literal', value: line, raw: String(line) }]
+          }
+        },
+        { type: 'BreakStatement', label: null }
+      ]
+    },
+    alternate: null
+  };
+}
+
+function injectProtection(loop, idx) {
+  const varName = `_LP${idx}`;
+  const { line } = loop.loc.start;
+  const check = makeCheckStatement(varName, line);
+
+  if (loop.body.type === 'BlockStatement') {
+    loop.body.body.unshift(check);
+  } else {
+    loop.body = {
+      type: 'BlockStatement',
+      body: [check, loop.body]
+    };
+  }
+
+  return makeVarDecl(varName);
+}
+
+function insertVarDeclsIntoBlock(blockBody, loopsWithVarDecls) {
+  loopsWithVarDecls.forEach(({ loop, varDecl }) => {
+    const idx = blockBody.indexOf(loop);
+    if (idx !== -1) {
+      blockBody.splice(idx, 0, varDecl);
+    }
+  });
+}
+
+function injectVarDeclsIntoAst(ast, loops) {
+  const loopToVarDecl = new Map();
+  loops.forEach((loop, idx) => {
+    loopToVarDecl.set(loop, injectProtection(loop, idx));
+  });
+
+  walk.simple(ast, {
+    BlockStatement(node) {
+      const loopsWithVarDecls = node.body
+        .filter((child) => loopToVarDecl.has(child))
+        .map((loop) => ({ loop, varDecl: loopToVarDecl.get(loop) }));
+      if (loopsWithVarDecls.length > 0) {
+        insertVarDeclsIntoBlock(node.body, loopsWithVarDecls);
+        loopsWithVarDecls.forEach(({ loop }) => loopToVarDecl.delete(loop));
+      }
+    },
+    Program(node) {
+      const loopsWithVarDecls = node.body
+        .filter((child) => loopToVarDecl.has(child))
+        .map((loop) => ({ loop, varDecl: loopToVarDecl.get(loop) }));
+      if (loopsWithVarDecls.length > 0) {
+        insertVarDeclsIntoBlock(node.body, loopsWithVarDecls);
+        loopsWithVarDecls.forEach(({ loop }) => loopToVarDecl.delete(loop));
+      }
+    }
+  });
+}
+
+function parseJs(jsText) {
+  const options = { ecmaVersion: 'latest', locations: true };
+  try {
+    return acorn.parse(jsText, { ...options, sourceType: 'script' });
+  } catch (e) {
+    try {
+      return acorn.parse(jsText, { ...options, sourceType: 'module' });
+    } catch (e2) {
+      return null;
+    }
+  }
+}
+
 export function jsPreprocess(jsText) {
   if (/\/\/\s*noprotect/.test(jsText)) {
     return jsText;
   }
 
-  let ast;
-  try {
-    ast = acorn.parse(jsText, {
-      ecmaVersion: 'latest',
-      sourceType: 'script',
-      locations: true
-    });
-  } catch (e) {
-    return jsText;
-  }
+  const ast = parseJs(jsText);
+  if (!ast) return jsText;
 
   const shaderNames = collectShaderFunctionNames(ast);
   const loops = collectLoopsToProtect(ast, shaderNames);
 
   if (loops.length === 0) return jsText;
 
-  const insertions = [];
+  injectVarDeclsIntoAst(ast, loops);
 
-  loops.forEach((loop) => {
-    const { line } = loop.loc.start;
-    const varName = `_LP${loop.start}`;
-
-    const beforeCode = `var ${varName} = Date.now(); `;
-
-    const checkCode =
-      `if (Date.now() - ${varName} > ${LOOP_TIMEOUT_MS}) ` +
-      `{ window.loopProtect.hit(${line}); break; } `;
-
-    const { body } = loop;
-    if (body.type === 'BlockStatement') {
-      insertions.push({ pos: loop.start, code: beforeCode });
-      insertions.push({ pos: body.start + 1, code: checkCode });
-    } else {
-      insertions.push({ pos: loop.start, code: beforeCode });
-      insertions.push({ pos: body.start, code: `{ ${checkCode}` });
-      insertions.push({ pos: body.end, code: ` }` });
-    }
-  });
-
-  insertions.sort((a, b) => b.pos - a.pos);
-
-  let result = jsText;
-  insertions.forEach(({ pos, code }) => {
-    result = result.slice(0, pos) + code + result.slice(pos);
-  });
-
-  return result;
+  return escodegen.generate(ast);
 }
