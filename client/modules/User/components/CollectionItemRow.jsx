@@ -26,6 +26,14 @@ const SketchlistDropdownColumn = styled.td`
   }
 `;
 
+const WiderTableDropdown = styled(TableDropdown)`
+  & ul {
+    width: ${remSize(220)};
+    top: 74%;
+    right: calc(100% - 26px);
+  }
+`;
+
 const CollectionItemRow = ({ collection, item, isOwner }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -67,11 +75,11 @@ const CollectionItemRow = ({ collection, item, isOwner }) => {
       <td>{sketchOwnerUsername}</td>
       <SketchlistDropdownColumn>
         {isOwner && (
-          <TableDropdown aria-label={t('SketchList.ToggleLabelARIA')}>
+          <WiderTableDropdown aria-label={t('SketchList.ToggleLabelARIA')}>
             <MenuItem onClick={handleSketchRemove}>
               {t('Collection.SketchRemoveARIA')}
             </MenuItem>
-          </TableDropdown>
+          </WiderTableDropdown>
         )}
       </SketchlistDropdownColumn>
     </tr>
