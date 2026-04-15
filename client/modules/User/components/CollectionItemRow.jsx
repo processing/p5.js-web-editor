@@ -28,7 +28,7 @@ const SketchlistDropdownColumn = styled.td`
 
 const WiderTableDropdown = styled(TableDropdown)`
   & ul {
-    width: ${remSize(220)};
+    width: ${remSize(180)};
     top: 74%;
     right: calc(100% - 26px);
   }
@@ -77,7 +77,7 @@ const CollectionItemRow = ({ collection, item, isOwner }) => {
         {isOwner && (
           <WiderTableDropdown aria-label={t('SketchList.ToggleLabelARIA')}>
             <MenuItem onClick={handleSketchRemove}>
-              {t('Collection.SketchRemoveARIA')}
+              {t('Collection.SketchRemoveLabel')}
             </MenuItem>
           </WiderTableDropdown>
         )}
