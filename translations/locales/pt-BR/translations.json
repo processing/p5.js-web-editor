@@ -475,6 +475,7 @@
     "AddSketch": "Adicionar Esboço",
     "DeleteFromCollection": "Realmente quer remover {{name_sketch}} dessa coleção?",
     "SketchDeleted": "Esboço apagado",
+    "SketchRemoveLabel": "Remove from Collection",
     "SketchRemoveARIA": "Remover esboço da coleção",
     "DescriptionPlaceholder": "Adicionar descrição",
     "NumSketches": "{{count}} esboço(s)",
@@ -487,8 +488,7 @@
     "DirectionAscendingARIA": "Ascendente",
     "DirectionDescendingARIA": "Descendente",
     "ButtonLabelAscendingARIA": "Ordenar por {{displayName}} ascendente.",
-    "ButtonLabelDescendingARIA": "Ordenar por {{displayName}} descendente.",
-    "SketchRemoveLabel": "Remove from Collection"
+    "ButtonLabelDescendingARIA": "Ordenar por {{displayName}} descendente."
   },
   "AddToCollectionList": {
     "Title": "Editor Web p5.js | Minhas coleções",

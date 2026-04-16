@@ -445,6 +445,7 @@
     "AddSketch": "Aggiungi sketch",
     "DeleteFromCollection": "Sei sicuro di voler cancellare {{name_sketch}} dalla collezione?",
     "SketchDeleted": "Sketch cancellato",
+    "SketchRemoveLabel": "Remove from Collection",
     "SketchRemoveARIA": "Cancella sketch dalla collezione",
     "DescriptionPlaceholder": "Aggiungi descrizione",
     "Description": "descrizione",
@@ -459,8 +460,7 @@
     "DirectionAscendingARIA": "Ascendente",
     "DirectionDescendingARIA": "Discendente",
     "ButtonLabelAscendingARIA": "Ordine per {{displayName}} ascendente.",
-    "ButtonLabelDescendingARIA": "Ordine per {{displayName}} discendente.",
-    "SketchRemoveLabel": "Remove from Collection"
+    "ButtonLabelDescendingARIA": "Ordine per {{displayName}} discendente."
   },
   "AddToCollectionList": {
     "Title": "p5.js redattore web | Le mie collezioni",

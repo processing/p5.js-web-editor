@@ -432,6 +432,7 @@
     "AddSketch": "Sketch hinzufügen",
     "DeleteFromCollection": "Bist Du sicher, dass Du {{name_sketch}} aus dieser Sammlung entfernen willst?",
     "SketchDeleted": "Sketch gelöscht",
+    "SketchRemoveLabel": "Remove from Collection",
     "SketchRemoveARIA": "Sketch aus der Sammlung entfernen",
     "DescriptionPlaceholder": "Beschreibung hinzufügen",
     "Description": "Beschreibung",
@@ -446,8 +447,7 @@
     "DirectionAscendingARIA": "Aufsteigend",
     "DirectionDescendingARIA": "Absteigend",
     "ButtonLabelAscendingARIA": "Sortiere nach {{displayName}} aufsteigend.",
-    "ButtonLabelDescendingARIA": "Sortiere nach {{displayName}} absteigend.",
-    "SketchRemoveLabel": "Remove from Collection"
+    "ButtonLabelDescendingARIA": "Sortiere nach {{displayName}} absteigend."
   },
   "AddToCollectionList": {
     "Title": "p5.js Web Editor | Meine Sammlungen",

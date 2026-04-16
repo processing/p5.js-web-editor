@@ -438,6 +438,7 @@
     "AddSketch": "新增草稿",
     "DeleteFromCollection": "確定要從本作品集移除 {{name_sketch}}？",
     "SketchDeleted": "已刪除草稿",
+    "SketchRemoveLabel": "Remove from Collection",
     "SketchRemoveARIA": "從作品集移除草稿",
     "DescriptionPlaceholder": "新增說明",
     "Description": "說明",
@@ -452,8 +453,7 @@
     "DirectionAscendingARIA": "升序",
     "DirectionDescendingARIA": "降序",
     "ButtonLabelAscendingARIA": "以 {{displayName}} 升序排列",
-    "ButtonLabelDescendingARIA": "以 {{displayName}} 降序排列",
-    "SketchRemoveLabel": "Remove from Collection"
+    "ButtonLabelDescendingARIA": "以 {{displayName}} 降序排列"
   },
   "AddToCollectionList": {
     "Title": "p5.js 網頁編輯器 | 我的作品集",

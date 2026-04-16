@@ -439,6 +439,7 @@
     "AddSketch": "Eskiz ekle",
     "DeleteFromCollection": "{{name_sketch}} eskizini koleksiyondan kaldırmak istediğinizden emin misiniz?",
     "SketchDeleted": "Eskiz silindi",
+    "SketchRemoveLabel": "Remove from Collection",
     "SketchRemoveARIA": "Eskiz koleksiyondan kaldır",
     "DescriptionPlaceholder": "Açıklama ekle",
     "Description": "açıklama",
@@ -453,8 +454,7 @@
     "DirectionAscendingARIA": "Artan sıralama",
     "DirectionDescendingARIA": "Azalan sıralama",
     "ButtonLabelAscendingARIA": "{{displayName}} artan sıralama.",
-    "ButtonLabelDescendingARIA": "{{displayName}} azalan sıralama.",
-    "SketchRemoveLabel": "Remove from Collection"
+    "ButtonLabelDescendingARIA": "{{displayName}} azalan sıralama."
   },
   "AddToCollectionList": {
     "Title": "p5.js Web Düzenleyicisi | Benim koleksiyonlarım",

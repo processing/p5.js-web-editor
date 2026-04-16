@@ -438,6 +438,7 @@
     "AddSketch": "添加项目",
     "DeleteFromCollection": "您确定要从此集合中删除 {{name_sketch}} 吗？",
     "SketchDeleted": "项目已删除",
+    "SketchRemoveLabel": "Remove from Collection",
     "SketchRemoveARIA": "从集合中移除项目",
     "DescriptionPlaceholder": "添加描述",
     "Description": "描述",
@@ -452,8 +453,7 @@
     "DirectionAscendingARIA": "升序",
     "DirectionDescendingARIA": "降序",
     "ButtonLabelAscendingARIA": "按 {{displayName}} 升序排列。",
-    "ButtonLabelDescendingARIA": "按 {{displayName}} 降序排列。",
-    "SketchRemoveLabel": "Remove from Collection"
+    "ButtonLabelDescendingARIA": "按 {{displayName}} 降序排列。"
   },
   "AddToCollectionList": {
     "Title": "p5.js 在线编辑器 ｜ 我的集合",
