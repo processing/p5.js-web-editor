@@ -424,6 +424,7 @@
     "AddSketch": "스케치 추가하기 Add Sketch",
     "DeleteFromCollection": "Are you sure you want to remove {{name_sketch}} from this collection?",
     "SketchDeleted": "Sketch deleted",
+    "SketchRemoveLabel": "Remove from Collection",
     "SketchRemoveARIA": "Remove sketch from collection",
     "DescriptionPlaceholder": "Add description",
     "Description": "description",
