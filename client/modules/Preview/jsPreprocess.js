@@ -107,8 +107,8 @@ function makeCheckStatement(varName, line) {
   };
 }
 
-function protectLoops(ast, shaderNames) {
-  let loopCount = 0;
+function collectLoopsToProtect(ast, shaderNames) {
+  const loops = [];
 
   function visitNode(node, ancestors) {
     const isInsideShader = ancestors.some((ancestor, idx) => {
@@ -142,30 +142,19 @@ function protectLoops(ast, shaderNames) {
 
     if (isInsideShader) return;
 
-    const varName = `_LP${loopCount++}`;
-    const { line } = node.loc.start;
-    const check = makeCheckStatement(varName, line);
-
-    if (node.body.type === 'BlockStatement') {
-      node.body.body.unshift(check);
-    } else {
-      node.body = { type: 'BlockStatement', body: [check, node.body] };
-    }
-
-    const varDecl = makeVarDecl(varName);
+    let parentBlock = null;
     for (let i = ancestors.length - 1; i >= 0; i--) {
       const ancestor = ancestors[i];
       if (
         ancestor !== node &&
         (ancestor.type === 'BlockStatement' || ancestor.type === 'Program')
       ) {
-        const nodeIdx = ancestor.body.indexOf(node);
-        if (nodeIdx !== -1) {
-          ancestor.body.splice(nodeIdx, 0, varDecl);
-          break;
-        }
+        parentBlock = ancestor;
+        break;
       }
     }
+
+    loops.push({ loop: node, parentBlock });
   }
 
   walk.ancestor(ast, {
@@ -174,7 +163,29 @@ function protectLoops(ast, shaderNames) {
     DoWhileStatement: visitNode
   });
 
-  return loopCount;
+  return loops;
+}
+
+function injectProtection(loops) {
+  loops.forEach(({ loop, parentBlock }, idx) => {
+    const varName = `_LP${idx}`;
+    const { line } = loop.loc.start;
+    const check = makeCheckStatement(varName, line);
+
+    if (loop.body.type === 'BlockStatement') {
+      loop.body.body.unshift(check);
+    } else {
+      loop.body = { type: 'BlockStatement', body: [check, loop.body] };
+    }
+
+    if (parentBlock) {
+      const varDecl = makeVarDecl(varName);
+      const nodeIdx = parentBlock.body.indexOf(loop);
+      if (nodeIdx !== -1) {
+        parentBlock.body.splice(nodeIdx, 0, varDecl);
+      }
+    }
+  });
 }
 
 function parseJs(jsText) {
@@ -199,9 +210,11 @@ export function jsPreprocess(jsText) {
   if (!ast) return jsText;
 
   const shaderNames = collectShaderFunctionNames(ast);
-  const loopCount = protectLoops(ast, shaderNames);
+  const loops = collectLoopsToProtect(ast, shaderNames);
 
-  if (loopCount === 0) return jsText;
+  if (loops.length === 0) return jsText;
+
+  injectProtection(loops);
 
   return escodegen.generate(ast);
 }
