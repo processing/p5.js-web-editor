@@ -452,7 +452,8 @@
     "DirectionAscendingARIA": "升序",
     "DirectionDescendingARIA": "降序",
     "ButtonLabelAscendingARIA": "按 {{displayName}} 升序排列。",
-    "ButtonLabelDescendingARIA": "按 {{displayName}} 降序排列。"
+    "ButtonLabelDescendingARIA": "按 {{displayName}} 降序排列。",
+    "SketchRemoveLabel": "Remove from Collection"
   },
   "AddToCollectionList": {
     "Title": "p5.js 在线编辑器 ｜ 我的集合",

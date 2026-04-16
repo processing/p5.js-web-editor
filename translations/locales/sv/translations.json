@@ -449,7 +449,8 @@
     "DirectionAscendingARIA": "Stigande",
     "DirectionDescendingARIA": "Fallande",
     "ButtonLabelAscendingARIA": "Sortera efter {{displayName}} stigande.",
-    "ButtonLabelDescendingARIA": "Sortera efter {{displayName}} fallande."
+    "ButtonLabelDescendingARIA": "Sortera efter {{displayName}} fallande.",
+    "SketchRemoveLabel": "Remove from Collection"
   },
   "AddToCollectionList": {
     "Title": "p5.js Webb editor | Mina samlingar",

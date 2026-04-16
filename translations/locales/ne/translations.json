@@ -521,7 +521,8 @@
     "DirectionAscendingARIA": "बढ्दो क्रम",
     "DirectionDescendingARIA": "घट्दो क्रम",
     "ButtonLabelAscendingARIA": "{{displayName}} बढ्दो क्रम मिलाउनुहोस्।",
-    "ButtonLabelDescendingARIA": "{{displayName}} घट्दो क्रम मिलाउनुहोस्।"
+    "ButtonLabelDescendingARIA": "{{displayName}} घट्दो क्रम मिलाउनुहोस्।",
+    "SketchRemoveLabel": "Remove from Collection"
   },
   "AddToCollectionList": {
     "Title": "p5.js वेब एडिटर | मेरा कलेक्सनहरू",

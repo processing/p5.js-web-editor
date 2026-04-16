@@ -453,7 +453,8 @@
     "DirectionAscendingARIA": "Artan sıralama",
     "DirectionDescendingARIA": "Azalan sıralama",
     "ButtonLabelAscendingARIA": "{{displayName}} artan sıralama.",
-    "ButtonLabelDescendingARIA": "{{displayName}} azalan sıralama."
+    "ButtonLabelDescendingARIA": "{{displayName}} azalan sıralama.",
+    "SketchRemoveLabel": "Remove from Collection"
   },
   "AddToCollectionList": {
     "Title": "p5.js Web Düzenleyicisi | Benim koleksiyonlarım",

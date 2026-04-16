@@ -446,7 +446,8 @@
     "DirectionAscendingARIA": "Aufsteigend",
     "DirectionDescendingARIA": "Absteigend",
     "ButtonLabelAscendingARIA": "Sortiere nach {{displayName}} aufsteigend.",
-    "ButtonLabelDescendingARIA": "Sortiere nach {{displayName}} absteigend."
+    "ButtonLabelDescendingARIA": "Sortiere nach {{displayName}} absteigend.",
+    "SketchRemoveLabel": "Remove from Collection"
   },
   "AddToCollectionList": {
     "Title": "p5.js Web Editor | Meine Sammlungen",

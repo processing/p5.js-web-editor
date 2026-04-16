@@ -169,7 +169,7 @@
     "Settings": "সেটিংস",
     "GeneralSettings": "সাধারণ সেটিংস",
     "Accessibility": "ব্যবহারযোগ্যতা",
-    "LibraryManagement": "লাইব্রেরি ম্যানেজমেন্ট",
+    "LibraryManagement": "লাইব্রেরি ব্যবস্থাপনা",
     "Theme": "থিম",
     "LightTheme": "সাদা",
     "LightThemeARIA": "সাদা থিম চালু",
@@ -212,7 +212,6 @@
     "TextOutputARIA": "টেক্সট আউটপুট অন",
     "TableText": "টেবিল-টেক্সট",
     "TableOutputARIA": "টেবিল আউটপুট অন",
-    "LibraryManagement": "লাইব্রেরি ব্যবস্থাপনা",
     "LibraryVersion": "p5.js সংস্করণ",
     "LibraryVersionInfo": "p5.js এর একটি [নতুন 2.0 রিলিজ](https://github.com/processing/p5.js/releases/) উপলব্ধ! এটি আগস্ট, 2026 এ ডিফল্ট হয়ে যাবে, তাই এটি পরীক্ষা করে দেখার জন্য এবং বাগ রিপোর্ট করার জন্য এই সময় নিন। 1.x থেকে 2.0 এ স্কেচ রূপান্তর করতে আগ্রহী? [সামঞ্জস্যতা এবং রূপান্তর সংস্থানগুলি দেখুন।](https://github.com/processing/p5.js-compatibility)",
     "CustomVersionTitle": "আপনার নিজস্ব লাইব্রেরি পরিচালনা করছেন? দারুন!",
@@ -485,7 +484,8 @@
     "DirectionAscendingARIA": "ঊর্ধ্বগামী",
     "DirectionDescendingARIA": "নিম্নগামী",
     "ButtonLabelAscendingARIA": "{{displayName}} দ্বারা ঊর্ধ্বগামী করুন।",
-    "ButtonLabelDescendingARIA": "{{displayName}} দ্বারা নিম্নগামী করুন।"
+    "ButtonLabelDescendingARIA": "{{displayName}} দ্বারা নিম্নগামী করুন।",
+    "SketchRemoveLabel": "Remove from Collection"
   },
   "AddToCollectionList": {
     "Title": "p5.js Web এডিটর | আমার সংগ্রহগুলি",

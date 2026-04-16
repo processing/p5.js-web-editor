@@ -459,7 +459,8 @@
     "DirectionAscendingARIA": "Ascendente",
     "DirectionDescendingARIA": "Discendente",
     "ButtonLabelAscendingARIA": "Ordine per {{displayName}} ascendente.",
-    "ButtonLabelDescendingARIA": "Ordine per {{displayName}} discendente."
+    "ButtonLabelDescendingARIA": "Ordine per {{displayName}} discendente.",
+    "SketchRemoveLabel": "Remove from Collection"
   },
   "AddToCollectionList": {
     "Title": "p5.js redattore web | Le mie collezioni",

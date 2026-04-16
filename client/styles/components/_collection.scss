@@ -144,3 +144,11 @@
   font-size: #{math.div(16, $base-font-size)}rem;
 }
 
+.collection-item__dropdown {
+  & ul {
+    width: #{math.div(180, $base-font-size)}rem;
+    top: 74%;
+    right: calc(100% - 26px);
+  }
+}
+

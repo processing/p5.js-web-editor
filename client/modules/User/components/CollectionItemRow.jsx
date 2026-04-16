@@ -3,36 +3,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import styled from 'styled-components';
 import { removeFromCollection } from '../../IDE/actions/collections';
 import { formatDateToString } from '../../../utils/formatDate';
 import { TableDropdown } from '../../../components/Dropdown/TableDropdown';
 import { MenuItem } from '../../../components/Dropdown/MenuItem';
-import { remSize } from '../../../theme';
-
-const SketchlistDropdownColumn = styled.td`
-  &&& {
-    position: relative;
-    width: ${remSize(60)};
-  }
-  @media (max-width: 770px) {
-    &&& {
-      position: absolute;
-      top: 0;
-      right: ${remSize(4)};
-      width: auto !important;
-      margin: ${remSize(8)};
-    }
-  }
-`;
-
-const WiderTableDropdown = styled(TableDropdown)`
-  & ul {
-    width: ${remSize(180)};
-    top: 74%;
-    right: calc(100% - 26px);
-  }
-`;
 
 const CollectionItemRow = ({ collection, item, isOwner }) => {
   const { t } = useTranslation();
@@ -73,15 +47,18 @@ const CollectionItemRow = ({ collection, item, isOwner }) => {
       <th scope="row">{name}</th>
       <td>{formatDateToString(item.createdAt)}</td>
       <td>{sketchOwnerUsername}</td>
-      <SketchlistDropdownColumn>
+      <td className="sketch-list__dropdown-column">
         {isOwner && (
-          <WiderTableDropdown aria-label={t('SketchList.ToggleLabelARIA')}>
+          <TableDropdown
+            aria-label={t('SketchList.ToggleLabelARIA')}
+            className="collection-item__dropdown"
+          >
             <MenuItem onClick={handleSketchRemove}>
               {t('Collection.SketchRemoveLabel')}
             </MenuItem>
-          </WiderTableDropdown>
+          </TableDropdown>
         )}
-      </SketchlistDropdownColumn>
+      </td>
     </tr>
   );
 };
