@@ -25,3 +25,4 @@ duplicates.json
 coverage
 
 *.tsbuildinfo
+/docs
