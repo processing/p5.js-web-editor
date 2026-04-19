@@ -1,4 +1,3 @@
-import { collections } from 'friendly-words';
 import { initialState as initialFilesState } from '../modules/IDE/reducers/files';
 import { initialState as initialPrefState } from '../modules/IDE/reducers/preferences';
 import { RootState } from '../reducers';
@@ -92,8 +91,20 @@ const initialTestState: RootState = {
     list: [],
     totalSize: 0
   },
-  loading: false,
-  collections: []
+  loading: false, 
+   collections: [],
+   collectionsListCollections: {
+    collections: [],
+    metadata: {
+      page: 1,
+      totalPages: 1,
+      totalProjects: 0,
+      limit: 10,
+      hasPagination: true
+    }
+  }
+
+ 
 };
 
 export { mockProjects, initialTestState };
