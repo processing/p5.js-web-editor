@@ -311,13 +311,13 @@
     "CurrentPasswordARIA": "Nuvarande lösenord",
     "NewPassword": "Nytt lösenord",
     "NewPasswordARIA": "Nytt lösenord",
-    "SubmitSaveAllSettings": "Spara alla inställningar"
+    "SaveAccountDetails": "Spara kontouppgifter"
   },
   "AccountView": {
     "SocialLogin": "Social inloggning",
     "SocialLoginDescription": "Använd ditt GitHub- eller Googlekonto för att logga in till p5.js Webb editor.",
     "Title": "p5.js Webb editor | Kontoinställningar",
-    "Settings": "Kontoinställningar",
+    "Settings": "Mitt konto",
     "AccountTab": "Konto",
     "AccessTokensTab": "Tokens för åtkomst"
   },

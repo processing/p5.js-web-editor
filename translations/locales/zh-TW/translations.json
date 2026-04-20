@@ -314,13 +314,13 @@
     "CurrentPasswordARIA": "目前密碼",
     "NewPassword": "新密碼",
     "NewPasswordARIA": "新密碼",
-    "SubmitSaveAllSettings": "儲存所有設定"
+    "SaveAccountDetails": "儲存帳戶詳細資料"
   },
   "AccountView": {
     "SocialLogin": "以社群帳號登入",
     "SocialLoginDescription": "使用你的 GitHub 或 Google 帳號登入 p5.js 網頁編輯器.",
     "Title": "p5.js 網頁編輯器 | 帳號設定",
-    "Settings": "帳號設定",
+    "Settings": "我的账户",
     "AccountTab": "帳號",
     "AccessTokensTab": "存取權杖"
   },

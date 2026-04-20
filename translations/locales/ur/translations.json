@@ -312,13 +312,13 @@
       "CurrentPasswordARIA": "موجودہ خفیہ لفظ",
       "NewPassword": "نیا پاس ورڈ",
       "NewPasswordARIA": "نیا پاس ورڈ",
-      "SubmitSaveAllSettings": "تمام ترتیبات کو محفوظ کریں۔"
+      "SaveAccountDetails": "اکاؤنٹ کی تفصیلات محفوظ کریں"
     },
     "AccountView": {
       "SocialLogin": "سماجی لاگ ان",
       "SocialLoginDescription": "p5.js ویب ایڈیٹر میں لاگ ان کرنے کے لیے اپنا GitHub یا Google اکاؤنٹ استعمال کریں۔",
       "Title": "p5.js ویب ایڈیٹر | ",
-      "Settings": "اکاؤنٹ کی ترتیبات",
+      "Settings": "میرا اکاؤنٹ",
       "AccountTab": "کھاتہ",
       "AccessTokensTab": "ٹوکنز تک رسائی حاصل کریں۔"
     },

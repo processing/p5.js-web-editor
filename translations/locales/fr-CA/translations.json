@@ -321,13 +321,13 @@
       "CurrentPasswordARIA": "Mot de passe actuel",
       "NewPassword": "Nouveau mot de passe",
       "NewPasswordARIA": "Nouveau mot de passe",
-      "SubmitSaveAllSettings": "Sauvegarder tous les paramètres"
+      "SaveAccountDetails": "Enregistrer les détails du compte"
     },
     "AccountView": {
       "SocialLogin": "Identification à l'aide des réseaux sociaux",
       "SocialLoginDescription": "Utilisez votre compte GitHub ou Google pour vous connecter à l'éditeur Web p5.js.",
       "Title": "Éditeur web p5.js | Paramètres du compte",
-      "Settings": "Paramètres du compte",
+      "Settings": "Mon compte",
       "AccountTab": "Compte",
       "AccessTokensTab": "Jetons d'accès"
     },

@@ -311,13 +311,13 @@
       "CurrentPasswordARIA": "現在のパスワード",
       "NewPassword": "新しいパスワード",
       "NewPasswordARIA": "新しいパスワード",
-      "SubmitSaveAllSettings": "すべての設定を保存"
+      "SaveAccountDetails": "アカウント詳細を保存"
     },
     "AccountView": {
       "SocialLogin": "ソーシャルログイン",
       "SocialLoginDescription": "GitHubやGoogleアカウントを使って、p5.js ウェブエディターにログインできます。",
       "Title": "p5.js ウェブエディター | アカウント設定",
-      "Settings": "アカウント設定",
+      "Settings": "マイアカウント",
       "AccountTab": "アカウント",
       "AccessTokensTab": "アクセストークン"
     },

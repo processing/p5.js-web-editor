@@ -318,13 +318,13 @@
     "CurrentPasswordARIA": "Contraseña Actual",
     "NewPassword": "Nueva Contraseña",
     "NewPasswordARIA": "Nueva Contraseña",
-    "SubmitSaveAllSettings": "Guardar Todas Las Configuraciones"
+    "SaveAccountDetails": "Guardar detalles de la cuenta"
   },
   "AccountView": {
     "SocialLogin": "Identificacion usando redes sociales",
     "SocialLoginDescription": "Usa tu cuenta de GitHub o Google para acceder al Editor Web de p5.js .",
     "Title": "Editor Web p5.js | Configuración Cuenta",
-    "Settings": "Configuración de la Cuenta",
+    "Settings": "Mi cuenta",
     "AccountTab": "Cuenta",
     "AccessTokensTab": "Tokens de acceso"
   },

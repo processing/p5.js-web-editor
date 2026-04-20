@@ -314,13 +314,13 @@
     "CurrentPasswordARIA": "当前密码",
     "NewPassword": "新密码",
     "NewPasswordARIA": "新密码",
-    "SubmitSaveAllSettings": "保存所有设置"
+    "SaveAccountDetails": "保存账户详细信息"
   },
   "AccountView": {
     "SocialLogin": "第三方登陆",
     "SocialLoginDescription": "使用您的 GitHub 或谷歌账号登陆 p5.js 在线编辑器。",
     "Title": "p5.js 在线编辑器 ｜ 账号设置",
-    "Settings": "账号设置",
+    "Settings": "我的账户",
     "AccountTab": "账号",
     "AccessTokensTab": "访问令牌"
   },

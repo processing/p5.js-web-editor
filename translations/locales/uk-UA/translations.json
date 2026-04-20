@@ -372,13 +372,13 @@
     "CurrentPasswordARIA": "Поточний пароль",
     "NewPassword": "Новий пароль",
     "NewPasswordARIA": "Новий пароль",
-    "SubmitSaveAllSettings": "Зберегти всі налаштування"
+    "SaveAccountDetails": "Зберегти дані облікового запису"
   },
   "AccountView": {
     "SocialLogin": "Увійти через соціальну мережу",
     "SocialLoginDescription": "Використовуйте свій обліковий запис GitHub або Google, щоб увійти у p5.js вебредактор.",
     "Title": "p5.js вебредактор | Налаштування акаунта",
-    "Settings": "Налаштування акаунта",
+    "Settings": "Мій обліковий запис",
     "AccountTab": "Акаунт",
     "AccessTokensTab": "Ключі"
   },
