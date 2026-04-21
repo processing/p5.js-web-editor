@@ -15,7 +15,7 @@ If you run into any issues while setting up your environment, take some time to 
 
 ## Manual Installation
 
-_Note_: The installation steps assume you are using a Unix-like shell. If you are using Windows, you will need to use `copy` instead of `cp`.
+_Note_: The installation steps assume you are using a Unix-like shell. If you are using Windows, see the [Windows-specific tips](#windows-tips) section below, then follow the steps as written.
 
 1. Install Node.js. The recommended way is to Node through [nvm](https://github.com/nvm-sh/nvm), which is a command-line tool that helps you manage different versions of Node.js on your system. You can install nvm by using [nvm's installation guide](https://github.com/nvm-sh/nvm?tab=readme-ov-file#installing-and-updating).
       - You can also install [node.js](https://nodejs.org/download/release/v18.20.8/) version 18.20.8 directly from the Node.js website. To check if you already have Node installed on your computer, run `$ node -v`.
@@ -89,6 +89,17 @@ To open a terminal/shell in the running Docker server (i.e. after `docker-compos
 If you don't have the full server environment running, you can launch a one-off container instance (and have it automatically deleted after you're done using it):
 
 12. `$ docker-compose -f docker-compose-development.yml run app --rm bash -l`
+
+## Windows Tips
+
+If you are setting up the project on Windows, the manual installation guide above applies with the following adjustments:
+
+- **Node.js**: Instead of using [nvm](https://github.com/nvm-sh/nvm) (which requires WSL on Windows), download and install Node.js v18.20.8 directly from the [Node.js website](https://nodejs.org/download/release/v18.20.8/). During installation, make sure "Add to PATH" stays checked. Alternatively, you can use [nvm-windows](https://github.com/coreybutler/nvm-windows) if you need to manage multiple Node versions.
+- **Shell**: Install [Git for Windows](https://git-scm.com/download/win), which includes Git Bash. You can use Git Bash to run all the commands in the guide as written (including `cp`). If you prefer using Command Prompt or PowerShell instead, replace `cp` with `copy`.
+- **MongoDB**: Follow the [MongoDB Windows installation guide](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-windows/). Choose "Install MongoDB as a Service" during setup so it runs automatically.
+- **Troubleshooting**:
+  - `node` or `npm` not recognized: Restart your terminal after installing Node.js so the PATH changes take effect.
+  - MongoDB won't start: Open Command Prompt as administrator and run `net start MongoDB`.
 
 ## S3 Bucket Configuration
 
