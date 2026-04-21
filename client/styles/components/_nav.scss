@@ -111,7 +111,7 @@
 }
 
 .nav__item--no-icon {
-  padding-left: #{math.div(15, $base-font-size)}rem;
+  padding-left: 0;
 }
 
 .nav__item-header-triangle polygon,
@@ -135,6 +135,13 @@
   & g, & path {
     @include themify() {
       fill: getThemifyVariable('nav-hover-color');
+    }
+  }
+
+  .nav__back-icon g,
+  .nav__back-icon path {
+    @include themify() {
+      fill: getThemifyVariable('button-hover-color');
     }
   }
 
@@ -289,4 +296,7 @@
 
 .nav__back-link {
   display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 #{math.div(10, $base-font-size)}rem 0 #{math.div(15, $base-font-size)}rem;
 }
