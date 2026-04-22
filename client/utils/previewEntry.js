@@ -102,11 +102,15 @@ if (Array.isArray(window.__jshintErrors) && window.__jshintErrors.length > 0) {
         }
       ]
     });
+    const mdn =
+      'https://developer.mozilla.org/docs/Web/JavaScript/Reference/Errors/Unexpected_token#What_went_wrong';
     messagesBatch.push({
       log: [
         {
           method: 'log',
-          data: [`🌸 p5.js says: ${friendlyHintForJshint(err)}`],
+          data: [
+            `🌸 p5.js says: ${friendlyHintForJshint(err)} + More info: ${mdn}`
+          ],
           id: `${id}-hint`
         }
       ]
