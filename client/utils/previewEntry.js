@@ -58,6 +58,17 @@ if (Array.isArray(window.__jshintErrors) && window.__jshintErrors.length > 0) {
     };
     return { log: [log] };
   });
+  const first = window.__jshintErrors[0];
+  const friendlyText = `🌸 p5.js says:\nSyntax Error - Symbol present at a place that wasn't expected.\n[${first.file}, line ${first.line}] Usually this is due to a typo. Check the line number in the error for anything missing/extra.\n\n+ More info: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Errors/Unexpected_token#What_went_wrong`;
+  errorLogs.push({
+    log: [
+      {
+        method: 'log',
+        data: [friendlyText],
+        id: `${Date.now()}-jshint-friendly`
+      }
+    ]
+  });
   editor.postMessage(
     {
       source: 'sketch',
