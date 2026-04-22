@@ -85,7 +85,7 @@ function jsPreprocess(jsText, fileName, lineOffset = 0) {
   }
   fatal.forEach((err) => {
     const line = (err.line || 1) + lineOffset;
-    const key = `${fileName}:${line}:${err.character}:${err.reason}`;
+    const key = `${fileName}:${line}:${err.reason}`;
     if (jshintErrorKeys.has(key)) return;
     jshintErrorKeys.add(key);
     jshintErrors.push({
