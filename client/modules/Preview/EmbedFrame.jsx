@@ -81,23 +81,23 @@ function jsPreprocess(jsText, fileName, lineOffset = 0) {
       space: true
     });
     newContent = loopProtect(newContent);
-  } else {
-    fatal.forEach((err) => {
-      const line = (err.line || 1) + lineOffset;
-      const key = `${fileName}:${line}:${err.character}:${err.reason}`;
-      if (jshintErrorKeys.has(key)) return;
-      jshintErrorKeys.add(key);
-      jshintErrors.push({
-        file: fileName,
-        line,
-        character: err.character,
-        reason: err.reason,
-        evidence: err.evidence,
-        code: err.code
-      });
-    });
+    return newContent;
   }
-  return newContent;
+  fatal.forEach((err) => {
+    const line = (err.line || 1) + lineOffset;
+    const key = `${fileName}:${line}:${err.character}:${err.reason}`;
+    if (jshintErrorKeys.has(key)) return;
+    jshintErrorKeys.add(key);
+    jshintErrors.push({
+      file: fileName,
+      line,
+      character: err.character,
+      reason: err.reason,
+      evidence: err.evidence,
+      code: err.code
+    });
+  });
+  return `/* p5 sketch suppressed due to syntax errors in ${fileName}, see console */`;
 }
 
 function resolveJSLinksInString(content, files, fileName, lineOffset = 0) {
