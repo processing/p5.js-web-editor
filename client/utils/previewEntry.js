@@ -39,15 +39,24 @@ if (Array.isArray(window.__jshintErrors) && window.__jshintErrors.length > 0) {
   const errorLogs = window.__jshintErrors.map((err) => {
     const location = `${err.file}:${err.line}:${err.character}`;
     const data = `SyntaxError: ${err.reason}\n    at ${location}`;
-    return {
-      log: [
-        {
-          method: 'error',
-          data: [data],
-          id: `${Date.now()}-${err.file}-${err.line}-${err.character}`
-        }
-      ]
+    const log = {
+      method: 'error',
+      data: [data],
+      id: `${Date.now()}-${err.file}-${err.line}-${err.character}`,
+      meta: {
+        name: 'SyntaxError',
+        message: err.reason,
+        stack: [
+          {
+            fileName: err.file,
+            functionName: null,
+            lineNumber: err.line,
+            columnNumber: err.character
+          }
+        ]
+      }
     };
+    return { log: [log] };
   });
   editor.postMessage(
     {
@@ -84,32 +93,51 @@ function handleMessageEvent(e) {
 
 window.addEventListener('message', handleMessageEvent);
 
-function formatStackLine({ fileName, functionName, lineNumber, columnNumber }) {
+function resolveStackFrame({
+  fileName,
+  functionName,
+  lineNumber,
+  columnNumber
+}) {
   const resolvedFileName = window.objectUrls[fileName] || fileName;
-  const resolvedFuncName = functionName || '(anonymous function)';
-  if (lineNumber && columnNumber) {
-    let resolvedLineNumber = lineNumber;
-    if (resolvedFileName === 'index.html') {
-      resolvedLineNumber = lineNumber - htmlOffset;
-    }
-    return `\n    at ${resolvedFuncName} (${resolvedFileName}:${resolvedLineNumber}:${columnNumber})`;
+  let resolvedLineNumber = lineNumber;
+  if (resolvedFileName === 'index.html' && lineNumber) {
+    resolvedLineNumber = lineNumber - htmlOffset;
   }
-  return `\n    at ${resolvedFuncName} (${resolvedFileName})`;
+  return {
+    fileName: resolvedFileName,
+    functionName: functionName || null,
+    lineNumber: resolvedLineNumber || null,
+    columnNumber: columnNumber || null
+  };
 }
 
-function postErrorMessage(data) {
+function formatStackFrame({
+  fileName,
+  functionName,
+  lineNumber,
+  columnNumber
+}) {
+  const name = functionName || '(anonymous function)';
+  if (lineNumber && columnNumber) {
+    return `\n    at ${name} (${fileName}:${lineNumber}:${columnNumber})`;
+  }
+  return `\n    at ${name} (${fileName})`;
+}
+
+function postErrorMessage(data, meta) {
+  const log = {
+    method: 'error',
+    data: [data],
+    id: Date.now().toString()
+  };
+  if (meta) log.meta = meta;
   editor.postMessage(
     {
       source: 'sketch',
       messages: [
         {
-          log: [
-            {
-              method: 'error',
-              data: [data],
-              id: Date.now().toString()
-            }
-          ]
+          log: [log]
         }
       ]
     },
@@ -129,48 +157,57 @@ window.onerror = async function onError(
     postErrorMessage(msg);
     return false;
   }
-  let data = `${error.name}: ${error.message}`;
-  let stackLines = [];
+  let rawStack = [];
   if (error.stack) {
     try {
-      stackLines = await StackTrace.fromError(error);
+      rawStack = await StackTrace.fromError(error);
     } catch (e) {
-      stackLines = [];
+      rawStack = [];
     }
   }
-  if (stackLines.length > 0) {
-    stackLines.forEach((stackLine) => {
-      data = data.concat(formatStackLine(stackLine));
-    });
-  } else {
-    data = data.concat(
-      formatStackLine({
+  if (rawStack.length === 0) {
+    rawStack = [
+      {
         fileName: source,
         functionName: null,
         lineNumber,
         columnNumber: columnNo
-      })
-    );
+      }
+    ];
   }
-  postErrorMessage(data);
+  const resolvedStack = rawStack.map(resolveStackFrame);
+  let data = `${error.name}: ${error.message}`;
+  resolvedStack.forEach((frame) => {
+    data = data.concat(formatStackFrame(frame));
+  });
+  postErrorMessage(data, {
+    name: error.name,
+    message: error.message,
+    stack: resolvedStack
+  });
   return false;
 };
 // catch rejected promises
 window.onunhandledrejection = async function onUnhandledRejection(event) {
   if (!event.reason || !event.reason.message) return;
-  let stackLines = [];
+  let rawStack = [];
   if (event.reason.stack) {
     try {
-      stackLines = await StackTrace.fromError(event.reason);
+      rawStack = await StackTrace.fromError(event.reason);
     } catch (e) {
-      stackLines = [];
+      rawStack = [];
     }
   }
+  const resolvedStack = rawStack.map(resolveStackFrame);
   let data = `${event.reason.name}: ${event.reason.message}`;
-  stackLines.forEach((stackLine) => {
-    data = data.concat(formatStackLine(stackLine));
+  resolvedStack.forEach((frame) => {
+    data = data.concat(formatStackFrame(frame));
   });
-  postErrorMessage(data);
+  postErrorMessage(data, {
+    name: event.reason.name,
+    message: event.reason.message,
+    stack: resolvedStack
+  });
 };
 
 // Monkeypatch p5._friendlyError

@@ -148,27 +148,42 @@ function Editor({
   useEffect(() => {
     const consoleErrors = consoleEvents.filter((e) => e.method === 'error');
 
-    if (consoleErrors.length > 0) {
-      const firstError = consoleErrors[0];
-      const errorObj = { stack: firstError.data[0].toString() };
-      StackTrace.fromError(errorObj).then((stackLines) => {
-        expandConsole();
-        const line = stackLines.find(
-          (l) => l.fileName && l.fileName.startsWith('/')
-        );
-        if (!line) return;
-        const fileNameArray = line.fileName.split('/');
-        const fileName = fileNameArray.slice(-1)[0];
-        const filePath = fileNameArray.slice(0, -1).join('/');
-        const fileWithError = files.find(
-          (f) => f.name === fileName && f.filePath === filePath
-        );
-        setSelectedFile(fileWithError.id);
-        addErrorDecoration(codemirrorView.current, line.lineNumber);
-      });
-    } else {
+    if (consoleErrors.length === 0) {
       removeErrorDecorations(codemirrorView.current);
+      return;
     }
+
+    const applyDecoration = (frame) => {
+      if (!frame || !frame.fileName) return;
+      expandConsole();
+      const fileNameArray = frame.fileName.split('/');
+      const fileName = fileNameArray.slice(-1)[0];
+      const filePath = fileNameArray.slice(0, -1).join('/');
+      const fileWithError = files.find(
+        (f) => f.name === fileName && f.filePath === filePath
+      );
+      if (!fileWithError) return;
+      setSelectedFile(fileWithError.id);
+      addErrorDecoration(codemirrorView.current, frame.lineNumber);
+    };
+
+    const firstError = consoleErrors[0];
+    const metaStack = firstError.meta && firstError.meta.stack;
+    if (Array.isArray(metaStack) && metaStack.length > 0) {
+      const frame =
+        metaStack.find((f) => f.fileName && f.fileName.startsWith('/')) ||
+        metaStack[0];
+      applyDecoration(frame);
+      return;
+    }
+
+    const errorObj = { stack: firstError.data[0].toString() };
+    StackTrace.fromError(errorObj).then((stackLines) => {
+      const frame = stackLines.find(
+        (l) => l.fileName && l.fileName.startsWith('/')
+      );
+      applyDecoration(frame);
+    });
   }, [consoleEvents]);
 
   const editorSectionClass = classNames({
