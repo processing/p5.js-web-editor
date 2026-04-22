@@ -35,9 +35,32 @@ setInterval(() => {
   }
 }, LOGWAIT);
 
+function detectMissingEquals(err) {
+  const evidence = err.evidence || '';
+  const match = /(let|const|var)\s+([a-z_$][\w$]*)\s+(\d|['"`]|true\b|false\b|null\b)/i.exec(
+    evidence
+  );
+  if (!match) return null;
+  return { keyword: match[1], name: match[2] };
+}
+
+function refineJshintReason(err) {
+  if (/missing semicolon/i.test(err.reason || '')) {
+    const eq = detectMissingEquals(err);
+    if (eq) {
+      return `Missing '=' in ${eq.keyword} declaration of '${eq.name}'`;
+    }
+  }
+  return err.reason;
+}
+
 function friendlyHintForJshint(err) {
   const prefix = `[${err.file}, line ${err.line}]`;
   const reason = err.reason || '';
+  const eq = detectMissingEquals(err);
+  if (eq && /missing semicolon/i.test(reason)) {
+    return `${prefix} a '=' is missing between the variable name '${eq.name}' and its value.`;
+  }
   if (/expected an identifier/i.test(reason)) {
     return `${prefix} a value or variable name is missing before the symbol here.`;
   }
@@ -78,8 +101,9 @@ function friendlyHintForJshint(err) {
 if (Array.isArray(window.__jshintErrors) && window.__jshintErrors.length > 0) {
   const messagesBatch = [];
   window.__jshintErrors.forEach((err) => {
+    const refinedReason = refineJshintReason(err);
     const location = `${err.file}:${err.line}:${err.character}`;
-    const data = `SyntaxError: ${err.reason} at ${location}`;
+    const data = `SyntaxError: ${refinedReason} at ${location}`;
     const id = `${Date.now()}-${err.file}-${err.line}-${err.character}`;
     messagesBatch.push({
       log: [
@@ -89,7 +113,7 @@ if (Array.isArray(window.__jshintErrors) && window.__jshintErrors.length > 0) {
           id,
           meta: {
             name: 'SyntaxError',
-            message: err.reason,
+            message: refinedReason,
             stack: [
               {
                 fileName: err.file,
