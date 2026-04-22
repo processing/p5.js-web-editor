@@ -109,7 +109,9 @@ if (Array.isArray(window.__jshintErrors) && window.__jshintErrors.length > 0) {
         {
           method: 'log',
           data: [
-            `🌸 p5.js says: ${friendlyHintForJshint(err)} + More info: ${mdn}`
+            `🌸 p5.js says: ${friendlyHintForJshint(
+              err
+            )}\n\n+ More info: ${mdn}`
           ],
           id: `${id}-hint`
         }
