@@ -148,41 +148,46 @@ function Editor({
   useEffect(() => {
     const consoleErrors = consoleEvents.filter((e) => e.method === 'error');
 
-    if (consoleErrors.length === 0) {
-      removeErrorDecorations(codemirrorView.current);
-      return;
-    }
+    removeErrorDecorations(codemirrorView.current);
 
-    const applyDecoration = (frame) => {
-      if (!frame || !frame.fileName) return;
-      expandConsole();
-      const fileNameArray = frame.fileName.split('/');
-      const fileName = fileNameArray.slice(-1)[0];
-      const filePath = fileNameArray.slice(0, -1).join('/');
-      const fileWithError = files.find(
-        (f) => f.name === fileName && f.filePath === filePath
+    if (consoleErrors.length === 0) return;
+
+    const resolveFrameFromError = (errorEntry) => {
+      const metaStack = errorEntry.meta && errorEntry.meta.stack;
+      if (Array.isArray(metaStack) && metaStack.length > 0) {
+        return Promise.resolve(
+          metaStack.find((f) => f.fileName && f.fileName.startsWith('/')) ||
+            metaStack[0]
+        );
+      }
+      return StackTrace.fromError({
+        stack: errorEntry.data[0].toString()
+      }).then((stackLines) =>
+        stackLines.find((l) => l.fileName && l.fileName.startsWith('/'))
       );
-      if (!fileWithError) return;
-      setSelectedFile(fileWithError.id);
-      addErrorDecoration(codemirrorView.current, frame.lineNumber);
     };
 
-    const firstError = consoleErrors[0];
-    const metaStack = firstError.meta && firstError.meta.stack;
-    if (Array.isArray(metaStack) && metaStack.length > 0) {
-      const frame =
-        metaStack.find((f) => f.fileName && f.fileName.startsWith('/')) ||
-        metaStack[0];
-      applyDecoration(frame);
-      return;
-    }
+    const matchFile = (frame) => {
+      if (!frame || !frame.fileName) return null;
+      const parts = frame.fileName.split('/');
+      const fileName = parts.slice(-1)[0];
+      const filePath = parts.slice(0, -1).join('/');
+      return files.find((f) => f.name === fileName && f.filePath === filePath);
+    };
 
-    const errorObj = { stack: firstError.data[0].toString() };
-    StackTrace.fromError(errorObj).then((stackLines) => {
-      const frame = stackLines.find(
-        (l) => l.fileName && l.fileName.startsWith('/')
-      );
-      applyDecoration(frame);
+    Promise.all(consoleErrors.map(resolveFrameFromError)).then((frames) => {
+      const pairs = frames
+        .map((frame) => ({ frame, file: matchFile(frame) }))
+        .filter((p) => p.frame && p.file);
+      if (pairs.length === 0) return;
+      expandConsole();
+      const targetFileId = pairs[0].file.id;
+      setSelectedFile(targetFileId);
+      pairs
+        .filter((p) => p.file.id === targetFileId)
+        .forEach((p) =>
+          addErrorDecoration(codemirrorView.current, p.frame.lineNumber)
+        );
     });
   }, [consoleEvents]);
 
