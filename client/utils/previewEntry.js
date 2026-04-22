@@ -102,21 +102,26 @@ if (Array.isArray(window.__jshintErrors) && window.__jshintErrors.length > 0) {
         }
       ]
     });
-    const mdn =
-      'https://developer.mozilla.org/docs/Web/JavaScript/Reference/Errors/Unexpected_token#What_went_wrong';
     messagesBatch.push({
       log: [
         {
           method: 'log',
-          data: [
-            `🌸 p5.js says: ${friendlyHintForJshint(
-              err
-            )}\n\n+ More info: ${mdn}`
-          ],
+          data: [`🌸 p5.js says: ${friendlyHintForJshint(err)}`],
           id: `${id}-hint`
         }
       ]
     });
+  });
+  const mdn =
+    'https://developer.mozilla.org/docs/Web/JavaScript/Reference/Errors/Unexpected_token#What_went_wrong';
+  messagesBatch.push({
+    log: [
+      {
+        method: 'log',
+        data: [`+ More info: ${mdn}`],
+        id: `${Date.now()}-jshint-more-info`
+      }
+    ]
   });
   editor.postMessage(
     {
