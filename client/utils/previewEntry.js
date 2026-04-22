@@ -35,33 +35,87 @@ setInterval(() => {
   }
 }, LOGWAIT);
 
+function friendlyHintForJshint(err) {
+  const prefix = `[${err.file}, line ${err.line}]`;
+  const reason = err.reason || '';
+  if (/expected an identifier/i.test(reason)) {
+    return `${prefix} a value or variable name is missing before the symbol here.`;
+  }
+  if (/missing semicolon/i.test(reason)) {
+    return `${prefix} a ';' might be missing at the end of this statement.`;
+  }
+  if (/unclosed (string|regular expression)/i.test(reason)) {
+    return `${prefix} a string or regular expression is not closed with a matching quote or delimiter.`;
+  }
+  if (/missing '\)'/i.test(reason)) {
+    return `${prefix} a closing ')' is missing. check for unbalanced parentheses.`;
+  }
+  if (/missing '\}'/i.test(reason)) {
+    return `${prefix} a closing '}' is missing. check for unbalanced braces.`;
+  }
+  if (/unmatched '/i.test(reason)) {
+    return `${prefix} a bracket, brace, or parenthesis on this line does not have a matching partner.`;
+  }
+  if (/unexpected early end/i.test(reason)) {
+    return `${prefix} the code ended while a block was still open. a '}' or ')' may be missing.`;
+  }
+  if (
+    /unexpected '?;'?/i.test(reason) ||
+    /unexpected token ';'/i.test(reason)
+  ) {
+    return `${prefix} there is an extra or misplaced ';' on this line.`;
+  }
+  if (
+    /use of const before it was defined|'[a-z_$][\w$]*' was used before it was defined/i.test(
+      reason
+    )
+  ) {
+    return `${prefix} a name is being used before it is declared.`;
+  }
+  return `${prefix} ${reason}`;
+}
+
 if (Array.isArray(window.__jshintErrors) && window.__jshintErrors.length > 0) {
-  const errorLogs = window.__jshintErrors.map((err) => {
+  const messagesBatch = [];
+  window.__jshintErrors.forEach((err) => {
     const location = `${err.file}:${err.line}:${err.character}`;
-    const data = `SyntaxError: ${err.reason}\n    at ${location}`;
-    const log = {
-      method: 'error',
-      data: [data],
-      id: `${Date.now()}-${err.file}-${err.line}-${err.character}`,
-      meta: {
-        name: 'SyntaxError',
-        message: err.reason,
-        stack: [
-          {
-            fileName: err.file,
-            functionName: null,
-            lineNumber: err.line,
-            columnNumber: err.character
+    const data = `SyntaxError: ${err.reason} at ${location}`;
+    const id = `${Date.now()}-${err.file}-${err.line}-${err.character}`;
+    messagesBatch.push({
+      log: [
+        {
+          method: 'error',
+          data: [data],
+          id,
+          meta: {
+            name: 'SyntaxError',
+            message: err.reason,
+            stack: [
+              {
+                fileName: err.file,
+                functionName: null,
+                lineNumber: err.line,
+                columnNumber: err.character
+              }
+            ]
           }
-        ]
-      }
-    };
-    return { log: [log] };
+        }
+      ]
+    });
+    messagesBatch.push({
+      log: [
+        {
+          method: 'log',
+          data: [`🌸 p5.js says: ${friendlyHintForJshint(err)}`],
+          id: `${id}-hint`
+        }
+      ]
+    });
   });
   editor.postMessage(
     {
       source: 'sketch',
-      messages: errorLogs
+      messages: messagesBatch
     },
     editorOrigin
   );
