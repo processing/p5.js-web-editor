@@ -35,6 +35,29 @@ setInterval(() => {
   }
 }, LOGWAIT);
 
+if (Array.isArray(window.__jshintErrors) && window.__jshintErrors.length > 0) {
+  const errorLogs = window.__jshintErrors.map((err) => {
+    const location = `${err.file}:${err.line}:${err.character}`;
+    const data = `SyntaxError: ${err.reason}\n    at ${location}`;
+    return {
+      log: [
+        {
+          method: 'error',
+          data: [data],
+          id: `${Date.now()}-${err.file}-${err.line}-${err.character}`
+        }
+      ]
+    };
+  });
+  editor.postMessage(
+    {
+      source: 'sketch',
+      messages: errorLogs
+    },
+    editorOrigin
+  );
+}
+
 function handleMessageEvent(e) {
   // maybe don't need this?? idk!
   if (window.origin !== e.origin) return;
