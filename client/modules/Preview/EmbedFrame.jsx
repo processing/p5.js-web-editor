@@ -58,27 +58,38 @@ function resolveCSSLinksInString(content, files) {
   return newContent;
 }
 
-function jsPreprocess(jsText, fileName) {
+const JSHINT_OPTIONS = {
+  esversion: 11,
+  asi: true,
+  laxbreak: true,
+  laxcomma: true
+};
+
+function jsPreprocess(jsText, fileName, lineOffset = 0) {
   let newContent = jsText;
   // check the code for js errors before sending it to strip comments
   // or loops.
-  JSHINT(newContent);
+  JSHINT(newContent, JSHINT_OPTIONS);
 
-  if (JSHINT.errors.length === 0) {
+  const fatal = JSHINT.errors.filter(
+    (err) => err && (!err.code || err.code.startsWith('E'))
+  );
+
+  if (fatal.length === 0) {
     newContent = decomment(newContent, {
       ignore: /\/\/\s*noprotect/g,
       space: true
     });
     newContent = loopProtect(newContent);
   } else {
-    JSHINT.errors.forEach((err) => {
-      if (!err) return;
-      const key = `${fileName}:${err.line}:${err.character}:${err.reason}`;
+    fatal.forEach((err) => {
+      const line = (err.line || 1) + lineOffset;
+      const key = `${fileName}:${line}:${err.character}:${err.reason}`;
       if (jshintErrorKeys.has(key)) return;
       jshintErrorKeys.add(key);
       jshintErrors.push({
         file: fileName,
-        line: err.line,
+        line,
         character: err.character,
         reason: err.reason,
         evidence: err.evidence,
@@ -89,7 +100,7 @@ function jsPreprocess(jsText, fileName) {
   return newContent;
 }
 
-function resolveJSLinksInString(content, files, fileName) {
+function resolveJSLinksInString(content, files, fileName, lineOffset = 0) {
   let newContent = content;
   let jsFileStrings = content.match(STRING_REGEX);
   jsFileStrings = jsFileStrings || [];
@@ -115,10 +126,17 @@ function resolveJSLinksInString(content, files, fileName) {
     }
   });
 
-  return jsPreprocess(newContent, fileName);
+  return jsPreprocess(newContent, fileName, lineOffset);
 }
 
-function resolveScripts(sketchDoc, files) {
+function getInlineScriptLineOffset(htmlContent, scriptInner) {
+  if (!htmlContent || !scriptInner) return 0;
+  const ix = htmlContent.indexOf(scriptInner);
+  if (ix < 0) return 0;
+  return htmlContent.substring(0, ix).split('\n').length - 1;
+}
+
+function resolveScripts(sketchDoc, files, htmlContent) {
   const scriptsInHTML = sketchDoc.getElementsByTagName('script');
   const scriptsInHTMLArray = Array.prototype.slice.call(scriptsInHTML);
   scriptsInHTMLArray.forEach((script) => {
@@ -153,7 +171,12 @@ function resolveScripts(sketchDoc, files) {
       ) !== null
     ) {
       script.setAttribute('crossorigin', '');
-      script.innerHTML = resolveJSLinksInString(script.innerHTML, files, 'index.html'); // eslint-disable-line
+      const inlineOffset = getInlineScriptLineOffset(
+        htmlContent,
+        script.innerHTML
+      );
+      script.innerHTML = resolveJSLinksInString(script.innerHTML, files, 'index.html', inlineOffset); // eslint-disable-line
+      script.dataset.inlineOffset = String(inlineOffset);
     }
   });
 }
@@ -209,7 +232,8 @@ function addLoopProtect(sketchDoc) {
   const scriptsInHTML = sketchDoc.getElementsByTagName('script');
   const scriptsInHTMLArray = Array.prototype.slice.call(scriptsInHTML);
   scriptsInHTMLArray.forEach((script) => {
-    script.innerHTML = jsPreprocess(script.innerHTML, 'index.html'); // eslint-disable-line
+    const inlineOffset = parseInt(script.dataset.inlineOffset || '0', 10);
+    script.innerHTML = jsPreprocess(script.innerHTML, 'index.html', inlineOffset); // eslint-disable-line
   });
 }
 
@@ -232,7 +256,7 @@ function injectLocalFiles(files, htmlFile, options) {
   resolvePathsForElementsWithAttribute('href', sketchDoc, resolvedFiles);
   // should also include background, data, poster, but these are used way less often
 
-  resolveScripts(sketchDoc, resolvedFiles);
+  resolveScripts(sketchDoc, resolvedFiles, htmlFile.content);
   resolveStyles(sketchDoc, resolvedFiles);
 
   if (textOutput || gridOutput) {

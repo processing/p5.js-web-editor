@@ -93,13 +93,23 @@ function handleMessageEvent(e) {
 
 window.addEventListener('message', handleMessageEvent);
 
+function resolveFileName(rawName) {
+  if (!rawName) return rawName;
+  if (window.objectUrls[rawName]) return window.objectUrls[rawName];
+  const withBlob = `blob:${rawName}`;
+  if (window.objectUrls[withBlob]) return window.objectUrls[withBlob];
+  const segment = rawName.split('/').pop();
+  if (window.objectPaths[segment]) return window.objectPaths[segment];
+  return rawName;
+}
+
 function resolveStackFrame({
   fileName,
   functionName,
   lineNumber,
   columnNumber
 }) {
-  const resolvedFileName = window.objectUrls[fileName] || fileName;
+  const resolvedFileName = resolveFileName(fileName);
   let resolvedLineNumber = lineNumber;
   if (resolvedFileName === 'index.html' && lineNumber) {
     resolvedLineNumber = lineNumber - htmlOffset;
