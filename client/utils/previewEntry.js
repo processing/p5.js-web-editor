@@ -84,29 +84,20 @@ function handleMessageEvent(e) {
 
 window.addEventListener('message', handleMessageEvent);
 
-// catch reference errors, via http://stackoverflow.com/a/12747364/2994108
-window.onerror = async function onError(
-  msg,
-  source,
-  lineNumber,
-  columnNo,
-  error
-) {
-  // maybe i can use error.stack sometime but i'm having a hard time triggering
-  // this function
-  let data;
-  if (!error) {
-    data = msg;
-  } else {
-    data = `${error.name}: ${error.message}`;
-    const resolvedFileName = window.objectUrls[source];
-    let resolvedLineNo = lineNumber;
-    if (window.objectUrls[source] === 'index.html') {
-      resolvedLineNo = lineNumber - htmlOffset;
+function formatStackLine({ fileName, functionName, lineNumber, columnNumber }) {
+  const resolvedFileName = window.objectUrls[fileName] || fileName;
+  const resolvedFuncName = functionName || '(anonymous function)';
+  if (lineNumber && columnNumber) {
+    let resolvedLineNumber = lineNumber;
+    if (resolvedFileName === 'index.html') {
+      resolvedLineNumber = lineNumber - htmlOffset;
     }
-    const line = `\n    at ${resolvedFileName}:${resolvedLineNo}:${columnNo}`;
-    data = data.concat(line);
+    return `\n    at ${resolvedFuncName} (${resolvedFileName}:${resolvedLineNumber}:${columnNumber})`;
   }
+  return `\n    at ${resolvedFuncName} (${resolvedFileName})`;
+}
+
+function postErrorMessage(data) {
   editor.postMessage(
     {
       source: 'sketch',
@@ -124,50 +115,62 @@ window.onerror = async function onError(
     },
     editorOrigin
   );
+}
+
+// catch reference errors, via http://stackoverflow.com/a/12747364/2994108
+window.onerror = async function onError(
+  msg,
+  source,
+  lineNumber,
+  columnNo,
+  error
+) {
+  if (!error) {
+    postErrorMessage(msg);
+    return false;
+  }
+  let data = `${error.name}: ${error.message}`;
+  let stackLines = [];
+  if (error.stack) {
+    try {
+      stackLines = await StackTrace.fromError(error);
+    } catch (e) {
+      stackLines = [];
+    }
+  }
+  if (stackLines.length > 0) {
+    stackLines.forEach((stackLine) => {
+      data = data.concat(formatStackLine(stackLine));
+    });
+  } else {
+    data = data.concat(
+      formatStackLine({
+        fileName: source,
+        functionName: null,
+        lineNumber,
+        columnNumber: columnNo
+      })
+    );
+  }
+  postErrorMessage(data);
   return false;
 };
 // catch rejected promises
 window.onunhandledrejection = async function onUnhandledRejection(event) {
-  if (event.reason && event.reason.message) {
-    let stackLines = [];
-    if (event.reason.stack) {
+  if (!event.reason || !event.reason.message) return;
+  let stackLines = [];
+  if (event.reason.stack) {
+    try {
       stackLines = await StackTrace.fromError(event.reason);
+    } catch (e) {
+      stackLines = [];
     }
-    let data = `${event.reason.name}: ${event.reason.message}`;
-    stackLines.forEach((stackLine) => {
-      const { fileName, functionName, lineNumber, columnNumber } = stackLine;
-      const resolvedFileName = window.objectUrls[fileName] || fileName;
-      const resolvedFuncName = functionName || '(anonymous function)';
-      let line;
-      if (lineNumber && columnNumber) {
-        let resolvedLineNumber = lineNumber;
-        if (resolvedFileName === 'index.html') {
-          resolvedLineNumber = lineNumber - htmlOffset;
-        }
-        line = `\n    at ${resolvedFuncName} (${resolvedFileName}:${resolvedLineNumber}:${columnNumber})`;
-      } else {
-        line = `\n    at ${resolvedFuncName} (${resolvedFileName})`;
-      }
-      data = data.concat(line);
-    });
-    editor.postMessage(
-      {
-        source: 'sketch',
-        messages: [
-          {
-            log: [
-              {
-                method: 'error',
-                data: [data],
-                id: Date.now().toString()
-              }
-            ]
-          }
-        ]
-      },
-      editorOrigin
-    );
   }
+  let data = `${event.reason.name}: ${event.reason.message}`;
+  stackLines.forEach((stackLine) => {
+    data = data.concat(formatStackLine(stackLine));
+  });
+  postErrorMessage(data);
 };
 
 // Monkeypatch p5._friendlyError
