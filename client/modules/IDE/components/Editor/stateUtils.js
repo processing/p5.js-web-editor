@@ -389,14 +389,22 @@ export function createNewFileState(filename, document, settings) {
   const autocompleteCpt = new Compartment();
 
   // Depending on the file mode, we have a different tidier function.
+  // Keep this binding local to each file state so modes don't accumulate
+  // across files via a shared module-level array.
   const mode = getFileMode(filename);
-  extraKeymaps.push({
-    key: `Shift-Mod-F`,
-    run: (cmView) => tidyCodeWithPrettier(cmView, mode)
-  });
+  const fileTidyKeymap = [
+    {
+      key: 'Shift-Mod-F',
+      run: (cmView) => {
+        tidyCodeWithPrettier(cmView, mode);
+        return true;
+      }
+    }
+  ];
 
   const keymaps = [
     extraKeymaps,
+    fileTidyKeymap,
     closeBracketsKeymap,
     defaultKeymap,
     historyKeymap,
