@@ -30,6 +30,7 @@ export function renderIndex() {
           window.process.env = {};
         }
         window.process.env.API_URL = '${process.env.API_URL}';
+        window.process.env.API_TOKEN = '${process.env.API_TOKEN}';
         window.process.env.NODE_ENV = '${process.env.NODE_ENV}';
         window.process.env.S3_BUCKET = '${process.env.S3_BUCKET}';
         window.process.env.S3_BUCKET_URL_BASE = ${
@@ -107,6 +108,7 @@ export function renderProjectIndex(username: string, projectName: string) {
           window.process.env = {};
         }
         window.process.env.API_URL = '${process.env.API_URL}';
+        window.process.env.API_TOKEN = '${process.env.API_TOKEN}';
         window.process.env.NODE_ENV = '${process.env.NODE_ENV}';
         window.process.env.S3_BUCKET = '${process.env.S3_BUCKET}';
         window.process.env.S3_BUCKET_URL_BASE = ${

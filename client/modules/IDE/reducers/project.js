@@ -9,7 +9,8 @@ const initialState = () => {
     name: generatedName,
     updatedAt: '',
     isSaving: false,
-    visibility: 'Public'
+    visibility: 'Public',
+    savedCodeTitles: []
   };
 };
 
@@ -33,7 +34,8 @@ const project = (state, action) => {
         updatedAt: action.project.updatedAt,
         owner: action.owner,
         isSaving: false,
-        visibility: action.project.visibility
+        visibility: action.project.visibility,
+        savedCodeTitles: action.project.savedCodeTitles ?? []
       };
     case ActionTypes.SET_PROJECT:
       return {
@@ -42,8 +44,11 @@ const project = (state, action) => {
         updatedAt: action.project.updatedAt,
         owner: action.owner,
         isSaving: false,
-        visibility: action.project.visibility
+        visibility: action.project.visibility,
+        savedCodeTitles: action.project.savedCodeTitles ?? []
       };
+    case ActionTypes.SET_SAVED_CODE_TITLES:
+      return Object.assign({}, state, { savedCodeTitles: action.titles });
     case ActionTypes.RESET_PROJECT:
       return initialState();
     case ActionTypes.SET_PROJECT_SAVED_TIME:

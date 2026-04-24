@@ -1,61 +1,68 @@
-import { apiClient } from '../../../utils/apiClient';
+import { opApiClient } from '../../../utils/opApiClient';
+import {
+  opPrivacyToVisibility,
+  opVisualIdToProjectId
+} from '../../../utils/opSketchAdapter';
 import * as ActionTypes from '../../../constants';
 import { startLoader, stopLoader } from '../reducers/loading';
 
-const buildProjectsUrl = (username, options = {}) => {
-  const {
-    page = 1,
-    limit = 10,
-    sortField = 'updatedAt',
-    sortDir = 'desc',
-    q = ''
-  } = options;
-
-  const base = username
-    ? `/${encodeURIComponent(username)}/projects`
-    : '/projects';
-
-  const params = new URLSearchParams({
-    page: String(page),
-    limit: String(limit),
-    sortField,
-    sortDir
-  });
-
-  const trimmed = q.trim();
-
-  if (trimmed) {
-    params.set('q', trimmed);
+function getRequestErrorPayload(error, fallbackMessage = 'Request failed.') {
+  const data = error?.response?.data;
+  if (data && typeof data === 'object') {
+    return data;
   }
 
-  return `${base}?${params.toString()}`;
-};
+  return {
+    message:
+      data || error?.response?.message || error?.message || fallbackMessage
+  };
+}
 
-const fetchProjects = (username, options, successType) => (dispatch) => {
+const fetchProjects = (options, successType) => (dispatch, getState) => {
+  const { user } = getState();
+  const userID = user.id;
+
+  if (!userID) {
+    dispatch({
+      type: ActionTypes.ERROR,
+      error: { message: 'User not authenticated' }
+    });
+    return Promise.reject(new Error('User not authenticated'));
+  }
+
+  const { page = 1, limit = 10 } = options ?? {};
+  const offset = (page - 1) * limit;
+
   dispatch(startLoader());
 
-  const url = buildProjectsUrl(username, options);
-
-  return apiClient
-    .get(url)
+  return opApiClient
+    .get(`/user/${userID}/sketches`, {
+      params: { limit, offset, sort: 'desc' }
+    })
     .then((response) => {
-      dispatch({ type: successType, projects: response.data });
+      const projects = response.data.map((s) => ({
+        id: opVisualIdToProjectId(s.visualID),
+        name: s.title,
+        createdAt: s.createdOn,
+        updatedAt: s.createdOn,
+        visibility: opPrivacyToVisibility(s.isPrivate ?? 0)
+      }));
+      dispatch({ type: successType, projects });
       dispatch(stopLoader());
-      return response.data;
+      return projects;
     })
     .catch((error) => {
-      dispatch({ type: ActionTypes.ERROR, error: error?.response?.data });
+      dispatch({
+        type: ActionTypes.ERROR,
+        error: getRequestErrorPayload(error)
+      });
       dispatch(stopLoader());
       throw error;
     });
 };
 
 export const getProjects = (username, options) =>
-  fetchProjects(username, options, ActionTypes.SET_PROJECTS);
+  fetchProjects(options, ActionTypes.SET_PROJECTS);
 
 export const getProjectsForCollectionList = (username, options) =>
-  fetchProjects(
-    username,
-    options,
-    ActionTypes.SET_PROJECTS_FOR_COLLECTION_LIST
-  );
+  fetchProjects(options, ActionTypes.SET_PROJECTS_FOR_COLLECTION_LIST);

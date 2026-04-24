@@ -4,6 +4,7 @@ import type { ThunkDispatch } from 'redux-thunk';
 import * as ActionTypes from '../../constants';
 import browserHistory from '../../browserHistory';
 import { apiClient } from '../../utils/apiClient';
+import { opApiClient } from '../../utils/opApiClient';
 import { showErrorModal, justOpenedProject } from '../IDE/actions/ide';
 import { setLanguage } from '../IDE/actions/preferences';
 import { showToast, setToastText } from '../IDE/actions/toast';
@@ -17,7 +18,6 @@ import type {
   RemoveApiKeyRequestParams,
   ResetOrUpdatePasswordRequestParams,
   ResetPasswordInitiateRequestBody,
-  UpdateCookieConsentRequestBody,
   UpdatePasswordRequestBody,
   UpdateSettingsRequestBody,
   UserPreferences,
@@ -30,6 +30,16 @@ export function authError(error: Error) {
     type: ActionTypes.AUTH_ERROR,
     payload: error
   };
+}
+
+function getRequestErrorMessage(error: any) {
+  return (
+    error?.response?.data?.message ||
+    error?.response?.data?.error ||
+    error?.response?.message ||
+    error?.message ||
+    'Request failed.'
+  );
 }
 
 /**
@@ -97,7 +107,7 @@ export function validateAndLoginUser(formProps: {
           })
           .catch((error) =>
             resolve({
-              [FORM_ERROR]: error.response.data.message
+              [FORM_ERROR]: getRequestErrorMessage(error)
             })
           );
       }
@@ -127,8 +137,7 @@ export function validateAndSignUpUser(formValues: CreateUserRequestBody) {
           resolve();
         })
         .catch((error) => {
-          const { response } = error;
-          dispatch(authError(response.data.error));
+          dispatch(authError(getRequestErrorMessage(error) as any));
           resolve({ error });
         });
     });
@@ -138,23 +147,21 @@ export function validateAndSignUpUser(formValues: CreateUserRequestBody) {
 export function getUser() {
   return async (dispatch: Dispatch) => {
     try {
-      const response = await apiClient.get('/session');
-      const { data } = response;
+      const { data } = await opApiClient.get('/whoami');
 
-      if (data?.user === null) {
-        return;
-      }
+      // Support both nested shape {user:{userID,...},token:{...}} and flat {userID,...}
+      const opUser = data.user ?? data;
+      const token = data.token ?? {};
 
-      dispatch(authenticateUser(data));
-      dispatch({
-        type: ActionTypes.SET_PREFERENCES,
-        preferences: data.preferences
-      });
-      setLanguage(data.preferences.language, { persistPreference: false });
+      dispatch(
+        authenticateUser({
+          id: String(opUser.userID),
+          username: opUser.username ?? '',
+          opTokenCaps: token
+        } as any)
+      );
     } catch (error: any) {
-      const message = error.response
-        ? error.response.data.error || error.response.message
-        : 'Unknown error.';
+      const message = getRequestErrorMessage(error);
       dispatch(authError(message));
     }
   };
@@ -198,8 +205,7 @@ export function logoutUser() {
         resetProject(dispatch);
       })
       .catch((error) => {
-        const { response } = error;
-        dispatch(authError(response.data.error));
+        dispatch(authError(getRequestErrorMessage(error) as any));
       });
   };
 }
@@ -479,29 +485,7 @@ export function unlinkService(service: string) {
         dispatch(authenticateUser(response.data));
       })
       .catch((error) => {
-        const { response } = error;
-        const message = response.message || response.data.error;
-        dispatch(authError(message));
-      });
-  };
-}
-
-export function setUserCookieConsent(
-  cookieConsent: UpdateCookieConsentRequestBody['cookieConsent']
-) {
-  // maybe also send this to the server rn?
-  return (dispatch: Dispatch) => {
-    apiClient
-      .put('/cookie-consent', { cookieConsent })
-      .then(() => {
-        dispatch({
-          type: ActionTypes.SET_COOKIE_CONSENT,
-          cookieConsent
-        });
-      })
-      .catch((error) => {
-        const { response } = error;
-        const message = response.message || response.data.error;
+        const message = getRequestErrorMessage(error);
         dispatch(authError(message));
       });
   };

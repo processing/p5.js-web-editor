@@ -1,9 +1,11 @@
-import objectID from 'bson-objectid';
-import each from 'async/each';
-import { isEqual } from 'lodash';
 import browserHistory from '../../../browserHistory';
-import { apiClient } from '../../../utils/apiClient';
-import { getConfig } from '../../../utils/getConfig';
+import { opApiClient } from '../../../utils/opApiClient';
+import {
+  opSketchToProject,
+  opVisualIdToProjectId,
+  editorFilesToCodeTabs,
+  visibilityToOpPrivacy
+} from '../../../utils/opSketchAdapter';
 import * as ActionTypes from '../../../constants';
 import { showToast, setToastText } from './toast';
 import {
@@ -15,10 +17,6 @@ import {
 } from './ide';
 import { clearLocalBackup } from '../utils/localBackup';
 import { clearState, saveState } from '../../../persistState';
-
-const ROOT_URL = getConfig('API_URL');
-const S3_BUCKET_URL_BASE = getConfig('S3_BUCKET_URL_BASE');
-const S3_BUCKET = getConfig('S3_BUCKET');
 
 export function setProject(project) {
   return {
@@ -53,21 +51,40 @@ export function setNewProject(project) {
   };
 }
 
-export function getProject(id, username) {
-  return (dispatch, getState) => {
+function getRequestErrorPayload(error, fallbackMessage = 'Request failed.') {
+  const data = error?.response?.data;
+  if (data && typeof data === 'object') {
+    return data;
+  }
+
+  return {
+    message:
+      data || error?.response?.message || error?.message || fallbackMessage
+  };
+}
+
+export function getProject(id, ownerUsername) {
+  return async (dispatch, getState) => {
     dispatch(justOpenedProject());
-    return apiClient
-      .get(`/${username}/projects/${id}`)
-      .then((response) => {
-        dispatch(setProject(response.data));
-        dispatch(setUnsavedChanges(false));
-      })
-      .catch((error) => {
-        dispatch({
-          type: ActionTypes.ERROR,
-          error: error?.response?.data
-        });
+    try {
+      const [sketchRes, codeRes] = await Promise.all([
+        opApiClient.get(`/sketch/${id}`),
+        opApiClient.get(`/sketch/${id}/code`)
+      ]);
+      const fallbackUsername = getState().user.username ?? '';
+      const project = opSketchToProject(
+        sketchRes.data,
+        codeRes.data,
+        ownerUsername ?? fallbackUsername
+      );
+      dispatch(setProject(project));
+      dispatch(setUnsavedChanges(false));
+    } catch (error) {
+      dispatch({
+        type: ActionTypes.ERROR,
+        error: getRequestErrorPayload(error)
       });
+    }
   };
 }
 
@@ -108,122 +125,136 @@ export function projectSaveSuccess() {
   };
 }
 
-// want a function that will check for changes on the front end
-function getSynchedProject(currentState, responseProject) {
-  let hasChanges = false;
-  const synchedProject = Object.assign({}, responseProject);
-  const currentFiles = currentState.files.map(
-    ({ name, children, content }) => ({ name, children, content })
+function createCodeTabs(visualID, codeTabs) {
+  return Promise.all(
+    codeTabs.map((tab, i) =>
+      opApiClient.post(
+        `/sketch/${visualID}/code/${encodeURIComponent(tab.title)}`,
+        { code: tab.code, orderID: i }
+      )
+    )
   );
-  const responseFiles = responseProject.files.map(
-    ({ name, children, content }) => ({ name, children, content })
-  );
-  if (!isEqual(currentFiles, responseFiles)) {
-    synchedProject.files = currentState.files;
-    hasChanges = true;
-  }
-  if (currentState.project.name !== responseProject.name) {
-    synchedProject.name = currentState.project.name;
-    hasChanges = true;
-  }
-  return {
-    synchedProject,
-    hasChanges
-  };
 }
 
-export function saveProject(
-  selectedFile = null,
-  autosave = false,
-  mobile = false
-) {
-  return (dispatch, getState) => {
+// Diff saved vs current tabs: delete removed ones, then upsert all current ones
+function syncCodeTabs(visualID, savedTitles, currentTabs) {
+  const currentTitles = currentTabs.map((t) => t.title);
+  const toDelete = savedTitles.filter((t) => !currentTitles.includes(t));
+
+  return Promise.all(
+    toDelete.map((title) =>
+      opApiClient.delete(
+        `/sketch/${visualID}/code/${encodeURIComponent(title)}`
+      )
+    )
+  ).then(() =>
+    Promise.all(
+      currentTabs.map((tab, i) => {
+        if (savedTitles.includes(tab.title)) {
+          return opApiClient.put(
+            `/sketch/${visualID}/code/${encodeURIComponent(tab.title)}`,
+            { code: tab.code, orderID: i }
+          );
+        }
+        return opApiClient.post(
+          `/sketch/${visualID}/code/${encodeURIComponent(tab.title)}`,
+          { code: tab.code, orderID: i }
+        );
+      })
+    )
+  );
+}
+
+export function saveProject(selectedFile = null, autosave = false) {
+  return async (dispatch, getState) => {
     const state = getState();
     if (state.project.isSaving) {
-      return Promise.resolve();
+      return;
     }
     dispatch(startSavingProject());
+
     if (
       state.user.id &&
       state.project.owner &&
       state.project.owner.id !== state.user.id
     ) {
-      return Promise.reject();
+      dispatch(endSavingProject());
+      return;
     }
-    const formParams = Object.assign({}, state.project);
-    formParams.files = [...state.files];
 
+    const files = [...state.files];
     if (selectedFile) {
-      const fileToUpdate = formParams.files.find(
-        (file) => file.id === selectedFile.id
-      );
-      fileToUpdate.content = selectedFile.content;
+      const fileToUpdate = files.find((f) => f.id === selectedFile.id);
+      if (fileToUpdate) fileToUpdate.content = selectedFile.content;
     }
-    if (state.project.id) {
-      return apiClient
-        .put(`/projects/${state.project.id}`, formParams)
-        .then((response) => {
-          dispatch(endSavingProject());
-          dispatch(setUnsavedChanges(false));
-          // Clear the localStorage backup after successful server save (#3891)
-          clearLocalBackup(state.project.id);
-          const { hasChanges, synchedProject } = getSynchedProject(
-            getState(),
-            response.data
-          );
-          if (hasChanges) {
-            dispatch(setUnsavedChanges(true));
-          }
-          dispatch(setProject(synchedProject));
-          dispatch(projectSaveSuccess());
-          if (!autosave) {
-            if (state.ide.justOpenedProject && state.preferences.autosave) {
-              dispatch(showToast(5500));
-              dispatch(setToastText('Toast.SketchSaved'));
-              setTimeout(
-                () => dispatch(setToastText('Toast.AutosaveEnabled')),
-                1500
-              );
-              dispatch(resetJustOpenedProject());
-            } else {
-              dispatch(showToast(1500));
-              dispatch(setToastText('Toast.SketchSaved'));
-            }
-          }
-        })
-        .catch((error) => {
-          const { response } = error;
-          dispatch(endSavingProject());
-          dispatch(setToastText('Toast.SketchFailedSave'));
-          dispatch(showToast(1500));
-          if (response.status === 403) {
-            dispatch(showErrorModal('staleSession'));
-          } else if (response.status === 409) {
-            dispatch(showErrorModal('staleProject'));
-          } else {
-            dispatch(projectSaveFail(response.data));
-          }
+
+    const codeTabs = editorFilesToCodeTabs(files);
+
+    try {
+      if (state.project.id) {
+        // Update existing sketch
+        const visualID = state.project.id;
+
+        await opApiClient.patch(`/sketch/${visualID}`, {
+          title: state.project.name,
+          isPrivate: visibilityToOpPrivacy(state.project.visibility)
         });
-    }
 
-    return apiClient
-      .post('/projects', formParams)
-      .then((response) => {
+        await syncCodeTabs(
+          visualID,
+          state.project.savedCodeTitles ?? [],
+          codeTabs
+        );
+
         dispatch(endSavingProject());
-        const { hasChanges, synchedProject } = getSynchedProject(
-          getState(),
-          response.data
-        );
-
-        dispatch(setNewProject(synchedProject));
         dispatch(setUnsavedChanges(false));
-        browserHistory.push(
-          `/${response.data.user.username}/sketches/${response.data.id}`
-        );
+        clearLocalBackup(state.project.id);
+        dispatch({
+          type: ActionTypes.SET_SAVED_CODE_TITLES,
+          titles: codeTabs.map((t) => t.title)
+        });
+        dispatch(projectSaveSuccess());
 
-        if (hasChanges) {
-          dispatch(setUnsavedChanges(true));
+        if (!autosave) {
+          if (state.ide.justOpenedProject && state.preferences.autosave) {
+            dispatch(showToast(5500));
+            dispatch(setToastText('Toast.SketchSaved'));
+            setTimeout(
+              () => dispatch(setToastText('Toast.AutosaveEnabled')),
+              1500
+            );
+            dispatch(resetJustOpenedProject());
+          } else {
+            dispatch(showToast(1500));
+            dispatch(setToastText('Toast.SketchSaved'));
+          }
         }
+      } else {
+        // Create new sketch
+        const sketchRes = await opApiClient.post('/sketch', {
+          title: state.project.name,
+          mode: 'p5js',
+          isPrivate: visibilityToOpPrivacy(state.project.visibility)
+        });
+
+        const { visualID } = sketchRes.data;
+        await createCodeTabs(visualID, codeTabs);
+        const projectId = opVisualIdToProjectId(visualID);
+
+        const createdProject = {
+          id: projectId,
+          name: state.project.name,
+          visibility: state.project.visibility,
+          files,
+          savedCodeTitles: codeTabs.map((t) => t.title),
+          updatedAt: sketchRes.data.createdOn ?? '',
+          user: { username: state.user.username, id: state.user.id }
+        };
+
+        dispatch(endSavingProject());
+        dispatch(setNewProject(createdProject));
+        dispatch(setUnsavedChanges(false));
+        browserHistory.push(`/${state.user.username}/sketches/${projectId}`);
 
         dispatch(projectSaveSuccess());
         if (!autosave) {
@@ -240,30 +271,31 @@ export function saveProject(
             dispatch(setToastText('Toast.SketchSaved'));
           }
         }
-      })
-      .catch((error) => {
-        const { response } = error;
-        dispatch(endSavingProject());
-        dispatch(setToastText('Toast.SketchFailedSave'));
-        dispatch(showToast(1500));
-        if (response.status === 403) {
-          dispatch(showErrorModal('staleSession'));
-        } else {
-          dispatch(projectSaveFail(response.data));
-        }
-      });
+      }
+    } catch (error) {
+      const { response } = error;
+      dispatch(endSavingProject());
+      dispatch(setToastText('Toast.SketchFailedSave'));
+      dispatch(showToast(1500));
+      if (response?.status === 403) {
+        dispatch(showErrorModal('staleSession'));
+      } else if (response?.status === 409) {
+        dispatch(showErrorModal('staleProject'));
+      } else {
+        dispatch(projectSaveFail(getRequestErrorPayload(error)));
+      }
+    }
   };
 }
 
-export function autosaveProject(mobile = false) {
+export function autosaveProject() {
   return (dispatch, getState) => {
-    saveProject(null, true, mobile)(dispatch, getState);
+    saveProject(null, true)(dispatch, getState);
   };
 }
 
-export function exportProjectAsZip(projectId) {
-  const win = window.open(`${ROOT_URL}/projects/${projectId}/zip`, '_blank');
-  win.focus();
+export function exportProjectAsZip() {
+  // ZIP export is not available in the OP API yet
 }
 
 export function resetProject() {
@@ -277,79 +309,49 @@ export function newProject() {
   return resetProject();
 }
 
-function generateNewIdsForChildren(file, files) {
-  const newChildren = [];
-  file.children.forEach((childId) => {
-    const child = files.find((childFile) => childFile.id === childId);
-    const newId = objectID().toHexString();
-    child.id = newId;
-    child._id = newId;
-    newChildren.push(newId);
-    generateNewIdsForChildren(child, files);
-  });
-  file.children = newChildren; // eslint-disable-line
-}
-
 export function cloneProject(project) {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     dispatch(setUnsavedChanges(false));
     const state = getState();
-    const files = project ? project.files : state.files;
+    const sourceID = project ? project.id : state.project.id;
     const projectName = project ? project.name : state.project.name;
-    const newFiles = files.map((file) => ({ ...file }));
 
-    // generate new IDS for all files
-    const rootFile = newFiles.find((file) => file.name === 'root');
-    const newRootFileId = objectID().toHexString();
-    rootFile.id = newRootFileId;
-    rootFile._id = newRootFileId;
-    generateNewIdsForChildren(rootFile, newFiles);
+    try {
+      const codeRes = await opApiClient.get(`/sketch/${sourceID}/code`);
 
-    // duplicate all files hosted on S3
-    each(
-      newFiles,
-      (file, callback) => {
-        if (
-          file.url &&
-          S3_BUCKET &&
-          S3_BUCKET_URL_BASE &&
-          (file.url.includes(S3_BUCKET_URL_BASE) ||
-            file.url.includes(S3_BUCKET))
-        ) {
-          const formParams = {
-            url: file.url
-          };
-          apiClient.post('/S3/copy', formParams).then((response) => {
-            file.url = response.data.url;
-            callback(null);
-          });
-        } else {
-          callback(null);
-        }
-      },
-      (err) => {
-        // if not errors in duplicating the files on S3, then duplicate it
-        const formParams = Object.assign(
-          {},
-          { name: `${projectName} copy` },
-          { files: newFiles }
-        );
-        apiClient
-          .post('/projects', formParams)
-          .then((response) => {
-            browserHistory.push(
-              `/${response.data.user.username}/sketches/${response.data.id}`
-            );
-            dispatch(setNewProject(response.data));
-          })
-          .catch((error) => {
-            dispatch({
-              type: ActionTypes.PROJECT_SAVE_FAIL,
-              error: error?.response?.data
-            });
-          });
-      }
-    );
+      const sketchRes = await opApiClient.post('/sketch', {
+        title: `${projectName} copy`,
+        mode: 'p5js',
+        isPrivate: visibilityToOpPrivacy(state.project.visibility)
+      });
+
+      const { visualID } = sketchRes.data;
+      const projectId = opVisualIdToProjectId(visualID);
+
+      await Promise.all(
+        codeRes.data.map((tab, i) =>
+          opApiClient.post(
+            `/sketch/${visualID}/code/${encodeURIComponent(tab.title)}`,
+            { code: tab.code, orderID: i }
+          )
+        )
+      );
+
+      const { username } = state.user;
+      const clonedProject = opSketchToProject(
+        { ...sketchRes.data, title: `${projectName} copy` },
+        codeRes.data,
+        username
+      );
+
+      dispatch(setNewProject(clonedProject));
+      browserHistory.push(`/${username}/sketches/${projectId}`);
+    } catch (error) {
+      dispatch({
+        type: ActionTypes.PROJECT_SAVE_FAIL,
+        error: getRequestErrorPayload(error)
+      });
+    }
   };
 }
 
@@ -361,118 +363,106 @@ export function setProjectSavedTime(updatedAt) {
 }
 
 export function changeProjectName(id, newName) {
-  return (dispatch, getState) => {
-    const state = getState();
-    apiClient
-      .put(`/projects/${id}`, { name: newName })
-      .then((response) => {
-        if (response.status === 200) {
-          dispatch({
-            type: ActionTypes.RENAME_PROJECT,
-            payload: { id: response.data.id, name: response.data.name }
-          });
-          if (state.project.id === response.data.id) {
-            dispatch({
-              type: ActionTypes.SET_PROJECT_NAME,
-              name: response.data.name
-            });
-          }
-        }
-      })
-      .catch((error) => {
-        dispatch({
-          type: ActionTypes.PROJECT_SAVE_FAIL,
-          error: error?.response?.data
-        });
+  return async (dispatch, getState) => {
+    try {
+      await opApiClient.patch(`/sketch/${id}`, { title: newName });
+      dispatch({
+        type: ActionTypes.RENAME_PROJECT,
+        payload: { id, name: newName }
       });
+      const state = getState();
+      if (state.project.id === id) {
+        dispatch({
+          type: ActionTypes.SET_PROJECT_NAME,
+          name: newName
+        });
+      }
+    } catch (error) {
+      dispatch({
+        type: ActionTypes.PROJECT_SAVE_FAIL,
+        error: getRequestErrorPayload(error)
+      });
+    }
   };
 }
 
 export function deleteProject(id) {
-  return (dispatch, getState) =>
-    apiClient
-      .delete(`/projects/${id}`)
-      .then(() => {
-        const state = getState();
-        if (id === state.project.id) {
-          dispatch(resetProject());
-          dispatch(setPreviousPath('/'));
-        }
-        dispatch({
-          type: ActionTypes.DELETE_PROJECT,
-          id
-        });
-      })
-      .catch((error) => {
-        const { response } = error;
-        if (response.status === 403) {
-          dispatch(showErrorModal('staleSession'));
-        } else {
-          dispatch({
-            type: ActionTypes.ERROR,
-            error: response.data
-          });
-        }
+  return async (dispatch, getState) => {
+    try {
+      await opApiClient.delete(`/sketch/${id}`);
+      const state = getState();
+      if (id === state.project.id) {
+        dispatch(resetProject());
+        dispatch(setPreviousPath('/'));
+      }
+      dispatch({
+        type: ActionTypes.DELETE_PROJECT,
+        id
       });
-}
-export function changeVisibility(projectId, projectName, visibility, t) {
-  return (dispatch, getState) => {
-    const state = getState();
-
-    apiClient
-      .patch('/project/visibility', { projectId, visibility })
-      .then((response) => {
-        if (response.status === 200) {
-          const { visibility: newVisibility, updatedAt, id } = response.data;
-
-          dispatch({
-            type: ActionTypes.CHANGE_VISIBILITY,
-            payload: {
-              id,
-              visibility: newVisibility
-            }
-          });
-
-          if (state.project.id === response.data.id) {
-            dispatch({
-              type: ActionTypes.SET_PROJECT_VISIBILITY,
-              visibility: newVisibility,
-              updatedAt
-            });
-
-            dispatch({
-              type: ActionTypes.SET_PROJECT_NAME,
-              name: response.data.name
-            });
-
-            let visibilityLabel;
-
-            switch (newVisibility) {
-              case 'Public':
-                visibilityLabel = t('Visibility.Public.Label');
-                break;
-              case 'Private':
-                visibilityLabel = t('Visibility.Private.Label');
-                break;
-              default:
-                visibilityLabel = newVisibility;
-            }
-
-            const visibilityToastText = t('Visibility.Changed', {
-              projectName,
-              newVisibility: visibilityLabel.toLowerCase()
-            });
-
-            dispatch(setToastText(visibilityToastText));
-            dispatch(showToast(2000));
-          }
-        }
-      })
-      .catch((error) => {
+    } catch (error) {
+      const { response } = error;
+      if (response?.status === 403) {
+        dispatch(showErrorModal('staleSession'));
+      } else {
         dispatch({
           type: ActionTypes.ERROR,
-          error: error?.response?.data
+          error: getRequestErrorPayload(error)
         });
+      }
+    }
+  };
+}
+
+export function changeVisibility(projectId, projectName, visibility, t) {
+  return async (dispatch, getState) => {
+    const state = getState();
+    try {
+      await opApiClient.patch(`/sketch/${projectId}`, {
+        isPrivate: visibilityToOpPrivacy(visibility)
       });
+
+      dispatch({
+        type: ActionTypes.CHANGE_VISIBILITY,
+        payload: { id: projectId, visibility }
+      });
+
+      if (state.project.id === projectId) {
+        dispatch({
+          type: ActionTypes.SET_PROJECT_VISIBILITY,
+          visibility,
+          updatedAt: new Date().toISOString()
+        });
+
+        dispatch({
+          type: ActionTypes.SET_PROJECT_NAME,
+          name: projectName
+        });
+
+        let visibilityLabel;
+        switch (visibility) {
+          case 'Public':
+            visibilityLabel = t('Visibility.Public.Label');
+            break;
+          case 'Private':
+            visibilityLabel = t('Visibility.Private.Label');
+            break;
+          default:
+            visibilityLabel = visibility;
+        }
+
+        const visibilityToastText = t('Visibility.Changed', {
+          projectName,
+          newVisibility: visibilityLabel.toLowerCase()
+        });
+
+        dispatch(setToastText(visibilityToastText));
+        dispatch(showToast(2000));
+      }
+    } catch (error) {
+      dispatch({
+        type: ActionTypes.ERROR,
+        error: getRequestErrorPayload(error)
+      });
+    }
   };
 }

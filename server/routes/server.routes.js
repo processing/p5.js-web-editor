@@ -9,6 +9,7 @@ import {
 import { collectionForUserExists } from '../controllers/collection.controller';
 
 const router = Router();
+const useOpApiTokenRouting = Boolean(process.env.API_TOKEN);
 
 router.get('/', (req, res) => {
   res.send(renderIndex());
@@ -22,50 +23,69 @@ router.get('/signup', (req, res) => {
 });
 
 router.get('/projects/:project_id', async (req, res) => {
+  if (useOpApiTokenRouting) {
+    return res.send(renderIndex());
+  }
   const exists = await projectExists(req.params.project_id);
-  await sendHtml(req, res, exists);
+  return sendHtml(req, res, exists);
 });
 
 router.get(
   '/:username/sketches/:project_id/add-to-collection',
   async (req, res) => {
+    if (useOpApiTokenRouting) {
+      return res.send(renderIndex());
+    }
     const exists = await projectForUserExists(
       req.params.username,
       req.params.project_id
     );
-    await sendHtml(req, res, exists);
+    return sendHtml(req, res, exists);
   }
 );
 
 router.get('/:username/sketches/:project_id', async (req, res) => {
+  if (useOpApiTokenRouting) {
+    return res.send(renderIndex());
+  }
   const project = await getProjectForUser(
     req.params.username,
     req.params.project_id
   );
 
   if (project.exists) {
-    res.send(renderProjectIndex(req.params.username, project.userProject.name));
-  } else {
-    await sendHtml(req, res, project.exists);
+    return res.send(
+      renderProjectIndex(req.params.username, project.userProject.name)
+    );
   }
+  return sendHtml(req, res, project.exists);
 });
 
 router.get('/:username/sketches', async (req, res) => {
+  if (useOpApiTokenRouting) {
+    return res.send(renderIndex());
+  }
   const exists = await userExists(req.params.username);
-  await sendHtml(req, res, exists);
+  return sendHtml(req, res, exists);
 });
 
 router.get('/:username/full/:project_id', async (req, res) => {
+  if (useOpApiTokenRouting) {
+    return res.send(renderIndex());
+  }
   const exists = await projectForUserExists(
     req.params.username,
     req.params.project_id
   );
-  await sendHtml(req, res, exists);
+  return sendHtml(req, res, exists);
 });
 
 router.get('/full/:project_id', async (req, res) => {
+  if (useOpApiTokenRouting) {
+    return res.send(renderIndex());
+  }
   const exists = await projectExists(req.params.project_id);
-  await sendHtml(req, res, exists);
+  return sendHtml(req, res, exists);
 });
 
 router.get('/login', (req, res) => {
@@ -110,10 +130,13 @@ router.get('/assets', (req, res) => {
 });
 
 router.get('/:username/assets', async (req, res) => {
+  if (useOpApiTokenRouting) {
+    return res.send(renderIndex());
+  }
   const exists = await userExists(req.params.username);
   const isLoggedInUser = req.user && req.user.username === req.params.username;
   const canAccess = exists && isLoggedInUser;
-  await sendHtml(req, res, canAccess);
+  return sendHtml(req, res, canAccess);
 });
 
 router.get('/account', (req, res) => {
@@ -129,16 +152,22 @@ router.get('/about', (req, res) => {
 });
 
 router.get('/:username/collections/:id', async (req, res) => {
+  if (useOpApiTokenRouting) {
+    return res.send(renderIndex());
+  }
   const exists = await collectionForUserExists(
     req.params.username,
     req.params.id
   );
-  await sendHtml(req, res, exists);
+  return sendHtml(req, res, exists);
 });
 
 router.get('/:username/collections', async (req, res) => {
+  if (useOpApiTokenRouting) {
+    return res.send(renderIndex());
+  }
   const exists = await userExists(req.params.username);
-  await sendHtml(req, res, exists);
+  return sendHtml(req, res, exists);
 });
 
 router.get('/privacy-policy', (req, res) => {
