@@ -194,7 +194,9 @@ function resolveStackFrame({
 }) {
   const resolvedFileName = resolveFileName(fileName);
   let resolvedLineNumber = lineNumber;
-  if (resolvedFileName === 'index.html' && lineNumber) {
+  const isIndexHtml =
+    resolvedFileName === 'index.html' || resolvedFileName === '/index.html';
+  if (isIndexHtml && lineNumber) {
     resolvedLineNumber = lineNumber - htmlOffset;
   }
   return {
