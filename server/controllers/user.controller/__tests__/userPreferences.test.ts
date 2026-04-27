@@ -84,7 +84,7 @@ describe('user.controller > user preferences', () => {
     it('returns 500 if saving preferences fails', async () => {
       mockUser = createMockUser({
         preferences: { ...mockUserPreferences, theme: AppThemeOptions.LIGHT },
-        save: jest.fn().mockRejectedValue(new Error('DB error'))
+        save: jest.fn().mockRejectedValue(new Error('Internal server error'))
       });
 
       User.findById = jest
@@ -101,7 +101,9 @@ describe('user.controller > user preferences', () => {
       );
 
       expect(response.status).toHaveBeenCalledWith(500);
-      expect(response.json).toHaveBeenCalledWith({ error: expect.any(Error) });
+      expect(response.json).toHaveBeenCalledWith({
+        error: 'Internal server error'
+      });
     });
   });
 
@@ -155,7 +157,7 @@ describe('user.controller > user preferences', () => {
     it('returns 500 if saving cookieConsent fails', async () => {
       mockUser = createMockUser({
         cookieConsent: CookieConsentOptions.ALL,
-        save: jest.fn().mockRejectedValue(new Error('DB error'))
+        save: jest.fn().mockRejectedValue(new Error('Internal server error'))
       });
 
       User.findById = jest
@@ -172,7 +174,9 @@ describe('user.controller > user preferences', () => {
       );
 
       expect(response.status).toHaveBeenCalledWith(500);
-      expect(response.json).toHaveBeenCalledWith({ error: expect.any(Error) });
+      expect(response.json).toHaveBeenCalledWith({
+        error: 'Internal server error'
+      });
     });
   });
 });
