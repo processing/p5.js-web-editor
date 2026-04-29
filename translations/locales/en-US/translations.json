@@ -516,6 +516,7 @@
     "DeleteFromCollection": "Are you sure you want to remove {{name_sketch}} from this collection?",
     "SketchDeleted": "Sketch deleted",
     "SketchRemoveARIA": "Remove sketch from collection",
+    "SketchRemoveLabel": "Remove from Collection",
     "DescriptionPlaceholder": "Add description",
     "Description": "description",
     "NumSketches": "{{count}} sketch",
