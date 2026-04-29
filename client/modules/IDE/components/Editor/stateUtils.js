@@ -272,6 +272,7 @@ const emmetKeymaps = [{ key: 'Tab', run: expandAbbreviation }];
 
 /** Returns completion options configured for autocomplete. */
 export const createAutocompleteOptions = (referenceBaseUrl) => ({
+  selectOnOpen: false,
   tooltipClass: () => 'CodeMirror-hints',
   closeOnBlur: false,
   icons: false,
