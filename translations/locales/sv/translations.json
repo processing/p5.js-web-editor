@@ -435,6 +435,7 @@
     "AddSketch": "Lägg till sketch",
     "DeleteFromCollection": "Är du säker på att du vill radera {{name_sketch}} från den här samlingen?",
     "SketchDeleted": "Sketchen är raderad",
+    "SketchRemoveLabel": "Remove from Collection",
     "SketchRemoveARIA": "Radera sketch från samling",
     "DescriptionPlaceholder": "Lägg till beskrivning",
     "Description": "beskrivning",
