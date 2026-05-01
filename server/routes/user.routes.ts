@@ -55,12 +55,6 @@ router.delete('/auth/google', UserController.unlinkGoogle);
  * USER PREFERENCES
  * ===============
  */
-// PUT /cookie-consent
-router.put(
-  '/cookie-consent',
-  isAuthenticated,
-  UserController.updateCookieConsent
-);
 // PUT /preferences
 router.put('/preferences', isAuthenticated, UserController.updatePreferences);
 

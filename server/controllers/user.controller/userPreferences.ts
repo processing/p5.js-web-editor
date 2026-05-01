@@ -2,11 +2,8 @@ import { RequestHandler } from 'express';
 import { User } from '../../models/user';
 import {
   UpdatePreferencesRequestBody,
-  UpdateCookieConsentRequestBody,
-  UpdatePreferencesResponseBody,
-  PublicUserOrError
+  UpdatePreferencesResponseBody
 } from '../../types';
-import { saveUser } from './helpers';
 
 /**
  * - Method: `PUT`
@@ -34,35 +31,6 @@ export const updatePreferences: RequestHandler<
     res.json(user.preferences);
   } catch (err) {
     console.error('Could not save preferences:', err);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-};
-
-/**
- * - Method: `PUT`
- * - Endpoint: `/cookie-consent`
- * - Authenticated: `true`
- * - Id: `UserController.updatePreferences`
- *
- * Description:
- *   - Update user cookie consent
- */
-export const updateCookieConsent: RequestHandler<
-  {},
-  PublicUserOrError,
-  UpdateCookieConsentRequestBody
-> = async (req, res) => {
-  try {
-    const user = await User.findById(req.user!.id).exec();
-    if (!user) {
-      res.status(404).json({ error: 'User not found' });
-      return;
-    }
-    const { cookieConsent } = req.body;
-    user.cookieConsent = cookieConsent;
-    await saveUser(res, user);
-  } catch (err) {
-    console.error('Could not save cookie consent:', err);
     res.status(500).json({ error: 'Internal server error' });
   }
 };

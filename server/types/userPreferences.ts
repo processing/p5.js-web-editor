@@ -37,8 +37,3 @@ export interface UpdatePreferencesRequestBody {
 
 /** userController.updatePreferences - Response */
 export type UpdatePreferencesResponseBody = UserPreferences | Error;
-
-/** user.controller.updateCookieConsent - Request */
-export interface UpdateCookieConsentRequestBody {
-  cookieConsent: CookieConsentOptions;
-}
