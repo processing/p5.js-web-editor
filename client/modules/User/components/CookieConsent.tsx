@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import Cookies from 'js-cookie';
 import styled from 'styled-components';
 import ReactGA from 'react-ga';
@@ -6,8 +7,10 @@ import { Transition } from 'react-transition-group';
 import { Link } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
 import { getConfig } from '../../../utils/getConfig';
+import { setUserCookieConsent } from '../actions';
 import { remSize, prop, device } from '../../../theme';
 import { Button, ButtonKinds } from '../../../common/Button';
+import { RootState } from '../../../reducers';
 import { CookieConsentOptions } from '../../../../common/types';
 
 interface CookieConsentContainerState {
@@ -79,62 +82,85 @@ const CookieConsentButtons = styled.div`
 `;
 
 const GOOGLE_ANALYTICS_ID = getConfig('GA_MEASUREMENT_ID');
-const COOKIE_CONSENT_STORAGE_KEY = 'p5-cookie-consent';
-
-function readCookieConsentFromSessionStorage() {
-  try {
-    const value = window.sessionStorage.getItem(COOKIE_CONSENT_STORAGE_KEY);
-    if (value && Object.values(CookieConsentOptions).includes(value as any)) {
-      return value as CookieConsentOptions;
-    }
-  } catch (error) {
-    // Ignore storage access failures and fall back to the banner.
-  }
-
-  return CookieConsentOptions.NONE;
-}
-
-function persistCookieConsentToSessionStorage(
-  cookieConsent: CookieConsentOptions
-) {
-  try {
-    window.sessionStorage.setItem(COOKIE_CONSENT_STORAGE_KEY, cookieConsent);
-  } catch (error) {
-    // Ignore storage access failures and keep the in-memory selection.
-  }
-}
 
 export function CookieConsent({ hide = false }: { hide?: boolean }) {
+  const user = useSelector((state: RootState) => state.user);
   const [
     cookieConsent,
     setBrowserCookieConsent
   ] = useState<CookieConsentOptions>(CookieConsentOptions.NONE);
   const [inProp, setInProp] = useState(false);
+  const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  function setCookieConsent(cookieConsentValue: CookieConsentOptions) {
-    setBrowserCookieConsent(cookieConsentValue);
-    persistCookieConsentToSessionStorage(cookieConsentValue);
+  function initializeCookieConsent() {
+    if (user.authenticated) {
+      if (!user.cookieConsent) {
+        return;
+      }
+      setBrowserCookieConsent(user.cookieConsent);
+      Cookies.set('p5-cookie-consent', user.cookieConsent, { expires: 365 });
+      return;
+    }
+    setBrowserCookieConsent(CookieConsentOptions.NONE);
+    Cookies.set('p5-cookie-consent', CookieConsentOptions.NONE, {
+      expires: 365
+    });
   }
 
   function acceptAllCookies() {
-    setCookieConsent(CookieConsentOptions.ALL);
+    if (user.authenticated) {
+      dispatch(setUserCookieConsent(CookieConsentOptions.ALL));
+    }
+    setBrowserCookieConsent(CookieConsentOptions.ALL);
+    Cookies.set('p5-cookie-consent', CookieConsentOptions.ALL, {
+      expires: 365
+    });
   }
 
   function acceptEssentialCookies() {
-    setCookieConsent(CookieConsentOptions.ESSENTIAL);
+    if (user.authenticated) {
+      dispatch(setUserCookieConsent(CookieConsentOptions.ESSENTIAL));
+    }
+    setBrowserCookieConsent(CookieConsentOptions.ESSENTIAL);
+    Cookies.set('p5-cookie-consent', CookieConsentOptions.ESSENTIAL, {
+      expires: 365
+    });
     // Remove Google Analytics Cookies
     Cookies.remove('_ga');
     Cookies.remove('_gat');
     Cookies.remove('_gid');
   }
 
+  function mergeCookieConsent() {
+    if (user.authenticated) {
+      if (!user.cookieConsent) {
+        user.cookieConsent = CookieConsentOptions.NONE;
+      }
+      if (
+        user.cookieConsent === CookieConsentOptions.NONE &&
+        cookieConsent !== CookieConsentOptions.NONE
+      ) {
+        dispatch(setUserCookieConsent(cookieConsent as CookieConsentOptions));
+      } else if (user.cookieConsent !== CookieConsentOptions.NONE) {
+        setBrowserCookieConsent(user.cookieConsent);
+        Cookies.set('p5-cookie-consent', user.cookieConsent, {
+          expires: 365
+        });
+      }
+    }
+  }
+
   useEffect(() => {
-    const storedCookieConsent = readCookieConsentFromSessionStorage();
-    setBrowserCookieConsent(storedCookieConsent);
+    const p5CookieConsent = Cookies.get('p5-cookie-consent');
+    if (p5CookieConsent) {
+      setBrowserCookieConsent(p5CookieConsent as CookieConsentOptions);
+    } else {
+      initializeCookieConsent();
+    }
 
     if (GOOGLE_ANALYTICS_ID) {
-      if (storedCookieConsent === CookieConsentOptions.ESSENTIAL) {
+      if (p5CookieConsent === 'essential') {
         ReactGA.initialize(GOOGLE_ANALYTICS_ID, {
           gaOptions: {
             storage: 'none'
@@ -146,6 +172,10 @@ export function CookieConsent({ hide = false }: { hide?: boolean }) {
       ReactGA.pageview(window.location.pathname + window.location.search);
     }
   }, []);
+
+  useEffect(() => {
+    mergeCookieConsent();
+  }, [user.authenticated]);
 
   useEffect(() => {
     if (cookieConsent !== 'none') {
