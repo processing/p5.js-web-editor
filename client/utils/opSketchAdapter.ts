@@ -16,6 +16,8 @@ export interface OpCodeTab {
   title: string;
   code: string;
   orderID?: number;
+  createdOn: string;
+  updatedOn: string;
 }
 
 export interface EditorFile {
@@ -53,6 +55,11 @@ export function visibilityToOpPrivacy(visibility: string): number {
 // Convert OP code tabs to editor file nodes, including a root folder
 export function codeTabsToFiles(codeTabs: OpCodeTab[]): EditorFile[] {
   const rootId = objectID().toHexString();
+  const sortedTabs = [...codeTabs].sort(
+    (a, b) => Date.parse(a.updatedOn) - Date.parse(b.updatedOn)
+  );
+  const selectedTab = sortedTabs[sortedTabs.length - 1];
+
   const fileNodes: EditorFile[] = codeTabs.map((tab, index) => {
     const id = objectID().toHexString();
     return {
@@ -63,7 +70,7 @@ export function codeTabsToFiles(codeTabs: OpCodeTab[]): EditorFile[] {
       fileType: 'file',
       children: [],
       filePath: '',
-      isSelectedFile: index === 0
+      isSelectedFile: tab === selectedTab
     };
   });
 
