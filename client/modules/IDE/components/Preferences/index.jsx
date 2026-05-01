@@ -29,6 +29,7 @@ import { CmControllerContext } from '../../pages/IDEView';
 import Stars from '../Stars';
 import Admonition from '../Admonition';
 import TextArea from '../TextArea';
+import { hasNoProtect, toggleLoopProtection } from '../../utils/loopProtection';
 
 export default function Preferences() {
   const { t } = useTranslation();
@@ -53,6 +54,16 @@ export default function Preferences() {
   const { versionInfo, indexID } = useP5Version();
   const cmRef = useContext(CmControllerContext);
   const [showStars, setShowStars] = useState(null);
+  const files = useSelector((s) => s.files);
+  const sketchFile = files.find(
+    (file) =>
+      file.fileType === 'file' &&
+      file.name === 'sketch.js' &&
+      file.filePath === ''
+  );
+  const sketchSrc = sketchFile?.content;
+  const sketchID = sketchFile?.id;
+  const loopProtection = useMemo(() => !hasNoProtect(sketchSrc), [sketchSrc]);
   const timerRef = useRef(null);
   const pickerRef = useRef(null);
   const onChangeVersion = (version) => {
@@ -64,6 +75,16 @@ export default function Preferences() {
       timerRef.current = setTimeout(() => setShowStars(null), 3000);
     }
   };
+
+  function handleLoopProtection(enabled) {
+    if (!sketchID || !sketchSrc) return;
+
+    const next = toggleLoopProtection(sketchSrc, enabled);
+    if (next === sketchSrc) return;
+
+    dispatch(updateFileContent(sketchID, next));
+    cmRef.current?.updateFileContent(sketchID, next);
+  }
 
   function onFontInputChange(event) {
     const INTEGER_REGEX = /^[0-9\b]+$/;
@@ -410,6 +431,42 @@ export default function Preferences() {
                 checked={!linewrap}
               />
               <label htmlFor="wordwrap-off" className="preference__option">
+                {t('Preferences.Off')}
+              </label>
+            </fieldset>
+          </div>
+          <div className="preference">
+            <h4 className="preference__title">
+              {t('Preferences.LoopProtection')}
+            </h4>
+            <fieldset className="preference__options">
+              <input
+                type="radio"
+                onChange={() => handleLoopProtection(true)}
+                aria-label={t('Preferences.LoopProtectionOnARIA')}
+                name="loopprotection"
+                id="loopprotection-on"
+                className="preference__radio-button"
+                value="On"
+                checked={loopProtection}
+              />
+              <label htmlFor="loopprotection-on" className="preference__option">
+                {t('Preferences.On')}
+              </label>
+              <input
+                type="radio"
+                onChange={() => handleLoopProtection(false)}
+                aria-label={t('Preferences.LoopProtectionOffARIA')}
+                name="loopprotection"
+                id="loopprotection-off"
+                className="preference__radio-button"
+                value="Off"
+                checked={!loopProtection}
+              />
+              <label
+                htmlFor="loopprotection-off"
+                className="preference__option"
+              >
                 {t('Preferences.Off')}
               </label>
             </fieldset>

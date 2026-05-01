@@ -3,6 +3,8 @@ import { act, fireEvent, reduxRender, screen } from '../../../../test-utils';
 import { initialState } from '../../reducers/preferences';
 import Preferences from './index';
 import * as PreferencesActions from '../../actions/preferences';
+import * as FileActions from '../../actions/files';
+import { initialState as filesInitialState } from '../../reducers/files';
 
 describe('<Preferences />', () => {
   // For backwards compatibility, spy on each action creator to see when it was dispatched.
@@ -13,13 +15,32 @@ describe('<Preferences />', () => {
     })
   );
 
-  const subject = (initialPreferences = {}) =>
+  const updateFileContentSpy = jest.spyOn(FileActions, 'updateFileContent');
+
+  const subject = (
+    initialPreferences = {},
+    sketchContent = `
+    function setup() {
+      createCanvas(400, 400);
+    }
+
+    function draw() {
+      background(220);
+    }
+    `
+  ) =>
     reduxRender(<Preferences />, {
       initialState: {
         preferences: {
           ...initialState,
           ...initialPreferences
-        }
+        },
+        files: filesInitialState().map((file) => ({
+          ...file,
+          ...(file.fileType === 'file' &&
+            file.name === 'sketch.js' &&
+            file.filePath === '' && { content: sketchContent })
+        }))
       }
     });
 
@@ -483,6 +504,104 @@ describe('<Preferences />', () => {
           props.setLinewrap,
           false
         );
+      });
+    });
+    describe('loop protection toggle', () => {
+      it('is ON by default when no noprotect comment exists', () => {
+        subject({}, 'function setup() {}');
+
+        const onRadio = screen.getByRole('radio', {
+          name: /loop protection on/i
+        });
+
+        expect(onRadio.checked).toBe(true);
+      });
+
+      it('is OFF when noprotect comment exists', () => {
+        subject({}, '// noprotect\nfunction setup() {}');
+
+        const offRadio = screen.getByRole('radio', {
+          name: /loop protection off/i
+        });
+
+        expect(offRadio.checked).toBe(true);
+      });
+
+      it('adds noprotect comment when turning OFF', () => {
+        subject({}, 'function setup() {}');
+
+        const offRadio = screen.getByRole('radio', {
+          name: /loop protection off/i
+        });
+
+        act(() => {
+          fireEvent.click(offRadio);
+        });
+
+        expect(updateFileContentSpy).toHaveBeenCalledTimes(1);
+
+        const updatedSrc = updateFileContentSpy.mock.calls[0][1];
+        expect(updatedSrc).toMatch(/^\/\/ noprotect\b/);
+        expect(updatedSrc.match(/\/\/ noprotect/g)?.length).toBe(1);
+      });
+
+      it('removes noprotect comment when turning ON', () => {
+        subject({}, '// noprotect\nfunction setup() {}');
+
+        const onRadio = screen.getByRole('radio', {
+          name: /loop protection on/i
+        });
+
+        act(() => {
+          fireEvent.click(onRadio);
+        });
+
+        expect(updateFileContentSpy).toHaveBeenCalledTimes(1);
+
+        const updatedSrc = updateFileContentSpy.mock.calls[0][1];
+        expect(updatedSrc).not.toMatch(/\/\/\s*noprotect/);
+      });
+
+      it('does not dispatch when clicking already selected state (ON)', () => {
+        subject({}, 'function setup() {}');
+
+        const onRadio = screen.getByRole('radio', {
+          name: /loop protection on/i
+        });
+
+        act(() => {
+          fireEvent.click(onRadio);
+        });
+
+        expect(updateFileContentSpy).toHaveBeenCalledTimes(0);
+      });
+
+      it('does not duplicate noprotect comment when already OFF', () => {
+        subject({}, '// noprotect\nfunction setup() {}');
+
+        const offRadio = screen.getByRole('radio', {
+          name: /loop protection off/i
+        });
+
+        act(() => {
+          fireEvent.click(offRadio);
+        });
+
+        expect(updateFileContentSpy).toHaveBeenCalledTimes(0);
+      });
+      it('removes noprotect even if not at top', () => {
+        subject({}, 'function setup() {}\n// noprotect');
+
+        const onRadio = screen.getByRole('radio', {
+          name: /loop protection on/i
+        });
+
+        act(() => {
+          fireEvent.click(onRadio);
+        });
+
+        const updatedSrc = updateFileContentSpy.mock.calls[0][1];
+        expect(updatedSrc).not.toMatch(/noprotect/);
       });
     });
   });
