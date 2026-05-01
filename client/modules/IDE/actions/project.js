@@ -197,6 +197,7 @@ export function saveProject(selectedFile = null, autosave = false) {
 
         await opApiClient.patch(`/sketch/${visualID}`, {
           title: state.project.name,
+          mode: 'html',
           isPrivate: visibilityToOpPrivacy(state.project.visibility)
         });
 
@@ -233,7 +234,7 @@ export function saveProject(selectedFile = null, autosave = false) {
         // Create new sketch
         const sketchRes = await opApiClient.post('/sketch', {
           title: state.project.name,
-          mode: 'p5js',
+          mode: 'html',
           isPrivate: visibilityToOpPrivacy(state.project.visibility)
         });
 
@@ -321,7 +322,7 @@ export function cloneProject(project) {
 
       const sketchRes = await opApiClient.post('/sketch', {
         title: `${projectName} copy`,
-        mode: 'p5js',
+        mode: 'html',
         isPrivate: visibilityToOpPrivacy(state.project.visibility)
       });
 
