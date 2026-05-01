@@ -9,7 +9,7 @@ import {
 import { collectionForUserExists } from '../controllers/collection.controller';
 
 const router = Router();
-const useOpApiTokenRouting = Boolean(process.env.API_TOKEN);
+const ApiTokenReady = Boolean(process.env.API_TOKEN);
 
 router.get('/', (req, res) => {
   res.send(renderIndex());
@@ -23,7 +23,7 @@ router.get('/signup', (req, res) => {
 });
 
 router.get('/projects/:project_id', async (req, res) => {
-  if (useOpApiTokenRouting) {
+  if (ApiTokenReady) {
     return res.send(renderIndex());
   }
   const exists = await projectExists(req.params.project_id);
@@ -33,7 +33,7 @@ router.get('/projects/:project_id', async (req, res) => {
 router.get(
   '/:username/sketches/:project_id/add-to-collection',
   async (req, res) => {
-    if (useOpApiTokenRouting) {
+    if (ApiTokenReady) {
       return res.send(renderIndex());
     }
     const exists = await projectForUserExists(
@@ -45,7 +45,7 @@ router.get(
 );
 
 router.get('/:username/sketches/:project_id', async (req, res) => {
-  if (useOpApiTokenRouting) {
+  if (ApiTokenReady) {
     return res.send(renderIndex());
   }
   const project = await getProjectForUser(
@@ -62,7 +62,7 @@ router.get('/:username/sketches/:project_id', async (req, res) => {
 });
 
 router.get('/:username/sketches', async (req, res) => {
-  if (useOpApiTokenRouting) {
+  if (ApiTokenReady) {
     return res.send(renderIndex());
   }
   const exists = await userExists(req.params.username);
@@ -70,7 +70,7 @@ router.get('/:username/sketches', async (req, res) => {
 });
 
 router.get('/:username/full/:project_id', async (req, res) => {
-  if (useOpApiTokenRouting) {
+  if (ApiTokenReady) {
     return res.send(renderIndex());
   }
   const exists = await projectForUserExists(
@@ -81,7 +81,7 @@ router.get('/:username/full/:project_id', async (req, res) => {
 });
 
 router.get('/full/:project_id', async (req, res) => {
-  if (useOpApiTokenRouting) {
+  if (ApiTokenReady) {
     return res.send(renderIndex());
   }
   const exists = await projectExists(req.params.project_id);
@@ -130,7 +130,7 @@ router.get('/assets', (req, res) => {
 });
 
 router.get('/:username/assets', async (req, res) => {
-  if (useOpApiTokenRouting) {
+  if (ApiTokenReady) {
     return res.send(renderIndex());
   }
   const exists = await userExists(req.params.username);
@@ -152,7 +152,7 @@ router.get('/about', (req, res) => {
 });
 
 router.get('/:username/collections/:id', async (req, res) => {
-  if (useOpApiTokenRouting) {
+  if (ApiTokenReady) {
     return res.send(renderIndex());
   }
   const exists = await collectionForUserExists(
@@ -163,7 +163,7 @@ router.get('/:username/collections/:id', async (req, res) => {
 });
 
 router.get('/:username/collections', async (req, res) => {
-  if (useOpApiTokenRouting) {
+  if (ApiTokenReady) {
     return res.send(renderIndex());
   }
   const exists = await userExists(req.params.username);
