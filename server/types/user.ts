@@ -48,6 +48,7 @@ export interface PublicUser
   > {
   /** Can contain either raw ApiKeyDocuments (server side) or SanitisedApiKeys (client side) */
   apiKeys: SanitisedApiKey[];
+  totalSketches?: number;
 }
 
 /** Mongoose document object for User */

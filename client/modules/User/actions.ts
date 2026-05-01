@@ -149,15 +149,11 @@ export function getUser() {
     try {
       const { data } = await opApiClient.get('/whoami');
 
-      // Support both nested shape {user:{userID,...},token:{...}} and flat {userID,...}
-      const opUser = data.user ?? data;
-      const token = data.token ?? {};
-
       dispatch(
         authenticateUser({
-          id: String(opUser.userID),
-          username: opUser.username ?? '',
-          opTokenCaps: token
+          id: String(data.userID),
+          username: data.username ?? '',
+          totalSketches: Number(data.totalSketches ?? 0)
         } as any)
       );
     } catch (error: any) {

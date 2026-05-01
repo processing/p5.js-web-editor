@@ -70,7 +70,16 @@ const initialTestState: RootState = {
     updatedAt: '',
     isSaving: false
   },
-  sketches: mockProjects,
+  sketches: {
+    projects: mockProjects,
+    metadata: {
+      page: 1,
+      totalPages: 1,
+      totalProjects: mockProjects.length,
+      limit: 10,
+      hasPagination: true
+    }
+  },
   search: {
     collectionSearchTerm: '',
     sketchSearchTerm: ''

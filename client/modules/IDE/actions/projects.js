@@ -18,16 +18,49 @@ function getRequestErrorPayload(error, fallbackMessage = 'Request failed.') {
   };
 }
 
-const fetchProjects = (options, successType) => (dispatch, getState) => {
-  const { user } = getState();
-  const userID = user.id;
+function normalizeOpProjectsResponse(response, page, limit, totalSketches) {
+  const projects = response.data.map((s) => ({
+    id: opVisualIdToProjectId(s.visualID),
+    name: s.title,
+    createdAt: s.createdOn,
+    updatedAt: s.createdOn,
+    visibility: opPrivacyToVisibility(s.isPrivate ?? 0)
+  }));
+  const totalProjects = Number(totalSketches);
+  const normalizedTotalProjects = Number.isFinite(totalProjects)
+    ? totalProjects
+    : projects.length;
+  const totalPages = Math.max(1, Math.ceil(normalizedTotalProjects / limit));
 
+  return {
+    projects,
+    metadata: {
+      page,
+      totalPages,
+      totalProjects: normalizedTotalProjects,
+      limit,
+      hasPagination: totalPages > 1
+    }
+  };
+}
+
+const fetchProjects = (username, options, successType) => (
+  dispatch,
+  getState
+) => {
+  const { user } = getState();
+  const { id: userID, totalSketches } = user;
+  const isOwnDashboard =
+    Boolean(userID) && (!username || username === user.username);
+
+  // In OP-backed mode sketches are fetched from /user/{userID}/sketches, so
+  // wait until auth hydration gives us the current user's ID before requesting.
   if (!userID) {
-    dispatch({
-      type: ActionTypes.ERROR,
-      error: { message: 'User not authenticated' }
-    });
-    return Promise.reject(new Error('User not authenticated'));
+    return Promise.resolve([]);
+  }
+
+  if (!isOwnDashboard) {
+    return Promise.resolve([]);
   }
 
   const { page = 1, limit = 10 } = options ?? {};
@@ -35,21 +68,19 @@ const fetchProjects = (options, successType) => (dispatch, getState) => {
 
   dispatch(startLoader());
 
-  return opApiClient
+  const request = opApiClient
     .get(`/user/${userID}/sketches`, {
       params: { limit, offset, sort: 'desc' }
     })
+    .then((response) =>
+      normalizeOpProjectsResponse(response, page, limit, totalSketches)
+    );
+
+  return request
     .then((response) => {
-      const projects = response.data.map((s) => ({
-        id: opVisualIdToProjectId(s.visualID),
-        name: s.title,
-        createdAt: s.createdOn,
-        updatedAt: s.createdOn,
-        visibility: opPrivacyToVisibility(s.isPrivate ?? 0)
-      }));
-      dispatch({ type: successType, projects });
+      dispatch({ type: successType, projects: response });
       dispatch(stopLoader());
-      return projects;
+      return response.projects;
     })
     .catch((error) => {
       dispatch({
@@ -62,7 +93,11 @@ const fetchProjects = (options, successType) => (dispatch, getState) => {
 };
 
 export const getProjects = (username, options) =>
-  fetchProjects(options, ActionTypes.SET_PROJECTS);
+  fetchProjects(username, options, ActionTypes.SET_PROJECTS);
 
 export const getProjectsForCollectionList = (username, options) =>
-  fetchProjects(options, ActionTypes.SET_PROJECTS_FOR_COLLECTION_LIST);
+  fetchProjects(
+    username,
+    options,
+    ActionTypes.SET_PROJECTS_FOR_COLLECTION_LIST
+  );

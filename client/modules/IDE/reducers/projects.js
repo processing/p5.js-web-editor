@@ -1,11 +1,42 @@
 import * as ActionTypes from '../../../constants';
 
-const sketches = (state = [], action) => {
+const initialState = {
+  projects: [],
+  metadata: {
+    page: 1,
+    totalPages: 1,
+    totalProjects: 0,
+    limit: 10,
+    hasPagination: true
+  }
+};
+
+const normalizeProjectsPayload = (payload, currentMetadata) => {
+  if (Array.isArray(payload)) {
+    return {
+      projects: payload,
+      metadata: {
+        ...currentMetadata,
+        totalProjects: payload.length
+      }
+    };
+  }
+
+  return {
+    projects: payload?.projects ?? [],
+    metadata: payload?.metadata ?? currentMetadata
+  };
+};
+
+const sketches = (state = initialState, action) => {
   switch (action.type) {
     case ActionTypes.SET_PROJECTS:
-      return action.projects;
+      return normalizeProjectsPayload(action.projects, state.metadata);
     case ActionTypes.DELETE_PROJECT:
-      return state.projects.filter((sketch) => sketch.id !== action.id);
+      return {
+        ...state,
+        projects: state.projects.filter((sketch) => sketch.id !== action.id)
+      };
     case ActionTypes.CHANGE_VISIBILITY: {
       const updatedProjects = state.projects.map((sketch) =>
         sketch.id === action.payload.id

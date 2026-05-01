@@ -33,7 +33,7 @@ const SketchList = ({
 }) => {
   const [isInitialDataLoad, setIsInitialDataLoad] = useState(true);
   const [page, setPage] = useState(1);
-  const limit = mobile ? 7 : 10;
+  const limit = 10;
   const [sketchToAddToCollection, setSketchToAddToCollection] = useState(null);
   const { t } = useTranslation();
 
@@ -57,7 +57,17 @@ const SketchList = ({
       sortDir,
       q: search
     });
-  }, [getProjects, username, page, limit, sortField, sortDir, search]);
+  }, [
+    getProjects,
+    username,
+    user.id,
+    user.username,
+    page,
+    limit,
+    sortField,
+    sortDir,
+    search
+  ]);
 
   useEffect(() => {
     if (Array.isArray(sketches)) {
@@ -241,6 +251,7 @@ const SketchList = ({
 
 SketchList.propTypes = {
   user: PropTypes.shape({
+    id: PropTypes.string,
     username: PropTypes.string,
     authenticated: PropTypes.bool.isRequired
   }).isRequired,
