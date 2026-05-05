@@ -11,6 +11,7 @@ import Project from '../models/project';
 import { User } from '../models/user';
 import { resolvePathToFile } from '../utils/filePath';
 import { generateFileSystemSafeName } from '../utils/generateFileSystemSafeName';
+import { commitPendingFiles } from '../utils/pendingAssets';
 
 const s3Client = new S3Client({
   credentials: {
@@ -60,6 +61,11 @@ export async function updateProject(req, res) {
     // only allow whitelisted fields so ownership/slug etc can't be overwritten
     const allowedFields = ['name', 'files', 'updatedAt', 'visibility'];
     const updateData = {};
+
+    if (req.body.files !== undefined) {
+      updateData.files = await commitPendingFiles(req.body.files, req.user.id);
+    }
+
     allowedFields.forEach((field) => {
       if (req.body[field] !== undefined) {
         updateData[field] = req.body[field];
@@ -77,21 +83,7 @@ export async function updateProject(req, res) {
     )
       .populate('user', 'username')
       .exec();
-    if (
-      req.body.files &&
-      updatedProject.files.length !== req.body.files.length
-    ) {
-      const oldFileIds = updatedProject.files.map((file) => file.id);
-      const newFileIds = req.body.files.map((file) => file.id);
-      const staleIds = oldFileIds.filter((id) => newFileIds.indexOf(id) === -1);
-      staleIds.forEach((staleId) => {
-        updatedProject.files.id(staleId).deleteOne();
-      });
-      const savedProject = await updatedProject.save();
-      res.json(savedProject);
-    } else {
-      res.json(updatedProject);
-    }
+    res.json(updatedProject);
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false });
