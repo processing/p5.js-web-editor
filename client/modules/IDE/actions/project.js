@@ -306,6 +306,7 @@ export function cloneProject(project) {
     generateNewIdsForChildren(rootFile, newFiles);
 
     // duplicate all files hosted on S3
+    const copiedAssetKeys = [];
     each(
       newFiles,
       (file, callback) => {
@@ -319,10 +320,16 @@ export function cloneProject(project) {
           const formParams = {
             url: file.url
           };
-          apiClient.post('/S3/copy', formParams).then((response) => {
-            file.url = response.data.url;
-            callback(null);
-          });
+          apiClient
+            .post('/S3/copy', formParams)
+            .then((response) => {
+              file.url = response.data.url;
+
+              const objectKeyFromUrl = file.url.split('/').pop();
+              copiedAssetKeys.push(objectKeyFromUrl);
+              callback(null);
+            })
+            .catch(callback);
         } else {
           callback(null);
         }
@@ -343,6 +350,12 @@ export function cloneProject(project) {
             dispatch(setNewProject(response.data));
           })
           .catch((error) => {
+            copiedAssetKeys.forEach((assetKey) => {
+              apiClient.delete(
+                `/S3/delete?objectKey=${encodeURIComponent(assetKey)}`
+              );
+            });
+
             dispatch({
               type: ActionTypes.PROJECT_SAVE_FAIL,
               error: error?.response?.data
