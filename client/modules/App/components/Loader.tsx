@@ -44,7 +44,7 @@ const LoaderCircle = styled.div`
   }
 `;
 
-const Loader = () => (
+export const Loader = () => (
   <Container>
     <LoaderWrapper>
       <LoaderCircle />
@@ -52,4 +52,3 @@ const Loader = () => (
     </LoaderWrapper>
   </Container>
 );
-export default Loader;

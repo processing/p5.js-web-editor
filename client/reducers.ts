@@ -14,6 +14,7 @@ import sorting from './modules/IDE/reducers/sorting';
 import loading from './modules/IDE/reducers/loading';
 import collections from './modules/IDE/reducers/collections';
 import collectionsListCollections from './modules/IDE/reducers/CollectionsListCollection';
+import collectionsListProjects from './modules/IDE/reducers/collectionsListProjects';
 
 const rootReducer = combineReducers({
   ide,
@@ -30,7 +31,8 @@ const rootReducer = combineReducers({
   assets,
   loading,
   collections,
-  collectionsListCollections
+  collectionsListCollections,
+  collectionsListProjects
 });
 
 // Type for entire redux state

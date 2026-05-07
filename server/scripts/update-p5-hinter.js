@@ -53,6 +53,39 @@ const reservedObjects = [
   { name: 'location', p5DocPath: undefined }
 ];
 
+function getKindLabel(type) {
+  switch (type) {
+    case 'method':
+      return 'fun';
+    case 'variable':
+      return 'var';
+    case 'constant':
+      return 'const';
+    case 'keyword':
+      return 'kw';
+    case 'boolean':
+      return 'bool';
+    case 'obj':
+      return 'obj';
+    default:
+      return type;
+  }
+}
+
+// create ghost text preview for methods
+function makePreview(label, type, params = []) {
+  const formattedParams = params
+    .map((param) => (param.o ? `[${param.p}]` : param.p))
+    .join(', ');
+
+  if (type === 'method') {
+    return `${label}(${formattedParams})`;
+  }
+
+  return label;
+}
+
+// TODO: add back in reference version switching depending user's p5.js version
 axios
   .get('https://p5js.org/reference/data.json')
   .then((response) => {
@@ -73,8 +106,6 @@ axios
         if (obj.itemtype === 'method') {
           itemType = 'method';
 
-          // Adds the parameters to the method.
-          // I'm not sure this will be used but we can at least keep it around.
           params = obj.params?.map((param) => ({
             p: param.name, // param name
             o: param.optional ?? false // optional
@@ -86,7 +117,9 @@ axios
         p5Keywords.push({
           label: obj.name,
           type: itemType,
+          kindLabel: getKindLabel(itemType),
           params,
+          preview: makePreview(obj.name, itemType, params),
           p5DocPath: obj.name
         });
       }
@@ -96,6 +129,9 @@ axios
       p5Keywords.push({
         label: bol,
         type: 'boolean',
+        kindLabel: 'bool',
+        params: [],
+        preview: bol,
         p5DocPath: 'boolean'
       });
     });
@@ -104,6 +140,9 @@ axios
       p5Keywords.push({
         label: keyword.name,
         type: 'keyword',
+        kindLabel: 'keyword',
+        params: [],
+        preview: keyword.name,
         p5DocPath: keyword.p5DocPath
       });
     });
@@ -112,6 +151,9 @@ axios
       p5Keywords.push({
         label: keyword.name,
         type: 'obj',
+        kindLabel: 'obj',
+        params: [],
+        preview: keyword.name,
         p5DocPath: keyword.p5DocPath
       });
     });

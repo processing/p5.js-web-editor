@@ -1,13 +1,6 @@
 import { useRef, useEffect } from 'react';
 import { EditorView, lineNumbers as lineNumbersExt } from '@codemirror/view';
 import { autocompletion, closeBrackets } from '@codemirror/autocomplete';
-
-// TODO: Check what the v6 variants of these addons are.
-// import 'codemirror/addon/search/searchcursor';
-// import 'codemirror/addon/search/matchesonscrollbar';
-// import 'codemirror/addon/search/match-highlighter';
-// import 'codemirror/addon/search/jump-to-line';
-
 import { debounce } from 'lodash';
 import { openSearchPanel } from '@codemirror/search';
 
@@ -15,14 +8,12 @@ import {
   getFileMode,
   createNewFileState,
   updateFileStates,
-  AUTOCOMPLETE_OPTIONS
+  createAutocompleteOptions
 } from './stateUtils';
 import { useEffectWithComparison } from '../../hooks/custom-hooks';
 import { tidyCodeWithPrettier } from './tidier';
 
 // ----- GENERAL TODOS (in order of priority) -----
-// - any features lost in the p5 conversion git merge
-// - javascript color picker (extension works for css but needs to be forked for js)
 // - revisit keymap differences, esp around sublime
 // - emmet doesn't trigger if text is copy pasted in
 // - need to re-implement emmet auto rename tag
@@ -45,7 +36,8 @@ export default function useCodeMirror({
   startSketch,
   autocompleteHinter,
   fontSize,
-  onUpdateLinting
+  onUpdateLinting,
+  referenceBaseUrl
 }) {
   // The codemirror instance.
   const cmView = useRef();
@@ -138,7 +130,9 @@ export default function useCodeMirror({
   useEffect(() => {
     const reconfigureEffect = (fileState) =>
       fileState.autocompleteCpt.reconfigure(
-        autocompleteHinter ? autocompletion(AUTOCOMPLETE_OPTIONS) : []
+        autocompleteHinter
+          ? autocompletion(createAutocompleteOptions(referenceBaseUrl))
+          : []
       );
     updateFileStates({
       fileStates: fileStates.current,
@@ -146,7 +140,7 @@ export default function useCodeMirror({
       file,
       reconfigureEffect
     });
-  }, [autocompleteHinter]);
+  }, [autocompleteHinter, referenceBaseUrl]);
 
   // Initializes the files as CodeMirror states.
   function initializeDocuments() {
@@ -168,7 +162,8 @@ export default function useCodeMirror({
             autocloseBracketsQuotes,
             autocomplete: autocompleteHinter,
             onUpdateLinting,
-            onViewUpdate
+            onViewUpdate,
+            referenceBaseUrl
           }
         );
       }

@@ -148,7 +148,8 @@
     "IncorrectCurrentPass": "Поточний пароль неправильний",
     "DefaultError": "Щось пішло не так",
     "UserNotFound": "Користувача не знайдено",
-    "NetworkError": "Помилка мережі"
+    "NetworkError": "Помилка мережі",
+    "CloseAlertARIA": "Close Alert"
   },
   "Toolbar": {
     "Preview": "Перегляд",
@@ -162,7 +163,8 @@
     "By": " користувачем ",
 	"CustomLibraryVersion": "Вибрана версія p5.js",
     "VersionPickerARIA": "Вибір версії",
-    "NewVersionPickerARIA": "Вибір версії"
+    "NewVersionPickerARIA": "Вибір версії",
+    "SelectVersionARIA": "Select p5.js version"
   },
   "Console": {
     "Title": "Консоль",
@@ -495,6 +497,7 @@
     "AddSketch": "Додати скетч",
     "DeleteFromCollection": "Ви впевнені, що хочете видалити {{name_sketch}} з цієї колекції?",
     "SketchDeleted": "Скетч видалено",
+    "SketchRemoveLabel": "Remove from Collection",
     "SketchRemoveARIA": "Видалити скетч із колекції",
     "DescriptionPlaceholder": "Додати опис",
     "Description": "опис",
@@ -569,10 +572,12 @@
     "ButtonAddToCollectionARIA": "Додати у колекцію",
     "View": "Перегляд"
   },
-   "Pagination": {
+  "Pagination": {
     "Next": "Next",
     "Previous": "Previous",
-    "Of": "of"
+    "Of": "of",
+    "PreviousPageARIA": "Previous Page",
+    "NextPageARIA": "Next Page"
   },
   "SketchList": {
     "View": "Перегляд",
@@ -682,5 +687,8 @@
   },
   "SkipLink": {
     "PlaySketch": "Запустити скетч"
+  },
+  "TextArea": {
+    "CopyARIA": "Copy"
   }
 }

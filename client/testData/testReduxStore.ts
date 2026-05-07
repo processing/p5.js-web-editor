@@ -91,10 +91,16 @@ const initialTestState: RootState = {
     list: [],
     totalSize: 0
   },
+// <<<<<<< HEAD
   loading: false, 
    collections: [],
    collectionsListCollections: {
     collections: [],
+// =======
+},
+  // loading: false,
+  collectionsListProjects: {
+    projects: [],
     metadata: {
       page: 1,
       totalPages: 1,
@@ -103,8 +109,5 @@ const initialTestState: RootState = {
       hasPagination: true
     }
   }
-
- 
-};
-
+}
 export { mockProjects, initialTestState };

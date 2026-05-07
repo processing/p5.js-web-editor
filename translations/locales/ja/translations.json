@@ -115,7 +115,8 @@
       "SketchFailedSave": "スケッチの保存に失敗しました",
       "AutosaveEnabled": "自動保存を有効にしました",
       "LangChange": "言語を変更しました",
-      "SettingsSaved": "設定を保存しました"
+      "SettingsSaved": "設定を保存しました",
+      "CloseAlertARIA": "Close Alert"
     },
     "Toolbar": {
       "Preview": "プレビュー",
@@ -126,7 +127,8 @@
       "StopSketchARIA": "スケッチを停止",
       "EditSketchARIA": "スケッチ名を編集",
       "NewSketchNameARIA": "新しいスケッチ名",
-      "By": " by "
+      "By": " by ",
+      "SelectVersionARIA": "Select p5.js version"
     },
     "Console": {
       "Title": "コンソール",
@@ -434,6 +436,7 @@
       "AddSketch": "スケッチを追加する",
       "DeleteFromCollection": "このコレクションから {{name_sketch}} を削除してもよろしいですか？",
       "SketchDeleted": "スケッチが削除されました",
+    "SketchRemoveLabel": "Remove from Collection",
       "SketchRemoveARIA": "コレクションからスケッチを削除する",
       "DescriptionPlaceholder": "スケッチについて記述する",
       "Description": "コレクションについて",
@@ -508,11 +511,13 @@
       "ButtonAddToCollectionARIA": "コレクションへ追加",
       "View": "表示"
     },
-     "Pagination": {
-    "Next": "Next",
-    "Previous": "Previous",
-    "Of": "of"
-  },
+    "Pagination": {
+      "Next": "Next",
+      "Previous": "Previous",
+      "Of": "of",
+      "PreviousPageARIA": "Previous Page",
+      "NextPageARIA": "Next Page"
+    },
     "SketchList": {
       "View": "表示",
       "Title": "p5.js ウェブエディター | マイスケッチ",
@@ -617,5 +622,8 @@
     "PrivacyPolicy": "プライバシーポリシー",
     "TermsOfUse": "利用規約",
     "CodeOfConduct": "行動規範"
+  },
+  "TextArea": {
+    "CopyARIA": "Copy"
   }
 }

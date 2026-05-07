@@ -6,15 +6,14 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import classNames from 'classnames';
 import { find } from 'lodash';
-// import { collections } from 'friendly-words';
 import * as ProjectActions from '../../actions/project';
 import * as ProjectsActions from '../../actions/projects';
 import * as CollectionsActions from '../../actions/collections';
 import * as ToastActions from '../../actions/toast';
 import * as SortingActions from '../../actions/sorting';
-// import getSortedCollections from '../../selectors/collections';
-import Loader from '../../../App/components/loader';
-import Overlay from '../../../App/components/Overlay';
+import getSortedCollections from '../../selectors/collections';
+import { Loader } from '../../../App/components/Loader';
+import { Overlay } from '../../../App/components/Overlay';
 import AddToCollectionSketchList from '../AddToCollectionSketchList';
 import { SketchSearchbar } from '../Searchbar';
 
@@ -314,7 +313,6 @@ CollectionList.defaultProps = {
 function mapStateToProps(state, ownProps) {
   return {
     user: state.user,
-    // collections: getSortedCollections(state),
     collections: state.collectionsListCollections.collections ?? [],
     paginationMeta: state.collectionsListCollections.metadata ?? {
       page: 1,

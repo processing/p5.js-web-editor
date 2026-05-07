@@ -28,6 +28,7 @@ import IDEOverlays from '../components/IDEOverlays';
 import useIsMobile from '../hooks/useIsMobile';
 import Banner from '../components/Banner';
 import { P5VersionProvider } from '../hooks/useP5Version';
+import { stopSketch } from '../actions/ide';
 
 const BANNER_DISMISS_KEY = 'bannerLastDismissedAt';
 const BANNER_COOLDOWN_MINUTES = 30;
@@ -113,7 +114,7 @@ const IDEView = () => {
   const [sidebarSize, setSidebarSize] = useState(160);
   const [isOverlayVisible, setIsOverlayVisible] = useState(false);
   const [MaxSize, setMaxSize] = useState(window.innerWidth);
-  const [displayBanner, setDisplayBanner] = useState(true);
+  const [displayBanner, setDisplayBanner] = useState(false); // set to true if in use
 
   const cmRef = useRef({});
 
@@ -158,6 +159,17 @@ const IDEView = () => {
       }
     };
   }, [shouldAutosave, dispatch]);
+  const prevIsMobile = useRef(isMobile);
+
+  useEffect(() => {
+    if (prevIsMobile.current !== isMobile) {
+      prevIsMobile.current = isMobile;
+
+      if (ide.isPlaying) {
+        dispatch(stopSketch());
+      }
+    }
+  }, [isMobile, ide.isPlaying, dispatch]);
 
   useEffect(() => {
     const updateInnerWidth = (e) => {
@@ -177,12 +189,12 @@ const IDEView = () => {
     const lastClosedAt = stored ? Number(stored) : null;
 
     if (!lastClosedAt) {
-      setDisplayBanner(true);
+      setDisplayBanner(false); // set to true if in use
       return;
     }
 
     if (minutesSince(lastClosedAt) >= BANNER_COOLDOWN_MINUTES) {
-      setDisplayBanner(true);
+      setDisplayBanner(false); // set to true if in use
     } else {
       setDisplayBanner(false);
     }

@@ -65,8 +65,9 @@ export async function deleteObjectsFromS3(keyList) {
 }
 
 export async function deleteObjectFromS3(req, res) {
-  const { objectKey, userId } = req.params;
-  const fullObjectKey = userId ? `${userId}/${objectKey}` : objectKey;
+  const userId = req.user.id;
+  const { objectKey } = req.query;
+  const fullObjectKey = `${userId}/${objectKey}`;
 
   try {
     await deleteObjectsFromS3([fullObjectKey]);
@@ -148,7 +149,8 @@ export async function copyObjectInS3RequestHandler(req, res) {
     const newUrl = await copyObjectInS3(url, req.user.id);
     res.json({ url: newUrl });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error('Error copying object in S3:', error.message);
+    res.status(500).json({ error: 'Internal server error' });
   }
 }
 

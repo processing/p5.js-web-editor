@@ -1,0 +1,32 @@
+.tooltip-wrapper {
+  position: relative;
+  display: flex;
+  width: 100%;
+}
+
+.tooltip-wrapper .tooltipped::after {
+  @include themify() {
+    background-color: getThemifyVariable('button-background-hover-color');
+    color: getThemifyVariable('button-hover-color');
+  }
+  font-family: Montserrat, sans-serif;
+  font-size: 1rem;
+  padding: 0.5rem 0.75rem;
+  max-width: none;
+  white-space: nowrap;
+  left: 1rem;
+  right: auto;
+  transform: translateX(0);
+  text-align: left;
+}
+
+.tooltip-wrapper .tooltipped-n::before,
+.tooltip-wrapper .tooltipped::before {
+  @include themify() {
+    color: getThemifyVariable('button-background-hover-color');
+    border-top-color: getThemifyVariable('button-background-hover-color');
+  }
+  left: 1.75rem;
+  right: auto;
+  transform: translateX(0);
+}
