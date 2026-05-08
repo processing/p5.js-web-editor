@@ -13,9 +13,16 @@ import {
 
 const mockStore = configureStore([thunk]);
 
+const mockOpSketches = mockProjects.map((project) => ({
+  visualID: project.id,
+  title: project.name,
+  createdOn: project.createdAt,
+  isPrivate: 0
+}));
+
 const server = setupServer(
-  rest.get(`/${initialTestState.user.username}/projects`, (req, res, ctx) =>
-    res(ctx.json(mockProjects))
+  rest.get(`/user/${initialTestState.user.id}/sketches`, (req, res, ctx) =>
+    res(ctx.set('X-Total-Count', '54'), ctx.json(mockOpSketches))
   )
 );
 
@@ -32,10 +39,26 @@ describe('projects action creator tests', () => {
 
   it('creates GET_PROJECTS after successfuly fetching projects', () => {
     store = mockStore(initialTestState);
+    const expectedProjects = {
+      projects: mockProjects.map((project) => ({
+        id: project.id,
+        name: project.name,
+        createdAt: project.createdAt,
+        updatedAt: project.createdAt,
+        visibility: project.visibility
+      })),
+      metadata: {
+        page: 1,
+        totalPages: 6,
+        totalProjects: 54,
+        limit: 10,
+        hasPagination: true
+      }
+    };
 
     const expectedActions = [
       { type: startLoader.type },
-      { type: ActionTypes.SET_PROJECTS, projects: mockProjects },
+      { type: ActionTypes.SET_PROJECTS, projects: expectedProjects },
       { type: stopLoader.type }
     ];
 

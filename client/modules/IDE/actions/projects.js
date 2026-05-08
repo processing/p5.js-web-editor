@@ -18,7 +18,15 @@ function getRequestErrorPayload(error, fallbackMessage = 'Request failed.') {
   };
 }
 
-function normalizeOpProjectsResponse(response, page, limit, totalSketches) {
+function getTotalCountHeader(headers) {
+  return (
+    headers?.get?.('x-total-count') ??
+    headers?.['x-total-count'] ??
+    headers?.['X-Total-Count']
+  );
+}
+
+function normalizeOpProjectsResponse(response, page, limit) {
   const projects = response.data.map((s) => ({
     id: opVisualIdToProjectId(s.visualID),
     name: s.title,
@@ -26,7 +34,7 @@ function normalizeOpProjectsResponse(response, page, limit, totalSketches) {
     updatedAt: s.createdOn,
     visibility: opPrivacyToVisibility(s.isPrivate ?? 0)
   }));
-  const totalProjects = Number(totalSketches);
+  const totalProjects = Number(getTotalCountHeader(response.headers));
   const normalizedTotalProjects = Number.isFinite(totalProjects)
     ? totalProjects
     : projects.length;
@@ -49,7 +57,7 @@ const fetchProjects = (username, options, successType) => (
   getState
 ) => {
   const { user } = getState();
-  const { id: userID, totalSketches } = user;
+  const { id: userID } = user;
   const isOwnDashboard =
     Boolean(userID) && (!username || username === user.username);
 
@@ -72,9 +80,7 @@ const fetchProjects = (username, options, successType) => (
     .get(`/user/${userID}/sketches`, {
       params: { limit, offset, sort: 'desc' }
     })
-    .then((response) =>
-      normalizeOpProjectsResponse(response, page, limit, totalSketches)
-    );
+    .then((response) => normalizeOpProjectsResponse(response, page, limit));
 
   return request
     .then((response) => {
