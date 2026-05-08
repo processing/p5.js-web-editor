@@ -18,6 +18,14 @@ function getRequestErrorPayload(error, fallbackMessage = 'Request failed.') {
   };
 }
 
+function isAbortError(error) {
+  return (
+    error?.code === 'ERR_CANCELED' ||
+    error?.name === 'CanceledError' ||
+    error?.name === 'AbortError'
+  );
+}
+
 function getTotalCountHeader(headers) {
   return (
     headers?.get?.('x-total-count') ??
@@ -52,6 +60,28 @@ function normalizeOpProjectsResponse(response, page, limit) {
   };
 }
 
+const SKETCHES_REQUEST_DELAY_MS = 500; // allows user to finish typing before a request is made
+
+let projectsRequest;
+
+function cancelProjectsRequest(dispatch) {
+  if (!projectsRequest) {
+    return;
+  }
+
+  const request = projectsRequest;
+  projectsRequest = undefined;
+  request.controller.abort();
+
+  if (request.timeoutId) {
+    clearTimeout(request.timeoutId);
+  } else {
+    dispatch(stopLoader());
+  }
+
+  request.resolve([]);
+}
+
 const fetchProjects = (username, options, successType) => (
   dispatch,
   getState
@@ -64,38 +94,82 @@ const fetchProjects = (username, options, successType) => (
   // In OP-backed mode sketches are fetched from /user/{userID}/sketches, so
   // wait until auth hydration gives us the current user's ID before requesting.
   if (!userID) {
+    cancelProjectsRequest(dispatch);
     return Promise.resolve([]);
   }
 
   if (!isOwnDashboard) {
+    cancelProjectsRequest(dispatch);
     return Promise.resolve([]);
   }
 
-  const { page = 1, limit = 10 } = options ?? {};
+  const { page = 1, limit = 10, q } = options ?? {};
   const offset = (page - 1) * limit;
+  const params = { limit, offset, sort: 'desc' };
 
-  dispatch(startLoader());
+  if (q?.trim()) {
+    params.q = q.trim();
+  }
 
-  const request = opApiClient
-    .get(`/user/${userID}/sketches`, {
-      params: { limit, offset, sort: 'desc' }
-    })
-    .then((response) => normalizeOpProjectsResponse(response, page, limit));
+  cancelProjectsRequest(dispatch);
+  const requestController = new AbortController();
 
-  return request
-    .then((response) => {
-      dispatch({ type: successType, projects: response });
-      dispatch(stopLoader());
-      return response.projects;
-    })
-    .catch((error) => {
-      dispatch({
-        type: ActionTypes.ERROR,
-        error: getRequestErrorPayload(error)
-      });
-      dispatch(stopLoader());
-      throw error;
-    });
+  return new Promise((resolve, reject) => {
+    const request = {
+      controller: requestController,
+      resolve,
+      timeoutId: undefined
+    };
+
+    projectsRequest = request;
+    request.timeoutId = setTimeout(() => {
+      if (projectsRequest !== request) {
+        resolve([]);
+        return;
+      }
+
+      request.timeoutId = undefined;
+      dispatch(startLoader());
+
+      opApiClient
+        .get(`/user/${userID}/sketches`, {
+          params,
+          signal: requestController.signal
+        })
+        .then((response) => normalizeOpProjectsResponse(response, page, limit))
+        .then((response) => {
+          if (projectsRequest !== request) {
+            resolve([]);
+            return;
+          }
+
+          dispatch({ type: successType, projects: response });
+          projectsRequest = undefined;
+          dispatch(stopLoader());
+          resolve(response.projects);
+        })
+        .catch((error) => {
+          if (projectsRequest !== request) {
+            resolve([]);
+            return;
+          }
+
+          projectsRequest = undefined;
+          dispatch(stopLoader());
+
+          if (isAbortError(error)) {
+            resolve([]);
+            return;
+          }
+
+          dispatch({
+            type: ActionTypes.ERROR,
+            error: getRequestErrorPayload(error)
+          });
+          reject(error);
+        });
+    }, SKETCHES_REQUEST_DELAY_MS);
+  });
 };
 
 export const getProjects = (username, options) =>
