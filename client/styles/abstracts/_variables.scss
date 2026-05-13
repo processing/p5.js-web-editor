@@ -120,6 +120,14 @@ $themes: (
     table-button-background-active-color: #00A1D3,
     table-button-background-color: $middle-gray,
     table-button-background-hover-color: $p5js-pink,
+    table-button-color: $lightest,
+    table-button-hover-color: $lightest,
+    table-row-stripe-color-alternate: $medium-light,
+    table-row-stripe-color: $medium-light,
+    toast-background-color: $medium-dark,
+    toast-text-color: $lightest,
+    toolbar-button-background-color: $medium-light,
+    toolbar-button-color: $dark,
   ),
   dark: (
     admonition-background: #105A7F,
@@ -199,7 +207,7 @@ $themes: (
     primary-text-color: $lightest,
     progress-bar-active-color: $p5js-active-pink,
     progress-bar-background-color: $darker,
-    progress-bar-border-color: $middle-dark,
+    progress-bar-border-color: $middle-gray,
     search-background-color: $darker,
     search-clear-background-color: $medium-dark,
     search-hover-background-color: $p5js-pink,
@@ -210,6 +218,14 @@ $themes: (
     table-button-background-active-color: #00A1D3,
     table-button-background-color: $middle-gray,
     table-button-background-hover-color: $p5js-pink,
+    table-button-color: $lightest,
+    table-button-hover-color: $lightest,
+    table-row-stripe-color-alternate: $darker,
+    table-row-stripe-color: $dark,
+    toast-background-color: $medium-light,
+    toast-text-color: $dark,
+    toolbar-button-background-color: $medium-dark,
+    toolbar-button-color: $lightest,
   ),
   contrast: (
     admonition-background: #000000,
@@ -299,8 +315,13 @@ $themes: (
     table-button-background-active-color: #00FFFF,
     table-button-background-color: $middle-gray,
     table-button-background-hover-color: $yellow,
+    table-button-color: $dark,
+    table-button-hover-color: $dark,
+    table-row-stripe-color-alternate: $darker,
+    table-row-stripe-color: $dark,
+    toast-background-color: $medium-light,
+    toast-text-color: $darker,
+    toolbar-button-background-color: $medium-light,
+    toolbar-button-color: $dark,
   )
 );
-
-$toast-background-color: $medium-dark;
-$toast-text-color: $lightest;
