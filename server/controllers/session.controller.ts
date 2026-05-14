@@ -4,12 +4,6 @@ import { RequestHandler } from 'express';
 
 import { userResponse } from './user.controller';
 
-/**
- * - Id: `SessionController.createSession`
- *
- * Description:
- *   - Creates a new user session (Login) using Passport's local strategy.
- */
 export const createSession: RequestHandler = (req, res, next) => {
   passport.authenticate('local', (err: Error, user: Express.User) => {
     if (err) {
@@ -31,12 +25,6 @@ export const createSession: RequestHandler = (req, res, next) => {
   })(req, res, next);
 };
 
-/**
- * - Id: `SessionController.getSession`
- *
- * Description:
- *   - Retrieves the current session user. Returns null if not authenticated.
- */
 export const getSession: RequestHandler = (req, res) => {
   if (!req.user) {
     return res.status(200).send({ user: null });
@@ -48,12 +36,6 @@ export const getSession: RequestHandler = (req, res) => {
   return res.json(userResponse(req.user));
 };
 
-/**
- * - Id: `SessionController.destroySession`
- *
- * Description:
- *   - Destroys the current session (Logout).
- */
 export const destroySession: RequestHandler = (req, res, next) => {
   req.logout((err: Error) => {
     if (err) {

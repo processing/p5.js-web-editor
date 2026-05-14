@@ -28,7 +28,6 @@ describe('session.controller', () => {
     response = new MockResponse();
     next = jest.fn();
 
-    // Add missing properties that jest-express MockRequest doesn't have by default but Passport uses
     (request as any).logIn = jest.fn();
     (request as any).logout = jest.fn();
     (request as any).session = {
