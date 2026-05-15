@@ -34,7 +34,15 @@ function NewFileForm() {
 
   return (
     <Form fields={['name']} validate={validate} onSubmit={onSubmit}>
-      {({ handleSubmit, errors, touched, invalid, submitting }) => (
+      {({
+        handleSubmit,
+        errors,
+        submitErrors,
+        touched,
+        invalid,
+        submitting,
+        submitFailed
+      }) => (
         <form className="new-file-form" onSubmit={handleSubmit}>
           <div className="new-file-form__input-wrapper">
             <Field name="name">
@@ -63,9 +71,10 @@ function NewFileForm() {
               )}
             </Field>
           </div>
-          {touched.submitButton && errors.name && (
+          {((touched.submitButton && errors.name) ||
+            (submitFailed && submitErrors?.name)) && (
             <span className="form-error" aria-live="polite">
-              {errors.name}
+              {errors.name || submitErrors.name}
             </span>
           )}
         </form>

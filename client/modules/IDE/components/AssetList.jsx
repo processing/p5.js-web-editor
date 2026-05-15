@@ -9,15 +9,19 @@ import * as AssetActions from '../actions/assets';
 const AssetList = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { username, assetList, loading } = useSelector((state) => ({
+  const { username, userId, assetList, loading } = useSelector((state) => ({
     username: state.user.username,
+    userId: state.user.id,
     assetList: state.assets.list,
     loading: state.loading
   }));
 
   useEffect(() => {
+    if (!userId) {
+      return;
+    }
     dispatch(AssetActions.getAssets());
-  }, []);
+  }, [dispatch, userId]);
 
   const hasAssets = () => !loading && assetList.length > 0;
 

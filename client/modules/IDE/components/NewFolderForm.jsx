@@ -31,7 +31,15 @@ function NewFolderForm() {
 
   return (
     <Form fields={['name']} validate={validate} onSubmit={onSubmit}>
-      {({ handleSubmit, invalid, submitting, touched, errors }) => (
+      {({
+        handleSubmit,
+        invalid,
+        submitting,
+        touched,
+        errors,
+        submitErrors,
+        submitFailed
+      }) => (
         <form className="new-folder-form" onSubmit={handleSubmit}>
           <div className="new-folder-form__input-wrapper">
             <Field name="name">
@@ -60,9 +68,10 @@ function NewFolderForm() {
               )}
             </Field>
           </div>
-          {touched.submitButton && errors.name && (
+          {((touched.submitButton && errors.name) ||
+            (submitFailed && submitErrors?.name)) && (
             <span className="form-error" aria-live="polite">
-              {errors.name}
+              {errors.name || submitErrors.name}
             </span>
           )}
         </form>

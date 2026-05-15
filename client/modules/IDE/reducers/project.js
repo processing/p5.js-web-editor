@@ -35,6 +35,7 @@ const project = (state, action) => {
         owner: action.owner,
         isSaving: false,
         visibility: action.project.visibility,
+        fileBase: action.project.fileBase,
         savedCodeTitles: action.project.savedCodeTitles ?? []
       };
     case ActionTypes.SET_PROJECT:
@@ -45,6 +46,7 @@ const project = (state, action) => {
         owner: action.owner,
         isSaving: false,
         visibility: action.project.visibility,
+        fileBase: action.project.fileBase,
         savedCodeTitles: action.project.savedCodeTitles ?? []
       };
     case ActionTypes.SET_SAVED_CODE_TITLES:

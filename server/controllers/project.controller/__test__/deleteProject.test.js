@@ -6,10 +6,8 @@ import { Request, Response } from 'jest-express';
 import Project from '../../../models/project';
 import { User } from '../../../models/user';
 import deleteProject from '../deleteProject';
-import { deleteObjectsFromS3 } from '../../aws.controller';
 
 jest.mock('../../../models/project');
-jest.mock('../../aws.controller');
 
 // TODO: incomplete test, 500 response status needs to be added
 
@@ -62,7 +60,7 @@ describe('project.controller', () => {
     });
   });
 
-  it('delete project and dependent files from S3', async () => {
+  it('deletes project', async () => {
     const user = new User();
     const project = new Project();
     project.user = user;
@@ -73,13 +71,11 @@ describe('project.controller', () => {
     request.user = { _id: user._id };
 
     Project.findById.mockResolvedValue(project);
-    deleteObjectsFromS3.mockResolvedValue();
 
     response.end = jest.fn();
 
     await deleteProject(request, response);
 
-    expect(deleteObjectsFromS3).toHaveBeenCalled();
     expect(project.deleteOne).toHaveBeenCalled();
     expect(response.status).toHaveBeenCalledWith(200);
     expect(response.end).toHaveBeenCalled();

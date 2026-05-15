@@ -67,15 +67,17 @@ export function getProject(id, ownerUsername) {
   return async (dispatch, getState) => {
     dispatch(justOpenedProject());
     try {
-      const [sketchRes, codeRes] = await Promise.all([
+      const [sketchRes, codeRes, filesRes] = await Promise.all([
         opApiClient.get(`/sketch/${id}`),
-        opApiClient.get(`/sketch/${id}/code`)
+        opApiClient.get(`/sketch/${id}/code`),
+        opApiClient.get(`/sketch/${id}/files`)
       ]);
       const fallbackUsername = getState().user.username ?? '';
       const project = opSketchToProject(
         sketchRes.data,
         codeRes.data,
-        ownerUsername ?? fallbackUsername
+        ownerUsername ?? fallbackUsername,
+        filesRes.data
       );
       dispatch(setProject(project));
       dispatch(setUnsavedChanges(false));
@@ -246,6 +248,7 @@ export function saveProject(selectedFile = null, autosave = false) {
           id: projectId,
           name: state.project.name,
           visibility: state.project.visibility,
+          fileBase: sketchRes.data.fileBase,
           files,
           savedCodeTitles: codeTabs.map((t) => t.title),
           updatedAt: sketchRes.data.createdOn ?? '',

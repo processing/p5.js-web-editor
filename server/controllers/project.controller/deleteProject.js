@@ -1,33 +1,9 @@
-import isBefore from 'date-fns/isBefore';
 import Project from '../../models/project';
-import { deleteObjectsFromS3, getObjectKey } from '../aws.controller';
 import createApplicationErrorClass from '../../utils/createApplicationErrorClass';
 
 const ProjectDeletionError = createApplicationErrorClass(
   'ProjectDeletionError'
 );
-
-async function deleteFilesFromS3(files) {
-  const filteredFiles = files
-    .filter((file) => {
-      const isValidFile =
-        file.url &&
-        (file.url.includes(process.env.S3_BUCKET_URL_BASE) ||
-          file.url.includes(process.env.S3_BUCKET)) &&
-        (!process.env.S3_DATE ||
-          (process.env.S3_DATE &&
-            isBefore(new Date(process.env.S3_DATE), new Date(file.createdAt))));
-
-      return isValidFile;
-    })
-    .map((file) => getObjectKey(file.url));
-
-  try {
-    await deleteObjectsFromS3(filteredFiles);
-  } catch (error) {
-    console.error('Failed to delete files from S3: ', error);
-  }
-}
 
 export default async function deleteProject(req, res) {
   const sendFailure = (error) => {
@@ -64,7 +40,6 @@ export default async function deleteProject(req, res) {
       return;
     }
 
-    await deleteFilesFromS3(project.files);
     await project.deleteOne();
     res.status(200).end();
   } catch (error) {

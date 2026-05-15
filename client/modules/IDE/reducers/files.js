@@ -110,20 +110,133 @@ function updateParent(state, action) {
   });
 }
 
+function splitPath(name) {
+  const parts = name.split('/').filter(Boolean);
+  const basename = parts.pop() || name;
+  return {
+    folders: parts,
+    basename
+  };
+}
+
+function findParentId(state, fileId) {
+  const parent = state.find((file) => file.children.includes(fileId));
+  return parent?.id;
+}
+
+function getChildFilePath(parentFile) {
+  if (parentFile.name === 'root') {
+    return '';
+  }
+  if (parentFile.filePath) {
+    return `${parentFile.filePath}/${parentFile.name}`;
+  }
+  return parentFile.name;
+}
+
+function getOrCreateChildFolder(state, parentId, folderName) {
+  const parent = state.find((file) => file.id === parentId);
+  const existingFolder = parent.children
+    .map((childId) => state.find((file) => file.id === childId))
+    .find((file) => file?.fileType === 'folder' && file.name === folderName);
+
+  if (existingFolder) {
+    return { state, folderId: existingFolder.id };
+  }
+
+  const id = objectID().toHexString();
+  const folder = {
+    id,
+    _id: id,
+    name: folderName,
+    content: '',
+    fileType: 'folder',
+    children: [],
+    filePath: getChildFilePath(parent)
+  };
+  const nextState = state.map((file) => {
+    if (file.id !== parentId) {
+      return file;
+    }
+    return {
+      ...file,
+      children: [...file.children, id]
+    };
+  });
+
+  return { state: [...nextState, folder], folderId: id };
+}
+
+function applyFilePathHierarchy(state, fileId) {
+  const file = state.find((candidate) => candidate.id === fileId);
+  if (!file || file.fileType === 'folder' || !file.name.includes('/')) {
+    return state;
+  }
+
+  const currentParentId = findParentId(state, fileId);
+  if (!currentParentId) {
+    return state;
+  }
+
+  const { folders, basename } = splitPath(file.name);
+  if (folders.length === 0) {
+    return state;
+  }
+
+  let nextState = state.map((candidate) => {
+    if (candidate.id !== currentParentId) {
+      return candidate;
+    }
+    return {
+      ...candidate,
+      children: candidate.children.filter((childId) => childId !== fileId)
+    };
+  });
+  let parentId = currentParentId;
+
+  folders.forEach((folderName) => {
+    const result = getOrCreateChildFolder(nextState, parentId, folderName);
+    nextState = result.state;
+    parentId = result.folderId;
+  });
+
+  nextState = nextState.map((candidate) => {
+    if (candidate.id === parentId) {
+      return {
+        ...candidate,
+        children: [...candidate.children, fileId]
+      };
+    }
+    if (candidate.id === fileId) {
+      const parent = nextState.find((parentFile) => parentFile.id === parentId);
+      return {
+        ...candidate,
+        name: basename,
+        filePath: getChildFilePath(parent)
+      };
+    }
+    return candidate;
+  });
+
+  return nextState;
+}
+
 function renameFile(state, action) {
   return state.map((file) => {
     if (file.id !== action.id) {
       return file;
     }
-    return Object.assign({}, file, { name: action.name });
+    return Object.assign({}, file, {
+      name: action.name,
+      url: action.urlsById?.[file.id] || action.url || file.url
+    });
   });
 }
 
 function setFilePath(files, fileId, path) {
   const file = files.find((f) => f.id === fileId);
   file.filePath = path;
-  // const newPath = `${path}${path.length > 0 ? '/' : ''}${file.name}`;
-  const newPath = `${path}/${file.name}`;
+  const newPath = path ? `${path}/${file.name}` : file.name;
   if (file.children.length === 0) return;
   file.children.forEach((childFileId) => {
     setFilePath(files, childFileId, newPath);
@@ -138,6 +251,13 @@ function setFilePaths(files) {
     setFilePath(updatedFiles, fileId, rootPath);
   });
   return updatedFiles;
+}
+
+function sortAllChildren(files) {
+  return files.map((file) => ({
+    ...file,
+    children: sortedChildrenId(files, file.children)
+  }));
 }
 
 const files = (state, action) => {
@@ -186,15 +306,7 @@ const files = (state, action) => {
       return initialState();
     case ActionTypes.CREATE_FILE: {
       const parentFile = state.find((file) => file.id === action.parentId);
-      // const filePath =
-      //   parentFile.name === 'root'
-      //     ? ''
-      //     : `${parentFile.filePath}${parentFile.filePath.length > 0 ? '/' : ''}
-      //     ${parentFile.name}`;
-      const filePath =
-        parentFile.name === 'root'
-          ? ''
-          : `${parentFile.filePath}/${parentFile.name}`;
+      const filePath = getChildFilePath(parentFile);
       const newState = [
         ...updateParent(state, action),
         {
@@ -209,28 +321,23 @@ const files = (state, action) => {
         }
       ];
 
-      return newState.map((file) => {
-        if (file.id === action.parentId) {
-          file.children = sortedChildrenId(newState, file.children);
-        }
-        return file;
-      });
+      return sortAllChildren(
+        setFilePaths(applyFilePathHierarchy(newState, action.id))
+      );
     }
     case ActionTypes.UPDATE_FILE_NAME: {
-      const newState = renameFile(state, action);
+      const newState = applyFilePathHierarchy(
+        renameFile(state, action),
+        action.id
+      );
       const updatedFile = newState.find((file) => file.id === action.id);
-      // const childPath = `${updatedFile.filePath}
-      // ${updatedFile.filePath.length > 0 ? '/' : ''}${updatedFile.name}`;
-      const childPath = `${updatedFile.filePath}/${updatedFile.name}`;
+      const childPath = updatedFile.filePath
+        ? `${updatedFile.filePath}/${updatedFile.name}`
+        : updatedFile.name;
       updatedFile.children.forEach((childId) => {
         setFilePath(newState, action.id, childPath);
       });
-      return newState.map((file) => {
-        if (file.children.includes(action.id)) {
-          file.children = sortedChildrenId(newState, file.children);
-        }
-        return file;
-      });
+      return sortAllChildren(setFilePaths(newState));
     }
     case ActionTypes.DELETE_FILE: {
       const newState = deleteMany(state, [

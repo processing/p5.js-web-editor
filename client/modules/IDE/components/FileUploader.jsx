@@ -1,5 +1,5 @@
 import Dropzone from 'dropzone';
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
@@ -9,7 +9,8 @@ import {
   dropzoneAcceptCallback,
   dropzoneCompleteCallback,
   dropzoneSendingCallback,
-  s3BucketHttps
+  getDropzoneUploadUrl,
+  getUploadPathForParent
 } from '../actions/uploader';
 
 Dropzone.autoDiscover = false;
@@ -44,7 +45,17 @@ const StyledUploader = styled.div`
 function FileUploader() {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const userId = useSelector((state) => state.user.id);
+  const { files, parentId, projectId } = useSelector((state) => ({
+    files: state.files,
+    parentId: state.ide.parentId,
+    projectId: state.project.id
+  }));
+  const uploadContext = useRef({ files, parentId, projectId });
+
+  useEffect(() => {
+    uploadContext.current = { files, parentId, projectId };
+  }, [files, parentId, projectId]);
+
   const deleteUploadErrorFiles = (uploader, file) => {
     if (file.status === 'error') {
       file.previewElement.addEventListener('click', (e) => {
@@ -55,13 +66,13 @@ function FileUploader() {
   };
   useEffect(() => {
     const uploader = new Dropzone('div#uploader', {
-      url: s3BucketHttps,
+      url: getDropzoneUploadUrl,
       method: 'post',
       autoProcessQueue: true,
       clickable: true,
       hiddenInputContainer: '#hidden-input-container',
       maxFiles: 6,
-      parallelUploads: 2,
+      parallelUploads: 1,
       maxFilesize: 5, // in mb
       maxThumbnailFilesize: 8, // 8 mb
       thumbnailWidth: 200,
@@ -69,7 +80,17 @@ function FileUploader() {
       acceptedFiles: fileExtensionsAndMimeTypes,
       dictDefaultMessage: t('FileUploader.DictDefaultMessage'),
       accept: (file, done) => {
-        dropzoneAcceptCallback(userId, file, done, dispatch);
+        const currentUploadContext = uploadContext.current;
+        dropzoneAcceptCallback(
+          currentUploadContext.projectId,
+          getUploadPathForParent(
+            currentUploadContext.files,
+            currentUploadContext.parentId
+          ),
+          file,
+          done,
+          dispatch
+        );
       },
       sending: dropzoneSendingCallback
     });
@@ -80,7 +101,7 @@ function FileUploader() {
     return () => {
       uploader.destroy();
     };
-  }, [userId, t, dispatch]);
+  }, [t, dispatch]);
 
   return (
     <div>

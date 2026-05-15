@@ -10,6 +10,7 @@ import {
   MEDIA_FILE_QUOTED_REGEX,
   STRING_REGEX,
   PLAINTEXT_FILE_REGEX,
+  TEXT_FILE_REGEX,
   EXTERNAL_LINK_REGEX,
   NOT_EXTERNAL_LINK_REGEX
 } from '../../../server/utils/fileUtils';
@@ -20,6 +21,28 @@ import resolvePathsForElementsWithAttribute from '../../../server/utils/resolveU
 
 let objectUrls = {};
 let objectPaths = {};
+
+function getFilePath(file) {
+  return file.filePath ? `${file.filePath}/${file.name}` : file.name;
+}
+
+function trackBlobUrl(file, blobUrl) {
+  const blobPath = blobUrl.split('/').pop();
+  objectUrls[blobUrl] = getFilePath(file);
+  objectPaths[blobPath] = file.name;
+}
+
+function getResolvedFileUrl(file) {
+  if (file.url) {
+    return file.url;
+  }
+  if (!file.name.match(TEXT_FILE_REGEX)) {
+    return null;
+  }
+  const blobUrl = file.blobUrl || createBlobUrl(file);
+  trackBlobUrl(file, blobUrl);
+  return blobUrl;
+}
 
 const Frame = styled.iframe`
   min-height: 100%;
@@ -135,22 +158,9 @@ function resolveScripts(sketchDoc, files) {
     ) {
       const resolvedFile = resolvePathToFile(script.getAttribute('src'), files);
       if (resolvedFile) {
-        if (resolvedFile.url) {
-          script.setAttribute('src', resolvedFile.url);
-        } else {
-          // in the future, when using y.js, could remake the blob for only the file(s)
-          // that changed
-          const blobUrl = createBlobUrl(resolvedFile);
-          script.setAttribute('src', blobUrl);
-          const blobPath = blobUrl.split('/').pop();
-          // objectUrls[blobUrl] = `${resolvedFile.filePath}${
-          //   resolvedFile.filePath.length > 0 ? '/' : ''
-          // }${resolvedFile.name}`;
-          objectUrls[blobUrl] = `${resolvedFile.filePath}/${resolvedFile.name}`;
-          objectPaths[blobPath] = resolvedFile.name;
-          // script.setAttribute('data-tag', `${startTag}${resolvedFile.name}`);
-          // script.removeAttribute('src');
-          // script.innerHTML = resolvedFile.content; // eslint-disable-line
+        const resolvedUrl = getResolvedFileUrl(resolvedFile);
+        if (resolvedUrl) {
+          script.setAttribute('src', resolvedUrl);
         }
       }
     } else if (
@@ -190,6 +200,27 @@ function resolveStyles(sketchDoc, files) {
           css.parentElement.removeChild(css);
         }
       }
+    }
+  });
+}
+
+function resolveAnchorLinks(sketchDoc, files) {
+  const links = sketchDoc.querySelectorAll('a[href], area[href]');
+  const linksArray = Array.prototype.slice.call(links);
+  linksArray.forEach((link) => {
+    const href = link.getAttribute('href');
+    if (!href || href.match(EXTERNAL_LINK_REGEX)) {
+      return;
+    }
+
+    const resolvedFile = resolvePathToFile(href, files);
+    if (!resolvedFile) {
+      return;
+    }
+
+    const resolvedUrl = getResolvedFileUrl(resolvedFile);
+    if (resolvedUrl) {
+      link.setAttribute('href', resolvedUrl);
     }
   });
 }
@@ -235,6 +266,7 @@ function injectLocalFiles(files, htmlFile, options) {
 
   resolveScripts(sketchDoc, resolvedFiles);
   resolveStyles(sketchDoc, resolvedFiles);
+  resolveAnchorLinks(sketchDoc, resolvedFiles);
 
   if (textOutput || gridOutput) {
     const scriptElement = sketchDoc.createElement('script');

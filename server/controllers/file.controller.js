@@ -1,9 +1,6 @@
-import each from 'async/each';
 import mime from 'mime';
-import isBefore from 'date-fns/isBefore';
 import Project from '../models/project';
 import { resolvePathToFile } from '../utils/filePath';
-import { deleteObjectsFromS3, getObjectKey } from './aws.controller';
 
 // Bug -> timestamps don't get created, but it seems like this will
 // be fixed in mongoose soon
@@ -61,31 +58,9 @@ function getAllDescendantIds(files, nodeId) {
 }
 
 function deleteMany(files, ids) {
-  const objectKeys = [];
-
-  each(
-    ids,
-    (id, cb) => {
-      if (files.id(id).url) {
-        if (
-          !process.env.S3_DATE ||
-          (process.env.S3_DATE &&
-            isBefore(
-              new Date(process.env.S3_DATE),
-              new Date(files.id(id).createdAt)
-            ))
-        ) {
-          const objectKey = getObjectKey(files.id(id).url);
-          objectKeys.push(objectKey);
-        }
-      }
-      files.id(id).deleteOne();
-      cb();
-    },
-    (err) => {
-      deleteObjectsFromS3(objectKeys);
-    }
-  );
+  ids.forEach((id) => {
+    files.id(id).deleteOne();
+  });
 }
 
 function deleteChild(files, parentId, id) {

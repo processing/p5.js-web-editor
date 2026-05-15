@@ -20,6 +20,67 @@ const s3Client = new S3Client({
   region: process.env.AWS_REGION
 });
 
+function appendQueryString(url, queryString = '') {
+  if (!queryString) {
+    return url;
+  }
+  return `${url}${url.includes('?') ? '&' : '?'}${queryString.slice(1)}`;
+}
+
+function getOpApiAuthConfig() {
+  return {
+    headers: {
+      Authorization: `Bearer ${process.env.API_TOKEN}`
+    }
+  };
+}
+
+async function serveOpSketchFile(req, res) {
+  if (!process.env.API_URL || !process.env.API_TOKEN) {
+    return false;
+  }
+
+  const projectId = req.params.project_id;
+  const filePath = req.params[0];
+  const queryIndex = req.originalUrl?.indexOf('?') ?? -1;
+  const queryString =
+    queryIndex === -1 ? '' : req.originalUrl.slice(queryIndex);
+
+  try {
+    const filesResponse = await axios.get(
+      `${process.env.API_URL}/sketch/${projectId}/files`,
+      getOpApiAuthConfig()
+    );
+    const file = filesResponse.data?.find(
+      (candidate) => candidate.name === filePath
+    );
+    if (file?.url) {
+      res.redirect(302, appendQueryString(file.url, queryString));
+      return true;
+    }
+
+    const codeResponse = await axios.get(
+      `${process.env.API_URL}/sketch/${projectId}/code`,
+      getOpApiAuthConfig()
+    );
+    const codeFile = codeResponse.data?.find(
+      (candidate) => candidate.title === filePath
+    );
+    if (codeFile) {
+      res.set(
+        'Content-Type',
+        mime.getType(codeFile.title) || 'application/octet-stream'
+      );
+      res.send(codeFile.code);
+      return true;
+    }
+
+    return false;
+  } catch (error) {
+    return false;
+  }
+}
+
 export {
   default as createProject,
   apiCreateProject
@@ -119,6 +180,13 @@ export async function getProject(req, res) {
 }
 
 export async function getProjectAsset(req, res) {
+  if (process.env.API_URL && process.env.API_TOKEN) {
+    if (await serveOpSketchFile(req, res)) {
+      return res;
+    }
+    return res.status(404).send({ message: 'Asset does not exist' });
+  }
+
   const projectId = req.params.project_id;
   const project = await Project.findOne({
     $or: [{ _id: projectId }, { slug: projectId }]

@@ -21,7 +21,9 @@ const AssetMenu = ({ item: asset }) => {
 
   return (
     <TableDropdown aria-label={t('AssetList.ToggleOpenCloseARIA')}>
-      <MenuItem onClick={handleAssetDelete}>{t('AssetList.Delete')}</MenuItem>
+      {asset.visualID && (
+        <MenuItem onClick={handleAssetDelete}>{t('AssetList.Delete')}</MenuItem>
+      )}
       <MenuItem href={asset.url} target="_blank" rel="noopener noreferrer">
         {t('AssetList.OpenNewTab')}
       </MenuItem>
@@ -33,7 +35,8 @@ AssetMenu.propTypes = {
   item: PropTypes.shape({
     key: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired
+    name: PropTypes.string.isRequired,
+    visualID: PropTypes.string
   }).isRequired
 };
 
@@ -62,6 +65,7 @@ AssetListRow.propTypes = {
   asset: PropTypes.shape({
     key: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
+    visualID: PropTypes.string,
     sketchId: PropTypes.string,
     sketchName: PropTypes.string,
     name: PropTypes.string.isRequired,
