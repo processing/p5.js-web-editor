@@ -7,10 +7,14 @@ import {
   MessageTypes,
   dispatchMessage
 } from '../../utils/dispatcher';
-import { filesReducer, setFilesAction } from './filesReducer';
+import type { Message } from '../../utils/dispatcher';
+import {
+  filesReducer,
+  setFilesAction,
+  type PreviewFile
+} from './filesReducer';
 import { EmbedFrame } from './EmbedFrame';
 import { getConfig } from '../../utils/getConfig';
-import { initialState } from '../IDE/reducers/files';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -19,22 +23,25 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const App = () => {
-  const [state, dispatch] = useReducer(filesReducer, [], initialState);
+  const [state, dispatch] = useReducer(filesReducer, [] as PreviewFile[]);
   const [isPlaying, setIsPlaying] = useState(false);
   const [basePath, setBasePath] = useState('');
   const [textOutput, setTextOutput] = useState(false);
   const [gridOutput, setGridOutput] = useState(false);
   registerFrame(window.parent, getConfig('EDITOR_URL'));
 
-  function handleMessageEvent(message) {
+  function handleMessageEvent(message: Message) {
     const { type, payload } = message;
     switch (type) {
-      case MessageTypes.SKETCH:
-        dispatch(setFilesAction(payload.files));
-        setBasePath(payload.basePath);
-        setTextOutput(payload.textOutput);
-        setGridOutput(payload.gridOutput);
+      // eslint-disable-next-line max-len
+      case MessageTypes.SKETCH: {
+        const sketchPayload = payload as { files: PreviewFile[]; basePath: string; textOutput: boolean; gridOutput: boolean };
+        dispatch(setFilesAction(sketchPayload.files));
+        setBasePath(sketchPayload.basePath);
+        setTextOutput(sketchPayload.textOutput);
+        setGridOutput(sketchPayload.gridOutput);
         break;
+      }
       case MessageTypes.START:
         setIsPlaying(true);
         break;
@@ -45,14 +52,14 @@ const App = () => {
         dispatchMessage({ type: MessageTypes.REGISTER });
         break;
       case MessageTypes.EXECUTE:
-        dispatchMessage(payload);
+        dispatchMessage(payload as Parameters<typeof dispatchMessage>[0]);
         break;
       default:
         break;
     }
   }
 
-  function addCacheBustingToAssets(files) {
+  function addCacheBustingToAssets(files: PreviewFile[]) {
     const timestamp = new Date().getTime();
     return files.map((file) => {
       if (file.url && !file.url.endsWith('obj') && !file.url.endsWith('stl')) {
@@ -71,6 +78,7 @@ const App = () => {
       unsubscribe();
     };
   });
+
   return (
     <React.Fragment>
       <GlobalStyle />

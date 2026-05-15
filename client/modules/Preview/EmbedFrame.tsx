@@ -264,7 +264,6 @@ function EmbedFrame({ files, isPlaying, basePath, gridOutput, textOutput }: Embe
     return () => {
       unsubscribe();
     };
-    // eslint-disable-next-line consistent-return
   });
 
   function renderSketch() {
@@ -293,10 +292,10 @@ function EmbedFrame({ files, isPlaying, basePath, gridOutput, textOutput }: Embe
           blobUtil.revokeObjectURL(toRevoke);
         }
       }, 0);
-      // eslint-disable-next-line consistent-return
     } else if (doc) {
       doc.src = '';
     }
+    return;
   }
 
   useEffect(renderSketch, [files, isPlaying]);
