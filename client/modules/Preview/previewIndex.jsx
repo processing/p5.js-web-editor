@@ -7,7 +7,7 @@ import {
   MessageTypes,
   dispatchMessage
 } from '../../utils/dispatcher';
-import { filesReducer, setFiles } from './filesReducer';
+import { filesReducer, setFilesAction } from './filesReducer';
 import EmbedFrame from './EmbedFrame';
 import { getConfig } from '../../utils/getConfig';
 import { initialState } from '../IDE/reducers/files';
@@ -30,7 +30,7 @@ const App = () => {
     const { type, payload } = message;
     switch (type) {
       case MessageTypes.SKETCH:
-        dispatch(setFiles(payload.files));
+        dispatch(setFilesAction(payload.files));
         setBasePath(payload.basePath);
         setTextOutput(payload.textOutput);
         setGridOutput(payload.gridOutput);
