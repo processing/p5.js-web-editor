@@ -1,5 +1,4 @@
 import blobUtil from 'blob-util';
-import PropTypes from 'prop-types';
 import React, { useRef, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 import { jsPreprocess } from './jsPreprocess';
@@ -13,14 +12,20 @@ import {
   NOT_EXTERNAL_LINK_REGEX
 } from '../../../server/utils/fileUtils';
 import { getAllScriptOffsets } from '../../utils/consoleUtils';
+import type { ScriptOffset } from '../../utils/consoleUtils';
 import { registerFrame } from '../../utils/dispatcher';
 import { createBlobUrl } from './filesReducer';
+import type { PreviewFile } from './filesReducer';
 import resolvePathsForElementsWithAttribute from '../../../server/utils/resolveUtils';
 
-let objectUrls = {};
-let objectPaths = {};
+let objectUrls: Record<string, string> = {};
+let objectPaths: Record<string, string> = {};
 
-const Frame = styled.iframe`
+interface FrameProps {
+  fullView?: boolean;
+}
+
+const Frame = styled.iframe<FrameProps>`
   min-height: 100%;
   min-width: 100%;
   position: absolute;
@@ -32,19 +37,18 @@ const Frame = styled.iframe`
   `}
 `;
 
-function getHtmlFile(files) {
-  return files.filter((file) => file.name.match(/.*\.html$/i))[0];
+function getHtmlFile(files: PreviewFile[]) {
+  return files.find((file) => file.name.match(/.*\.html$/i));
 }
 
-function resolveCSSLinksInString(content, files) {
+function resolveCSSLinksInString(content: string, files: PreviewFile[]) {
   let newContent = content;
-  let cssFileStrings = content.match(STRING_REGEX);
-  cssFileStrings = cssFileStrings || [];
+  const cssFileStrings = content.match(STRING_REGEX) || [];
   cssFileStrings.forEach((cssFileString) => {
     if (cssFileString.match(MEDIA_FILE_QUOTED_REGEX)) {
-      const filePath = cssFileString.substr(1, cssFileString.length - 2);
-      const quoteCharacter = cssFileString.substr(0, 1);
-      const resolvedFile = resolvePathToFile(filePath, files);
+      const filePath = cssFileString.slice(1, -1);
+      const quoteCharacter = cssFileString[0];
+      const resolvedFile = resolvePathToFile(filePath, files) as PreviewFile | false | undefined;
       if (resolvedFile) {
         if (resolvedFile.url) {
           newContent = newContent.replace(
@@ -58,17 +62,16 @@ function resolveCSSLinksInString(content, files) {
   return newContent;
 }
 
-function resolveJSLinksInString(content, files) {
+function resolveJSLinksInString(content: string, files: PreviewFile[]) {
   const indexFile = getHtmlFile(files);
   const indexSrc = indexFile?.content;
   let newContent = content;
-  let jsFileStrings = content.match(STRING_REGEX);
-  jsFileStrings = jsFileStrings || [];
+  const jsFileStrings = content.match(STRING_REGEX) || [];
   jsFileStrings.forEach((jsFileString) => {
     if (jsFileString.match(MEDIA_FILE_QUOTED_REGEX)) {
-      const filePath = jsFileString.substr(1, jsFileString.length - 2);
-      const quoteCharacter = jsFileString.substr(0, 1);
-      const resolvedFile = resolvePathToFile(filePath, files);
+      const filePath = jsFileString.slice(1, -1);
+      const quoteCharacter = jsFileString[0];
+      const resolvedFile = resolvePathToFile(filePath, files) as PreviewFile | false | undefined;
 
       if (resolvedFile) {
         if (resolvedFile.url) {
@@ -89,107 +92,97 @@ function resolveJSLinksInString(content, files) {
   return jsPreprocess(newContent, indexSrc);
 }
 
-function resolveScripts(sketchDoc, files) {
+function resolveScripts(sketchDoc: Document, files: PreviewFile[]) {
   const scriptsInHTML = sketchDoc.getElementsByTagName('script');
   const scriptsInHTMLArray = Array.prototype.slice.call(scriptsInHTML);
   scriptsInHTMLArray.forEach((script) => {
-    if (
-      script.getAttribute('src') &&
-      script.getAttribute('src').match(NOT_EXTERNAL_LINK_REGEX) !== null
-    ) {
-      const resolvedFile = resolvePathToFile(script.getAttribute('src'), files);
+    const src = script.getAttribute('src');
+    if (src && src.match(NOT_EXTERNAL_LINK_REGEX) !== null) {
+      const resolvedFile = resolvePathToFile(src, files) as PreviewFile | false | undefined;
       if (resolvedFile) {
         if (resolvedFile.url) {
           script.setAttribute('src', resolvedFile.url);
         } else {
-          // in the future, when using y.js, could remake the blob for only the file(s)
-          // that changed
           const blobUrl = createBlobUrl(resolvedFile);
           script.setAttribute('src', blobUrl);
-          const blobPath = blobUrl.split('/').pop();
-          // objectUrls[blobUrl] = `${resolvedFile.filePath}${
-          //   resolvedFile.filePath.length > 0 ? '/' : ''
-          // }${resolvedFile.name}`;
-          objectUrls[blobUrl] = `${resolvedFile.filePath}/${resolvedFile.name}`;
+          const blobPath = blobUrl.split('/').pop() || '';
+          objectUrls[blobUrl] = `${(resolvedFile as unknown as { filePath: string }).filePath}/${resolvedFile.name}`;
           objectPaths[blobPath] = resolvedFile.name;
-          // script.setAttribute('data-tag', `${startTag}${resolvedFile.name}`);
-          // script.removeAttribute('src');
-          // script.innerHTML = resolvedFile.content; // eslint-disable-line
         }
       }
-    } else if (
-      !(
-        script.getAttribute('src') &&
-        script.getAttribute('src').match(EXTERNAL_LINK_REGEX)
-      ) !== null
-    ) {
+    } else if (!(src && src.match(EXTERNAL_LINK_REGEX)) !== null) {
       script.setAttribute('crossorigin', '');
-      script.innerHTML = resolveJSLinksInString(script.innerHTML, files); // eslint-disable-line
+      script.innerHTML = resolveJSLinksInString(script.innerHTML, files);
     }
   });
 }
 
-function resolveStyles(sketchDoc, files) {
+function resolveStyles(sketchDoc: Document, files: PreviewFile[]) {
   const inlineCSSInHTML = sketchDoc.getElementsByTagName('style');
   const inlineCSSInHTMLArray = Array.prototype.slice.call(inlineCSSInHTML);
   inlineCSSInHTMLArray.forEach((style) => {
-    style.innerHTML = resolveCSSLinksInString(style.innerHTML, files); // eslint-disable-line
+    style.innerHTML = resolveCSSLinksInString(style.innerHTML, files);
   });
 
   const cssLinksInHTML = sketchDoc.querySelectorAll('link[rel="stylesheet"]');
   const cssLinksInHTMLArray = Array.prototype.slice.call(cssLinksInHTML);
   cssLinksInHTMLArray.forEach((css) => {
-    if (
-      css.getAttribute('href') &&
-      css.getAttribute('href').match(NOT_EXTERNAL_LINK_REGEX) !== null
-    ) {
-      const resolvedFile = resolvePathToFile(css.getAttribute('href'), files);
+    const href = css.getAttribute('href');
+    if (href && href.match(NOT_EXTERNAL_LINK_REGEX) !== null) {
+      const resolvedFile = resolvePathToFile(href, files) as PreviewFile | false | undefined;
       if (resolvedFile) {
         if (resolvedFile.url) {
-          css.href = resolvedFile.url; // eslint-disable-line
+          css.setAttribute('href', resolvedFile.url);
         } else {
           const style = sketchDoc.createElement('style');
-          style.innerHTML = `\n${resolvedFile.content}`;
+          style.innerHTML = `\n${resolvedFile.content || ''}`;
           sketchDoc.head.appendChild(style);
-          css.parentElement.removeChild(css);
+          css.parentElement?.removeChild(css);
         }
       }
     }
   });
 }
 
-function resolveJSAndCSSLinks(files) {
-  const newFiles = [];
+function resolveJSAndCSSLinks(files: PreviewFile[]) {
+  const newFiles: PreviewFile[] = [];
   files.forEach((file) => {
     const newFile = { ...file };
     if (file.name.match(/.*\.js$/i)) {
-      newFile.content = resolveJSLinksInString(newFile.content, files);
+      newFile.content = resolveJSLinksInString(newFile.content || '', files);
     } else if (file.name.match(/.*\.css$/i)) {
-      newFile.content = resolveCSSLinksInString(newFile.content, files);
+      newFile.content = resolveCSSLinksInString(newFile.content || '', files);
     }
     newFiles.push(newFile);
   });
   return newFiles;
 }
 
-function addLoopProtect(sketchDoc, indexSrc) {
+function addLoopProtect(sketchDoc: Document, indexSrc: string) {
   const scriptsInHTML = sketchDoc.getElementsByTagName('script');
   const scriptsInHTMLArray = Array.prototype.slice.call(scriptsInHTML);
   scriptsInHTMLArray.forEach((script) => {
-    script.innerHTML = jsPreprocess(script.innerHTML, indexSrc); // eslint-disable-line
+    script.innerHTML = jsPreprocess(script.innerHTML, indexSrc);
+  });
   });
 }
 
-function injectLocalFiles(files, htmlFile, options) {
+interface InjectLocalFilesOptions {
+  basePath: string;
+  gridOutput: boolean;
+  textOutput: boolean;
+}
+
+function injectLocalFiles(files: PreviewFile[], htmlFile: PreviewFile, options: InjectLocalFilesOptions) {
   const { basePath, gridOutput, textOutput } = options;
-  let scriptOffs = [];
+  let scriptOffs: ScriptOffset[] = [];
   objectUrls = {};
   objectPaths = {};
   const resolvedFiles = resolveJSAndCSSLinks(files);
   const parser = new DOMParser();
-  const sketchDoc = parser.parseFromString(htmlFile.content, 'text/html');
+  const sketchDoc = parser.parseFromString(htmlFile.content || '', 'text/html');
   const indexFile = getHtmlFile(files);
-  const indexSrc = indexFile?.content;
+  const indexSrc = indexFile?.content || '';
 
   const base = sketchDoc.createElement('base');
   base.href = `${window.origin}${basePath}${basePath.length > 1 && '/'}`;
@@ -243,12 +236,27 @@ p5.prototype.registerMethod('afterSetup', p5.prototype.ensureAccessibleCanvas);`
   return `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
 }
 
-function EmbedFrame({ files, isPlaying, basePath, gridOutput, textOutput }) {
-  const iframe = useRef();
+function getHtmlFile(files: PreviewFile[]) {
+  return files.find((file) => file.name.match(/.*\.html$/i));
+}
+
+interface EmbedFrameProps {
+  files: PreviewFile[];
+  isPlaying: boolean;
+  basePath: string;
+  gridOutput: boolean;
+  textOutput: boolean;
+}
+
+function EmbedFrame({ files, isPlaying, basePath, gridOutput, textOutput }: EmbedFrameProps) {
+  const iframe = useRef<HTMLIFrameElement>(null);
   const htmlFile = useMemo(() => getHtmlFile(files), [files]);
-  const srcRef = useRef();
+  const srcRef = useRef<string | null>(null);
 
   useEffect(() => {
+    if (!iframe.current) {
+      return;
+    }
     const unsubscribe = registerFrame(
       iframe.current.contentWindow,
       window.origin
@@ -256,31 +264,37 @@ function EmbedFrame({ files, isPlaying, basePath, gridOutput, textOutput }) {
     return () => {
       unsubscribe();
     };
+    // eslint-disable-next-line consistent-return
   });
 
   function renderSketch() {
     const doc = iframe.current;
-    if (isPlaying) {
+    if (isPlaying && doc && htmlFile) {
       const htmlDoc = injectLocalFiles(files, htmlFile, {
         basePath,
         gridOutput,
         textOutput
       });
-      const generatedHtmlFile = {
+      const generatedHtmlFile: PreviewFile = {
+        id: 'generated',
         name: 'index.html',
-        content: htmlDoc
+        content: htmlDoc,
+        children: [],
+        fileType: 'file'
       };
       const htmlUrl = createBlobUrl(generatedHtmlFile);
       const toRevoke = srcRef.current;
       srcRef.current = htmlUrl;
-      // BRO FOR SOME REASON YOU HAVE TO DO THIS TO GET IT TO WORK ON SAFARI
       setTimeout(() => {
-        doc.src = htmlUrl;
+        if (doc) {
+          doc.src = htmlUrl;
+        }
         if (toRevoke) {
           blobUtil.revokeObjectURL(toRevoke);
         }
       }, 0);
-    } else {
+      // eslint-disable-next-line consistent-return
+    } else if (doc) {
       doc.src = '';
     }
   }
@@ -296,18 +310,4 @@ function EmbedFrame({ files, isPlaying, basePath, gridOutput, textOutput }) {
   );
 }
 
-EmbedFrame.propTypes = {
-  files: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      content: PropTypes.string.isRequired
-    })
-  ).isRequired,
-  isPlaying: PropTypes.bool.isRequired,
-  basePath: PropTypes.string.isRequired,
-  gridOutput: PropTypes.bool.isRequired,
-  textOutput: PropTypes.bool.isRequired
-};
-
-export default EmbedFrame;
+export { EmbedFrame };

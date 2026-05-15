@@ -8,7 +8,7 @@ import {
   dispatchMessage
 } from '../../utils/dispatcher';
 import { filesReducer, setFilesAction } from './filesReducer';
-import EmbedFrame from './EmbedFrame';
+import { EmbedFrame } from './EmbedFrame';
 import { getConfig } from '../../utils/getConfig';
 import { initialState } from '../IDE/reducers/files';
 
