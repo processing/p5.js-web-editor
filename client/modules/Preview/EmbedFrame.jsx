@@ -2,9 +2,7 @@ import blobUtil from 'blob-util';
 import PropTypes from 'prop-types';
 import React, { useRef, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
-import loopProtect from 'loop-protect';
-import { JSHINT } from 'jshint';
-import decomment from 'decomment';
+import { jsPreprocess } from './jsPreprocess';
 import { resolvePathToFile } from '../../../server/utils/filePath';
 import { getConfig } from '../../utils/getConfig';
 import {
@@ -53,22 +51,6 @@ function resolveCSSLinksInString(content, files) {
       }
     }
   });
-  return newContent;
-}
-
-function jsPreprocess(jsText) {
-  let newContent = jsText;
-  // check the code for js errors before sending it to strip comments
-  // or loops.
-  JSHINT(newContent);
-
-  if (JSHINT.errors.length === 0) {
-    newContent = decomment(newContent, {
-      ignore: /\/\/\s*noprotect/g,
-      space: true
-    });
-    newContent = loopProtect(newContent);
-  }
   return newContent;
 }
 

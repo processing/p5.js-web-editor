@@ -77,10 +77,9 @@ export const createApiKey: RequestHandler<
     res.json({ apiKeys });
   } catch (err) {
     if (err instanceof Error) {
-      res.status(500).json({ error: err.message });
-    } else {
-      res.status(500).json({ error: 'Internal server error' });
+      console.error('Could not create API key:', err.message);
     }
+    res.status(500).json({ error: 'Internal server error' });
   }
 };
 
@@ -122,9 +121,8 @@ export const removeApiKey: RequestHandler<
     res.status(200).json({ apiKeys: user.apiKeys });
   } catch (err: unknown) {
     if (err instanceof Error) {
-      res.status(500).json({ error: err.message });
-    } else {
-      res.status(500).json({ error: 'Internal server error' });
+      console.error('Could not remove API key:', err.message);
     }
+    res.status(500).json({ error: 'Internal server error' });
   }
 };

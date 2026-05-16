@@ -497,6 +497,7 @@
     "AddSketch": "Додати скетч",
     "DeleteFromCollection": "Ви впевнені, що хочете видалити {{name_sketch}} з цієї колекції?",
     "SketchDeleted": "Скетч видалено",
+    "SketchRemoveLabel": "Remove from Collection",
     "SketchRemoveARIA": "Видалити скетч із колекції",
     "DescriptionPlaceholder": "Додати опис",
     "Description": "опис",

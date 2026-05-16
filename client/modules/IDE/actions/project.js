@@ -13,6 +13,7 @@ import {
   showErrorModal,
   setPreviousPath
 } from './ide';
+import { clearLocalBackup } from '../utils/localBackup';
 import { clearState, saveState } from '../../../persistState';
 
 const ROOT_URL = getConfig('API_URL');
@@ -164,6 +165,8 @@ export function saveProject(
         .then((response) => {
           dispatch(endSavingProject());
           dispatch(setUnsavedChanges(false));
+          // Clear the localStorage backup after successful server save (#3891)
+          clearLocalBackup(state.project.id);
           const { hasChanges, synchedProject } = getSynchedProject(
             getState(),
             response.data
