@@ -33,7 +33,8 @@ export const updatePreferences: RequestHandler<
     await user.save();
     res.json(user.preferences);
   } catch (err) {
-    res.status(500).json({ error: err });
+    console.error('Could not save preferences:', err);
+    res.status(500).json({ error: 'Internal server error' });
   }
 };
 
@@ -61,6 +62,7 @@ export const updateCookieConsent: RequestHandler<
     user.cookieConsent = cookieConsent;
     await saveUser(res, user);
   } catch (err) {
-    res.status(500).json({ error: err });
+    console.error('Could not save cookie consent:', err);
+    res.status(500).json({ error: 'Internal server error' });
   }
 };
