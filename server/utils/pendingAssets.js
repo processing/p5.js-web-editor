@@ -13,7 +13,7 @@ const s3Client = new S3Client({
   region: process.env.AWS_REGION
 });
 
-const STALE_ASSET_TIME = 5;
+const STALE_ASSET_TIME = 7 * 24 * 60;
 
 async function getPendingAssets(userId) {
   const params = {

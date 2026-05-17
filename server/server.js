@@ -219,7 +219,7 @@ app.listen(process.env.PORT, (error) => {
 });
 
 // Set up periodic cleanup of stale pending assets
-const cleanupIntervalMs = 5 * 60 * 1000;
+const cleanupIntervalMs = 24 * 60 * 60 * 1000;
 setInterval(cleanupStalePendingAssets, cleanupIntervalMs);
 
 export default app;
