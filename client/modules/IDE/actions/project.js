@@ -343,9 +343,7 @@ export function cloneProject(project) {
               const objectKey = url.split('/').pop();
               apiClient
                 .delete(`/S3/delete?objectKey=${objectKey}`)
-                .catch(() => {
-                  // Silently ignore cleanup errors
-                });
+                .catch(() => {});
             });
             dispatch({
               type: ActionTypes.PROJECT_SAVE_FAIL,
