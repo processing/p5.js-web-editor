@@ -4,6 +4,7 @@ import {
   FileValidationError,
   ProjectValidationError
 } from '../../domain-objects/Project';
+import { commitPendingAssets } from '../../utils/pendingAssets';
 
 export default function createProject(req, res) {
   const projectValues = Object.assign({}, req.body, { user: req.user._id });
@@ -16,7 +17,12 @@ export default function createProject(req, res) {
     return Project.populate(newProject, {
       path: 'user',
       select: 'username'
-    }).then((newProjectWithUser) => {
+    }).then(async (newProjectWithUser) => {
+      try {
+        await commitPendingAssets(req.user.id);
+      } catch (error) {
+        console.error('Error committing pending assets:', error);
+      }
       res.json(newProjectWithUser);
     });
   }
@@ -87,6 +93,13 @@ export async function apiCreateProject(req, res) {
     }
 
     const newProject = await model.save();
+
+    try {
+      await commitPendingAssets(req.user.id);
+    } catch (error) {
+      console.error('Error committing pending assets:', error);
+    }
+
     res.status(201).json({ id: newProject.id });
   } catch (err) {
     handleErrors(err);

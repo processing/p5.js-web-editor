@@ -298,14 +298,14 @@ export function cloneProject(project) {
     const projectName = project ? project.name : state.project.name;
     const newFiles = files.map((file) => ({ ...file }));
 
-    // generate new IDS for all files
     const rootFile = newFiles.find((file) => file.name === 'root');
     const newRootFileId = objectID().toHexString();
     rootFile.id = newRootFileId;
     rootFile._id = newRootFileId;
     generateNewIdsForChildren(rootFile, newFiles);
 
-    // duplicate all files hosted on S3
+    const copiedS3Assets = [];
+
     each(
       newFiles,
       (file, callback) => {
@@ -316,24 +316,20 @@ export function cloneProject(project) {
           (file.url.includes(S3_BUCKET_URL_BASE) ||
             file.url.includes(S3_BUCKET))
         ) {
-          const formParams = {
-            url: file.url
-          };
-          apiClient.post('/S3/copy', formParams).then((response) => {
+          apiClient.post('/S3/copy', { url: file.url }).then((response) => {
             file.url = response.data.url;
+            copiedS3Assets.push(response.data.url);
             callback(null);
           });
         } else {
           callback(null);
         }
       },
-      (err) => {
-        // if not errors in duplicating the files on S3, then duplicate it
-        const formParams = Object.assign(
-          {},
-          { name: `${projectName} copy` },
-          { files: newFiles }
-        );
+      () => {
+        const formParams = {
+          name: `${projectName} copy`,
+          files: newFiles
+        };
         apiClient
           .post('/projects', formParams)
           .then((response) => {
@@ -343,6 +339,14 @@ export function cloneProject(project) {
             dispatch(setNewProject(response.data));
           })
           .catch((error) => {
+            copiedS3Assets.forEach((url) => {
+              const objectKey = url.split('/').pop();
+              apiClient
+                .delete(`/S3/delete?objectKey=${objectKey}`)
+                .catch(() => {
+                  // Silently ignore cleanup errors
+                });
+            });
             dispatch({
               type: ActionTypes.PROJECT_SAVE_FAIL,
               error: error?.response?.data

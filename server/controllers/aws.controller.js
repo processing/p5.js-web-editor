@@ -156,7 +156,7 @@ export async function signS3(req, res) {
     const acl = 'public-read';
     const policy = S3Policy.generate({
       acl,
-      key: `${req.body.userId}/${filename}`,
+      key: `pending/${req.user.id}/${filename}`,
       bucket: process.env.S3_BUCKET,
       contentType: req.body.type,
       region: process.env.AWS_REGION,
