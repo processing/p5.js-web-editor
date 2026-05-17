@@ -298,12 +298,14 @@ export function cloneProject(project) {
     const projectName = project ? project.name : state.project.name;
     const newFiles = files.map((file) => ({ ...file }));
 
+    // generate new IDS for all files
     const rootFile = newFiles.find((file) => file.name === 'root');
     const newRootFileId = objectID().toHexString();
     rootFile.id = newRootFileId;
     rootFile._id = newRootFileId;
     generateNewIdsForChildren(rootFile, newFiles);
 
+    // duplicate all files hosted on S3
     const copiedS3Assets = [];
 
     each(
