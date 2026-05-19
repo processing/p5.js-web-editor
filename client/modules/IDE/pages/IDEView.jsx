@@ -120,6 +120,8 @@ const IDEView = () => {
   const [sidebarSize, setSidebarSize] = useState(160);
   const [isOverlayVisible, setIsOverlayVisible] = useState(false);
   const [MaxSize, setMaxSize] = useState(window.innerWidth);
+  const [editorSplitSize, setEditorSplitSize] = useState(null);
+  const editorSplitRatioRef = useRef(0.5);
   const [displayBanner, setDisplayBanner] = useState(false); // set to true if in use
 
   const cmRef = useRef({});
@@ -238,6 +240,17 @@ const IDEView = () => {
     ? consoleSize
     : consoleCollapsedSize;
 
+  const sidebarWidth = ide.sidebarIsExpanded ? sidebarSize : 20;
+  const editorSplitAvailableWidth = MaxSize - sidebarWidth;
+
+  useEffect(() => {
+    if (editorSplitAvailableWidth > 0) {
+      setEditorSplitSize(
+        Math.floor(editorSplitAvailableWidth * editorSplitRatioRef.current)
+      );
+    }
+  }, [editorSplitAvailableWidth]);
+
   return (
     <RootPage>
       <Helmet>
@@ -307,8 +320,16 @@ const IDEView = () => {
               <SplitPane
                 split="vertical"
                 maxSize={MaxSize * 0.965}
-                defaultSize="50%"
-                onChange={() => {
+                size={
+                  editorSplitSize ?? Math.floor(editorSplitAvailableWidth * 0.5)
+                }
+                onChange={(size) => {
+                  const rounded = Math.floor(size);
+                  setEditorSplitSize(rounded);
+                  if (editorSplitAvailableWidth > 0) {
+                    editorSplitRatioRef.current =
+                      rounded / editorSplitAvailableWidth;
+                  }
                   setIsOverlayVisible(true);
                 }}
                 onDragFinished={() => {
