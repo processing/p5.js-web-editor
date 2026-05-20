@@ -8,11 +8,8 @@ import {
   dispatchMessage
 } from '../../utils/dispatcher';
 import type { Message } from '../../utils/dispatcher';
-import {
-  filesReducer,
-  setFilesAction,
-  type PreviewFile
-} from './filesReducer';
+import { filesReducer, setFilesAction } from './filesReducer';
+import type { PreviewFile } from './filesReducer';
 import { EmbedFrame } from './EmbedFrame';
 import { getConfig } from '../../utils/getConfig';
 
@@ -35,7 +32,12 @@ const App = () => {
     switch (type) {
       // eslint-disable-next-line max-len
       case MessageTypes.SKETCH: {
-        const sketchPayload = payload as { files: PreviewFile[]; basePath: string; textOutput: boolean; gridOutput: boolean };
+        const sketchPayload = payload as {
+          files: PreviewFile[];
+          basePath: string;
+          textOutput: boolean;
+          gridOutput: boolean;
+        };
         dispatch(setFilesAction(sketchPayload.files));
         setBasePath(sketchPayload.basePath);
         setTextOutput(sketchPayload.textOutput);

@@ -48,7 +48,10 @@ function resolveCSSLinksInString(content: string, files: PreviewFile[]) {
     if (cssFileString.match(MEDIA_FILE_QUOTED_REGEX)) {
       const filePath = cssFileString.slice(1, -1);
       const quoteCharacter = cssFileString[0];
-      const resolvedFile = resolvePathToFile(filePath, files) as PreviewFile | false | undefined;
+      const resolvedFile = resolvePathToFile(filePath, files) as
+        | PreviewFile
+        | false
+        | undefined;
       if (resolvedFile) {
         if (resolvedFile.url) {
           newContent = newContent.replace(
@@ -71,7 +74,10 @@ function resolveJSLinksInString(content: string, files: PreviewFile[]) {
     if (jsFileString.match(MEDIA_FILE_QUOTED_REGEX)) {
       const filePath = jsFileString.slice(1, -1);
       const quoteCharacter = jsFileString[0];
-      const resolvedFile = resolvePathToFile(filePath, files) as PreviewFile | false | undefined;
+      const resolvedFile = resolvePathToFile(filePath, files) as
+        | PreviewFile
+        | false
+        | undefined;
 
       if (resolvedFile) {
         if (resolvedFile.url) {
@@ -98,7 +104,10 @@ function resolveScripts(sketchDoc: Document, files: PreviewFile[]) {
   scriptsInHTMLArray.forEach((script) => {
     const src = script.getAttribute('src');
     if (src && src.match(NOT_EXTERNAL_LINK_REGEX) !== null) {
-      const resolvedFile = resolvePathToFile(src, files) as PreviewFile | false | undefined;
+      const resolvedFile = resolvePathToFile(src, files) as
+        | PreviewFile
+        | false
+        | undefined;
       if (resolvedFile) {
         if (resolvedFile.url) {
           script.setAttribute('src', resolvedFile.url);
@@ -106,7 +115,9 @@ function resolveScripts(sketchDoc: Document, files: PreviewFile[]) {
           const blobUrl = createBlobUrl(resolvedFile);
           script.setAttribute('src', blobUrl);
           const blobPath = blobUrl.split('/').pop() || '';
-          objectUrls[blobUrl] = `${(resolvedFile as unknown as { filePath: string }).filePath}/${resolvedFile.name}`;
+          objectUrls[blobUrl] = `${
+            ((resolvedFile as unknown) as { filePath: string }).filePath
+          }/${resolvedFile.name}`;
           objectPaths[blobPath] = resolvedFile.name;
         }
       }
@@ -129,7 +140,10 @@ function resolveStyles(sketchDoc: Document, files: PreviewFile[]) {
   cssLinksInHTMLArray.forEach((css) => {
     const href = css.getAttribute('href');
     if (href && href.match(NOT_EXTERNAL_LINK_REGEX) !== null) {
-      const resolvedFile = resolvePathToFile(href, files) as PreviewFile | false | undefined;
+      const resolvedFile = resolvePathToFile(href, files) as
+        | PreviewFile
+        | false
+        | undefined;
       if (resolvedFile) {
         if (resolvedFile.url) {
           css.setAttribute('href', resolvedFile.url);
@@ -173,7 +187,11 @@ interface InjectLocalFilesOptions {
   textOutput: boolean;
 }
 
-function injectLocalFiles(files: PreviewFile[], htmlFile: PreviewFile, options: InjectLocalFilesOptions) {
+function injectLocalFiles(
+  files: PreviewFile[],
+  htmlFile: PreviewFile,
+  options: InjectLocalFilesOptions
+) {
   const { basePath, gridOutput, textOutput } = options;
   let scriptOffs: ScriptOffset[] = [];
   objectUrls = {};
@@ -248,14 +266,20 @@ interface EmbedFrameProps {
   textOutput: boolean;
 }
 
-function EmbedFrame({ files, isPlaying, basePath, gridOutput, textOutput }: EmbedFrameProps) {
+function EmbedFrame({
+  files,
+  isPlaying,
+  basePath,
+  gridOutput,
+  textOutput
+}: EmbedFrameProps) {
   const iframe = useRef<HTMLIFrameElement>(null);
   const htmlFile = useMemo(() => getHtmlFile(files), [files]);
   const srcRef = useRef<string | null>(null);
 
   useEffect(() => {
     if (!iframe.current) {
-      return;
+      return () => {};
     }
     const unsubscribe = registerFrame(
       iframe.current.contentWindow,
@@ -295,7 +319,6 @@ function EmbedFrame({ files, isPlaying, basePath, gridOutput, textOutput }: Embe
     } else if (doc) {
       doc.src = '';
     }
-    return;
   }
 
   useEffect(renderSketch, [files, isPlaying]);
