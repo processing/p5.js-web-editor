@@ -26,3 +26,4 @@ coverage
 
 *.tsbuildinfo
 /docs
+/.claude
