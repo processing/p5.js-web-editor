@@ -118,6 +118,10 @@
   padding-left: 0;
 }
 
+.nav__item--no-icon .nav__back-link {
+  margin-left: #{math.div(15, $base-font-size)}rem;
+}
+
 .nav__item-header-triangle polygon,
 .nav__item-header-triangle path {
   @include themify() {
@@ -325,8 +329,9 @@
 
 .nav__back-link {
   display: flex;
-
   align-items: center;
+  width: 100%;
   height: 100%;
+  text-decoration: none;
   padding: 0 #{math.div(10, $base-font-size)}rem;
 }
