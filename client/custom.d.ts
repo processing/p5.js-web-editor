@@ -8,6 +8,8 @@ declare module '*.svg' {
   export default ReactComponent;
 }
 
+declare module 'blob-util';
+
 // Extend window for Redux DevTools
 interface Window {
   __REDUX_DEVTOOLS_EXTENSION__?: () => any;
