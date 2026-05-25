@@ -1,0 +1,27 @@
+name: E2E Tests
+on:
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  e2e:
+    name: End-to-end tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '18.20.x'
+      - run: npm install
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+      - name: Start the app
+        run: npm run start &
+        env:
+          NODE_ENV: test
+      - name: Wait for app to be ready
+        run: npx wait-on http://localhost:8000 --timeout 60000
+      - name: Run E2E tests
+        run: npx playwright test
