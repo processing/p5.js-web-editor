@@ -55,15 +55,14 @@ export default function Preferences() {
   const cmRef = useContext(CmControllerContext);
   const [showStars, setShowStars] = useState(null);
   const files = useSelector((s) => s.files);
-  const sketchFile = files.find(
+  const indexFile = files.find(
     (file) =>
       file.fileType === 'file' &&
-      file.name === 'sketch.js' &&
+      file.name === 'index.html' &&
       file.filePath === ''
   );
-  const sketchSrc = sketchFile?.content;
-  const sketchID = sketchFile?.id;
-  const loopProtection = useMemo(() => !hasNoProtect(sketchSrc), [sketchSrc]);
+  const indexSrc = indexFile?.content;
+  const loopProtection = useMemo(() => !hasNoProtect(indexSrc), [indexSrc]);
   const timerRef = useRef(null);
   const pickerRef = useRef(null);
   const onChangeVersion = (version) => {
@@ -75,16 +74,6 @@ export default function Preferences() {
       timerRef.current = setTimeout(() => setShowStars(null), 3000);
     }
   };
-
-  function handleLoopProtection(enabled) {
-    if (!sketchID || !sketchSrc) return;
-
-    const next = toggleLoopProtection(sketchSrc, enabled);
-    if (next === sketchSrc) return;
-
-    dispatch(updateFileContent(sketchID, next));
-    cmRef.current?.updateFileContent(sketchID, next);
-  }
 
   function onFontInputChange(event) {
     const INTEGER_REGEX = /^[0-9\b]+$/;
@@ -135,6 +124,15 @@ export default function Preferences() {
     dispatch(updateFileContent(indexID, src));
     cmRef.current?.updateFileContent(indexID, src);
   };
+
+  function handleLoopProtection(enabled) {
+    if (!indexID || !indexSrc) return;
+
+    const next = toggleLoopProtection(indexSrc, enabled);
+    if (next === indexSrc) return;
+
+    updateHTML(next);
+  }
 
   const markdownComponents = useMemo(() => {
     // eslint-disable-next-line react/no-unstable-nested-components

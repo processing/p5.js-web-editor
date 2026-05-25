@@ -1,4 +1,4 @@
-const NO_PROTECT_REGEX = /^\s*\/\/\s*noprotect\b.*\n?/m;
+export const NO_PROTECT_REGEX = /^\s*<!--\s*noprotect\s*-->\s*\n?/m;
 
 export function hasNoProtect(src = '') {
   return NO_PROTECT_REGEX.test(src);
@@ -6,7 +6,7 @@ export function hasNoProtect(src = '') {
 
 export function addNoProtect(src = '') {
   if (hasNoProtect(src)) return src;
-  return `// noprotect\n${src}`;
+  return `<!-- noprotect -->\n${src}`;
 }
 
 export function removeNoProtect(src = '') {
