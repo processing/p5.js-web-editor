@@ -510,6 +510,7 @@
     "AddSketch": "स्केच जोड़ें",
     "DeleteFromCollection": "क्या आप वाकई {{name_sketch}} को इस संग्रह से हटाना चाहते हो?",
     "SketchDeleted": "स्केच डिलीट किया",
+    "SketchRemoveLabel": "Remove from Collection",
     "SketchRemoveARIA": "स्केच संग्रह से हटाएं",
     "DescriptionPlaceholder": "विवरण लिखें",
     "NumSketches": "{{count}} स्केच",
