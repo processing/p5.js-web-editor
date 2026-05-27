@@ -1,18 +1,18 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { getConfig } from '../../../utils/getConfig';
 import { registerFrame } from '../../../utils/dispatcher';
 
 const Frame = styled.iframe`
-  min-height: 100%;
-  min-width: 100%;
+  display: block;
   position: ${(props) => (props.fullView ? 'relative' : 'absolute')};
   border-width: 0;
 `;
 
 function PreviewFrame({ fullView, isOverlayVisible }) {
   const iframe = useRef();
+  const [frameSize, setFrameSize] = useState(null);
   const previewUrl = getConfig('PREVIEW_URL');
   useEffect(() => {
     const unsubscribe = registerFrame(iframe.current.contentWindow, previewUrl);
@@ -20,6 +20,26 @@ function PreviewFrame({ fullView, isOverlayVisible }) {
       unsubscribe();
     };
   });
+
+  useEffect(() => {
+    const parent = iframe.current?.parentElement;
+    if (!parent) {
+      return () => {};
+    }
+    const updateSize = () => {
+      const { width, height } = parent.getBoundingClientRect();
+      setFrameSize({
+        width: Math.floor(width),
+        height: Math.floor(height)
+      });
+    };
+    updateSize();
+    const observer = new ResizeObserver(updateSize);
+    observer.observe(parent);
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
 
   const frameUrl = previewUrl;
   const sandboxAttributes = `allow-forms allow-modals allow-pointer-lock allow-popups 
@@ -45,6 +65,11 @@ function PreviewFrame({ fullView, isOverlayVisible }) {
         frameBorder="0"
         ref={iframe}
         fullView={fullView}
+        style={
+          frameSize
+            ? { width: frameSize.width, height: frameSize.height }
+            : undefined
+        }
       />
     </>
   );
