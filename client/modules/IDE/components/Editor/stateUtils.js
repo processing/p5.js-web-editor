@@ -391,7 +391,7 @@ export function createNewFileState(filename, document, settings) {
   // Depending on the file mode, we have a different tidier function.
   const mode = getFileMode(filename);
   extraKeymaps.push({
-    key: `Shift-Mod-F`,
+    key: `Shift-Mod-f`,
     run: (cmView) => tidyCodeWithPrettier(cmView, mode)
   });
 
