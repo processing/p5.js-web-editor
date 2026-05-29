@@ -394,7 +394,7 @@ export function createNewFileState(filename, document, settings) {
   const mode = getFileMode(filename);
   const fileTidyKeymap = [
     {
-      key: 'Shift-Mod-F',
+      key: 'Shift-Mod-f',
       run: (cmView) => {
         tidyCodeWithPrettier(cmView, mode);
         return true;
