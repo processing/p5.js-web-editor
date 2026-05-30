@@ -21,6 +21,8 @@ import resolvePathsForElementsWithAttribute from '../../../server/utils/resolveU
 
 let objectUrls = {};
 let objectPaths = {};
+let jshintErrors = [];
+let jshintErrorKeys = new Set();
 
 const Frame = styled.iframe`
   min-height: 100%;
@@ -56,23 +58,49 @@ function resolveCSSLinksInString(content, files) {
   return newContent;
 }
 
-function jsPreprocess(jsText) {
+const JSHINT_OPTIONS = {
+  esversion: 11,
+  asi: true,
+  laxbreak: true,
+  laxcomma: true
+};
+
+function jsPreprocess(jsText, fileName, lineOffset = 0) {
   let newContent = jsText;
   // check the code for js errors before sending it to strip comments
   // or loops.
-  JSHINT(newContent);
+  JSHINT(newContent, JSHINT_OPTIONS);
 
-  if (JSHINT.errors.length === 0) {
+  const fatal = JSHINT.errors.filter(
+    (err) => err && (!err.code || err.code.startsWith('E'))
+  );
+
+  if (fatal.length === 0) {
     newContent = decomment(newContent, {
       ignore: /\/\/\s*noprotect/g,
       space: true
     });
     newContent = loopProtect(newContent);
+    return newContent;
   }
-  return newContent;
+  fatal.forEach((err) => {
+    const line = (err.line || 1) + lineOffset;
+    const key = `${fileName}:${line}:${err.reason}`;
+    if (jshintErrorKeys.has(key)) return;
+    jshintErrorKeys.add(key);
+    jshintErrors.push({
+      file: fileName,
+      line,
+      character: err.character,
+      reason: err.reason,
+      evidence: err.evidence,
+      code: err.code
+    });
+  });
+  return `/* p5 sketch suppressed due to syntax errors in ${fileName}, see console */`;
 }
 
-function resolveJSLinksInString(content, files) {
+function resolveJSLinksInString(content, files, fileName, lineOffset = 0) {
   let newContent = content;
   let jsFileStrings = content.match(STRING_REGEX);
   jsFileStrings = jsFileStrings || [];
@@ -98,10 +126,17 @@ function resolveJSLinksInString(content, files) {
     }
   });
 
-  return jsPreprocess(newContent);
+  return jsPreprocess(newContent, fileName, lineOffset);
 }
 
-function resolveScripts(sketchDoc, files) {
+function getInlineScriptLineOffset(htmlContent, scriptInner) {
+  if (!htmlContent || !scriptInner) return 0;
+  const ix = htmlContent.indexOf(scriptInner);
+  if (ix < 0) return 0;
+  return htmlContent.substring(0, ix).split('\n').length - 1;
+}
+
+function resolveScripts(sketchDoc, files, htmlContent) {
   const scriptsInHTML = sketchDoc.getElementsByTagName('script');
   const scriptsInHTMLArray = Array.prototype.slice.call(scriptsInHTML);
   scriptsInHTMLArray.forEach((script) => {
@@ -136,7 +171,12 @@ function resolveScripts(sketchDoc, files) {
       ) !== null
     ) {
       script.setAttribute('crossorigin', '');
-      script.innerHTML = resolveJSLinksInString(script.innerHTML, files); // eslint-disable-line
+      const inlineOffset = getInlineScriptLineOffset(
+        htmlContent,
+        script.innerHTML
+      );
+      script.innerHTML = resolveJSLinksInString(script.innerHTML, files, 'index.html', inlineOffset); // eslint-disable-line
+      script.dataset.inlineOffset = String(inlineOffset);
     }
   });
 }
@@ -175,7 +215,11 @@ function resolveJSAndCSSLinks(files) {
   files.forEach((file) => {
     const newFile = { ...file };
     if (file.name.match(/.*\.js$/i)) {
-      newFile.content = resolveJSLinksInString(newFile.content, files);
+      newFile.content = resolveJSLinksInString(
+        newFile.content,
+        files,
+        file.name
+      );
     } else if (file.name.match(/.*\.css$/i)) {
       newFile.content = resolveCSSLinksInString(newFile.content, files);
     }
@@ -188,7 +232,8 @@ function addLoopProtect(sketchDoc) {
   const scriptsInHTML = sketchDoc.getElementsByTagName('script');
   const scriptsInHTMLArray = Array.prototype.slice.call(scriptsInHTML);
   scriptsInHTMLArray.forEach((script) => {
-    script.innerHTML = jsPreprocess(script.innerHTML); // eslint-disable-line
+    const inlineOffset = parseInt(script.dataset.inlineOffset || '0', 10);
+    script.innerHTML = jsPreprocess(script.innerHTML, 'index.html', inlineOffset); // eslint-disable-line
   });
 }
 
@@ -197,6 +242,8 @@ function injectLocalFiles(files, htmlFile, options) {
   let scriptOffs = [];
   objectUrls = {};
   objectPaths = {};
+  jshintErrors = [];
+  jshintErrorKeys = new Set();
   const resolvedFiles = resolveJSAndCSSLinks(files);
   const parser = new DOMParser();
   const sketchDoc = parser.parseFromString(htmlFile.content, 'text/html');
@@ -209,7 +256,7 @@ function injectLocalFiles(files, htmlFile, options) {
   resolvePathsForElementsWithAttribute('href', sketchDoc, resolvedFiles);
   // should also include background, data, poster, but these are used way less often
 
-  resolveScripts(sketchDoc, resolvedFiles);
+  resolveScripts(sketchDoc, resolvedFiles, htmlFile.content);
   resolveStyles(sketchDoc, resolvedFiles);
 
   if (textOutput || gridOutput) {
@@ -241,13 +288,14 @@ p5.prototype.registerMethod('afterSetup', p5.prototype.ensureAccessibleCanvas);`
   const sketchDocString = `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
   scriptOffs = getAllScriptOffsets(sketchDocString);
   const consoleErrorsScript = sketchDoc.createElement('script');
+  addLoopProtect(sketchDoc);
   consoleErrorsScript.innerHTML = `
     window.offs = ${JSON.stringify(scriptOffs)};
     window.objectUrls = ${JSON.stringify(objectUrls)};
     window.objectPaths = ${JSON.stringify(objectPaths)};
+    window.__jshintErrors = ${JSON.stringify(jshintErrors)};
     window.editorOrigin = '${getConfig('EDITOR_URL')}';
   `;
-  addLoopProtect(sketchDoc);
   sketchDoc.head.prepend(consoleErrorsScript);
 
   return `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;

@@ -148,27 +148,47 @@ function Editor({
   useEffect(() => {
     const consoleErrors = consoleEvents.filter((e) => e.method === 'error');
 
-    if (consoleErrors.length > 0) {
-      const firstError = consoleErrors[0];
-      const errorObj = { stack: firstError.data[0].toString() };
-      StackTrace.fromError(errorObj).then((stackLines) => {
-        expandConsole();
-        const line = stackLines.find(
-          (l) => l.fileName && l.fileName.startsWith('/')
+    removeErrorDecorations(codemirrorView.current);
+
+    if (consoleErrors.length === 0) return;
+
+    const resolveFrameFromError = (errorEntry) => {
+      const metaStack = errorEntry.meta && errorEntry.meta.stack;
+      if (Array.isArray(metaStack) && metaStack.length > 0) {
+        return Promise.resolve(
+          metaStack.find((f) => f.fileName && f.fileName.startsWith('/')) ||
+            metaStack[0]
         );
-        if (!line) return;
-        const fileNameArray = line.fileName.split('/');
-        const fileName = fileNameArray.slice(-1)[0];
-        const filePath = fileNameArray.slice(0, -1).join('/');
-        const fileWithError = files.find(
-          (f) => f.name === fileName && f.filePath === filePath
+      }
+      return StackTrace.fromError({
+        stack: errorEntry.data[0].toString()
+      }).then((stackLines) =>
+        stackLines.find((l) => l.fileName && l.fileName.startsWith('/'))
+      );
+    };
+
+    const matchFile = (frame) => {
+      if (!frame || !frame.fileName) return null;
+      const parts = frame.fileName.split('/');
+      const fileName = parts.slice(-1)[0];
+      const filePath = parts.slice(0, -1).join('/');
+      return files.find((f) => f.name === fileName && f.filePath === filePath);
+    };
+
+    Promise.all(consoleErrors.map(resolveFrameFromError)).then((frames) => {
+      const pairs = frames
+        .map((frame) => ({ frame, file: matchFile(frame) }))
+        .filter((p) => p.frame && p.file);
+      if (pairs.length === 0) return;
+      expandConsole();
+      const targetFileId = pairs[0].file.id;
+      setSelectedFile(targetFileId);
+      pairs
+        .filter((p) => p.file.id === targetFileId)
+        .forEach((p) =>
+          addErrorDecoration(codemirrorView.current, p.frame.lineNumber)
         );
-        setSelectedFile(fileWithError.id);
-        addErrorDecoration(codemirrorView.current, line.lineNumber);
-      });
-    } else {
-      removeErrorDecorations(codemirrorView.current);
-    }
+    });
   }, [consoleEvents]);
 
   const editorSectionClass = classNames({

@@ -36,6 +36,9 @@ const ERROR_DECORATION = Decoration.line({
 
 // Add an error decoration to a specific line number
 export function addErrorDecoration(view, lineNumber) {
+  if (!view || !lineNumber) return;
+  const totalLines = view.state.doc.lines;
+  if (lineNumber < 1 || lineNumber > totalLines) return;
   const docLineNumber = view.state.doc.line(lineNumber);
   view.dispatch({
     effects: ADD_ERROR_DECORATION.of([
@@ -46,6 +49,7 @@ export function addErrorDecoration(view, lineNumber) {
 
 // Remove all error decorations
 export function removeErrorDecorations(view) {
+  if (!view) return;
   view.dispatch({
     effects: FILTER_ERROR_DECORATION.of(() => false)
   });
