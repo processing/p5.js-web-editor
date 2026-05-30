@@ -334,6 +334,7 @@ const IDEView = () => {
                 >
                   <Editor
                     provideController={(ctl) => {
+                      console.log('providing controller', ctl);
                       cmRef.current = ctl;
                     }}
                   />
