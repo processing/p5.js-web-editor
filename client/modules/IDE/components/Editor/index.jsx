@@ -128,7 +128,7 @@ function Editor({
       getContent,
       showSearch
     });
-  }, [getContent]);
+  }, [tidyCode, showSearch, getContent]);
 
   // When the CM container div mounts, we set up CodeMirror.
   const onContainerMounted = useCallback(setupCodeMirrorOnContainerMounted, []);
