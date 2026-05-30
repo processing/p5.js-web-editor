@@ -279,8 +279,6 @@ Editor.propTypes = {
   setUnsavedChanges: PropTypes.func.isRequired,
   startSketch: PropTypes.func.isRequired,
   autorefresh: PropTypes.bool.isRequired,
-  theme: PropTypes.string.isRequired,
-  unsavedChanges: PropTypes.bool.isRequired,
   files: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
