@@ -6,8 +6,8 @@ import contextAwareHinter from '../../../../utils/contextAwareHinter';
 
 function addCompletions(context) {
   const word = context.matchBefore(/\w*/);
-
-  if (!word && !context.explicit) {
+  const isValidWord = word?.text && word.text.trim().length >= 2;
+  if (!isValidWord && !context.explicit) {
     return null;
   }
 
