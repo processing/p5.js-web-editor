@@ -123,11 +123,6 @@ function Editor({
 
   // Lets the parent component access file content-specific functionality...
   useEffect(() => {
-    console.log('providing new controller', {
-      tidyCode,
-      getContent,
-      showSearch
-    });
     provideController({
       tidyCode,
       getContent,

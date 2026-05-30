@@ -208,10 +208,8 @@ export default function useCodeMirror({
     openSearchPanel(cmView.current);
   };
 
-  console.log('tidy code function', file.name);
   const tidyCode = () => {
     const fileMode = getFileMode(file.name);
-    console.log('tidying code', fileMode, file.name, cmView.current);
     tidyCodeWithPrettier(cmView.current, fileMode);
   };
 
