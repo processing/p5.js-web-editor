@@ -31,7 +31,6 @@ export default function useCodeMirror({
   file,
   files,
   autorefresh,
-  isPlaying,
   clearConsole,
   startSketch,
   autocompleteHinter,
@@ -53,7 +52,7 @@ export default function useCodeMirror({
   function onChange() {
     setUnsavedChanges(true);
     updateFileContent(fileId.current, cmView.current.state.doc.toString());
-    if (autorefresh && isPlaying) {
+    if (autorefresh) {
       clearConsole();
       startSketch();
     }
