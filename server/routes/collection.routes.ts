@@ -4,13 +4,10 @@ import { isAuthenticated } from '../middleware/isAuthenticated';
 
 const router = Router();
 
-// List collections
 router.get(
-  '/collections',
-  isAuthenticated,
-  CollectionController.listCollections
+  '/:username/collections',
+  CollectionController.getCollectionsForUser
 );
-router.get('/:username/collections', CollectionController.listCollections);
 
 // Create, modify, delete collection
 router.post(

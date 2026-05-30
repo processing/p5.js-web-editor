@@ -21,14 +21,18 @@ import CollectionListRow from './CollectionListRow';
 
 import ArrowUpIcon from '../../../../images/sort-arrow-up.svg';
 import ArrowDownIcon from '../../../../images/sort-arrow-down.svg';
+import Pagination from '../Pagination';
 
 const CollectionList = ({
   user,
   projectId,
   getCollections,
+  // getCollectionsForCollectionList,
   getProject,
   collections,
-  username: propsUsername,
+  search,
+  paginationMeta,
+  username,
   loading,
   toggleDirectionForField,
   resetSorting,
@@ -36,6 +40,8 @@ const CollectionList = ({
   project,
   mobile
 }) => {
+  const [page, setPage] = useState(1);
+  const limit = mobile ? 7 : 10;
   const { t } = useTranslation();
   const [hasLoadedData, setHasLoadedData] = useState(false);
   const [
@@ -43,13 +49,27 @@ const CollectionList = ({
     setAddingSketchesToCollectionId
   ] = useState(null);
 
+  const sortField = sorting.field || 'updatedAt';
+  const sortDir =
+    sorting.direction === SortingActions.DIRECTION.ASC ? 'asc' : 'desc';
+
   useEffect(() => {
-    if (projectId) {
-      getProject(projectId);
-    }
-    getCollections(propsUsername || user.username);
     resetSorting();
-  }, []);
+  }, [username, resetSorting]);
+
+  useEffect(() => {
+    setPage(1);
+  }, [username, search, sortField, sortDir]);
+
+  useEffect(() => {
+    getCollections(username, {
+      page,
+      limit,
+      sortField,
+      sortDir,
+      q: search
+    });
+  }, [getCollections, username, page, limit, sortField, sortDir, search]);
 
   useEffect(() => {
     if (!loading) {
@@ -58,13 +78,13 @@ const CollectionList = ({
   }, [loading]);
 
   const getTitle = useMemo(() => {
-    if (propsUsername === user.username) {
+    if (username === user.username) {
       return t('CollectionList.Title');
     }
     return t('CollectionList.AnothersTitle', {
-      anotheruser: propsUsername
+      anotheruser: username
     });
-  }, [propsUsername, user.username, t]);
+  }, [username, user.username, t]);
 
   const showAddSketches = (collectionId) => {
     setAddingSketchesToCollectionId(collectionId);
@@ -74,8 +94,7 @@ const CollectionList = ({
     setAddingSketchesToCollectionId(null);
   };
 
-  const hasCollections = () =>
-    (!loading || hasLoadedData) && collections.length > 0;
+  const hasCollections = () => collections.length > 0;
 
   const renderLoader = () => {
     if (loading && !hasLoadedData) return <Loader />;
@@ -150,70 +169,83 @@ const CollectionList = ({
   };
 
   return (
-    <article className="sketches-table-container">
-      <Helmet>
-        <title>{getTitle}</title>
-      </Helmet>
+    <>
+      <article className="sketches-table-container">
+        <Helmet>
+          <title>{getTitle}</title>
+        </Helmet>
 
-      {renderLoader()}
-      {renderEmptyTable()}
+        {renderLoader()}
+        {renderEmptyTable()}
+        {hasCollections() && (
+          <table
+            className="sketches-table"
+            summary={t('CollectionList.TableSummary')}
+          >
+            <thead>
+              <tr>
+                {renderFieldHeader('name', t('CollectionList.HeaderName'))}
+                {renderFieldHeader(
+                  'createdAt',
+                  t('CollectionList.HeaderCreatedAt', {
+                    context: mobile ? 'mobile' : ''
+                  })
+                )}
+                {renderFieldHeader(
+                  'updatedAt',
+                  t('CollectionList.HeaderUpdatedAt', {
+                    context: mobile ? 'mobile' : ''
+                  })
+                )}
+                {renderFieldHeader(
+                  'numItems',
+                  t('CollectionList.HeaderNumItems', {
+                    context: mobile ? 'mobile' : ''
+                  })
+                )}
+                <th aria-label="dropdown" scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {collections.map((collection) => (
+                <CollectionListRow
+                  mobile={mobile}
+                  key={collection.id}
+                  collection={collection}
+                  user={user}
+                  username={username}
+                  project={project}
+                  onAddSketches={() => showAddSketches(collection.id)}
+                />
+              ))}
+            </tbody>
+          </table>
+        )}
+        {addingSketchesToCollectionId && (
+          <Overlay
+            title={t('CollectionList.AddSketch')}
+            actions={<SketchSearchbar />}
+            closeOverlay={hideAddSketches}
+            isFixedHeight
+          >
+            <AddToCollectionSketchList
+              collection={find(collections, {
+                id: addingSketchesToCollectionId
+              })}
+            />
+          </Overlay>
+        )}
+      </article>
       {hasCollections() && (
-        <table
-          className="sketches-table"
-          summary={t('CollectionList.TableSummary')}
-        >
-          <thead>
-            <tr>
-              {renderFieldHeader('name', t('CollectionList.HeaderName'))}
-              {renderFieldHeader(
-                'createdAt',
-                t('CollectionList.HeaderCreatedAt', {
-                  context: mobile ? 'mobile' : ''
-                })
-              )}
-              {renderFieldHeader(
-                'updatedAt',
-                t('CollectionList.HeaderUpdatedAt', {
-                  context: mobile ? 'mobile' : ''
-                })
-              )}
-              {renderFieldHeader(
-                'numItems',
-                t('CollectionList.HeaderNumItems', {
-                  context: mobile ? 'mobile' : ''
-                })
-              )}
-              <th aria-label="dropdown" scope="col"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {collections.map((collection) => (
-              <CollectionListRow
-                mobile={mobile}
-                key={collection.id}
-                collection={collection}
-                user={user}
-                username={propsUsername || user.username}
-                project={project}
-                onAddSketches={() => showAddSketches(collection.id)}
-              />
-            ))}
-          </tbody>
-        </table>
+        <Pagination
+          page={page}
+          totalPages={paginationMeta.totalPages}
+          onPageChange={setPage}
+          limit={limit}
+          totalCollections={paginationMeta.totalCollections}
+        />
       )}
-      {addingSketchesToCollectionId && (
-        <Overlay
-          title={t('CollectionList.AddSketch')}
-          actions={<SketchSearchbar />}
-          closeOverlay={hideAddSketches}
-          isFixedHeight
-        >
-          <AddToCollectionSketchList
-            collection={find(collections, { id: addingSketchesToCollectionId })}
-          />
-        </Overlay>
-      )}
-    </article>
+    </>
   );
 };
 
@@ -222,8 +254,17 @@ CollectionList.propTypes = {
     username: PropTypes.string,
     authenticated: PropTypes.bool.isRequired
   }).isRequired,
+  paginationMeta: PropTypes.shape({
+    page: PropTypes.number.isRequired,
+    totalPages: PropTypes.number.isRequired,
+    totalCollections: PropTypes.number.isRequired,
+    limit: PropTypes.number.isRequired,
+    hasPagination: PropTypes.bool.isRequired
+  }).isRequired,
   projectId: PropTypes.string,
   getCollections: PropTypes.func.isRequired,
+  // getCollectionsForCollectionList: PropTypes.func.isRequired,
+  search: PropTypes.string.isRequired,
   getProject: PropTypes.func.isRequired,
   collections: PropTypes.arrayOf(
     PropTypes.shape({
@@ -264,9 +305,17 @@ CollectionList.defaultProps = {
 function mapStateToProps(state, ownProps) {
   return {
     user: state.user,
-    collections: getSortedCollections(state),
+    collections: state.collections.collections ?? [],
+    paginationMeta: state.collections.metadata ?? {
+      page: 1,
+      totalPages: 1,
+      totalCollections: 0,
+      limit: 10,
+      hasPagination: true
+    },
     sorting: state.sorting,
     loading: state.loading,
+    search: state.search.collectionSearchTerm,
     project: state.project,
     projectId: ownProps && ownProps.params ? ownProps.params.project_id : null
   };
