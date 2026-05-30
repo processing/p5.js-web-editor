@@ -122,10 +122,12 @@ function makeCssLinter(callback) {
       } = message;
       const cmLine = view.state.doc.line(messageLine);
 
-      // TODO: Can we to do the to/from smarter?
+      const start = cmLine.from + messageCharacter - 1;
+      const end = cmLine.to;
+
       diagnostics.push({
-        from: cmLine.from + messageCharacter - 1,
-        to: cmLine.from + messageCharacter,
+        from: start,
+        to: end,
         severity: messageType,
         message: messageText
       });
