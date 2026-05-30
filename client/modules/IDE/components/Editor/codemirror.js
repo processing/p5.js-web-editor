@@ -210,6 +210,7 @@ export default function useCodeMirror({
 
   const tidyCode = () => {
     const fileMode = getFileMode(file.name);
+    console.log('tidying code', fileMode, file.name, cmView.current);
     tidyCodeWithPrettier(cmView.current, fileMode);
   };
 
