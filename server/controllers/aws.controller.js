@@ -78,28 +78,97 @@ export async function deleteObjectFromS3(req, res) {
   }
 }
 
-export function signS3(req, res) {
-  const limit = process.env.UPLOAD_LIMIT || 250000000;
-  if (req.user.totalSize > limit) {
-    res
-      .status(403)
-      .send({ message: 'user has uploaded the maximum size of assets.' });
-    return;
+export async function listObjectsInS3ForUser(userId) {
+  try {
+    let assets = [];
+    const params = {
+      Bucket: process.env.S3_BUCKET,
+      Prefix: `${userId}/`
+    };
+
+    const data = await s3Client.send(new ListObjectsCommand(params));
+
+    assets = data.Contents?.map((object) => ({
+      key: object.Key,
+      size: object.Size
+    }));
+
+    const projects = await Project.getProjectsForUserId(userId);
+    const projectAssets = [];
+    let totalSize = 0;
+
+    assets?.forEach((asset) => {
+      const name = asset.key.split('/').pop();
+      const foundAsset = {
+        key: asset.key,
+        name,
+        size: asset.size,
+        url: `${process.env.S3_BUCKET_URL_BASE}${asset.key}`
+      };
+      totalSize += asset.size;
+
+      const wasMatched = projects.some((project) =>
+        project.files.some((file) => {
+          if (!file.url) return false;
+          if (file.url.includes(asset.key)) {
+            foundAsset.name = file.name;
+            foundAsset.sketchName = project.name;
+            foundAsset.sketchId = project.id;
+            foundAsset.url = file.url;
+            return true;
+          }
+          return false;
+        })
+      );
+
+      if (wasMatched) {
+        projectAssets.push(foundAsset);
+      }
+    });
+
+    return { assets: projectAssets, totalSize };
+  } catch (error) {
+    if (error instanceof TypeError) {
+      return null;
+    }
+    console.error('Got an error: ', error);
+    throw error;
   }
-  const fileExtension = getExtension(req.body.name);
-  const filename = uuidv4() + fileExtension;
-  const acl = 'public-read';
-  const policy = S3Policy.generate({
-    acl,
-    key: `${req.body.userId}/${filename}`,
-    bucket: process.env.S3_BUCKET,
-    contentType: req.body.type,
-    region: process.env.AWS_REGION,
-    accessKey: process.env.AWS_ACCESS_KEY,
-    secretKey: process.env.AWS_SECRET_KEY,
-    metadata: []
-  });
-  res.json(policy);
+}
+
+export async function signS3(req, res) {
+  const limit = Number(process.env.UPLOAD_LIMIT) || 250000000;
+
+  try {
+    const objects = await listObjectsInS3ForUser(req.user.id);
+    const currentSize = Number(objects?.totalSize ?? req.user.totalSize) || 0;
+    const incomingSize = Number(req.body.size) || 0;
+
+    if (currentSize >= limit || currentSize + incomingSize > limit) {
+      res
+        .status(403)
+        .send({ message: 'user has uploaded the maximum size of assets.' });
+      return;
+    }
+
+    const fileExtension = getExtension(req.body.name);
+    const filename = uuidv4() + fileExtension;
+    const acl = 'public-read';
+    const policy = S3Policy.generate({
+      acl,
+      key: `${req.body.userId}/${filename}`,
+      bucket: process.env.S3_BUCKET,
+      contentType: req.body.type,
+      region: process.env.AWS_REGION,
+      accessKey: process.env.AWS_ACCESS_KEY,
+      secretKey: process.env.AWS_SECRET_KEY,
+      metadata: []
+    });
+    res.json(policy);
+  } catch (error) {
+    console.error('Error signing upload policy:', error);
+    res.status(500).json({ error: 'Failed to sign upload policy' });
+  }
 }
 
 export async function copyObjectInS3(url, userId) {
@@ -180,64 +249,6 @@ export async function moveObjectToUserInS3(url, userId) {
 
   await s3Client.send(new CopyObjectCommand(params));
   return `${s3Bucket}${userId}/${newFilename}`;
-}
-
-export async function listObjectsInS3ForUser(userId) {
-  try {
-    let assets = [];
-    const params = {
-      Bucket: process.env.S3_BUCKET,
-      Prefix: `${userId}/`
-    };
-
-    const data = await s3Client.send(new ListObjectsCommand(params));
-
-    assets = data.Contents?.map((object) => ({
-      key: object.Key,
-      size: object.Size
-    }));
-
-    const projects = await Project.getProjectsForUserId(userId);
-    const projectAssets = [];
-    let totalSize = 0;
-
-    assets?.forEach((asset) => {
-      const name = asset.key.split('/').pop();
-      const foundAsset = {
-        key: asset.key,
-        name,
-        size: asset.size,
-        url: `${process.env.S3_BUCKET_URL_BASE}${asset.key}`
-      };
-      totalSize += asset.size;
-
-      const wasMatched = projects.some((project) =>
-        project.files.some((file) => {
-          if (!file.url) return false;
-          if (file.url.includes(asset.key)) {
-            foundAsset.name = file.name;
-            foundAsset.sketchName = project.name;
-            foundAsset.sketchId = project.id;
-            foundAsset.url = file.url;
-            return true;
-          }
-          return false;
-        })
-      );
-
-      if (wasMatched) {
-        projectAssets.push(foundAsset);
-      }
-    });
-
-    return { assets: projectAssets, totalSize };
-  } catch (error) {
-    if (error instanceof TypeError) {
-      return null;
-    }
-    console.error('Got an error: ', error);
-    throw error;
-  }
 }
 
 export async function listObjectsInS3ForUserRequestHandler(req, res) {

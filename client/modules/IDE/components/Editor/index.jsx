@@ -30,6 +30,7 @@ import UnsavedChangesIndicator from '../UnsavedChangesIndicator';
 import { EditorContainer, EditorHolder } from './MobileEditor';
 import { FolderIcon } from '../../../../common/icons';
 import { IconButton } from '../../../../common/IconButton';
+import { saveLocalBackup } from '../../utils/localBackup';
 
 import useCodeMirror from './codemirror';
 
@@ -64,7 +65,6 @@ function Editor({
   updateLintMessage,
   updateFileContent,
   autorefresh,
-  isPlaying,
   clearConsole,
   startSketch,
   autocompleteHinter,
@@ -111,7 +111,6 @@ function Editor({
     file,
     files,
     autorefresh,
-    isPlaying,
     clearConsole,
     startSketch,
     autocompleteHinter,
@@ -280,7 +279,8 @@ Editor.propTypes = {
   setUnsavedChanges: PropTypes.func.isRequired,
   startSketch: PropTypes.func.isRequired,
   autorefresh: PropTypes.bool.isRequired,
-  isPlaying: PropTypes.bool.isRequired,
+  theme: PropTypes.string.isRequired,
+  unsavedChanges: PropTypes.bool.isRequired,
   files: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -299,11 +299,15 @@ Editor.propTypes = {
   provideController: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
   setSelectedFile: PropTypes.func.isRequired,
-  expandConsole: PropTypes.func.isRequired
+  expandConsole: PropTypes.func.isRequired,
+  project: PropTypes.shape({
+    id: PropTypes.string
+  })
 };
 
 Editor.defaultProps = {
-  htmlFile: null
+  htmlFile: null,
+  project: {}
 };
 
 function mapStateToProps(state) {
