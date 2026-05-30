@@ -3,6 +3,7 @@ import { EditorView, lineNumbers as lineNumbersExt } from '@codemirror/view';
 import { autocompletion, closeBrackets } from '@codemirror/autocomplete';
 import { debounce } from 'lodash';
 import { openSearchPanel } from '@codemirror/search';
+import { saveLocalBackup } from '../../utils/localBackup';
 
 import {
   getFileMode,
@@ -22,6 +23,7 @@ import { tidyCodeWithPrettier } from './tidier';
 
 /** This is a custom React hook that manages CodeMirror state. */
 export default function useCodeMirror({
+  project,
   lineNumbers,
   linewrap,
   autocloseBracketsQuotes,
@@ -52,6 +54,13 @@ export default function useCodeMirror({
   function onChange() {
     setUnsavedChanges(true);
     updateFileContent(fileId.current, cmView.current.state.doc.toString());
+
+    // Save a local backup to localStorage for crash recovery (#3891).
+    // This ensures work is recoverable even if the tab crashes
+    // (e.g. from an infinite loop) before the server autosave fires.
+    const projectId = project?.id || 'unsaved';
+    saveLocalBackup(projectId, files);
+
     if (autorefresh) {
       clearConsole();
       startSketch();

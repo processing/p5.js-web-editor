@@ -30,7 +30,6 @@ import UnsavedChangesIndicator from '../UnsavedChangesIndicator';
 import { EditorContainer, EditorHolder } from './MobileEditor';
 import { FolderIcon } from '../../../../common/icons';
 import { IconButton } from '../../../../common/IconButton';
-import { saveLocalBackup } from '../../utils/localBackup';
 
 import useCodeMirror from './codemirror';
 
@@ -54,6 +53,7 @@ function Editor({
   provideController,
   files,
   file,
+  project,
   linewrap,
   lineNumbers,
   closeProjectOptions,
@@ -103,6 +103,7 @@ function Editor({
     tidyCode,
     showSearch
   } = useCodeMirror({
+    project,
     lineNumbers,
     linewrap,
     autocloseBracketsQuotes,
