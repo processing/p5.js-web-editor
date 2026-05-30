@@ -395,7 +395,17 @@ export function createNewFileState(filename, document, settings) {
   // Keep this binding local to each file state so modes don't accumulate
   // across files via a shared module-level array.
   const mode = getFileMode(filename);
+
+  // Make a keymap for both uppercase and lowercase F, since
+  // since browsers can differ in which one they send for the Shift-Mod-F shortcut.
   const fileTidyKeymap = [
+    {
+      key: 'Shift-Mod-F',
+      run: (cmView) => {
+        tidyCodeWithPrettier(cmView, mode);
+        return true;
+      }
+    },
     {
       key: 'Shift-Mod-f',
       run: (cmView) => {
