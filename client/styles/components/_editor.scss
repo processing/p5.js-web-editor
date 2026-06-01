@@ -306,7 +306,20 @@
 // contentSeparator, monospace, strikethrough, inserted, deleted, changed, invalid, meta,
 // documentMeta, annotation, processingInstruction, standard, special, macroName
 
-// TODO(connie): Add p5 specific highlighting styles, like .cm-p5-function, .cm-p5-variable
+.cm-p5-function,
+.cm-p5-function .cm-variable {
+  @include themify() {
+    color: getThemifyVariable('highlight-style-variable-color');
+    font-weight: bold;
+  }
+}
+
+.cm-p5-variable,
+.cm-p5-variable .cm-variable {
+  @include themify() {
+    color: getThemifyVariable('highlight-style-atom-color');
+  }
+}
 
 // Additional matching selection styling
 .cm-matchingBracket {
