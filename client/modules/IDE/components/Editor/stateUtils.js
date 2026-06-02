@@ -59,7 +59,6 @@ import { Linter as ESLinter } from 'eslint-linter-browserify';
 import { tidyCodeWithPrettier } from './tidier';
 import p5JavaScript from './p5JavaScript';
 import { highlightStyle } from './highlightStyle';
-import { p5Highlight } from './p5Highlight';
 import { errorDecorationStateField } from './consoleErrorDecoration';
 
 // ----- TODOS -----
@@ -447,7 +446,6 @@ export function createNewFileState(filename, document, settings) {
     highlightSpecialChars(),
     highlightSelectionMatches(),
     syntaxHighlighting(highlightStyle),
-    p5Highlight,
     // Selection extensions
     drawSelection(),
     rectangularSelection(),

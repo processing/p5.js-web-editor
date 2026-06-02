@@ -306,6 +306,8 @@
 // contentSeparator, monospace, strikethrough, inserted, deleted, changed, invalid, meta,
 // documentMeta, annotation, processingInstruction, standard, special, macroName
 
+// CM6 uses EditorView.theme() instead of cm-s-* classes, so the p5 highlight styles
+// from the CM5 theme files do not apply. These rules replicate them for CM6.
 .cm-p5-function,
 .cm-p5-function .cm-variable {
   @include themify() {
