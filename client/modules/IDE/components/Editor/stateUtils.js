@@ -52,7 +52,7 @@ import { emmetConfig } from '@emmetio/codemirror6-plugin';
 import { color as colorPicker } from '@connieye/codemirror-color-picker';
 
 import { tidyCodeWithPrettier } from './tidier';
-import p5JavaScript from './p5JavaScript';
+import { p5JavaScript } from './p5JavaScript';
 import { highlightStyle } from './highlightStyle';
 import { errorDecorationStateField } from './consoleErrorDecoration';
 import {
@@ -407,8 +407,7 @@ export function createNewFileState(filename, document, settings) {
 
   // Only enable the color picker for Javascript and CSS, which
   // have both been tested.
-  const fileMode = getFileMode(filename);
-  if (fileMode === 'javascript' || fileMode === 'css') {
+  if (mode === 'javascript' || mode === 'css') {
     extensions.push(colorPicker);
   }
 

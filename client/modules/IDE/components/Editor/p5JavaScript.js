@@ -3,7 +3,7 @@ import { javascript } from '@codemirror/lang-javascript';
 import { ViewPlugin, Decoration } from '@codemirror/view';
 import { RangeSetBuilder } from '@codemirror/state';
 import { p5Hinter } from '../../../../utils/p5-hinter';
-import { p5CompletionPreview } from './p5CompletionPreview';
+import { completionPreview } from './completionPreview';
 import contextAwareHinter from '../../../../utils/contextAwareHinter';
 import {
   p5FunctionKeywords,
@@ -66,14 +66,14 @@ function addCompletions(context) {
   });
 }
 
-export default function p5JavaScript() {
+export function p5JavaScript() {
   const jsLang = javascript();
   return new LanguageSupport(jsLang.language, [
     jsLang.extension,
     jsLang.language.data.of({
       autocomplete: addCompletions
     }),
-    p5CompletionPreview(),
+    completionPreview(),
     p5Highlight
   ]);
 }

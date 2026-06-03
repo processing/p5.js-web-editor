@@ -2,6 +2,7 @@ import { StateField, RangeSetBuilder } from '@codemirror/state';
 import { Decoration, EditorView, WidgetType } from '@codemirror/view';
 import { selectedCompletion, completionStatus } from '@codemirror/autocomplete';
 
+/** Creates a "ghost" of what the completion would look like, for autocomplete selections. */
 class GhostTextWidget extends WidgetType {
   constructor(text) {
     super();
@@ -94,7 +95,7 @@ const ghostTextField = StateField.define({
   provide: (field) => EditorView.decorations.from(field)
 });
 
-export const p5CompletionPreviewTheme = EditorView.theme({
+export const completionPreviewTheme = EditorView.theme({
   '.cm-ghostCompletion': {
     opacity: '0.55',
     fontStyle: 'italic',
@@ -103,6 +104,6 @@ export const p5CompletionPreviewTheme = EditorView.theme({
   }
 });
 
-export function p5CompletionPreview() {
-  return [ghostTextField, p5CompletionPreviewTheme];
+export function completionPreview() {
+  return [ghostTextField, completionPreviewTheme];
 }
