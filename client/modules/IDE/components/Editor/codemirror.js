@@ -98,7 +98,16 @@ export default function useCodeMirror({
 
   // When settings change, we pass those changes into CodeMirror.
   useEffect(() => {
-    cmView.current.dom.style['font-size'] = `${fontSize}px`;
+    const reconfigureEffect = (fileState) =>
+      fileState.fontSizeCpt.reconfigure(
+        EditorView.theme({ '&': { fontSize: `${fontSize}px` } })
+      );
+    updateFileStates({
+      fileStates: fileStates.current,
+      cmView: cmView.current,
+      file,
+      reconfigureEffect
+    });
   }, [fontSize]);
   useEffect(() => {
     const reconfigureEffect = (fileState) =>
@@ -170,7 +179,8 @@ export default function useCodeMirror({
             autocomplete: autocompleteHinter,
             onUpdateLinting,
             onViewUpdate,
-            referenceBaseUrl
+            referenceBaseUrl,
+            fontSize
           }
         );
       }
