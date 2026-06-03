@@ -13,6 +13,7 @@ import {
   showErrorModal,
   setPreviousPath
 } from './ide';
+import { clearLocalBackup } from '../utils/localBackup';
 import { clearState, saveState } from '../../../persistState';
 
 const ROOT_URL = getConfig('API_URL');
@@ -164,6 +165,8 @@ export function saveProject(
         .then((response) => {
           dispatch(endSavingProject());
           dispatch(setUnsavedChanges(false));
+          // Clear the localStorage backup after successful server save (#3891)
+          clearLocalBackup(state.project.id);
           const { hasChanges, synchedProject } = getSynchedProject(
             getState(),
             response.data
@@ -386,7 +389,7 @@ export function changeProjectName(id, newName) {
 }
 
 export function deleteProject(id) {
-  return (dispatch, getState) => {
+  return (dispatch, getState) =>
     apiClient
       .delete(`/projects/${id}`)
       .then(() => {
@@ -411,7 +414,6 @@ export function deleteProject(id) {
           });
         }
       });
-  };
 }
 export function changeVisibility(projectId, projectName, visibility, t) {
   return (dispatch, getState) => {
@@ -421,12 +423,12 @@ export function changeVisibility(projectId, projectName, visibility, t) {
       .patch('/project/visibility', { projectId, visibility })
       .then((response) => {
         if (response.status === 200) {
-          const { visibility: newVisibility, updatedAt } = response.data;
+          const { visibility: newVisibility, updatedAt, id } = response.data;
 
           dispatch({
             type: ActionTypes.CHANGE_VISIBILITY,
             payload: {
-              id: response.data.id,
+              id,
               visibility: newVisibility
             }
           });

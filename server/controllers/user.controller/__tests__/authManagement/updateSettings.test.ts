@@ -523,7 +523,7 @@ describe('user.controller > auth management > updateSettings (email, username, p
 
   describe('and when there is any other error', () => {
     beforeEach(async () => {
-      User.findById = jest.fn().mockRejectedValue('db error');
+      User.findById = jest.fn().mockRejectedValue('Internal server error');
       requestBody = minimumValidRequest;
       request.setBody(requestBody);
       await updateSettings(
@@ -534,7 +534,9 @@ describe('user.controller > auth management > updateSettings (email, username, p
     });
     it('returns a 500 error', () => {
       expect(response.status).toHaveBeenCalledWith(500);
-      expect(response.json).toHaveBeenCalledWith({ error: 'db error' });
+      expect(response.json).toHaveBeenCalledWith({
+        error: 'Internal server error'
+      });
     });
   });
 });

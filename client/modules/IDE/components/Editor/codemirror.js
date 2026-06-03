@@ -1,28 +1,20 @@
 import { useRef, useEffect } from 'react';
 import { EditorView, lineNumbers as lineNumbersExt } from '@codemirror/view';
 import { autocompletion, closeBrackets } from '@codemirror/autocomplete';
-
-// TODO: Check what the v6 variants of these addons are.
-// import 'codemirror/addon/search/searchcursor';
-// import 'codemirror/addon/search/matchesonscrollbar';
-// import 'codemirror/addon/search/match-highlighter';
-// import 'codemirror/addon/search/jump-to-line';
-
 import { debounce } from 'lodash';
 import { openSearchPanel } from '@codemirror/search';
+import { saveLocalBackup } from '../../utils/localBackup';
 
 import {
   getFileMode,
   createNewFileState,
   updateFileStates,
-  AUTOCOMPLETE_OPTIONS
+  createAutocompleteOptions
 } from './stateUtils';
 import { useEffectWithComparison } from '../../hooks/custom-hooks';
 import { tidyCodeWithPrettier } from './tidier';
 
 // ----- GENERAL TODOS (in order of priority) -----
-// - any features lost in the p5 conversion git merge
-// - javascript color picker (extension works for css but needs to be forked for js)
 // - revisit keymap differences, esp around sublime
 // - emmet doesn't trigger if text is copy pasted in
 // - need to re-implement emmet auto rename tag
@@ -31,6 +23,7 @@ import { tidyCodeWithPrettier } from './tidier';
 
 /** This is a custom React hook that manages CodeMirror state. */
 export default function useCodeMirror({
+  project,
   lineNumbers,
   linewrap,
   autocloseBracketsQuotes,
@@ -40,12 +33,12 @@ export default function useCodeMirror({
   file,
   files,
   autorefresh,
-  isPlaying,
   clearConsole,
   startSketch,
   autocompleteHinter,
   fontSize,
-  onUpdateLinting
+  onUpdateLinting,
+  referenceBaseUrl
 }) {
   // The codemirror instance.
   const cmView = useRef();
@@ -61,7 +54,14 @@ export default function useCodeMirror({
   function onChange() {
     setUnsavedChanges(true);
     updateFileContent(fileId.current, cmView.current.state.doc.toString());
-    if (autorefresh && isPlaying) {
+
+    // Save a local backup to localStorage for crash recovery (#3891).
+    // This ensures work is recoverable even if the tab crashes
+    // (e.g. from an infinite loop) before the server autosave fires.
+    const projectId = project?.id || 'unsaved';
+    saveLocalBackup(projectId, files);
+
+    if (autorefresh) {
       clearConsole();
       startSketch();
     }
@@ -138,7 +138,9 @@ export default function useCodeMirror({
   useEffect(() => {
     const reconfigureEffect = (fileState) =>
       fileState.autocompleteCpt.reconfigure(
-        autocompleteHinter ? autocompletion(AUTOCOMPLETE_OPTIONS) : []
+        autocompleteHinter
+          ? autocompletion(createAutocompleteOptions(referenceBaseUrl))
+          : []
       );
     updateFileStates({
       fileStates: fileStates.current,
@@ -146,7 +148,7 @@ export default function useCodeMirror({
       file,
       reconfigureEffect
     });
-  }, [autocompleteHinter]);
+  }, [autocompleteHinter, referenceBaseUrl]);
 
   // Initializes the files as CodeMirror states.
   function initializeDocuments() {
@@ -168,7 +170,8 @@ export default function useCodeMirror({
             autocloseBracketsQuotes,
             autocomplete: autocompleteHinter,
             onUpdateLinting,
-            onViewUpdate
+            onViewUpdate,
+            referenceBaseUrl
           }
         );
       }

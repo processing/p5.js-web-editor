@@ -32,7 +32,7 @@ import { selectSketchPath } from '../../selectors/project';
 import { availableLanguages, languageKeyToLabel } from '../../../../i18n';
 import { showToast } from '../../actions/toast';
 import { setLanguage } from '../../actions/preferences';
-import Overlay from '../../../App/components/Overlay';
+import { Overlay } from '../../../App/components/Overlay';
 import ProjectName from './ProjectName';
 import CollectionCreate from '../../../User/components/CollectionCreate';
 

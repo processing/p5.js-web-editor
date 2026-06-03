@@ -31,37 +31,6 @@ mongoose.connection.on('error', () => {
  * https://mongodb.github.io/node-mongodb-native
  */
 
-const agg = [
-  // eslint-disable-line
-  {
-    $project: {
-      email: {
-        $toLower: ['$email']
-      }
-    }
-  },
-  {
-    $group: {
-      _id: '$email',
-      total: {
-        $sum: 1
-      }
-    }
-  },
-  {
-    $match: {
-      total: {
-        $gt: 1
-      }
-    }
-  },
-  {
-    $sort: {
-      total: -1
-    }
-  }
-];
-
 // steps to make this work
 // iterate through the results
 // check if any files are on AWS
@@ -202,61 +171,3 @@ async function consolidateAccount(email) {
       process.exit(1);
     });
 }
-
-// let duplicates = [
-//   "5ce3d936e0f9df0022d8330c",
-//   "5cff843f091745001e83c070",
-//     "5d246f5db489e6001eaee6e9"
-// ];
-// let currentUser = null;
-// User.deleteMany({ _id: { $in: duplicates } }).then(() => {
-//   return User.findOne({ "email": "Silverstar09@hotmail.com" })
-// }).then((result) => {
-//   currentUser = result;
-//   console.log('Deleted other user accounts.');
-//   currentUser.email = currentUser.email.toLowerCase();
-//   return currentUser.save();
-// }).then(() => {
-//   const mailOptions = renderAccountConsolidation({
-//     body: {
-//       domain: 'https://editor.p5js.org',
-//       username: currentUser.username,
-//       email: currentUser.email
-//     },
-//     to: currentUser.email,
-//   });
-
-//   return new Promise((resolve, reject) => {
-//     mailerService.send(mailOptions, (mailErr, result) => {
-//       console.log('Sent email.');
-//       if (mailErr) {
-//         return reject(mailErr);
-//       }
-//       return resolve(result);
-//     });
-//   });
-// });
-
-// import s3 from '@auth0/s3';
-
-// const client = s3.createClient({
-//   maxAsyncS3: 20,
-//   s3RetryCount: 3,
-//   s3RetryDelay: 1000,
-//   multipartUploadThreshold: 20971520, // this is the default (20 MB)
-//   multipartUploadSize: 15728640, // this is the default (15 MB)
-//   s3Options: {
-//     accessKeyId: `${process.env.AWS_ACCESS_KEY}`,
-//     secretAccessKey: `${process.env.AWS_SECRET_KEY}`,
-//     region: `${process.env.AWS_REGION}`
-//   },
-// });
-
-// const headParams = {
-//   Bucket: `${process.env.S3_BUCKET}`,
-//   Key: "5c9de807f6bccf0017da7927/8b9d95ae-7ddd-452a-b398-672392c4ac43.png"
-// };
-// client.s3.headObject(headParams, (err, data) => {
-//   console.log(err);
-//   console.log(data);
-// });

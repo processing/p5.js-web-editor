@@ -4,38 +4,247 @@
   box-shadow: 0 0 #{math.div(18, $base-font-size)}rem 0 rgba(0, 0, 0, 0.16);
   border: #{math.div(1, $base-font-size)}rem solid #A6A6A6;
   font-family: Inconsolata, monospace;
-  
+  font-size: 1rem;
+
   @include themify() {
-    .cm-completionInfo {
-      background: getThemifyVariable('hint-arrow-background-color');
-      height: 1.2em;
-      left: auto;
-      right: 0px;
-      padding: 0 6px;
-      white-space: nowrap;
-      
-      a {
-        color: getThemifyVariable('hint-arrow-color');
-      }
+    background: getThemifyVariable('hint-background-color');
+    color: getThemifyVariable('hint-text-color');
+  }
 
-      &:hover, &:active, &.focused-hint-link {
-        background: getThemifyVariable('hint-arrow-background-active-color');
-      }
-
-      &.focused-hint-link {
-        outline: #{math.div(3, $base-font-size)}rem solid getThemifyVariable('hint-arrow-focus-outline-color');
-        outline-offset: #{math.div(-3, $base-font-size)}rem;
-      }
-    }
-
-    .hint-hidden {
-      @extend %hidden-element;
-      display: none;
+  ul {
+    @include themify() {
+      background: getThemifyVariable('hint-background-color');
     }
   }
 
-  .CodeMirror-hint.blacklisted {
-    height: auto;
-    min-height: 3.2rem; // enough to show the warning + content
+  li.CodeMirror-hint {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto #{math.div(40, $base-font-size)}rem;
+    align-items: center;
+    min-height: #{math.div(24, $base-font-size)}rem;
+    font-weight: 500;
+
+    @include themify() {
+      background: getThemifyVariable('hint-background-color');
+      color: getThemifyVariable('hint-text-color');
+      border-bottom: #{math.div(1, $base-font-size)}rem solid
+        getThemifyVariable('hint-item-border-bottom-color');
+    }
+
+    &:hover:not([aria-selected='true']) {
+      @include themify() {
+        background: getThemifyVariable('hint-item-hover-background-color');
+      }
+    }
+
+    &[aria-selected='true'] {
+      @include themify() {
+        background: getThemifyVariable('hint-item-active-background-color');
+        color: getThemifyVariable('hint-item-active-text-color');
+        outline: getThemifyVariable('hint-item-active-outline');
+        outline-offset: getThemifyVariable('hint-item-active-outline-offset');
+      }
+
+      .cm-completionKind {
+        @include themify() {
+          color: getThemifyVariable('hint-item-active-type-text-color');
+        }
+      }
+
+      .cm-completionMatchedText {
+        color: inherit;
+      }
+    }
+
+    &.blacklisted {
+      height: auto;
+      min-height: 3.2rem; // enough to show the warning + content
+    }
+  }
+
+  .cm-completionLabel {
+    grid-column: 1;
+    justify-self: start;
+    margin-left: #{math.div(12, $base-font-size)}rem;
+    line-height: 1.1;
+    font-weight: 600;
+    color: inherit;
+    background: transparent;
+  }
+
+  .cm-completionMatchedText {
+    color: inherit;
+    text-decoration: none;
+    font-weight: inherit;
+  }
+
+  .cm-completionDetail {
+    display: none;
+  }
+
+  .cm-completionKind {
+    grid-column: 2;
+    justify-self: end;
+    padding-right: #{math.div(28, $base-font-size)}rem;
+    font-size: 0.8rem;
+
+    @include themify() {
+      color: getThemifyVariable('hint-type-text-color');
+    }
+  }
+
+  .cm-completionRefLink {
+    grid-column: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: stretch;
+    width: 75%;
+    text-decoration: none;
+
+    @include themify() {
+      background: getThemifyVariable('hint-arrow-background-color');
+      color: getThemifyVariable('hint-arrow-color');
+    }
+
+    &:hover,
+    &:active,
+    &.focused-hint-link {
+      @include themify() {
+        background: getThemifyVariable('hint-arrow-background-active-color');
+      }
+    }
+
+    &.focused-hint-link {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      align-self: stretch;
+
+      @include themify() {
+        outline: #{math.div(3, $base-font-size)}rem solid
+          getThemifyVariable('hint-arrow-focus-outline-color');
+        outline-offset: #{math.div(-3, $base-font-size)}rem;
+      }
+    }
+  }
+
+  .cm-completionRefLink--disabled,
+  li:not(.has-doc-link) .cm-completionRefLink {
+    @include themify() {
+      background: getThemifyVariable('hint-no-link-background-color');
+      color: getThemifyVariable('hint-arrow-color');
+    }
+  }
+
+  // label colors
+  li.hint-type-method,
+  li.hint-type-obj {
+    .cm-completionLabel,
+    .cm-completionMatchedText {
+      @include themify() {
+        color: getThemifyVariable('hint-fun-text-color');
+      }
+    }
+  }
+
+  li.hint-type-variable,
+  li.hint-type-constant,
+  li.hint-type-boolean {
+    .cm-completionLabel,
+    .cm-completionMatchedText {
+      @include themify() {
+        color: getThemifyVariable('hint-var-text-color');
+      }
+    }
+  }
+
+  li.hint-type-keyword {
+    .cm-completionLabel,
+    .cm-completionMatchedText {
+      @include themify() {
+        color: getThemifyVariable('hint-keyword-text-color');
+      }
+    }
+  }
+
+  // highlighted completion label colors
+  li.hint-type-method[aria-selected='true'],
+  li.hint-type-obj[aria-selected='true'] {
+    .cm-completionLabel {
+      @include themify() {
+        background: getThemifyVariable('hint-fun-text-color');
+        color: getThemifyVariable('hint-item-active-text-color');
+        border-bottom: #{math.div(1, $base-font-size)}rem solid
+          getThemifyVariable('hint-fun-active-border-bottom-color');
+      }
+    }
+  }
+
+  li.hint-type-variable[aria-selected='true'],
+  li.hint-type-constant[aria-selected='true'],
+  li.hint-type-boolean[aria-selected='true'] {
+    .cm-completionLabel {
+      @include themify() {
+        background: getThemifyVariable('hint-var-text-color');
+        color: getThemifyVariable('hint-item-active-text-color');
+        border-bottom: #{math.div(1, $base-font-size)}rem solid
+          getThemifyVariable('hint-var-active-border-bottom-color');
+      }
+    }
+  }
+
+  li.hint-type-keyword[aria-selected='true'] {
+    .cm-completionLabel {
+      @include themify() {
+        background: getThemifyVariable('hint-keyword-text-color');
+        color: getThemifyVariable('hint-item-active-text-color');
+      }
+    }
+  }
+
+  .cm-completionWarning {
+    grid-column: 1 / 4;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    width: fit-content;
+    margin: 0.35rem 0.75rem 0.5rem 0.75rem;
+    padding: 0.32rem 0.55rem;
+    border: 1px solid #d9a300;
+    border-radius: 0.45rem;
+    background: #f3e7b7;
+    color: #9a6b00;
+    font-size: 0.8rem;
+    line-height: 1.1;
+    white-space: nowrap;
+  }
+
+  .cm-completionWarningIcon {
+    flex: 0 0 auto;
+    font-size: 1rem;
+  }
+
+  .cm-completionWarningText {
+    line-height: 1.1;
+  }
+
+  .cm-ghostCompletion {
+    @include themify() {
+      color: getThemifyVariable('hint-inline-text-color');
+    }
+  }
+
+  .cm-ghostCompletion.cm-ghostCompletion--light {
+    @include themify() {
+      color: getThemifyVariable('hint-inline-text-color-light');
+    }
+  }
+
+  .hint-hidden {
+    @include themify() {
+      @extend %hidden-element;
+      display: none;
+    }
   }
 }

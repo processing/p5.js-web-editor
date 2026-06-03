@@ -82,6 +82,8 @@ mongoose.connect(mongoConnectionString, {
   socketTimeoutMS: 45000 // 45 seconds timeout
 });
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 app.use(
   session({
     resave: true,
@@ -91,7 +93,7 @@ app.use(
     name: 'sessionId',
     cookie: {
       httpOnly: true,
-      secure: false,
+      secure: isProduction,
       maxAge: 1000 * 60 * 60 * 24 * 28 // 4 weeks in milliseconds
     },
     store: MongoStore.create({
@@ -168,7 +170,8 @@ app.get('/', (req, res) => {
 // Handle API errors
 app.use('/api', (error, req, res, next) => {
   if (error && error.code && !res.headersSent) {
-    res.status(error.code).json({ error: error.message });
+    console.error('API error:', error.message);
+    res.status(error.code).json({ error: 'Internal server error' });
     return;
   }
 
@@ -193,6 +196,20 @@ app.get('*', async (req, res) => {
     return;
   }
   res.type('txt').send('Not found.');
+});
+
+// Global error handler for unhandled errors
+app.use((error, req, res, next) => {
+  console.error('Unhandled error:', error);
+
+  if (res.headersSent) {
+    return next(error);
+  }
+
+  const statusCode = error.status || 500;
+  return res.status(statusCode).json({
+    error: 'Internal server error'
+  });
 });
 
 // start app

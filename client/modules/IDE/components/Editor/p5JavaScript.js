@@ -1,46 +1,69 @@
-import { LanguageSupport } from '@codemirror/language';
+import { LanguageSupport, syntaxTree } from '@codemirror/language';
 import { javascript } from '@codemirror/lang-javascript';
+import { ViewPlugin, Decoration } from '@codemirror/view';
+import { RangeSetBuilder } from '@codemirror/state';
 import { p5Hinter } from '../../../../utils/p5-hinter';
+import { p5CompletionPreview } from './p5CompletionPreview';
+import contextAwareHinter from '../../../../utils/contextAwareHinter';
+import {
+  p5FunctionKeywords,
+  p5VariableKeywords
+} from '../../../../utils/p5-keywords';
 
-function testCompletions(context) {
-  const word = context.matchBefore(/\w*/);
-  if (word.from === word.to && !context.explicit) return null;
+const p5Functions = new Set(Object.keys(p5FunctionKeywords));
+const p5Variables = new Set(Object.keys(p5VariableKeywords));
 
-  function addDomNodeInfo(item) {
-    const itemCopy = { ...item };
+const p5FunctionMark = Decoration.mark({ class: 'cm-p5-function' });
+const p5VariableMark = Decoration.mark({ class: 'cm-p5-variable' });
 
-    if (item.p5DocPath) {
-      // TODO: Use the option below to add the p5 link for *all* hints.
-      // https://codemirror.net/docs/ref/#autocomplete.autocompletion^config.addToOptions
-      itemCopy.info = () => {
-        const domNode = document.createElement('a');
-        domNode.href = `https://p5js.org/reference/p5/${item.p5DocPath}`;
-        domNode.role = 'link';
-        domNode.target = '_blank';
-        domNode.onclick = (event) => event.stopPropagation();
-        domNode.innerHTML = `
-        <span class="hint-hidden">open ${item.label} reference</span>
-        <span aria-hidden="true">&#10132;</span>
-      `;
-        return {
-          dom: domNode,
-          destroy: () => {
-            // Cleanup logic if needed
-            domNode.remove();
-          }
-        };
-      };
+// Used to add highlighting to the p5-specific keywords.
+function buildHighlightDecorations(view) {
+  const builder = new RangeSetBuilder();
+  view.visibleRanges.forEach(({ from, to }) => {
+    syntaxTree(view.state).iterate({
+      from,
+      to,
+      enter(node) {
+        const isVariable = node.name === 'VariableName';
+        const isDefinition = node.name === 'VariableDefinition';
+        if (!isVariable && !isDefinition) return;
+        const name = view.state.doc.sliceString(node.from, node.to);
+        if (p5Functions.has(name)) {
+          builder.add(node.from, node.to, p5FunctionMark);
+        } else if (p5Variables.has(name)) {
+          builder.add(node.from, node.to, p5VariableMark);
+        }
+      }
+    });
+  });
+  return builder.finish();
+}
+
+const p5Highlight = ViewPlugin.fromClass(
+  class {
+    constructor(view) {
+      this.decorations = buildHighlightDecorations(view);
     }
 
-    return itemCopy;
+    update(update) {
+      if (update.docChanged || update.viewportChanged) {
+        this.decorations = buildHighlightDecorations(update.view);
+      }
+    }
+  },
+  { decorations: (v) => v.decorations }
+);
+
+function addCompletions(context) {
+  const word = context.matchBefore(/\w*/);
+  const isValidWord = word?.text && word.text.trim().length >= 2;
+  if (!isValidWord && !context.explicit) {
+    return null;
   }
 
-  const hinterWithDomNodes = p5Hinter.map(addDomNodeInfo);
-
-  return {
-    from: word.from,
-    options: hinterWithDomNodes
-  };
+  return contextAwareHinter(context, {
+    hints: p5Hinter
+  });
 }
 
 export default function p5JavaScript() {
@@ -48,7 +71,9 @@ export default function p5JavaScript() {
   return new LanguageSupport(jsLang.language, [
     jsLang.extension,
     jsLang.language.data.of({
-      autocomplete: testCompletions
-    })
+      autocomplete: addCompletions
+    }),
+    p5CompletionPreview(),
+    p5Highlight
   ]);
 }

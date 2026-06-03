@@ -116,7 +116,8 @@
       "SketchFailedSave": "Echec de la sauvegarde du croquis.",
       "AutosaveEnabled": "Sauvegarde automatique activée.",
       "LangChange": "Langue changée.",
-      "SettingsSaved": "Paramètres sauvegardés."
+      "SettingsSaved": "Paramètres sauvegardés.",
+      "CloseAlertARIA": "Close Alert"
     },
     "Toolbar": {
       "Preview": "Aperçu",
@@ -127,7 +128,8 @@
       "StopSketchARIA": "Arrêter le croquis",
       "EditSketchARIA": "Éditer le nom du croquis",
       "NewSketchNameARIA": "Nouveau nom de croquis",
-      "By": " par "
+      "By": " par ",
+      "SelectVersionARIA": "Select p5.js version"
     },
     "Console": {
       "Title": "Console",
@@ -444,6 +446,7 @@
       "AddSketch": "Ajouter un croquis",
       "DeleteFromCollection": "Êtes-vous sûr de vouloir supprimer {{name_sketch}} de cette collection?",
       "SketchDeleted": "Croquis supprimé",
+    "SketchRemoveLabel": "Remove from Collection",
       "SketchRemoveARIA": "Supprimer le croquis de la collection",
       "DescriptionPlaceholder": "Ajouter une description",
       "Description": "description",
@@ -517,6 +520,13 @@
       "ButtonRemoveARIA": "Supprimer de la collection",
       "ButtonAddToCollectionARIA": "Ajouter à la collection",
       "View": "Voir"
+    },
+    "Pagination": {
+      "Next": "Next",
+      "Previous": "Previous",
+      "Of": "of",
+      "PreviousPageARIA": "Previous Page",
+      "NextPageARIA": "Next Page"
     },
     "SketchList": {
       "View": "Voir",
@@ -611,6 +621,9 @@
     },
     "Explorer": {
       "Files": "Fichiers"
+    },
+    "TextArea": {
+      "CopyARIA": "Copy"
     }
   }
   

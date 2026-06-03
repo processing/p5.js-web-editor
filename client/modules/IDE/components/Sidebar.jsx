@@ -16,6 +16,7 @@ import { getAuthenticated, selectCanEditSketch } from '../selectors/users';
 import ConnectedFileNode from './FileNode';
 import { PlusIcon } from '../../../common/icons';
 import { FileDrawer } from './Editor/MobileEditor';
+import { Tooltip } from '../../../common/Tooltip';
 
 // TODO: use a generic Dropdown UI component
 
@@ -124,8 +125,8 @@ export default function SideBar() {
                     {t('Sidebar.AddFile')}
                   </button>
                 </li>
-                {isAuthenticated && (
-                  <li>
+                <li>
+                  {isAuthenticated ? (
                     <button
                       aria-label={t('Sidebar.UploadFileARIA')}
                       onClick={() => {
@@ -135,8 +136,24 @@ export default function SideBar() {
                     >
                       {t('Sidebar.UploadFile')}
                     </button>
-                  </li>
-                )}
+                  ) : (
+                    <Tooltip
+                      content={t('Sidebar.UploadFileTooltipUnauthenticated')}
+                    >
+                      <button
+                        aria-label={t('Sidebar.UploadFileARIA')}
+                        aria-disabled
+                        onClick={(e) => {
+                          // prevent any action when unauthenticated
+                          e.preventDefault();
+                          e.stopPropagation();
+                        }}
+                      >
+                        {t('Sidebar.UploadFile')}
+                      </button>
+                    </Tooltip>
+                  )}
+                </li>
               </ul>
             )}
           </div>

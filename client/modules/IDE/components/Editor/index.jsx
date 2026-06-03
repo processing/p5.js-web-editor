@@ -38,10 +38,22 @@ import {
   removeErrorDecorations
 } from './consoleErrorDecoration';
 
+// temporary until p5.js 2.0 becomes default
+// checks if sketch is using p5.js 2.0 to pass correct base url for autocomplete hinter reference
+export function getReferenceBaseUrl(htmlFile) {
+  const html = htmlFile?.content || '';
+
+  const isV2 =
+    /https:\/\/beta\.p5js\.org\b/i.test(html) || /\bp5(@|-)2\./i.test(html);
+
+  return isV2 ? 'https://beta.p5js.org' : 'https://p5js.org';
+}
+
 function Editor({
   provideController,
   files,
   file,
+  project,
   linewrap,
   lineNumbers,
   closeProjectOptions,
@@ -53,7 +65,6 @@ function Editor({
   updateLintMessage,
   updateFileContent,
   autorefresh,
-  isPlaying,
   clearConsole,
   startSketch,
   autocompleteHinter,
@@ -62,6 +73,7 @@ function Editor({
   consoleEvents,
   expandConsole,
   isExpanded,
+  htmlFile,
   t,
   collapseSidebar,
   expandSidebar
@@ -91,6 +103,7 @@ function Editor({
     tidyCode,
     showSearch
   } = useCodeMirror({
+    project,
     lineNumbers,
     linewrap,
     autocloseBracketsQuotes,
@@ -99,13 +112,13 @@ function Editor({
     file,
     files,
     autorefresh,
-    isPlaying,
     clearConsole,
     startSketch,
     autocompleteHinter,
     fontSize,
     updateLintingMessageAccessibility,
-    setCurrentLine
+    setCurrentLine,
+    referenceBaseUrl: getReferenceBaseUrl(htmlFile)
   });
 
   // Lets the parent component access file content-specific functionality...
@@ -115,7 +128,7 @@ function Editor({
       getContent,
       showSearch
     });
-  }, [getContent]);
+  }, [tidyCode, showSearch, getContent]);
 
   // When the CM container div mounts, we set up CodeMirror.
   const onContainerMounted = useCallback(setupCodeMirrorOnContainerMounted, []);
@@ -267,7 +280,6 @@ Editor.propTypes = {
   setUnsavedChanges: PropTypes.func.isRequired,
   startSketch: PropTypes.func.isRequired,
   autorefresh: PropTypes.bool.isRequired,
-  isPlaying: PropTypes.bool.isRequired,
   files: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -276,6 +288,9 @@ Editor.propTypes = {
     })
   ).isRequired,
   isExpanded: PropTypes.bool.isRequired,
+  htmlFile: PropTypes.shape({
+    content: PropTypes.string
+  }),
   collapseSidebar: PropTypes.func.isRequired,
   closeProjectOptions: PropTypes.func.isRequired,
   expandSidebar: PropTypes.func.isRequired,
@@ -283,7 +298,15 @@ Editor.propTypes = {
   provideController: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
   setSelectedFile: PropTypes.func.isRequired,
-  expandConsole: PropTypes.func.isRequired
+  expandConsole: PropTypes.func.isRequired,
+  project: PropTypes.shape({
+    id: PropTypes.string
+  })
+};
+
+Editor.defaultProps = {
+  htmlFile: null,
+  project: {}
 };
 
 function mapStateToProps(state) {

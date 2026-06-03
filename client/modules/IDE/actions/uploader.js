@@ -3,6 +3,7 @@ import { apiClient } from '../../../utils/apiClient';
 import { getConfig } from '../../../utils/getConfig';
 import { isTestEnvironment } from '../../../utils/checkTestEnv';
 import { handleCreateFile } from './files';
+import { showErrorModal } from './ide';
 
 const s3BucketUrlBase = getConfig('S3_BUCKET_URL_BASE');
 const awsRegion = getConfig('AWS_REGION');
@@ -22,7 +23,7 @@ function isS3Upload(file) {
   return !TEXT_FILE_REGEX.test(file.name) || file.size >= MAX_LOCAL_FILE_SIZE;
 }
 
-export async function dropzoneAcceptCallback(userId, file, done) {
+export async function dropzoneAcceptCallback(userId, file, done, dispatch) {
   // if a user would want to edit this file as text, local interceptor
   if (!isS3Upload(file)) {
     try {
@@ -51,6 +52,13 @@ export async function dropzoneAcceptCallback(userId, file, done) {
       file.postData = response.data;
       done();
     } catch (error) {
+      if (error?.response?.status === 403) {
+        if (dispatch) {
+          dispatch(showErrorModal('uploadLimit'));
+        }
+        done('Upload limit reached.');
+        return;
+      }
       done(
         error?.response?.data?.responseText?.message ||
           error?.message ||
@@ -82,6 +90,23 @@ export function dropzoneCompleteCallback(file) {
         content: file.content
       };
       dispatch(handleCreateFile(formParams, false));
+    } else if (file.status === 'error' || file.xhr.status >= 400) {
+      let uploadFileErrorMessage = 'Uploading file to AWS failed.';
+      if (file.xhr?.response) {
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(file.xhr.response, 'text/xml');
+        const message = xmlDoc.getElementsByTagName('Message')[0]?.textContent;
+        const code = xmlDoc.getElementsByTagName('Code')[0]?.textContent;
+        uploadFileErrorMessage = `${code}: ${message}`;
+      }
+      file.previewElement.classList.add('dz-error');
+      file.previewElement.classList.remove('dz-success');
+      const dzErrorMessageElement = file.previewElement?.querySelector(
+        '[data-dz-errormessage]'
+      );
+      if (dzErrorMessageElement) {
+        dzErrorMessageElement.textContent = uploadFileErrorMessage;
+      }
     }
   };
 }

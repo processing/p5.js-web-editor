@@ -34,12 +34,14 @@ export function NewPasswordForm(props: { resetPasswordToken: string }) {
                   className="form__input"
                   aria-label={t('NewPasswordForm.TitleARIA')}
                   type="password"
-                  id="Password"
+                  id="password"
                   autoComplete="new-password"
                   {...field.input}
                 />
                 {field.meta.touched && field.meta.error && (
-                  <span className="form-error">{field.meta.error}</span>
+                  <span className="form-error" aria-live="polite">
+                    {field.meta.error}
+                  </span>
                 )}
               </p>
             )}
@@ -47,19 +49,21 @@ export function NewPasswordForm(props: { resetPasswordToken: string }) {
           <Field name="confirmPassword">
             {(field) => (
               <p className="form__field">
-                <label htmlFor="confirm password" className="form__label">
+                <label htmlFor="confirmPassword" className="form__label">
                   {t('NewPasswordForm.ConfirmPassword')}
                 </label>
                 <input
                   className="form__input"
                   type="password"
                   aria-label={t('NewPasswordForm.ConfirmPasswordARIA')}
-                  id="confirm password"
+                  id="confirmPassword"
                   autoComplete="new-password"
                   {...field.input}
                 />
                 {field.meta.touched && field.meta.error && (
-                  <span className="form-error">{field.meta.error}</span>
+                  <span className="form-error" aria-live="polite">
+                    {field.meta.error}
+                  </span>
                 )}
               </p>
             )}

@@ -36,7 +36,6 @@ export function createBlobUrl(file) {
   }
 
   const mimeType = mime.getType(file.name) || 'text/plain';
-  console.log(mimeType);
 
   const fileBlob = blobUtil.createBlob([file.content], { type: mimeType });
   const blobURL = blobUtil.createObjectURL(fileBlob);

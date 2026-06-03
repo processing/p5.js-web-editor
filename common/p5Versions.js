@@ -1,11 +1,15 @@
-export const currentP5Version = '1.11.11'; // Don't update to 2.x until 2026
+export const currentP5Version = '1.11.13'; // Don't update to 2.x until 2026
 
 // Generated from https://www.npmjs.com/package/p5?activeTab=versions
 // Run this in the console:
 // JSON.stringify([...document.querySelectorAll('._132722c7')].map(n => n.innerText), null, 2)
 // TODO: use their API for this to grab these at build time?
 export const p5Versions = [
-  { version: '2.1.2', label: '(Beta)' },
+  { version: '2.2.3', label: '(Beta)' },
+  '2.2.2',
+  '2.2.1',
+  '2.2.0',
+  '2.1.2',
   '2.1.1',
   '2.0.5',
   '2.0.4',
@@ -13,7 +17,9 @@ export const p5Versions = [
   '2.0.2',
   '2.0.1',
   '2.0.0',
-  { version: '1.11.11', label: '(Default)' },
+  { version: '1.11.13', label: '(Default)' },
+  '1.11.12',
+  '1.11.11',
   '1.11.10',
   '1.11.9',
   '1.11.8',

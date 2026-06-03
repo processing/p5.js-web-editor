@@ -110,7 +110,8 @@
       "SketchFailedSave": "خاکہ محفوظ کرنے میں ناکام۔",
       "AutosaveEnabled": "خودکار محفوظ کرنا فعال ہے۔",
       "LangChange": "زبان بدل گئی۔",
-      "SettingsSaved": "ترتیبات محفوظ ہو گئیں۔"
+      "SettingsSaved": "ترتیبات محفوظ ہو گئیں۔",
+      "CloseAlertARIA": "Close Alert"
     },
     "Toolbar": {
         "Preview": "پیش نظارہ",
@@ -121,7 +122,8 @@
         "StopSketchARIA": "خاکہ بنانا بند کریں",
         "EditSketchARIA": "خاکے کے نام میں ترمیم کریں۔",
         "NewSketchNameARIA": "خاکے کا نیا نام",
-        "By": " کی طرف سے "
+        "By": " کی طرف سے ",
+        "SelectVersionARIA": "Select p5.js version"
       },      
     "Console": {
       "Title": "تسلی",
@@ -434,6 +436,7 @@
       "AddSketch": "خاکہ شامل کریں۔",
       "DeleteFromCollection": "کیا آپ واقعی ہٹانا چاہتے ہیں {{name_sketch}} اس مجموعہ سے؟",
       "SketchDeleted": "خاکہ حذف کر دیا گیا۔",
+    "SketchRemoveLabel": "Remove from Collection",
       "SketchRemoveARIA": "مجموعہ سے خاکہ کو ہٹا دیں۔",
       "DescriptionPlaceholder": "تفصیل شامل کریں۔",
       "Description": "تفصیل",
@@ -507,6 +510,13 @@
       "ButtonRemoveARIA": "مجموعہ سے ہٹا دیں۔",
       "ButtonAddToCollectionARIA": "مجموعہ میں شامل کریں۔",
       "View": "دیکھیں"
+    },
+    "Pagination": {
+      "Next": "Next",
+      "Previous": "Previous",
+      "Of": "of",
+      "PreviousPageARIA": "Previous Page",
+      "NextPageARIA": "Next Page"
     },
     "SketchList": {
       "View": "دیکھیں",
@@ -613,6 +623,9 @@
       "PrivacyPolicy": "رازداری کی پالیسی",
       "TermsOfUse": "استعمال کرنے کی شرائط",
       "CodeOfConduct": "ضابطہ اخلاق"
+    },
+    "TextArea": {
+      "CopyARIA": "Copy"
     }
   }
   

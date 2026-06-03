@@ -22,7 +22,7 @@ const AssetMenu = ({ item: asset }) => {
   return (
     <TableDropdown aria-label={t('AssetList.ToggleOpenCloseARIA')}>
       <MenuItem onClick={handleAssetDelete}>{t('AssetList.Delete')}</MenuItem>
-      <MenuItem href={asset.url} target="_blank">
+      <MenuItem href={asset.url} target="_blank" rel="noopener noreferrer">
         {t('AssetList.OpenNewTab')}
       </MenuItem>
     </TableDropdown>
@@ -44,7 +44,7 @@ const AssetListRow = ({ asset, username }) => (
         {asset.name}
       </a>
     </th>
-    <td>{prettyBytes(asset.size)}</td>
+    <td className="asset-table__size-column">{prettyBytes(asset.size)}</td>
     <td>
       {asset.sketchId && (
         <Link to={`/${username}/sketches/${asset.sketchId}`}>

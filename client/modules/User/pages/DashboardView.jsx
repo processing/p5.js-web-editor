@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 import { Button } from '../../../common/Button';
 import Nav from '../../IDE/components/Header/Nav';
-import Overlay from '../../App/components/Overlay';
+import { Overlay } from '../../App/components/Overlay';
 import AssetList from '../../IDE/components/AssetList';
 import AssetSize from '../../IDE/components/AssetSize';
 import CollectionList from '../../IDE/components/CollectionList';
