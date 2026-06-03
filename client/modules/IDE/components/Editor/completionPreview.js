@@ -2,7 +2,12 @@ import { StateField, RangeSetBuilder } from '@codemirror/state';
 import { Decoration, EditorView, WidgetType } from '@codemirror/view';
 import { selectedCompletion, completionStatus } from '@codemirror/autocomplete';
 
-/** Creates a "ghost" of what the completion would look like, for autocomplete selections. */
+/**
+ * Creates a "ghost" of what the completion would look like, for autocomplete selections.
+ *
+ * This is currently only used in conjection with p5Javascript language support,
+ * but it could be moved to stateUtils and used with other languages as well.
+ */
 class GhostTextWidget extends WidgetType {
   constructor(text) {
     super();
