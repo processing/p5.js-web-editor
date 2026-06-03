@@ -18,7 +18,6 @@ import { tidyCodeWithPrettier } from './tidier';
 // - revisit keymap differences, esp around sublime
 // - emmet doesn't trigger if text is copy pasted in
 // - need to re-implement emmet auto rename tag
-// - color picker should be triggered by metakey cmd k
 // - clike addon
 
 /** This is a custom React hook that manages CodeMirror state. */

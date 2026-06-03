@@ -242,7 +242,6 @@ export const createAutocompleteOptions = (referenceBaseUrl) => ({
       render(completion, state, view) {
         if (!completion.p5DocPath) return null;
 
-        // TODO: add in reference url version switching
         const link = document.createElement('a');
         link.className = 'cm-completionRefLink';
         link.href = `${referenceBaseUrl}/reference/p5/${completion.p5DocPath}`;
