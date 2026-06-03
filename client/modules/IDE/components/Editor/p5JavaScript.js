@@ -16,7 +16,8 @@ const p5Variables = new Set(Object.keys(p5VariableKeywords));
 const p5FunctionMark = Decoration.mark({ class: 'cm-p5-function' });
 const p5VariableMark = Decoration.mark({ class: 'cm-p5-variable' });
 
-function buildDecorations(view) {
+// Used to add highlighting to the p5-specific keywords.
+function buildHighlightDecorations(view) {
   const builder = new RangeSetBuilder();
   view.visibleRanges.forEach(({ from, to }) => {
     syntaxTree(view.state).iterate({
@@ -41,12 +42,12 @@ function buildDecorations(view) {
 const p5Highlight = ViewPlugin.fromClass(
   class {
     constructor(view) {
-      this.decorations = buildDecorations(view);
+      this.decorations = buildHighlightDecorations(view);
     }
 
     update(update) {
       if (update.docChanged || update.viewportChanged) {
-        this.decorations = buildDecorations(update.view);
+        this.decorations = buildHighlightDecorations(update.view);
       }
     }
   },
