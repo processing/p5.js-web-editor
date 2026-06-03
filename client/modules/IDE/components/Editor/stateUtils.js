@@ -236,6 +236,35 @@ function getFileEmmetConfig(fileName) {
   }
 }
 
+function getColorPickerAtSelection(view) {
+  const { head } = view.state.selection.main;
+  const { node } = view.domAtPos(head);
+
+  const startEl =
+    node.nodeType === Node.ELEMENT_NODE ? node : node.parentElement;
+
+  const lineEl = startEl?.closest('.cm-line');
+
+  return (
+    lineEl?.querySelector('input[type="color"]:not(:disabled)') ||
+    view.contentDOM.querySelector('input[type="color"]:not(:disabled)')
+  );
+}
+
+function openColorPickerWithKeyboard(view) {
+  const picker = getColorPickerAtSelection(view);
+
+  if (!picker || picker.disabled) {
+    return false;
+  }
+
+  picker.focus();
+
+  if (typeof picker.showPicker === 'function') {
+    picker.showPicker();
+  } else {
+    picker.click();
+  }
 function focusOnReferenceArrow(view) {
   if (completionStatus(view.state) !== 'active') return false;
 
@@ -395,6 +424,13 @@ export function createNewFileState(filename, document, settings) {
   // Keep this binding local to each file state so modes don't accumulate
   // across files via a shared module-level array.
   const mode = getFileMode(filename);
+  
+  let colorPickerKeymap = [];
+  if (mode === 'css' || mode === 'javascript') {
+    colorPickerKeymap.push({
+    key: 'Mod-k',
+    run: (view) => openColorPickerWithKeyboard(view)
+  });
 
   // Make a keymap for both uppercase and lowercase F, since
   // since browsers can differ in which one they send for the Shift-Mod-F shortcut.
@@ -417,6 +453,7 @@ export function createNewFileState(filename, document, settings) {
 
   const keymaps = [
     extraKeymaps,
+    colorPickerKeymap,
     fileTidyKeymap,
     closeBracketsKeymap,
     defaultKeymap,
