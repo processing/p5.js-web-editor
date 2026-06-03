@@ -162,10 +162,9 @@
 
 .cm-foldGutter .cm-gutterElement {
   cursor: pointer;
-  // !important needed to override CM6's inline display style on gutter elements
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 // CM5: .CodeMirror-foldgutter-open:after / .CodeMirror-foldgutter-folded:after
