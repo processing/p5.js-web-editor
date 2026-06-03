@@ -5,6 +5,7 @@ import * as ActionTypes from '../../constants';
 import browserHistory from '../../browserHistory';
 import { apiClient } from '../../utils/apiClient';
 import { opApiClient } from '../../utils/opApiClient';
+import { revokeStoredToken, getStoredToken } from '../../utils/opAuth';
 import { showErrorModal, justOpenedProject } from '../IDE/actions/ide';
 import { setLanguage } from '../IDE/actions/preferences';
 import { showToast, setToastText } from '../IDE/actions/toast';
@@ -25,13 +26,6 @@ import type {
 } from '../../../common/types';
 import type { GetRootState, RootState } from '../../reducers';
 
-export function authError(error: Error) {
-  return {
-    type: ActionTypes.AUTH_ERROR,
-    payload: error
-  };
-}
-
 function getRequestErrorMessage(error: any) {
   return (
     error?.response?.data?.message ||
@@ -40,6 +34,29 @@ function getRequestErrorMessage(error: any) {
     error?.message ||
     'Request failed.'
   );
+}
+
+/**
+ * Records an authentication error in the store and surfaces it to the user.
+ *
+ * The reducer only clears the authenticated flag, so without a visible
+ * notification an auth failure (e.g. a token lacking the required scope) would
+ * otherwise only be observable in devtools. We show the message via a toast so
+ * the user understands why they could not be signed in.
+ */
+export function authError(error: Error | string) {
+  return (dispatch: ThunkDispatch<RootState, unknown, AnyAction>) => {
+    dispatch({
+      type: ActionTypes.AUTH_ERROR,
+      payload: error
+    });
+    const message =
+      typeof error === 'string' ? error : getRequestErrorMessage(error);
+    if (message) {
+      dispatch(setToastText(message));
+      dispatch(showToast(8000));
+    }
+  };
 }
 
 /**
@@ -125,7 +142,10 @@ export function validateAndLoginUser(formProps: {
  *   - Create a new user
  */
 export function validateAndSignUpUser(formValues: CreateUserRequestBody) {
-  return (dispatch: Dispatch, getState: GetRootState) => {
+  return (
+    dispatch: ThunkDispatch<RootState, unknown, AnyAction>,
+    getState: GetRootState
+  ) => {
     const state = getState();
     const { previousPath } = state.ide;
     return new Promise<void | PublicUserOrError>((resolve) => {
@@ -145,7 +165,7 @@ export function validateAndSignUpUser(formValues: CreateUserRequestBody) {
 }
 
 export function getUser() {
-  return async (dispatch: Dispatch) => {
+  return async (dispatch: ThunkDispatch<RootState, unknown, AnyAction>) => {
     try {
       const { data } = await opApiClient.get('/whoami');
 
@@ -163,22 +183,9 @@ export function getUser() {
   };
 }
 
-export function validateSession() {
-  return async (dispatch: Dispatch, getState: GetRootState) => {
-    try {
-      const response = await apiClient.get('/session');
-      const state = getState();
-
-      if (state.user.username !== response.data.username) {
-        dispatch(showErrorModal('staleSession'));
-      }
-    } catch (error: any) {
-      if (error.response && error.response.status === 404) {
-        dispatch(showErrorModal('staleSession'));
-      }
-    }
-  };
-}
+// validateSession() was removed when the editor moved to serverless +
+// localStorage auth. The OP access token in localStorage is the only
+// authority; there is no Mongo-backed editor session to validate.
 
 export function resetProject(dispatch: Dispatch) {
   dispatch({
@@ -191,18 +198,14 @@ export function resetProject(dispatch: Dispatch) {
 }
 
 export function logoutUser() {
-  return (dispatch: Dispatch) => {
-    apiClient
-      .get('/logout')
-      .then(() => {
-        dispatch({
-          type: ActionTypes.UNAUTH_USER
-        });
-        resetProject(dispatch);
-      })
-      .catch((error) => {
-        dispatch(authError(getRequestErrorMessage(error) as any));
-      });
+  return async (dispatch: Dispatch) => {
+    // Revoke the OP token (best-effort) and clear local storage.
+    // No editor-side server logout — there is no editor session anymore.
+    await revokeStoredToken();
+    dispatch({
+      type: ActionTypes.UNAUTH_USER
+    });
+    resetProject(dispatch);
   };
 }
 
@@ -473,7 +476,7 @@ export function removeApiKey(keyId: RemoveApiKeyRequestParams['keyId']) {
 }
 
 export function unlinkService(service: string) {
-  return (dispatch: Dispatch) => {
+  return (dispatch: ThunkDispatch<RootState, unknown, AnyAction>) => {
     if (!['github', 'google'].includes(service)) return;
     apiClient
       .delete(`/auth/${service}`)

@@ -30,7 +30,9 @@ export function renderIndex() {
           window.process.env = {};
         }
         window.process.env.API_URL = '${process.env.API_URL}';
-        window.process.env.API_TOKEN = '${process.env.API_TOKEN}';
+        // API_TOKEN intentionally NOT exposed to the browser — it's a shared
+        // service token used only server-side (project.controller.js). Per-user
+        // OP access tokens live in localStorage after the OAuth popup flow.
         window.process.env.NODE_ENV = '${process.env.NODE_ENV}';
         window.process.env.S3_BUCKET = '${process.env.S3_BUCKET}';
         window.process.env.S3_BUCKET_URL_BASE = ${
@@ -108,7 +110,9 @@ export function renderProjectIndex(username: string, projectName: string) {
           window.process.env = {};
         }
         window.process.env.API_URL = '${process.env.API_URL}';
-        window.process.env.API_TOKEN = '${process.env.API_TOKEN}';
+        // API_TOKEN intentionally NOT exposed to the browser — it's a shared
+        // service token used only server-side (project.controller.js). Per-user
+        // OP access tokens live in localStorage after the OAuth popup flow.
         window.process.env.NODE_ENV = '${process.env.NODE_ENV}';
         window.process.env.S3_BUCKET = '${process.env.S3_BUCKET}';
         window.process.env.S3_BUCKET_URL_BASE = ${

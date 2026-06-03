@@ -9,7 +9,12 @@ import {
 import { collectionForUserExists } from '../controllers/collection.controller';
 
 const router = Router();
-const ApiTokenReady = Boolean(process.env.API_TOKEN);
+// After the OP migration, all sketch / user / collection URLs serve the SPA
+// shell unconditionally — the React app fetches data from OP using the
+// per-user localStorage token (or anonymously for public data). The
+// Mongo-backed `else` branches below are dead code, kept for a follow-up
+// retirement pass.
+const ApiTokenReady = true;
 
 router.get('/', (req, res) => {
   res.send(renderIndex());

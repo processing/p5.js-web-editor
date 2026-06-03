@@ -1,13 +1,36 @@
-import axios, { AxiosInstance } from 'axios';
+import axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 import { getConfig } from './getConfig';
+import { clearStoredToken, getStoredToken } from './opAuth';
 
 function createOpClientInstance(): AxiosInstance {
-  return axios.create({
-    baseURL: getConfig('API_URL'),
-    headers: {
-      Authorization: `Bearer ${getConfig('API_TOKEN')}`
-    }
+  const instance = axios.create({
+    baseURL: getConfig('API_URL')
   });
+
+  // Attach the user's OP bearer token from localStorage on every request.
+  // When no token is present (guest), the request goes out unauthenticated;
+  // OP returns 401 for protected endpoints and serves public data otherwise.
+  instance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
+    const token = getStoredToken();
+    if (token) {
+      config.headers.set('Authorization', `Bearer ${token}`);
+    }
+    return config;
+  });
+
+  // If OP rejects the token (revoked / deleted / expired), clear it locally
+  // so the next page load shows the logged-out state and prompts re-login.
+  instance.interceptors.response.use(
+    (response) => response,
+    (error) => {
+      if (error?.response?.status === 401 && getStoredToken()) {
+        clearStoredToken();
+      }
+      return Promise.reject(error);
+    }
+  );
+
+  return instance;
 }
 
 export const opApiClient = createOpClientInstance();

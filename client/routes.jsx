@@ -15,10 +15,10 @@ import { SignupView } from './modules/User/pages/SignupView';
 import { ResetPasswordView } from './modules/User/pages/ResetPasswordView';
 import { EmailVerificationView } from './modules/User/pages/EmailVerificationView';
 import { NewPasswordView } from './modules/User/pages/NewPasswordView';
-import { AccountView } from './modules/User/pages/AccountView';
 import { CollectionView } from './modules/User/pages/CollectionView';
 import DashboardView from './modules/User/pages/DashboardView';
 import { getUser } from './modules/User/actions';
+import { getStoredToken } from './utils/opAuth';
 import ProtectedSketchRoute from './protected-route';
 
 /**
@@ -79,7 +79,6 @@ const routes = (
     <Route path="/:username/collections" component={DashboardView} />
     <Route path="/sketches" component={DashboardView} />
     <Route path="/assets" component={DashboardView} />
-    <Route path="/account" component={AccountView} />
     <Route path="/about" component={About} />
     <Route path="/privacy-policy" component={PrivacyPolicy} />
     <Route path="/terms-of-use" component={TermsOfUse} />
@@ -91,7 +90,11 @@ function Routing() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getUser());
+    // Only hydrate identity if we have an OP access token. Otherwise the
+    // user is a guest; /api/whoami without a token would just 401.
+    if (getStoredToken()) {
+      dispatch(getUser());
+    }
   }, []);
 
   return <App>{routes}</App>;

@@ -26,6 +26,7 @@ import {
   showKeyboardShortcutModal
 } from '../../actions/ide';
 import { logoutUser } from '../../../User/actions';
+import { getOpBaseUrl } from '../../../../utils/opAuth';
 import { useSketchActions, useWhatPage } from '../../hooks';
 import { CmControllerContext } from '../../pages/IDEView';
 import { selectSketchPath } from '../../selectors/project';
@@ -345,7 +346,9 @@ const AccountMenu = () => {
           <MobileMenuItem href={`/${user.username}/sketches`}>
             My Stuff
           </MobileMenuItem>
-          <MobileMenuItem href="/account">Settings</MobileMenuItem>
+          <MobileMenuItem href={`${getOpBaseUrl()}/user/edit`}>
+            Settings
+          </MobileMenuItem>
           <MobileMenuItem onClick={() => dispatch(logoutUser())}>
             Log Out
           </MobileMenuItem>

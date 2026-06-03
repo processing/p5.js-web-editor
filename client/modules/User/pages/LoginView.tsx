@@ -1,14 +1,20 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
-import { LoginForm } from '../components/LoginForm';
-import {
-  SocialAuthButton,
-  SocialAuthServices
-} from '../components/SocialAuthButton';
+import styled from 'styled-components';
+import { OpenProcessingButton } from '../components/OpenProcessingButton';
 import Nav from '../../IDE/components/Header/Nav';
 import { RootPage } from '../../../components/RootPage';
+import { remSize } from '../../../theme';
+
+const Intro = styled.p`
+  max-width: ${remSize(360)};
+  margin: 0 auto ${remSize(20)};
+  text-align: center;
+  font-size: ${remSize(14)};
+  line-height: 1.5;
+  color: #555;
+`;
 
 export function LoginView() {
   const { t } = useTranslation();
@@ -21,25 +27,16 @@ export function LoginView() {
         </Helmet>
         <div className="form-container__content">
           <h2 className="form-container__title">{t('LoginView.Login')}</h2>
-          <LoginForm />
-          <h2 className="form-container__divider">{t('LoginView.LoginOr')}</h2>
-          <div className="form-container__stack">
-            <SocialAuthButton service={SocialAuthServices.github} />
-            <SocialAuthButton service={SocialAuthServices.google} />
+          <Intro>
+            All user accounts migrated to OpenProcessing. Continue below to
+            login with your existing account or create a new one.
+          </Intro>
+          <div
+            className="form-container__stack"
+            style={{ textAlign: 'center' }}
+          >
+            <OpenProcessingButton />
           </div>
-          <p className="form__navigation-options">
-            {t('LoginView.DontHaveAccount')}
-            <Link className="form__signup-button" to="/signup">
-              {t('LoginView.SignUp')}
-            </Link>
-          </p>
-          <p className="form__navigation-options">
-            {t('LoginView.ForgotPassword')}
-            <Link className="form__reset-password-button" to="/reset-password">
-              {' '}
-              {t('LoginView.ResetPassword')}
-            </Link>
-          </p>
         </div>
       </main>
     </RootPage>

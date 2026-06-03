@@ -11,12 +11,22 @@
   left: 50%;
   transform: translate(-50%, 0);
   min-width: #{math.div(375, $base-font-size)}rem; //500px
+  max-width: calc(100vw - #{math.div(40, $base-font-size)}rem);
   font-size: #{math.div(20, $base-font-size)}rem;
   display: flex;
   z-index: 9999;
   align-items: center;
   justify-content: space-between;
   box-shadow: 0 6px 6px 0 rgba(0,0,0,0.10);
+
+  p {
+    margin: 0;
+    min-width: 0;
+    // Allow long, unbreakable strings (e.g. URLs) to wrap instead of
+    // forcing the toast wider than the viewport.
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
 }
 
 .toast__close {
@@ -25,4 +35,5 @@
   }
   padding-top: #{math.div(10, $base-font-size)}rem;
   margin-left: #{math.div(40, $base-font-size)}rem;
+  flex-shrink: 0;
 }
