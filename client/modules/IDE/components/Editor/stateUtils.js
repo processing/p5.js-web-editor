@@ -402,6 +402,14 @@ export const createAutocompleteOptions = (referenceBaseUrl) => ({
   ]
 });
 
+// Uses window.document explicitly to avoid shadowing by the `document`
+// parameter in createNewFileState below.
+function createFoldMarker(open) {
+  const span = window.document.createElement('span');
+  span.className = open ? 'cm-fold-open' : 'cm-fold-closed';
+  return span;
+}
+
 /**
  * Creates a new CodeMirror editor state with configurations,
  * extensions, and keymaps tailored to the file type and settings.
@@ -416,12 +424,14 @@ export function createNewFileState(filename, document, settings) {
     autocloseBracketsQuotes,
     onUpdateLinting,
     onViewUpdate,
-    referenceBaseUrl
+    referenceBaseUrl,
+    fontSize
   } = settings;
   const lineNumbersCpt = new Compartment();
   const lineWrappingCpt = new Compartment();
   const closeBracketsCpt = new Compartment();
   const autocompleteCpt = new Compartment();
+  const fontSizeCpt = new Compartment();
 
   // Depending on the file mode, we have a different tidier function.
   // Keep this binding local to each file state so modes don't accumulate
@@ -469,6 +479,7 @@ export function createNewFileState(filename, document, settings) {
   // https://github.com/codemirror/basic-setup/blob/main/src/codemirror.ts
   const extensions = [
     // The first few extensions can be toggled on or off.
+    fontSizeCpt.of(EditorView.theme({ '&': { fontSize: `${fontSize}px` } })),
     lineNumbersCpt.of(lineNumbers ? lineNumbersExt() : []),
     lineWrappingCpt.of(linewrap ? EditorView.lineWrapping : []),
     closeBracketsCpt.of(autocloseBracketsQuotes ? closeBrackets() : []),
@@ -495,7 +506,7 @@ export function createNewFileState(filename, document, settings) {
     EditorState.allowMultipleSelections.of(true),
     // Gutter extensions
     gutters({ fixed: false }),
-    foldGutter(),
+    foldGutter({ markerDOM: createFoldMarker }),
     // Misc extensions
     indentOnInput(),
     bracketMatching(),
@@ -557,7 +568,8 @@ export function createNewFileState(filename, document, settings) {
     lineNumbersCpt,
     lineWrappingCpt,
     closeBracketsCpt,
-    autocompleteCpt
+    autocompleteCpt,
+    fontSizeCpt
   };
 }
 

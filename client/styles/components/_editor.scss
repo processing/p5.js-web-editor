@@ -155,7 +155,60 @@
   }
 }
 
-// TODO: Add fold gutter styling back.
+// CM5: .CodeMirror-foldgutter-open, .CodeMirror-foldgutter-folded
+.cm-foldGutter {
+  padding-right: #{math.div(3, $base-font-size)}rem;
+}
+
+.cm-foldGutter .cm-gutterElement {
+  cursor: pointer;
+  // !important needed to override CM6's inline display style on gutter elements
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+// CM5: .CodeMirror-foldgutter-open:after / .CodeMirror-foldgutter-folded:after
+.cm-fold-open,
+.cm-fold-closed {
+  display: inline-block;
+  width: #{math.div(10, $base-font-size)}rem;
+  height: #{math.div(10, $base-font-size)}rem;
+  background-size: #{math.div(10, $base-font-size)}rem #{math.div(10, $base-font-size)}rem;
+  background-repeat: no-repeat;
+  background-position: center center;
+  opacity: 0.4;
+}
+
+.cm-fold-open {
+  @include themify() {
+    background-image: getThemifyVariable('codefold-icon-open');
+  }
+}
+
+.cm-fold-closed {
+  @include themify() {
+    background-image: getThemifyVariable('codefold-icon-closed');
+  }
+}
+
+// CM5: .CodeMirror-foldmarker
+.cm-foldPlaceholder {
+  display: inline-block;
+  vertical-align: middle;
+  height: 0.85em;
+  line-height: 0.7;
+  border-radius: 5px;
+  padding: 0 #{math.div(5, $base-font-size)}rem;
+  font-family: serif;
+  cursor: pointer;
+  opacity: 0.75;
+
+  @include themify() {
+    background-color: getThemifyVariable('primary-text-color');
+    color: getThemifyVariable('background-color');
+  }
+}
 
 .editor-holder {
   height: calc(100% - #{math.div(29, $base-font-size)}rem);
