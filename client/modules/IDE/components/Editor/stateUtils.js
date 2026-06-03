@@ -38,7 +38,7 @@ import {
   insertTab,
   indentLess
 } from '@codemirror/commands';
-import { lintGutter } from '@codemirror/lint';
+import { lintGutter, linter } from '@codemirror/lint';
 import {
   expandAbbreviation,
   abbreviationTracker
@@ -46,20 +46,21 @@ import {
 
 import { css } from '@codemirror/lang-css';
 import { html } from '@codemirror/lang-html';
-import { json, jsonParseLinter } from '@codemirror/lang-json';
+import { json } from '@codemirror/lang-json';
 import { xml } from '@codemirror/lang-xml';
-import { linter } from '@codemirror/lint';
-import { HTMLHint } from 'htmlhint';
-import { CSSLint } from 'csslint';
 import { emmetConfig } from '@emmetio/codemirror6-plugin';
 import { color as colorPicker } from '@connieye/codemirror-color-picker';
 
-import { esLint } from '@codemirror/lang-javascript';
-import { Linter as ESLinter } from 'eslint-linter-browserify';
 import { tidyCodeWithPrettier } from './tidier';
 import p5JavaScript from './p5JavaScript';
 import { highlightStyle } from './highlightStyle';
 import { errorDecorationStateField } from './consoleErrorDecoration';
+import {
+  makeCssLinter,
+  makeHtmlLinter,
+  makeJsonLinter,
+  makeJavascriptLinter
+} from './linters';
 
 // ----- TODOS -----
 // - shader syntax highlighting
@@ -106,112 +107,12 @@ function getFileLanguage(fileName) {
   }
 }
 
-function makeCssLinter(callback) {
-  return (view) => {
-    const documentContent = view.state.doc.toString();
-    const { messages } = CSSLint.verify(documentContent, {});
-    const diagnostics = [];
-    messages.forEach((message) => {
-      if (!message) return;
-
-      const {
-        line: messageLine,
-        col: messageCharacter,
-        type: messageType,
-        message: messageText
-      } = message;
-      const cmLine = view.state.doc.line(messageLine);
-
-      const start = cmLine.from + messageCharacter - 1;
-      const end = cmLine.to;
-
-      diagnostics.push({
-        from: start,
-        to: end,
-        severity: messageType,
-        message: messageText
-      });
-    });
-
-    if (callback) callback(diagnostics);
-
-    return diagnostics;
-  };
-}
-
-// https://github.com/codemirror/codemirror5/blob/master/addon/lint/html-lint.js
-const HTMLHINT_OPTIONS = {
-  'tagname-lowercase': true,
-  'attr-lowercase': true,
-  'attr-value-double-quotes': true,
-  'doctype-first': false,
-  'tag-pair': true,
-  'spec-char-escape': true,
-  'id-unique': true,
-  'src-not-empty': true,
-  'attr-no-duplication': true
-};
-
-function makeHtmlLinter(callback) {
-  return (view) => {
-    const documentContent = view.state.doc.toString();
-
-    const messages = HTMLHint.verify(documentContent, HTMLHINT_OPTIONS) || [];
-
-    const diagnostics = [];
-    messages.forEach((message) => {
-      if (!message) return;
-
-      const {
-        line: messageLine,
-        col: messageCharacter,
-        type: messageType,
-        message: messageText
-      } = message;
-      const cmLine = view.state.doc.line(messageLine);
-
-      // TODO: Can we to do the to/from smarter?
-      diagnostics.push({
-        from: cmLine.from + messageCharacter - 1,
-        to: cmLine.from + messageCharacter,
-        severity: messageType,
-        message: messageText
-      });
-    });
-
-    if (callback) callback(diagnostics);
-
-    return diagnostics;
-  };
-}
-
-const ESLINT_CONFIG = {
-  languageOptions: {
-    ecmaVersion: 2021
-  },
-  rules: {
-    semi: 'off',
-    eqeqeq: 'off'
-  }
-};
-
-const eslint = new ESLinter();
-
-function makeJsonLinter(callback) {
-  const baseJsonLinter = jsonParseLinter();
-  return (view) => {
-    const diagnostics = baseJsonLinter(view);
-    if (callback) callback(diagnostics);
-    return diagnostics;
-  };
-}
-
 function getFileLinter(fileName, callback) {
   const fileMode = getFileMode(fileName);
 
   switch (fileMode) {
     case 'javascript':
-      return linter(esLint(eslint, ESLINT_CONFIG));
+      return makeJavascriptLinter();
     case 'html':
       return linter(makeHtmlLinter(callback));
     case 'css':
