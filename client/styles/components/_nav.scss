@@ -221,11 +221,6 @@
   .nav__item--open & {
     display: flex;
   }
-  // & li.nav__dropdown-item--disabled:hover {
-  //   @include themify() {
-  //     color: getThemifyVariable('button-nav-inactive-color');
-  //   }
-  // }
 }
 
 .nav__items-right {
