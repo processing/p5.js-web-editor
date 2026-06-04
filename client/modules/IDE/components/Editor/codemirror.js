@@ -12,7 +12,7 @@ import {
   createAutocompleteOptions
 } from './stateUtils';
 import { useEffectWithComparison } from '../../hooks/custom-hooks';
-import { tidyCodeWithPrettier } from './tidier';
+import { tidyCodeWithPrettier } from './utils/tidier';
 
 // ----- GENERAL TODOS (in order of priority) -----
 // - revisit keymap differences, esp around sublime

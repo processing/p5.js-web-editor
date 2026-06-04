@@ -14,30 +14,13 @@ import {
 } from '@codemirror/view';
 import {
   foldGutter,
-  foldKeymap,
   bracketMatching,
   indentOnInput,
   syntaxHighlighting
 } from '@codemirror/language';
-import {
-  autocompletion,
-  closeBrackets,
-  closeBracketsKeymap,
-  completionStatus,
-  selectedCompletionIndex
-} from '@codemirror/autocomplete';
-import {
-  highlightSelectionMatches,
-  search,
-  searchKeymap
-} from '@codemirror/search';
-import {
-  defaultKeymap,
-  history,
-  historyKeymap,
-  insertTab,
-  indentLess
-} from '@codemirror/commands';
+import { autocompletion, closeBrackets } from '@codemirror/autocomplete';
+import { highlightSelectionMatches, search } from '@codemirror/search';
+import { history } from '@codemirror/commands';
 import { lintGutter, linter } from '@codemirror/lint';
 import {
   expandAbbreviation,
@@ -51,16 +34,20 @@ import { xml } from '@codemirror/lang-xml';
 import { emmetConfig } from '@emmetio/codemirror6-plugin';
 import { color as colorPicker } from '@connieye/codemirror-color-picker';
 
-import { tidyCodeWithPrettier } from './tidier';
-import { p5JavaScript } from './p5JavaScript';
-import { highlightStyle } from './highlightStyle';
-import { errorDecorationStateField } from './consoleErrorDecoration';
+import { p5JavaScript } from './utils/p5JavaScript';
+import { highlightStyle } from './utils/highlightStyle';
+import { errorDecorationStateField } from './utils/consoleErrorDecoration';
 import {
   makeCssLinter,
   makeHtmlLinter,
   makeJsonLinter,
   makeJavascriptLinter
-} from './linters';
+} from './utils/linters';
+import { emmetKeymaps, buildKeymaps } from './utils/keymaps';
+import {
+  createAutocompleteOptions,
+  createFoldMarker
+} from './utils/extensionCustomStyles';
 
 // ----- TODOS -----
 // - shader syntax highlighting
@@ -137,179 +124,6 @@ function getFileEmmetConfig(fileName) {
   }
 }
 
-function getColorPickerAtSelection(view) {
-  const { head } = view.state.selection.main;
-  const { node } = view.domAtPos(head);
-
-  const startEl =
-    node.nodeType === Node.ELEMENT_NODE ? node : node.parentElement;
-
-  const lineEl = startEl?.closest('.cm-line');
-
-  return (
-    lineEl?.querySelector('input[type="color"]:not(:disabled)') ||
-    view.contentDOM.querySelector('input[type="color"]:not(:disabled)')
-  );
-}
-
-function openColorPickerWithKeyboard(view) {
-  const picker = getColorPickerAtSelection(view);
-
-  if (!picker || picker.disabled) {
-    return false;
-  }
-
-  picker.focus();
-
-  if (typeof picker.showPicker === 'function') {
-    picker.showPicker();
-  } else {
-    picker.click();
-  }
-  return true;
-}
-
-function focusOnReferenceArrow(view) {
-  if (completionStatus(view.state) !== 'active') return false;
-
-  const selectedIndex = selectedCompletionIndex(view.state);
-  if (selectedIndex == null || selectedIndex < 0) return false;
-
-  const tooltip = view.dom.querySelector('.cm-tooltip-autocomplete');
-  if (!tooltip) return false;
-
-  const options = tooltip.querySelectorAll('li.CodeMirror-hint');
-  const selectedOption = options[selectedIndex];
-  if (!selectedOption) return false;
-
-  const link = selectedOption.querySelector('.cm-completionRefLink');
-  if (!link) return false;
-
-  link.focus();
-  link.classList.add('focused-hint-link');
-
-  const cleanup = () => {
-    link.classList.remove('focused-hint-link');
-    link.removeEventListener('blur', cleanup);
-  };
-  link.addEventListener('blur', cleanup);
-
-  return true;
-}
-
-// Extra custom keymaps.
-// TODO: We need to add sublime mappings + other missing extra mappings here.
-const extraKeymaps = [
-  { key: 'ArrowRight', run: focusOnReferenceArrow },
-  { key: 'Tab', run: insertTab, shift: indentLess }
-];
-const emmetKeymaps = [{ key: 'Tab', run: expandAbbreviation }];
-
-/** Returns completion options configured for autocomplete. */
-export const createAutocompleteOptions = (referenceBaseUrl) => ({
-  selectOnOpen: false,
-  tooltipClass: () => 'CodeMirror-hints',
-  closeOnBlur: false,
-  icons: false,
-
-  // handle css classes
-  optionClass(completion) {
-    let className = 'CodeMirror-hint';
-
-    if (completion.type) {
-      className += ` hint-type-${completion.type}`;
-    }
-
-    if (completion.p5DocPath) {
-      className += ' has-doc-link';
-    }
-
-    return className;
-  },
-
-  addToOptions: [
-    {
-      position: 60,
-      render(completion) {
-        const kind = document.createElement('span');
-        kind.className = 'cm-completionKind';
-        kind.textContent = completion.kindLabel || completion.type || '';
-        return kind;
-      }
-    },
-    {
-      position: 80,
-      render(completion, state, view) {
-        if (!completion.p5DocPath) return null;
-
-        const link = document.createElement('a');
-        link.className = 'cm-completionRefLink';
-        link.href = `${referenceBaseUrl}/reference/p5/${completion.p5DocPath}`;
-        link.target = '_blank';
-        link.rel = 'noopener noreferrer';
-        link.tabIndex = -1;
-        link.setAttribute('aria-label', `Open ${completion.label} reference`);
-
-        link.innerHTML = `
-          <span class="hint-hidden">open ${completion.label} reference</span>
-          <span aria-hidden="true">&#10132;</span>
-        `;
-
-        link.addEventListener('mousedown', (event) => {
-          event.preventDefault();
-          event.stopPropagation();
-        });
-
-        link.addEventListener('click', (event) => {
-          event.stopPropagation();
-        });
-
-        link.addEventListener('keydown', (event) => {
-          if (event.key === 'ArrowLeft' || event.key === 'Escape') {
-            event.preventDefault();
-            event.stopPropagation();
-            link.classList.remove('focused-hint-link');
-            view.focus();
-          }
-        });
-
-        return link;
-      }
-    },
-    {
-      position: 100,
-      render(completion) {
-        if (!completion.blacklisted) return null;
-
-        const warning = document.createElement('div');
-        warning.className = 'cm-completionWarning';
-
-        const icon = document.createElement('span');
-        icon.className = 'cm-completionWarningIcon';
-        icon.setAttribute('aria-hidden', 'true');
-        icon.textContent = '⚠️';
-
-        const text = document.createElement('span');
-        text.className = 'cm-completionWarningText';
-        text.textContent = 'use with caution in this context';
-
-        warning.appendChild(icon);
-        warning.appendChild(text);
-
-        return warning;
-      }
-    }
-  ]
-});
-
-// Uses window.document explicitly to avoid shadowing by the `document`
-// parameter in createNewFileState below.
-function createFoldMarker(open) {
-  const span = window.document.createElement('span');
-  span.className = open ? 'cm-fold-open' : 'cm-fold-closed';
-  return span;
-}
-
 /**
  * Creates a new CodeMirror editor state with configurations,
  * extensions, and keymaps tailored to the file type and settings.
@@ -338,43 +152,7 @@ export function createNewFileState(filename, document, settings) {
   // across files via a shared module-level array.
   const mode = getFileMode(filename);
 
-  const colorPickerKeymap = [];
-  if (mode === 'css' || mode === 'javascript') {
-    colorPickerKeymap.push({
-      key: 'Mod-k',
-      run: (view) => openColorPickerWithKeyboard(view)
-    });
-  }
-
-  // Make a keymap for both uppercase and lowercase F, since
-  // since browsers can differ in which one they send for the Shift-Mod-F shortcut.
-  const fileTidyKeymap = [
-    {
-      key: 'Shift-Mod-F',
-      run: (cmView) => {
-        tidyCodeWithPrettier(cmView, mode);
-        return true;
-      }
-    },
-    {
-      key: 'Shift-Mod-f',
-      run: (cmView) => {
-        tidyCodeWithPrettier(cmView, mode);
-        return true;
-      }
-    }
-  ];
-
-  const keymaps = [
-    extraKeymaps,
-    colorPickerKeymap,
-    fileTidyKeymap,
-    closeBracketsKeymap,
-    defaultKeymap,
-    historyKeymap,
-    foldKeymap,
-    searchKeymap
-  ];
+  const keymaps = buildKeymaps(mode);
 
   // https://github.com/codemirror/basic-setup/blob/main/src/codemirror.ts
   const extensions = [
