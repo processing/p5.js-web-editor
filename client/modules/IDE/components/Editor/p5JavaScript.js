@@ -2,7 +2,8 @@ import { LanguageSupport, syntaxTree } from '@codemirror/language';
 import { javascript } from '@codemirror/lang-javascript';
 import { ViewPlugin, Decoration } from '@codemirror/view';
 import { RangeSetBuilder } from '@codemirror/state';
-import { p5Hinter } from '../../../../utils/p5-hinter';
+import { p5HinterV1 } from '../../../../utils/p5-hinter-v1';
+import { p5HinterV2 } from '../../../../utils/p5-hinter-v2';
 import { completionPreview } from './completionPreview';
 import contextAwareHinter from '../../../../utils/contextAwareHinter';
 import {
@@ -54,20 +55,24 @@ const p5Highlight = ViewPlugin.fromClass(
   { decorations: (v) => v.decorations }
 );
 
-function addCompletions(context) {
-  const word = context.matchBefore(/\w*/);
-  const isValidWord = word?.text && word.text.trim().length >= 2;
-  if (!isValidWord && !context.explicit) {
-    return null;
+export function p5JavaScript(p5Version) {
+  const jsLang = javascript();
+
+  const hints = p5Version?.startsWith('2.') ? p5HinterV2 : p5HinterV1;
+
+  function addCompletions(context) {
+    const word = context.matchBefore(/\w*/);
+    const isValidWord = word?.text && word.text.trim().length >= 2;
+
+    if (!isValidWord && !context.explicit) {
+      return null;
+    }
+
+    return contextAwareHinter(context, {
+      hints
+    });
   }
 
-  return contextAwareHinter(context, {
-    hints: p5Hinter
-  });
-}
-
-export function p5JavaScript() {
-  const jsLang = javascript();
   return new LanguageSupport(jsLang.language, [
     jsLang.extension,
     jsLang.language.data.of({

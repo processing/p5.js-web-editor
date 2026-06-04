@@ -325,13 +325,15 @@ export function createNewFileState(filename, document, settings) {
     onUpdateLinting,
     onViewUpdate,
     referenceBaseUrl,
-    fontSize
+    fontSize,
+    p5Version
   } = settings;
   const lineNumbersCpt = new Compartment();
   const lineWrappingCpt = new Compartment();
   const closeBracketsCpt = new Compartment();
   const autocompleteCpt = new Compartment();
   const fontSizeCpt = new Compartment();
+  const languageCpt = new Compartment();
 
   // Depending on the file mode, we have a different tidier function.
   // Keep this binding local to each file state so modes don't accumulate
@@ -427,7 +429,11 @@ export function createNewFileState(filename, document, settings) {
   const fileEmmetConfig = getFileEmmetConfig(filename);
 
   if (fileLanguage) {
-    extensions.push(fileLanguage());
+    extensions.push(
+      languageCpt.of(
+        mode === 'javascript' ? fileLanguage(p5Version) : fileLanguage()
+      )
+    );
   }
   if (fileLinter) {
     extensions.push(fileLinter);
@@ -468,7 +474,8 @@ export function createNewFileState(filename, document, settings) {
     lineWrappingCpt,
     closeBracketsCpt,
     autocompleteCpt,
-    fontSizeCpt
+    fontSizeCpt,
+    languageCpt
   };
 }
 

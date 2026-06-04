@@ -4,6 +4,7 @@ import { autocompletion, closeBrackets } from '@codemirror/autocomplete';
 import { debounce } from 'lodash';
 import { openSearchPanel } from '@codemirror/search';
 import { saveLocalBackup } from '../../utils/localBackup';
+import { p5JavaScript } from './p5JavaScript';
 
 import {
   getFileMode,
@@ -37,7 +38,8 @@ export default function useCodeMirror({
   autocompleteHinter,
   fontSize,
   onUpdateLinting,
-  referenceBaseUrl
+  referenceBaseUrl,
+  p5Version
 }) {
   // The codemirror instance.
   const cmView = useRef();
@@ -157,6 +159,19 @@ export default function useCodeMirror({
       reconfigureEffect
     });
   }, [autocompleteHinter, referenceBaseUrl]);
+  useEffect(() => {
+    const reconfigureEffect = (fileState) =>
+      fileState.languageCpt.reconfigure(
+        autocompleteHinter ? p5JavaScript(p5Version) : []
+      );
+
+    updateFileStates({
+      fileStates: fileStates.current,
+      cmView: cmView.current,
+      file,
+      reconfigureEffect
+    });
+  }, [p5Version]);
 
   // Initializes the files as CodeMirror states.
   function initializeDocuments() {
@@ -180,7 +195,8 @@ export default function useCodeMirror({
             onUpdateLinting,
             onViewUpdate,
             referenceBaseUrl,
-            fontSize
+            fontSize,
+            p5Version
           }
         );
       }
