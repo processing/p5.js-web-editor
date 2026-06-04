@@ -185,7 +185,7 @@ const ProjectMenu = () => {
           isDisabled={
             !user.authenticated ||
             !isLoginEnabled ||
-            (!project?.owner && !isUserOwner)
+            (!!project?.owner && !isUserOwner)
           }
           tooltipContent={
             !user.authenticated || !isLoginEnabled
