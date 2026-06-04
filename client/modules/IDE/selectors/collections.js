@@ -41,10 +41,14 @@ const getSortedCollections = createSelector(
       }
       return orderBy(collections, 'name', 'asc');
     } else if (field === 'numItems') {
+      // `numItems` is the count returned by the list endpoint; fall back to the
+      // length of any loaded items.
+      const itemCount = (collection) =>
+        collection.numItems ?? (collection.items ? collection.items.length : 0);
       if (direction === DIRECTION.DESC) {
-        return orderBy(collections, 'items.length', 'desc');
+        return orderBy(collections, itemCount, 'desc');
       }
-      return orderBy(collections, 'items.length', 'asc');
+      return orderBy(collections, itemCount, 'asc');
     }
     const sortedCollections = [...collections].sort((a, b) => {
       const result =

@@ -11,51 +11,64 @@ let requestCount = 0;
 let addRequestCount = 0;
 let removeRequestCount = 0;
 
-// helper to create test project data
-const makeProjects = (prefix, count) =>
+// helper to create OP sketch data as returned by GET /user/:userID/sketches
+const makeSketches = (prefix, count) =>
   Array.from({ length: count }).map((_, i) => ({
-    id: `${prefix}-${i + 1}`,
-    name: `${prefix}-sketch-${i + 1}`,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-    visibility: 'public'
+    visualID: `${prefix}-${i + 1}`,
+    title: `${prefix}-sketch-${i + 1}`,
+    userID: 123456789,
+    isPrivate: 0,
+    createdOn: new Date().toISOString()
   }));
 
 const server = setupServer(
-  rest.get('/projects', (req, res, ctx) => {
+  rest.get('/user/:userID/sketches', (req, res, ctx) => {
     requestCount += 1;
     lastSearchParams = req.url.searchParams;
 
-    const page = Number(req.url.searchParams.get('page') ?? 1);
     const limit = Number(req.url.searchParams.get('limit') ?? 10);
+    const offset = Number(req.url.searchParams.get('offset') ?? 0);
+    const page = Math.floor(offset / limit) + 1;
 
-    const projects =
-      page === 1 ? makeProjects('page1', limit) : makeProjects('page2', limit);
+    const sketches = makeSketches(`page${page}`, limit);
 
+    // Total across all pages, surfaced via the X-Total-Count header the
+    // OP-backed action reads for pagination metadata.
     return res(
       ctx.status(200),
-      ctx.json({
-        projects,
-        metadata: {
-          page,
-          totalPages: 6,
-          totalProjects: 54,
-          limit,
-          hasPagination: true
-        }
-      })
+      ctx.set('X-Total-Count', '54'),
+      ctx.json(sketches)
     );
   }),
 
-  rest.post('/collections/:collectionId/:projectId', (req, res, ctx) => {
+  rest.post('/curation/:collectionId/sketches/:projectId', (req, res, ctx) => {
     addRequestCount += 1;
-    return res(ctx.status(200));
+    return res(ctx.status(201));
   }),
 
-  rest.delete('/collections/:collectionId/:projectId', (req, res, ctx) => {
-    removeRequestCount += 1;
-    return res(ctx.status(200));
-  })
+  // After add/remove the action refetches the curation + its sketches.
+  rest.get('/curation/:collectionId', (req, res, ctx) =>
+    res(
+      ctx.status(200),
+      ctx.json({
+        curationID: req.params.collectionId,
+        title: 'My Collection',
+        userID: 1,
+        username: 'happydog'
+      })
+    )
+  ),
+  rest.get('/curation/:collectionId/sketches', (req, res, ctx) =>
+    res(ctx.status(200), ctx.json([]))
+  ),
+
+  rest.delete(
+    '/curation/:collectionId/sketches/:projectId',
+    (req, res, ctx) => {
+      removeRequestCount += 1;
+      return res(ctx.status(200));
+    }
+  )
 );
 
 beforeAll(async () => {
@@ -92,7 +105,7 @@ describe('<AddToCollectionSketchList />', () => {
       <Suspense fallback={<div>loading</div>}>
         <AddToCollectionSketchList collection={collection} />
       </Suspense>,
-      { preloadedState: overrideState ?? initialTestState }
+      { initialState: overrideState ?? initialTestState }
     );
 
   it('calls the server on mount with page/limit/q', async () => {
@@ -100,7 +113,7 @@ describe('<AddToCollectionSketchList />', () => {
 
     await screen.findByText('page1-sketch-1');
 
-    expect(lastSearchParams.get('page')).toBe('1');
+    expect(lastSearchParams.get('offset')).toBe('0');
     expect(lastSearchParams.get('limit')).toBe('10');
 
     const q = lastSearchParams.get('q');
@@ -125,7 +138,7 @@ describe('<AddToCollectionSketchList />', () => {
 
     await waitFor(() => {
       expect(requestCount).toBeGreaterThan(before);
-      expect(lastSearchParams.get('page')).toBe('2');
+      expect(lastSearchParams.get('offset')).toBe('10');
     });
 
     await screen.findByText('page2-sketch-1');
@@ -142,22 +155,14 @@ describe('<AddToCollectionSketchList />', () => {
 
   it('shows empty state if there are no projects', async () => {
     server.use(
-      rest.get('/projects', (req, res, ctx) => {
+      rest.get('/user/:userID/sketches', (req, res, ctx) => {
         requestCount += 1;
         lastSearchParams = req.url.searchParams;
 
         return res(
           ctx.status(200),
-          ctx.json({
-            projects: [],
-            metadata: {
-              page: 1,
-              totalPages: 1,
-              totalProjects: 0,
-              limit: 10,
-              hasPagination: false
-            }
-          })
+          ctx.set('X-Total-Count', '0'),
+          ctx.json([])
         );
       })
     );
@@ -176,7 +181,7 @@ describe('<AddToCollectionSketchList />', () => {
       <AddToCollectionSketchList
         collection={{ id: 'col-1', name: 'My Collection', items: [] }}
       />,
-      { preloadedState: initialTestState }
+      { initialState: initialTestState }
     );
 
     await screen.findByText('page1-sketch-1');
@@ -199,7 +204,7 @@ describe('<AddToCollectionSketchList />', () => {
           items: [{ projectId: 'page1-1', isDeleted: false }]
         }}
       />,
-      { preloadedState: initialTestState }
+      { initialState: initialTestState }
     );
 
     await screen.findByText('page1-sketch-1');
@@ -215,30 +220,22 @@ describe('<AddToCollectionSketchList />', () => {
 
   it('renders correct pagination numbers when totalProjects is not a multiple of 10', async () => {
     server.use(
-      rest.get('/projects', (req, res, ctx) => {
-        const page = Number(req.url.searchParams.get('page') ?? 1);
-        const limit = 10;
+      rest.get('/user/:userID/sketches', (req, res, ctx) => {
+        const limit = Number(req.url.searchParams.get('limit') ?? 10);
+        const offset = Number(req.url.searchParams.get('offset') ?? 0);
+        const page = Math.floor(offset / limit) + 1;
 
         const totalProjects = 23;
-        const totalPages = 3;
 
-        const start = (page - 1) * limit;
+        const start = offset;
         const end = Math.min(start + limit, totalProjects);
 
-        const projects = makeProjects(`page${page}`, end - start);
+        const sketches = makeSketches(`page${page}`, end - start);
 
         return res(
           ctx.status(200),
-          ctx.json({
-            projects,
-            metadata: {
-              page,
-              totalPages,
-              totalProjects,
-              limit,
-              hasPagination: true
-            }
-          })
+          ctx.set('X-Total-Count', String(totalProjects)),
+          ctx.json(sketches)
         );
       })
     );
@@ -247,7 +244,7 @@ describe('<AddToCollectionSketchList />', () => {
       <AddToCollectionSketchList
         collection={{ id: 'col-1', name: 'Test', items: [] }}
       />,
-      { preloadedState: initialTestState }
+      { initialState: initialTestState }
     );
 
     await screen.findByText('page1-sketch-1');

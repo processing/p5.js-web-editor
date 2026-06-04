@@ -21,7 +21,6 @@ import users from './routes/user.routes';
 import sessions from './routes/session.routes';
 import projects from './routes/project.routes';
 import files from './routes/file.routes';
-import collections from './routes/collection.routes';
 import serverRoutes from './routes/server.routes';
 import redirectEmbedRoutes from './routes/redirectEmbed.routes';
 import passportRoutes from './routes/passport.routes';
@@ -147,7 +146,6 @@ app.use('/editor', requestsOfTypeJSON(), users);
 app.use('/editor', requestsOfTypeJSON(), sessions);
 app.use('/editor', requestsOfTypeJSON(), files);
 app.use('/editor', requestsOfTypeJSON(), projects);
-app.use('/editor', requestsOfTypeJSON(), collections);
 
 // this is supposed to be TEMPORARY -- until i figure out
 // isomorphic rendering

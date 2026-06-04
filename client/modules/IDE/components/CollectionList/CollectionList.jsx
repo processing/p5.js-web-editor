@@ -26,6 +26,7 @@ const CollectionList = ({
   user,
   projectId,
   getCollections,
+  getCollection,
   getProject,
   collections,
   username: propsUsername,
@@ -67,6 +68,8 @@ const CollectionList = ({
   }, [propsUsername, user.username, t]);
 
   const showAddSketches = (collectionId) => {
+    // Load the collection's sketches so the overlay can show which are already added.
+    getCollection(collectionId);
     setAddingSketchesToCollectionId(collectionId);
   };
 
@@ -224,6 +227,7 @@ CollectionList.propTypes = {
   }).isRequired,
   projectId: PropTypes.string,
   getCollections: PropTypes.func.isRequired,
+  getCollection: PropTypes.func.isRequired,
   getProject: PropTypes.func.isRequired,
   collections: PropTypes.arrayOf(
     PropTypes.shape({

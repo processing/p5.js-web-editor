@@ -8,6 +8,7 @@ import { Loader } from '../../App/components/Loader';
 import {
   addToCollection,
   getCollections,
+  getCollectionIdsForSketch,
   removeFromCollection
 } from '../actions/collections';
 import getSortedCollections from '../selectors/collections';
@@ -41,22 +42,44 @@ const AddToCollectionList = ({ projectId }) => {
   const [hasLoadedData, setHasLoadedData] = useState(false);
   const showLoader = loading && !hasLoadedData;
 
+  // Ids of collections that already contain this sketch. Membership comes from
+  // the sketch's curations rather than each collection's (possibly unloaded)
+  // items, and is updated optimistically on add/remove.
+  const [addedCollectionIds, setAddedCollectionIds] = useState(() => new Set());
+
   useEffect(() => {
     dispatch(getCollections(username)).then(() => setHasLoadedData(true));
   }, [dispatch, username]);
 
+  useEffect(() => {
+    if (!projectId) {
+      return;
+    }
+    dispatch(getCollectionIdsForSketch(projectId)).then((ids) =>
+      setAddedCollectionIds(new Set(ids))
+    );
+  }, [dispatch, projectId]);
+
   const handleCollectionAdd = (collection) => {
-    dispatch(addToCollection(collection.id, projectId));
+    dispatch(addToCollection(collection.id, projectId)).then(() =>
+      setAddedCollectionIds((prev) => new Set(prev).add(collection.id))
+    );
   };
 
   const handleCollectionRemove = (collection) => {
-    dispatch(removeFromCollection(collection.id, projectId));
+    dispatch(removeFromCollection(collection.id, projectId)).then(() =>
+      setAddedCollectionIds((prev) => {
+        const next = new Set(prev);
+        next.delete(collection.id);
+        return next;
+      })
+    );
   };
 
   const collectionWithSketchStatus = collections.map((collection) => ({
     ...collection,
     url: `/${collection.owner.username}/collections/${collection.id}`,
-    isAdded: collection.items.some((item) => item.projectId === projectId)
+    isAdded: addedCollectionIds.has(collection.id)
   }));
 
   const getContent = () => {

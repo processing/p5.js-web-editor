@@ -221,7 +221,7 @@ const CollectionListRowBase = (props) => {
       <td>{formatDateCell(collection.updatedAt, mobile)}</td>
       <td>
         {mobile && 'sketches: '}
-        {(collection.items || []).length}
+        {collection.numItems ?? (collection.items || []).length}
       </td>
       <SketchlistDropdownColumn>{renderActions()}</SketchlistDropdownColumn>
     </SketchsTableRow>
@@ -237,6 +237,7 @@ CollectionListRowBase.propTypes = {
     }).isRequired,
     createdAt: PropTypes.string.isRequired,
     updatedAt: PropTypes.string.isRequired,
+    numItems: PropTypes.number,
     items: PropTypes.arrayOf(
       PropTypes.shape({
         project: PropTypes.shape({

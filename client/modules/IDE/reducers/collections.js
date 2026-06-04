@@ -5,6 +5,19 @@ const sketches = (state = [], action) => {
     case ActionTypes.SET_COLLECTIONS:
       return action.collections;
 
+    // Upsert a single, fully-loaded collection (with its items) into the list.
+    case ActionTypes.SET_COLLECTION: {
+      const exists = state.some(({ id }) => id === action.collection.id);
+      if (exists) {
+        return state.map((collection) =>
+          collection.id === action.collection.id
+            ? action.collection
+            : collection
+        );
+      }
+      return [...state, action.collection];
+    }
+
     case ActionTypes.DELETE_COLLECTION:
       return state.filter(({ id }) => action.collectionId !== id);
 
