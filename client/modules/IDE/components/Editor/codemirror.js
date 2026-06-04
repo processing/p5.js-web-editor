@@ -8,9 +8,9 @@ import { saveLocalBackup } from '../../utils/localBackup';
 import {
   getFileMode,
   createNewFileState,
-  updateFileStates,
-  createAutocompleteOptions
-} from './stateUtils';
+  updateFileStates
+} from './utils/fileState';
+import { createAutocompleteOptions } from './utils/extensionCustomStyles';
 import { useEffectWithComparison } from '../../hooks/custom-hooks';
 import { tidyCodeWithPrettier } from './utils/tidier';
 

@@ -34,20 +34,20 @@ import { xml } from '@codemirror/lang-xml';
 import { emmetConfig } from '@emmetio/codemirror6-plugin';
 import { color as colorPicker } from '@connieye/codemirror-color-picker';
 
-import { p5JavaScript } from './utils/p5JavaScript';
-import { highlightStyle } from './utils/highlightStyle';
-import { errorDecorationStateField } from './utils/consoleErrorDecoration';
+import { p5JavaScript } from './p5JavaScript';
+import { highlightStyle } from './highlightStyle';
+import { errorDecorationStateField } from './consoleErrorDecoration';
 import {
   makeCssLinter,
   makeHtmlLinter,
   makeJsonLinter,
   makeJavascriptLinter
-} from './utils/linters';
-import { emmetKeymaps, buildKeymaps } from './utils/keymaps';
+} from './linters';
+import { emmetKeymaps, buildKeymaps } from './keymaps';
 import {
   createAutocompleteOptions,
   createFoldMarker
-} from './utils/extensionCustomStyles';
+} from './extensionCustomStyles';
 
 // ----- TODOS -----
 // - shader syntax highlighting

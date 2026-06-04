@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import { EditorView, runScopeHandlers } from '@codemirror/view';
-import { createNewFileState } from './stateUtils';
+import { createNewFileState } from './fileState';
 
 const defaultSettings = {
   linewrap: false,
