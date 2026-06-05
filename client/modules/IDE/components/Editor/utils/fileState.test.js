@@ -2,7 +2,6 @@
  * @jest-environment jsdom
  */
 import { EditorView, runScopeHandlers } from '@codemirror/view';
-import { startCompletion } from '@codemirror/autocomplete';
 import { createNewFileState, getFileMode } from './fileState';
 
 const defaultSettings = {
@@ -20,7 +19,6 @@ function mountFile(filename, doc) {
   const parent = document.createElement('div');
   document.body.appendChild(parent);
   const view = new EditorView({ state: cmState, parent });
-  console.log(parent.innerHTML);
   return view;
 }
 
