@@ -37,7 +37,7 @@ import { useP5Version } from '../../hooks/useP5Version';
 import {
   addErrorDecoration,
   removeErrorDecorations
-} from './consoleErrorDecoration';
+} from './utils/consoleErrorDecoration';
 
 // temporary until p5.js 2.0 becomes default
 // checks if sketch is using p5.js 2.0 to pass correct base url for autocomplete hinter reference

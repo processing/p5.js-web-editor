@@ -2,14 +2,14 @@ import { LanguageSupport, syntaxTree } from '@codemirror/language';
 import { javascript } from '@codemirror/lang-javascript';
 import { ViewPlugin, Decoration } from '@codemirror/view';
 import { RangeSetBuilder } from '@codemirror/state';
-import { p5HinterV1 } from '../../../../utils/p5-hinter-v1';
-import { p5HinterV2 } from '../../../../utils/p5-hinter-v2';
+import { p5HinterV1 } from '../../../../../utils/p5-hinter-v1';
+import { p5HinterV2 } from '../../../../../utils/p5-hinter-v2';
 import { completionPreview } from './completionPreview';
-import contextAwareHinter from '../../../../utils/contextAwareHinter';
+import contextAwareHinter from '../../../../../utils/contextAwareHinter';
 import {
   p5FunctionKeywords,
   p5VariableKeywords
-} from '../../../../utils/p5-keywords';
+} from '../../../../../utils/p5-keywords';
 
 const p5Functions = new Set(Object.keys(p5FunctionKeywords));
 const p5Variables = new Set(Object.keys(p5VariableKeywords));

@@ -4,16 +4,16 @@ import { autocompletion, closeBrackets } from '@codemirror/autocomplete';
 import { debounce } from 'lodash';
 import { openSearchPanel } from '@codemirror/search';
 import { saveLocalBackup } from '../../utils/localBackup';
-import { p5JavaScript } from './p5JavaScript';
+import { p5JavaScript } from './utils/p5JavaScript';
 
 import {
   getFileMode,
   createNewFileState,
-  updateFileStates,
-  createAutocompleteOptions
-} from './stateUtils';
+  updateFileStates
+} from './utils/fileState';
+import { createAutocompleteOptions } from './utils/extensionCustomStyles';
 import { useEffectWithComparison } from '../../hooks/custom-hooks';
-import { tidyCodeWithPrettier } from './tidier';
+import { tidyCodeWithPrettier } from './utils/tidier';
 
 // ----- GENERAL TODOS (in order of priority) -----
 // - revisit keymap differences, esp around sublime
