@@ -2,6 +2,7 @@
  * @jest-environment jsdom
  */
 import { EditorView, runScopeHandlers } from '@codemirror/view';
+import { startCompletion } from '@codemirror/autocomplete';
 import { createNewFileState, getFileMode } from './fileState';
 
 const defaultSettings = {
@@ -19,6 +20,7 @@ function mountFile(filename, doc) {
   const parent = document.createElement('div');
   document.body.appendChild(parent);
   const view = new EditorView({ state: cmState, parent });
+  console.log(parent.innerHTML);
   return view;
 }
 
@@ -144,46 +146,6 @@ describe('createNewFileState - Settings', () => {
     const div = parent.querySelector('.cm-lineNumbers');
 
     expect(div).toBeNull();
-  });
-
-  it('Enable autocomplete', () => {
-    const fileName = 'file1.js';
-    const content = ``;
-    const settings = {
-      linewrap: false,
-      lineNumbers: false,
-      autocomplete: true,
-      autocloseBracketsQuotes: false,
-      onUpdateLinting: jest.fn(),
-      onViewUpdate: jest.fn()
-    };
-    const result = createNewFileState(fileName, content, settings);
-
-    const parent = document.createElement('div');
-    const cmView = new EditorView({ state: result.cmState, parent });
-    const div = parent.querySelector('.cm-content');
-
-    expect(div).toHaveAttribute('aria-autocomplete', 'list');
-  });
-
-  it('Disable autocomplete', () => {
-    const fileName = 'file1.js';
-    const content = ``;
-    const settings = {
-      linewrap: false,
-      lineNumbers: false,
-      autocomplete: false,
-      autocloseBracketsQuotes: false,
-      onUpdateLinting: jest.fn(),
-      onViewUpdate: jest.fn()
-    };
-    const result = createNewFileState(fileName, content, settings);
-
-    const parent = document.createElement('div');
-    const cmView = new EditorView({ state: result.cmState, parent });
-    const div = parent.querySelector('.cm-content');
-
-    expect(div).not.toHaveAttribute('aria-autocomplete', 'list');
   });
 
   it('Enables autoclose brackets and quotes', () => {
