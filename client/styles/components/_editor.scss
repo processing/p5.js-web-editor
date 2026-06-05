@@ -8,6 +8,11 @@
     color: getThemifyVariable('primary-text-color');
   }
 
+  .cm-scroller {
+    font-family: Inconsolata, monospace;
+    line-height: 1.2;
+  }
+
   .cm-content {
     padding-top: #{math.div(25, $base-font-size)}rem;
 
@@ -31,7 +36,7 @@
       }
     }
 
-    .cm-errorLine.cm-activeLine, 
+    .cm-errorLine.cm-activeLine,
     .cm-errorLine {
       background-color: rgb(255 95 82 / 30%);
     }
@@ -173,7 +178,10 @@
   display: inline-block;
   width: #{math.div(10, $base-font-size)}rem;
   height: #{math.div(10, $base-font-size)}rem;
-  background-size: #{math.div(10, $base-font-size)}rem #{math.div(10, $base-font-size)}rem;
+  background-size: #{math.div(10, $base-font-size)}rem #{math.div(
+      10,
+      $base-font-size
+    )}rem;
   background-repeat: no-repeat;
   background-position: center center;
   opacity: 0.4;
