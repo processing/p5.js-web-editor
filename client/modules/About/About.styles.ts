@@ -177,7 +177,7 @@ export const ContactHandles = styled.p`
   width: 50%;
 
   & a {
-    color: ${prop('logoColor')};
+    color: ${prop('linkTextColor')};
     text-decoration: underline;
 
     &:hover {
@@ -204,7 +204,7 @@ export const Footer = styled.div`
 
   & a {
     margin: ${remSize(20)} 9.5% 0 0;
-    color: ${prop('logoColor')};
+    color: ${prop('linkTextColor')};
     text-decoration: underline;
 
     &:hover {
