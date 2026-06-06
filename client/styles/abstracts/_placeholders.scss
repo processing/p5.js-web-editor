@@ -180,9 +180,9 @@
 		}
 		&:hover {
 			text-decoration: none;
-			color: getThemifyVariable('link-text-color');
+			color: getThemifyVariable('heavy-text-color');
 			& g, & path {
-				fill: getThemifyVariable('link-text-color');
+				fill: getThemifyVariable('heavy-text-color');
 			}
 		}
 	}
