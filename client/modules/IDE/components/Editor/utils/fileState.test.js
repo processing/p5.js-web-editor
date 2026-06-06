@@ -62,10 +62,6 @@ describe('createNewFileState — Tidy keyboard shortcut', () => {
 });
 
 describe('createNewFileState - Settings', () => {
-  function getDocText(cmView) {
-    return cmView.state.doc.toString();
-  }
-
   it('Enables line wrap', () => {
     const fileName = 'file1.js';
     const content = ``;
@@ -84,6 +80,7 @@ describe('createNewFileState - Settings', () => {
     const div = parent.querySelector('.cm-lineWrapping');
 
     expect(div).not.toBeNull();
+    cmView.destroy();
   });
 
   it('Disable line wrap', () => {
@@ -104,6 +101,7 @@ describe('createNewFileState - Settings', () => {
     const div = parent.querySelector('.cm-lineWrapping');
 
     expect(div).toBeNull();
+    cmView.destroy();
   });
 
   it('Enables line numbers', () => {
@@ -124,6 +122,7 @@ describe('createNewFileState - Settings', () => {
     const div = parent.querySelector('.cm-lineNumbers');
 
     expect(div).not.toBeNull();
+    cmView.destroy();
   });
 
   it('Disable line numbers', () => {
@@ -144,6 +143,7 @@ describe('createNewFileState - Settings', () => {
     const div = parent.querySelector('.cm-lineNumbers');
 
     expect(div).toBeNull();
+    cmView.destroy();
   });
 
   it('Enables autoclose brackets and quotes', () => {
