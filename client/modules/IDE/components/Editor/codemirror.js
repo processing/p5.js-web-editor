@@ -49,18 +49,30 @@ export default function useCodeMirror({
   const fileId = useRef();
   fileId.current = file.id;
 
+  // CM6 update listeners are attached when file states are created and
+  // can outlive React renders. Keep dynamic values in a ref so onChange
+  // always sees the latest state.
+  const latestRef = useRef({});
+  latestRef.current = {
+    autorefresh,
+    project,
+    files
+  };
+
   // When the file changes, update the file content and save status.
   function onChange() {
+    const latest = latestRef.current;
+
     setUnsavedChanges(true);
     updateFileContent(fileId.current, cmView.current.state.doc.toString());
 
     // Save a local backup to localStorage for crash recovery (#3891).
     // This ensures work is recoverable even if the tab crashes
     // (e.g. from an infinite loop) before the server autosave fires.
-    const projectId = project?.id || 'unsaved';
-    saveLocalBackup(projectId, files);
+    const projectId = latest.project?.id || 'unsaved';
+    saveLocalBackup(projectId, latest.files);
 
-    if (autorefresh) {
+    if (latest.autorefresh) {
       clearConsole();
       startSketch();
     }
