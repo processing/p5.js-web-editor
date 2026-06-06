@@ -9,6 +9,8 @@ $black: #000;
 $yellow: #f5dc23;
 $dodgerblue: #1e90ff;
 $p5-contrast-pink: #ffa9d9;
+$p5-contrast-light-pink: #ffa9d9;
+$p5-contrast-dark-pink: #b20046;
 
 $outline-color: #0f9dd7;
 
@@ -183,7 +185,7 @@ $themes: (
     toolbar-button-background-color: $medium-light,
     toolbar-button-color: $dark
   ),
-  dark: (
+  dark: (    
     activeline-background-color: $p5-dark-activeline,
     admonition-background: #105a7f,
     admonition-border: #22c8ed,
@@ -327,7 +329,7 @@ $themes: (
     console-header-color: $lightest,
     console-input-background-color: $darker,
     editor-gutter-color: $darker,
-    error-color: $p5-contrast-pink,
+    error-color: $p5-contrast-light-pink,
     file-hover-color: $dark,
     file-selected-color: $medium-dark,
     form-navigation-options-color: $middle-light,
