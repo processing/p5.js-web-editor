@@ -1,7 +1,6 @@
 import {
   S3Client,
   CopyObjectCommand,
-  ListObjectsCommand,
   DeleteObjectsCommand
 } from '@aws-sdk/client-s3';
 
@@ -13,43 +12,26 @@ const s3Client = new S3Client({
   region: process.env.AWS_REGION
 });
 
-const STALE_ASSET_TIME = 7 * 24 * 60;
-
-async function getPendingAssets(userId) {
-  const params = {
-    Bucket: process.env.S3_BUCKET,
-    Prefix: `pending/${userId}/`
-  };
-
-  try {
-    const data = await s3Client.send(new ListObjectsCommand(params));
-    return data.Contents || [];
-  } catch (error) {
-    console.error('Error listing pending assets from S3:', error);
-    throw error;
+function getPendingKeyFromUrl(url, userId) {
+  const marker = `pending/${userId}/`;
+  if (!url || !url.includes(marker)) {
+    return null;
   }
+  const filename = url.split('?')[0].split('/').pop();
+  return `pending/${userId}/${filename}`;
 }
 
-async function getStalePendingAssets(minutesOld = STALE_ASSET_TIME) {
-  const params = {
-    Bucket: process.env.S3_BUCKET,
-    Prefix: 'pending/'
-  };
-
-  try {
-    const data = await s3Client.send(new ListObjectsCommand(params));
-    if (!data.Contents) return [];
-
-    const cutoffTime = new Date();
-    cutoffTime.setMinutes(cutoffTime.getMinutes() - minutesOld);
-
-    return data.Contents.filter(
-      (object) => object.LastModified < cutoffTime
-    ).map((object) => object.Key);
-  } catch (error) {
-    console.error('Error listing stale pending assets from S3:', error);
-    throw error;
-  }
+export function rewritePendingFileUrls(files, userId) {
+  const marker = `pending/${userId}/`;
+  const replacement = `${userId}/`;
+  return files.map((file) => {
+    if (file.url && file.url.includes(marker)) {
+      return Object.assign({}, file, {
+        url: file.url.replace(marker, replacement)
+      });
+    }
+    return file;
+  });
 }
 
 async function moveAssetFromPending(pendingKey, userId) {
@@ -75,39 +57,20 @@ async function moveAssetFromPending(pendingKey, userId) {
   return destinationKey;
 }
 
-async function deleteKeys(keys) {
-  if (keys.length === 0) return;
+export async function commitPendingAssets(userId, files = []) {
+  const pendingKeys = [
+    ...new Set(
+      files
+        .map((file) => getPendingKeyFromUrl(file.url, userId))
+        .filter(Boolean)
+    )
+  ];
 
-  await s3Client.send(
-    new DeleteObjectsCommand({
-      Bucket: process.env.S3_BUCKET,
-      Delete: { Objects: keys.map((key) => ({ Key: key })) }
-    })
+  if (pendingKeys.length === 0) {
+    return [];
+  }
+
+  return Promise.all(
+    pendingKeys.map((key) => moveAssetFromPending(key, userId))
   );
-}
-
-export async function commitPendingAssets(userId) {
-  try {
-    const assets = await getPendingAssets(userId);
-    if (assets.length === 0) return [];
-
-    const movePromises = assets.map((asset) =>
-      moveAssetFromPending(asset.Key, userId)
-    );
-    return Promise.all(movePromises);
-  } catch (error) {
-    console.error('Error committing pending assets:', error);
-    throw error;
-  }
-}
-
-export async function cleanupStalePendingAssets() {
-  try {
-    const staleKeys = await getStalePendingAssets();
-    if (staleKeys.length > 0) {
-      await deleteKeys(staleKeys);
-    }
-  } catch (error) {
-    console.error('Error cleaning up stale pending assets:', error);
-  }
 }

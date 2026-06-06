@@ -11,7 +11,10 @@ import Project from '../models/project';
 import { User } from '../models/user';
 import { resolvePathToFile } from '../utils/filePath';
 import { generateFileSystemSafeName } from '../utils/generateFileSystemSafeName';
-import { commitPendingAssets } from '../utils/pendingAssets';
+import {
+  commitPendingAssets,
+  rewritePendingFileUrls
+} from '../utils/pendingAssets';
 
 const s3Client = new S3Client({
   credentials: {
@@ -66,6 +69,12 @@ export async function updateProject(req, res) {
         updateData[field] = req.body[field];
       }
     });
+
+    if (updateData.files) {
+      await commitPendingAssets(req.user.id, updateData.files);
+      updateData.files = rewritePendingFileUrls(updateData.files, req.user.id);
+    }
+
     const updatedProject = await Project.findByIdAndUpdate(
       req.params.project_id,
       {
@@ -78,12 +87,6 @@ export async function updateProject(req, res) {
     )
       .populate('user', 'username')
       .exec();
-
-    try {
-      await commitPendingAssets(req.user.id);
-    } catch (error) {
-      console.error('Error committing pending assets:', error);
-    }
 
     if (
       req.body.files &&

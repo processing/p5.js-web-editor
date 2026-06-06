@@ -32,7 +32,12 @@ function getExtension(filename) {
 }
 
 export function getObjectKey(url) {
-  const urlArray = url.split('/');
+  const pendingMarker = '/pending/';
+  const pendingIndex = url.indexOf(pendingMarker);
+  if (pendingIndex !== -1) {
+    return url.substring(pendingIndex + 1).split('?')[0];
+  }
+  const urlArray = url.split('?')[0].split('/');
   const objectKey = urlArray.pop();
   const userId = urlArray.pop();
   if (ObjectId.isValid(userId) && userId === new ObjectId(userId).toString()) {

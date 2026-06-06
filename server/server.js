@@ -27,7 +27,6 @@ import serverRoutes from './routes/server.routes';
 import redirectEmbedRoutes from './routes/redirectEmbed.routes';
 import passportRoutes from './routes/passport.routes';
 import { requestsOfTypeJSON } from './utils/requestsOfType';
-import { cleanupStalePendingAssets } from './utils/pendingAssets';
 
 import { renderIndex } from './views/index';
 import { get404Sketch } from './views/404Page';
@@ -219,9 +218,5 @@ app.listen(process.env.PORT, (error) => {
     console.log(`p5.js Web Editor is running on port: ${process.env.PORT}!`); // eslint-disable-line
   }
 });
-
-// Set up periodic cleanup of stale pending assets
-const cleanupIntervalMs = 24 * 60 * 60 * 1000;
-setInterval(cleanupStalePendingAssets, cleanupIntervalMs);
 
 export default app;
