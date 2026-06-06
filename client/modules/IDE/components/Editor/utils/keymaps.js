@@ -77,6 +77,10 @@ export function openColorPickerWithKeyboard(view) {
 // Extra custom keymaps.
 // TODO: We need to add sublime mappings + other missing extra mappings here.
 export const extraKeymaps = [
+  {
+    key: 'Mod-Enter',
+    run: () => true
+  },
   { key: 'ArrowRight', run: focusOnReferenceArrow },
   { key: 'Tab', run: insertTab, shift: indentLess }
 ];
