@@ -107,7 +107,7 @@ export async function listObjectsInS3ForUser(userId) {
       };
       totalSize += asset.size;
 
-      const wasMatched = projects.some((project) =>
+      projects.some((project) =>
         project.files.some((file) => {
           if (!file.url) return false;
           if (file.url.includes(asset.key)) {
@@ -121,9 +121,7 @@ export async function listObjectsInS3ForUser(userId) {
         })
       );
 
-      if (wasMatched) {
-        projectAssets.push(foundAsset);
-      }
+      projectAssets.push(foundAsset);
     });
 
     return { assets: projectAssets, totalSize };
