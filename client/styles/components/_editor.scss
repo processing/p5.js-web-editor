@@ -75,6 +75,8 @@
       color: getThemifyVariable('inactive-text-color');
     }
     pointer-events: none;
+    position:absolute;
+    right: 20%;
   }
 
   .cm-activeLineGutter {
@@ -162,14 +164,8 @@
 
 // CM5: .CodeMirror-foldgutter-open, .CodeMirror-foldgutter-folded
 .cm-foldGutter {
-  padding-right: #{math.div(3, $base-font-size)}rem;
-}
-
-.cm-foldGutter .cm-gutterElement {
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: absolute;
+  right: 1px;
 }
 
 // CM5: .CodeMirror-foldgutter-open:after / .CodeMirror-foldgutter-folded:after
@@ -184,7 +180,7 @@
     )}rem;
   background-repeat: no-repeat;
   background-position: center center;
-  opacity: 0.4;
+  opacity: 0.2;
 }
 
 .cm-fold-open {
