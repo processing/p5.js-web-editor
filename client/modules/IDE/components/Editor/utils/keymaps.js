@@ -1,7 +1,9 @@
 import {
   completionStatus,
   selectedCompletionIndex,
-  closeBracketsKeymap
+  closeBracketsKeymap,
+  completionKeymap,
+  acceptCompletion
 } from '@codemirror/autocomplete';
 import {
   insertTab,
@@ -87,6 +89,13 @@ export const extraKeymaps = [
 
 export const emmetKeymaps = [{ key: 'Tab', run: expandAbbreviation }];
 
+function createAutocompleteKeymap() {
+  return [
+    ...completionKeymap.filter((binding) => binding.key !== 'Ctrl-Space'),
+    { key: 'Tab', run: acceptCompletion }
+  ];
+}
+
 function createColorPickerKeymap(mode) {
   const colorPickerKeymap = [];
   if (mode === 'css' || mode === 'javascript') {
@@ -120,10 +129,12 @@ function createFileTidyKeymap(mode) {
 }
 
 export function buildKeymaps(mode) {
+  const autocompleteKeymap = createAutocompleteKeymap();
   const colorPickerKeymap = createColorPickerKeymap(mode);
   const fileTidyKeymap = createFileTidyKeymap(mode);
 
   return [
+    autocompleteKeymap,
     extraKeymaps,
     colorPickerKeymap,
     fileTidyKeymap,

@@ -5,6 +5,7 @@
   border: #{math.div(1, $base-font-size)}rem solid #A6A6A6;
   font-family: Inconsolata, monospace;
   font-size: 1rem;
+  z-index: 1001;
 
   @include themify() {
     background: getThemifyVariable('hint-background-color');
@@ -65,11 +66,12 @@
   .cm-completionLabel {
     grid-column: 1;
     justify-self: start;
-    margin-left: #{math.div(12, $base-font-size)}rem;
+    margin-left: #{math.div(6, $base-font-size)}rem;
     line-height: 1.1;
-    font-weight: 600;
+    font-weight: bold;
     color: inherit;
     background: transparent;
+    padding: 0 0.5rem;
   }
 
   .cm-completionMatchedText {
@@ -138,8 +140,8 @@
   }
 
   // label colors
-  li.hint-type-method,
-  li.hint-type-obj {
+  li.hint-type-method:not([aria-selected='true']),
+  li.hint-type-obj:not([aria-selected='true']) {
     .cm-completionLabel,
     .cm-completionMatchedText {
       @include themify() {
@@ -148,9 +150,9 @@
     }
   }
 
-  li.hint-type-variable,
-  li.hint-type-constant,
-  li.hint-type-boolean {
+  li.hint-type-variable:not([aria-selected='true']),
+  li.hint-type-constant:not([aria-selected='true']),
+  li.hint-type-boolean:not([aria-selected='true']) {
     .cm-completionLabel,
     .cm-completionMatchedText {
       @include themify() {
@@ -159,92 +161,92 @@
     }
   }
 
-  li.hint-type-keyword {
+  li.hint-type-keyword:not([aria-selected='true']) {
     .cm-completionLabel,
     .cm-completionMatchedText {
       @include themify() {
         color: getThemifyVariable('hint-keyword-text-color');
-      }
     }
   }
+}
 
-  // highlighted completion label colors
-  li.hint-type-method[aria-selected='true'],
-  li.hint-type-obj[aria-selected='true'] {
-    .cm-completionLabel {
-      @include themify() {
-        background: getThemifyVariable('hint-fun-text-color');
-        color: getThemifyVariable('hint-item-active-text-color');
-        border-bottom: #{math.div(1, $base-font-size)}rem solid
-          getThemifyVariable('hint-fun-active-border-bottom-color');
-      }
-    }
-  }
-
-  li.hint-type-variable[aria-selected='true'],
-  li.hint-type-constant[aria-selected='true'],
-  li.hint-type-boolean[aria-selected='true'] {
-    .cm-completionLabel {
-      @include themify() {
-        background: getThemifyVariable('hint-var-text-color');
-        color: getThemifyVariable('hint-item-active-text-color');
-        border-bottom: #{math.div(1, $base-font-size)}rem solid
-          getThemifyVariable('hint-var-active-border-bottom-color');
-      }
-    }
-  }
-
-  li.hint-type-keyword[aria-selected='true'] {
-    .cm-completionLabel {
-      @include themify() {
-        background: getThemifyVariable('hint-keyword-text-color');
-        color: getThemifyVariable('hint-item-active-text-color');
-      }
-    }
-  }
-
-  .cm-completionWarning {
-    grid-column: 1 / 4;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    width: fit-content;
-    margin: 0.35rem 0.75rem 0.5rem 0.75rem;
-    padding: 0.32rem 0.55rem;
-    border: 1px solid #d9a300;
-    border-radius: 0.45rem;
-    background: #f3e7b7;
-    color: #9a6b00;
-    font-size: 0.8rem;
-    line-height: 1.1;
-    white-space: nowrap;
-  }
-
-  .cm-completionWarningIcon {
-    flex: 0 0 auto;
-    font-size: 1rem;
-  }
-
-  .cm-completionWarningText {
-    line-height: 1.1;
-  }
-
-  .cm-ghostCompletion {
+// highlighted completion label colors
+li.hint-type-method[aria-selected='true'],
+li.hint-type-obj[aria-selected='true'] {
+  .cm-completionLabel {
     @include themify() {
-      color: getThemifyVariable('hint-inline-text-color');
+      background: getThemifyVariable('hint-fun-text-color');
+      color: getThemifyVariable('hint-item-active-text-color');
+      border-bottom: #{math.div(1, $base-font-size)}rem solid
+        getThemifyVariable('hint-fun-active-border-bottom-color');
     }
   }
+}
 
-  .cm-ghostCompletion.cm-ghostCompletion--light {
+li.hint-type-variable[aria-selected='true'],
+li.hint-type-constant[aria-selected='true'],
+li.hint-type-boolean[aria-selected='true'] {
+  .cm-completionLabel {
     @include themify() {
-      color: getThemifyVariable('hint-inline-text-color-light');
+      background: getThemifyVariable('hint-var-text-color');
+      color: getThemifyVariable('hint-item-active-text-color');
+      border-bottom: #{math.div(1, $base-font-size)}rem solid
+        getThemifyVariable('hint-var-active-border-bottom-color');
     }
   }
+}
 
-  .hint-hidden {
+li.hint-type-keyword[aria-selected='true'] {
+  .cm-completionLabel {
     @include themify() {
-      @extend %hidden-element;
-      display: none;
+      background: getThemifyVariable('hint-keyword-text-color');
+      color: getThemifyVariable('hint-item-active-text-color');
     }
+  }
+}
+
+.cm-completionWarning {
+  grid-column: 1 / 4;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  width: fit-content;
+  margin: 0.35rem 0.75rem 0.5rem 0.75rem;
+  padding: 0.32rem 0.55rem;
+  border: 1px solid #d9a300;
+  border-radius: 0.45rem;
+  background: #f3e7b7;
+  color: #9a6b00;
+  font-size: 0.8rem;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.cm-completionWarningIcon {
+  flex: 0 0 auto;
+  font-size: 1rem;
+}
+
+.cm-completionWarningText {
+  line-height: 1.1;
+}
+
+.cm-ghostCompletion {
+  @include themify() {
+    color: getThemifyVariable('hint-inline-text-color');
+  }
+}
+
+.cm-ghostCompletion.cm-ghostCompletion--light {
+  @include themify() {
+    color: getThemifyVariable('hint-inline-text-color-light');
+  }
+}
+
+.hint-hidden {
+  @include themify() {
+    @extend %hidden-element;
+    display: none;
+  }
   }
 }
