@@ -164,6 +164,7 @@
 
 // CM5: .CodeMirror-foldgutter-open, .CodeMirror-foldgutter-folded
 .cm-foldGutter {
+  cursor: pointer;
   position: absolute;
   right: 1px;
 }
