@@ -298,6 +298,9 @@ const files = (state, action) => {
           const isFolderClosed = corrospondingObj.isFolderClosed || false;
           return { ...file, isFolderClosed };
         }
+        if (corrospondingObj) {
+          return { ...file, isSelectedFile: corrospondingObj.isSelectedFile };
+        }
         return file;
       });
       return setFilePaths(newFiles);

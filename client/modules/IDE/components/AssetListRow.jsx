@@ -47,7 +47,7 @@ const AssetListRow = ({ asset, username }) => (
         {asset.name}
       </a>
     </th>
-    <td>{prettyBytes(asset.size)}</td>
+    <td className="asset-table__size-column">{prettyBytes(asset.size)}</td>
     <td>
       {asset.sketchId && (
         <Link to={`/${username}/sketches/${asset.sketchId}`}>

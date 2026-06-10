@@ -475,6 +475,7 @@
     "AddSketch": "Adicionar Esboço",
     "DeleteFromCollection": "Realmente quer remover {{name_sketch}} dessa coleção?",
     "SketchDeleted": "Esboço apagado",
+    "SketchRemoveLabel": "Remove from Collection",
     "SketchRemoveARIA": "Remover esboço da coleção",
     "DescriptionPlaceholder": "Adicionar descrição",
     "NumSketches": "{{count}} esboço(s)",

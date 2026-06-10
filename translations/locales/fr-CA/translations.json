@@ -446,6 +446,7 @@
       "AddSketch": "Ajouter un croquis",
       "DeleteFromCollection": "Êtes-vous sûr de vouloir supprimer {{name_sketch}} de cette collection?",
       "SketchDeleted": "Croquis supprimé",
+    "SketchRemoveLabel": "Remove from Collection",
       "SketchRemoveARIA": "Supprimer le croquis de la collection",
       "DescriptionPlaceholder": "Ajouter une description",
       "Description": "description",
