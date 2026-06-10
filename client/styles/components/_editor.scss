@@ -16,6 +16,10 @@
   .cm-content {
     padding-top: #{math.div(25, $base-font-size)}rem;
 
+    .cm-line {
+      padding: 0 #{math.div(4, $base-font-size)}rem;
+    }
+
     .cm-activeLine {
       // Needed to place the active line highlight behind the selection highlight.
       position: relative;

@@ -19,7 +19,7 @@ import {
   syntaxHighlighting
 } from '@codemirror/language';
 import { autocompletion, closeBrackets } from '@codemirror/autocomplete';
-import { highlightSelectionMatches, search } from '@codemirror/search';
+import { search } from '@codemirror/search';
 import { history } from '@codemirror/commands';
 import { lintGutter, linter } from '@codemirror/lint';
 import {
@@ -174,7 +174,6 @@ export function createNewFileState(filename, document, settings) {
     highlightActiveLine(),
     highlightActiveLineGutter(),
     highlightSpecialChars(),
-    highlightSelectionMatches(),
     syntaxHighlighting(highlightStyle),
     // Selection extensions
     drawSelection(),
