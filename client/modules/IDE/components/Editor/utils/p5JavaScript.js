@@ -56,7 +56,7 @@ const p5Highlight = ViewPlugin.fromClass(
 
 function addCompletions(context) {
   const word = context.matchBefore(/\w*/);
-  const isValidWord = word?.text && word.text.trim().length >= 2;
+  const isValidWord = word?.text && word.text.trim().length >= 1;
   if (!isValidWord && !context.explicit) {
     return null;
   }
