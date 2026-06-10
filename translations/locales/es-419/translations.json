@@ -442,6 +442,7 @@
     "AddSketch": "Agregar Bosquejo",
     "DeleteFromCollection": "¿Estás seguro que quieres remover {{name_sketch}} de esta colección?",
     "SketchDeleted": "El bosquejo fue eliminado",
+    "SketchRemoveLabel": "Remove from Collection",
     "SketchRemoveARIA": "Remover bosquejo de la colección",
     "DescriptionPlaceholder": "Agregar descripción",
     "Description": "descripción",
