@@ -1,22 +1,12 @@
 services:
-  mongo:
-    image: mongo:8.0
-    volumes:
-      - dbdata:/data/db
   app:
     build:
       context: ./
       dockerfile: Dockerfile
       target: development
-    environment:
-      - MONGO_URL=mongodb://mongo:27017/p5js-web-editor
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
     ports:
       - '8000:8000'
       - '8002:8002'
-    depends_on:
-      - mongo
-volumes:
-  dbdata:

@@ -1,22 +1,19 @@
-import type { CookieConsentOptions, PublicUser } from '../../../common/types';
+import type { PublicUser } from '../../../common/types';
 import * as ActionTypes from '../../constants';
 
 // User Action:
 export type UserAction = {
   user?: PublicUser;
-  cookieConsent?: CookieConsentOptions;
   type: any;
 };
 
+// Authentication is handled by OpenProcessing; the editor only tracks whether
+// the user is signed in and their public profile. Password-reset, email
+// verification, account settings, API keys and cookie-consent were removed
+// along with the editor's own user server, so their reducer cases are gone.
 export const user = (
   state: Partial<PublicUser> & {
     authenticated: boolean;
-    // TODO: use state of user from server as single source of truth:
-    // Currently using redux state below, but server also has similar info.
-    resetPasswordInitiate?: boolean;
-    resetPasswordInvalid?: boolean;
-    emailVerificationInitiate?: boolean;
-    emailVerificationTokenState?: 'checking' | 'verified' | 'invalid';
   } = {
     authenticated: false
   },
@@ -36,34 +33,6 @@ export const user = (
       return {
         authenticated: false
       };
-    case ActionTypes.RESET_PASSWORD_INITIATE:
-      return Object.assign({}, state, { resetPasswordInitiate: true });
-    case ActionTypes.RESET_PASSWORD_RESET:
-      return Object.assign({}, state, { resetPasswordInitiate: false });
-    case ActionTypes.INVALID_RESET_PASSWORD_TOKEN:
-      return Object.assign({}, state, { resetPasswordInvalid: true });
-    case ActionTypes.EMAIL_VERIFICATION_INITIATE:
-      return Object.assign({}, state, { emailVerificationInitiate: true });
-    case ActionTypes.EMAIL_VERIFICATION_VERIFY:
-      return Object.assign({}, state, {
-        emailVerificationTokenState: 'checking'
-      });
-    case ActionTypes.EMAIL_VERIFICATION_VERIFIED:
-      return Object.assign({}, state, {
-        emailVerificationTokenState: 'verified'
-      });
-    case ActionTypes.EMAIL_VERIFICATION_INVALID:
-      return Object.assign({}, state, {
-        emailVerificationTokenState: 'invalid'
-      });
-    case ActionTypes.SETTINGS_UPDATED:
-      return { ...state, ...action.user };
-    case ActionTypes.API_KEY_REMOVED:
-      return { ...state, ...action.user };
-    case ActionTypes.API_KEY_CREATED:
-      return { ...state, ...action.user };
-    case ActionTypes.SET_COOKIE_CONSENT:
-      return { ...state, cookieConsent: action.cookieConsent };
     default:
       return state;
   }

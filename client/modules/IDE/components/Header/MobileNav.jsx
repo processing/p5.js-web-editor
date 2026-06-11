@@ -27,6 +27,7 @@ import {
 } from '../../actions/ide';
 import { logoutUser } from '../../../User/actions';
 import { getOpBaseUrl } from '../../../../utils/opAuth';
+import { getConfig } from '../../../../utils/getConfig';
 import { useSketchActions, useWhatPage } from '../../hooks';
 import { CmControllerContext } from '../../pages/IDEView';
 import { selectSketchPath } from '../../selectors/project';
@@ -36,6 +37,13 @@ import { setLanguage } from '../../actions/preferences';
 import { Overlay } from '../../../App/components/Overlay';
 import ProjectName from './ProjectName';
 import CollectionCreate from '../../../User/components/CollectionCreate';
+
+// Path to the OpenProcessing collection shown as "Examples", e.g.
+// /username/collections/collectionId. Rendered by the standard collection page.
+const examplesEndpoint = getConfig('EXAMPLES_ENDPOINT', {
+  nullishString: true,
+  warn: false
+});
 
 const Nav = styled(Menubar)`
   background: ${prop('MobilePanel.default.background')};
@@ -423,9 +431,11 @@ const MoreMenu = () => {
           <MobileMenuItem onClick={() => saveSketch(cmRef.current)}>
             {t('Common.Save')}
           </MobileMenuItem>
-          <MobileMenuItem href="/p5/sketches">
-            {t('Nav.File.Examples')}
-          </MobileMenuItem>
+          {examplesEndpoint && (
+            <MobileMenuItem href={examplesEndpoint}>
+              {t('Nav.File.Examples')}
+            </MobileMenuItem>
+          )}
           <b>{t('Nav.Edit.Title')}</b>
           <MobileMenuItem onClick={cmRef.current?.tidyCode}>
             {t('Nav.Edit.TidyCode')}

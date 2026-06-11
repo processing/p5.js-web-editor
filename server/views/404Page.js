@@ -1,5 +1,4 @@
-import { User } from '../models/user';
-import Project from '../models/project';
+import axios from 'axios';
 
 const insertErrorMessage = (htmlFile) => {
   const html = htmlFile.split('</head>');
@@ -68,8 +67,10 @@ const insertErrorMessage = (htmlFile) => {
   return html.join('</head>');
 };
 
-export const get404Sketch = async () => {
-  const errorMessage = insertErrorMessage(`<!DOCTYPE html>
+// Bare 404 page with no sketch background. Used as the response when no
+// featured sketch is configured or when fetching it from OpenProcessing fails.
+const staticErrorPage = () =>
+  insertErrorMessage(`<!DOCTYPE html>
     <html lang="en">
       <head>
         <meta charset="utf-8" />
@@ -78,80 +79,77 @@ export const get404Sketch = async () => {
       </body>
     </html>`);
 
+// CDN p5 build used to run the featured 404 sketch in the browser. The editor
+// server no longer stores sketches, so the background animation is rendered by
+// loading a published OpenProcessing sketch's code directly.
+const P5_CDN = 'https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.min.js';
+
+/**
+ * Render the 404 page with a featured p5 sketch animating in the background.
+ *
+ * The sketch is pulled from OpenProcessing (set OP_404_SKETCH_ID to a public
+ * sketch's visualID). If that env var is unset, or OP can't be reached, we
+ * fall back to the plain styled 404 page — the editor server keeps no local
+ * copy of any sketch.
+ */
+export const get404Sketch = async () => {
+  const sketchId = process.env.OP_404_SKETCH_ID;
+  if (!sketchId || !process.env.API_URL) {
+    return staticErrorPage();
+  }
+
   try {
-    const p5User = await User.findOne({ username: 'p5' }).exec();
+    const headers = process.env.API_TOKEN
+      ? { Authorization: `Bearer ${process.env.API_TOKEN}` }
+      : undefined;
 
-    if (!p5User) {
-      return errorMessage;
+    // OP returns an array of code tabs: { title, code, ... }
+    const { data: codeTabs } = await axios.get(
+      `${process.env.API_URL}/sketch/${sketchId}/code`,
+      {
+        headers,
+        timeout: 5000
+      }
+    );
+
+    if (!Array.isArray(codeTabs) || codeTabs.length === 0) {
+      return staticErrorPage();
     }
 
-    const projects = await Project.find({ user: p5User._id }).exec();
-
-    if (!projects.length) {
-      return errorMessage;
+    const jsTabs = codeTabs.filter((tab) => /\.js$/i.test(tab.title || ''));
+    if (jsTabs.length === 0) {
+      return staticErrorPage();
     }
 
-    const randomIndex = Math.floor(Math.random() * projects.length);
-    const sketch = projects[randomIndex];
+    // Make the sketch fill the window regardless of its declared canvas size.
+    const inlineScripts = jsTabs
+      .map((tab) => {
+        const code = (tab.code || '').replace(
+          /createCanvas\(\s*[^)]*?\)/g,
+          'createCanvas(windowWidth, windowHeight)'
+        );
+        return `<script>${code}</script>`;
+      })
+      .join('\n');
 
-    // Get sketch files
-    let htmlFile = sketch.files.find((file) => file.name.match(/.*\.html$/i))
-      .content;
-    const jsFiles = sketch.files.filter((file) => file.name.match(/.*\.js$/i));
-    const cssFiles = sketch.files.filter((file) =>
-      file.name.match(/.*\.css$/i)
-    );
-    const linkedFiles = sketch.files.filter((file) => file.url);
+    const htmlFile = insertErrorMessage(`<!DOCTYPE html>
+      <html lang="en">
+        <head>
+          <meta charset="utf-8" />
+          <script src="${P5_CDN}"></script>
+        </head>
+        <body>
+          ${inlineScripts}
+        </body>
+      </html>`);
 
-    const instanceMode = jsFiles
-      .find((file) => file.name === 'sketch.js')
-      .content.includes('Instance Mode');
-
-    jsFiles.forEach((file) => {
-      // Add js files as script tags
-      const html = htmlFile.split('</body>');
-      html[0] = `${html[0]}<script>${file.content}</script>`;
-      htmlFile = html.join('</body>');
-    });
-
-    cssFiles.forEach((file) => {
-      // Add css files as style tags
-      const html = htmlFile.split('</head>');
-      html[0] = `${html[0]}<style>${file.content}</style>`;
-      htmlFile = html.join('</head>');
-    });
-
-    linkedFiles.forEach((file) => {
-      // Add linked files as link tags
-      const html = htmlFile.split('<head>');
-      html[1] = `<link href=${file.url}>${html[1]}`;
-      htmlFile = html.join('<head>');
-    });
-
-    // Add 404 html and position canvas
-    htmlFile = insertErrorMessage(htmlFile);
-
-    // Fix links to assets
-    htmlFile = htmlFile.replace(
-      /'assets/g,
-      "'https://rawgit.com/processing/p5.js-website/main/dist/assets/examples/assets/"
-    );
-    htmlFile = htmlFile.replace(
-      /"assets/g,
-      '"https://rawgit.com/processing/p5.js-website/main/dist/assets/examples/assets/'
-    );
-
-    // Change canvas size
-    htmlFile = htmlFile.replace(
-      /createCanvas\(\d+, ?\d+/g,
-      instanceMode
-        ? 'createCanvas(p.windowWidth, p.windowHeight'
-        : 'createCanvas(windowWidth, windowHeight'
-    );
     return htmlFile;
   } catch (err) {
-    console.error('Error retrieving 404 sketch:', err);
-    throw err;
+    console.error(
+      'Error retrieving 404 sketch from OpenProcessing:',
+      err.message
+    );
+    return staticErrorPage();
   }
 };
 

@@ -4,6 +4,7 @@ import {
 } from '../../../../common/types';
 import * as ActionTypes from '../../../constants';
 import i18n from '../../../i18n';
+import { loadPreferences } from '../../../persistPreferences';
 import type { PreferencesAction } from '../actions/preferences.types';
 
 export interface PreferencesState
@@ -11,7 +12,7 @@ export interface PreferencesState
   tabIndex: number;
 }
 
-export const initialState: PreferencesState = {
+const defaultPreferences: PreferencesState = {
   tabIndex: 0,
   fontSize: 18,
   autosave: true,
@@ -25,6 +26,13 @@ export const initialState: PreferencesState = {
   language: i18n.language,
   autocloseBracketsQuotes: true,
   autocompleteHinter: false
+};
+
+// Start from any preferences persisted in localStorage, falling back to the
+// defaults for anything not previously saved.
+export const initialState: PreferencesState = {
+  ...defaultPreferences,
+  ...loadPreferences()
 };
 
 export const preferences = (

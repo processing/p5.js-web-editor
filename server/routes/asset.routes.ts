@@ -1,6 +1,8 @@
 import { Router } from 'express';
-import { getProjectAsset } from '../controllers/project.controller';
-import { getFileContent } from '../controllers/file.controller';
+import {
+  getProjectAsset,
+  getFileContent
+} from '../controllers/asset.controller';
 
 const router = Router();
 

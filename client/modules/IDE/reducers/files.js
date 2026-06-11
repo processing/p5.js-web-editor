@@ -4,7 +4,7 @@ import {
   defaultSketch,
   defaultCSS,
   defaultHTML
-} from '../../../../server/domain-objects/createDefaultFiles';
+} from '../../../../common/createDefaultFiles';
 import { parseUrlParams } from '../../../utils/parseURLParams';
 
 export const initialState = () => {

@@ -1,5 +1,4 @@
 import Express from 'express';
-import mongoose from 'mongoose';
 import path from 'path';
 import webpack from 'webpack';
 import cors from 'cors';
@@ -12,32 +11,8 @@ import { renderPreviewIndex } from './views/previewIndex';
 
 const app = new Express();
 
-// This also works if you take out the mongoose connection
-// but i have no idea why
-const mongoConnectionString = process.env.MONGO_URL;
-
-const connectToMongoDB = async () => {
-  try {
-    mongoose.set('strictQuery', true);
-
-    await mongoose.connect(mongoConnectionString, {
-      serverSelectionTimeoutMS: 30000,
-      socketTimeoutMS: 45000
-    });
-  } catch (error) {
-    console.error('Failed to connect to MongoDB:', error);
-    process.exit(1);
-  }
-};
-
-connectToMongoDB();
-
-mongoose.connection.on('error', (err) => {
-  console.error(
-    'MongoDB Connection Error. Please make sure that MongoDB is running.',
-    err
-  );
-});
+// The preview server is stateless: sketch files and code are fetched from
+// OpenProcessing on demand (see asset.controller). There is no local database.
 
 const allowedCorsOrigins = [
   /p5js\.org$/,

@@ -1,11 +1,7 @@
 import Express from 'express';
-import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import session from 'express-session';
-import MongoStore from 'connect-mongo';
-import passport from 'passport';
 import path from 'path';
 import basicAuth from 'express-basic-auth';
 
@@ -16,17 +12,10 @@ import webpackHotMiddleware from '@gatsbyjs/webpack-hot-middleware';
 import config from '../webpack/config.dev';
 
 // Import all required modules
-import api from './routes/api.routes';
-import users from './routes/user.routes';
-import sessions from './routes/session.routes';
-import projects from './routes/project.routes';
-import files from './routes/file.routes';
 import serverRoutes from './routes/server.routes';
 import redirectEmbedRoutes from './routes/redirectEmbed.routes';
 import passportRoutes from './routes/passport.routes';
-import { requestsOfTypeJSON } from './utils/requestsOfType';
 
-import { renderIndex } from './views/index';
 import { get404Sketch } from './views/404Page';
 
 const app = new Express();
@@ -55,7 +44,6 @@ if (process.env.NODE_ENV === 'development') {
   app.use(webpackHotMiddleware(compiler, { log: false }));
 }
 
-const mongoConnectionString = process.env.MONGO_URL;
 app.set('trust proxy', true);
 
 // Enable Cross-Origin Resource Sharing (CORS) for all origins
@@ -71,47 +59,9 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(cookieParser());
 
-mongoose.set('strictQuery', true);
-
-// TODO: update mongodb connection for other scripts
-
-mongoose.connect(mongoConnectionString, {
-  serverSelectionTimeoutMS: 30000, // 30 seconds timeout
-  socketTimeoutMS: 45000 // 45 seconds timeout
-});
-
-const isProduction = process.env.NODE_ENV === 'production';
-
-app.use(
-  session({
-    resave: true,
-    saveUninitialized: false,
-    secret: process.env.SESSION_SECRET,
-    proxy: true,
-    name: 'sessionId',
-    cookie: {
-      httpOnly: true,
-      secure: isProduction,
-      maxAge: 1000 * 60 * 60 * 24 * 28 // 4 weeks in milliseconds
-    },
-    store: MongoStore.create({
-      mongoUrl: mongoConnectionString,
-      ttl: 1000 * 60 * 60 * 24 * 28 // 4 weeks in milliseconds to match cookie maxAge
-    })
-  })
-);
-
-app.use('/api/v1', requestsOfTypeJSON(), api);
-// This is a temporary way to test access via Personal Access Tokens
-// Sending a valid username:<personal-access-token> combination will
-// return the user's information.
-app.get(
-  '/api/v1/auth/access-check',
-  passport.authenticate('basic', { session: false }),
-  (req, res) => res.json(req.user)
-);
-
-// For basic auth, but can't have double basic auth for API
+// Optional HTTP basic-auth gate (used to lock down staging deployments).
+// Unrelated to user authentication, which is handled entirely by
+// OpenProcessing via the browser OAuth flow.
 if (process.env.BASIC_USERNAME && process.env.BASIC_PASSWORD) {
   app.use(
     basicAuth({
@@ -123,7 +73,7 @@ if (process.env.BASIC_USERNAME && process.env.BASIC_PASSWORD) {
   );
 }
 
-// Body parser, cookie parser, sessions, serve public assets
+// Serve public assets
 app.use(
   '/locales',
   Express.static(path.resolve(__dirname, '../dist/static/locales'), {
@@ -142,26 +92,14 @@ app.use(
 );
 app.use(Express.static(path.resolve(__dirname, '../public')));
 
-app.use(passport.initialize());
-app.use(passport.session());
-app.use('/editor', requestsOfTypeJSON(), users);
-app.use('/editor', requestsOfTypeJSON(), sessions);
-app.use('/editor', requestsOfTypeJSON(), files);
-app.use('/editor', requestsOfTypeJSON(), projects);
-
-// this is supposed to be TEMPORARY -- until i figure out
-// isomorphic rendering
+// The editor server is a stateless host for the React SPA. All user, project,
+// and collection data — and authentication — is served by OpenProcessing,
+// which the browser talks to directly using the per-user access token stored
+// in the browser after the OAuth popup flow. The routes below only render the
+// SPA shell, perform legacy URL redirects, and host the OAuth callback page.
 app.use('/', serverRoutes);
-
 app.use('/', redirectEmbedRoutes);
 app.use('/', passportRoutes);
-
-// configure passport
-require('./config/passport');
-
-app.get('/', (req, res) => {
-  res.sendFile(renderIndex());
-});
 
 // Handle API errors
 app.use('/api', (error, req, res, next) => {

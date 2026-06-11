@@ -1,49 +1,16 @@
-import { Router, Request, Response, NextFunction } from 'express';
-import passport from 'passport';
-import { UserDocument } from '../types';
+import { Router } from 'express';
 
 const router = Router();
 
-const authenticateOAuth = (service: string) => (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  passport.authenticate(
-    service,
-    { failureRedirect: '/login' },
-    (err: unknown, user: UserDocument) => {
-      if (err) {
-        // use query string param to show error;
-        res.redirect(`/account?error=${service}`);
-        return;
-      }
-
-      if (!user) {
-        res.redirect(`/account?error=${service}NoUser`);
-        return;
-      }
-
-      req.logIn(user, (loginErr) => {
-        if (loginErr) {
-          next(loginErr);
-          return;
-        }
-        res.redirect('/');
-      });
-    }
-  )(req, res, next);
-};
-
-router.get('/auth/github', passport.authenticate('github'));
-router.get('/auth/github/callback', authenticateOAuth('github'));
-
-router.get('/auth/google', passport.authenticate('google'));
-router.get('/auth/google/callback', authenticateOAuth('google'));
-
-// "Sign in with OpenProcessing" runs fully in the browser now (PKCE +
-// localStorage). The editor server's only OAuth role is hosting the static
-// callback page below — it's the registered OAuth redirect_uri target.
+// Authentication is handled entirely by OpenProcessing. "Sign in with
+// OpenProcessing" (which also covers GitHub/Google once those users exist in
+// the OP database) runs fully in the browser via PKCE + localStorage. The
+// editor server's only OAuth role is hosting the static callback page below —
+// it's the registered OAuth redirect_uri target.
+//
+// The legacy editor-level GitHub/Google passport strategies and their
+// /auth/github and /auth/google routes were removed along with the Mongo user
+// store; those providers are now reached through OP's own sign-in flow.
 
 // Static landing page for the OP popup. OP redirects the popup here with
 // ?code=...&state=...; we postMessage them up to the opener and close.

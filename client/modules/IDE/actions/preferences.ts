@@ -1,7 +1,6 @@
 import i18next from 'i18next';
-import { UpdatePreferencesRequestBody } from '../../../../common/types';
-import { apiClient } from '../../../utils/apiClient';
 import * as ActionTypes from '../../../constants';
+import { savePreferences } from '../../../persistPreferences';
 import type {
   UpdatePreferencesDispatch,
   SetPreferencesTabValue,
@@ -21,19 +20,10 @@ import type {
 } from './preferences.types';
 import type { GetRootState } from '../../../reducers';
 
-function updatePreferences(
-  formParams: UpdatePreferencesRequestBody,
-  dispatch: UpdatePreferencesDispatch
-) {
-  apiClient
-    .put('/preferences', formParams)
-    .then(() => {})
-    .catch((error) => {
-      dispatch({
-        type: ActionTypes.ERROR,
-        error: error?.response?.data
-      });
-    });
+// Preferences persist to localStorage (per browser) rather than the server.
+// Persisting after dispatch means we store the already-updated slice.
+function persistPreferences(getState: GetRootState) {
+  savePreferences(getState().preferences);
 }
 
 export function setPreferencesTab(value: SetPreferencesTabValue) {
@@ -45,20 +35,11 @@ export function setPreferencesTab(value: SetPreferencesTabValue) {
 
 export function setFontSize(value: SetFontSizeValue) {
   return (dispatch: UpdatePreferencesDispatch, getState: GetRootState) => {
-    // eslint-disable-line
     dispatch({
       type: ActionTypes.SET_FONT_SIZE,
       value
     });
-    const state = getState();
-    if (state.user.authenticated) {
-      const formParams = {
-        preferences: {
-          fontSize: value
-        }
-      };
-      updatePreferences(formParams, dispatch);
-    }
+    persistPreferences(getState);
   };
 }
 
@@ -68,15 +49,7 @@ export function setLineNumbers(value: SetLineNumbersValue) {
       type: ActionTypes.SET_LINE_NUMBERS,
       value
     });
-    const state = getState();
-    if (state.user.authenticated) {
-      const formParams = {
-        preferences: {
-          lineNumbers: value
-        }
-      };
-      updatePreferences(formParams, dispatch);
-    }
+    persistPreferences(getState);
   };
 }
 
@@ -88,15 +61,7 @@ export function setAutocloseBracketsQuotes(
       type: ActionTypes.SET_AUTOCLOSE_BRACKETS_QUOTES,
       value
     });
-    const state = getState();
-    if (state.user.authenticated) {
-      const formParams = {
-        preferences: {
-          autocloseBracketsQuotes: value
-        }
-      };
-      updatePreferences(formParams, dispatch);
-    }
+    persistPreferences(getState);
   };
 }
 
@@ -106,15 +71,7 @@ export function setAutocompleteHinter(value: SetAutocompleteHinterValue) {
       type: ActionTypes.SET_AUTOCOMPLETE_HINTER,
       value
     });
-    const state = getState();
-    if (state.user.authenticated) {
-      const formParams = {
-        preferences: {
-          autocompleteHinter: value
-        }
-      };
-      updatePreferences(formParams, dispatch);
-    }
+    persistPreferences(getState);
   };
 }
 
@@ -124,15 +81,7 @@ export function setAutosave(value: SetAutosaveValue) {
       type: ActionTypes.SET_AUTOSAVE,
       value
     });
-    const state = getState();
-    if (state.user.authenticated) {
-      const formParams = {
-        preferences: {
-          autosave: value
-        }
-      };
-      updatePreferences(formParams, dispatch);
-    }
+    persistPreferences(getState);
   };
 }
 
@@ -142,15 +91,7 @@ export function setLinewrap(value: SetLinewrapValue) {
       type: ActionTypes.SET_LINEWRAP,
       value
     });
-    const state = getState();
-    if (state.user.authenticated) {
-      const formParams = {
-        preferences: {
-          linewrap: value
-        }
-      };
-      updatePreferences(formParams, dispatch);
-    }
+    persistPreferences(getState);
   };
 }
 
@@ -160,15 +101,7 @@ export function setLintWarning(value: SetLintWarningValue) {
       type: ActionTypes.SET_LINT_WARNING,
       value
     });
-    const state = getState();
-    if (state.user.authenticated) {
-      const formParams = {
-        preferences: {
-          lintWarning: value
-        }
-      };
-      updatePreferences(formParams, dispatch);
-    }
+    persistPreferences(getState);
   };
 }
 
@@ -178,15 +111,7 @@ export function setTextOutput(value: SetTextOutputValue) {
       type: ActionTypes.SET_TEXT_OUTPUT,
       value
     });
-    const state = getState();
-    if (state.user.authenticated) {
-      const formParams = {
-        preferences: {
-          textOutput: value
-        }
-      };
-      updatePreferences(formParams, dispatch);
-    }
+    persistPreferences(getState);
   };
 }
 
@@ -196,15 +121,7 @@ export function setGridOutput(value: SetGridOutputValue) {
       type: ActionTypes.SET_GRID_OUTPUT,
       value
     });
-    const state = getState();
-    if (state.user.authenticated) {
-      const formParams = {
-        preferences: {
-          gridOutput: value
-        }
-      };
-      updatePreferences(formParams, dispatch);
-    }
+    persistPreferences(getState);
   };
 }
 
@@ -214,15 +131,7 @@ export function setTheme(value: SetThemeValue) {
       type: ActionTypes.SET_THEME,
       value
     });
-    const state = getState();
-    if (state.user.authenticated) {
-      const formParams = {
-        preferences: {
-          theme: value
-        }
-      };
-      updatePreferences(formParams, dispatch);
-    }
+    persistPreferences(getState);
   };
 }
 
@@ -232,20 +141,12 @@ export function setAutorefresh(value: SetAutorefreshValue) {
       type: ActionTypes.SET_AUTOREFRESH,
       value
     });
-    const state = getState();
-    if (state.user.authenticated) {
-      const formParams = {
-        preferences: {
-          autorefresh: value
-        }
-      };
-      updatePreferences(formParams, dispatch);
-    }
+    persistPreferences(getState);
   };
 }
 
 export function setAllAccessibleOutput(value: SetAllAccessibleOutputValue) {
-  return (dispatch: UpdatePreferencesDispatch, getState: GetRootState) => {
+  return (dispatch: UpdatePreferencesDispatch) => {
     dispatch(setTextOutput(value));
     dispatch(setGridOutput(value));
   };
@@ -261,14 +162,8 @@ export function setLanguage(
       type: ActionTypes.SET_LANGUAGE,
       language: value
     });
-    const state = getState();
-    if (persistPreference && state.user.authenticated) {
-      const formParams = {
-        preferences: {
-          language: value
-        }
-      };
-      updatePreferences(formParams, dispatch);
+    if (persistPreference) {
+      persistPreferences(getState);
     }
   };
 }

@@ -51,6 +51,11 @@ export function renderIndex() {
         window.process.env.EXAMPLES_ENABLED = ${
           process.env.EXAMPLES_ENABLED !== 'false'
         };
+        window.process.env.EXAMPLES_ENDPOINT = ${
+          process.env.EXAMPLES_ENDPOINT
+            ? `'${process.env.EXAMPLES_ENDPOINT}'`
+            : undefined
+        };
         window.process.env.UI_ACCESS_TOKEN_ENABLED = ${
           process.env.UI_ACCESS_TOKEN_ENABLED !== 'false'
         };
@@ -130,6 +135,11 @@ export function renderProjectIndex(username: string, projectName: string) {
         };
         window.process.env.EXAMPLES_ENABLED = ${
           process.env.EXAMPLES_ENABLED !== 'false'
+        };
+        window.process.env.EXAMPLES_ENDPOINT = ${
+          process.env.EXAMPLES_ENDPOINT
+            ? `'${process.env.EXAMPLES_ENDPOINT}'`
+            : undefined
         };
         window.process.env.UI_ACCESS_TOKEN_ENABLED = ${
           process.env.UI_ACCESS_TOKEN_ENABLED !== 'false'

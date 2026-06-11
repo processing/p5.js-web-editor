@@ -1,8 +1,4 @@
 services:
-  mongo:
-    image: mongo:8.0
-    volumes:
-      - dbdata:/data/db
   app:
     build:
       context: .
@@ -33,30 +29,18 @@ services:
     #   - GOOGLE_SECRET
     #   - MAILGUN_DOMAIN
     #   - MAILGUN_KEY
-    #   - ML5_EXAMPLES_USERNAME
-    #   - ML5_EXAMPLES_EMAIL
-    #   - ML5_EXAMPLES_PASS
-    #   - MONGO_URL
     #   - PORT
     #   - PREVIEW_PORT
     #   - EDITOR_URL
     #   - PREVIEW_URL
     #   - S3_BUCKET
     #   - S3_BUCKET_URL_BASE
-    #   - SESSION_SECRET
     #   - TRANSLATIONS_ENABLED
     #   - UI_ACCESS_TOKEN_ENABLED
     #   - UPLOAD_LIMIT
-      # you can either set this in your .env or as an environment variables
-      # or here YOU CHOOSE
-      # - MONGO_URL=mongodb://mongo:27017/p5js-web-editor
     volumes:
       - .:/opt/node/app
       - /opt/node/app/node_modules
     ports:
       - '8000:8000'
       - '8002:8002'
-    depends_on:
-      - mongo
-volumes:
-  dbdata:

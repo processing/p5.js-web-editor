@@ -88,6 +88,12 @@ const isUiCollectionsEnabled = parseBoolean(
   true
 );
 const isExamplesEnabled = parseBoolean(getConfig('EXAMPLES_ENABLED'), true);
+// Path to the OpenProcessing collection shown as "Examples", e.g.
+// /username/collections/collectionId. Rendered by the standard collection page.
+const examplesEndpoint = getConfig('EXAMPLES_ENDPOINT', {
+  nullishString: true,
+  warn: false
+});
 
 const UserMenu = () => {
   const isAuthenticated = useSelector(getAuthenticated);
@@ -258,8 +264,8 @@ const ProjectMenu = () => {
         </MenubarItem>
         <MenubarItem
           id="file-examples"
-          isDisabled={!isExamplesEnabled}
-          href="/p5/sketches"
+          isDisabled={!isExamplesEnabled || !examplesEndpoint}
+          href={examplesEndpoint || undefined}
         >
           {t('Nav.File.Examples')}
         </MenubarItem>

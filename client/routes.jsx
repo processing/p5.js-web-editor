@@ -12,9 +12,6 @@ import { PrivacyPolicy } from './modules/Legal/pages/PrivacyPolicy';
 import { TermsOfUse } from './modules/Legal/pages/TermsOfUse';
 import { LoginView } from './modules/User/pages/LoginView';
 import { SignupView } from './modules/User/pages/SignupView';
-import { ResetPasswordView } from './modules/User/pages/ResetPasswordView';
-import { EmailVerificationView } from './modules/User/pages/EmailVerificationView';
-import { NewPasswordView } from './modules/User/pages/NewPasswordView';
 import { CollectionView } from './modules/User/pages/CollectionView';
 import DashboardView from './modules/User/pages/DashboardView';
 import { getUser } from './modules/User/actions';
@@ -49,12 +46,6 @@ const routes = (
     <ProtectedSketchRoute exact path="/" component={IDEView} />
     <Route path="/login" component={LoginView} />
     <Route path="/signup" component={SignupView} />
-    <Route
-      path="/reset-password/:reset_password_token"
-      component={NewPasswordView}
-    />
-    <Route path="/reset-password" component={ResetPasswordView} />
-    <Route path="/verify" component={EmailVerificationView} />
     <Route path="/projects/:project_id" component={IDEView} />
     <ProtectedSketchRoute
       path="/:username/full/:project_id"

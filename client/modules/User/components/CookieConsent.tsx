@@ -81,15 +81,18 @@ const CookieConsentButtons = styled.div`
 const GOOGLE_ANALYTICS_ID = getConfig('GA_MEASUREMENT_ID');
 const COOKIE_CONSENT_KEY = 'p5-cookie-consent';
 
-function readCookieConsentCookie(): CookieConsentOptions {
-  const cookieValue = Cookies.get(COOKIE_CONSENT_KEY);
+function readStoredCookieConsent(): CookieConsentOptions {
+  const storedValue =
+    typeof localStorage !== 'undefined'
+      ? localStorage.getItem(COOKIE_CONSENT_KEY)
+      : null;
   if (
-    cookieValue &&
+    storedValue &&
     Object.values(CookieConsentOptions).includes(
-      cookieValue as CookieConsentOptions
+      storedValue as CookieConsentOptions
     )
   ) {
-    return cookieValue as CookieConsentOptions;
+    return storedValue as CookieConsentOptions;
   }
 
   return CookieConsentOptions.NONE;
@@ -105,24 +108,20 @@ export function CookieConsent({ hide = false }: { hide?: boolean }) {
 
   function acceptAllCookies() {
     setBrowserCookieConsent(CookieConsentOptions.ALL);
-    Cookies.set(COOKIE_CONSENT_KEY, CookieConsentOptions.ALL, {
-      expires: 365
-    });
+    localStorage.setItem(COOKIE_CONSENT_KEY, CookieConsentOptions.ALL);
   }
 
   function acceptEssentialCookies() {
     setBrowserCookieConsent(CookieConsentOptions.ESSENTIAL);
-    Cookies.set(COOKIE_CONSENT_KEY, CookieConsentOptions.ESSENTIAL, {
-      expires: 365
-    });
-    // Remove Google Analytics Cookies
+    localStorage.setItem(COOKIE_CONSENT_KEY, CookieConsentOptions.ESSENTIAL);
+    // Remove any existing Google Analytics tracking cookies
     Cookies.remove('_ga');
     Cookies.remove('_gat');
     Cookies.remove('_gid');
   }
 
   useEffect(() => {
-    const p5CookieConsent = readCookieConsentCookie();
+    const p5CookieConsent = readStoredCookieConsent();
     setBrowserCookieConsent(p5CookieConsent);
 
     if (GOOGLE_ANALYTICS_ID) {

@@ -1,4 +1,4 @@
-import { currentP5Version } from '../../common/p5Versions';
+import { currentP5Version } from './p5Versions';
 import {
   p5SoundURLOldTemplate,
   p5SoundURL,
@@ -6,7 +6,7 @@ import {
   p5ShapesAddonURL,
   p5DataAddonURL,
   p5URLTemplate
-} from '../../common/p5URLs';
+} from './p5URLs';
 
 export const defaultSketch = `function setup() {
   createCanvas(400, 400);
