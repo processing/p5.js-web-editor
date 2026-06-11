@@ -18,8 +18,8 @@ function createOpClientInstance(): AxiosInstance {
     return config;
   });
 
-  // If OP rejects the token (revoked / deleted / expired), clear it locally
-  // so the next page load shows the logged-out state and prompts re-login.
+  // OP uses 401 only for missing/invalid authentication. Authorization failures
+  // such as private-resource denials should come back as 403.
   instance.interceptors.response.use(
     (response) => response,
     (error) => {

@@ -128,7 +128,7 @@ export function clearPkce(): void {
 
 export function buildAuthorizeUrl(
   pkce: PkceState,
-  scope = 'read write'
+  scope = 'read write private'
 ): string {
   const params = new URLSearchParams({
     response_type: 'code',
