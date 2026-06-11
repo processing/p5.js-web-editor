@@ -6,10 +6,9 @@ import {
   acceptCompletion
 } from '@codemirror/autocomplete';
 import {
-  insertTab,
-  indentLess,
   defaultKeymap,
-  historyKeymap
+  historyKeymap,
+  indentWithTab
 } from '@codemirror/commands';
 import { foldKeymap } from '@codemirror/language';
 import { searchKeymap } from '@codemirror/search';
@@ -84,7 +83,7 @@ export const extraKeymaps = [
     run: () => true
   },
   { key: 'ArrowRight', run: focusOnReferenceArrow },
-  { key: 'Tab', run: insertTab, shift: indentLess }
+  indentWithTab
 ];
 
 export const emmetKeymaps = [{ key: 'Tab', run: expandAbbreviation }];
