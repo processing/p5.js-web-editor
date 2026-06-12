@@ -40,6 +40,8 @@ export async function updateProject(req, res) {
       });
       return;
     }
+    console.log('project in controller: ', project);
+    console.log('req.user in controller: ', req.user);
     if (!project.user.equals(req.user._id)) {
       res.status(403).send({
         success: false,
