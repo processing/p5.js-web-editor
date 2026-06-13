@@ -82,8 +82,6 @@ mongoose.connect(mongoConnectionString, {
   socketTimeoutMS: 45000 // 45 seconds timeout
 });
 
-const isProduction = process.env.NODE_ENV === 'production';
-
 app.use(
   session({
     resave: true,
@@ -93,7 +91,7 @@ app.use(
     name: 'sessionId',
     cookie: {
       httpOnly: true,
-      secure: isProduction,
+      secure: false,
       maxAge: 1000 * 60 * 60 * 24 * 28 // 4 weeks in milliseconds
     },
     store: MongoStore.create({
