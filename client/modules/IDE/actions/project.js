@@ -143,8 +143,6 @@ export function saveProject(
       return Promise.resolve();
     }
     dispatch(startSavingProject());
-    console.log('state user: ', state.user);
-    console.log('state project: ', state.project);
     if (
       state.user.id &&
       state.project.owner &&
