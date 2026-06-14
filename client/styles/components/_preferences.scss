@@ -73,7 +73,7 @@
   & a {
     text-decoration: underline;
     @include themify() {
-      color: getThemifyVariable('button-background-hover-color');
+      color: getThemifyVariable('link-text-color');
     }
   }
   & a:hover {
@@ -154,7 +154,7 @@
     display: contents;
     & a {
       text-decoration: underline;
-      color: getThemifyVariable('button-background-hover-color');
+      color: getThemifyVariable('link-text-color');
     }
     & a:hover {
       text-decoration: underline;

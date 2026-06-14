@@ -8,7 +8,8 @@ $white: #fff;
 $black: #000;
 $yellow: #F5DC23;
 $dodgerblue: #1E90FF;
-$p5-contrast-pink: #FFA9D9;
+$p5-contrast-light-pink: #ffa9d9;
+$p5-contrast-dark-pink: #b20046;
 
 $outline-color: #0F9DD7;
 
@@ -31,8 +32,9 @@ $darkest: #000;
 
 $themes: (
   light: (
+    link-text-color: $p5-contrast-dark-pink,
     admonition-background: #E4F8FF,
-    admonition-border: #22C8ED,
+    admonition-border: #22C8ED, 
     admonition-text: #075769,
     background-color: $lighter,
     button-active-color: $lightest,
@@ -130,6 +132,7 @@ $themes: (
     toolbar-button-color: $dark,
   ),
   dark: (
+    link-text-color: $p5-contrast-light-pink,
     admonition-background: #105A7F,
     admonition-border: #22C8ED,
     admonition-text: #FFFFFF,
@@ -228,6 +231,7 @@ $themes: (
     toolbar-button-color: $lightest,
   ),
   contrast: (
+    link-text-color: $p5-contrast-light-pink,
     admonition-background: #000000,
     admonition-border: #22C8ED,
     admonition-text: #ffffff,
@@ -251,7 +255,7 @@ $themes: (
     console-header-color: $lightest,
     console-input-background-color: $darker,
     editor-gutter-color: $darker,
-    error-color: $p5-contrast-pink,
+    error-color: $p5-contrast-light-pink,
     file-hover-color: $dark,
     file-selected-color: $medium-dark,
     form-navigation-options-color: $middle-light,
