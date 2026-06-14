@@ -375,7 +375,7 @@ const FileNode = ({
           </div>
         </div>
       )}
-      {children && (
+      {children && children.length > 0 && (
         <ul className="file-item__children">
           {children.map((childId) => (
             <li key={childId}>
