@@ -7,6 +7,8 @@ import { useSelector } from 'react-redux';
 
 import * as IDEActions from '../actions/ide';
 import * as FileActions from '../actions/files';
+import { showToast as showToastAction } from '../actions/toast';
+import { CREATE_FILE_REGEX } from '../../../../server/utils/fileUtils';
 import DownArrowIcon from '../../../images/down-filled-triangle.svg';
 import FolderRightIcon from '../../../images/triangle-arrow-right.svg';
 import FolderDownIcon from '../../../images/triangle-arrow-down.svg';
@@ -82,7 +84,8 @@ const FileNode = ({
   canEdit,
   openUploadFileModal,
   authenticated,
-  onClickFile
+  onClickFile,
+  showToast
 }) => {
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
   const [isEditingName, setIsEditingName] = useState(false);
@@ -195,6 +198,13 @@ const FileNode = ({
     const hasEmptyFilename = updatedName.trim() === '';
     const hasOnlyExtension =
       newFileExtension && updatedName.trim() === newFileExtension[0];
+
+    if (fileType === 'file' && !updatedName.match(CREATE_FILE_REGEX)) {
+      showToast(t('NewFileModal.InvalidType'));
+      setUpdatedName(currentName);
+      return;
+    }
+
     if (
       hasEmptyFilename ||
       hasNoExtension ||
@@ -412,7 +422,8 @@ FileNode.propTypes = {
   canEdit: PropTypes.bool.isRequired,
   openUploadFileModal: PropTypes.func.isRequired,
   authenticated: PropTypes.bool.isRequired,
-  onClickFile: PropTypes.func
+  onClickFile: PropTypes.func,
+  showToast: PropTypes.func.isRequired
 };
 
 FileNode.defaultProps = {
@@ -433,7 +444,11 @@ function mapStateToProps(state, ownProps) {
   });
 }
 
-const mapDispatchToProps = { ...FileActions, ...IDEActions };
+const mapDispatchToProps = {
+  ...FileActions,
+  ...IDEActions,
+  showToast: showToastAction
+};
 
 const ConnectedFileNode = connect(
   mapStateToProps,
