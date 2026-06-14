@@ -7,6 +7,8 @@ import { useSelector } from 'react-redux';
 
 import * as IDEActions from '../actions/ide';
 import * as FileActions from '../actions/files';
+import { showToast as showToastAction } from '../actions/toast';
+import { CREATE_FILE_REGEX } from '../../../../server/utils/fileUtils';
 import DownArrowIcon from '../../../images/down-filled-triangle.svg';
 import FolderRightIcon from '../../../images/triangle-arrow-right.svg';
 import FolderDownIcon from '../../../images/triangle-arrow-down.svg';
@@ -82,7 +84,8 @@ const FileNode = ({
   canEdit,
   openUploadFileModal,
   authenticated,
-  onClickFile
+  onClickFile,
+  showToast
 }) => {
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
   const [isEditingName, setIsEditingName] = useState(false);
@@ -186,23 +189,42 @@ const FileNode = ({
     const oldFileExtension = currentName.match(/\.[0-9a-z]+$/i);
     const newFileExtension = updatedName.match(/\.[0-9a-z]+$/i);
     const hasPeriod = updatedName.match(/\.+/);
-    const hasNoExtension = oldFileExtension && !newFileExtension;
-    const hasExtensionIfFolder = fileType === 'folder' && hasPeriod;
     const notSameExtension =
       oldFileExtension &&
       newFileExtension &&
       oldFileExtension[0].toLowerCase() !== newFileExtension[0].toLowerCase();
     const hasEmptyFilename = updatedName.trim() === '';
-    const hasOnlyExtension =
-      newFileExtension && updatedName.trim() === newFileExtension[0];
-    if (
-      hasEmptyFilename ||
-      hasNoExtension ||
-      hasOnlyExtension ||
-      hasExtensionIfFolder
-    ) {
+
+    // Check empty filename
+    if (hasEmptyFilename) {
+      if (fileType === 'folder') {
+        showToast(t('NewFolderModal.EnterName'));
+      } else {
+        showToast(t('NewFileModal.EnterName'));
+      }
       setUpdatedName(currentName);
-    } else if (notSameExtension) {
+      return;
+    }
+
+    // Check folder specific rules
+    if (fileType === 'folder') {
+      if (hasPeriod) {
+        showToast(t('NewFolderModal.InvalidExtension'));
+        setUpdatedName(currentName);
+        return;
+      }
+    }
+
+    // Check file specific rules
+    if (fileType === 'file') {
+      if (!updatedName.match(CREATE_FILE_REGEX)) {
+        showToast(t('NewFileModal.InvalidType'));
+        setUpdatedName(currentName);
+        return;
+      }
+    }
+
+    if (notSameExtension) {
       const userResponse = window.confirm(
         'Are you sure you want to change the file extension?'
       );
@@ -412,7 +434,8 @@ FileNode.propTypes = {
   canEdit: PropTypes.bool.isRequired,
   openUploadFileModal: PropTypes.func.isRequired,
   authenticated: PropTypes.bool.isRequired,
-  onClickFile: PropTypes.func
+  onClickFile: PropTypes.func,
+  showToast: PropTypes.func.isRequired
 };
 
 FileNode.defaultProps = {
@@ -433,7 +456,11 @@ function mapStateToProps(state, ownProps) {
   });
 }
 
-const mapDispatchToProps = { ...FileActions, ...IDEActions };
+const mapDispatchToProps = {
+  ...FileActions,
+  ...IDEActions,
+  showToast: showToastAction
+};
 
 const ConnectedFileNode = connect(
   mapStateToProps,
