@@ -254,6 +254,7 @@
     "fuse.js": "^6.6.2",
     "history": "^4.10.1",
     "htmlhint": "^0.15.1",
+    "http-proxy-middleware": "^3.0.5",
     "i18next": "^19.9.2",
     "i18next-http-backend": "^1.2.6",
     "is-url": "^1.2.4",

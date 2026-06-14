@@ -42,7 +42,7 @@ mongoose.connection.on('error', (err) => {
 const allowedCorsOrigins = [
   /p5js\.org$/,
   process.env.EDITOR_URL,
-  process.env.PREVIEW_URL
+  process.env.PREVIEW_SERVER_URL
 ];
 
 // to allow client-only development
