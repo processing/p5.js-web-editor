@@ -105,7 +105,7 @@ export const completionPreviewTheme = EditorView.theme({
     opacity: '0.55',
     fontStyle: 'italic',
     pointerEvents: 'none',
-    whiteSpace: 'pre'
+    whiteSpace: 'pre-wrap'
   }
 });
 

@@ -8,8 +8,17 @@
     color: getThemifyVariable('primary-text-color');
   }
 
+  .cm-scroller {
+    font-family: Inconsolata, monospace;
+    line-height: 1.2;
+  }
+
   .cm-content {
     padding-top: #{math.div(25, $base-font-size)}rem;
+
+    .cm-line {
+      padding: 0 #{math.div(4, $base-font-size)}rem;
+    }
 
     .cm-activeLine {
       // Needed to place the active line highlight behind the selection highlight.
@@ -31,7 +40,7 @@
       }
     }
 
-    .cm-errorLine.cm-activeLine, 
+    .cm-errorLine.cm-activeLine,
     .cm-errorLine {
       background-color: rgb(255 95 82 / 30%);
     }
@@ -70,6 +79,8 @@
       color: getThemifyVariable('inactive-text-color');
     }
     pointer-events: none;
+    position:absolute;
+    right: 20%;
   }
 
   .cm-activeLineGutter {
@@ -157,14 +168,9 @@
 
 // CM5: .CodeMirror-foldgutter-open, .CodeMirror-foldgutter-folded
 .cm-foldGutter {
-  padding-right: #{math.div(3, $base-font-size)}rem;
-}
-
-.cm-foldGutter .cm-gutterElement {
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: absolute;
+  right: 1px;
 }
 
 // CM5: .CodeMirror-foldgutter-open:after / .CodeMirror-foldgutter-folded:after
@@ -173,10 +179,13 @@
   display: inline-block;
   width: #{math.div(10, $base-font-size)}rem;
   height: #{math.div(10, $base-font-size)}rem;
-  background-size: #{math.div(10, $base-font-size)}rem #{math.div(10, $base-font-size)}rem;
+  background-size: #{math.div(10, $base-font-size)}rem #{math.div(
+      10,
+      $base-font-size
+    )}rem;
   background-repeat: no-repeat;
   background-position: center center;
-  opacity: 0.4;
+  opacity: 0.2;
 }
 
 .cm-fold-open {

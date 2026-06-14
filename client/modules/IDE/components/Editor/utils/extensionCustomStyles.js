@@ -8,7 +8,8 @@
  * stateUtils when creating a new file state.
  */
 export const createAutocompleteOptions = (referenceBaseUrl) => ({
-  selectOnOpen: false,
+  defaultKeymap: false,
+  selectOnOpen: true,
   tooltipClass: () => 'CodeMirror-hints',
   closeOnBlur: false,
   icons: false,

@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import { EditorView, runScopeHandlers } from '@codemirror/view';
-import { createNewFileState } from './fileState';
+import { createNewFileState, getFileMode } from './fileState';
 
 const defaultSettings = {
   linewrap: false,
@@ -59,5 +59,215 @@ describe('createNewFileState — Tidy keyboard shortcut', () => {
     expect(htmlView.state.doc.toString()).toBe(
       '<html>\n  <body>\n    hello\n  </body>\n</html>\n'
     );
+  });
+});
+
+describe('createNewFileState - Settings', () => {
+  it('Enables line wrap', () => {
+    const fileName = 'file1.js';
+    const content = ``;
+    const settings = {
+      linewrap: true,
+      lineNumbers: true,
+      autocomplete: false,
+      autocloseBracketsQuotes: false,
+      onUpdateLinting: jest.fn(),
+      onViewUpdate: jest.fn()
+    };
+    const result = createNewFileState(fileName, content, settings);
+
+    const parent = document.createElement('div');
+    const cmView = new EditorView({ state: result.cmState, parent });
+    const div = parent.querySelector('.cm-lineWrapping');
+
+    expect(div).not.toBeNull();
+    cmView.destroy();
+  });
+
+  it('Disable line wrap', () => {
+    const fileName = 'file1.js';
+    const content = ``;
+    const settings = {
+      linewrap: false,
+      lineNumbers: true,
+      autocomplete: false,
+      autocloseBracketsQuotes: false,
+      onUpdateLinting: jest.fn(),
+      onViewUpdate: jest.fn()
+    };
+    const result = createNewFileState(fileName, content, settings);
+
+    const parent = document.createElement('div');
+    const cmView = new EditorView({ state: result.cmState, parent });
+    const div = parent.querySelector('.cm-lineWrapping');
+
+    expect(div).toBeNull();
+    cmView.destroy();
+  });
+
+  it('Enables line numbers', () => {
+    const fileName = 'file1.js';
+    const content = ``;
+    const settings = {
+      linewrap: false,
+      lineNumbers: true,
+      autocomplete: false,
+      autocloseBracketsQuotes: false,
+      onUpdateLinting: jest.fn(),
+      onViewUpdate: jest.fn()
+    };
+    const result = createNewFileState(fileName, content, settings);
+
+    const parent = document.createElement('div');
+    const cmView = new EditorView({ state: result.cmState, parent });
+    const div = parent.querySelector('.cm-lineNumbers');
+
+    expect(div).not.toBeNull();
+    cmView.destroy();
+  });
+
+  it('Disable line numbers', () => {
+    const fileName = 'file1.js';
+    const content = ``;
+    const settings = {
+      linewrap: false,
+      lineNumbers: false,
+      autocomplete: false,
+      autocloseBracketsQuotes: false,
+      onUpdateLinting: jest.fn(),
+      onViewUpdate: jest.fn()
+    };
+    const result = createNewFileState(fileName, content, settings);
+
+    const parent = document.createElement('div');
+    const cmView = new EditorView({ state: result.cmState, parent });
+    const div = parent.querySelector('.cm-lineNumbers');
+
+    expect(div).toBeNull();
+    cmView.destroy();
+  });
+
+  it('Enables autoclose brackets and quotes', () => {
+    const fileName = 'file1.js';
+    const content = ``;
+    const settings = {
+      linewrap: false,
+      lineNumbers: false,
+      autocomplete: false,
+      autocloseBracketsQuotes: true,
+      onUpdateLinting: jest.fn(),
+      onViewUpdate: jest.fn()
+    };
+
+    const result = createNewFileState(fileName, content, settings);
+
+    expect(result.closeBracketsCpt.get(result.cmState).length).toBeGreaterThan(
+      0
+    );
+  });
+
+  it('Disable autoclose brackets and quotes', () => {
+    const fileName = 'file1.js';
+    const content = ``;
+    const settings = {
+      linewrap: false,
+      lineNumbers: false,
+      autocomplete: false,
+      autocloseBracketsQuotes: false,
+      onUpdateLinting: jest.fn(),
+      onViewUpdate: jest.fn()
+    };
+
+    const result = createNewFileState(fileName, content, settings);
+
+    expect(result.closeBracketsCpt.get(result.cmState).length).toBe(0);
+  });
+});
+
+describe('getFileMode', () => {
+  it('Returns correct javascript file mode', () => {
+    const fileName = 'file1.js';
+    const mode = getFileMode(fileName);
+    const expectedMode = 'javascript';
+
+    expect(mode).toBe(expectedMode);
+  });
+
+  it('Returns correct css file mode', () => {
+    const fileName = 'file1.css';
+    const mode = getFileMode(fileName);
+    const expectedMode = 'css';
+
+    expect(mode).toBe(expectedMode);
+  });
+
+  it('Returns correct html file mode', () => {
+    const fileName = 'file1.html';
+    const mode = getFileMode(fileName);
+    const expectedMode = 'html';
+
+    expect(mode).toBe(expectedMode);
+  });
+
+  it('Returns correct xml file mode', () => {
+    const fileName = 'file1.xml';
+    const mode = getFileMode(fileName);
+    const expectedMode = 'xml';
+
+    expect(mode).toBe(expectedMode);
+  });
+
+  it('Returns correct json file mode', () => {
+    const fileName = 'file1.json';
+    const mode = getFileMode(fileName);
+    const expectedMode = 'application/json';
+
+    expect(mode).toBe(expectedMode);
+  });
+
+  it('Returns correct frag|glsl file mode', () => {
+    const fileName = 'file1.frag';
+    const fileName2 = 'file2.glsl';
+    const mode = getFileMode(fileName);
+    const mode2 = getFileMode(fileName2);
+    const expectedMode = 'x-shader/x-fragment';
+
+    expect(mode).toBe(expectedMode);
+    expect(mode2).toBe(expectedMode);
+  });
+
+  it('Returns correct vert|stl|mtl file mode', () => {
+    const fileName = 'file1.vert';
+    const fileName2 = 'file2.stl';
+    const fileName3 = 'file3.mtl';
+    const mode = getFileMode(fileName);
+    const mode2 = getFileMode(fileName2);
+    const mode3 = getFileMode(fileName3);
+    const expectedMode = 'x-shader/x-vertex';
+
+    expect(mode).toBe(expectedMode);
+    expect(mode2).toBe(expectedMode);
+    expect(mode3).toBe(expectedMode);
+  });
+
+  it('Returns plain text otherwise file mode', () => {
+    const fileName = 'file1.py';
+    const mode = getFileMode(fileName);
+    const expectedMode = 'text/plain';
+    expect(mode).toBe(expectedMode);
+  });
+
+  it('Empty fileName', () => {
+    const fileName = '';
+    const mode = getFileMode(fileName);
+    const expectedMode = 'text/plain';
+    expect(mode).toBe(expectedMode);
+  });
+
+  it('Unknown fileName', () => {
+    const fileName = 'file1.xyz';
+    const mode = getFileMode(fileName);
+    const expectedMode = 'text/plain';
+    expect(mode).toBe(expectedMode);
   });
 });

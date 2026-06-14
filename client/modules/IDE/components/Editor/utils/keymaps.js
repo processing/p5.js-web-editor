@@ -1,13 +1,14 @@
 import {
   completionStatus,
   selectedCompletionIndex,
-  closeBracketsKeymap
+  closeBracketsKeymap,
+  completionKeymap,
+  acceptCompletion
 } from '@codemirror/autocomplete';
 import {
-  insertTab,
-  indentLess,
   defaultKeymap,
-  historyKeymap
+  historyKeymap,
+  indentWithTab
 } from '@codemirror/commands';
 import { foldKeymap } from '@codemirror/language';
 import { searchKeymap } from '@codemirror/search';
@@ -77,11 +78,22 @@ export function openColorPickerWithKeyboard(view) {
 // Extra custom keymaps.
 // TODO: We need to add sublime mappings + other missing extra mappings here.
 export const extraKeymaps = [
+  {
+    key: 'Mod-Enter',
+    run: () => true
+  },
   { key: 'ArrowRight', run: focusOnReferenceArrow },
-  { key: 'Tab', run: insertTab, shift: indentLess }
+  indentWithTab
 ];
 
 export const emmetKeymaps = [{ key: 'Tab', run: expandAbbreviation }];
+
+function createAutocompleteKeymap() {
+  return [
+    ...completionKeymap.filter((binding) => binding.key !== 'Ctrl-Space'),
+    { key: 'Tab', run: acceptCompletion }
+  ];
+}
 
 function createColorPickerKeymap(mode) {
   const colorPickerKeymap = [];
@@ -116,10 +128,12 @@ function createFileTidyKeymap(mode) {
 }
 
 export function buildKeymaps(mode) {
+  const autocompleteKeymap = createAutocompleteKeymap();
   const colorPickerKeymap = createColorPickerKeymap(mode);
   const fileTidyKeymap = createFileTidyKeymap(mode);
 
   return [
+    autocompleteKeymap,
     extraKeymaps,
     colorPickerKeymap,
     fileTidyKeymap,

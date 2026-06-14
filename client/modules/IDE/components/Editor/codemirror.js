@@ -46,23 +46,30 @@ export default function useCodeMirror({
   // The current codemirror files.
   const fileStates = useRef();
 
-  // We have to create a ref for the file ID, or else the debouncer
-  // will old onto an old version of the fileId and just overrwrite the initial file.
-  const fileId = useRef();
-  fileId.current = file.id;
+  // We store values used by the debounced onChange callback in a ref.
+  // Otherwise it can hold onto stale React state
+  const onChangeStateRef = useRef({});
+  onChangeStateRef.current = {
+    fileId: file.id,
+    autorefresh,
+    project,
+    files
+  };
 
   // When the file changes, update the file content and save status.
   function onChange() {
+    const state = onChangeStateRef.current;
+
     setUnsavedChanges(true);
-    updateFileContent(fileId.current, cmView.current.state.doc.toString());
+    updateFileContent(state.fileId, cmView.current.state.doc.toString());
 
     // Save a local backup to localStorage for crash recovery (#3891).
     // This ensures work is recoverable even if the tab crashes
     // (e.g. from an infinite loop) before the server autosave fires.
-    const projectId = project?.id || 'unsaved';
-    saveLocalBackup(projectId, files);
+    const projectId = state.project?.id || 'unsaved';
+    saveLocalBackup(projectId, state.files);
 
-    if (autorefresh) {
+    if (state.autorefresh) {
       clearConsole();
       startSketch();
     }

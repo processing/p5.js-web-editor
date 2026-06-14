@@ -2,11 +2,7 @@ import PropTypes from 'prop-types';
 import React, { useRef, useEffect } from 'react';
 import { EditorState } from '@codemirror/state';
 import { EditorView, highlightSpecialChars, keymap } from '@codemirror/view';
-import {
-  bracketMatching,
-  syntaxHighlighting,
-  defaultHighlightStyle
-} from '@codemirror/language';
+import { bracketMatching, syntaxHighlighting } from '@codemirror/language';
 import { closeBrackets, closeBracketsKeymap } from '@codemirror/autocomplete';
 import { defaultKeymap, history, historyKeymap } from '@codemirror/commands';
 import { javascript } from '@codemirror/lang-javascript';
@@ -17,6 +13,7 @@ import { Encode } from 'console-feed';
 import RightArrowIcon from '../../../images/right-arrow.svg';
 import { dispatchConsoleEvent } from '../actions/console';
 import { dispatchMessage, MessageTypes } from '../../../utils/dispatcher';
+import { highlightStyle } from './Editor/utils/highlightStyle';
 
 // heavily inspired by
 // https://github.com/codesandbox/codesandbox-client/blob/92a1131f4ded6f7d9c16945dc7c18aa97c8ada27/packages/app/src/app/components/Preview/DevTools/Console/Input/index.tsx
@@ -119,7 +116,7 @@ function ConsoleInput({ theme, fontSize }) {
         highlightSpecialChars(),
         bracketMatching(),
         closeBrackets(),
-        syntaxHighlighting(defaultHighlightStyle),
+        syntaxHighlighting(highlightStyle),
         javascript(),
         keymap.of([
           enterKeymap,
