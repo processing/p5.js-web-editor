@@ -101,7 +101,8 @@ function Editor({
     codemirrorView,
     getContent,
     tidyCode,
-    showSearch
+    showSearch,
+    updateEditorFileContent
   } = useCodeMirror({
     project,
     lineNumbers,
@@ -126,9 +127,10 @@ function Editor({
     provideController({
       tidyCode,
       getContent,
-      showSearch
+      showSearch,
+      updateFileContent: updateEditorFileContent
     });
-  }, [tidyCode, showSearch, getContent]);
+  }, [tidyCode, showSearch, getContent, updateEditorFileContent]);
 
   // When the CM container div mounts, we set up CodeMirror.
   const onContainerMounted = useCallback(setupCodeMirrorOnContainerMounted, []);
