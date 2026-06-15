@@ -11,7 +11,8 @@ const defaultSettings = {
   autocloseBracketsQuotes: false,
   onUpdateLinting: () => {},
   onViewUpdate: () => {},
-  referenceBaseUrl: 'https://p5js.org'
+  referenceBaseUrl: 'https://p5js.org',
+  p5Version: '1.11.13'
 };
 
 function mountFile(filename, doc) {

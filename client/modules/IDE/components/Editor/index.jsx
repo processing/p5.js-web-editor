@@ -32,6 +32,7 @@ import { FolderIcon } from '../../../../common/icons';
 import { IconButton } from '../../../../common/IconButton';
 
 import useCodeMirror from './codemirror';
+import { useP5Version } from '../../hooks/useP5Version';
 
 import {
   addErrorDecoration,
@@ -78,6 +79,7 @@ function Editor({
   collapseSidebar,
   expandSidebar
 }) {
+  const { versionInfo } = useP5Version();
   const [currentLine, setCurrentLine] = useState(1);
   const beep = useRef();
 
@@ -118,7 +120,8 @@ function Editor({
     fontSize,
     updateLintingMessageAccessibility,
     setCurrentLine,
-    referenceBaseUrl: getReferenceBaseUrl(htmlFile)
+    referenceBaseUrl: getReferenceBaseUrl(htmlFile),
+    p5Version: versionInfo?.version
   });
 
   // Lets the parent component access file content-specific functionality...
