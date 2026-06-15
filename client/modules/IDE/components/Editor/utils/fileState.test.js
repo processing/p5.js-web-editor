@@ -7,7 +7,7 @@ import { createNewFileState, getFileMode } from './fileState';
 const defaultSettings = {
   linewrap: false,
   lineNumbers: false,
-  autocomplete: false,
+  autocomplete: true,
   autocloseBracketsQuotes: false,
   onUpdateLinting: () => {},
   onViewUpdate: () => {},
@@ -69,7 +69,7 @@ describe('createNewFileState - Settings', () => {
     const settings = {
       linewrap: true,
       lineNumbers: true,
-      autocomplete: false,
+      autocomplete: true,
       autocloseBracketsQuotes: false,
       onUpdateLinting: jest.fn(),
       onViewUpdate: jest.fn()
@@ -90,7 +90,7 @@ describe('createNewFileState - Settings', () => {
     const settings = {
       linewrap: false,
       lineNumbers: true,
-      autocomplete: false,
+      autocomplete: true,
       autocloseBracketsQuotes: false,
       onUpdateLinting: jest.fn(),
       onViewUpdate: jest.fn()
@@ -111,7 +111,7 @@ describe('createNewFileState - Settings', () => {
     const settings = {
       linewrap: false,
       lineNumbers: true,
-      autocomplete: false,
+      autocomplete: true,
       autocloseBracketsQuotes: false,
       onUpdateLinting: jest.fn(),
       onViewUpdate: jest.fn()
@@ -132,7 +132,7 @@ describe('createNewFileState - Settings', () => {
     const settings = {
       linewrap: false,
       lineNumbers: false,
-      autocomplete: false,
+      autocomplete: true,
       autocloseBracketsQuotes: false,
       onUpdateLinting: jest.fn(),
       onViewUpdate: jest.fn()
@@ -153,7 +153,7 @@ describe('createNewFileState - Settings', () => {
     const settings = {
       linewrap: false,
       lineNumbers: false,
-      autocomplete: false,
+      autocomplete: true,
       autocloseBracketsQuotes: true,
       onUpdateLinting: jest.fn(),
       onViewUpdate: jest.fn()
@@ -172,7 +172,7 @@ describe('createNewFileState - Settings', () => {
     const settings = {
       linewrap: false,
       lineNumbers: false,
-      autocomplete: false,
+      autocomplete: true,
       autocloseBracketsQuotes: false,
       onUpdateLinting: jest.fn(),
       onViewUpdate: jest.fn()
