@@ -9,10 +9,15 @@ import passport from 'passport';
 import path from 'path';
 import basicAuth from 'express-basic-auth';
 
+// Swagger Open Api requirements:
+import swaggerUi from 'swagger-ui-express';
+import YAML from 'yamljs';
+
 // Webpack Requirements
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from '@gatsbyjs/webpack-hot-middleware';
+
 import config from '../webpack/config.dev';
 
 // Import all required modules
@@ -32,6 +37,7 @@ import { renderIndex } from './views/index';
 import { get404Sketch } from './views/404Page';
 
 const app = new Express();
+const swaggerDocument = YAML.load('./common/openapi.yaml');
 
 app.get('/health', (req, res) => res.json({ success: true }));
 
@@ -55,6 +61,9 @@ if (process.env.NODE_ENV === 'development') {
     })
   );
   app.use(webpackHotMiddleware(compiler, { log: false }));
+
+  // Show swagger openapi docs in local development only?
+  app.use('/open-api', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 }
 
 const mongoConnectionString = process.env.MONGO_URL;

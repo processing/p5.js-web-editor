@@ -1,0 +1,461 @@
+openapi: 3.1.0
+info:
+  title: p5.js Web Editor - 1.11.10
+  description: |-
+    This is the api for the p5.js Web Editor
+  contact:
+    email: hello@p5js.org
+  license:
+    name: GNU LESSER GENERAL PUBLIC LICENSE 2.0
+    url: https://github.com/processing/p5.js/blob/main/license.txt
+  version: 1.11.10
+externalDocs:
+  description: Find out more about the p5.js library
+  url: https://p5js.org/
+servers:
+  - url: https://editor.p5js.org
+    description: Production server
+  - url: http://localhost:8000
+    description: Location development server
+tags:
+  - name: Auth
+    description: Signup, login, verification, and password reset endpoints
+  - name: Account
+    description: Authenticated user account and API key management
+  - name: Preferences
+    description: User preference and cookie consent endpoints
+paths:
+  /editor/signup:
+    post:
+      summary: Create a new user
+      operationId: createUser
+      tags: [Auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserRequestBody'
+      responses:
+        '200':
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicUser'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /editor/signup/duplicate_check:
+    get:
+      summary: Check for duplicate email or username
+      operationId: duplicateUserCheck
+      tags: [Auth]
+      parameters:
+        - name: check_type
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [email, username]
+        - name: email
+          in: query
+          schema:
+            type: string
+        - name: username
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Returns whether the email or username exists
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  exists:
+                    type: boolean
+                  message:
+                    type: string
+                  type:
+                    type: string
+
+  /editor/verify/send:
+    post:
+      summary: Send email verification link
+      operationId: emailVerificationInitiate
+      tags: [Auth]
+      security:
+        - cookieAuth: []
+      responses:
+        '200':
+          description: Verification email sent
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicUser'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          description: Email already verified
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /editor/verify:
+    get:
+      summary: Verify email using token
+      operationId: verifyEmail
+      tags: [Auth]
+      parameters:
+        - name: t
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Email verified successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /editor/account/api-keys:
+    post:
+      summary: Create API key
+      operationId: createApiKey
+      tags: [Account]
+      security:
+        - cookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateApiKeyRequestBody'
+      responses:
+        '200':
+          description: API key created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiKeysResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /editor/account/api-keys/{keyId}:
+    delete:
+      summary: Remove API key
+      operationId: removeApiKey
+      tags: [Account]
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: keyId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: API key removed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiKeysResponse'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /editor/reset-password:
+    post:
+      summary: Initiate password reset
+      operationId: resetPasswordInitiate
+      tags: [Auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResetPasswordInitiateRequestBody'
+      responses:
+        '200':
+          description: Reset email sent (even if user not found)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponseBody'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /editor/reset-password/{token}:
+    get:
+      summary: Validate reset password token
+      operationId: validateResetPasswordToken
+      tags: [Auth]
+      parameters:
+        - name: token
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Token valid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponseBody'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      summary: Update password using token
+      operationId: updatePassword
+      tags: [Auth]
+      parameters:
+        - name: token
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePasswordRequestBody'
+      responses:
+        '200':
+          description: Password updated successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /editor/account:
+    put:
+      summary: Update account settings
+      operationId: updateSettings
+      tags: [Account]
+      security:
+        - cookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateSettingsRequestBody'
+      responses:
+        '200':
+          description: Account updated successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /editor/auth/github:
+    delete:
+      summary: Unlink GitHub account
+      operationId: unlinkGithub
+      tags: [Auth]
+      responses:
+        '200':
+          description: GitHub account unlinked
+        '404':
+          $ref: '#/components/responses/Unauthorized'
+
+  /editor/auth/google:
+    delete:
+      summary: Unlink Google account
+      operationId: unlinkGoogle
+      tags: [Auth]
+      responses:
+        '200':
+          description: Google account unlinked
+        '404':
+          $ref: '#/components/responses/Unauthorized'
+
+  /editor/cookie-consent:
+    put:
+      summary: Update cookie consent
+      operationId: updateCookieConsent
+      tags: [Preferences]
+      security:
+        - cookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCookieConsentRequestBody'
+      responses:
+        '200':
+          description: Cookie consent updated
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /editor/preferences:
+    put:
+      summary: Update user preferences
+      operationId: updatePreferences
+      tags: [Preferences]
+      security:
+        - cookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePreferencesRequestBody'
+      responses:
+        '200':
+          description: Preferences updated
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+components:
+  # TODO: not sure how passport works here
+  # securitySchemes:
+  #   cookieAuth:
+  #     type: apiKey
+  #     in: cookie
+  #     name: sessionId
+
+  responses:
+    Unauthorized:
+      description: Unauthorized or invalid token
+    NotFound:
+      description: Resource not found
+    BadRequest:
+      description: Bad request
+    ValidationError:
+      description: Validation failed (e.g., duplicate email or username)
+    ServerError:
+      description: Internal server error
+
+  schemas:
+    PublicUser:
+      type: object
+      properties:
+        id:
+          type: string
+        username:
+          type: string
+        email:
+          type: string
+        verified:
+          type: string
+        preferences:
+          type: object
+          nullable: true
+
+    CreateUserRequestBody:
+      type: object
+      required: [username, email, password]
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          format: password
+
+    CreateApiKeyRequestBody:
+      type: object
+      required: [label]
+      properties:
+        label:
+          type: string
+          example: 'My Integration Key'
+
+    ApiKeysResponse:
+      type: object
+      properties:
+        apiKeys:
+          type: array
+          items:
+            type: object
+            properties:
+              label:
+                type: string
+              token:
+                type: string
+                nullable: true
+              id:
+                type: string
+
+    ResetPasswordInitiateRequestBody:
+      type: object
+      required: [email]
+      properties:
+        email:
+          type: string
+          format: email
+
+    UpdatePasswordRequestBody:
+      type: object
+      required: [password]
+      properties:
+        password:
+          type: string
+          format: password
+
+    UpdateSettingsRequestBody:
+      type: object
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+          format: email
+        currentPassword:
+          type: string
+          format: password
+        newPassword:
+          type: string
+          format: password
+
+    UpdateCookieConsentRequestBody:
+      type: object
+      required: [cookieConsent]
+      properties:
+        cookieConsent:
+          type: boolean
+
+    UpdatePreferencesRequestBody:
+      type: object
+      required: [preferences]
+      properties:
+        preferences:
+          type: object
+          example:
+            appTheme: 'dark'
+
+    GenericResponseBody:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
