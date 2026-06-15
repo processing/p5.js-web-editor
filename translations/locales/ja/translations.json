@@ -436,6 +436,7 @@
       "AddSketch": "スケッチを追加する",
       "DeleteFromCollection": "このコレクションから {{name_sketch}} を削除してもよろしいですか？",
       "SketchDeleted": "スケッチが削除されました",
+    "SketchRemoveLabel": "Remove from Collection",
       "SketchRemoveARIA": "コレクションからスケッチを削除する",
       "DescriptionPlaceholder": "スケッチについて記述する",
       "Description": "コレクションについて",

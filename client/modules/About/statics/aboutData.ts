@@ -19,7 +19,7 @@ export const ContactSectionLinks: ContactSectionLink[] = [
   { label: 'About.X', href: 'https://x.com/p5xjs' },
   {
     label: 'About.Discord',
-    href: 'https://discord.gg/esmGA6H6wm'
+    href: 'https://discord.p5js.org'
   },
   {
     label: 'About.Forum',
@@ -87,7 +87,7 @@ export const AboutSectionInfo: AboutSectionInfoSection[] = [
         description: 'About.LinkDescriptions.Forum'
       },
       {
-        url: 'https://discord.com/invite/esmGA6H6wm',
+        url: 'https://discord.p5js.org',
         title: 'About.DiscordCTA',
         description: 'About.LinkDescriptions.Discord'
       }
