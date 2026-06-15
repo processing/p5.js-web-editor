@@ -19,6 +19,11 @@ localhost.key
 privkey.pem
 terraform/.terraform/
 
+# Playwright
+test-results/
+playwright-report/
+.playwright/
+
 storybook-static
 duplicates.json
 

@@ -6,9 +6,9 @@ export default defineConfig({
   timeout: 120_000,
 
   use: {
-    baseURL: 'http://localhost:8000',
-    headless: true,
+    baseURL: 'http://localhost:8000'
   },
+
   projects: [
     {
       name: 'chromium',
