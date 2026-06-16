@@ -91,12 +91,6 @@ test.describe('p5.js Editor – Playwright E2E', () => {
       { timeout: 10_000 }
     );
 
-    // Open console if collapsed
-    const openConsole = page.getByLabel('Open console');
-    if (await openConsole.isVisible().catch(() => false)) {
-      await openConsole.click();
-    }
-
     // Assert console output
     await expect(
       page.locator('.preview-console__messages')
