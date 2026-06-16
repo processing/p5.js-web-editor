@@ -1,6 +1,7 @@
 import * as acorn from 'acorn';
 import * as walk from 'acorn-walk';
 import escodegen from 'escodegen';
+import { hasNoProtect } from '../IDE/utils/loopProtection';
 
 const LOOP_TIMEOUT_MS = 100;
 
@@ -201,8 +202,8 @@ function parseJs(jsText) {
   }
 }
 
-export function jsPreprocess(jsText) {
-  if (/\/\/\s*noprotect/.test(jsText)) {
+export function jsPreprocess(jsText, indexSrc) {
+  if (hasNoProtect(indexSrc)) {
     return jsText;
   }
 
