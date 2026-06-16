@@ -72,7 +72,9 @@ export async function deleteObjectsFromS3(keyList) {
 export async function deleteObjectFromS3(req, res) {
   const userId = req.user.id;
   const { objectKey } = req.query;
-  const fullObjectKey = `${userId}/${objectKey}`;
+  const fullObjectKey = objectKey.startsWith('pending/')
+    ? objectKey
+    : `${userId}/${objectKey}`;
 
   try {
     await deleteObjectsFromS3([fullObjectKey]);
@@ -85,18 +87,31 @@ export async function deleteObjectFromS3(req, res) {
 
 export async function listObjectsInS3ForUser(userId) {
   try {
-    let assets = [];
-    const params = {
-      Bucket: process.env.S3_BUCKET,
-      Prefix: `${userId}/`
-    };
+    const [savedData, pendingData] = await Promise.all([
+      s3Client.send(
+        new ListObjectsCommand({
+          Bucket: process.env.S3_BUCKET,
+          Prefix: `${userId}/`
+        })
+      ),
+      s3Client.send(
+        new ListObjectsCommand({
+          Bucket: process.env.S3_BUCKET,
+          Prefix: `pending/${userId}/`
+        })
+      )
+    ]);
 
-    const data = await s3Client.send(new ListObjectsCommand(params));
-
-    assets = data.Contents?.map((object) => ({
-      key: object.Key,
-      size: object.Size
-    }));
+    const assets = [
+      ...(savedData.Contents?.map((object) => ({
+        key: object.Key,
+        size: object.Size
+      })) ?? []),
+      ...(pendingData.Contents?.map((object) => ({
+        key: object.Key,
+        size: object.Size
+      })) ?? [])
+    ];
 
     const projects = await Project.getProjectsForUserId(userId);
     const projectAssets = [];

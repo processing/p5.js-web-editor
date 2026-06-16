@@ -306,7 +306,7 @@ export function cloneProject(project) {
     generateNewIdsForChildren(rootFile, newFiles);
 
     // duplicate all files hosted on S3
-    const copiedS3Assets = [];
+    const copiedAssetKeys = [];
 
     each(
       newFiles,
@@ -318,16 +318,30 @@ export function cloneProject(project) {
           (file.url.includes(S3_BUCKET_URL_BASE) ||
             file.url.includes(S3_BUCKET))
         ) {
-          apiClient.post('/S3/copy', { url: file.url }).then((response) => {
-            file.url = response.data.url;
-            copiedS3Assets.push(response.data.url);
-            callback(null);
-          });
+          apiClient
+            .post('/S3/copy', { url: file.url })
+            .then((response) => {
+              file.url = response.data.url;
+              const objectKey = response.data.url.split('/').pop();
+              copiedAssetKeys.push(objectKey);
+              callback(null);
+            })
+            .catch(callback);
         } else {
           callback(null);
         }
       },
-      () => {
+      (err) => {
+        if (err) {
+          copiedAssetKeys.forEach((key) => {
+            apiClient.delete(`/S3/delete?objectKey=${key}`).catch(() => {});
+          });
+          dispatch({
+            type: ActionTypes.PROJECT_SAVE_FAIL,
+            error: err?.response?.data
+          });
+          return;
+        }
         const formParams = {
           name: `${projectName} copy`,
           files: newFiles
@@ -341,11 +355,8 @@ export function cloneProject(project) {
             dispatch(setNewProject(response.data));
           })
           .catch((error) => {
-            copiedS3Assets.forEach((url) => {
-              const objectKey = url.split('/').pop();
-              apiClient
-                .delete(`/S3/delete?objectKey=${objectKey}`)
-                .catch(() => {});
+            copiedAssetKeys.forEach((key) => {
+              apiClient.delete(`/S3/delete?objectKey=${key}`).catch(() => {});
             });
             dispatch({
               type: ActionTypes.PROJECT_SAVE_FAIL,
