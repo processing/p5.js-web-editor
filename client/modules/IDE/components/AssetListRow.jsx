@@ -34,9 +34,9 @@ AssetMenu.propTypes = {
     key: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    sketchId: PropTypes.string.isRequired,
-    fileId: PropTypes.string.isRequired,
-    parentId: PropTypes.string.isRequired
+    sketchId: PropTypes.string,
+    fileId: PropTypes.string,
+    parentId: PropTypes.string
   }).isRequired
 };
 
@@ -65,10 +65,10 @@ AssetListRow.propTypes = {
   asset: PropTypes.shape({
     key: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
-    sketchId: PropTypes.string.isRequired,
+    sketchId: PropTypes.string,
     sketchName: PropTypes.string,
-    fileId: PropTypes.string.isRequired,
-    parentId: PropTypes.string.isRequired,
+    fileId: PropTypes.string,
+    parentId: PropTypes.string,
     name: PropTypes.string.isRequired,
     size: PropTypes.number.isRequired
   }).isRequired,

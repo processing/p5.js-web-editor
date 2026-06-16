@@ -2,7 +2,6 @@ import { apiClient } from '../../../utils/apiClient';
 import * as ActionTypes from '../../../constants';
 import { startLoader, stopLoader } from '../reducers/loading';
 import { assetsActions } from '../reducers/assets';
-import { setProjectSavedTime } from './project';
 
 const { setAssets, deleteAsset } = assetsActions;
 
@@ -31,21 +30,26 @@ export function getAssets() {
 export function deleteAssetRequest(asset) {
   return async (dispatch, getState) => {
     try {
-      const response = await apiClient.delete(
-        `/projects/${asset.sketchId}/files/${asset.fileId}`,
-        { params: { parentId: asset.parentId } }
-      );
-      dispatch(deleteAsset(asset.key));
+      if (asset.sketchId) {
+        await apiClient.delete(
+          `/projects/${asset.sketchId}/files/${asset.fileId}`,
+          { params: { parentId: asset.parentId } }
+        );
 
-      const { project } = getState();
-      if (project.id === asset.sketchId) {
-        dispatch(setProjectSavedTime(response.data.project.updatedAt));
-        dispatch({
-          type: ActionTypes.DELETE_FILE,
-          id: asset.fileId,
-          parentId: asset.parentId
+        const { project } = getState();
+        if (project.id === asset.sketchId) {
+          dispatch({
+            type: ActionTypes.DELETE_FILE,
+            id: asset.fileId,
+            parentId: asset.parentId
+          });
+        }
+      } else {
+        await apiClient.delete('/S3/delete', {
+          params: { objectKey: asset.key }
         });
       }
+      dispatch(deleteAsset(asset.key));
     } catch (error) {
       dispatch({
         type: ActionTypes.ERROR
