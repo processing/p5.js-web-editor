@@ -152,6 +152,8 @@
     "OpenedNewSketch": "Opened new sketch.",
     "SketchSaved": "Sketch saved.",
     "SketchFailedSave": "Failed to save sketch.",
+    "SketchDownloaded": "Sketch downloaded.",
+    "SketchFailedDownload": "Failed to download sketch.",
     "AutosaveEnabled": "Autosave enabled.",
     "LangChange": "Language changed",
     "SettingsSaved": "Settings saved.",

@@ -44,6 +44,14 @@ export interface CodeTabPayload {
   orderID: number;
 }
 
+export interface ZipEntry {
+  path: string;
+  // Text code tabs carry their content inline; uploaded assets carry a url
+  // pointing at OP storage (S3/CloudFront) and must be fetched.
+  content?: string;
+  url?: string;
+}
+
 function splitPath(name: string): { folders: string[]; basename: string } {
   const parts = name.split('/').filter(Boolean);
   const basename = parts.pop() ?? name;
@@ -214,4 +222,15 @@ export function editorFilesToCodeTabs(files: EditorFile[]): CodeTabPayload[] {
     code: f.content,
     orderID: index
   }));
+}
+
+// Flatten editor files into zip entries, keeping their full folder paths.
+// Code tabs keep their inline content; uploaded assets keep their storage url.
+export function editorFilesToZipEntries(files: EditorFile[]): ZipEntry[] {
+  return files
+    .filter((f) => f.fileType === 'file')
+    .map((f) => ({
+      path: getFilePath(f),
+      ...(f.url ? { url: f.url } : { content: f.content })
+    }));
 }

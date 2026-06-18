@@ -1,9 +1,11 @@
+import JSZip from 'jszip';
 import browserHistory from '../../../browserHistory';
 import { opApiClient } from '../../../utils/opApiClient';
 import {
   opSketchToProject,
   opVisualIdToProjectId,
   editorFilesToCodeTabs,
+  editorFilesToZipEntries,
   visibilityToOpPrivacy
 } from '../../../utils/opSketchAdapter';
 import * as ActionTypes from '../../../constants';
@@ -299,7 +301,46 @@ export function autosaveProject() {
 }
 
 export function exportProjectAsZip() {
-  // ZIP export is not available in the OP API yet
+  return async (dispatch, getState) => {
+    const { files, project } = getState();
+    const entries = editorFilesToZipEntries(files);
+
+    try {
+      const zip = new JSZip();
+
+      await Promise.all(
+        entries.map(async (entry) => {
+          if (entry.url) {
+            // Uploaded asset: fetch the bytes from OP storage (S3/CloudFront).
+            const res = await fetch(entry.url);
+            if (!res.ok) {
+              throw new Error(`Failed to fetch ${entry.path}: ${res.status}`);
+            }
+            zip.file(entry.path, await res.blob());
+          } else {
+            zip.file(entry.path, entry.content ?? '');
+          }
+        })
+      );
+
+      const blob = await zip.generateAsync({ type: 'blob' });
+      const filename = `sketch${project.id || project.name || 'export'}.zip`;
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+
+      dispatch(setToastText('Toast.SketchDownloaded'));
+      dispatch(showToast(1500));
+    } catch (error) {
+      dispatch(setToastText('Toast.SketchFailedDownload'));
+      dispatch(showToast(1500));
+    }
+  };
 }
 
 export function resetProject() {

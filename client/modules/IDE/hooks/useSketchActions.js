@@ -43,7 +43,7 @@ const useSketchActions = () => {
   function downloadSketch() {
     if (authenticated && user.id === project.owner.id) {
       dispatch(autosaveProject());
-      exportProjectAsZip(project.id);
+      dispatch(exportProjectAsZip());
     }
   }
 
