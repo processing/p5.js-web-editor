@@ -1,6 +1,6 @@
 {
   "name": "p5.js-web-editor",
-  "version": "2.20.9",
+  "version": "2.20.10",
   "description": "The web editor for p5.js.",
   "scripts": {
     "clean": "rimraf dist",
@@ -66,7 +66,12 @@
         "displayName": "client",
         "testEnvironment": "jsdom",
         "transform": {
-          "^.+\\.[jt]sx?$": "babel-jest"
+          "\\.[jt]sx?$": [
+            "babel-jest",
+            {
+              "configFile": "./.babelrc"
+            }
+          ]
         },
         "moduleFileExtensions": [
           "ts",
@@ -83,6 +88,9 @@
           "^.+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)(|\\?byContent|\\?byUrl)$": "<rootDir>/client/__mocks__/fileMock.js",
           "\\.(css|less|scss)$": "<rootDir>/client/__mocks__/styleMock.js"
         },
+        "transformIgnorePatterns": [
+          "<rootDir>/node_modules/(?!colors-named|colors-named-hex|hsl-matcher|@emmetio/)"
+        ],
         "testMatch": [
           "<rootDir>/client/**/*.test.(js|jsx|ts|tsx)"
         ]
@@ -145,6 +153,7 @@
     "@types/nodemailer": "^7.0.1",
     "@types/nodemailer-mailgun-transport": "^1.4.6",
     "@types/passport": "^1.0.17",
+    "@types/prettier": "^2.7.3",
     "@types/react": "^16.14.0",
     "@types/react-dom": "^16.9.25",
     "@types/react-helmet": "^6.1.11",
@@ -210,8 +219,23 @@
     "@babel/parser": "^7.27.5",
     "@babel/register": "^7.14.5",
     "@babel/traverse": "^7.27.4",
+    "@codemirror/autocomplete": "^6.18.6",
+    "@codemirror/commands": "^6.10.3",
+    "@codemirror/lang-css": "^6.3.1",
+    "@codemirror/lang-html": "^6.4.9",
+    "@codemirror/lang-javascript": "^6.2.3",
+    "@codemirror/lang-json": "^6.0.1",
+    "@codemirror/lang-xml": "^6.1.0",
+    "@codemirror/language": "^6.11.0",
+    "@codemirror/lint": "^6.8.5",
+    "@codemirror/search": "^6.5.11",
+    "@codemirror/state": "^6.5.2",
+    "@codemirror/view": "^6.40.0",
+    "@connieye/codemirror-color-picker": "^1.0.3",
     "@emmetio/codemirror-plugin": "^1.2.4",
+    "@emmetio/codemirror6-plugin": "^0.4.0",
     "@gatsbyjs/webpack-hot-middleware": "^2.25.3",
+    "@lezer/highlight": "^1.2.3",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.11",
     "@redux-devtools/core": "^3.11.0",
     "@redux-devtools/dock-monitor": "^3.0.1",
@@ -229,8 +253,7 @@
     "bson-objectid": "^2.0.3",
     "classnames": "^2.3.1",
     "clipboard": "^1.7.1",
-    "codemirror": "^5.62.0",
-    "codemirror-colorpicker": "^1.9.72",
+    "codemirror": "^6.0.1",
     "connect-mongo": "^5.1.0",
     "console-feed": "^3.2.0",
     "cookie-parser": "^1.4.5",
@@ -244,6 +267,7 @@
     "dropzone": "^4.3.0",
     "escape-string-regexp": "^1.0.5",
     "escodegen": "^2.1.0",
+    "eslint-linter-browserify": "^10.0.3",
     "eslint-scope": "^8.4.0",
     "eslint-webpack-plugin": "^3.1.1",
     "express": "^4.22.1",
@@ -253,7 +277,7 @@
     "friendly-words": "^1.2.1",
     "fuse.js": "^6.6.2",
     "history": "^4.10.1",
-    "htmlhint": "^0.15.1",
+    "htmlhint": "^0.15.2",
     "i18next": "^19.9.2",
     "i18next-http-backend": "^1.2.6",
     "is-url": "^1.2.4",
