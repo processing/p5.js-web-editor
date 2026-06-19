@@ -21,13 +21,14 @@
   @include themify() {
     border-bottom: 1px dashed map-get($theme-map, 'nav-border-color');
   }
-  // padding-left: #{math.div(20, $base-font-size)}rem;
+
+
 }
 
 .nav__menubar {
   display: flex;
   flex-direction: row;
-  width:100%;
+  width: 100%;
   justify-content: space-between;
 }
 
@@ -57,11 +58,11 @@
 }
 
 // base focus styles
-.nav__item button:focus {  
+.nav__item button:focus {
   @include themify() {
     background-color: getThemifyVariable('nav-hover-color');
   }
-  
+
   .nav__item-header {
     @include themify() {
       color: getThemifyVariable('button-hover-color');
@@ -73,11 +74,12 @@
     @include themify() {
       fill: getThemifyVariable('button-hover-color');
     }
-  }  
+  }
 }
 
 
 .nav__dropdown-item {
+
   & button:focus,
   & a:focus {
     @include themify() {
@@ -85,6 +87,7 @@
       background-color: getThemifyVariable('nav-hover-color');
     }
   }
+
   & button:focus .nav__keyboard-shortcut,
   & a:focus .nav__keyboard-shortcut {
     @include themify() {
@@ -93,6 +96,7 @@
   }
 
   &.nav__dropdown-item--disabled {
+
     & button,
     & a,
     & button:hover,
@@ -115,7 +119,7 @@
 }
 
 .nav__item--no-icon .nav__back-link {
-  padding-left: #{math.div(15, $base-font-size)}rem;
+  margin-left: #{math.div(15, $base-font-size)}rem;
 }
 
 .nav__item-header-triangle polygon,
@@ -135,8 +139,9 @@
       color: getThemifyVariable('button-hover-color');
     }
   }
-  
-  & g, & path {
+
+  & g,
+  & path {
     @include themify() {
       fill: getThemifyVariable('nav-hover-color');
     }
@@ -150,11 +155,24 @@
   }
 }
 
+
+.nav__item.nav__item--no-icon:hover {
+  background-color: transparent;
+
+  .nav__back-link {
+    @include themify() {
+      background-color: getThemifyVariable('nav-hover-color');
+    }
+  }
+}
+
 .nav__item-header:hover {
   @include themify() {
     color: getThemifyVariable('nav-hover-color');
   }
-  & g, & path {
+
+  & g,
+  & path {
     @include themify() {
       fill: getThemifyVariable('nav-hover-color');
     }
@@ -162,17 +180,17 @@
 }
 
 .nav__item-header-triangle {
-	margin-left: #{math.div(5, $base-font-size)}rem;
+  margin-left: #{math.div(5, $base-font-size)}rem;
 }
 
 .nav__dropdown {
   @include themify() {
-      color: getThemifyVariable('nav-hover-color');
-    }
+    color: getThemifyVariable('nav-hover-color');
+  }
 }
 
 .nav__item-header-triangle {
-	margin-left: #{math.div(5, $base-font-size)}rem;
+  margin-left: #{math.div(5, $base-font-size)}rem;
 }
 
 .nav__dropdown {
@@ -180,6 +198,7 @@
   display: none;
   max-height: none;
   overflow: visible;
+
   .nav__item--open & {
     display: flex;
   }
@@ -215,6 +234,7 @@
 // }
 
 .nav__dropdown-item {
+
   & button,
   & a,
   & .tooltip-wrapper button,
@@ -227,6 +247,7 @@
   }
 
   &:hover {
+
     & .tooltip-wrapper button,
     & .tooltip-wrapper a {
       @include themify() {
@@ -255,8 +276,8 @@
 
 }
 
-.svg__logo g path{
-  
+.svg__logo g path {
+
   @include themify() {
     // Set internal color of the logo;
     fill: getThemifyVariable('logo-background-color');
@@ -282,13 +303,28 @@
 }
 
 .nav__back-icon {
-  & g, & path {
+
+  & g,
+  & path {
     opacity: 1;
+
     @include themify() {
       fill: getThemifyVariable('inactive-text-color');
     }
   }
+
   margin-right: #{math.div(5, $base-font-size)}rem;
+}
+
+
+.nav__item.nav__item--no-icon:hover .nav__back-icon {
+
+  & g,
+  & path {
+    @include themify() {
+      fill: getThemifyVariable('button-hover-color');
+    }
+  }
 }
 
 .nav__back-link {
@@ -297,4 +333,5 @@
   width: 100%;
   height: 100%;
   text-decoration: none;
+  padding: 0 #{math.div(10, $base-font-size)}rem;
 }
