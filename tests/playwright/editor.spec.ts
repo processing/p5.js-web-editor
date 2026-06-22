@@ -32,50 +32,15 @@ test.describe('p5.js Editor – Playwright E2E', () => {
       "  console.log('hi from sketch');",
       '  noLoop();',
       '}'
-    ].join('\n');
+    ].join(''); // Avoid newlines to prevent autocomplete from inserting unnecessary brackets
 
     // Wait for CodeMirror to be ready
-    await page.waitForFunction(
-      () => {
-        const wrapper = document.querySelector('.CodeMirror') as any;
-        return (wrapper?.CodeMirror?.getValue?.() ?? '').length > 0;
-      },
-      { timeout: 30_000 }
-    );
+    const editor = page.locator('.CodeMirror');
+    await expect(editor).toBeVisible({ timeout: 30_000 });
+    await editor.click();
 
-    // Update code via CodeMirror API + Redux dispatch
-    // (confirmed working approach from earlier diagnostic work)
-    await page.evaluate((code) => {
-      const cm = (document.querySelector('.CodeMirror') as any).CodeMirror;
-      cm.setValue(code);
-      cm.refresh();
-
-      const root = document.querySelector('#root') as any;
-      const fiberKey = Object.keys(root).find((k) =>
-        k.startsWith('__reactContainer')
-      );
-      let node = root[fiberKey];
-      let store: any = null;
-      while (node) {
-        if (node.memoizedProps?.store) {
-          store = node.memoizedProps.store;
-          break;
-        }
-        node = node.child;
-      }
-      if (!store) throw new Error('Redux store not found');
-
-      const selectedFile = store
-        .getState()
-        .files.find((f: any) => f.isSelectedFile);
-      if (!selectedFile) throw new Error('No selected file');
-
-      store.dispatch({
-        type: 'UPDATE_FILE_CONTENT',
-        id: selectedFile.id,
-        content: code
-      });
-    }, newCode);
+    await page.keyboard.press('Control+A');
+    await page.keyboard.type(newCode, { delay: 5 });
 
     await page.waitForTimeout(500);
 
