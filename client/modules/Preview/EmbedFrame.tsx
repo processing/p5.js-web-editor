@@ -95,7 +95,7 @@ function resolveJSLinksInString(content: string, files: PreviewFile[]) {
     }
   });
 
-  return jsPreprocess(newContent, indexSrc);
+  return jsPreprocess(newContent, indexSrc || '');
 }
 
 function resolveScripts(sketchDoc: Document, files: PreviewFile[]) {
@@ -178,7 +178,6 @@ function addLoopProtect(sketchDoc: Document, indexSrc: string) {
   scriptsInHTMLArray.forEach((script) => {
     script.innerHTML = jsPreprocess(script.innerHTML, indexSrc);
   });
-  });
 }
 
 interface InjectLocalFilesOptions {
@@ -252,10 +251,6 @@ p5.prototype.registerMethod('afterSetup', p5.prototype.ensureAccessibleCanvas);`
   sketchDoc.head.prepend(consoleErrorsScript);
 
   return `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
-}
-
-function getHtmlFile(files: PreviewFile[]) {
-  return files.find((file) => file.name.match(/.*\.html$/i));
 }
 
 interface EmbedFrameProps {
