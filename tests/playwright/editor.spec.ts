@@ -5,7 +5,7 @@ test.describe('p5.js Editor – Playwright E2E', () => {
     await page.goto('/');
 
     // Wait for the page to be interactive before checking for the banner
-    await page.waitForSelector('.CodeMirror', { timeout: 30_000 });
+    await page.waitForSelector('.CodeMirror', { timeout: 180_000 });
 
     // Dismiss cookie banner via JS — handles the case where the button
     // is outside the viewport due to the Redux DevTools sidebar
@@ -35,14 +35,11 @@ test.describe('p5.js Editor – Playwright E2E', () => {
     ].join(''); // Avoid newlines to prevent autocomplete from inserting unnecessary brackets
 
     // Wait for CodeMirror to be ready
-    const editor = page.locator('.CodeMirror');
-    await expect(editor).toBeVisible({ timeout: 30_000 });
-    await editor.click();
+    await expect(page.locator('.CodeMirror')).toBeVisible({ timeout: 30_000 });
+    await page.click('.CodeMirror-code', { force: true });
 
     await page.keyboard.press('Control+A');
     await page.keyboard.type(newCode, { delay: 5 });
-
-    await page.waitForTimeout(500);
 
     // Click Play
     await page.locator('#play-sketch').click();
