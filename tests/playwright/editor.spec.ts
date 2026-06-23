@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('p5.js Editor – Playwright E2E', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
 
     // Wait for the page to be interactive before checking for the banner
     await page.waitForSelector('.CodeMirror', { timeout: 180_000 });
