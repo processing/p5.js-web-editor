@@ -257,7 +257,7 @@ function parseJs(jsText: string): acorn.Program | null {
 }
 
 export function jsPreprocess(jsText: string, indexSrc: string): string {
-  if (/\/\/\s*noprotect/.test(jsText)) {
+  if (/\/\/\s*noprotect/.test(jsText) || hasNoProtect(indexSrc)) {
     return jsText;
   }
 
