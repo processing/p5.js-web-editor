@@ -169,7 +169,7 @@ export default function useCodeMirror({
   useEffect(() => {
     const reconfigureEffect = (fileState) =>
       fileState.languageCpt.reconfigure(
-        autocompleteHinter ? p5JavaScript(p5Version) : []
+        p5Version ? p5JavaScript(p5Version) : []
       );
 
     updateFileStates({
