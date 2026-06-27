@@ -245,12 +245,31 @@ export default function useCodeMirror({
     tidyCodeWithPrettier(cmView.current, fileMode);
   };
 
+  const updateEditorFileContent = (id, src) => {
+    const fileState = fileStates.current?.[id];
+
+    if (!fileState) return;
+
+    fileState.cmState = fileState.cmState.update({
+      changes: {
+        from: 0,
+        to: fileState.cmState.doc.length,
+        insert: src
+      }
+    }).state;
+
+    if (id === file.id) {
+      cmView.current.setState(fileState.cmState);
+    }
+  };
+
   return {
     setupCodeMirrorOnContainerMounted,
     teardownCodeMirror,
     getContent,
     tidyCode,
     showSearch,
+    updateEditorFileContent,
     codemirrorView: cmView
   };
 }
