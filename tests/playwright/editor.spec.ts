@@ -38,7 +38,7 @@ test.describe('p5.js Editor – Playwright E2E', () => {
     await expect(page.locator('.CodeMirror')).toBeVisible({ timeout: 30_000 });
     await page.click('.CodeMirror-code', { force: true });
 
-    await page.keyboard.press('Control+A');
+    await page.keyboard.press('ControlOrMeta+A');
     await page.keyboard.type(newCode, { delay: 5 });
 
     // Click Play
