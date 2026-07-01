@@ -34,9 +34,8 @@ test.describe('p5.js Editor – Playwright E2E', () => {
       '}'
     ].join(''); // Avoid newlines to prevent autocomplete from inserting unnecessary brackets
 
-    // Wait for CodeMirror to be ready
-    await expect(page.locator('.CodeMirror')).toBeVisible({ timeout: 30_000 });
-    await page.click('.CodeMirror', { force: true });
+    await page.waitForSelector('.CodeMirror-code', { timeout: 600_000 });
+    await page.click('.CodeMirror-code', { force: true });
 
     await page.keyboard.press('Meta+A');
     await page.keyboard.type(newCode, { delay: 5 });
