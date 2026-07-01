@@ -170,7 +170,7 @@ export default function useCodeMirror({
     const reconfigureEffect = (fileState) => {
       const fileMode = getFileMode(file.name);
 
-      if (fileMode !== 'javascript' && !p5Version) {
+      if (fileMode !== 'javascript') {
         return [];
       }
 
