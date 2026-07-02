@@ -51,6 +51,32 @@ jobs:
 
           echo "App did not become ready"
           exit 1
+      - name: Diagnose - check what browser actually sees after 60s
+        run: |
+          echo "=== Waiting 60 seconds ==="
+          sleep 60
+          
+          echo "=== Raw server response (first 200 chars) ==="
+          curl -s http://localhost:8000 | head -c 200
+          
+          echo ""
+          echo "=== Does response contain CodeMirror? ==="
+          curl -s http://localhost:8000 | grep -c "CodeMirror" || echo "NOT FOUND"
+          
+          echo "=== Does response contain p5? ==="
+          curl -s http://localhost:8000 | grep -c "p5" || echo "NOT FOUND"
+          
+          echo "=== Does response contain app.js? ==="
+          curl -s http://localhost:8000 | grep -c "app.js" || echo "NOT FOUND"
+          
+          echo "=== Node processes still running? ==="
+          ps aux | grep node | grep -v grep
+          
+          echo "=== Port 8000 listening? ==="
+          ss -tlnp | grep 8000 || echo "NOT LISTENING"
+          
+          echo "=== Port 8002 listening? ==="
+          ss -tlnp | grep 8002 || echo "NOT LISTENING"
 
       - name: Run E2E tests
         run: npm run e2e:ci
