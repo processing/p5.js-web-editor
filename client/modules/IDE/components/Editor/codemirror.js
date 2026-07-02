@@ -168,7 +168,7 @@ export default function useCodeMirror({
   }, [autocompleteHinter, referenceBaseUrl]);
   useEffect(() => {
     const reconfigureEffect = (fileState) => {
-      const fileMode = getFileMode(file.name);
+      const fileMode = getFileMode(fileState.filename);
 
       if (fileMode !== 'javascript') {
         return [];
