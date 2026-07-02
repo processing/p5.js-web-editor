@@ -31,15 +31,17 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Disable eval devtool for CI
+        run: |
+          sed -i "s/devtool: 'eval-cheap-module-source-map'/devtool: false/" webpack/config.dev.js
+          echo "=== Verifying patch ==="
+          grep "devtool" webpack/config.dev.js
+
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
 
       - name: Start the app
         run: npm run start &
-
-      - name: Disable eval devtool for CI
-        run: |
-          sed -i "s/devtool: 'eval-cheap-module-source-map'/devtool: false/" webpack/config.dev.js
 
       - name: Wait for webpack to finish compiling
         run: |
