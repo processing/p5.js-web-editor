@@ -2,7 +2,27 @@ import { test, expect } from '@playwright/test';
 
 test.describe('p5.js Editor – Playwright E2E', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/');
+    page.on('console', (msg) => {
+      console.log(`[browser:${msg.type()}] ${msg.text()}`);
+    });
+    page.on('pageerror', (err) => {
+      console.log(`[browser:pageerror] ${err.stack ?? err.message}`);
+    });
+    page.on('requestfailed', (req) => {
+      console.log(
+        `[browser:requestfailed] ${req.method()} ${req.url()} — ${
+          req.failure()?.errorText
+        }`
+      );
+    });
+    page.on('response', (res) => {
+      if (res.status() >= 400) {
+        console.log(`[browser:response] ${res.status()} ${res.url()}`);
+      }
+    });
+
+    const response = await page.goto('/');
+    console.log(`[goto] status=${response?.status()} url=${response?.url()}`);
 
     // Wait for the page to be interactive before checking for the banner
     await page.waitForSelector('.CodeMirror', { timeout: 300_000 });
