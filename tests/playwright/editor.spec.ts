@@ -2,30 +2,66 @@ import { test, expect } from '@playwright/test';
 
 test.describe('p5.js Editor – Playwright E2E', () => {
   test.beforeEach(async ({ page }) => {
+    const t0 = Date.now();
+    const el = (ms: number) => `+${(ms / 1000).toFixed(1)}s`;
+
     page.on('console', (msg) => {
-      console.log(`[browser:${msg.type()}] ${msg.text()}`);
+      console.log(
+        `[browser:${msg.type()}] ${el(Date.now() - t0)} ${msg.text()}`
+      );
     });
     page.on('pageerror', (err) => {
-      console.log(`[browser:pageerror] ${err.stack ?? err.message}`);
+      console.log(
+        `[browser:pageerror] ${el(Date.now() - t0)} ${err.stack ?? err.message}`
+      );
     });
     page.on('requestfailed', (req) => {
       console.log(
-        `[browser:requestfailed] ${req.method()} ${req.url()} — ${
-          req.failure()?.errorText
-        }`
+        `[browser:requestfailed] ${el(
+          Date.now() - t0
+        )} ${req.method()} ${req.url()} — ${req.failure()?.errorText}`
       );
     });
-    page.on('response', (res) => {
-      if (res.status() >= 400) {
-        console.log(`[browser:response] ${res.status()} ${res.url()}`);
+    // Log every request/response pair — including successful ones — with
+    // elapsed time, since a chain of slow-but-successful API calls would
+    // otherwise be invisible (we previously only logged >=400 responses).
+    page.on('request', (req) => {
+      if (req.url().includes('/editor') || req.url().includes('/api/')) {
+        console.log(
+          `[browser:request] ${el(
+            Date.now() - t0
+          )} ${req.method()} ${req.url()}`
+        );
+      }
+    });
+    page.on('response', async (res) => {
+      const url = res.url();
+      if (
+        url.includes('/editor') ||
+        url.includes('/api/') ||
+        res.status() >= 400
+      ) {
+        const timing = res.request().timing();
+        console.log(
+          `[browser:response] ${el(
+            Date.now() - t0
+          )} ${res.status()} ${url} (responseEnd=${timing.responseEnd.toFixed(
+            0
+          )}ms)`
+        );
       }
     });
 
     const response = await page.goto('/');
-    console.log(`[goto] status=${response?.status()} url=${response?.url()}`);
+    console.log(
+      `[goto] ${el(
+        Date.now() - t0
+      )} status=${response?.status()} url=${response?.url()}`
+    );
 
     // Wait for the page to be interactive before checking for the banner
     await page.waitForSelector('.CodeMirror', { timeout: 300_000 });
+    console.log(`[codemirror-visible] ${el(Date.now() - t0)}`);
 
     // Dismiss cookie banner via JS — handles the case where the button
     // is outside the viewport due to the Redux DevTools sidebar
