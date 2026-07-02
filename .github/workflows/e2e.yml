@@ -37,46 +37,23 @@ jobs:
       - name: Start the app
         run: npm run start &
 
-      - name: Wait for app to be ready
+      - name: Wait for webpack to finish compiling
         run: |
+          echo "Waiting for webpack to finish..."
           for i in $(seq 1 120); do
-            if curl -sf http://localhost:8000 | grep -q "p5"; then
-              echo "App fully ready"
+            # Check if app.js is fully compiled by requesting it directly
+            # webpack serves a loading response until compilation is done
+            SIZE=$(curl -s http://localhost:8000/app.js | wc -c)
+            echo "app.js size: $SIZE bytes (attempt $i/120)"
+            if [ "$SIZE" -gt 1000000 ]; then
+              echo "app.js fully compiled ($SIZE bytes) after $((i * 5))s"
               exit 0
             fi
-
-            echo "Still bundling... $i/120"
             sleep 5
           done
-
-          echo "App did not become ready"
+          echo "Webpack did not finish in time"
           exit 1
-      - name: Diagnose - check what browser actually sees after 60s
-        run: |
-          echo "=== Waiting 60 seconds ==="
-          sleep 60
-          
-          echo "=== Raw server response (first 200 chars) ==="
-          curl -s http://localhost:8000 | head -c 200
-          
-          echo ""
-          echo "=== Does response contain CodeMirror? ==="
-          curl -s http://localhost:8000 | grep -c "CodeMirror" || echo "NOT FOUND"
-          
-          echo "=== Does response contain p5? ==="
-          curl -s http://localhost:8000 | grep -c "p5" || echo "NOT FOUND"
-          
-          echo "=== Does response contain app.js? ==="
-          curl -s http://localhost:8000 | grep -c "app.js" || echo "NOT FOUND"
-          
-          echo "=== Node processes still running? ==="
-          ps aux | grep node | grep -v grep
-          
-          echo "=== Port 8000 listening? ==="
-          ss -tlnp | grep 8000 || echo "NOT LISTENING"
-          
-          echo "=== Port 8002 listening? ==="
-          ss -tlnp | grep 8002 || echo "NOT LISTENING"
+      
 
       - name: Run E2E tests
         run: npm run e2e:ci
