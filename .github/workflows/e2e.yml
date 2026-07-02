@@ -55,30 +55,9 @@ jobs:
           echo "Webpack did not finish in time"
           exit 1
  
-      - name: Diagnose - what does browser get after app.js is ready
+      - name: Disable eval devtool for CI
         run: |
-          echo "=== Full HTML response ==="
-          curl -s http://localhost:8000 | head -c 2000
-          
-          echo ""
-          echo "=== app.js first 500 chars (confirms its real JS not error) ==="
-          curl -s http://localhost:8000/app.js | head -c 500
-          
-          echo ""
-          echo "=== previewApp.js size ==="
-          curl -s http://localhost:8000/previewApp.js | wc -c
-          
-          echo ""
-          echo "=== Any console errors from a headless curl session ==="
-          curl -s http://localhost:8000/__webpack_hmr || echo "HMR endpoint not reachable"
-          
-          echo ""
-          echo "=== Memory available ==="
-          free -h
-          
-          echo ""
-          echo "=== CPU load ==="
-          uptime
+          sed -i "s/devtool: 'eval-cheap-module-source-map'/devtool: false/" webpack/config.dev.js
 
       - name: Run E2E tests
         run: npm run e2e:ci
