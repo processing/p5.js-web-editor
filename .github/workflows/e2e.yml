@@ -37,6 +37,10 @@ jobs:
       - name: Start the app
         run: npm run start &
 
+      - name: Disable eval devtool for CI
+        run: |
+          sed -i "s/devtool: 'eval-cheap-module-source-map'/devtool: false/" webpack/config.dev.js
+
       - name: Wait for webpack to finish compiling
         run: |
           echo "Waiting for webpack to finish..."
@@ -54,10 +58,6 @@ jobs:
           done
           echo "Webpack did not finish in time"
           exit 1
- 
-      - name: Disable eval devtool for CI
-        run: |
-          sed -i "s/devtool: 'eval-cheap-module-source-map'/devtool: false/" webpack/config.dev.js
 
       - name: Run E2E tests
         run: npm run e2e:ci
