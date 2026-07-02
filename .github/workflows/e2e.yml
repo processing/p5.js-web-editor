@@ -47,6 +47,7 @@ jobs:
             echo "app.js size: $SIZE bytes (attempt $i/120)"
             if [ "$SIZE" -gt 1000000 ]; then
               echo "app.js fully compiled ($SIZE bytes) after $((i * 5))s"
+              sleep 10
               exit 0
             fi
             sleep 5
