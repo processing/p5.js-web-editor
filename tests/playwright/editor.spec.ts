@@ -5,7 +5,15 @@ test.describe('p5.js Editor – Playwright E2E', () => {
     await page.goto('/', { waitUntil: 'domcontentloaded' });
 
     // Wait for the page to be interactive before checking for the banner
-    await page.waitForSelector('.CodeMirror', { timeout: 600_000 });
+    try {
+      await page.waitForSelector('.CodeMirror', { timeout: 30_000 });
+    } catch (err) {
+      console.log(
+        '[debug] page HTML at CodeMirror timeout:\n',
+        await page.content()
+      );
+      throw err;
+    }
 
     // Dismiss cookie banner via JS — handles the case where the button
     // is outside the viewport due to the Redux DevTools sidebar
