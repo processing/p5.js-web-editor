@@ -2,10 +2,12 @@ import { test, expect } from '@playwright/test';
 
 test.describe('p5.js Editor – Playwright E2E', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/', { waitUntil: 'domcontentloaded' });
+    await page.goto('/');
 
-    // Wait for the page to be interactive before checking for the banner
-    await page.waitForSelector('.CodeMirror', { timeout: 600_000 });
+    // Wait for app to fully render — skip link only appears after React mounts
+    await expect(
+      page.locator('a.skip_link[href="#play-sketch"]')
+    ).toHaveText('Skip to Play Sketch', { timeout: 60_000 });
 
     // Dismiss cookie banner via JS — handles the case where the button
     // is outside the viewport due to the Redux DevTools sidebar
@@ -34,7 +36,7 @@ test.describe('p5.js Editor – Playwright E2E', () => {
       '}'
     ].join(''); // Avoid newlines to prevent autocomplete from inserting unnecessary brackets
 
-    await page.waitForSelector('.CodeMirror-code', { timeout: 600_000 });
+    await page.waitForSelector('.CodeMirror-code', { timeout: 60_000 });
     await page.click('.CodeMirror-code', { force: true });
 
     await page.keyboard.press('ControlOrMeta+A');
