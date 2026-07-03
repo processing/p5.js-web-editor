@@ -427,7 +427,7 @@ const MoreMenu = () => {
           <MobileMenuItem onClick={cmRef.current?.tidyCode}>
             {t('Nav.Edit.TidyCode')}
           </MobileMenuItem>
-          <MobileMenuItem onClick={cmRef.current?.showFind}>
+          <MobileMenuItem onClick={cmRef.current?.showSearch}>
             {t('Nav.Edit.Find')}
           </MobileMenuItem>
           <b>{t('Nav.Sketch.Title')}</b>
