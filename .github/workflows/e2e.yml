@@ -1,0 +1,85 @@
+name: E2E Testing
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [develop]
+  issue_comment:
+    types: [created]
+jobs:
+  test-e2e:
+    # temporary while new e2e environment is not yet created:
+    # only trigger on workflow_dispatch, maintainer comment, or if PR is from GSOC project mentor or mentee
+    if: >
+      github.event_name == 'workflow_dispatch' ||
+      (
+        github.event_name == 'pull_request' &&
+        contains(fromJSON('["Geethegreat", "clairep94"]'), github.event.pull_request.user.login)
+      ) ||
+      (
+        github.event.issue.pull_request &&
+        github.event.comment.body == '/e2e' &&
+        contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.comment.author_association)
+      )
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Resolve PR head ref
+      if: github.event_name == 'issue_comment'
+      id: pr
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const { data: pr } = await github.rest.pulls.get({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            pull_number: context.issue.number
+          });
+          core.setOutput('sha', pr.head.sha);
+
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        ref: ${{ github.event_name == 'issue_comment' && steps.pr.outputs.sha || github.ref }}
+
+    - name: Set up node
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18.20.x'
+
+    - name: Create .env file
+      run: cp .env.example .env
+
+    - name: Start MongoDB
+      uses: supercharge/mongodb-github-action@1.10.0
+      with:
+        mongodb-version: '6.0'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps chromium
+
+    - name: Start app
+      run: npm start > app.log 2>&1 &
+
+    - name: Wait for app to be ready
+      run: |
+        npx wait-on@7 http://localhost:8000 --timeout 180000 || {
+          echo "::error::App failed to become ready at http://localhost:8000 within 180s"
+          echo "----- app.log -----"
+          cat app.log
+          exit 1
+        }
+
+    - name: Run Playwright tests
+      run: npm run e2e:ci
+      
+    - name: Upload artifacts
+      if: failure()
+      uses: actions/upload-artifact@v4
+      with:
+        name: playwright-report
+        path: playwright-report/
+        retention-days: 30
