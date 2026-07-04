@@ -46,6 +46,7 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: '18.20.x'
+        cache: 'npm'
 
     - name: Create .env file
       run: cp .env.example .env
@@ -58,8 +59,20 @@ jobs:
     - name: Install dependencies
       run: npm ci
 
+    - name: Cache Playwright browsers
+      uses: actions/cache@v4
+      id: playwright-cache
+      with:
+        path: ~/.cache/ms-playwright
+        key: playwright-${{ hashFiles('package-lock.json') }}
+
     - name: Install Playwright Browsers
+      if: steps.playwright-cache.outputs.cache-hit != 'true'
       run: npx playwright install --with-deps chromium
+
+    - name: Install Playwright deps (OS libraries)
+      if: steps.playwright-cache.outputs.cache-hit == 'true'
+      run: npx playwright install-deps chromium
 
     - name: Start app
       run: npm start > app.log 2>&1 &
