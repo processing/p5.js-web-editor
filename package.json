@@ -289,7 +289,7 @@
     "lodash": "^4.18.1",
     "loop-protect": "github:catarak/loop-protect",
     "mime": "^3.0.0",
-    "mjml": "^4.14.1",
+    "mjml": "^5.0.0",
     "mongodb-memory-server": "^10.2.1",
     "mongoose": "^8.16.3",
     "nodemailer": "^8.0.5",
