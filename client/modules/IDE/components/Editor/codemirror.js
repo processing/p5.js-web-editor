@@ -167,10 +167,15 @@ export default function useCodeMirror({
     });
   }, [autocompleteHinter, referenceBaseUrl]);
   useEffect(() => {
-    const reconfigureEffect = (fileState) =>
-      fileState.languageCpt.reconfigure(
-        autocompleteHinter ? p5JavaScript(p5Version) : []
-      );
+    const reconfigureEffect = (fileState) => {
+      const fileMode = getFileMode(fileState.filename);
+
+      if (fileMode !== 'javascript') {
+        return [];
+      }
+
+      return fileState.languageCpt.reconfigure(p5JavaScript(p5Version));
+    };
 
     updateFileStates({
       fileStates: fileStates.current,
