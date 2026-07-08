@@ -27,7 +27,7 @@
 .nav__menubar {
   display: flex;
   flex-direction: row;
-  width:100%;
+  width: 100%;
   justify-content: space-between;
 }
 
@@ -57,11 +57,11 @@
 }
 
 // base focus styles
-.nav__item button:focus {  
+.nav__item button:focus {
   @include themify() {
     background-color: getThemifyVariable('nav-hover-color');
   }
-  
+
   .nav__item-header {
     @include themify() {
       color: getThemifyVariable('button-hover-color');
@@ -73,11 +73,13 @@
     @include themify() {
       fill: getThemifyVariable('button-hover-color');
     }
-  }  
+  }
 }
 
-
 .nav__dropdown-item {
+  @include themify() {
+    color: getThemifyVariable('button-nav-active-color');
+  }
   & button:focus,
   & a:focus {
     @include themify() {
@@ -93,18 +95,52 @@
   }
 
   &.nav__dropdown-item--disabled {
-    & button,
-    & a,
-    & button:hover,
-    & a:hover {
+    &:hover {
+      @include themify() {
+        background-color: transparent;
+        color: getThemifyVariable('button-nav-inactive-color');
+        cursor: not-allowed;
+      }
+    }
+
+    & .tooltip-wrapper button,
+    & .tooltip-wrapper a,
+    &:hover .tooltip-wrapper button,
+    &:hover .tooltip-wrapper a,
+    & .tooltip-wrapper button:active,
+    & .tooltip-wrapper a:active {
+      @include themify() {
+        color: getThemifyVariable('button-nav-inactive-color');
+        background-color: transparent;
+        cursor: not-allowed;
+      }
+    }
+
+    & .nav__keyboard-shortcut,
+    &:hover .nav__keyboard-shortcut,
+    & .tooltip-wrapper button:hover .nav__keyboard-shortcut,
+    & .tooltip-wrapper button:focus .nav__keyboard-shortcut {
       @include themify() {
         color: getThemifyVariable('button-nav-inactive-color');
       }
+    }
+  }
+  & button,
+  & a,
+  & .tooltip-wrapper button,
+  & .tooltip-wrapper a {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
-      & .nav__keyboard-shortcut {
-        @include themify() {
-          color: getThemifyVariable('button-nav-inactive-color');
-        }
+  &:hover {
+    & .tooltip-wrapper button,
+    & .tooltip-wrapper a {
+      @include themify() {
+        color: getThemifyVariable('button-hover-color');
       }
     }
   }
@@ -135,8 +171,9 @@
       color: getThemifyVariable('button-hover-color');
     }
   }
-  
-  & g, & path {
+
+  & g,
+  & path {
     @include themify() {
       fill: getThemifyVariable('nav-hover-color');
     }
@@ -154,7 +191,8 @@
   @include themify() {
     color: getThemifyVariable('nav-hover-color');
   }
-  & g, & path {
+  & g,
+  & path {
     @include themify() {
       fill: getThemifyVariable('nav-hover-color');
     }
@@ -162,17 +200,17 @@
 }
 
 .nav__item-header-triangle {
-	margin-left: #{math.div(5, $base-font-size)}rem;
+  margin-left: #{math.div(5, $base-font-size)}rem;
 }
 
 .nav__dropdown {
   @include themify() {
-      color: getThemifyVariable('nav-hover-color');
-    }
+    color: getThemifyVariable('nav-hover-color');
+  }
 }
 
 .nav__item-header-triangle {
-	margin-left: #{math.div(5, $base-font-size)}rem;
+  margin-left: #{math.div(5, $base-font-size)}rem;
 }
 
 .nav__dropdown {
@@ -214,28 +252,6 @@
 //   padding: 0;
 // }
 
-.nav__dropdown-item {
-  & button,
-  & a,
-  & .tooltip-wrapper button,
-  & .tooltip-wrapper a {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  &:hover {
-    & .tooltip-wrapper button,
-    & .tooltip-wrapper a {
-      @include themify() {
-        color: getThemifyVariable('button-hover-color');
-      }
-    }
-  }
-}
-
 .nav__item-logo {
   position: relative;
   height: #{math.div(42, $base-font-size)}rem;
@@ -247,23 +263,18 @@
 }
 
 .svg__logo {
-
   @include themify() {
     // Set background color of the logo
     background-color: getThemifyVariable('logo-color');
   }
-
 }
 
-.svg__logo g path{
-  
+.svg__logo g path {
   @include themify() {
     // Set internal color of the logo;
     fill: getThemifyVariable('logo-background-color');
   }
-
 }
-
 
 .nav__keyboard-shortcut {
   font-size: #{math.div(12, $base-font-size)}rem;
@@ -282,7 +293,8 @@
 }
 
 .nav__back-icon {
-  & g, & path {
+  & g,
+  & path {
     opacity: 1;
     @include themify() {
       fill: getThemifyVariable('inactive-text-color');
