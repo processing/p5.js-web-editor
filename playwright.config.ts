@@ -13,6 +13,8 @@ import { defineConfig, devices } from '@playwright/test';
  */
 export default defineConfig({
   testDir: './e2e',
+  /* Drops the e2e database before each run so tests start from a clean slate */
+  globalSetup: './e2e/global-setup',
   /* Timeout per individual test (w/ before & after hooks). Make CI longer than default 30s to accomodate */
   timeout: process.env.CI ? 60_000 : 30_000,
   /* Run tests in files in parallel */
