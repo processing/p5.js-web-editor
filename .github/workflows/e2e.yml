@@ -48,8 +48,6 @@ jobs:
         node-version: '18.20.x'
         cache: 'npm'
 
-    - name: Create .env file
-      run: cp .env.example .env
 
     - name: Start MongoDB
       uses: supercharge/mongodb-github-action@1.10.0
@@ -75,7 +73,7 @@ jobs:
       run: npx playwright install-deps chromium
 
     - name: Start app
-      run: npm start > app.log 2>&1 &
+      run: npm run start:e2e > app.log 2>&1 &
 
     - name: Wait for app to be ready
       run: |
