@@ -5,7 +5,10 @@ if (process.env.NODE_ENV === 'production') {
   require('./dist/server.bundle.js');
   require('./dist/previewServer.bundle.js');
 } else {
-  let parsed = require('dotenv').config();
+  // ENV_FILE lets scripts point at an alternate env file (e.g. .env.e2e for e2e tests)
+  let parsed = require('dotenv').config({
+    path: process.env.ENV_FILE || '.env'
+  });
   require('@babel/register')({
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
     presets: ['@babel/preset-env', '@babel/preset-typescript']

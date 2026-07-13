@@ -5,6 +5,7 @@
   "scripts": {
     "clean": "rimraf dist",
     "start": "cross-env BABEL_DISABLE_CACHE=1 NODE_ENV=development nodemon index.js",
+    "start:e2e": "cross-env ENV_FILE=.env.e2e npm run start",
     "start:prod": "cross-env NODE_ENV=production node index.js",
     "lint": "eslint client server --ext .jsx --ext .js --ext .tsx --ext .ts",
     "lint-fix": "eslint client server --ext .jsx --ext .js --ext .tsx --ext .ts --fix",
