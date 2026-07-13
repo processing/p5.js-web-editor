@@ -9,7 +9,7 @@ import path from 'path';
 
 dotenv.config({ path: path.resolve(__dirname, '.env.e2e') });
 
-const baseURL = process.env.EDITOR_URL || 'http://localhost:8000';
+const baseURL = process.env.EDITOR_URL || 'http://localhost:9000';
 // Mailpit's default HTTP API port; SMTP is on :1025 (see server/utils/mail.ts)
 const mailPitBaseURL = 'http://localhost:8025';
 
@@ -41,17 +41,34 @@ export default defineConfig({
   },
 
   /**
-   * Auto-start Mailpit (local mail catcher for signup/verification emails) if
-   * it isn't already running; reuses a running instance (e.g. the CI service
-   * container, or one you started yourself). Requires the mailpit binary
-   * locally: `brew install mailpit`. Runs on Mailpit's default ports.
+   * Servers auto-started before the tests (reused if already running):
+   *
+   * 1. Mailpit — local mail catcher for signup/verification emails, on its
+   *    default ports. Requires the binary locally (`brew install mailpit`);
+   *    on CI an already-running service container is reused instead.
+   * 2. The app — started with .env.e2e config on dedicated ports (9000/9002),
+   *    so reuseExistingServer can never latch onto a regular dev server on
+   *    8000 (which would point at the real dev database and Mailgun).
+   *    First start compiles webpack from scratch, hence the long timeout.
    */
-  webServer: {
-    command: 'mailpit',
-    url: `${mailPitBaseURL}/api/v1/info`,
-    reuseExistingServer: true,
-    timeout: 15_000
-  },
+  webServer: [
+    {
+      name: 'Mailpit',
+      command: 'mailpit',
+      url: `${mailPitBaseURL}/api/v1/info`,
+      reuseExistingServer: true,
+      timeout: 15_000
+    },
+    {
+      name: 'App server',
+      command: 'npm run start',
+      env: { ENV_FILE: '.env.e2e' },
+      url: baseURL,
+      reuseExistingServer: true,
+      timeout: 120_000,
+      stdout: 'pipe'
+    }
+  ],
 
   /* Configure projects for major browsers */
   projects: [
