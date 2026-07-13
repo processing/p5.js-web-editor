@@ -131,6 +131,14 @@ export async function getProjectAsset(req, res) {
       .send({ message: 'Project with that id does not exist' });
   }
 
+  // Check visibility and ownership for private projects
+  if (
+    project.visibility === 'Private' &&
+    (!req.user || !project.user._id.equals(req.user._id))
+  ) {
+    return res.status(403).send({ message: 'Project is private' });
+  }
+
   const filePath = req.params[0];
   const resolvedFile = resolvePathToFile(filePath, project.files);
   if (!resolvedFile) {
@@ -311,7 +319,7 @@ async function buildZip(project, req, res) {
     const currentTime = format(new Date(), 'yyyy_MM_dd_HH_mm_ss');
     project.slug = slugify(project.name, '_');
     const zipFileName = `${generateFileSystemSafeName(
-      project.slug
+      project.name
     )}_${currentTime}.zip`;
     const { files } = project;
     const root = files.find((file) => file.name === 'root');

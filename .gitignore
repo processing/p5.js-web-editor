@@ -4,6 +4,7 @@
 .env.staging
 .vscode/
 node_modules/
+minio/
 npm-debug.log
 dump.rdb
 static/dist/

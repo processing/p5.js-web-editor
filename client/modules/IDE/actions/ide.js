@@ -236,23 +236,10 @@ export function hideErrorModal() {
   };
 }
 
-export function hideRuntimeErrorWarning() {
-  return {
-    type: ActionTypes.HIDE_RUNTIME_ERROR_WARNING
-  };
-}
-
-export function showRuntimeErrorWarning() {
-  return {
-    type: ActionTypes.SHOW_RUNTIME_ERROR_WARNING
-  };
-}
-
 export function startSketch() {
   return (dispatch, getState) => {
     dispatch(clearConsole());
     dispatch(startVisualSketch());
-    dispatch(showRuntimeErrorWarning());
     const state = getState();
     dispatchMessage({
       type: MessageTypes.SKETCH,
