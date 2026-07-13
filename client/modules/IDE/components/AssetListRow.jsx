@@ -7,6 +7,7 @@ import prettyBytes from 'pretty-bytes';
 import { MenuItem } from '../../../components/Dropdown/MenuItem';
 import { TableDropdown } from '../../../components/Dropdown/TableDropdown';
 import { deleteAssetRequest } from '../actions/assets';
+import { showToast } from '../actions/toast';
 
 const AssetMenu = ({ item: asset }) => {
   const { t } = useTranslation();
@@ -19,11 +20,21 @@ const AssetMenu = ({ item: asset }) => {
     }
   };
 
+  const handleCopyPath = async () => {
+    try {
+      await navigator.clipboard.writeText(asset.url);
+      dispatch(showToast(t('AssetList.CopyPathSuccess')));
+    } catch (_e) {
+      dispatch(showToast(t('AssetList.CopyPathFailure'), 5000));
+    }
+  };
+
   return (
     <TableDropdown aria-label={t('AssetList.ToggleOpenCloseARIA')}>
       {asset.visualID && (
         <MenuItem onClick={handleAssetDelete}>{t('AssetList.Delete')}</MenuItem>
       )}
+      <MenuItem onClick={handleCopyPath}>{t('AssetList.CopyPath')}</MenuItem>
       <MenuItem href={asset.url} target="_blank" rel="noopener noreferrer">
         {t('AssetList.OpenNewTab')}
       </MenuItem>

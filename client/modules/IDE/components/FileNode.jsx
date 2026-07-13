@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import React, { useState, useRef } from 'react';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
 import * as IDEActions from '../actions/ide';
 import * as FileActions from '../actions/files';
+import { showToast } from '../actions/toast';
 import DownArrowIcon from '../../../images/down-filled-triangle.svg';
 import FolderRightIcon from '../../../images/triangle-arrow-right.svg';
 import FolderDownIcon from '../../../images/triangle-arrow-down.svg';
@@ -69,6 +70,7 @@ const FileNode = ({
   children,
   name,
   fileType,
+  url,
   isSelectedFile,
   isFolderClosed,
   setSelectedFile,
@@ -108,6 +110,7 @@ const FileNode = ({
   };
 
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const fileNameInput = useRef(null);
   const fileOptionsRef = useRef(null);
 
@@ -153,6 +156,16 @@ const FileNode = ({
   const handleClickUploadFile = () => {
     openUploadFileModal(id);
     setTimeout(hideFileOptions, 0);
+  };
+
+  const handleClickCopyPath = async () => {
+    try {
+      await navigator.clipboard.writeText(url);
+      dispatch(showToast(t('FileNode.CopyPathSuccess')));
+    } catch (_e) {
+      dispatch(showToast(t('FileNode.CopyPathFailure'), 5000));
+    }
+    setTimeout(() => hideFileOptions(), 0);
   };
 
   const handleClickDelete = () => {
@@ -363,6 +376,16 @@ const FileNode = ({
                   {t('FileNode.Rename')}
                 </button>
               </li>
+              {isFile && url && (
+                <li>
+                  <button
+                    onClick={handleClickCopyPath}
+                    className="sidebar__file-item-option"
+                  >
+                    {t('FileNode.CopyPath')}
+                  </button>
+                </li>
+              )}
               <li>
                 <button
                   onClick={handleClickDelete}
@@ -399,6 +422,7 @@ FileNode.propTypes = {
   children: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   name: PropTypes.string.isRequired,
   fileType: PropTypes.string.isRequired,
+  url: PropTypes.string,
   isSelectedFile: PropTypes.bool,
   isFolderClosed: PropTypes.bool,
   setSelectedFile: PropTypes.func.isRequired,
@@ -418,6 +442,7 @@ FileNode.propTypes = {
 FileNode.defaultProps = {
   onClickFile: null,
   parentId: '0',
+  url: undefined,
   isSelectedFile: false,
   isFolderClosed: false
 };

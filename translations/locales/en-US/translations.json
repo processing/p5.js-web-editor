@@ -304,7 +304,10 @@
     "UploadFile": "Upload file",
     "UploadFileARIA": "upload file",
     "Rename": "Rename",
-    "Delete": "Delete"
+    "Delete": "Delete",
+    "CopyPath": "Copy Path",
+    "CopyPathSuccess": "Path Copied to Clipboard",
+    "CopyPathFailure": "Unable to copy path to clipboard"
   },
   "Common": {
     "SiteName": "p5.js Web Editor",
@@ -462,6 +465,9 @@
     "Title": "p5.js Web Editor | My assets",
     "ToggleOpenCloseARIA": "Toggle Open/Close Asset Options",
     "Delete": "Delete",
+    "CopyPath": "Copy Path",
+    "CopyPathSuccess": "Path Copied to Clipboard",
+    "CopyPathFailure": "Unable to copy path to clipboard",
     "OpenNewTab": "Open in New Tab",
     "NoUploadedAssets": "No uploaded assets.",
     "HeaderName": "Name",
