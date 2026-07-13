@@ -2,14 +2,31 @@ import nodemailer from 'nodemailer';
 import mg from 'nodemailer-mailgun-transport';
 import { RenderedMailerData } from '../types/email';
 
-if (!process.env.MAILGUN_KEY) {
-  throw new Error('Mailgun key missing');
-}
-
-const auth = {
-  api_key: process.env.MAILGUN_KEY,
-  domain: process.env.MAILGUN_DOMAIN
+// When EMAIL_TRANSPORT=smtp, emails are sent over plain SMTP (e.g. to a local
+// mail catcher like Mailpit during development and e2e tests) instead of Mailgun.
+const useSmtpTransport = process.env.EMAIL_TRANSPORT === 'smtp';
+const SMPT_TRANSPORT_CONFIG = {
+  host: 'localhost',
+  port: 1025,
+  secure: false
 };
+
+function createTransport(): nodemailer.Transporter {
+  if (useSmtpTransport) {
+    return nodemailer.createTransport(SMPT_TRANSPORT_CONFIG);
+  }
+
+  if (!process.env.MAILGUN_KEY) {
+    throw new Error('Mailgun key missing');
+  }
+
+  const auth = {
+    api_key: process.env.MAILGUN_KEY,
+    domain: process.env.MAILGUN_DOMAIN
+  };
+
+  return nodemailer.createTransport(mg({ auth }));
+}
 
 /** Mail service class wrapping around mailgun */
 class Mail {
@@ -18,7 +35,7 @@ class Mail {
   sendOptions: Pick<nodemailer.SendMailOptions, 'from'>;
 
   constructor() {
-    this.client = nodemailer.createTransport(mg({ auth }));
+    this.client = createTransport();
     this.sendOptions = {
       from: process.env.EMAIL_SENDER
     };

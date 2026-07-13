@@ -4,9 +4,14 @@ import { defineConfig, devices } from '@playwright/test';
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
  */
-// import dotenv from 'dotenv';
-// import path from 'path';
-// dotenv.config({ path: path.resolve(__dirname, '.env') });
+import dotenv from 'dotenv';
+import path from 'path';
+
+dotenv.config({ path: path.resolve(__dirname, '.env.e2e') });
+
+const baseURL = process.env.EDITOR_URL || 'http://localhost:8000';
+// Mailpit's default HTTP API port; SMTP is on :1025 (see server/utils/mail.ts)
+const mailPitBaseURL = 'http://localhost:8025';
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -30,10 +35,22 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('')`. */
-    baseURL: 'http://localhost:8000',
-
+    baseURL,
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry'
+  },
+
+  /**
+   * Auto-start Mailpit (local mail catcher for signup/verification emails) if
+   * it isn't already running; reuses a running instance (e.g. the CI service
+   * container, or one you started yourself). Requires the mailpit binary
+   * locally: `brew install mailpit`. Runs on Mailpit's default ports.
+   */
+  webServer: {
+    command: 'mailpit',
+    url: `${mailPitBaseURL}/api/v1/info`,
+    reuseExistingServer: true,
+    timeout: 15_000
   },
 
   /* Configure projects for major browsers */
@@ -73,11 +90,4 @@ export default defineConfig({
     //   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
     // },
   ]
-
-  /* Run your local dev server before starting the tests */
-  // webServer: {
-  //   command: 'npm run start',
-  //   url: 'http://localhost:3000',
-  //   reuseExistingServer: !process.env.CI,
-  // },
 });
