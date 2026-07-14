@@ -330,7 +330,7 @@ async function buildZip(project, req, res) {
     const currentTime = format(new Date(), 'yyyy_MM_dd_HH_mm_ss');
     project.slug = slugify(project.name, '_');
     const zipFileName = `${generateFileSystemSafeName(
-      project.slug
+      project.name
     )}_${currentTime}.zip`;
     const { files } = project;
     const root = files.find((file) => file.name === 'root');

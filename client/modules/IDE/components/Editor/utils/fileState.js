@@ -247,6 +247,7 @@ export function createNewFileState(filename, document, settings) {
   const cmState = EditorState.create(stateOptions);
   return {
     cmState,
+    filename,
     lineNumbersCpt,
     lineWrappingCpt,
     closeBracketsCpt,
