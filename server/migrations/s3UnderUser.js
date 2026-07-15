@@ -14,7 +14,7 @@ import dotenv from 'dotenv';
 dotenv.config({ path: path.resolve('.env') });
 
 async function main() {
-  mongoose.connect('mongodb://localhost:27017/p5js-web-editor');
+  mongoose.connect(process.env.MONGO_URL);
   mongoose.connection.on('error', () => {
     console.error(
       'MongoDB Connection Error. Please make sure that MongoDB is running.'
