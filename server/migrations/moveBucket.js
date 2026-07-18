@@ -1,11 +1,10 @@
 /* eslint-disable */
 import s3 from '@auth0/s3';
-import path from 'path';
 import mongoose from 'mongoose';
 import { User } from '../models/user';
 import Project from '../models/project';
 import async from 'async';
-require('dotenv').config({ path: path.resolve('.env') });
+require('../../loadEnv')();
 mongoose.connect(process.env.MONGO_URL);
 mongoose.connection.on('error', () => {
   console.error(
