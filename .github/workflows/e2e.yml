@@ -75,12 +75,12 @@ jobs:
       run: npx playwright install-deps chromium
 
     - name: Start app
-      run: npm start > app.log 2>&1 &
+      run: npm run start:e2e > app.log 2>&1 &
 
     - name: Wait for app to be ready
       run: |
-        npx wait-on@7 http://localhost:8000 --timeout 180000 || {
-          echo "::error::App failed to become ready at http://localhost:8000 within 180s"
+        npx wait-on@7 http://localhost:9000 --timeout 180000 || {
+          echo "::error::App failed to become ready at http://localhost:9000 within 180s"
           echo "----- app.log -----"
           cat app.log
           exit 1

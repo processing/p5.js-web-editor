@@ -1,12 +1,11 @@
 import { defineConfig, devices } from '@playwright/test';
 
-/**
- * Read environment variables from file.
- * https://github.com/motdotla/dotenv
- */
-// import dotenv from 'dotenv';
-// import path from 'path';
-// dotenv.config({ path: path.resolve(__dirname, '.env') });
+// DO NOT REMOVE: makes sure that playwright is always run with the e2e env overrides. See loadEnv.js
+process.env.APP_ENV = 'e2e';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+require('./loadEnv')();
+
+const EDITOR_URL = process.env.EDITOR_URL || 'http://localhost:9000';
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -28,11 +27,27 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('')`. */
-    baseURL: 'http://localhost:8000',
+    baseURL: EDITOR_URL,
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry'
   },
+
+  /* Run your local dev server before starting the tests */
+  webServer: [
+    {
+      name: 'app (e2e env)',
+      command: 'npm run start:e2e',
+      url: EDITOR_URL,
+      /** CI > e2e.yml starts up the e2e app server separately for more logging */
+      reuseExistingServer: true,
+      /** stream the app server's startup logs into the terminal running Playwright */
+      stdout: 'pipe',
+      stderr: 'pipe',
+      /** First start compiles webpack from scratch, hence the long timeout. */
+      timeout: 180_000
+    }
+  ],
 
   /* Configure projects for major browsers */
   projects: [
@@ -71,11 +86,4 @@ export default defineConfig({
     //   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
     // },
   ]
-
-  /* Run your local dev server before starting the tests */
-  // webServer: {
-  //   command: 'npm run start',
-  //   url: 'http://localhost:3000',
-  //   reuseExistingServer: !process.env.CI,
-  // },
 });
