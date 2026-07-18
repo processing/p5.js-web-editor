@@ -12,6 +12,7 @@ const EDITOR_URL = process.env.EDITOR_URL || 'http://localhost:9000';
  */
 export default defineConfig({
   testDir: './e2e/specs',
+  globalSetup: './e2e/setup/global-setup',
   /* Timeout per individual test (w/ before & after hooks). Make CI longer than default 30s to accomodate */
   timeout: process.env.CI ? 60_000 : 30_000,
   /* Run tests in files in parallel */
