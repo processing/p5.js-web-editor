@@ -6,13 +6,6 @@ on:
 jobs:
   test-e2e:
     environment: e2e-tests
-    # only trigger on workflow_dispatch, or if PR is from GSOC project mentor or mentee
-    if: >
-      github.event_name == 'workflow_dispatch' ||
-      (
-        github.event_name == 'pull_request' &&
-        contains(fromJSON('["Geethegreat", "clairep94"]'), github.event.pull_request.user.login)
-      )
     timeout-minutes: 60
     runs-on: ubuntu-latest
 
