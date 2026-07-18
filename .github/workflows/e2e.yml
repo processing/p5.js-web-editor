@@ -45,7 +45,7 @@ jobs:
     - name: Set up node
       uses: actions/setup-node@v4
       with:
-        node-version: '18.20.x'
+        node-version-file: '.nvmrc'
         cache: 'npm'
 
     - name: Create .env file
@@ -56,7 +56,15 @@ jobs:
       with:
         mongodb-version: '6.0'
 
+    - name: Cache node_modules
+      uses: actions/cache@v4
+      id: node-modules-cache
+      with:
+        path: node_modules
+        key: node-modules-${{ runner.os }}-node-${{ hashFiles('.nvmrc') }}-${{ hashFiles('package-lock.json') }}
+
     - name: Install dependencies
+      if: steps.node-modules-cache.outputs.cache-hit != 'true'
       run: npm ci
 
     - name: Cache Playwright browsers
