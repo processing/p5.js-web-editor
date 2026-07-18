@@ -1,4 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
+import { warnToStartE2eAppServerSeparately } from './e2e/setup/warn-to-start-e2e-server-separately';
 
 // DO NOT REMOVE: makes sure that playwright is always run with the e2e env overrides. See loadEnv.js
 process.env.APP_ENV = 'e2e';
@@ -7,6 +8,7 @@ require('./loadEnv')();
 
 const EDITOR_URL = process.env.EDITOR_URL || 'http://localhost:9000';
 
+warnToStartE2eAppServerSeparately();
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
