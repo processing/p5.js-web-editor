@@ -1,4 +1,5 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures';
+import { dismissCookieBanner } from '../helpers/cookie-banner';
 
 test.describe('editor page', () => {
   test.beforeEach(async ({ page }) => {
@@ -9,14 +10,7 @@ test.describe('editor page', () => {
       'Skip to Play Sketch'
     );
 
-    // Dismiss cookie banner if it appears
-    // Note: we do document.querySelectorAll instead of page.locator as workaround due to the buttons on the banner being beyond the viewport
-    await page.evaluate(() => {
-      const btn = Array.from(document.querySelectorAll('button')).find((b) =>
-        /allow essential|allow all/i.test(b.textContent ?? '')
-      ) as HTMLElement | undefined;
-      btn?.click();
-    });
+    await dismissCookieBanner(page);
 
     // wait for page to fully load with all main IDE components:
     await expect(page.locator('#play-sketch')).toBeVisible(); // play button
@@ -50,7 +44,7 @@ test.describe('editor page', () => {
     // Wait for the sketch iframe src to confirm the sketch actually started
     await expect(
       page.locator('iframe[title="sketch preview"]')
-    ).toHaveAttribute('src', /8002/, { timeout: 10_000 });
+    ).toHaveAttribute('src', /9002/, { timeout: 10_000 });
 
     // Assert console output
     await expect(
@@ -75,7 +69,10 @@ test.describe('editor page', () => {
 
     // Attempt save via keyboard shortcut
     await page.locator('.editor-holder').click();
-    await page.keyboard.press('ControlOrMeta+S');
+    // 'Control' (not ControlOrMeta): the app's isMac() checks the user agent,
+    // which the Desktop Chrome device emulates as Windows — so the app-level
+    // save shortcut expects Ctrl+S on every host, including Macs.
+    await page.keyboard.press('Control+S');
 
     // Verify login prompt appears
     await expect(

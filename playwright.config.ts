@@ -11,7 +11,7 @@ const EDITOR_URL = process.env.EDITOR_URL || 'http://localhost:9000';
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-  testDir: './e2e',
+  testDir: './e2e/specs',
   /* Timeout per individual test (w/ before & after hooks). Make CI longer than default 30s to accomodate */
   timeout: process.env.CI ? 60_000 : 30_000,
   /* Run tests in files in parallel */
