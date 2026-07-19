@@ -5,6 +5,8 @@ on:
     branches: [develop]
   issue_comment:
     types: [created]
+env:
+  WAIT_ON_VERSION: '7'
 jobs:
   test-e2e:
     # temporary while new e2e environment is not yet created:
@@ -82,12 +84,23 @@ jobs:
       if: steps.playwright-cache.outputs.cache-hit == 'true'
       run: npx playwright install-deps chromium
 
+    - name: Cache wait-on
+      uses: actions/cache@v4
+      id: wait-on-cache
+      with:
+        path: ~/.npm/_npx
+        key: npx-wait-on-${{ env.WAIT_ON_VERSION }}-${{ runner.os }}
+
+    - name: Install wait-on
+      if: steps.wait-on-cache.outputs.cache-hit != 'true'
+      run: npx -y wait-on@$WAIT_ON_VERSION --version
+
     - name: Start app
       run: npm start > app.log 2>&1 &
 
     - name: Wait for app to be ready
       run: |
-        npx wait-on@7 http://localhost:8000 --timeout 180000 || {
+        npx wait-on@$WAIT_ON_VERSION http://localhost:8000 --timeout 180000 || {
           echo "::error::App failed to become ready at http://localhost:8000 within 180s"
           echo "----- app.log -----"
           cat app.log
