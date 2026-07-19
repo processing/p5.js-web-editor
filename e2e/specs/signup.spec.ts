@@ -1,6 +1,7 @@
 import { test, expect } from '../fixtures';
 import { dismissCookieBanner } from '../helpers/cookie-banner';
 import { usernamePrefix, emailSuffix, password } from '../helpers/env';
+import { getVerificationLink } from '../helpers/mailpit';
 
 test.describe('signup and email verification', () => {
   test('can sign up and verify email via the emailed link', async ({
@@ -27,6 +28,18 @@ test.describe('signup and email verification', () => {
     await expect(page.locator('.editor-holder')).toBeVisible({
       timeout: 15_000
     });
-    // TODO: on next PR, email verification
+
+    // "Receive" the verification email and click its link
+    const verificationLink = await getVerificationLink(email);
+    await page.goto(verificationLink);
+
+    // On success the verify page flashes a message for ~1s and then redirects
+    // home, so asserting on the message races the redirect. The redirect only
+    // happens for a valid token (invalid tokens stay on /verify showing an
+    // error), so assert the redirect, then the durable outcome via the API.
+    await expect(page).toHaveURL('/', { timeout: 15_000 });
+
+    const session = await page.request.get('/editor/session');
+    expect((await session.json()).verified).toBe('verified');
   });
 });

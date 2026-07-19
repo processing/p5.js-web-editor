@@ -9,6 +9,15 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
 
+    services:
+      # Local mail catcher: the app sends verification emails here over SMTP (port 1025)
+      # and the e2e tests read them back via Mailpit's REST API (port 8025)
+      mailpit:
+        image: axllent/mailpit:latest
+        ports:
+          - 1025:1025
+          - 8025:8025
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v4

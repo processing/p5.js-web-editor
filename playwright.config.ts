@@ -7,6 +7,8 @@ process.env.APP_ENV = 'e2e';
 require('./loadEnv')();
 
 const EDITOR_URL = process.env.EDITOR_URL || 'http://localhost:9000';
+// Mailpit's default HTTP API port; SMTP is on :1025 (see server/utils/mail.ts)
+const MAILPIT_URL = 'http://localhost:8025';
 
 warnToStartE2eAppServerSeparately();
 /**
@@ -49,6 +51,19 @@ export default defineConfig({
       stderr: 'pipe',
       /** First start compiles webpack from scratch, hence the long timeout. */
       timeout: 180_000
+    },
+    {
+      /**
+       * Local mail catcher for signup/verification emails. Requires the
+       * binary locally (e.g. `winget install axllent.mailpit` / `brew
+       * install mailpit`); on CI an already-running service container is
+       * reused instead (see e2e.yml).
+       */
+      name: 'Mailpit',
+      command: 'mailpit',
+      url: `${MAILPIT_URL}/api/v1/info`,
+      reuseExistingServer: true,
+      timeout: 15_000
     }
   ],
 
