@@ -5,15 +5,24 @@ import { RenderedMailerData } from '../types/email';
 // When EMAIL_TRANSPORT=smtp, emails are sent over plain SMTP (e.g. to a local
 // mail catcher like Mailpit during e2e tests) instead of Mailgun.
 const useSmtpTransport = process.env.EMAIL_TRANSPORT === 'smtp';
-const SMTP_TRANSPORT_CONFIG = {
-  host: 'localhost',
-  port: 1025,
-  secure: false
-};
 
 function createTransport(): nodemailer.Transporter {
   if (useSmtpTransport) {
-    return nodemailer.createTransport(SMTP_TRANSPORT_CONFIG);
+    const { MAILPIT_SMTP_PORT } = process.env;
+    if (!MAILPIT_SMTP_PORT) {
+      throw new Error('MAILPIT_SMTP_PORT missing from .env.e2e');
+    }
+    if (Number.isNaN(Number(MAILPIT_SMTP_PORT))) {
+      throw new Error(
+        'MAILPIT_SMTP_PORT is not a valid number. Check .env.e2e'
+      );
+    }
+
+    return nodemailer.createTransport({
+      host: 'localhost',
+      port: Number(MAILPIT_SMTP_PORT),
+      secure: false
+    });
   }
 
   if (!process.env.MAILGUN_KEY) {

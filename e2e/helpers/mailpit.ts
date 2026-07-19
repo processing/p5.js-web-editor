@@ -1,11 +1,14 @@
 import { expect } from '../fixtures';
+import { requireEnv } from './env';
 
 /**
- * Mailpit's default HTTP API port (https://mailpit.axllent.org/). Emails are
- * captured here instead of Mailgun (EMAIL_TRANSPORT=smtp in .env.e2e, on
- * Mailpit's default SMTP port :1025 — see server/utils/mail.ts).
+ * Mailpit addresses derived from the MAILPIT_*_PORT vars in .env.e2e. Emails
+ * are captured here instead of Mailgun (EMAIL_TRANSPORT=smtp in .env.e2e,
+ * on MAILPIT_SMTP_PORT — see server/utils/mail.ts).
  */
-const MAILPIT_API = 'http://localhost:8025/api/v1';
+export const mailpitSmtpPort = () => requireEnv('MAILPIT_SMTP_PORT');
+export const mailpitUiPort = () => requireEnv('MAILPIT_UI_PORT');
+export const mailpitApiUrl = () => `http://localhost:${mailpitUiPort()}/api/v1`;
 
 /**
  * Polls Mailpit until a verification email arrives for `email` (delivery is
@@ -17,7 +20,7 @@ export async function getVerificationLink(email: string): Promise<string> {
     .poll(
       async () => {
         const res = await fetch(
-          `${MAILPIT_API}/search?query=${encodeURIComponent(`to:${email}`)}`
+          `${mailpitApiUrl()}/search?query=${encodeURIComponent(`to:${email}`)}`
         );
         const data = await res.json();
         messageId = data.messages?.[0]?.ID;
@@ -30,7 +33,7 @@ export async function getVerificationLink(email: string): Promise<string> {
     )
     .toBeTruthy();
 
-  const res = await fetch(`${MAILPIT_API}/message/${messageId}`);
+  const res = await fetch(`${mailpitApiUrl()}/message/${messageId}`);
   const message = await res.json();
   const match = (message.HTML as string).match(
     /href="(http[^"]*\/verify\?t=[^"]+)"/

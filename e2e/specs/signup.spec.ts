@@ -8,8 +8,8 @@ test.describe('signup and email verification', () => {
     page
   }) => {
     // Unique per run so the duplicate username/email check passes
-    const uniqueId = `${usernamePrefix}${Date.now()}`;
-    const email = `${uniqueId}${emailSuffix}`;
+    const uniqueId = `${usernamePrefix()}${Date.now()}`;
+    const email = `${uniqueId}${emailSuffix()}`;
 
     await page.goto('/signup');
 
@@ -17,8 +17,8 @@ test.describe('signup and email verification', () => {
 
     await page.locator('#username').fill(uniqueId);
     await page.locator('#email').fill(email);
-    await page.locator('#password').fill(password);
-    await page.locator('#confirmPassword').fill(password);
+    await page.locator('#password').fill(password());
+    await page.locator('#confirmPassword').fill(password());
 
     // The submit button stays disabled until the async duplicate
     // username/email check resolves; click() auto-waits for enabled
