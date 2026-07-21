@@ -11,9 +11,10 @@ test.describe('signup and email verification', () => {
     const uniqueId = `${usernamePrefix()}${Date.now()}`;
     const email = `${uniqueId}${emailSuffix()}`;
 
-    await page.goto('/signup');
-
+    await page.goto('/');
     await dismissCookieBanner(page);
+
+    await page.locator('a[href="/signup"]').click();
 
     await page.locator('#username').fill(uniqueId);
     await page.locator('#email').fill(email);
@@ -41,5 +42,64 @@ test.describe('signup and email verification', () => {
 
     const session = await page.request.get('/editor/session');
     expect((await session.json()).verified).toBe('verified');
+  });
+
+  test('cannot sign up with an already-used username or email', async ({
+    page
+  }) => {
+    const uniqueId = `${usernamePrefix()}${Date.now()}`;
+    const email = `${uniqueId}${emailSuffix()}`;
+
+    await page.goto('/');
+
+    await dismissCookieBanner(page);
+
+    await page.locator('a[href="/signup"]').click();
+
+    await page.locator('#username').fill(uniqueId);
+    await page.locator('#email').fill(email);
+    await page.locator('#password').fill(password());
+    await page.locator('#confirmPassword').fill(password());
+
+    await page.getByRole('button', { name: 'Sign Up', exact: true }).click();
+
+    // Successful signup logs the user in and redirects to the editor
+    await expect(page.locator('.editor-holder')).toBeVisible({
+      timeout: 15_000
+    });
+
+    await page.locator(`button:has-text("${uniqueId}")`).click();
+    await page.locator('#account-logout').click();
+
+    await expect(page.locator('a[href="/signup"]')).toBeVisible({
+      timeout: 5_000
+    });
+    await page.locator('a[href="/signup"]').click();
+
+    // Fill the input field and move away, error appears on blur
+    await page.locator('#username').fill(uniqueId);
+    await page.locator('#email').click();
+    await expect(
+      page
+        .locator('.form-error')
+        .filter({ hasText: 'This username is already taken.' })
+    ).toBeVisible({ timeout: 5_000 });
+    await page.locator('#email').fill(email);
+    await page.locator('#password').click();
+    await expect(
+      page
+        .locator('.form-error')
+        .filter({ hasText: 'This email is already taken.' })
+    ).toBeVisible({ timeout: 5_000 });
+
+    // Now fill passwords — email error will disappear but that's fine
+    // we already asserted on it above
+    await page.locator('#password').fill(password());
+    await page.locator('#confirmPassword').fill(password());
+
+    // Submit button should still be disabled due to duplicate username/email
+    await expect(
+      page.getByRole('button', { name: 'Sign Up', exact: true })
+    ).toBeDisabled();
   });
 });
