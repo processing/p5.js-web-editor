@@ -5,11 +5,11 @@ const axios = require('axios');
 const VERSIONS = [
   {
     version: 'v1',
-    url: 'https://p5js.org/reference/data.json'
+    url: 'https://v1.p5js.org/reference/data.json'
   },
   {
     version: 'v2',
-    url: 'https://beta.p5js.org/reference/data.json'
+    url: 'https://p5js.org/reference/data.json'
   }
 ];
 
