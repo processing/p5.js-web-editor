@@ -6,7 +6,7 @@ import { User } from '../models/user';
 import Project from '../models/project';
 import async from 'async';
 require('dotenv').config({ path: path.resolve('.env') });
-mongoose.connect('mongodb://localhost:27017/p5js-web-editor');
+mongoose.connect(process.env.MONGO_URL);
 mongoose.connection.on('error', () => {
   console.error(
     'MongoDB Connection Error. Please make sure that MongoDB is running.'
