@@ -28,7 +28,6 @@ test.describe('editor page', () => {
       'function draw() {',
       '  background(220);',
       "  console.log('hi from sketch');",
-      '  noLoop();',
       '}'
     ].join(''); // Purposely joining without '\n' to avoid triggering the autocomplete with keyboard.type & creating extra brackets
 
@@ -50,6 +49,22 @@ test.describe('editor page', () => {
     await expect(
       page.locator('.preview-console__messages')
     ).toContainText('hi from sketch', { timeout: 15_000 });
+
+    // Let sketch run for 2 seconds
+    await page.waitForTimeout(2000);
+
+    const countDiv = page
+      .locator('.preview-console__messages [data-method="log"] div')
+      .first();
+    const count = Number(await countDiv.textContent());
+    expect(count).toBeGreaterThan(1);
+
+    // Stop the sketch
+    await page.locator('[aria-label="Stop sketch"]').click();
+
+    // Wait and confirm count is frozen
+    await page.waitForTimeout(1000);
+    await expect(countDiv).toHaveText(count.toString());
   });
 
   test('unauthenticated users cannot save sketches', async ({ page }) => {
