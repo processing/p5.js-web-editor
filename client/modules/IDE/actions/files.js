@@ -191,6 +191,16 @@ export function deleteFile(id, parentId) {
       apiClient
         .delete(`/projects/${state.project.id}/files/${id}`, deleteConfig)
         .then((response) => {
+          const file = state.files.find((f) => f.id === id);
+          if (file?.url && file.url.includes('/pending/')) {
+            const pendingIndex = file.url.indexOf('/pending/');
+            const objectKey = file.url
+              .substring(pendingIndex + 1)
+              .split('?')[0];
+            apiClient
+              .delete(`/S3/delete?objectKey=${objectKey}`)
+              .catch(() => {});
+          }
           dispatch(setProjectSavedTime(response.data.project.updatedAt));
           dispatch({
             type: ActionTypes.DELETE_FILE,

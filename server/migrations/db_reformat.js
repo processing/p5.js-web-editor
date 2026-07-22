@@ -4,7 +4,7 @@ import path from 'path';
 import { uniqWith, isEqual } from 'lodash';
 require('dotenv').config({ path: path.resolve('.env') });
 const ObjectId = mongoose.Types.ObjectId;
-mongoose.connect('mongodb://localhost:27017/p5js-web-editor');
+mongoose.connect(process.env.MONGO_URL);
 mongoose.connection.on('error', () => {
   console.error(
     'MongoDB Connection Error. Please make sure that MongoDB is running.'

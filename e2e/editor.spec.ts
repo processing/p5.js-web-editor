@@ -57,4 +57,31 @@ test.describe('editor page', () => {
       page.locator('.preview-console__messages')
     ).toContainText('hi from sketch', { timeout: 15_000 });
   });
+
+  test('unauthenticated users cannot save sketches', async ({ page }) => {
+    // Verify save option is disabled in File menu
+    await page.getByRole('menuitem', { name: 'File' }).click();
+
+    const saveButton = page.locator('#file-save');
+
+    await expect(saveButton).toHaveAttribute('aria-disabled', 'true');
+    await expect(saveButton).toHaveAttribute(
+      'aria-label',
+      'Log in to save your sketch'
+    );
+
+    // Close menu if needed
+    await page.keyboard.press('Escape');
+
+    // Attempt save via keyboard shortcut
+    await page.locator('.editor-holder').click();
+    await page.keyboard.press('ControlOrMeta+S');
+
+    // Verify login prompt appears
+    await expect(
+      page.getByText(
+        'In order to save sketches, you must be logged in. Please Login or Sign Up.'
+      )
+    ).toBeVisible();
+  });
 });
