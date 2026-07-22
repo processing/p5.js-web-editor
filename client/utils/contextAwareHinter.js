@@ -74,11 +74,39 @@ function makeBaseHintLookup(hints) {
   return byLabel;
 }
 
-function buildMethodOption(methodName, baseHint, range) {
+function createFunctionApply(name, state, pos) {
+  return function apply(view, completion, from, to) {
+    const line = state.doc.lineAt(pos);
+    const beforeCursor = line.text.slice(0, pos - line.from);
+
+    const isFunctionDeclaration = /\bfunction\s+[a-zA-Z_$\w$]*$/.test(
+      beforeCursor
+    );
+
+    const insertText = isFunctionDeclaration ? `${name}() {\n\n}` : `${name}()`;
+
+    const cursorPos = isFunctionDeclaration
+      ? from + `${name}() {\n`.length
+      : from + name.length + 1;
+
+    view.dispatch({
+      changes: {
+        from,
+        to,
+        insert: insertText
+      },
+      selection: {
+        anchor: cursorPos
+      }
+    });
+  };
+}
+function buildMethodOption(methodName, baseHint, range, state, pos) {
   const params = baseHint?.params || [];
 
   return {
     label: methodName,
+    apply: createFunctionApply(methodName, state, pos),
     type: 'method',
     kindLabel: baseHint?.kindLabel || 'fun',
     params,
@@ -89,13 +117,11 @@ function buildMethodOption(methodName, baseHint, range) {
   };
 }
 
-function buildVarOrFunctionOption({
-  name,
-  isFunc,
-  userDefinedFunctionMetadata,
-  blacklist,
-  range
-}) {
+function buildVarOrFunctionOption(
+  { name, isFunc, userDefinedFunctionMetadata, blacklist, range },
+  state,
+  pos
+) {
   const fnMeta = userDefinedFunctionMetadata[name];
   const params = fnMeta?.params || [];
 
@@ -115,6 +141,9 @@ function buildVarOrFunctionOption({
 
   return {
     label: fnMeta?.text || name,
+    ...(isFunc && {
+      apply: createFunctionApply(name, state, pos)
+    }),
     type: isFunc ? 'method' : 'variable',
     kindLabel: isFunc ? 'fun' : 'var',
     params,
@@ -126,10 +155,17 @@ function buildVarOrFunctionOption({
     to: range.to
   };
 }
+function buildGlobalHintOption(hint, blacklist, range, state, pos) {
+  const isFunctionLike =
+    hint.type === 'method' ||
+    hint.type === 'function' ||
+    hint.kindLabel === 'fun';
 
-function buildGlobalHintOption(hint, blacklist, range) {
   return {
     ...hint,
+    ...(isFunctionLike && {
+      apply: createFunctionApply(hint.label, state, pos)
+    }),
     blacklisted: blacklist.includes(hint.label),
     warning: blacklist.includes(hint.label)
       ? '⚠️ use with caution in this context'
@@ -176,7 +212,13 @@ export default function contextAwareHinter(context, { hints = [] } = {}) {
     const options = methods
       .filter((method) => method.toLowerCase().startsWith(typedLower))
       .map((method) =>
-        buildMethodOption(method, baseHintLookup.get(method), memberInfo)
+        buildMethodOption(
+          method,
+          baseHintLookup.get(method),
+          memberInfo,
+          state,
+          pos
+        )
       );
 
     return {
@@ -225,7 +267,9 @@ export default function contextAwareHinter(context, { hints = [] } = {}) {
         isFunc,
         userDefinedFunctionMetadata,
         blacklist,
-        range: wordInfo
+        range: wordInfo,
+        state,
+        pos
       });
     });
 
@@ -236,7 +280,9 @@ export default function contextAwareHinter(context, { hints = [] } = {}) {
         typeof hint.label === 'string' &&
         hint.label.toLowerCase().startsWith(lowerCurrentWord)
     )
-    .map((hint) => buildGlobalHintOption(hint, blacklist, wordInfo));
+    .map((hint) =>
+      buildGlobalHintOption(hint, blacklist, wordInfo, state, pos)
+    );
 
   const combinedOptions = [...localOptions, ...globalOptions];
 
