@@ -277,6 +277,7 @@
     "express": "^4.22.1",
     "express-basic-auth": "^1.2.0",
     "express-session": "^1.18.2",
+    "fast-xml-parser": "^4.5.4",
     "final-form": "^4.20.2",
     "friendly-words": "^1.2.1",
     "fuse.js": "^6.6.2",
