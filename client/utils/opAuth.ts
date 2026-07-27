@@ -139,7 +139,7 @@ export function buildAuthorizeUrl(
     code_challenge: pkce.codeChallenge,
     code_challenge_method: 'S256'
   });
-  return `${getOpBaseUrl()}/oauth/p5login?${params.toString()}`;
+  return `${getOpBaseUrl()}/oauth/authorize?${params.toString()}`;
 }
 
 interface ExchangeResponse {
