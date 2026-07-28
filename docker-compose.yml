@@ -22,7 +22,6 @@ services:
     #   - PREVIEW_URL
     #   - EXAMPLES_ENDPOINT
     #   - TRANSLATIONS_ENABLED
-    #   - UI_ACCESS_TOKEN_ENABLED
     #   - UPLOAD_LIMIT
     volumes:
       - .:/opt/node/app

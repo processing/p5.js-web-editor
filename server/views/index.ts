@@ -40,9 +40,6 @@ export function renderIndex() {
           process.env.API_TOKEN ? `'${process.env.API_TOKEN}'` : undefined
         };
         window.process.env.NODE_ENV = '${process.env.NODE_ENV}';
-        window.process.env.FORCE_TO_HTTPS = ${
-          process.env.FORCE_TO_HTTPS === 'false' ? false : undefined
-        };
         window.process.env.CLIENT = true;
         window.process.env.LOGIN_ENABLED = ${
           process.env.LOGIN_ENABLED !== 'false'
@@ -54,9 +51,6 @@ export function renderIndex() {
           process.env.EXAMPLES_ENDPOINT
             ? `'${process.env.EXAMPLES_ENDPOINT}'`
             : undefined
-        };
-        window.process.env.UI_ACCESS_TOKEN_ENABLED = ${
-          process.env.UI_ACCESS_TOKEN_ENABLED !== 'false'
         };
         window.process.env.UI_COLLECTIONS_ENABLED = ${
           process.env.UI_COLLECTIONS_ENABLED !== 'false'
@@ -124,9 +118,6 @@ export function renderProjectIndex(username: string, projectName: string) {
           process.env.API_TOKEN ? `'${process.env.API_TOKEN}'` : undefined
         };
         window.process.env.NODE_ENV = '${process.env.NODE_ENV}';
-        window.process.env.FORCE_TO_HTTPS = ${
-          process.env.FORCE_TO_HTTPS === 'false' ? false : undefined
-        };
         window.process.env.CLIENT = true;
         window.process.env.LOGIN_ENABLED = ${
           process.env.LOGIN_ENABLED !== 'false'
@@ -138,9 +129,6 @@ export function renderProjectIndex(username: string, projectName: string) {
           process.env.EXAMPLES_ENDPOINT
             ? `'${process.env.EXAMPLES_ENDPOINT}'`
             : undefined
-        };
-        window.process.env.UI_ACCESS_TOKEN_ENABLED = ${
-          process.env.UI_ACCESS_TOKEN_ENABLED !== 'false'
         };
         window.process.env.UI_COLLECTIONS_ENABLED = ${
           process.env.UI_COLLECTIONS_ENABLED !== 'false'
