@@ -4,9 +4,9 @@ Follow these instructions to set up your development environment, which you need
 
 Before you dive in, note that there are two ways to install the project locally:
 
-- **Manual Installation** is great if you're comfortable managing dependencies like Node.js and MongoDB directly on your machine. It's more hands-on and gives you finer control, which can be helpful for debugging or learning how each part works.
+- **Manual Installation** is great if you're comfortable managing dependencies like Node.js directly on your machine. It's more hands-on and gives you finer control, which can be helpful for debugging or learning how each part works.
 
-- **Docker Installation** is ideal if you want a faster setup with all dependencies (Node, MongoDB, etc.) isolated in containers. This avoids version conflicts and works consistently across environments especially helpful if you're new to backend setup or don't want to alter your local setup.
+- **Docker Installation** is ideal if you want a faster setup with all dependencies (Node, etc.) isolated in containers. This avoids version conflicts and works consistently across environments especially helpful if you're new to backend setup or don't want to alter your local setup.
 
 If you're just getting started, try going with the **Manual Installation** method! Once you're comfortable with one method, feel free to try out both to see which one you prefer. 
 
@@ -34,32 +34,21 @@ _Note_: The installation steps assume you are using a Unix-like shell. If you ar
    $ cd p5.js-web-editor
    $ npm install
    ```
-7. Install MongoDB and make sure it is running
-   * For Mac OSX with [homebrew](http://brew.sh/): `brew tap mongodb/brew` then `brew install mongodb-community` and finally start the server with `brew services start mongodb-community` or you can visit the installation guide here [Installation Guide For MacOS](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/)
-   * For Windows and Linux: [MongoDB Installation](https://docs.mongodb.com/manual/installation/)
-   * If you have trouble setting up MongoDB locally, an alternative is to use [MongoDB Atlas](https://cloud.mongodb.com/) to get a connection string that you can use as your `MONGO_URL` in the `.env` file. To get your connection string:
-      - Navigate to [mongodb.com](https://www.mongodb.com/) and sign up or log in.
-      - Create a new project. Give it any name, and either add a key-value pair or skip that step.
-      - Create a cluster by choosing the free tier. Give your cluster a name, choose a region, and keep the provider as AWS.
-      - Set a username and password for your database-user, these will be part of your connection string.
-      - Choose **Node.js** as the driver for your connection method. You will see a connection string, with or without the password filled in.
-      - Copy the string and use it as your `MONGO_URL` in the `.env` file.
-8. `$ cp .env.example .env`
-9. (Optional) Update `.env` with necessary keys to enable certain app behaviors, i.e. add Github ID and Github Secret if you want to be able to log in with Github.
+7. `$ cp .env.example .env`
+8. (Optional) Update `.env` with necessary keys to enable certain app behaviors, i.e. add Github ID and Github Secret if you want to be able to log in with Github.
    * See the [GitHub API Configuration](#github-api-configuration) section for information on how to authenticate with Github.
-   * See the [S3 Bucket Configuration](#s3-bucket-configuration) section for information on how to set up an S3 bucket
-10. (Optional) Run `$ npm run fetch-examples` to download the example sketches into a user called 'p5'. Note that you need to configure your GitHub Credentials, which you can do by following the [Github API Configuration](#github-api-configuration) section.
-11. Enable Prettier in your text editor by following [this guide](https://prettier.io/docs/en/editors.html).
-12. `$ npm start`
-13. Navigate to [http://localhost:8000](http://localhost:8000) in your browser
-14. Install the [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en)
-15. Open and close the Redux DevTools using `ctrl+h`, and move them with `ctrl+w`
+9. (Optional) Run `$ npm run fetch-examples` to download the example sketches into a user called 'p5'. Note that you need to configure your GitHub Credentials, which you can do by following the [Github API Configuration](#github-api-configuration) section.
+10. Enable Prettier in your text editor by following [this guide](https://prettier.io/docs/en/editors.html).
+11. `$ npm start`
+12. Navigate to [http://localhost:8000](http://localhost:8000) in your browser
+13. Install the [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en)
+14. Open and close the Redux DevTools using `ctrl+h`, and move them with `ctrl+w`
 
 ## Docker Installation
 
 _Note_: The installation steps assume you are using a Unix-like shell. If you are using Windows, you will need to use `copy` instead of `cp`.
 
-Using Docker, you can have a complete, consistent development environment without having to manually install dependencies such as Node, Mongo, etc. It also helps isolate these dependencies and their data from other projects that you may have on the same computer that use different/conflicting versions, etc.
+Using Docker, you can have a complete, consistent development environment without having to manually install dependencies such as Node, etc. It also helps isolate these dependencies and their data from other projects that you may have on the same computer that use different/conflicting versions, etc.
 
 Note that this takes up a significant amount of space on your machine. Make sure you have at least 5GB free.
 
@@ -73,7 +62,6 @@ Note that this takes up a significant amount of space on your machine. Make sure
 5. `$ cp .env.example .env`
 6. (Optional) Update `.env` with necessary keys to enable certain app behaviors, i.e. add Github ID and Github Secret if you want to be able to log in with Github.
    * See the [GitHub API Configuration](#github-api-configuration) section for information on how to authenticate with Github.
-   * See the [S3 Bucket Configuration](#s3-bucket-configuration) section for information on how to set up an S3 bucket
 7. `$ docker-compose -f docker-compose-development.yml run --rm app npm run fetch-examples` -  note that you need to configure your GitHub Credentials, which you can do by following the [Github API Configuration](#github-api-configuration) section.
 8. Enable Prettier in your text editor by following [this guide](https://prettier.io/docs/en/editors.html).
 
@@ -89,12 +77,6 @@ To open a terminal/shell in the running Docker server (i.e. after `docker-compos
 If you don't have the full server environment running, you can launch a one-off container instance (and have it automatically deleted after you're done using it):
 
 12. `$ docker-compose -f docker-compose-development.yml run app --rm bash -l`
-
-## S3 Bucket Configuration
-
-See [this configuration guide](./s3_configuration.md) for information about how to configure your own S3 bucket. These instructions were adapted from [this gist](https://gist.github.com/catarak/70c9301f0fd1ac2d6b58de03f61997e3).
-
-Note that this is optional unless you are working on the part of the application that allows a user to upload images, videos, etc. 
 
 ## GitHub API Configuration
 

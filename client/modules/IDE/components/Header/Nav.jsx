@@ -28,7 +28,7 @@ import {
   stopSketch
 } from '../../actions/ide';
 import { logoutUser } from '../../../User/actions';
-import { getOpBaseUrl } from '../../../../utils/opAuth';
+import { getOpBaseUrl, isTokenOverride } from '../../../../utils/opAuth';
 import { CmControllerContext } from '../../pages/IDEView';
 import MobileNav from './MobileNav';
 import useIsMobile from '../../hooks/useIsMobile';
@@ -437,9 +437,14 @@ const AuthenticatedUserMenu = () => {
         <MenubarItem id="account-settings" href={`${getOpBaseUrl()}/user/edit`}>
           {t('Nav.Auth.MyAccount')}
         </MenubarItem>
-        <MenubarItem id="account-logout" onClick={() => dispatch(logoutUser())}>
-          {t('Nav.Auth.LogOut')}
-        </MenubarItem>
+        {!isTokenOverride() && (
+          <MenubarItem
+            id="account-logout"
+            onClick={() => dispatch(logoutUser())}
+          >
+            {t('Nav.Auth.LogOut')}
+          </MenubarItem>
+        )}
       </MenubarSubmenu>
     </ul>
   );

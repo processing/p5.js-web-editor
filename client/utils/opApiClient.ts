@@ -1,6 +1,6 @@
 import axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 import { getConfig } from './getConfig';
-import { clearStoredToken, getStoredToken } from './opAuth';
+import { clearStoredToken, getStoredToken, isTokenOverride } from './opAuth';
 
 function createOpClientInstance(): AxiosInstance {
   const instance = axios.create({
@@ -23,7 +23,13 @@ function createOpClientInstance(): AxiosInstance {
   instance.interceptors.response.use(
     (response) => response,
     (error) => {
-      if (error?.response?.status === 401 && getStoredToken()) {
+      // Don't clear the override token on 401 — it's env-provided, not a
+      // per-user localStorage token, and clearing it wouldn't re-auth anyway.
+      if (
+        error?.response?.status === 401 &&
+        !isTokenOverride() &&
+        getStoredToken()
+      ) {
         clearStoredToken();
       }
       return Promise.reject(error);

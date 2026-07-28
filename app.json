@@ -4,43 +4,13 @@
   "repository": "https://github.com/processing/p5.js-web-editor",
   "logo": "https://p5js.org/assets/img/p5js.svg",
   "keywords": ["processing", "p5js", "p5.js"],
-  "addons": [
-    {
-      "plan": "mailgun:starter",
-      "as": "MAILGUN"
-    }
-  ],
   "env": {
     "API_URL": {
       "description": "Base URL of the OpenProcessing API the editor reads from.",
       "value": "https://openprocessing.org/api"
     },
-    "AWS_ACCESS_KEY": {
-      "description": "AWS Access Key",
-      "value": "placeholder"
-    },
-    "AWS_SECRET_KEY": {
-      "description": "AWS Secret Key",
-      "value": "placeholder"
-    },
-    "AWS_REGION": {
-      "description": "AWS Region for the S3_BUCKET",
-      "value": "placeholder"
-    },
-    "EMAIL_SENDER": {
-      "description": "The sending email address for transactional emails.",
-      "value": "no-reply@mydomain.com"
-    },
     "NODE_ENV": {
       "value": "production"
-    },
-    "S3_BUCKET": {
-      "desription": "Name of the S3 bucket for asset storage",
-      "value": "placeholder"
-    },
-    "S3_BUCKET_URL_BASE": {
-      "description": "S3 bucket URL base",
-      "required": false
     }
   }
 }

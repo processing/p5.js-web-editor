@@ -13,28 +13,14 @@ services:
       - "$PWD/.env"
     # environment:
     #   - API_URL
-    #   - AWS_ACCESS_KEY
-    #   - AWS_REGION
-    #   - AWS_SECRET_KEY
-    #   - EMAIL_SENDER
-    #   - EMAIL_VERIFY_SECRET_TOKEN
-    #   - EXAMPLE_USER_EMAIL
-    #   - EXAMPLE_USER_PASSWORD
-    #   - GG_EXAMPLES_USERNAME
-    #   - GG_EXAMPLES_EMAIL
-    #   - GG_EXAMPLES_PASS
-    #   - GITHUB_ID
-    #   - GITHUB_SECRET
-    #   - GOOGLE_ID
-    #   - GOOGLE_SECRET
-    #   - MAILGUN_DOMAIN
-    #   - MAILGUN_KEY
+    #   - API_TOKEN
+    #   - CORS_ALLOW_LOCALHOST
+    #   - OP_404_SKETCH_ID
     #   - PORT
     #   - PREVIEW_PORT
     #   - EDITOR_URL
     #   - PREVIEW_URL
-    #   - S3_BUCKET
-    #   - S3_BUCKET_URL_BASE
+    #   - EXAMPLES_ENDPOINT
     #   - TRANSLATIONS_ENABLED
     #   - UI_ACCESS_TOKEN_ENABLED
     #   - UPLOAD_LIMIT

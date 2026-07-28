@@ -20,7 +20,6 @@ These guides aren't exhaustive, and do not cover all the possible ways you can c
 - [Public API](public_api.md) - The current Web Editor programmatic API for uploading sketches and working with files.
 - [Proposed Public API](public_api_proposed.md) - Proposed API extensions and design notes for future endpoints.
 - [Styling](styling.md) - UI styling guidelines and front-end design best practices.
-- [S3 Configuration](s3_configuration.md) - Steps for setting up Amazon S3 and required environment variables.
 - [GSoC Hinter and Refactoring Changes](GSOC_hinter_and_refactoring_changes.md) - Architecture overview for autocomplete hinter and refactoring systems built during GSoC 2025.
 - [pr05 2025 Typescript Migration](pr05_2025_typescript_migration/index.md) - Project appendix and migration status for the 2025 incremental TypeScript migration.
 

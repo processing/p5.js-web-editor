@@ -30,17 +30,16 @@ export function renderIndex() {
           window.process.env = {};
         }
         window.process.env.API_URL = '${process.env.API_URL}';
-        // API_TOKEN intentionally NOT exposed to the browser — it's a shared
-        // service token used only server-side (project.controller.js). Per-user
-        // OP access tokens live in localStorage after the OAuth popup flow.
-        window.process.env.NODE_ENV = '${process.env.NODE_ENV}';
-        window.process.env.S3_BUCKET = '${process.env.S3_BUCKET}';
-        window.process.env.S3_BUCKET_URL_BASE = ${
-          process.env.S3_BUCKET_URL_BASE
-            ? `'${process.env.S3_BUCKET_URL_BASE}'`
-            : undefined
+        // API_TOKEN is an optional deployment-wide override: when set, it's used
+        // as the bearer for every OP API request and the per-user OAuth flow is
+        // bypassed. Only exposed when present. Readable by anyone who loads the
+        // page, so it must never be set on a shared public deployment — it's for
+        // self-hosted / single-user / embedded / CI use. When unset, per-user OP
+        // access tokens live in localStorage after the OAuth popup flow.
+        window.process.env.API_TOKEN = ${
+          process.env.API_TOKEN ? `'${process.env.API_TOKEN}'` : undefined
         };
-        window.process.env.AWS_REGION = '${process.env.AWS_REGION}';
+        window.process.env.NODE_ENV = '${process.env.NODE_ENV}';
         window.process.env.FORCE_TO_HTTPS = ${
           process.env.FORCE_TO_HTTPS === 'false' ? false : undefined
         };
@@ -115,17 +114,16 @@ export function renderProjectIndex(username: string, projectName: string) {
           window.process.env = {};
         }
         window.process.env.API_URL = '${process.env.API_URL}';
-        // API_TOKEN intentionally NOT exposed to the browser — it's a shared
-        // service token used only server-side (project.controller.js). Per-user
-        // OP access tokens live in localStorage after the OAuth popup flow.
-        window.process.env.NODE_ENV = '${process.env.NODE_ENV}';
-        window.process.env.S3_BUCKET = '${process.env.S3_BUCKET}';
-        window.process.env.S3_BUCKET_URL_BASE = ${
-          process.env.S3_BUCKET_URL_BASE
-            ? `'${process.env.S3_BUCKET_URL_BASE}'`
-            : undefined
+        // API_TOKEN is an optional deployment-wide override: when set, it's used
+        // as the bearer for every OP API request and the per-user OAuth flow is
+        // bypassed. Only exposed when present. Readable by anyone who loads the
+        // page, so it must never be set on a shared public deployment — it's for
+        // self-hosted / single-user / embedded / CI use. When unset, per-user OP
+        // access tokens live in localStorage after the OAuth popup flow.
+        window.process.env.API_TOKEN = ${
+          process.env.API_TOKEN ? `'${process.env.API_TOKEN}'` : undefined
         };
-        window.process.env.AWS_REGION = '${process.env.AWS_REGION}';
+        window.process.env.NODE_ENV = '${process.env.NODE_ENV}';
         window.process.env.FORCE_TO_HTTPS = ${
           process.env.FORCE_TO_HTTPS === 'false' ? false : undefined
         };

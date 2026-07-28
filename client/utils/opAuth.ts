@@ -31,7 +31,27 @@ export function getRedirectUri(): string {
 // Token storage
 // ---------------------------------------------------------------------------
 
+/**
+ * Optional deployment-wide override token. When `API_TOKEN` is provided in the
+ * environment it is bundled into the page and used as the bearer for every OP
+ * API request, bypassing the per-user OAuth flow entirely. This is intended for
+ * self-hosted / single-user / embedded / CI deployments — the token is readable
+ * by anyone who can load the page, so it must never be set on a shared public
+ * deployment.
+ */
+export function getOverrideToken(): string | null {
+  return getConfig('API_TOKEN', { warn: false }) ?? null;
+}
+
+export function isTokenOverride(): boolean {
+  return getOverrideToken() != null;
+}
+
 export function getStoredToken(): string | null {
+  const override = getOverrideToken();
+  if (override) {
+    return override;
+  }
   try {
     return window.localStorage.getItem(TOKEN_KEY);
   } catch {
@@ -177,6 +197,9 @@ export async function exchangeCodeForToken(
 
 /** Best-effort revoke on OP and unconditional local clear. */
 export async function revokeStoredToken(): Promise<void> {
+  // Never revoke the deployment-wide override token: it isn't a per-user token
+  // and revoking it on OP would break the token for every visitor.
+  if (isTokenOverride()) return;
   const token = getStoredToken();
   clearStoredToken();
   if (!token) return;

@@ -26,7 +26,7 @@ import {
   showKeyboardShortcutModal
 } from '../../actions/ide';
 import { logoutUser } from '../../../User/actions';
-import { getOpBaseUrl } from '../../../../utils/opAuth';
+import { getOpBaseUrl, isTokenOverride } from '../../../../utils/opAuth';
 import { getConfig } from '../../../../utils/getConfig';
 import { useSketchActions, useWhatPage } from '../../hooks';
 import { CmControllerContext } from '../../pages/IDEView';
@@ -357,9 +357,11 @@ const AccountMenu = () => {
           <MobileMenuItem href={`${getOpBaseUrl()}/user/edit`}>
             Settings
           </MobileMenuItem>
-          <MobileMenuItem onClick={() => dispatch(logoutUser())}>
-            Log Out
-          </MobileMenuItem>
+          {!isTokenOverride() && (
+            <MobileMenuItem onClick={() => dispatch(logoutUser())}>
+              Log Out
+            </MobileMenuItem>
+          )}
         </ParentMenuContext.Provider>
       </ul>
     </div>
