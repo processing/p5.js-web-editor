@@ -22,17 +22,28 @@ function getErrorPayload(error, fallbackMessage = 'Request failed.') {
   return { message: data || error?.message || fallbackMessage };
 }
 
-// Fetch a single curation together with its sketches and build a fully
-// populated collection object (the shape the store/components expect).
-function fetchCollectionWithItems(collectionId) {
-  return Promise.all([
-    opApiClient.get(`/curation/${collectionId}`),
-    opApiClient.get(`/curation/${collectionId}/sketches`, {
+function fetchCuration(collectionId) {
+  return opApiClient
+    .get(`/curation/${collectionId}`)
+    .then((response) => response.data);
+}
+
+function fetchCurationSketches(collectionId) {
+  return opApiClient
+    .get(`/curation/${collectionId}/sketches`, {
       params: { limit: MAX_PAGE_SIZE, sort: 'desc' }
     })
-  ]).then(([curationRes, sketchesRes]) =>
-    opCurationWithSketchesToCollection(curationRes.data, sketchesRes.data || [])
-  );
+    .then((response) => response.data || []);
+}
+
+// Fetch a single curation together with its sketches and build a fully
+// populated collection object (the shape the store/components expect).
+// The sketches are only requested once the curation resolves, so a
+// collection id that doesn't exist costs one request instead of two.
+async function fetchCollectionWithItems(collectionId) {
+  const curation = await fetchCuration(collectionId);
+  const sketches = await fetchCurationSketches(collectionId);
+  return opCurationWithSketchesToCollection(curation, sketches);
 }
 
 export function getCollections(
@@ -78,44 +89,52 @@ export function getCollections(
 
 // Load a single collection (with its sketches) and upsert it into the store.
 // A missing collection — or one owned by someone other than the username in
-// the URL — surfaces as a toast rather than an error modal.
+// the URL — surfaces as a toast rather than an error modal. The owner is
+// checked before the sketches are requested, so neither case pays for a
+// second call.
 export function getCollection(collectionId, ownerUsername) {
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch(startLoader());
-    return fetchCollectionWithItems(collectionId)
-      .then((collection) => {
-        if (
-          ownerUsername &&
-          collection.owner.username &&
-          collection.owner.username.toLowerCase() !==
-            ownerUsername.toLowerCase()
-        ) {
-          dispatch(stopLoader());
-          dispatch(notFoundRedirect('Toast.CollectionNotFound'));
-          return null;
-        }
+    try {
+      const curation = await fetchCuration(collectionId);
 
-        dispatch({
-          type: ActionTypes.SET_COLLECTION,
-          collection
-        });
+      if (
+        ownerUsername &&
+        curation.username &&
+        curation.username.toLowerCase() !== ownerUsername.toLowerCase()
+      ) {
         dispatch(stopLoader());
-        return collection;
-      })
-      .catch((error) => {
-        dispatch(stopLoader());
-
-        if (error?.response?.status === 404) {
-          dispatch(notFoundRedirect('Toast.CollectionNotFound'));
-          return null;
-        }
-
-        dispatch({
-          type: ActionTypes.ERROR,
-          error: getErrorPayload(error)
-        });
+        dispatch(notFoundRedirect('Toast.CollectionNotFound'));
         return null;
+      }
+
+      const sketches = await fetchCurationSketches(collectionId);
+      const collection = opCurationWithSketchesToCollection(
+        curation,
+        sketches,
+        ownerUsername
+      );
+
+      dispatch({
+        type: ActionTypes.SET_COLLECTION,
+        collection
       });
+      dispatch(stopLoader());
+      return collection;
+    } catch (error) {
+      dispatch(stopLoader());
+
+      if (error?.response?.status === 404) {
+        dispatch(notFoundRedirect('Toast.CollectionNotFound'));
+        return null;
+      }
+
+      dispatch({
+        type: ActionTypes.ERROR,
+        error: getErrorPayload(error)
+      });
+      return null;
+    }
   };
 }
 

@@ -72,19 +72,23 @@ function usernamesMatch(a, b) {
 // Resolves to { notFound: true } when the sketch doesn't exist, or when it
 // exists but belongs to someone other than the username in the URL — that
 // address doesn't identify a sketch, so callers render a 404.
+//
+// The sketch itself is fetched first and its code and files only once it
+// resolves, so a URL that isn't a sketch costs one request instead of three.
 export function getProject(id, ownerUsername) {
   return async (dispatch, getState) => {
     dispatch(justOpenedProject());
     try {
-      const [sketchRes, codeRes, filesRes] = await Promise.all([
-        opApiClient.get(`/sketch/${id}`),
-        opApiClient.get(`/sketch/${id}/code`),
-        opApiClient.get(`/sketch/${id}/files`)
-      ]);
+      const sketchRes = await opApiClient.get(`/sketch/${id}`);
       const sketch = sketchRes.data;
       if (ownerUsername && !usernamesMatch(sketch.username, ownerUsername)) {
         return { notFound: true };
       }
+
+      const [codeRes, filesRes] = await Promise.all([
+        opApiClient.get(`/sketch/${id}/code`),
+        opApiClient.get(`/sketch/${id}/files`)
+      ]);
       const fallbackUsername = getState().user.username ?? '';
       const project = opSketchToProject(
         sketch,
