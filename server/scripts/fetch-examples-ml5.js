@@ -1,8 +1,8 @@
 require('@babel/register');
 require('regenerator-runtime/runtime');
-const dotenv = require('dotenv');
+const loadEnv = require('../../loadEnv');
 
 if (process.env.NODE_ENV === 'development') {
-  dotenv.config();
+  loadEnv();
 }
 require('./examples-ml5');

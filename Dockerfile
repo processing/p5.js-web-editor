@@ -10,7 +10,7 @@ FROM base AS development
 ENV NODE_ENV development
 COPY package.json package-lock.json ./
 RUN npm install
-COPY .babelrc index.js nodemon.json ./
+COPY .babelrc index.js nodemon.json loadEnv.js ./
 COPY ./webpack ./webpack
 COPY client ./client
 COPY server ./server
