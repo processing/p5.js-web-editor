@@ -1,8 +1,7 @@
 /* eslint-disable */
 import mongoose from 'mongoose';
-import path from 'path';
 import { uniqWith, isEqual } from 'lodash';
-require('dotenv').config({ path: path.resolve('.env') });
+require('../../loadEnv')();
 const ObjectId = mongoose.Types.ObjectId;
 mongoose.connect(process.env.MONGO_URL);
 mongoose.connection.on('error', () => {
