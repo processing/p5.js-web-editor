@@ -87,18 +87,14 @@ const fetchProjects = (username, options, successType) => (
   getState
 ) => {
   const { user } = getState();
-  const { id: userID } = user;
-  const isOwnDashboard =
-    Boolean(userID) && (!username || username === user.username);
 
-  // In OP-backed mode sketches are fetched from /user/{userID}/sketches, so
-  // wait until auth hydration gives us the current user's ID before requesting.
-  if (!userID) {
-    cancelProjectsRequest(dispatch);
-    return Promise.resolve([]);
-  }
+  // Sketches come from /user/{owner}/sketches. Another user's dashboard is
+  // addressed by @username (the API returns only their public sketches);
+  // the current user's own dashboard falls back to their id, which requires
+  // waiting for auth hydration.
+  const owner = username ? `@${username}` : user.id;
 
-  if (!isOwnDashboard) {
+  if (!owner) {
     cancelProjectsRequest(dispatch);
     return Promise.resolve([]);
   }
@@ -132,7 +128,7 @@ const fetchProjects = (username, options, successType) => (
       dispatch(startLoader());
 
       opApiClient
-        .get(`/user/${userID}/sketches`, {
+        .get(`/user/${owner}/sketches`, {
           params,
           signal: requestController.signal
         })
