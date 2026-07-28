@@ -22,10 +22,13 @@ const mockOpSketches = mockProjects.map((project) => ({
 }));
 
 const server = setupServer(
-  rest.get(`/user/${initialTestState.user.id}/sketches`, (req, res, ctx) => {
-    lastSearchParams = req.url.searchParams;
-    return res(ctx.set('X-Total-Count', '54'), ctx.json(mockOpSketches));
-  })
+  rest.get(
+    `/user/@${initialTestState.user.username}/sketches`,
+    (req, res, ctx) => {
+      lastSearchParams = req.url.searchParams;
+      return res(ctx.set('X-Total-Count', '54'), ctx.json(mockOpSketches));
+    }
+  )
 );
 
 beforeAll(() => server.listen());
@@ -86,7 +89,7 @@ describe('projects action creator tests', () => {
 
     server.use(
       rest.get(
-        `/user/${initialTestState.user.id}/sketches`,
+        `/user/@${initialTestState.user.username}/sketches`,
         (req, res, ctx) => {
           lastSearchParams = req.url.searchParams;
           const delay = lastSearchParams.get('q') === 'first' ? 100 : 0;

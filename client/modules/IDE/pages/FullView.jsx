@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import PreviewFrame from '../components/PreviewFrame';
 import { PreviewNav } from '../../../components/PreviewNav';
 import { getProject } from '../actions/project';
+import notFoundRedirect from '../../../utils/notFoundRedirect';
 import { startSketch } from '../actions/ide';
 import {
   listen,
@@ -21,7 +22,11 @@ function FullView() {
   const params = useParams();
 
   useEffect(() => {
-    dispatch(getProject(params.project_id, params.username));
+    dispatch(getProject(params.project_id, params.username)).then((result) => {
+      if (result?.notFound) {
+        dispatch(notFoundRedirect('Toast.SketchNotFound'));
+      }
+    });
   }, [params]);
 
   useEffect(() => {

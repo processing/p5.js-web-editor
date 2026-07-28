@@ -23,9 +23,9 @@ const Collection = ({ collectionId, username }) => {
   const loading = useSelector((state) => state.loading);
 
   useEffect(() => {
-    dispatch(CollectionsActions.getCollection(collectionId));
+    dispatch(CollectionsActions.getCollection(collectionId, username));
     dispatch(SortingActions.resetSorting());
-  }, [dispatch, collectionId]);
+  }, [dispatch, collectionId, username]);
 
   const isOwner = () =>
     user != null &&

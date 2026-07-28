@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -23,6 +23,8 @@ import {
   TabKey
 } from '../components/DashboardTabSwitcher';
 import useIsMobile from '../../IDE/hooks/useIsMobile';
+import notFoundRedirect from '../../../utils/notFoundRedirect';
+import { getStoredToken } from '../../../utils/opAuth';
 
 const DashboardView = () => {
   const isMobile = useIsMobile();
@@ -62,6 +64,29 @@ const DashboardView = () => {
   };
 
   const isOwner = () => params.username === user.username;
+
+  // Assets are only ever the signed-in user's own — AssetList fetches them by
+  // the current user's id and ignores the username in the URL — so someone
+  // else's /:username/assets isn't a page that exists. Wait for auth
+  // hydration first, or the owner gets bounced off their own assets.
+  const isHydratingAuth = Boolean(getStoredToken()) && !user.authenticated;
+
+  useEffect(() => {
+    if (
+      selectedTabKey() === TabKey.assets &&
+      params.username &&
+      !isHydratingAuth &&
+      params.username !== user.username
+    ) {
+      dispatch(notFoundRedirect('Toast.PageNotFound'));
+    }
+  }, [
+    selectedTabKey,
+    params.username,
+    user.username,
+    isHydratingAuth,
+    dispatch
+  ]);
 
   const toggleCollectionCreate = () => {
     setCollectionCreateVisible((prevState) => !prevState);

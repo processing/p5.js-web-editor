@@ -48,7 +48,9 @@ const CollectionList = ({
     if (projectId) {
       getProject(projectId);
     }
-    getCollections(propsUsername || user.username);
+    getCollections(propsUsername || user.username, {
+      redirectIfUserMissing: true
+    });
     resetSorting();
   }, []);
 

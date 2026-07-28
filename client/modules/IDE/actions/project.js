@@ -65,6 +65,13 @@ function getRequestErrorPayload(error, fallbackMessage = 'Request failed.') {
   };
 }
 
+function usernamesMatch(a, b) {
+  return String(a ?? '').toLowerCase() === String(b ?? '').toLowerCase();
+}
+
+// Resolves to { notFound: true } when the sketch doesn't exist, or when it
+// exists but belongs to someone other than the username in the URL — that
+// address doesn't identify a sketch, so callers render a 404.
 export function getProject(id, ownerUsername) {
   return async (dispatch, getState) => {
     dispatch(justOpenedProject());
@@ -74,20 +81,29 @@ export function getProject(id, ownerUsername) {
         opApiClient.get(`/sketch/${id}/code`),
         opApiClient.get(`/sketch/${id}/files`)
       ]);
+      const sketch = sketchRes.data;
+      if (ownerUsername && !usernamesMatch(sketch.username, ownerUsername)) {
+        return { notFound: true };
+      }
       const fallbackUsername = getState().user.username ?? '';
       const project = opSketchToProject(
-        sketchRes.data,
+        sketch,
         codeRes.data,
-        ownerUsername ?? fallbackUsername,
+        sketch.username ?? ownerUsername ?? fallbackUsername,
         filesRes.data
       );
       dispatch(setProject(project));
       dispatch(setUnsavedChanges(false));
+      return { notFound: false };
     } catch (error) {
+      if (error?.response?.status === 404) {
+        return { notFound: true };
+      }
       dispatch({
         type: ActionTypes.ERROR,
         error: getRequestErrorPayload(error)
       });
+      return { notFound: false };
     }
   };
 }

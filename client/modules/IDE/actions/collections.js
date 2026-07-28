@@ -9,6 +9,7 @@ import {
 import * as ActionTypes from '../../../constants';
 import { startLoader, stopLoader } from '../reducers/loading';
 import { setToastText, showToast } from './toast';
+import notFoundRedirect from '../../../utils/notFoundRedirect';
 
 const TOAST_DISPLAY_TIME_MS = 1500;
 const MAX_PAGE_SIZE = 1000;
@@ -34,7 +35,10 @@ function fetchCollectionWithItems(collectionId) {
   );
 }
 
-export function getCollections(username) {
+export function getCollections(
+  username,
+  { redirectIfUserMissing = false } = {}
+) {
   return (dispatch, getState) => {
     dispatch(startLoader());
     const owner = username || getState().user.username;
@@ -53,21 +57,44 @@ export function getCollections(username) {
         dispatch(stopLoader());
       })
       .catch((error) => {
+        dispatch(stopLoader());
+
+        // 404 means the username in the URL has no OP user. On the dashboard
+        // that makes the page itself a 404; elsewhere an empty list will do.
+        if (error?.response?.status === 404) {
+          if (redirectIfUserMissing) {
+            dispatch(notFoundRedirect('Toast.UserNotFound'));
+          }
+          return;
+        }
+
         dispatch({
           type: ActionTypes.ERROR,
           error: getErrorPayload(error)
         });
-        dispatch(stopLoader());
       });
   };
 }
 
 // Load a single collection (with its sketches) and upsert it into the store.
-export function getCollection(collectionId) {
+// A missing collection — or one owned by someone other than the username in
+// the URL — surfaces as a toast rather than an error modal.
+export function getCollection(collectionId, ownerUsername) {
   return (dispatch) => {
     dispatch(startLoader());
     return fetchCollectionWithItems(collectionId)
       .then((collection) => {
+        if (
+          ownerUsername &&
+          collection.owner.username &&
+          collection.owner.username.toLowerCase() !==
+            ownerUsername.toLowerCase()
+        ) {
+          dispatch(stopLoader());
+          dispatch(notFoundRedirect('Toast.CollectionNotFound'));
+          return null;
+        }
+
         dispatch({
           type: ActionTypes.SET_COLLECTION,
           collection
@@ -76,11 +103,18 @@ export function getCollection(collectionId) {
         return collection;
       })
       .catch((error) => {
+        dispatch(stopLoader());
+
+        if (error?.response?.status === 404) {
+          dispatch(notFoundRedirect('Toast.CollectionNotFound'));
+          return null;
+        }
+
         dispatch({
           type: ActionTypes.ERROR,
           error: getErrorPayload(error)
         });
-        dispatch(stopLoader());
+        return null;
       });
   };
 }
