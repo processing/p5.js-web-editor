@@ -1,33 +1,13 @@
 import { test, expect } from '../fixtures';
 import { dismissCookieBanner } from '../helpers/cookie-banner';
-import { usernamePrefix, emailSuffix, password } from '../helpers/env';
+import { password } from '../helpers/env';
+import { createTestUser, TestUser } from '../helpers/auth';
 
 test.describe('login', () => {
-  const testUser = {
-    username: `${usernamePrefix()}${Date.now().toString(36)}`,
-    email: ''
-  };
-  testUser.email = `${testUser.username}${emailSuffix()}`;
+  let testUser: TestUser;
 
-  // Created via a direct API call rather than the UI signup flow login
-  // doesn't require a verified email (see server/controllers/user.controller
-  // /signup.ts), so this is a faster, more focused way to get a test user.
   test.beforeAll(async ({ request }) => {
-    const res = await request.post('/editor/signup', {
-      headers: { 'Content-Type': 'application/json' },
-      data: {
-        username: testUser.username,
-        email: testUser.email,
-        password: password(),
-        confirmPassword: password()
-      }
-    });
-
-    if (!res.ok()) {
-      throw new Error(
-        `beforeAll: failed to create test user — ${res.status()}\n${await res.text()}`
-      );
-    }
+    testUser = await createTestUser(request);
   });
 
   test.beforeEach(async ({ page }) => {
