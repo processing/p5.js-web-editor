@@ -219,7 +219,7 @@
   },
   "dependencies": {
     "@auth0/s3": "^1.0.0",
-    "@aws-sdk/client-s3": "^3.412.0",
+    "@aws-sdk/client-s3": "^3.1100.0",
     "@babel/core": "^7.29.6",
     "@babel/parser": "^7.27.5",
     "@babel/register": "^7.14.5",
