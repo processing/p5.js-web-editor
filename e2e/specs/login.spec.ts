@@ -11,13 +11,15 @@ test.describe('login', () => {
   });
 
   test.beforeEach(async ({ page }) => {
-    await page.goto('/login');
+    await page.goto('/');
     await dismissCookieBanner(page);
   });
 
   test('existing user can log in with username and password', async ({
     page
   }) => {
+    await page.locator('a[href="/login"]').click();
+
     await expect(page.locator('h2.form-container__title')).toHaveText('Log In');
 
     // Passport's usernameField is 'email' the input accepts either
