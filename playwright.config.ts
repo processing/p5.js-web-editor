@@ -1,6 +1,6 @@
 import { defineConfig, devices } from '@playwright/test';
 import { warnToStartE2eAppServerSeparately } from './e2e/setup/warn-to-start-e2e-server-separately';
-import { requireEnv } from './e2e/helpers/env';
+import { requireEnv } from './e2e/helpers/require-env';
 import {
   mailpitApiUrl,
   mailpitSmtpPort,
