@@ -171,7 +171,12 @@ export function createNewFileState(filename, document, settings) {
 
     // Everything below here should always be on.
     history(),
-    search(),
+    search({
+      createPanel: (view) => ({
+        // Create an empty search panel
+        dom: document.createElement('div')
+      })
+    }),
     // Highlight extensions
     highlightActiveLine(),
     highlightActiveLineGutter(),

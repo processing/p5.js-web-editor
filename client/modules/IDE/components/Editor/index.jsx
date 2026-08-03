@@ -27,6 +27,7 @@ import AssetPreview from '../AssetPreview';
 import Timer from '../Timer';
 import EditorAccessibility from '../EditorAccessibility';
 import UnsavedChangesIndicator from '../UnsavedChangesIndicator';
+import SearchPanel from './SearchPanel';
 import { EditorContainer, EditorHolder } from './MobileEditor';
 import { FolderIcon } from '../../../../common/icons';
 import { IconButton } from '../../../../common/IconButton';
@@ -81,6 +82,7 @@ function Editor({
 }) {
   const { versionInfo } = useP5Version();
   const [currentLine, setCurrentLine] = useState(1);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const beep = useRef();
 
   const updateLintingMessageAccessibility = debounce((annotations) => {
@@ -103,7 +105,6 @@ function Editor({
     codemirrorView,
     getContent,
     tidyCode,
-    showSearch,
     updateEditorFileContent
   } = useCodeMirror({
     project,
@@ -125,15 +126,19 @@ function Editor({
     p5Version: versionInfo?.version
   });
 
+  const openSearchPanelComponent = useCallback(() => {
+    setIsSearchOpen(true);
+  }, []);
+
   // Lets the parent component access file content-specific functionality...
   useEffect(() => {
     provideController({
       tidyCode,
       getContent,
-      showSearch,
+      showSearch: openSearchPanelComponent,
       updateFileContent: updateEditorFileContent
     });
-  }, [tidyCode, showSearch, getContent, updateEditorFileContent]);
+  }, [tidyCode, openSearchPanelComponent, getContent, updateEditorFileContent]);
 
   // When the CM container div mounts, we set up CodeMirror.
   const onContainerMounted = useCallback(setupCodeMirrorOnContainerMounted, []);
@@ -218,6 +223,7 @@ function Editor({
               </div>
             </div>
             <article ref={onContainerMounted} className={editorHolderClass} />
+            {isSearchOpen && <SearchPanel view={codemirrorView.current} />}
             {file.url ? <AssetPreview url={file.url} name={file.name} /> : null}
             <EditorAccessibility
               lintMessages={lintMessages}
@@ -235,6 +241,7 @@ function Editor({
             </div>
             <section>
               <EditorHolder ref={onContainerMounted} />
+              {isSearchOpen && <SearchPanel view={codemirrorView.current} />}
               {file.url ? (
                 <AssetPreview url={file.url} name={file.name} />
               ) : null}
