@@ -23,6 +23,7 @@ test.describe('editor page', () => {
     const newCode = [
       'function setup() {',
       '  createCanvas(400, 400);',
+      ' frameRate(10);',
       '}',
       '',
       'function draw() {',
@@ -53,11 +54,17 @@ test.describe('editor page', () => {
     // Let sketch run for 2 seconds
     await page.waitForTimeout(2000);
 
-    const countDiv = page
-      .locator('.preview-console__messages [data-method="log"] div')
-      .first();
+    const logRow = page
+      .locator('.preview-console__messages [data-method="log"]')
+      .filter({ hasText: 'hi from sketch' })
+      .last();
+    const countDiv = logRow.locator('div').first();
     const count = Number(await countDiv.textContent());
-    expect(count).toBeGreaterThan(1);
+
+    // Wide tolerance: exact frame count depends on browser/CI scheduling, not just frameRate(10) math.
+    // Ideally its supposed to be 20 frames in 2 seconds.
+    expect(count).toBeGreaterThan(15);
+    expect(count).toBeLessThan(30);
 
     // Stop the sketch
     await page.locator('[aria-label="Stop sketch"]').click();
