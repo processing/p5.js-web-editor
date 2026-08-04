@@ -1,24 +1,37 @@
+import type { Page } from '@playwright/test';
 import { test, expect } from '../fixtures';
 import { dismissCookieBanner } from '../helpers/cookie-banner';
 import { createTestUser, loginAs, TestUser } from '../helpers/auth';
 
-test.describe('save sketch', () => {
+test.describe.serial('sketch lifecycle', () => {
   let testUser: TestUser;
+  let page: Page;
+  let sketchName: string;
 
-  test.beforeAll(async ({ request }) => {
+  test.beforeAll(async ({ browser, request }) => {
     testUser = await createTestUser(request);
-  });
 
-  test.beforeEach(async ({ page }) => {
+    // A single page shared across this describe.serial block (instead of the
+    // per-test `page` fixture) so each test below can build on the previous
+    // one's state (same sketch, still logged in).
+    page = await browser.newPage();
+    await page.addInitScript(() => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (window as any).__REDUX_DEVTOOLS_EXTENSION__ = () => {};
+    });
+
     await page.goto('/login');
     await dismissCookieBanner(page);
     await loginAs(page, testUser);
   });
 
-  test('logged in user can save, rename, edit code, and delete a sketch', async ({
-    page
-  }) => {
-    // Write and run the initial sketch
+  test.afterAll(async () => {
+    await page.close();
+  });
+
+  const editor = () => page.locator('.editor-holder');
+
+  test('can save a sketch', async () => {
     const initialCode = [
       'function setup() {',
       '  createCanvas(400, 400);',
@@ -31,8 +44,7 @@ test.describe('save sketch', () => {
       '}'
     ].join('');
 
-    const editor = page.locator('.editor-holder');
-    await editor.click();
+    await editor().click();
     await page.keyboard.press('ControlOrMeta+A');
     await page.keyboard.type(initialCode, { delay: 5 });
 
@@ -44,38 +56,31 @@ test.describe('save sketch', () => {
       page.locator('.preview-console__messages')
     ).toContainText('initial log', { timeout: 10_000 });
 
-    // Save the sketch
-    const sketchName = await page
+    const name = await page
       .locator('button.editable-input__label')
       .textContent();
-    expect(sketchName).toBeTruthy();
+    expect(name).toBeTruthy();
+    sketchName = name ?? '';
 
-    await editor.click();
+    await editor().click();
     await page.keyboard.press('Control+S');
     await expect(page.getByText('Sketch saved.')).toBeVisible({
       timeout: 10_000
     });
+  });
 
-    // Go to sketches page and open the sketch
-    // Note: navigating via the nav dropdown (commented below) is flaky,
-    // the dropdown sometimes does not respond to clicks consistently
-    // await page.locator(`button:has-text("${testUser.username}")`).click();
-    // await page.locator('#account-sketches').click();
-
-    // Using page.goto() directly as a reliable alternative.
+  test('can reopen and edit a saved sketch', async () => {
+    // Using page.goto() directly rather than the nav dropdown — the dropdown
+    // sometimes does not respond to clicks consistently.
     await page.goto(`/${testUser.username}/sketches`);
 
-    await page
-      .locator('table.sketches-table')
-      .getByText(sketchName ?? '')
-      .click();
+    await page.locator('table.sketches-table').getByText(sketchName).click();
 
     // Confirm we're back on the right sketch
     await expect(
       page.locator('button.editable-input__label')
-    ).toContainText(sketchName ?? '', { timeout: 10_000 });
+    ).toContainText(sketchName, { timeout: 10_000 });
 
-    // Change the code
     const updatedCode = [
       'function setup() {',
       '  createCanvas(400, 400);',
@@ -88,15 +93,16 @@ test.describe('save sketch', () => {
       '}'
     ].join('');
 
-    await editor.click();
+    await editor().click();
     await page.keyboard.press('ControlOrMeta+A');
     await page.keyboard.type(updatedCode, { delay: 5 });
     await page.keyboard.press('Control+S');
     await expect(page.getByText('Sketch saved.')).toBeVisible({
       timeout: 10_000
     });
+  });
 
-    // Rename the sketch
+  test('can rename a sketch and the update persists', async () => {
     await page.locator('button.editable-input__label').click();
     await page.locator('input.editable-input__input').fill('renamed-sketch');
     await page.locator('input.editable-input__input').press('Enter');
@@ -104,7 +110,7 @@ test.describe('save sketch', () => {
       timeout: 10_000
     });
 
-    // Navigate away and come back via sketches page
+    // Navigate away and come back via the sketches page
     await page.goto(`/${testUser.username}/sketches`);
 
     // Confirm renamed sketch appears in the table
@@ -116,7 +122,7 @@ test.describe('save sketch', () => {
       .getByText('renamed-sketch')
       .click();
 
-    // Run the updated sketch and verify changed log
+    // Run the renamed sketch and verify the edited code persisted
     await page.locator('#play-sketch').click({ force: true });
     await expect(
       page.locator('iframe[title="sketch preview"]')
@@ -124,14 +130,14 @@ test.describe('save sketch', () => {
     await expect(
       page.locator('.preview-console__messages')
     ).toContainText('updated log', { timeout: 10_000 });
+  });
 
+  test('can delete a sketch', async () => {
     await page.goto(`/${testUser.username}/sketches`);
-
     await expect(page.locator('table.sketches-table')).toBeVisible({
       timeout: 10_000
     });
 
-    // Delete the sketch
     page.on('dialog', (dialog) => dialog.accept());
     await page
       .locator('[aria-label="Toggle Open/Close Sketch Options"]')
