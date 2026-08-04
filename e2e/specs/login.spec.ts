@@ -1,6 +1,6 @@
 import { test, expect } from '../fixtures';
 import { dismissCookieBanner } from '../helpers/cookie-banner';
-import { password } from '../helpers/env';
+import { password } from '../helpers/test-user';
 import { createTestUser, TestUser } from '../helpers/auth';
 
 test.describe('login', () => {

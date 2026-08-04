@@ -1,6 +1,6 @@
 import type { APIRequestContext, Page } from '@playwright/test';
 import { expect } from '../fixtures';
-import { usernamePrefix, emailSuffix, password } from './env';
+import { usernamePrefix, emailSuffix, password } from './test-user';
 
 export interface TestUser {
   username: string;
