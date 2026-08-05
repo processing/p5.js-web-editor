@@ -14,53 +14,11 @@ import {
 } from '@codemirror/search';
 import { runScopeHandlers } from '@codemirror/view';
 
-// Minimal inline styles standing in for the original's baseTheme.
-// Swap these out for your own CSS/Tailwind/etc.
-const styles = {
-  panel: {
-    position: 'relative',
-    padding: '2px 6px 4px',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '4px',
-    fontSize: '13px'
-  },
-  row: {
-    display: 'flex',
-    alignItems: 'center',
-    flexWrap: 'wrap',
-    gap: '4px'
-  },
-  textfield: {
-    fontFamily: 'inherit',
-    fontSize: 'inherit',
-    padding: '2px 4px'
-  },
-  label: {
-    display: 'inline-flex',
-    alignItems: 'center',
-    gap: '4px',
-    fontSize: '80%',
-    whiteSpace: 'pre'
-  },
-  closeButton: {
-    position: 'absolute',
-    top: 0,
-    right: 4,
-    background: 'inherit',
-    border: 'none',
-    font: 'inherit',
-    padding: 0,
-    margin: 0,
-    cursor: 'pointer'
-  }
-};
-
 /**
- * React port of CodeMirror 6's built-in SearchPanel.
+ * Custom implementation of CodeMirror 6's built-in SearchPanel.
  *
  * Usage:
- *   <SearchPanel view={editorViewInstance} onClose={() => setSearchOpen(false)} />
+ *   <SearchPanel view={editorViewInstance} />
  *
  * `view` must be a live EditorView instance (e.g. from a ref on your editor).
  * The panel is fully controlled by React state and pushes changes into
@@ -181,21 +139,17 @@ export default function SearchPanel({ view }) {
       {/* The <div> element TODO */}
       {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
       <div onKeyDown={handleKeyDown} ref={panelRef}>
-        <form
-          className="cm-search-panel"
-          onSubmit={(e) => e.preventDefault()}
-          style={styles.panel}
-        >
+        <form className="cm-search-panel" onSubmit={(e) => e.preventDefault()}>
           <button
             type="button"
             aria-label="close"
             onClick={handleClose}
-            style={styles.closeButton}
+            className="cm-search-panel-close-button"
           >
             ×
           </button>
 
-          <div style={styles.row}>
+          <div className="cm-search-panel-row">
             <input
               ref={searchFieldRef}
               type="text"
@@ -205,7 +159,6 @@ export default function SearchPanel({ view }) {
               aria-label="Find"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              style={styles.textfield}
             />
 
             <button
@@ -230,7 +183,7 @@ export default function SearchPanel({ view }) {
               all
             </button>
 
-            <label htmlFor="cm-search-case-sensitive" style={styles.label}>
+            <label htmlFor="cm-search-case-sensitive">
               <input
                 id="cm-search-case-sensitive"
                 type="checkbox"
@@ -239,7 +192,7 @@ export default function SearchPanel({ view }) {
               />
               match case
             </label>
-            <label htmlFor="cm-search-regexp" style={styles.label}>
+            <label htmlFor="cm-search-regexp">
               <input
                 id="cm-search-regexp"
                 type="checkbox"
@@ -250,7 +203,7 @@ export default function SearchPanel({ view }) {
             </label>
           </div>
 
-          <div style={styles.row}>
+          <div className="cm-search-panel-row">
             <input
               ref={replaceFieldRef}
               type="text"
@@ -260,7 +213,6 @@ export default function SearchPanel({ view }) {
               aria-label="Replace"
               value={replace}
               onChange={(e) => setReplace(e.target.value)}
-              style={styles.textfield}
             />
             <button
               type="button"

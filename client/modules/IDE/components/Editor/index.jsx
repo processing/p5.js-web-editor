@@ -97,6 +97,10 @@ function Editor({
     }
   }, 2000);
 
+  const showSearch = useCallback(() => {
+    setIsSearchOpen(true);
+  }, []);
+
   // The useCodeMirror hook manages CodeMirror state and returns
   // a reference to the actual CM instance.
   const {
@@ -122,23 +126,20 @@ function Editor({
     fontSize,
     updateLintingMessageAccessibility,
     setCurrentLine,
+    showSearch,
     referenceBaseUrl: getReferenceBaseUrl(htmlFile),
     p5Version: versionInfo?.version
   });
-
-  const openSearchPanelComponent = useCallback(() => {
-    setIsSearchOpen(true);
-  }, []);
 
   // Lets the parent component access file content-specific functionality...
   useEffect(() => {
     provideController({
       tidyCode,
       getContent,
-      showSearch: openSearchPanelComponent,
+      showSearch,
       updateFileContent: updateEditorFileContent
     });
-  }, [tidyCode, openSearchPanelComponent, getContent, updateEditorFileContent]);
+  }, [tidyCode, showSearch, getContent, updateEditorFileContent]);
 
   // When the CM container div mounts, we set up CodeMirror.
   const onContainerMounted = useCallback(setupCodeMirrorOnContainerMounted, []);

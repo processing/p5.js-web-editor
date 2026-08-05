@@ -127,12 +127,25 @@ function createFileTidyKeymap(mode) {
   ];
 }
 
+function searchPanelKeymap(callback) {
+  //   searchKeymap: readonly KeyBinding[]
+  // Default search-related key bindings.
+
+  // Mod-f: openSearchPanel
+  // F3, Mod-g: findNext
+  // Shift-F3, Shift-Mod-g: findPrevious
+  // Mod-Alt-g: gotoLine
+  // Mod-d: selectNextOccurrence
+  return [{ key: 'Mod-f', run: callback }];
+}
+
 export function buildKeymaps(mode) {
   const autocompleteKeymap = createAutocompleteKeymap();
   const colorPickerKeymap = createColorPickerKeymap(mode);
   const fileTidyKeymap = createFileTidyKeymap(mode);
 
   return [
+    searchPanelKeymap,
     autocompleteKeymap,
     extraKeymaps,
     colorPickerKeymap,
@@ -140,7 +153,6 @@ export function buildKeymaps(mode) {
     closeBracketsKeymap,
     defaultKeymap,
     historyKeymap,
-    foldKeymap,
-    searchKeymap
+    foldKeymap
   ];
 }
