@@ -102,4 +102,96 @@ test.describe('signup and email verification', () => {
       page.getByRole('button', { name: 'Sign Up', exact: true })
     ).toBeDisabled();
   });
+
+  test('sketch persists and runs after unauthenticated user creates an account', async ({
+    page
+  }) => {
+    const username = `${usernamePrefix()}${Date.now()}`;
+    const email = `${username}${emailSuffix()}`;
+
+    const newCode = [
+      'function setup() {',
+      '  createCanvas(400, 400);',
+      '}',
+      '',
+      'function draw() {',
+      '  background(220);',
+      "  console.log('hi from sketch');",
+      '  noLoop();',
+      '}'
+    ].join('');
+
+    await page.goto('/');
+    await dismissCookieBanner(page);
+
+    // Run sketch as unauthenticated user
+    const editor = page.locator('.editor-holder');
+    await editor.click();
+    await page.keyboard.press('ControlOrMeta+A');
+    await page.keyboard.type(newCode, { delay: 5 });
+
+    await page.locator('#play-sketch').click({ force: true });
+
+    await expect(
+      page.locator('iframe[title="sketch preview"]')
+    ).toHaveAttribute('src', /9002/, { timeout: 10_000 });
+
+    await expect(
+      page.locator('.preview-console__messages')
+    ).toContainText('hi from sketch', { timeout: 15_000 });
+
+    // Try to save the sketch, which should prompt login
+    await editor.click();
+    await page.keyboard.press('Control+S');
+
+    await expect(
+      page.getByText(
+        'In order to save sketches, you must be logged in. Please Login or Sign Up.'
+      )
+    ).toBeVisible();
+
+    // Click on the signup prompt
+    await page.locator('a[href="/signup"]').last().click();
+    await page.waitForURL('**/signup', { timeout: 10_000 });
+
+    await expect(page.locator('h2.form-container__title')).toHaveText(
+      'Sign Up'
+    );
+
+    await page.fill('input#username', username);
+    await page.fill('input#email', email);
+    await page.fill('input#password', password());
+    await page.fill('input#confirmPassword', password());
+
+    await expect(page.locator('button[type="submit"]')).toBeEnabled({
+      timeout: 5_000
+    });
+    await page.click('button[type="submit"]');
+
+    await page.waitForURL((url) => !url.pathname.endsWith('/signup'), {
+      timeout: 15_000
+    });
+    await expect(page.locator(`text=${username}`).first()).toBeVisible({
+      timeout: 10_000
+    });
+
+    // Run the same sketch again as authenticated user
+    await expect(page.locator('.editor-holder')).toBeVisible();
+    await page.locator('#play-sketch').click();
+
+    await expect(
+      page.locator('iframe[title="sketch preview"]')
+    ).toHaveAttribute('src', /9002/, { timeout: 10_000 });
+
+    await expect(
+      page.locator('.preview-console__messages')
+    ).toContainText('hi from sketch', { timeout: 20_000 });
+
+    // Make sure link in email works
+    const verificationLink = await getVerificationLink(email);
+    await page.goto(verificationLink);
+
+    await expect(page).toHaveURL('/', { timeout: 15_000 });
+    await expect(page.locator('.editor-holder')).toBeVisible();
+  });
 });
