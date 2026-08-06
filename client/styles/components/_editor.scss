@@ -136,18 +136,28 @@
   @include themify() {
     color: getThemifyVariable('primary-text-color');
     background-color: getThemifyVariable('modal-background-color');
-    box-shadow: 0 12px 12px 0 getThemifyVariable('shadow-color');
     border: solid 0.5px getThemifyVariable('modal-border-color');
+    font-family: Montserrat, sans-serif;
+    position: relative;
+    z-index: 1;
+
+    &:not(.mobile) {
+      position: absolute;
+      right: 0px;
+      top: 0px;
+      box-shadow: 0 12px 12px 0 getThemifyVariable('shadow-color');
+    }
+
+    display: flex;
+    padding-left: 4px;
   }
-  font-family: Montserrat, sans-serif;
-  z-index: 1;
-  position: absolute;
-  right: 0px;
-  top: 0px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 8px 8px;
+
+  .cm-search-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 8px 8px 8px 4px;
+  }
 
   // Various button stylings
   .cm-search-button {
@@ -165,19 +175,6 @@
     }
   }
 
-  .cm-search-replace {
-    .cm-search-button {
-      height: auto;
-      width: auto;
-      border-radius: 10rem;
-      padding: 0.5rem 0.7rem;
-    }
-  }
-
-  svg {
-    fill: currentColor;
-  }
-
   .cm-search-close {
     position: absolute;
     top: 4px;
@@ -189,6 +186,35 @@
     svg {
       width: 24px;
       height: 24px;
+    }
+  }
+
+  // Otherwise the play button will cover the close button.
+  &.mobile {
+    .cm-search-close {
+      position: relative;
+      margin: 0;
+      height: auto;
+      width: auto;
+      top: 0;
+      right: 0;
+    }
+  }
+
+  .cm-search-replace {
+    .cm-search-button {
+      height: auto;
+      width: auto;
+      border-radius: 10rem;
+      padding: 0.5rem 0.7rem;
+    }
+  }
+
+  svg {
+    fill: currentColor;
+
+    g {
+      opacity: 1;
     }
   }
 
@@ -206,6 +232,10 @@
 
   input[type='text'] {
     width: 200px;
+  }
+
+  .cm-search-find {
+    padding-right: 32px;
   }
 
   .cm-search-findContainer {
@@ -231,6 +261,7 @@
           &:has(> input[type='checkbox']:checked) {
             svg {
               fill: getThemifyVariable('button-background-active-color');
+              opacity: 1;
             }
           }
           &:has(> input:focus-visible) {

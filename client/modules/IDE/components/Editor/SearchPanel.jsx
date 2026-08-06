@@ -17,6 +17,7 @@ import MatchCaseSvg from '../../../../images/match-case.svg';
 import RegexSvg from '../../../../images/regex.svg';
 import ArrowSvg from '../../../../images/arrow.svg';
 import CrossSvg from '../../../../images/cross.svg';
+import CaretArrowSvg from '../../../../images/right-arrow.svg';
 
 /**
  * Custom implementation of CodeMirror 6's built-in SearchPanel.
@@ -29,7 +30,8 @@ import CrossSvg from '../../../../images/cross.svg';
  * CodeMirror via the `setSearchQuery` effect, mirroring the original
  * plugin's `commit()` behavior.
  */
-export default function SearchPanel({ view, closePanel }) {
+export default function SearchPanel({ view, closePanel, isMobile }) {
+  console.log(isMobile);
   // Seed initial state from whatever query is already active in the editor,
   // falling back to an empty query.
   const initialQuery = view
@@ -43,6 +45,8 @@ export default function SearchPanel({ view, closePanel }) {
   );
   const [regexp, setRegexp] = useState(initialQuery.regexp);
   const [wholeWord, setWholeWord] = useState(initialQuery.wholeWord);
+  // Controls whether the replace row is visible (accordion)
+  const [showReplace, setShowReplace] = useState(false);
 
   const searchFieldRef = useRef(null);
   const replaceFieldRef = useRef(null);
@@ -139,7 +143,11 @@ export default function SearchPanel({ view, closePanel }) {
     <>
       {/* The <div> element TODO */}
       {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
-      <div className="cm-search-panel" onKeyDown={handleKeyDown} ref={panelRef}>
+      <div
+        className={`cm-search-panel ${isMobile ? 'mobile' : ''}`}
+        onKeyDown={handleKeyDown}
+        ref={panelRef}
+      >
         <button
           type="button"
           aria-label="close"
@@ -148,80 +156,103 @@ export default function SearchPanel({ view, closePanel }) {
         >
           <CrossSvg focusable="false" aria-hidden="true" />
         </button>
-        <div className="cm-search-row">
-          <div className="cm-search-findContainer">
-            <input
-              ref={searchFieldRef}
-              type="text"
-              name="search"
-              className="cm-textfield"
-              placeholder="Find"
-              aria-label="Find"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-            <div className="cm-search-findOptions">
-              <label htmlFor="cm-search-caseSensitive">
-                <input
-                  id="cm-search-caseSensitive"
-                  type="checkbox"
-                  checked={caseSensitive}
-                  onChange={(e) => setCaseSensitive(e.target.checked)}
-                />
-                <MatchCaseSvg focusable="false" aria-hidden="true" />
-              </label>
-              <label htmlFor="cm-search-regexp">
-                <input
-                  id="cm-search-regexp"
-                  type="checkbox"
-                  checked={regexp}
-                  onChange={(e) => setRegexp(e.target.checked)}
-                />
-                <RegexSvg focusable="false" aria-hidden="true" />
-              </label>
-            </div>
-          </div>
-          <button
-            type="button"
-            className="cm-search-button cm-search-next"
-            onClick={() => view && findNext(view)}
-          >
-            <ArrowSvg aria-label="Find next search" />
-          </button>
-          <button
-            type="button"
-            className="cm-search-button cm-search-previous"
-            onClick={() => view && findPrevious(view)}
-          >
-            <ArrowSvg aria-label="Find previous search" />
-          </button>
-        </div>
-        <div className="cm-search-row cm-search-replace">
-          <input
-            ref={replaceFieldRef}
-            type="text"
-            name="replace"
-            className="cm-textfield"
-            placeholder="Replace"
-            aria-label="Replace"
-            value={replace}
-            onChange={(e) => setReplace(e.target.value)}
-          />
-          <button
-            className="cm-search-button"
-            onClick={() => {
-              console.log('replace next');
-              if (view) replaceNext(view);
+        <button
+          type="button"
+          className="cm-search-toggle-replace"
+          onClick={() => setShowReplace((s) => !s)}
+          aria-expanded={showReplace}
+          aria-controls="cm-search-replace-row"
+          title={showReplace ? 'Hide replace' : 'Show replace'}
+        >
+          <CaretArrowSvg
+            aria-hidden="true"
+            style={{
+              transform: showReplace ? 'rotate(90deg)' : 'rotate(0deg)',
+              transition: 'transform 0.18s ease'
             }}
-          >
-            replace
-          </button>
-          <button
-            className="cm-search-button"
-            onClick={() => view && replaceAll(view)}
-          >
-            replace all
-          </button>
+          />
+        </button>
+        <div className="cm-search-content">
+          <div className="cm-search-row cm-search-find">
+            <div className="cm-search-findContainer">
+              <input
+                ref={searchFieldRef}
+                type="text"
+                name="search"
+                className="cm-textfield"
+                placeholder="Find"
+                aria-label="Find"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+              <div className="cm-search-findOptions">
+                <label htmlFor="cm-search-caseSensitive">
+                  <input
+                    id="cm-search-caseSensitive"
+                    type="checkbox"
+                    checked={caseSensitive}
+                    onChange={(e) => setCaseSensitive(e.target.checked)}
+                  />
+                  <MatchCaseSvg focusable="false" aria-hidden="true" />
+                </label>
+                <label htmlFor="cm-search-regexp">
+                  <input
+                    id="cm-search-regexp"
+                    type="checkbox"
+                    checked={regexp}
+                    onChange={(e) => setRegexp(e.target.checked)}
+                  />
+                  <RegexSvg focusable="false" aria-hidden="true" />
+                </label>
+              </div>
+            </div>
+            <button
+              type="button"
+              className="cm-search-button cm-search-next"
+              onClick={() => view && findNext(view)}
+            >
+              <ArrowSvg aria-label="Find next search" />
+            </button>
+            <button
+              type="button"
+              className="cm-search-button cm-search-previous"
+              onClick={() => view && findPrevious(view)}
+            >
+              <ArrowSvg aria-label="Find previous search" />
+            </button>
+          </div>
+          {showReplace && (
+            <div
+              id="cm-search-replace-row"
+              className="cm-search-row cm-search-replace"
+            >
+              <input
+                ref={replaceFieldRef}
+                type="text"
+                name="replace"
+                className="cm-textfield"
+                placeholder="Replace"
+                aria-label="Replace"
+                value={replace}
+                onChange={(e) => setReplace(e.target.value)}
+              />
+              <button
+                className="cm-search-button"
+                onClick={() => {
+                  console.log('replace next');
+                  if (view) replaceNext(view);
+                }}
+              >
+                replace
+              </button>
+              <button
+                className="cm-search-button"
+                onClick={() => view && replaceAll(view)}
+              >
+                replace all
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </>
@@ -234,9 +265,11 @@ SearchPanel.propTypes = {
     state: PropTypes.shape({}),
     focus: PropTypes.func.isRequired
   }),
-  closePanel: PropTypes.func.isRequired
+  closePanel: PropTypes.func.isRequired,
+  isMobile: PropTypes.bool
 };
 
 SearchPanel.defaultProps = {
-  view: null
+  view: null,
+  isMobile: false
 };

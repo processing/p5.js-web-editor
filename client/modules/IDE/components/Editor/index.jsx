@@ -251,7 +251,6 @@ function Editor({
             </div>
             <section>
               <EditorHolder ref={onContainerMounted} />
-              {isSearchOpen && <SearchPanel view={codemirrorView.current} />}
               {file.url ? (
                 <AssetPreview url={file.url} name={file.name} />
               ) : null}
@@ -260,6 +259,13 @@ function Editor({
                 currentLine={currentLine}
               />
             </section>
+            {isSearchOpen && (
+              <SearchPanel
+                isMobile
+                view={codemirrorView.current}
+                closePanel={hideSearch}
+              />
+            )}
           </EditorContainer>
         )
       }

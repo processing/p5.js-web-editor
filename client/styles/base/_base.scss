@@ -74,6 +74,10 @@ textarea {
     color: getThemifyVariable('input-text-color');
     background-color: getThemifyVariable('input-background-color');
     border-color: getThemifyVariable('input-border-color');
+
+    &::placeholder {
+      color: getThemifyVariable('input-placeholder-color');
+    }
   }
 }
 
