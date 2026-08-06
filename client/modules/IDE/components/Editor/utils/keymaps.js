@@ -11,7 +11,7 @@ import {
   indentWithTab
 } from '@codemirror/commands';
 import { foldKeymap } from '@codemirror/language';
-import { searchKeymap } from '@codemirror/search';
+// import { searchKeymap } from '@codemirror/search';
 import { expandAbbreviation } from '@emmetio/codemirror6-plugin';
 import { tidyCodeWithPrettier } from './tidier';
 
@@ -127,7 +127,7 @@ function createFileTidyKeymap(mode) {
   ];
 }
 
-function searchPanelKeymap(callback) {
+function createSearchPanelKeymap(callback) {
   //   searchKeymap: readonly KeyBinding[]
   // Default search-related key bindings.
 
@@ -136,13 +136,16 @@ function searchPanelKeymap(callback) {
   // Shift-F3, Shift-Mod-g: findPrevious
   // Mod-Alt-g: gotoLine
   // Mod-d: selectNextOccurrence
-  return [{ key: 'Mod-f', run: callback }];
+  return [
+    { key: 'Mod-f', run: callback, preventDefault: true, stopPropagation: true }
+  ];
 }
 
-export function buildKeymaps(mode) {
+export function buildKeymaps(mode, searchPanelCallback) {
   const autocompleteKeymap = createAutocompleteKeymap();
   const colorPickerKeymap = createColorPickerKeymap(mode);
   const fileTidyKeymap = createFileTidyKeymap(mode);
+  const searchPanelKeymap = createSearchPanelKeymap(searchPanelCallback);
 
   return [
     searchPanelKeymap,

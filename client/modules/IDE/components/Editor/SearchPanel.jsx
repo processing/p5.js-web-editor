@@ -13,19 +13,23 @@ import {
   getSearchQuery
 } from '@codemirror/search';
 import { runScopeHandlers } from '@codemirror/view';
+import MatchCaseSvg from '../../../../images/match-case.svg';
+import RegexSvg from '../../../../images/regex.svg';
+import ArrowSvg from '../../../../images/arrow.svg';
+import CrossSvg from '../../../../images/cross.svg';
 
 /**
  * Custom implementation of CodeMirror 6's built-in SearchPanel.
  *
  * Usage:
- *   <SearchPanel view={editorViewInstance} />
+ *   <SearchPanel view={editorViewInstance} closePanel={closePanelFunction} />
  *
  * `view` must be a live EditorView instance (e.g. from a ref on your editor).
  * The panel is fully controlled by React state and pushes changes into
  * CodeMirror via the `setSearchQuery` effect, mirroring the original
  * plugin's `commit()` behavior.
  */
-export default function SearchPanel({ view }) {
+export default function SearchPanel({ view, closePanel }) {
   // Seed initial state from whatever query is already active in the editor,
   // falling back to an empty query.
   const initialQuery = view
@@ -56,6 +60,7 @@ export default function SearchPanel({ view }) {
     return () => {
       if (view) {
         closeSearchPanel(view);
+        view.focus();
       }
     };
   }, [view]);
@@ -112,10 +117,6 @@ export default function SearchPanel({ view }) {
     searchFieldRef.current?.select();
   }, []);
 
-  const handleClose = () => {
-    if (view) closeSearchPanel(view);
-  };
-
   const handleKeyDown = (e) => {
     if (view && runScopeHandlers(view, e.nativeEvent, 'search-panel')) {
       e.preventDefault();
@@ -130,7 +131,7 @@ export default function SearchPanel({ view }) {
     } else if (e.keyCode === 27) {
       // Escape closes the panel
       e.preventDefault();
-      handleClose();
+      closePanel();
     }
   };
 
@@ -138,18 +139,17 @@ export default function SearchPanel({ view }) {
     <>
       {/* The <div> element TODO */}
       {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
-      <div onKeyDown={handleKeyDown} ref={panelRef}>
-        <form className="cm-search-panel" onSubmit={(e) => e.preventDefault()}>
-          <button
-            type="button"
-            aria-label="close"
-            onClick={handleClose}
-            className="cm-search-panel-close-button"
-          >
-            ×
-          </button>
-
-          <div className="cm-search-panel-row">
+      <div className="cm-search-panel" onKeyDown={handleKeyDown} ref={panelRef}>
+        <button
+          type="button"
+          aria-label="close"
+          onClick={closePanel}
+          className="cm-search-close"
+        >
+          <CrossSvg focusable="false" aria-hidden="true" />
+        </button>
+        <div className="cm-search-row">
+          <div className="cm-search-findContainer">
             <input
               ref={searchFieldRef}
               type="text"
@@ -160,76 +160,69 @@ export default function SearchPanel({ view }) {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
-
-            <button
-              type="button"
-              className="cm-button"
-              onClick={() => view && findNext(view)}
-            >
-              next
-            </button>
-            <button
-              type="button"
-              className="cm-button"
-              onClick={() => view && findPrevious(view)}
-            >
-              previous
-            </button>
-            <button
-              type="button"
-              className="cm-button"
-              onClick={() => view && selectMatches(view)}
-            >
-              all
-            </button>
-
-            <label htmlFor="cm-search-case-sensitive">
-              <input
-                id="cm-search-case-sensitive"
-                type="checkbox"
-                checked={caseSensitive}
-                onChange={(e) => setCaseSensitive(e.target.checked)}
-              />
-              match case
-            </label>
-            <label htmlFor="cm-search-regexp">
-              <input
-                id="cm-search-regexp"
-                type="checkbox"
-                checked={regexp}
-                onChange={(e) => setRegexp(e.target.checked)}
-              />
-              regexp
-            </label>
+            <div className="cm-search-findOptions">
+              <label htmlFor="cm-search-caseSensitive">
+                <input
+                  id="cm-search-caseSensitive"
+                  type="checkbox"
+                  checked={caseSensitive}
+                  onChange={(e) => setCaseSensitive(e.target.checked)}
+                />
+                <MatchCaseSvg focusable="false" aria-hidden="true" />
+              </label>
+              <label htmlFor="cm-search-regexp">
+                <input
+                  id="cm-search-regexp"
+                  type="checkbox"
+                  checked={regexp}
+                  onChange={(e) => setRegexp(e.target.checked)}
+                />
+                <RegexSvg focusable="false" aria-hidden="true" />
+              </label>
+            </div>
           </div>
-
-          <div className="cm-search-panel-row">
-            <input
-              ref={replaceFieldRef}
-              type="text"
-              name="replace"
-              className="cm-textfield"
-              placeholder="Replace"
-              aria-label="Replace"
-              value={replace}
-              onChange={(e) => setReplace(e.target.value)}
-            />
-            <button
-              type="button"
-              className="cm-button"
-              onClick={() => view && replaceNext(view)}
-            >
-              replace
-            </button>
-            <button
-              type="button"
-              className="cm-button"
-              onClick={() => view && replaceAll(view)}
-            >
-              replace all
-            </button>
-          </div>
-        </form>
+          <button
+            type="button"
+            className="cm-search-button cm-search-next"
+            onClick={() => view && findNext(view)}
+          >
+            <ArrowSvg aria-label="Find next search" />
+          </button>
+          <button
+            type="button"
+            className="cm-search-button cm-search-previous"
+            onClick={() => view && findPrevious(view)}
+          >
+            <ArrowSvg aria-label="Find previous search" />
+          </button>
+        </div>
+        <div className="cm-search-row cm-search-replace">
+          <input
+            ref={replaceFieldRef}
+            type="text"
+            name="replace"
+            className="cm-textfield"
+            placeholder="Replace"
+            aria-label="Replace"
+            value={replace}
+            onChange={(e) => setReplace(e.target.value)}
+          />
+          <button
+            className="cm-search-button"
+            onClick={() => {
+              console.log('replace next');
+              if (view) replaceNext(view);
+            }}
+          >
+            replace
+          </button>
+          <button
+            className="cm-search-button"
+            onClick={() => view && replaceAll(view)}
+          >
+            replace all
+          </button>
+        </div>
       </div>
     </>
   );
@@ -238,6 +231,12 @@ export default function SearchPanel({ view }) {
 SearchPanel.propTypes = {
   view: PropTypes.shape({
     dispatch: PropTypes.func.isRequired,
-    state: PropTypes.shape({})
-  }).isRequired
+    state: PropTypes.shape({}),
+    focus: PropTypes.func.isRequired
+  }),
+  closePanel: PropTypes.func.isRequired
+};
+
+SearchPanel.defaultProps = {
+  view: null
 };

@@ -82,7 +82,7 @@ function Editor({
 }) {
   const { versionInfo } = useP5Version();
   const [currentLine, setCurrentLine] = useState(1);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(true);
   const beep = useRef();
 
   const updateLintingMessageAccessibility = debounce((annotations) => {
@@ -99,6 +99,10 @@ function Editor({
 
   const showSearch = useCallback(() => {
     setIsSearchOpen(true);
+  }, []);
+
+  const hideSearch = useCallback(() => {
+    setIsSearchOpen(false);
   }, []);
 
   // The useCodeMirror hook manages CodeMirror state and returns
@@ -224,7 +228,12 @@ function Editor({
               </div>
             </div>
             <article ref={onContainerMounted} className={editorHolderClass} />
-            {isSearchOpen && <SearchPanel view={codemirrorView.current} />}
+            {isSearchOpen && (
+              <SearchPanel
+                view={codemirrorView.current}
+                closePanel={hideSearch}
+              />
+            )}
             {file.url ? <AssetPreview url={file.url} name={file.name} /> : null}
             <EditorAccessibility
               lintMessages={lintMessages}

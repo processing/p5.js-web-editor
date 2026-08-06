@@ -79,7 +79,7 @@
       color: getThemifyVariable('inactive-text-color');
     }
     pointer-events: none;
-    position:absolute;
+    position: absolute;
     right: 20%;
   }
 
@@ -132,7 +132,7 @@
 }
 
 /** Search dialog */
-.cm-search.cm-panel {
+.cm-search-panel {
   @include themify() {
     color: getThemifyVariable('primary-text-color');
     background-color: getThemifyVariable('modal-background-color');
@@ -140,27 +140,112 @@
     border: solid 0.5px getThemifyVariable('modal-border-color');
   }
   font-family: Montserrat, sans-serif;
+  z-index: 1;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px 8px;
 
-  .cm-button {
-    @include themify() {
-      @extend %link;
-      color: getThemifyVariable('secondary-text-color');
-      &:hover {
-        color: getThemifyVariable('logo-color');
-      }
+  // Various button stylings
+  .cm-search-button {
+    @extend %toolbar-button;
+    white-space: nowrap;
+
+    &.cm-search-previous,
+    &.cm-search-next {
+      height: #{math.div(32, $base-font-size)}rem;
+      width: #{math.div(32, $base-font-size)}rem;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
-    background: transparent;
-    border: none;
-    font-size: 1rem;
   }
 
-  input.cm-textfield {
-    @include themify() {
-      color: getThemifyVariable('input-text-color');
-      background-color: getThemifyVariable('input-secondary-background-color');
-      border: solid 0.5px getThemifyVariable('button-border-color');
-      &::placeholder {
-        color: getThemifyVariable('inactive-text-color');
+  .cm-search-replace {
+    .cm-search-button {
+      height: auto;
+      width: auto;
+      border-radius: 10rem;
+      padding: 0.5rem 0.7rem;
+    }
+  }
+
+  svg {
+    fill: currentColor;
+  }
+
+  .cm-search-close {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 48px;
+    height: 48px;
+    margin: -12px;
+
+    svg {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  .cm-search-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .cm-search-previous {
+    svg {
+      transform: rotate(180deg);
+    }
+  }
+
+  input[type='text'] {
+    width: 200px;
+  }
+
+  .cm-search-findContainer {
+    position: relative;
+
+    .cm-search-findOptions {
+      position: absolute;
+      right: 0px;
+      top: 0px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px;
+
+      @include themify() {
+        label {
+          cursor: pointer;
+          svg {
+            opacity: 0.8;
+            fill: getThemifyVariable('inactive-text-color');
+          }
+          &:has(> input[type='checkbox']:checked) {
+            svg {
+              fill: getThemifyVariable('button-background-active-color');
+            }
+          }
+          &:has(> input:focus-visible) {
+            outline: 1px solid $outline-color;
+          }
+          &:has(> input:hover) {
+            svg {
+              opacity: 1;
+            }
+          }
+        }
+      }
+
+      input[type='checkbox'] {
+        @extend .visually-hidden;
       }
     }
   }
