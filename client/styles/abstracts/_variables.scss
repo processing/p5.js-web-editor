@@ -111,7 +111,10 @@ $themes: (
     highlight-style-tag-color: $p5-light-pink,
     highlight-style-property-color: $p5-light-black,
     highlight-style-attribute-color: $p5-light-black,
-    highlight-style-matching-selection-background-color: $p5js-pink-opacity,
+    highlight-style-matching-selection-background-color:
+      rgba($p5-contrast-pink, 0.3),
+    highlight-style-matched-selection-background-color:
+      rgba($p5-contrast-pink, 0.6),
     hint-arrow-background-active-color: $p5js-active-pink,
     hint-arrow-background-color: #ed225ddd,
     hint-arrow-color: $lightest,
@@ -226,7 +229,10 @@ $themes: (
     highlight-style-tag-color: $p5-dark-pink,
     highlight-style-property-color: $p5-dark-white,
     highlight-style-attribute-color: $p5-dark-lightblue,
-    highlight-style-matching-selection-background-color: $p5js-pink-opacity,
+    highlight-style-matching-selection-background-color:
+      rgba($p5-contrast-pink, 0.2),
+    highlight-style-matched-selection-background-color:
+      rgba($p5-contrast-pink, 0.35),
     hint-arrow-background-active-color: $p5js-active-pink,
     hint-arrow-background-color: #ed225ddd,
     hint-arrow-color: $lightest,
@@ -341,6 +347,7 @@ $themes: (
     highlight-style-property-color: $p5-contrast-white,
     highlight-style-attribute-color: $p5-contrast-white,
     highlight-style-matching-selection-background-color: $medium-dark,
+    highlight-style-matched-selection-background-color: $medium-dark,
     hint-arrow-background-active-color: #f5dc23,
     hint-arrow-background-color: #f5dc23dd,
     hint-arrow-color: $darker,

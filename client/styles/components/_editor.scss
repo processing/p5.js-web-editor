@@ -510,11 +510,18 @@
 }
 
 .cm-selectionMatch,
-.cm-searchMatch,
-.cm-searchMatch-selected {
+.cm-searchMatch {
   @include themify() {
     background-color: getThemifyVariable(
       'highlight-style-matching-selection-background-color'
+    );
+  }
+}
+
+.cm-searchMatch-selected {
+  @include themify() {
+    background-color: getThemifyVariable(
+      'highlight-style-matched-selection-background-color'
     );
   }
 }
