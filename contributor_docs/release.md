@@ -1,6 +1,6 @@
 # Release
 
-A guide for deploying a release to the production environment.
+A guide for deploying a release to the p5.js Editor production environment.
 
 ## Background
 This project's release guide is based on:
@@ -28,8 +28,6 @@ This project's release guide is based on:
 13. Check that Github actions are running.
 14. `$ kubectl get pods --namespace production` to check the pods are running (this might take a few minutes and you can rerun the command to check again).
 15. Validate that [production](https://stagingeditor.p5js.org/) is working and you are finished!
-
-Travis CI will automatically deploy the release to production, as well as push a production tagged Docker image to DockerHub.
 
 
 ## Steps for a Patch Release
