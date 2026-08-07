@@ -24,7 +24,7 @@ import { CrossIcon } from '../../../common/icons';
 
 const Banner = ({ onClose }) => {
   // URL can be updated depending on the opportunity or announcement.
-  const bannerURL = 'https://github.com/processing/p5.js/issues/8870';
+  const bannerURL = 'https://p5js.org/tutorials/v2_transition';
 
   // currently holds donation copy, will switch back when temp maintenance is done
   const bannerCopy = (

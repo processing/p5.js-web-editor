@@ -49,7 +49,7 @@
       }
     },
     "Banner": {
-      "Copy": "<bold>p5.js v2.0 will become the default editor version this August</bold>! Check out the timeline and ask questions in the linked issue!"
+      "Copy": "<bold>p5.js v2 is now the default</bold>. If you teach with p5, check out this essential guide!"
     },
     "CodemirrorFindAndReplace": {
       "ToggleReplace": "Activer/désactiver le remplacement",
