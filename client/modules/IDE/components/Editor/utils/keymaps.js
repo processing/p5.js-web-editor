@@ -11,7 +11,14 @@ import {
   indentWithTab
 } from '@codemirror/commands';
 import { foldKeymap } from '@codemirror/language';
-// import { searchKeymap } from '@codemirror/search';
+import {
+  gotoLine,
+  selectNextOccurrence,
+  findNext,
+  findPrevious,
+  selectSelectionMatches,
+  closeSearchPanel
+} from '@codemirror/search';
 import { expandAbbreviation } from '@emmetio/codemirror6-plugin';
 import { tidyCodeWithPrettier } from './tidier';
 
@@ -128,16 +135,33 @@ function createFileTidyKeymap(mode) {
 }
 
 function createSearchPanelKeymap(callback) {
-  //   searchKeymap: readonly KeyBinding[]
-  // Default search-related key bindings.
-
-  // Mod-f: openSearchPanel
-  // F3, Mod-g: findNext
-  // Shift-F3, Shift-Mod-g: findPrevious
-  // Mod-Alt-g: gotoLine
-  // Mod-d: selectNextOccurrence
+  // Re-implements default search-related key bindings,
+  // but with a custom callback for opening the search panel.
   return [
-    { key: 'Mod-f', run: callback, preventDefault: true, stopPropagation: true }
+    {
+      key: 'Mod-f',
+      run: callback,
+      preventDefault: true,
+      stopPropagation: true
+    },
+    {
+      key: 'F3',
+      run: findNext,
+      shift: findPrevious,
+      scope: 'editor search-panel',
+      preventDefault: true
+    },
+    {
+      key: 'Mod-g',
+      run: findNext,
+      shift: findPrevious,
+      scope: 'editor search-panel',
+      preventDefault: true
+    },
+    { key: 'Mod-Shift-l', run: selectSelectionMatches },
+    { key: 'Mod-Alt-g', run: gotoLine },
+    { key: 'Mod-d', run: selectNextOccurrence, preventDefault: true },
+    { key: 'Escape', run: closeSearchPanel, scope: 'editor search-panel' }
   ];
 }
 
