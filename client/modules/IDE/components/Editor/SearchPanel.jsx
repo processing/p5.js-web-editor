@@ -20,6 +20,12 @@ import CaretArrowSvg from '../../../../images/right-arrow.svg';
 
 /**
  * Custom implementation of CodeMirror 6's built-in SearchPanel.
+ *
+ * TODO:
+ * We may need to add an announce functionality for screen readers, similar to the original:
+ * https://github.com/codemirror/search/blob/4db1811530f9e77239e5de8bd7bb155ffc0377e0/src/search.ts#L766
+ *
+ * It may also be nice to have a X of X label for results, similar to vscode.
  */
 export default function SearchPanel({ view, closePanel, isMobile }) {
   // Seed initial state from whatever query is already active in the editor,
