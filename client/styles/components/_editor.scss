@@ -140,16 +140,18 @@
     font-family: Montserrat, sans-serif;
     position: relative;
     z-index: 1;
+    display: flex;
+    padding-left: 4px;
+    // Extra padding for the play button to not overlap with the search panel
+    padding-bottom: 20px;
 
     &:not(.mobile) {
       position: absolute;
       right: 0px;
       top: 0px;
       box-shadow: 0 12px 12px 0 getThemifyVariable('shadow-color');
+      padding-bottom: 0px;
     }
-
-    display: flex;
-    padding-left: 4px;
   }
 
   .cm-search-content {
@@ -186,18 +188,6 @@
     svg {
       width: 24px;
       height: 24px;
-    }
-  }
-
-  // Otherwise the play button will cover the close button.
-  &.mobile {
-    .cm-search-close {
-      position: relative;
-      margin: 0;
-      height: auto;
-      width: auto;
-      top: 0;
-      right: 0;
     }
   }
 
