@@ -174,7 +174,8 @@ export function createNewFileState(filename, fileDocument, settings) {
     history(),
     search({
       createPanel: (view) => ({
-        // Create an empty search panel
+        // Create an empty search panel, the actual panel
+        // is rendered in the SearchPanel component.
         dom: document.createElement('div')
       })
     }),
