@@ -21,17 +21,8 @@ import CaretArrowSvg from '../../../../images/right-arrow.svg';
 
 /**
  * Custom implementation of CodeMirror 6's built-in SearchPanel.
- *
- * Usage:
- *   <SearchPanel view={editorViewInstance} closePanel={closePanelFunction} />
- *
- * `view` must be a live EditorView instance (e.g. from a ref on your editor).
- * The panel is fully controlled by React state and pushes changes into
- * CodeMirror via the `setSearchQuery` effect, mirroring the original
- * plugin's `commit()` behavior.
  */
 export default function SearchPanel({ view, closePanel, isMobile }) {
-  console.log(isMobile);
   // Seed initial state from whatever query is already active in the editor,
   // falling back to an empty query.
   const initialQuery = view
@@ -44,13 +35,10 @@ export default function SearchPanel({ view, closePanel, isMobile }) {
     initialQuery.caseSensitive
   );
   const [regexp, setRegexp] = useState(initialQuery.regexp);
-  const [wholeWord, setWholeWord] = useState(initialQuery.wholeWord);
-  // Controls whether the replace row is visible (accordion)
   const [showReplace, setShowReplace] = useState(false);
 
   const searchFieldRef = useRef(null);
   const replaceFieldRef = useRef(null);
-  const panelRef = useRef(null);
 
   // Keep a ref of the "last committed" query so we can avoid redundant dispatches,
   // same as the original's `this.query` comparison.
@@ -76,45 +64,18 @@ export default function SearchPanel({ view, closePanel, isMobile }) {
       search,
       caseSensitive,
       regexp,
-      wholeWord,
       replace
     });
     if (!query.eq(lastQueryRef.current)) {
       lastQueryRef.current = query;
-      console.log('dispatching setSearchQuery', query);
       view.dispatch({ effects: setSearchQuery.of(query) });
     }
-  }, [view, search, replace, caseSensitive, regexp, wholeWord]);
+  }, [view, search, replace, caseSensitive, regexp]);
 
   // Re-commit whenever any field changes (mirrors onchange/onkeyup -> commit()).
   useEffect(() => {
     commit();
   }, [commit]);
-
-  // Listen for external changes to the search query (e.g. triggered elsewhere
-  // in the app) and sync the form fields back, mirroring `setQuery()`.
-  useEffect(() => {
-    if (!view) return;
-
-    const checkForExternalChange = () => {
-      const q = getSearchQuery(view.state);
-      if (!q.eq(lastQueryRef.current)) {
-        lastQueryRef.current = q;
-        setSearch(q.search);
-        setReplace(q.replace);
-        setCaseSensitive(q.caseSensitive);
-        setRegexp(q.regexp);
-        setWholeWord(q.wholeWord);
-      }
-    };
-
-    // CodeMirror doesn't give us a plain event emitter here, so if you're
-    // driving `view` from elsewhere in your app, call this after any
-    // dispatch that might change the search query. A simple approach is to
-    // expose an EditorView.updateListener extension that calls a callback
-    // passed down as a prop; wire that up in place of this stub if needed.
-    checkForExternalChange();
-  }, [view]);
 
   // Focus + select the search field on mount, like the original's mount().
   useEffect(() => {
@@ -146,7 +107,6 @@ export default function SearchPanel({ view, closePanel, isMobile }) {
       <div
         className={`cm-search-panel ${isMobile ? 'mobile' : ''}`}
         onKeyDown={handleKeyDown}
-        ref={panelRef}
       >
         <button
           type="button"

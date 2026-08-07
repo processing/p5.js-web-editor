@@ -82,7 +82,7 @@ function Editor({
 }) {
   const { versionInfo } = useP5Version();
   const [currentLine, setCurrentLine] = useState(1);
-  const [isSearchOpen, setIsSearchOpen] = useState(true);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const beep = useRef();
 
   const updateLintingMessageAccessibility = debounce((annotations) => {
