@@ -7,7 +7,6 @@ import {
   findPrevious,
   replaceNext,
   replaceAll,
-  selectMatches,
   openSearchPanel,
   closeSearchPanel,
   getSearchQuery
