@@ -163,4 +163,118 @@ test.describe('editor page', () => {
       );
     });
   });
+
+  test('User can create a functioning sketch with multiple files', async ({
+    page
+  }) => {
+    await page
+      .locator('button[aria-label="Open Sketch files navigation"]')
+      .click();
+
+    await page
+      .locator('button[aria-label="Toggle open/close sketch file options"]')
+      .click();
+
+    await page.locator('button[aria-label="add file"]').click();
+
+    await page.locator('.new-file-form__name-input').fill('fileA.js');
+
+    await page.keyboard.press('Enter');
+
+    const fileACode = [
+      'function fileA(){',
+      '  console.log("log from file A");',
+      '}'
+    ].join('');
+
+    await page.waitForTimeout(1000);
+
+    await page.locator('.editor-holder').click();
+    await page.keyboard.type(fileACode, { delay: 5 });
+
+    // Wait for CodeMirror's debounced onChange (1000ms) to commit this
+    // file's content to Redux before switching tabs. The debounce reads
+    // "current file" at fire time, not at schedule time, so switching away
+    // too early makes the pending save misfire against whichever file is
+    // active when the timer eventually runs, silently dropping this edit.
+    await page.waitForTimeout(1000);
+
+    // Register the new file in index.html
+    await page.locator('button[aria-label="index.html"]').click();
+    await page.locator('.editor-holder').click();
+    await page.keyboard.press('ControlOrMeta+F');
+    await page.keyboard.type('<script src="sketch.js"></script>');
+    await page.keyboard.press('Enter'); // find it
+    await page.keyboard.press('Escape'); // close search
+
+    // Move to end of that line and add new line
+    await page.keyboard.press('End');
+    await page.keyboard.press('Enter');
+    // Autocorrect takes care of the closing </script> tag
+    await page.keyboard.type('<script src="fileA.js">', { delay: 5 });
+
+    await page.waitForTimeout(1000);
+
+    await page.locator('button[aria-label="sketch.js"]').click();
+
+    const sketchCode = [
+      'function setup() {',
+      '  createCanvas(400, 400);',
+      '  fileA();',
+      '}',
+      '',
+      'function draw() {',
+      '  background(220);',
+      '}'
+    ].join('');
+
+    await page.locator('.editor-holder').click();
+    await page.keyboard.press('ControlOrMeta+A');
+    await page.keyboard.type(sketchCode, { delay: 5 });
+
+    await page.waitForTimeout(1000);
+
+    // Click Play
+    await page.locator('#play-sketch').click({ force: true });
+
+    // Wait for the sketch iframe src to confirm the sketch actually started
+    await expect(
+      page.locator('iframe[title="sketch preview"]')
+    ).toHaveAttribute('src', /9002/, { timeout: 10_000 });
+
+    // Assert console output
+    await expect(
+      page.locator('.preview-console__messages')
+    ).toContainText('log from file A', { timeout: 15_000 });
+
+    page.on('dialog', (dialog) => dialog.accept());
+
+    // Open the file options for fileA.js
+    const fileItem = page
+      .locator('.file-item__content')
+      .filter({ has: page.locator('button[aria-label="fileA.js"]') });
+    await fileItem.click();
+    await fileItem
+      .locator('button[aria-label="Toggle open/close file options"]')
+      .click();
+
+    // Delete the file
+    await fileItem
+      .locator('button.sidebar__file-item-option')
+      .filter({ hasText: 'Delete' })
+      .click();
+    await expect(
+      page
+        .locator('.file-item__content')
+        .filter({ has: page.locator('button[aria-label="fileA.js"]') })
+    ).toHaveCount(0);
+
+    // Play sketch again and verify that the console output from the deleted file is gone
+    await page.locator('#play-sketch').click({ force: true });
+
+    // Check for the error message in the console indicating that fileA is not defined
+    await expect(
+      page.locator('.preview-console__messages')
+    ).toContainText('fileA is not defined', { timeout: 15_000 });
+  });
 });
