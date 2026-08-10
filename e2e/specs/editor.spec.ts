@@ -277,4 +277,183 @@ test.describe('editor page', () => {
       page.locator('.preview-console__messages')
     ).toContainText('fileA is not defined', { timeout: 15_000 });
   });
+
+  test('user can create a functioning sketch with folders', async ({
+    page
+  }) => {
+    await page
+      .locator('button[aria-label="Open Sketch files navigation"]')
+      .click();
+
+    await page
+      .locator('button[aria-label="Toggle open/close sketch file options"]')
+      .click();
+
+    await page.locator('button[aria-label="add folder"]').click();
+
+    await page.locator('.new-folder-form__name-input').fill('folderA');
+
+    await page.keyboard.press('Enter');
+
+    // Open folder options
+    await page
+      .locator('button[aria-label="folderA"]')
+      .locator('..')
+      .locator('button[aria-label="Toggle open/close file options"]')
+      .click();
+
+    // Click Create file
+    await page
+      .locator('button[aria-label="folderA"]')
+      .locator('..')
+      .locator('button[aria-label="add file"]')
+      .click();
+
+    await page.locator('.new-file-form__name-input').fill('fileA.js');
+
+    await page.keyboard.press('Enter');
+
+    const fileACode = [
+      'function fileA(){',
+      '  console.log("log from file A");',
+      '}'
+    ].join('');
+
+    await page.waitForTimeout(1000);
+
+    await page.locator('.editor-holder').click();
+    await page.keyboard.type(fileACode, { delay: 5 });
+
+    // Wait for CodeMirror's debounced onChange (1000ms) to commit this
+    // file's content to Redux before switching away
+    await page.waitForTimeout(1000);
+
+    await page.locator('button[aria-label="folderA"]').click();
+
+    // Open folder options again to create another file in the same folder
+    await page
+      .locator('button[aria-label="folderA"]')
+      .locator('..')
+      .locator('button[aria-label="Toggle open/close file options"]')
+      .click();
+
+    // Click Create file
+    await page
+      .locator('button[aria-label="folderA"]')
+      .locator('..')
+      .locator('button[aria-label="add file"]')
+      .click();
+
+    await page.locator('.new-file-form__name-input').fill('fileB.js');
+
+    await page.keyboard.press('Enter');
+
+    const fileBCode = [
+      'function fileB(){',
+      '  console.log("log from file B");',
+      '}'
+    ].join('');
+
+    await page.waitForTimeout(1000);
+
+    await page.locator('.editor-holder').click();
+    await page.keyboard.type(fileBCode, { delay: 5 });
+
+    // Same debounce wait as above, before switching to index.html
+    await page.waitForTimeout(1000);
+
+    // Register the new files in index.html
+    await page.locator('button[aria-label="index.html"]').click();
+    await page.locator('.editor-holder').click();
+
+    await page.keyboard.press('ControlOrMeta+F');
+    await page.keyboard.type('<script src="sketch.js"></script>');
+    await page.keyboard.press('Enter'); // find it
+    await page.keyboard.press('Escape'); // close search
+
+    // Move to end of that line and add new line
+    await page.keyboard.press('End');
+    await page.keyboard.press('Enter');
+    // Both files live inside folderA, so the src needs the folder-relative
+    // path — resolvePathToFile() (server/utils/filePath.js) walks from the
+    // sketch root by name at each path segment, it doesn't search
+    // recursively, so a bare "fileA.js" won't resolve to a nested file.
+    // Autocorrect takes care of the closing </script> tag
+    await page.keyboard.type('<script src="folderA/fileA.js"></script>', {
+      delay: 5
+    });
+    await page.keyboard.press('Enter');
+    // Autocorrect takes care of the closing </script> tag
+    await page.keyboard.type('<script src="folderA/fileB.js">', {
+      delay: 5
+    });
+
+    await page.waitForTimeout(1000);
+
+    const sketchCode = [
+      'function setup() {',
+      '  createCanvas(400, 400);',
+      '  fileA();',
+      '  fileB();',
+      '}',
+      '',
+      'function draw() {',
+      '  background(220);',
+      '}'
+    ].join('');
+
+    await page.locator('button[aria-label="sketch.js"]').click();
+
+    await page.locator('.editor-holder').click();
+    await page.keyboard.press('ControlOrMeta+A');
+    await page.keyboard.type(sketchCode, { delay: 5 });
+
+    await page.waitForTimeout(1000);
+
+    // Click Play
+    await page.locator('#play-sketch').click({ force: true });
+
+    // Wait for the sketch iframe src to confirm the sketch actually started
+    await expect(
+      page.locator('iframe[title="sketch preview"]')
+    ).toHaveAttribute('src', /9002/, { timeout: 10_000 });
+
+    // Assert console output
+    await expect(
+      page.locator('.preview-console__messages')
+    ).toContainText('log from file A', { timeout: 15_000 });
+    await expect(
+      page.locator('.preview-console__messages')
+    ).toContainText('log from file B', { timeout: 15_000 });
+
+    page.on('dialog', (dialog) => dialog.accept());
+
+    // Open the file options for fileA.js
+    const folderItem = page
+      .locator('.file-item__content')
+      .filter({ has: page.locator('button[aria-label="folderA"]') });
+    await folderItem.click();
+    await folderItem
+      .locator('button[aria-label="Toggle open/close file options"]')
+      .click();
+
+    // Delete the folder
+    await folderItem
+      .locator('button.sidebar__file-item-option')
+      .filter({ hasText: 'Delete' })
+      .click();
+    await expect(
+      page
+        .locator('.file-item__content')
+        .filter({ has: page.locator('button[aria-label="folderA"]') })
+    ).toHaveCount(0);
+
+    // Play sketch again and verify that the console output from the deleted file is gone
+    await page.locator('#play-sketch').click({ force: true });
+
+    // Check for the error message in the console indicating that fileA is not defined
+    await expect(
+      page.locator('.preview-console__messages')
+    ).toContainText('fileA is not defined', { timeout: 15_000 });
+  });
 });
