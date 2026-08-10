@@ -328,18 +328,35 @@ test.describe('editor page', () => {
     // file's content to Redux before switching away
     await page.waitForTimeout(1000);
 
-    await page.locator('button[aria-label="folderA"]').click();
-
-    // Open folder options again to create another file in the same folder
+    // Create a second, separate folder for fileB.js — this exercises
+    // resolvePathToFile() actually respecting folder boundaries (folderA
+    // vs folderB), not just matching a filename found anywhere in the tree.
     await page
-      .locator('button[aria-label="folderA"]')
+      .locator('button[aria-label="Toggle open/close sketch file options"]')
+      .click();
+
+    // "add folder" also exists (hidden) as folderA's own per-item option for
+    // creating a subfolder inside it — scope to the visible one to avoid a
+    // strict-mode ambiguity now that folderA exists.
+    await page.locator('button[aria-label="add folder"]:visible').click();
+
+    await page.locator('.new-folder-form__name-input').fill('folderB');
+
+    await page.keyboard.press('Enter');
+
+    // The options button is only revealed on hover of the file item row
+    await page.locator('button[aria-label="folderB"]').hover();
+
+    // Open folder options for folderB
+    await page
+      .locator('button[aria-label="folderB"]')
       .locator('..')
       .locator('button[aria-label="Toggle open/close file options"]')
       .click();
 
     // Click Create file
     await page
-      .locator('button[aria-label="folderA"]')
+      .locator('button[aria-label="folderB"]')
       .locator('..')
       .locator('button[aria-label="add file"]')
       .click();
@@ -374,27 +391,31 @@ test.describe('editor page', () => {
     // Move to end of that line and add new line
     await page.keyboard.press('End');
     await page.keyboard.press('Enter');
-    // Both files live inside folderA, so the src needs the folder-relative
-    // path — resolvePathToFile() (server/utils/filePath.js) walks from the
-    // sketch root by name at each path segment, it doesn't search
-    // recursively, so a bare "fileA.js" won't resolve to a nested file.
+    // fileA.js and fileB.js live in separate folders, so each src needs its
+    // own folder-relative path — resolvePathToFile() (server/utils/filePath.js)
+    // walks from the sketch root by name at each path segment, it doesn't
+    // search recursively, so a bare filename won't resolve to a nested file.
     // Autocorrect takes care of the closing </script> tag
     await page.keyboard.type('<script src="folderA/fileA.js"></script>', {
       delay: 5
     });
     await page.keyboard.press('Enter');
     // Autocorrect takes care of the closing </script> tag
-    await page.keyboard.type('<script src="folderA/fileB.js">', {
+    await page.keyboard.type('<script src="folderB/fileB.js">', {
       delay: 5
     });
 
     await page.waitForTimeout(1000);
 
+    // fileB() is called first: later, after folderA is deleted, fileA()
+    // throws and halts setup() — calling it second means fileB() still
+    // runs and logs before that happens, so we can verify folderB's file
+    // survives folderA's deletion instead of never being reached at all.
     const sketchCode = [
       'function setup() {',
       '  createCanvas(400, 400);',
-      '  fileA();',
       '  fileB();',
+      '  fileA();',
       '}',
       '',
       'function draw() {',
@@ -432,7 +453,7 @@ test.describe('editor page', () => {
     const folderItem = page
       .locator('.file-item__content')
       .filter({ has: page.locator('button[aria-label="folderA"]') });
-    await folderItem.click();
+    await folderItem.hover();
     await folderItem
       .locator('button[aria-label="Toggle open/close file options"]')
       .click();
@@ -455,5 +476,11 @@ test.describe('editor page', () => {
     await expect(
       page.locator('.preview-console__messages')
     ).toContainText('fileA is not defined', { timeout: 15_000 });
+
+    // folderB/fileB.js should be untouched — deleting folderA shouldn't
+    // affect its sibling folder
+    await expect(
+      page.locator('.preview-console__messages')
+    ).toContainText('log from file B', { timeout: 15_000 });
   });
 });
