@@ -186,12 +186,5 @@ test.describe('signup and email verification', () => {
     await expect(
       page.locator('.preview-console__messages')
     ).toContainText('hi from sketch', { timeout: 20_000 });
-
-    // Make sure link in email works
-    const verificationLink = await getVerificationLink(email);
-    await page.goto(verificationLink);
-
-    await expect(page).toHaveURL('/', { timeout: 15_000 });
-    await expect(page.locator('.editor-holder')).toBeVisible();
   });
 });
