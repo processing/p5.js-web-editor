@@ -67,11 +67,10 @@
     background-color: getThemifyVariable('editor-gutter-color');
     border-color: getThemifyVariable('ide-border-color');
   }
-  width: #{math.div(48, $base-font-size)}rem;
-  position: relative;
+  min-width: #{math.div(48, $base-font-size)}rem;
 
   .cm-gutter {
-    z-index: 1;
+    flex-shrink: 0;
   }
 
   .cm-lineNumbers {
@@ -79,8 +78,7 @@
       color: getThemifyVariable('inactive-text-color');
     }
     pointer-events: none;
-    position:absolute;
-    right: 20%;
+    flex-grow: 1;
   }
 
   .cm-activeLineGutter {
@@ -88,11 +86,6 @@
   }
 
   .cm-gutter-lint {
-    position: absolute;
-    left: 0;
-    width: 100%;
-    z-index: 0;
-
     .cm-activeLineGutter {
       @include themify() {
         background-color: getThemifyVariable('active-line-background-color');
@@ -169,8 +162,6 @@
 // CM5: .CodeMirror-foldgutter-open, .CodeMirror-foldgutter-folded
 .cm-foldGutter {
   cursor: pointer;
-  position: absolute;
-  right: 1px;
 }
 
 // CM5: .CodeMirror-foldgutter-open:after / .CodeMirror-foldgutter-folded:after
