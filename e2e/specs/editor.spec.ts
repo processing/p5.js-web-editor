@@ -20,15 +20,18 @@ test.describe('editor page', () => {
   });
 
   test('can run sketch code written in the editor', async ({ page }) => {
+    const LOG = 'hi from sketch';
+    const FRAME_RATE = 10;
+
     const newCode = [
       'function setup() {',
       '  createCanvas(400, 400);',
-      ' frameRate(10);',
+      ` frameRate(${FRAME_RATE});`,
       '}',
       '',
       'function draw() {',
       '  background(220);',
-      "  console.log('hi from sketch');",
+      `  console.log('${LOG}');`,
       '}'
     ].join(''); // Purposely joining without '\n' to avoid triggering the autocomplete with keyboard.type & creating extra brackets
 
@@ -40,7 +43,7 @@ test.describe('editor page', () => {
 
     const logRow = page
       .locator('.preview-console__messages [data-method="log"]')
-      .filter({ hasText: 'hi from sketch' });
+      .filter({ hasText: LOG });
 
     // Confirm count starts as 0, before the sketch has run at all
     await expect(logRow).toHaveCount(0);
@@ -54,12 +57,16 @@ test.describe('editor page', () => {
     ).toHaveAttribute('src', /9002/, { timeout: 10_000 });
 
     // Assert console output
-    await expect(
-      page.locator('.preview-console__messages')
-    ).toContainText('hi from sketch', { timeout: 15_000 });
+    await expect(page.locator('.preview-console__messages')).toContainText(
+      LOG,
+      { timeout: 15_000 }
+    );
 
     // Let sketch run for 2 seconds
     await page.waitForTimeout(2000);
+
+    // Stop the sketch
+    await page.locator('[aria-label="Stop sketch"]').click();
 
     const countDiv = logRow.last().locator('div').first();
     const count = Number(await countDiv.textContent());
@@ -68,9 +75,6 @@ test.describe('editor page', () => {
     // on browser/CI scheduling, not just frameRate(10) math.
     expect(count).toBeGreaterThan(15);
     expect(count).toBeLessThan(30);
-
-    // Stop the sketch
-    await page.locator('[aria-label="Stop sketch"]').click();
 
     // Wait and confirm count did not increase
     await page.waitForTimeout(1000);
