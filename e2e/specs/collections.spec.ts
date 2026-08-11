@@ -49,17 +49,21 @@ test.describe.serial('collection lifecycle', () => {
     sketchName1 = name ?? '';
 
     // Open the collections page
-    await page.locator(`button:has-text("${testUser.username}")`).click();
+    await page.getByRole('menuitem', { name: testUser.username }).click();
     await page.locator('#account-collections').click();
 
-    await expect(page.locator('text=No Collections.')).toBeVisible({
+    await expect(page.getByText('No Collections.')).toBeVisible({
       timeout: 5_000
     });
 
     // Create a new collection
-    await page.locator('button:has-text("Create Collection")').click();
+    await page
+      .getByRole('button', { name: 'Create collection', exact: true })
+      .click();
 
     collectionName = await page.locator('input#name').inputValue();
+    // The form's submit button has the same accessible name as the toolbar
+    // button that opened it, so it needs [type="submit"] to disambiguate.
     await page
       .locator('button[type="submit"]:has-text("Create collection")')
       .click();
@@ -74,18 +78,20 @@ test.describe.serial('collection lifecycle', () => {
   });
 
   test('can add sketches to a collection', async () => {
-    await page.locator('button:has-text("Add Sketch")').click();
+    await page.getByRole('button', { name: 'Add Sketch', exact: true }).click();
 
     await expect(
       page.locator('.quick-add__item-name').filter({ hasText: sketchName1 })
     ).toBeVisible({ timeout: 5_000 });
 
     await page
-      .locator('button[aria-label="Add to collection"]')
+      .getByRole('button', { name: 'Add to collection', exact: true })
       .first()
       .click();
 
-    await page.locator('button[aria-label="Close Add Sketch overlay"]').click();
+    await page
+      .getByRole('button', { name: 'Close Add Sketch overlay' })
+      .click();
 
     // Confirm the sketch is in the collection
     await expect(
@@ -125,20 +131,22 @@ test.describe.serial('collection lifecycle', () => {
     ).toBeVisible({ timeout: 5_000 });
 
     await page
-      .locator('button[aria-label="Add to collection"]')
+      .getByRole('button', { name: 'Add to collection', exact: true })
       .first()
       .click();
 
-    await expect(page.getByText(`Added to "${collectionName}"`)).toBeVisible({
-      timeout: 10_000
-    });
+    // The item's toggle flips to "Remove from collection" once the add lands.
+    // Asserting on that rather than the toast, which only shows for 1500ms.
+    await expect(
+      page.getByRole('button', { name: 'Remove from collection', exact: true })
+    ).toBeVisible({ timeout: 10_000 });
 
     // Close the overlay
     await page
-      .locator('button[aria-label="Close Add to collection overlay"]')
+      .getByRole('button', { name: 'Close Add to collection overlay' })
       .click();
 
-    await page.locator(`button:has-text("${testUser.username}")`).click();
+    await page.getByRole('menuitem', { name: testUser.username }).click();
     await page.locator('#account-collections').click();
 
     // Verify the collection has 2 sketches
@@ -154,7 +162,7 @@ test.describe.serial('collection lifecycle', () => {
   test('can rename a collection', async () => {
     // Open the dropdown
     await page
-      .locator('[aria-label="Toggle Open/Close collection options"]')
+      .getByRole('button', { name: 'Toggle Open/Close collection options' })
       .first()
       .click();
 
@@ -173,7 +181,7 @@ test.describe.serial('collection lifecycle', () => {
       page.locator('table.sketches-table').getByText(collectionName)
     ).toBeVisible({ timeout: 5_000 });
 
-    await page.locator(`a:has-text("${collectionName}")`).click();
+    await page.getByRole('link', { name: collectionName }).click();
 
     // Both sketches should still be in the collection after the rename
     await expect(
@@ -188,7 +196,7 @@ test.describe.serial('collection lifecycle', () => {
   });
 
   test('can remove a sketch from a collection', async () => {
-    await page.locator(`a:has-text("${sketchName1}")`).click();
+    await page.getByRole('link', { name: sketchName1 }).click();
 
     // Confirm we're back in the editor and the sketch is loaded
     await expect(page.locator('.editor-holder')).toBeVisible({
@@ -206,22 +214,22 @@ test.describe.serial('collection lifecycle', () => {
     ).toBeVisible({ timeout: 5_000 });
 
     await page
-      .locator('button[aria-label="Remove from collection"]')
+      .getByRole('button', { name: 'Remove from collection', exact: true })
       .first()
       .click();
 
+    // The toggle flips back to "Add to collection" once the removal lands.
+    // Asserting on that rather than the toast, which only shows for 1500ms.
     await expect(
-      page.getByText(`Removed from "${collectionName}"`)
-    ).toBeVisible({
-      timeout: 10_000
-    });
+      page.getByRole('button', { name: 'Add to collection', exact: true })
+    ).toBeVisible({ timeout: 10_000 });
 
     // Close the overlay
     await page
-      .locator('button[aria-label="Close Add to collection overlay"]')
+      .getByRole('button', { name: 'Close Add to collection overlay' })
       .click();
 
-    await page.locator(`button:has-text("${testUser.username}")`).click();
+    await page.getByRole('menuitem', { name: testUser.username }).click();
     await page.locator('#account-collections').click();
 
     // sketch1 was removed but sketch2 is still in the collection
@@ -240,7 +248,7 @@ test.describe.serial('collection lifecycle', () => {
 
     // Open the dropdown for the collection
     await page
-      .locator('[aria-label="Toggle Open/Close collection options"]')
+      .getByRole('button', { name: 'Toggle Open/Close collection options' })
       .first()
       .click();
 
@@ -257,7 +265,7 @@ test.describe.serial('collection lifecycle', () => {
       page.locator('table.sketches-table').getByText('renamed-collection')
     ).toHaveCount(0, { timeout: 5_000 });
 
-    await expect(page.locator('text=No collections.')).toBeVisible({
+    await expect(page.getByText('No collections.')).toBeVisible({
       timeout: 5_000
     });
   });
