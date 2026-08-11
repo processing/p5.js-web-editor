@@ -106,6 +106,10 @@ test.describe('signup and email verification', () => {
   test('sketch persists and runs after unauthenticated user creates an account', async ({
     page
   }) => {
+    // This test does a lot in one flow: type + run a sketch, sign up, then
+    // run it again. The default 30s is tight for it on a loaded machine.
+    test.setTimeout(60_000);
+
     const username = `${usernamePrefix()}${Date.now()}`;
     const email = `${username}${emailSuffix()}`;
 
@@ -129,6 +133,13 @@ test.describe('signup and email verification', () => {
     await editor.click();
     await page.keyboard.press('ControlOrMeta+A');
     await page.keyboard.type(newCode, { delay: 5 });
+
+    // Required: signing up boots the app fresh, and the editor recovers the
+    // unsaved sketch from the localStorage backup (see IDEView.jsx). That
+    // backup is only written by CodeMirror's debounced onChange (1s after
+    // typing stops) — the Play button's syncFileContent() dispatches to Redux
+    // but never writes it. Without this wait the sketch is lost on signup.
+    await page.waitForTimeout(1000);
 
     await page.locator('#play-sketch').click({ force: true });
 
@@ -175,9 +186,17 @@ test.describe('signup and email verification', () => {
       timeout: 10_000
     });
 
-    // Run the same sketch again as authenticated user
+    // The sketch the user wrote while logged out survives the signup:
+    // they land back in the editor with their code still there.
     await expect(page.locator('.editor-holder')).toBeVisible();
-    await page.locator('#play-sketch').click();
+    // Scoped to the editor — the console has its own CodeMirror input,
+    // so a bare .cm-content matches two elements.
+    await expect(
+      editor.locator('.cm-content')
+    ).toContainText("console.log('hi from sketch')", { timeout: 10_000 });
+
+    // ...and still runs as the now-authenticated user
+    await page.locator('#play-sketch').click({ force: true });
 
     await expect(
       page.locator('iframe[title="sketch preview"]')
