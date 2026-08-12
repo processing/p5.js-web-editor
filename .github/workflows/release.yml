@@ -1,0 +1,95 @@
+name: Create a release
+
+on:
+  workflow_dispatch:
+    inputs:
+      newversion:
+        description: >
+          Version to release. Accepts an explicit semver (e.g. 2.22.0) or an
+          npm version keyword (patch, minor, major, prepatch, preminor,
+          premajor, prerelease). See https://docs.npmjs.com/cli/version
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out develop
+        uses: actions/checkout@v4
+        with:
+          ref: develop
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18.20.x'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm run test:ci
+
+      # future: deploy to staging (+stop deploying to staging upon merges to develop) + e2e test pointed at staging
+
+  release:
+    needs: verify
+    runs-on: ubuntu-latest
+    # Requires a maintainer to approve in the Actions UI before this job runs.
+    # Configure required reviewers under Settings > Environments > release-approval.
+    environment: release-approval
+    steps:
+      - name: Check out develop
+        uses: actions/checkout@v4
+        with:
+          ref: develop
+
+      - name: Fetch release branch
+        run: git fetch origin release:release
+
+      - name: Configure git identity
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Create temporary release branch
+        run: git checkout -b "release-${{ inputs.newversion }}"
+
+      - name: Bump version
+        id: bump
+        run: |
+          NEW_VERSION=$(npm version "${{ inputs.newversion }}" -m "v%s")
+          echo "version=$NEW_VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Merge into release
+        run: |
+          git checkout release
+          git pull origin release
+          git merge --no-ff "release-${{ inputs.newversion }}" -m "Merge release-${{ inputs.newversion }} into release"
+          git push origin release
+          git push origin --tags
+
+      - name: Merge back into develop
+        run: |
+          git checkout develop
+          git pull origin develop
+          git merge --no-ff "release-${{ inputs.newversion }}" -m "Merge release-${{ inputs.newversion }} into develop"
+          git push origin develop
+
+      - name: Delete temporary release branch
+        run: git push origin --delete "release-${{ inputs.newversion }}"
+
+      - name: Draft GitHub release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "${{ steps.bump.outputs.version }}" \
+            --target release \
+            --title "${{ steps.bump.outputs.version }}" \
+            --generate-notes \
+            --draft
