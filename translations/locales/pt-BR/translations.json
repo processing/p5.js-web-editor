@@ -46,7 +46,7 @@
     }
   },
   "Banner": {
-    "Copy": "<bold>p5.js v2.0 will become the default editor version this August</bold>! Check out the timeline and ask questions in the linked issue!"
+    "Copy": "<bold>p5.js v2 is now the default</bold>. If you teach with p5, check out this essential guide!"
   },
   "CodemirrorFindAndReplace": {
     "ToggleReplace": "Alternar entre localizar/substituir",
@@ -618,7 +618,6 @@
   "Cookies": {
     "Header": "Cookies",
     "Body": "O editor p5.js usa cookies. Alguns são essenciais para a funcionalidade do site e permitem que você gerencie uma conta e preferências. Outros não são essenciais - são usados para análises e nos permitem aprender mais sobre nossa comunidade. <strong> Nunca vendemos esses dados ou os usamos para publicidade. </strong> Você pode decidir quais cookies gostaria de permitir e saber mais em nossa <0>Política de Privacidade</0>.",
-    "AllowAll": "Permitir todos",
     "AllowEssential": "Permitir essenciais"
   },
   "Legal": {

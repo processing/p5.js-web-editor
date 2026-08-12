@@ -3,9 +3,9 @@ require('@babel/register')({
   presets: ['@babel/preset-env', '@babel/preset-typescript']
 });
 require('regenerator-runtime/runtime');
-const dotenv = require('dotenv');
+const loadEnv = require('../../loadEnv');
 
 if (process.env.NODE_ENV === 'development') {
-  dotenv.config();
+  loadEnv();
 }
 require('./examples');

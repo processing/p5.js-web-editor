@@ -1,7 +1,7 @@
 export const p5SoundURLOldTemplate =
   'https://cdn.jsdelivr.net/npm/p5@$VERSION/lib/addons/p5.sound.min.js';
 export const p5SoundURL =
-  'https://cdn.jsdelivr.net/npm/p5.sound@0.3.0/dist/p5.sound.min.js';
+  'https://cdn.jsdelivr.net/npm/p5.sound@0.4.1/dist/p5.sound.min.js';
 export const p5PreloadAddonURL =
   'https://cdn.jsdelivr.net/npm/p5.js-compatibility@0.2.0/src/preload.js';
 export const p5ShapesAddonURL =

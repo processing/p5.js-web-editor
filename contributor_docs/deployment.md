@@ -24,6 +24,8 @@ These are the steps that happen when you deploy the application.
 6. This image is pushed to [Docker Hub](https://hub.docker.com/r/catarak/p5.js-web-editor/) with a unique tag name (the Travis commit) and also to the `latest` tag.
 7. The Kubernetes deployment is updated to image just pushed to Docker Hub on the cluster on Google Kubernetes Engine.
 
+Note that deployed environments do not read `.env` files at all: when `NODE_ENV=production`, the app skips dotenv entirely and expects all configuration as real environment variables, which are injected by the Kubernetes deployment manifests (managed outside this repo). The `.env.production`/`.env.staging` files listed in `.gitignore` are only for hand-run ops scripts and local production testing — see the "Environment Files" section in [installation.md](./installation.md).
+
 ## Production Installation
 
 You'll only need to do this if you're testing the production environment locally.
