@@ -624,7 +624,6 @@
   "Cookies": {
     "Header": "Cookies",
     "Body": "L'editor p5.js usa cookies. Alcuni sono essenziali alle funzionalità del sito e ti permettono di gestire l'account e le preferenze. Altri non sono essenziali—loro sono usati per analisi e ci permettono di acquisire più informazioni per la nostra community. <strong> Non venderemo mai questi dati o li useremo per pubblicità. </strong> Puoi decidere che cookies vuoi permettere, e puoi saperne di più nella nostra <0>Privacy Policy<0>.",
-    "AllowAll": "Permetti tutti",
     "AllowEssential": "Permetti essenziali"
   },
   "Legal": {

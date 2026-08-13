@@ -8,7 +8,9 @@ import {
 import {
   defaultKeymap,
   historyKeymap,
-  indentWithTab
+  indentWithTab,
+  moveLineUp,
+  moveLineDown
 } from '@codemirror/commands';
 import { foldKeymap } from '@codemirror/language';
 import { searchKeymap } from '@codemirror/search';
@@ -83,7 +85,9 @@ export const extraKeymaps = [
     run: () => true
   },
   { key: 'ArrowRight', run: focusOnReferenceArrow },
-  indentWithTab
+  indentWithTab,
+  { key: 'Ctrl-Shift-ArrowUp', mac: 'Cmd-Ctrl-ArrowUp', run: moveLineUp },
+  { key: 'Ctrl-Shift-ArrowDown', mac: 'Cmd-Ctrl-ArrowDown', run: moveLineDown }
 ];
 
 export const emmetKeymaps = [{ key: 'Tab', run: expandAbbreviation }];
