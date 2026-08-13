@@ -68,8 +68,11 @@
     border-color: getThemifyVariable('ide-border-color');
   }
   min-width: #{math.div(48, $base-font-size)}rem;
+  position: relative;
 
   .cm-gutter {
+    position: relative;
+    z-index: 1;
     flex-shrink: 0;
   }
 
@@ -86,6 +89,11 @@
   }
 
   .cm-gutter-lint {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    z-index: 0;
+
     .cm-activeLineGutter {
       @include themify() {
         background-color: getThemifyVariable('active-line-background-color');
