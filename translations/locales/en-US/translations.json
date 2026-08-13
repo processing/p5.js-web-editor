@@ -269,7 +269,9 @@
       "CodeEditing": "Code Editing",
       "ColorPicker": "Show Inline Color Picker",
       "CreateNewFile": "Create New File",
-      "RenameVariable": "Rename Variable"
+      "RenameVariable": "Rename Variable",
+      "MoveLineUp": "Move Line Up",
+      "MoveLineDown": "Move Line Down"
     },
     "General": "General",
     "GeneralSelection": {

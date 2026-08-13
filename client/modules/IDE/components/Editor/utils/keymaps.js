@@ -13,7 +13,7 @@ import {
   moveLineDown
 } from '@codemirror/commands';
 import { foldKeymap } from '@codemirror/language';
-import { searchKeymap } from '@codemirror/search';
+import { searchKeymap, openSearchPanel } from '@codemirror/search';
 import { expandAbbreviation } from '@emmetio/codemirror6-plugin';
 import { tidyCodeWithPrettier } from './tidier';
 
@@ -87,7 +87,8 @@ export const extraKeymaps = [
   { key: 'ArrowRight', run: focusOnReferenceArrow },
   indentWithTab,
   { key: 'Ctrl-Shift-ArrowUp', mac: 'Cmd-Ctrl-ArrowUp', run: moveLineUp },
-  { key: 'Ctrl-Shift-ArrowDown', mac: 'Cmd-Ctrl-ArrowDown', run: moveLineDown }
+  { key: 'Ctrl-Shift-ArrowDown', mac: 'Cmd-Ctrl-ArrowDown', run: moveLineDown },
+  { key: 'Ctrl-h', mac: 'Cmd-Alt-f', run: openSearchPanel }
 ];
 
 export const emmetKeymaps = [{ key: 'Tab', run: expandAbbreviation }];

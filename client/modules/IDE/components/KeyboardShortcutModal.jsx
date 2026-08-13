@@ -9,6 +9,14 @@ function KeyboardShortcutModal() {
   const newFileCommand =
     metaKey === 'Ctrl' ? `${metaKeyName} + Alt + N` : `${metaKeyName} + ⌥ + N`;
   const renameCommand = metaKey === 'Ctrl' ? 'F2' : 'Ctrl + F2';
+  const moveLineUpCommand =
+    metaKey === 'Ctrl'
+      ? `${metaKeyName} + Shift + Up`
+      : `${metaKeyName} + Ctrl + Up`;
+  const moveLineDownCommand =
+    metaKey === 'Ctrl'
+      ? `${metaKeyName} + Shift + Down`
+      : `${metaKeyName} + Ctrl + Down`;
   return (
     <div className="keyboard-shortcuts">
       <h3 className="keyboard-shortcuts__title">
@@ -79,6 +87,18 @@ function KeyboardShortcutModal() {
         <li className="keyboard-shortcut-item">
           <span className="keyboard-shortcut__command">{renameCommand}</span>
           <span>{t('KeyboardShortcuts.CodeEditing.RenameVariable')}</span>
+        </li>
+        <li className="keyboard-shortcut-item">
+          <span className="keyboard-shortcut__command">
+            {moveLineUpCommand}
+          </span>
+          <span>{t('KeyboardShortcuts.CodeEditing.MoveLineUp')}</span>
+        </li>
+        <li className="keyboard-shortcut-item">
+          <span className="keyboard-shortcut__command">
+            {moveLineDownCommand}
+          </span>
+          <span>{t('KeyboardShortcuts.CodeEditing.MoveLineDown')}</span>
         </li>
       </ul>
       <h3 className="keyboard-shortcuts__title">
