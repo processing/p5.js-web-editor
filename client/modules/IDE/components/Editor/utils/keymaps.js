@@ -10,7 +10,8 @@ import {
   historyKeymap,
   indentWithTab,
   moveLineUp,
-  moveLineDown
+  moveLineDown,
+  copyLineDown
 } from '@codemirror/commands';
 import { foldKeymap } from '@codemirror/language';
 import { searchKeymap } from '@codemirror/search';
@@ -77,6 +78,11 @@ export function openColorPickerWithKeyboard(view) {
   return true;
 }
 
+function scrollLine(view, direction) {
+  view.scrollDOM.scrollTop += direction * view.defaultLineHeight;
+  return true;
+}
+
 // Extra custom keymaps.
 // TODO: We need to add sublime mappings + other missing extra mappings here.
 export const extraKeymaps = [
@@ -87,7 +93,18 @@ export const extraKeymaps = [
   { key: 'ArrowRight', run: focusOnReferenceArrow },
   indentWithTab,
   { key: 'Ctrl-Shift-ArrowUp', mac: 'Cmd-Ctrl-ArrowUp', run: moveLineUp },
-  { key: 'Ctrl-Shift-ArrowDown', mac: 'Cmd-Ctrl-ArrowDown', run: moveLineDown }
+  { key: 'Ctrl-Shift-ArrowDown', mac: 'Cmd-Ctrl-ArrowDown', run: moveLineDown },
+  { key: 'Shift-Ctrl-d', mac: 'Shift-Cmd-d', run: copyLineDown },
+  {
+    key: 'Ctrl-ArrowUp',
+    mac: 'Ctrl-Alt-ArrowUp',
+    run: (view) => scrollLine(view, -1)
+  },
+  {
+    key: 'Ctrl-ArrowDown',
+    mac: 'Ctrl-Alt-ArrowDown',
+    run: (view) => scrollLine(view, 1)
+  }
 ];
 
 export const emmetKeymaps = [{ key: 'Tab', run: expandAbbreviation }];
