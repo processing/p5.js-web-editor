@@ -25,9 +25,8 @@ test.describe('unsaved changes warning', () => {
 
   // Covers the <Prompt> in IDEView.jsx, which guards in-app navigation and
   // shows the app's own message via window.confirm(). The sibling
-  // beforeunload handler (full page unload) isn't covered here: the browser
-  // discards the app's message and substitutes its own text, and Playwright
-  // auto-dismisses those dialogs, so there'd be nothing of ours to assert on.
+  // beforeunload handler (full page unload, e.g. reload/close) is a separate
+  // guard on the same state, not covered here.
   // Note the Prompt deliberately allows /login, /signup and /feedback through
   // without warning, so this navigates to the user's sketches instead.
   test('warns before navigating away from the editor with unsaved changes', async ({
