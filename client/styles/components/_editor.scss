@@ -67,11 +67,13 @@
     background-color: getThemifyVariable('editor-gutter-color');
     border-color: getThemifyVariable('ide-border-color');
   }
-  width: #{math.div(48, $base-font-size)}rem;
+  min-width: #{math.div(48, $base-font-size)}rem;
   position: relative;
 
   .cm-gutter {
+    position: relative;
     z-index: 1;
+    flex-shrink: 0;
   }
 
   .cm-lineNumbers {
@@ -79,8 +81,7 @@
       color: getThemifyVariable('inactive-text-color');
     }
     pointer-events: none;
-    position: absolute;
-    right: 20%;
+    flex-grow: 1;
   }
 
   .cm-activeLineGutter {
@@ -275,8 +276,6 @@
 // CM5: .CodeMirror-foldgutter-open, .CodeMirror-foldgutter-folded
 .cm-foldGutter {
   cursor: pointer;
-  position: absolute;
-  right: 1px;
 }
 
 // CM5: .CodeMirror-foldgutter-open:after / .CodeMirror-foldgutter-folded:after

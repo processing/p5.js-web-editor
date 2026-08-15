@@ -48,7 +48,7 @@ export function getReferenceBaseUrl(htmlFile) {
   const isV2 =
     /https:\/\/beta\.p5js\.org\b/i.test(html) || /\bp5(@|-)2\./i.test(html);
 
-  return isV2 ? 'https://beta.p5js.org' : 'https://p5js.org';
+  return isV2 ? 'https://p5js.org' : 'https://v1.p5js.org';
 }
 
 function Editor({
