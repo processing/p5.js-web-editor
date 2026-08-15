@@ -110,4 +110,45 @@ test.describe('editor page', () => {
       )
     ).toBeVisible();
   });
+
+  test('nav dropdown items redirect to the right place', async ({
+    page,
+    context
+  }) => {
+    // File > Examples — internal link, same tab
+    await page.getByRole('menuitem', { name: 'File' }).click();
+    await page.locator('#file-examples').click();
+    await expect(page).toHaveURL(/\/p5\/sketches/, { timeout: 10_000 });
+
+    // Help > About — internal link, same tab
+    await page.goto('/');
+    await dismissCookieBanner(page);
+    await page.getByRole('menuitem', { name: 'Help' }).click();
+    await page.locator('#help-about').click();
+    await expect(page).toHaveURL(/\/about/, { timeout: 10_000 });
+
+    // Help > Reference — external link, opens in a new tab
+    await page.goto('/');
+    await dismissCookieBanner(page);
+    await page.getByRole('menuitem', { name: 'Help' }).click();
+    const [referencePage] = await Promise.all([
+      context.waitForEvent('page'),
+      page.locator('#help-reference').click()
+    ]);
+    await referencePage.waitForLoadState();
+    expect(referencePage.url()).toContain('p5js.org/reference');
+    await referencePage.close();
+
+    // Help > Post on the Forum — external link, opens in a new tab
+    await page.goto('/');
+    await dismissCookieBanner(page);
+    await page.getByRole('menuitem', { name: 'Help' }).click();
+    const [forumPage] = await Promise.all([
+      context.waitForEvent('page'),
+      page.locator('#help-forum').click()
+    ]);
+    await forumPage.waitForLoadState();
+    expect(forumPage.url()).toContain('discourse.processing.org/c/p5js/10');
+    await forumPage.close();
+  });
 });
