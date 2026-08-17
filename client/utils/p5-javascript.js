@@ -162,7 +162,7 @@ CodeMirror.defineMode("javascript", function(config, parserConfig) {
         var kw = keywords[word]
         return ret(kw.type, kw.style, word)
       }
-      if (state.lastType != "." && word == "async" && stream.match(/^(\s|\/\*.*?\*\/)*[\[\(\w]/, false))
+      if (state.lastType != "." && word == "async" && stream.match(/^(\s|\/\*([^*]|\*(?!\/))*?\*\/)*[\[\(\w]/, false))
         return ret("async", "keyword", word)
       return ret("variable", "variable", word)
     }
