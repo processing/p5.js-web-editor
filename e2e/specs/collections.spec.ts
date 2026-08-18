@@ -41,16 +41,19 @@ test.describe.serial('collection lifecycle', () => {
       timeout: 10_000
     });
 
-    // Get the sketch name
+    // Get the sketch name. ProjectName.jsx gives this button a static
+    // "Edit sketch name" aria-label (unlike the collection name editor,
+    // which uses the dynamic default), so we search by that and read the
+    // sketch name from its text content instead.
     const name = await page
-      .locator('button.editable-input__label')
+      .getByRole('button', { name: 'Edit sketch name' })
       .textContent();
     expect(name).toBeTruthy();
     sketchName1 = name ?? '';
 
     // Open the collections page
     await page.getByRole('menuitem', { name: testUser.username }).click();
-    await page.locator('#account-collections').click();
+    await page.getByRole('menuitem', { name: 'My Collections' }).click();
 
     await expect(page.getByText('No Collections.')).toBeVisible({
       timeout: 5_000
@@ -65,26 +68,24 @@ test.describe.serial('collection lifecycle', () => {
       .getByRole('textbox', { name: 'name' })
       .inputValue();
     // The form's submit button has the same accessible name as the toolbar
-    // button that opened it, so it needs [type="submit"] to disambiguate.
+    // button that opened it (still present behind the overlay), so the role
+    // query is scoped to the form itself to disambiguate.
     await page
-      .locator('button[type="submit"]:has-text("Create collection")')
+      .locator('form')
+      .getByRole('button', { name: 'Create collection', exact: true })
       .click();
 
     // Confirm we're on the new collection page
     await expect(
-      page.locator('button.editable-input__label').first()
-    ).toContainText(collectionName, { timeout: 10_000 });
-    await expect(page.locator('p.collection-empty-message')).toHaveText(
-      'No sketches in collection'
-    );
+      page.getByRole('button', { name: collectionName })
+    ).toBeVisible({ timeout: 10_000 });
+    await expect(page.getByText('No sketches in collection')).toBeVisible();
   });
 
   test('can add sketches to a collection', async () => {
     await page.getByRole('button', { name: 'Add Sketch', exact: true }).click();
 
-    await expect(
-      page.locator('.quick-add__item-name').filter({ hasText: sketchName1 })
-    ).toBeVisible({ timeout: 5_000 });
+    await expect(page.getByText(sketchName1)).toBeVisible({ timeout: 5_000 });
 
     await page
       .getByRole('button', { name: 'Add to collection', exact: true })
@@ -96,7 +97,7 @@ test.describe.serial('collection lifecycle', () => {
       .click();
 
     // Confirm the sketch is in the collection
-    const sketchesTable = page.locator('table.sketches-table');
+    const sketchesTable = page.getByRole('table');
     await expect(
       sketchesTable.getByRole('link', { name: sketchName1 })
     ).toBeVisible({ timeout: 5_000 });
@@ -109,7 +110,7 @@ test.describe.serial('collection lifecycle', () => {
     });
 
     await page.getByRole('menuitem', { name: 'File' }).click();
-    await page.locator('#file-new').click();
+    await page.getByRole('menuitem', { name: 'New' }).click();
 
     const editor = page.locator('.editor-holder');
     await editor.click();
@@ -120,18 +121,20 @@ test.describe.serial('collection lifecycle', () => {
     });
 
     const name = await page
-      .locator('button.editable-input__label')
+      .getByRole('button', { name: 'Edit sketch name' })
       .textContent();
     expect(name).toBeTruthy();
     sketchName2 = name ?? '';
 
     // Add the new sketch to the collection
     await page.getByRole('menuitem', { name: 'File' }).click();
-    await page.locator('#file-add-to-collection').click();
+    await page
+      .getByRole('menuitem', { name: 'Add to Collection', exact: true })
+      .click();
 
-    await expect(
-      page.locator('.quick-add__item-name').filter({ hasText: collectionName })
-    ).toBeVisible({ timeout: 5_000 });
+    await expect(page.getByText(collectionName)).toBeVisible({
+      timeout: 5_000
+    });
 
     await page
       .getByRole('button', { name: 'Add to collection', exact: true })
@@ -150,7 +153,7 @@ test.describe.serial('collection lifecycle', () => {
       .click();
 
     await page.getByRole('menuitem', { name: testUser.username }).click();
-    await page.locator('#account-collections').click();
+    await page.getByRole('menuitem', { name: 'My Collections' }).click();
 
     // Verify the collection has 2 sketches
     await expect(
@@ -168,10 +171,13 @@ test.describe.serial('collection lifecycle', () => {
     // Click Rename
     await page.getByRole('menuitem').filter({ hasText: 'Rename' }).click();
 
-    // The collection name becomes an input — fill it
-    await page.locator('th input').first().click();
-    await page.locator('th input').first().fill('renamed-collection');
-    await page.locator('th input').first().press('Enter');
+    // The collection name becomes an input — fill it. No aria-label on this
+    // one, so it's scoped to the table to disambiguate from the page's
+    // "Search collections..." textbox.
+    const renameInput = page.getByRole('table').getByRole('textbox');
+    await renameInput.click();
+    await renameInput.fill('renamed-collection');
+    await renameInput.press('Enter');
 
     collectionName = 'renamed-collection';
 
@@ -183,16 +189,14 @@ test.describe.serial('collection lifecycle', () => {
     await page.getByRole('link', { name: collectionName }).click();
 
     // Both sketches should still be in the collection after the rename
-    const sketchesTable = page.locator('table.sketches-table');
+    const sketchesTable = page.getByRole('table');
     await expect(
       sketchesTable.getByRole('link', { name: sketchName1 })
     ).toBeVisible({ timeout: 5_000 });
     await expect(
       sketchesTable.getByRole('link', { name: sketchName2 })
     ).toBeVisible({ timeout: 5_000 });
-    await expect(page.locator('p.collection-metadata__user').last()).toHaveText(
-      '2 sketches'
-    );
+    await expect(page.getByText('2 sketches')).toBeVisible();
   });
 
   test('can remove a sketch from a collection', async () => {
@@ -203,15 +207,17 @@ test.describe.serial('collection lifecycle', () => {
       timeout: 5_000
     });
     await expect(
-      page.locator('button.editable-input__label').first()
+      page.getByRole('button', { name: 'Edit sketch name' })
     ).toHaveText(sketchName1, { timeout: 5_000 });
 
     await page.getByRole('menuitem', { name: 'File' }).click();
-    await page.locator('#file-add-to-collection').click();
+    await page
+      .getByRole('menuitem', { name: 'Add to Collection', exact: true })
+      .click();
 
-    await expect(
-      page.locator('.quick-add__item-name').filter({ hasText: collectionName })
-    ).toBeVisible({ timeout: 5_000 });
+    await expect(page.getByText(collectionName)).toBeVisible({
+      timeout: 5_000
+    });
 
     await page
       .getByRole('button', { name: 'Remove from collection', exact: true })
@@ -230,7 +236,7 @@ test.describe.serial('collection lifecycle', () => {
       .click();
 
     await page.getByRole('menuitem', { name: testUser.username }).click();
-    await page.locator('#account-collections').click();
+    await page.getByRole('menuitem', { name: 'My Collections' }).click();
 
     // sketch1 was removed but sketch2 is still in the collection
     await expect(
