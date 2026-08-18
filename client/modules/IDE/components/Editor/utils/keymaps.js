@@ -8,10 +8,19 @@ import {
 import {
   defaultKeymap,
   historyKeymap,
-  indentWithTab
+  indentWithTab,
+  moveLineUp,
+  moveLineDown
 } from '@codemirror/commands';
 import { foldKeymap } from '@codemirror/language';
-import { searchKeymap } from '@codemirror/search';
+import {
+  gotoLine,
+  selectNextOccurrence,
+  findNext,
+  findPrevious,
+  selectSelectionMatches,
+  closeSearchPanel
+} from '@codemirror/search';
 import { expandAbbreviation } from '@emmetio/codemirror6-plugin';
 import { tidyCodeWithPrettier } from './tidier';
 
@@ -83,7 +92,9 @@ export const extraKeymaps = [
     run: () => true
   },
   { key: 'ArrowRight', run: focusOnReferenceArrow },
-  indentWithTab
+  indentWithTab,
+  { key: 'Ctrl-Shift-ArrowUp', mac: 'Cmd-Ctrl-ArrowUp', run: moveLineUp },
+  { key: 'Ctrl-Shift-ArrowDown', mac: 'Cmd-Ctrl-ArrowDown', run: moveLineDown }
 ];
 
 export const emmetKeymaps = [{ key: 'Tab', run: expandAbbreviation }];
@@ -127,12 +138,45 @@ function createFileTidyKeymap(mode) {
   ];
 }
 
-export function buildKeymaps(mode) {
+function createSearchPanelKeymap(callback) {
+  // Re-implements default search-related key bindings,
+  // but with a custom callback for opening the search panel.
+  return [
+    {
+      key: 'Mod-f',
+      run: callback,
+      preventDefault: true,
+      stopPropagation: true
+    },
+    {
+      key: 'F3',
+      run: findNext,
+      shift: findPrevious,
+      scope: 'editor search-panel',
+      preventDefault: true
+    },
+    {
+      key: 'Mod-g',
+      run: findNext,
+      shift: findPrevious,
+      scope: 'editor search-panel',
+      preventDefault: true
+    },
+    { key: 'Mod-Shift-l', run: selectSelectionMatches },
+    { key: 'Mod-Alt-g', run: gotoLine },
+    { key: 'Mod-d', run: selectNextOccurrence, preventDefault: true },
+    { key: 'Escape', run: closeSearchPanel, scope: 'editor search-panel' }
+  ];
+}
+
+export function buildKeymaps(mode, searchPanelCallback) {
   const autocompleteKeymap = createAutocompleteKeymap();
   const colorPickerKeymap = createColorPickerKeymap(mode);
   const fileTidyKeymap = createFileTidyKeymap(mode);
+  const searchPanelKeymap = createSearchPanelKeymap(searchPanelCallback);
 
   return [
+    searchPanelKeymap,
     autocompleteKeymap,
     extraKeymaps,
     colorPickerKeymap,
@@ -140,7 +184,6 @@ export function buildKeymaps(mode) {
     closeBracketsKeymap,
     defaultKeymap,
     historyKeymap,
-    foldKeymap,
-    searchKeymap
+    foldKeymap
   ];
 }
