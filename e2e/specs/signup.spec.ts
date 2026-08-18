@@ -102,4 +102,108 @@ test.describe('signup and email verification', () => {
       page.getByRole('button', { name: 'Sign Up', exact: true })
     ).toBeDisabled();
   });
+
+  test('sketch persists and runs after unauthenticated user creates an account', async ({
+    page
+  }) => {
+    // This test does a lot in one flow: type + run a sketch, sign up, then
+    // run it again. The default 30s is tight for it on a loaded machine.
+    test.setTimeout(60_000);
+
+    const username = `${usernamePrefix()}${Date.now()}`;
+    const email = `${username}${emailSuffix()}`;
+
+    const newCode = [
+      'function setup() {',
+      '  createCanvas(400, 400);',
+      '}',
+      '',
+      'function draw() {',
+      '  background(220);',
+      "  console.log('hi from sketch');",
+      '  noLoop();',
+      '}'
+    ].join('');
+
+    await page.goto('/');
+    await dismissCookieBanner(page);
+
+    // Run sketch as unauthenticated user
+    const editor = page.locator('.editor-holder');
+    await editor.click();
+    await page.keyboard.press('ControlOrMeta+A');
+    await page.keyboard.type(newCode, { delay: 5 });
+
+    // Required: signing up boots the app fresh, and the editor recovers the
+    // unsaved sketch from the localStorage backup (see IDEView.jsx). That
+    // backup is only written by CodeMirror's debounced onChange (1s after
+    // typing stops) — the Play button's syncFileContent() dispatches to Redux
+    // but never writes it. Without this wait the sketch is lost on signup.
+    await page.waitForTimeout(1000);
+
+    await page.locator('#play-sketch').click({ force: true });
+
+    await expect(
+      page.locator('iframe[title="sketch preview"]')
+    ).toHaveAttribute('src', /9002/, { timeout: 10_000 });
+
+    await expect(
+      page.locator('.preview-console__messages')
+    ).toContainText('hi from sketch', { timeout: 15_000 });
+
+    // Try to save the sketch, which should prompt login
+    await editor.click();
+    await page.keyboard.press('Control+S');
+
+    await expect(
+      page.getByText(
+        'In order to save sketches, you must be logged in. Please Login or Sign Up.'
+      )
+    ).toBeVisible();
+
+    // Click on the signup prompt
+    await page.locator('a[href="/signup"]').last().click();
+    await page.waitForURL('**/signup', { timeout: 10_000 });
+
+    await expect(page.locator('h2.form-container__title')).toHaveText(
+      'Sign Up'
+    );
+
+    await page.fill('input#username', username);
+    await page.fill('input#email', email);
+    await page.fill('input#password', password());
+    await page.fill('input#confirmPassword', password());
+
+    await expect(page.locator('button[type="submit"]')).toBeEnabled({
+      timeout: 5_000
+    });
+    await page.click('button[type="submit"]');
+
+    await page.waitForURL((url) => !url.pathname.endsWith('/signup'), {
+      timeout: 15_000
+    });
+    await expect(page.locator(`text=${username}`).first()).toBeVisible({
+      timeout: 10_000
+    });
+
+    // The sketch the user wrote while logged out survives the signup:
+    // they land back in the editor with their code still there.
+    await expect(page.locator('.editor-holder')).toBeVisible();
+    // Scoped to the editor — the console has its own CodeMirror input,
+    // so a bare .cm-content matches two elements.
+    await expect(
+      editor.locator('.cm-content')
+    ).toContainText("console.log('hi from sketch')", { timeout: 10_000 });
+
+    // ...and still runs as the now-authenticated user
+    await page.locator('#play-sketch').click({ force: true });
+
+    await expect(
+      page.locator('iframe[title="sketch preview"]')
+    ).toHaveAttribute('src', /9002/, { timeout: 10_000 });
+
+    await expect(
+      page.locator('.preview-console__messages')
+    ).toContainText('hi from sketch', { timeout: 20_000 });
+  });
 });
