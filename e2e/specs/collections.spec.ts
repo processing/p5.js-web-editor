@@ -61,7 +61,9 @@ test.describe.serial('collection lifecycle', () => {
       .getByRole('button', { name: 'Create collection', exact: true })
       .click();
 
-    collectionName = await page.locator('input#name').inputValue();
+    collectionName = await page
+      .getByRole('textbox', { name: 'name' })
+      .inputValue();
     // The form's submit button has the same accessible name as the toolbar
     // button that opened it, so it needs [type="submit"] to disambiguate.
     await page
@@ -94,11 +96,12 @@ test.describe.serial('collection lifecycle', () => {
       .click();
 
     // Confirm the sketch is in the collection
+    const sketchesTable = page.locator('table.sketches-table');
     await expect(
-      page.locator('table.sketches-table').getByText(sketchName1)
+      sketchesTable.getByRole('link', { name: sketchName1 })
     ).toBeVisible({ timeout: 5_000 });
 
-    await page.locator('table.sketches-table').getByText(sketchName1).click();
+    await sketchesTable.getByRole('link', { name: sketchName1 }).click();
 
     // Create a new sketch to add to the collection
     await expect(page.locator('.editor-holder')).toBeVisible({
@@ -151,11 +154,7 @@ test.describe.serial('collection lifecycle', () => {
 
     // Verify the collection has 2 sketches
     await expect(
-      page
-        .locator('tr')
-        .filter({ hasText: collectionName })
-        .locator('td')
-        .nth(2)
+      page.getByRole('row', { name: collectionName }).getByRole('cell').nth(2)
     ).toHaveText('2');
   });
 
@@ -177,18 +176,19 @@ test.describe.serial('collection lifecycle', () => {
     collectionName = 'renamed-collection';
 
     // Verify the new name appears
-    await expect(
-      page.locator('table.sketches-table').getByText(collectionName)
-    ).toBeVisible({ timeout: 5_000 });
+    await expect(page.getByRole('link', { name: collectionName })).toBeVisible({
+      timeout: 5_000
+    });
 
     await page.getByRole('link', { name: collectionName }).click();
 
     // Both sketches should still be in the collection after the rename
+    const sketchesTable = page.locator('table.sketches-table');
     await expect(
-      page.locator('table.sketches-table').getByText(sketchName1)
+      sketchesTable.getByRole('link', { name: sketchName1 })
     ).toBeVisible({ timeout: 5_000 });
     await expect(
-      page.locator('table.sketches-table').getByText(sketchName2)
+      sketchesTable.getByRole('link', { name: sketchName2 })
     ).toBeVisible({ timeout: 5_000 });
     await expect(page.locator('p.collection-metadata__user').last()).toHaveText(
       '2 sketches'
@@ -234,11 +234,7 @@ test.describe.serial('collection lifecycle', () => {
 
     // sketch1 was removed but sketch2 is still in the collection
     await expect(
-      page
-        .locator('tr')
-        .filter({ hasText: collectionName })
-        .locator('td')
-        .nth(2)
+      page.getByRole('row', { name: collectionName }).getByRole('cell').nth(2)
     ).toHaveText('1');
   });
 
@@ -257,12 +253,7 @@ test.describe.serial('collection lifecycle', () => {
 
     // Verify collection no longer exists in the table
     await expect(
-      page.locator('table.sketches-table').getByText(collectionName)
-    ).toHaveCount(0, { timeout: 5_000 });
-
-    // Verify collection no longer exists in the table
-    await expect(
-      page.locator('table.sketches-table').getByText('renamed-collection')
+      page.getByRole('link', { name: collectionName })
     ).toHaveCount(0, { timeout: 5_000 });
 
     await expect(page.getByText('No collections.')).toBeVisible({
