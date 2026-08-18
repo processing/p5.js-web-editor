@@ -57,7 +57,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Create temporary release branch
+      - name: Create cut release branch
         run: git checkout -b "release-${{ inputs.newversion }}"
 
       - name: Bump version
@@ -81,8 +81,8 @@ jobs:
           git merge --no-ff "release-${{ inputs.newversion }}" -m "Merge release-${{ inputs.newversion }} into develop"
           git push origin develop
 
-      - name: Delete temporary release branch
-        run: git push origin --delete "release-${{ inputs.newversion }}"
+      - name: Push cut release branch
+        run: git push origin "release-${{ inputs.newversion }}"
 
       - name: Draft GitHub release
         env:
