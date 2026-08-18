@@ -1,3 +1,4 @@
+import type { BrowserContext, Page } from '@playwright/test';
 import { test, expect } from '../fixtures';
 import { dismissCookieBanner } from '../helpers/cookie-banner';
 
@@ -111,44 +112,55 @@ test.describe('editor page', () => {
     ).toBeVisible();
   });
 
-  test('nav dropdown items redirect to the right place', async ({
-    page,
-    context
-  }) => {
-    // File > Examples — internal link, same tab
-    await page.getByRole('menuitem', { name: 'File' }).click();
-    await page.locator('#file-examples').click();
-    await expect(page).toHaveURL(/\/p5\/sketches/, { timeout: 10_000 });
+  test.describe('nav dropdown redirects', () => {
+    // Reused by the two Help items that open an external link in a new tab.
+    const expectHelpLinkOpensNewTab = async (
+      page: Page,
+      context: BrowserContext,
+      locatorId: string,
+      urlSubstring: string
+    ) => {
+      await page.getByRole('menuitem', { name: 'Help' }).click();
+      const [newTab] = await Promise.all([
+        context.waitForEvent('page'),
+        page.locator(locatorId).click()
+      ]);
+      await newTab.waitForLoadState();
+      expect(newTab.url()).toContain(urlSubstring);
+      await newTab.close();
+    };
 
-    // Help > About — internal link, same tab
-    await page.goto('/');
-    await dismissCookieBanner(page);
-    await page.getByRole('menuitem', { name: 'Help' }).click();
-    await page.locator('#help-about').click();
-    await expect(page).toHaveURL(/\/about/, { timeout: 10_000 });
+    test('File > Examples opens in the same tab', async ({ page }) => {
+      await page.getByRole('menuitem', { name: 'File' }).click();
+      await page.locator('#file-examples').click();
+      await expect(page).toHaveURL(/\/p5\/sketches/, { timeout: 10_000 });
+    });
 
-    // Help > Reference — external link, opens in a new tab
-    await page.goto('/');
-    await dismissCookieBanner(page);
-    await page.getByRole('menuitem', { name: 'Help' }).click();
-    const [referencePage] = await Promise.all([
-      context.waitForEvent('page'),
-      page.locator('#help-reference').click()
-    ]);
-    await referencePage.waitForLoadState();
-    expect(referencePage.url()).toContain('p5js.org/reference');
-    await referencePage.close();
+    test('Help > About opens in the same tab', async ({ page }) => {
+      await page.getByRole('menuitem', { name: 'Help' }).click();
+      await page.locator('#help-about').click();
+      await expect(page).toHaveURL(/\/about/, { timeout: 10_000 });
+    });
 
-    // Help > Post on the Forum — external link, opens in a new tab
-    await page.goto('/');
-    await dismissCookieBanner(page);
-    await page.getByRole('menuitem', { name: 'Help' }).click();
-    const [forumPage] = await Promise.all([
-      context.waitForEvent('page'),
-      page.locator('#help-forum').click()
-    ]);
-    await forumPage.waitForLoadState();
-    expect(forumPage.url()).toContain('discourse.processing.org/c/p5js/10');
-    await forumPage.close();
+    test('Help > Reference opens in a new tab', async ({ page, context }) => {
+      await expectHelpLinkOpensNewTab(
+        page,
+        context,
+        '#help-reference',
+        'p5js.org/reference'
+      );
+    });
+
+    test('Help > Post on the Forum opens in a new tab', async ({
+      page,
+      context
+    }) => {
+      await expectHelpLinkOpensNewTab(
+        page,
+        context,
+        '#help-forum',
+        'discourse.processing.org/c/p5js/10'
+      );
+    });
   });
 });
