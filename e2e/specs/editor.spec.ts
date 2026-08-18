@@ -1,3 +1,4 @@
+import type { BrowserContext, Page } from '@playwright/test';
 import { test, expect } from '../fixtures';
 import { dismissCookieBanner } from '../helpers/cookie-banner';
 
@@ -109,5 +110,57 @@ test.describe('editor page', () => {
         'In order to save sketches, you must be logged in. Please Login or Sign Up.'
       )
     ).toBeVisible();
+  });
+
+  test.describe('nav dropdown redirects', () => {
+    // Reused by the two Help items that open an external link in a new tab.
+    const expectHelpLinkOpensNewTab = async (
+      page: Page,
+      context: BrowserContext,
+      locatorId: string,
+      urlSubstring: string
+    ) => {
+      await page.getByRole('menuitem', { name: 'Help' }).click();
+      const [newTab] = await Promise.all([
+        context.waitForEvent('page'),
+        page.locator(locatorId).click()
+      ]);
+      await newTab.waitForLoadState();
+      expect(newTab.url()).toContain(urlSubstring);
+      await newTab.close();
+    };
+
+    test('File > Examples opens in the same tab', async ({ page }) => {
+      await page.getByRole('menuitem', { name: 'File' }).click();
+      await page.locator('#file-examples').click();
+      await expect(page).toHaveURL(/\/p5\/sketches/, { timeout: 10_000 });
+    });
+
+    test('Help > About opens in the same tab', async ({ page }) => {
+      await page.getByRole('menuitem', { name: 'Help' }).click();
+      await page.locator('#help-about').click();
+      await expect(page).toHaveURL(/\/about/, { timeout: 10_000 });
+    });
+
+    test('Help > Reference opens in a new tab', async ({ page, context }) => {
+      await expectHelpLinkOpensNewTab(
+        page,
+        context,
+        '#help-reference',
+        'p5js.org/reference'
+      );
+    });
+
+    test('Help > Post on the Forum opens in a new tab', async ({
+      page,
+      context
+    }) => {
+      await expectHelpLinkOpensNewTab(
+        page,
+        context,
+        '#help-forum',
+        'discourse.processing.org/c/p5js/10'
+      );
+    });
   });
 });
