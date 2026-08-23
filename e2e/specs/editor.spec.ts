@@ -221,11 +221,7 @@ test.describe('editor page', () => {
     await page.keyboard.press('ControlOrMeta+F');
     await page.keyboard.type('<script src="sketch.js"></script>');
     await page.keyboard.press('Enter'); // find it
-    // Close via the panel's own close button rather than Escape: Escape
-    // routes through CodeMirror's search keymap first, which only clears
-    // CM's internal search state and leaves this panel on-screen still
-    // holding focus, so subsequent keystrokes would land in the search
-    // field instead of the editor.
+    // Close via the panel's own button — Escape only clears CM's internal search state and leaves this panel focused.
     await page.getByRole('button', { name: 'close', exact: true }).click();
     await expect(page.locator('.cm-search-panel')).toBeHidden();
 
@@ -429,11 +425,7 @@ test.describe('editor page', () => {
     await page.keyboard.press('ControlOrMeta+F');
     await page.keyboard.type('<script src="sketch.js"></script>');
     await page.keyboard.press('Enter'); // find it
-    // Close via the panel's own close button rather than Escape: Escape
-    // routes through CodeMirror's search keymap first, which only clears
-    // CM's internal search state and leaves this panel on-screen still
-    // holding focus, so subsequent keystrokes would land in the search
-    // field instead of the editor.
+    // Close via the panel's own button — Escape only clears CM's internal search state and leaves this panel focused.
     await page.getByRole('button', { name: 'close', exact: true }).click();
     await expect(page.locator('.cm-search-panel')).toBeHidden();
 
