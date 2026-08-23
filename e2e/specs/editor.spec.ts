@@ -440,10 +440,7 @@ test.describe('editor page', () => {
     // Move to end of that line and add new line
     await page.keyboard.press('End');
     await page.keyboard.press('Enter');
-    // fileA.js and fileB.js live in separate folders, so each src needs its
-    // own folder-relative path — resolvePathToFile() (server/utils/filePath.js)
-    // walks from the sketch root by name at each path segment, it doesn't
-    // search recursively, so a bare filename won't resolve to a nested file.
+    // Each src needs its folder-relative path — resolvePathToFile() doesn't search recursively.
     // Autocorrect takes care of the closing </script> tag
     await page.keyboard.type('<script src="folderA/fileA.js"></script>', {
       delay: 5
@@ -456,10 +453,7 @@ test.describe('editor page', () => {
 
     await page.waitForTimeout(1000);
 
-    // fileB() is called first: later, after folderA is deleted, fileA()
-    // throws and halts setup() — calling it second means fileB() still
-    // runs and logs before that happens, so we can verify folderB's file
-    // survives folderA's deletion instead of never being reached at all.
+    // fileB() runs first so its log survives fileA() throwing after folderA is deleted.
     const sketchCode = [
       'function setup() {',
       '  createCanvas(400, 400);',
