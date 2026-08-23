@@ -163,4 +163,46 @@ test.describe('editor page', () => {
       );
     });
   });
+
+  // Composition is driven via CDP since dispatched CompositionEvents don't
+  // actually insert text into a contenteditable.
+  test('IME composition leaves only the final character in the editor', async ({
+    page
+  }) => {
+    const intermediate = 'nihao';
+    const final = '你好';
+
+    const editor = page.locator('.editor-holder');
+    await editor.click();
+    await page.keyboard.press('ControlOrMeta+A');
+    await page.keyboard.press('Delete');
+
+    const cdp = await page.context().newCDPSession(page);
+
+    // compositionstart + the intermediate pinyin, as the user types "nihao"
+    await editor.dispatchEvent('compositionstart', { data: '' });
+    await cdp.send('Input.imeSetComposition', {
+      text: intermediate,
+      selectionStart: intermediate.length,
+      selectionEnd: intermediate.length
+    });
+
+    await expect(editor.locator('.cm-content')).toContainText(intermediate, {
+      timeout: 5_000
+    });
+
+    // The user presses a number key to select 你好, replacing the pinyin
+    await cdp.send('Input.imeSetComposition', {
+      text: final,
+      selectionStart: final.length,
+      selectionEnd: final.length,
+      replacementStart: 0,
+      replacementEnd: intermediate.length
+    });
+    await editor.dispatchEvent('compositionend', { data: final });
+
+    const content = editor.locator('.cm-content');
+    await expect(content).toContainText(final, { timeout: 5_000 });
+    await expect(content).not.toContainText(intermediate);
+  });
 });
