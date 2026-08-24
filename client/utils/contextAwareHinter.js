@@ -4,17 +4,181 @@ import classMap from './p5-instance-methods-and-creators.json';
 
 const scopeMap = require('./p5-scope-function-access-map.json');
 
-function getExpressionBeforeCursor(cm) {
-  const cursor = cm.getCursor();
-  const line = cm.getLine(cursor.line);
-  const uptoCursor = line.slice(0, cursor.ch);
+function getCurrentWordInfo(context) {
+  const word = context.matchBefore(/\w*/);
+
+  if (!word) {
+    return {
+      text: '',
+      from: context.pos,
+      to: context.pos
+    };
+  }
+
+  return {
+    text: word.text || '',
+    from: word.from,
+    to: context.pos
+  };
+}
+
+function getExpressionBeforeCursor(state, pos) {
+  const line = state.doc.lineAt(pos);
+  const uptoCursor = line.text.slice(0, pos - line.from);
   const match = uptoCursor.match(
     /([a-zA-Z_$][\w$]*(?:\.[a-zA-Z_$][\w$]*)*)\.(?:[a-zA-Z_$][\w$]*)?$/
   );
   return match ? match[1] : null;
 }
 
-export default function contextAwareHinter(cm, options = {}) {
+function getTypedMemberInfo(state, pos) {
+  const line = state.doc.lineAt(pos);
+  const uptoCursor = line.text.slice(0, pos - line.from);
+  const dotMatch = uptoCursor.match(/\.([a-zA-Z_$][\w$]*)?$/);
+
+  if (!dotMatch) {
+    return {
+      typed: '',
+      from: pos,
+      to: pos
+    };
+  }
+
+  const typed = dotMatch[1] || '';
+  const methodStart = pos - dotMatch[0].length + 1;
+
+  return {
+    typed,
+    from: methodStart,
+    to: pos
+  };
+}
+
+function formatPreview(label, params = []) {
+  if (!params.length) return `${label}()`;
+
+  return `${label}(${params
+    .map((param) => (param.o ? `[${param.p}]` : param.p))
+    .join(', ')})`;
+}
+
+function makeBaseHintLookup(hints) {
+  const byLabel = new Map();
+
+  hints.forEach((hint) => {
+    if (hint?.label) {
+      byLabel.set(hint.label, hint);
+    }
+  });
+
+  return byLabel;
+}
+
+function createFunctionApply(name, state, pos) {
+  return function apply(view, completion, from, to) {
+    const line = state.doc.lineAt(pos);
+    const beforeCursor = line.text.slice(0, pos - line.from);
+
+    const isFunctionDeclaration = /\bfunction\s+[a-zA-Z_$\w$]*$/.test(
+      beforeCursor
+    );
+
+    const insertText = isFunctionDeclaration ? `${name}() {\n\n}` : `${name}()`;
+
+    const cursorPos = isFunctionDeclaration
+      ? from + `${name}() {\n`.length
+      : from + name.length + 1;
+
+    view.dispatch({
+      changes: {
+        from,
+        to,
+        insert: insertText
+      },
+      selection: {
+        anchor: cursorPos
+      }
+    });
+  };
+}
+function buildMethodOption(methodName, baseHint, range, state, pos) {
+  const params = baseHint?.params || [];
+
+  return {
+    label: methodName,
+    apply: createFunctionApply(methodName, state, pos),
+    type: 'method',
+    kindLabel: baseHint?.kindLabel || 'fun',
+    params,
+    p5DocPath: baseHint?.p5DocPath,
+    preview: baseHint?.preview || formatPreview(methodName, params),
+    from: range.from,
+    to: range.to
+  };
+}
+
+function buildVarOrFunctionOption(
+  { name, isFunc, userDefinedFunctionMetadata, blacklist, range },
+  state,
+  pos
+) {
+  const fnMeta = userDefinedFunctionMetadata[name];
+  const params = fnMeta?.params || [];
+
+  let preview;
+
+  if (isFunc) {
+    if (fnMeta?.text) {
+      preview = formatPreview(fnMeta.text, params);
+    } else {
+      preview = formatPreview(name, params);
+    }
+  } else {
+    preview = undefined;
+  }
+
+  const isBlacklisted = blacklist.includes(name);
+
+  return {
+    label: fnMeta?.text || name,
+    ...(isFunc && {
+      apply: createFunctionApply(name, state, pos)
+    }),
+    type: isFunc ? 'method' : 'variable',
+    kindLabel: isFunc ? 'fun' : 'var',
+    params,
+    p5DocPath: undefined,
+    preview,
+    blacklisted: isBlacklisted,
+    warning: isBlacklisted ? '⚠️ use with caution in this context' : null,
+    from: range.from,
+    to: range.to
+  };
+}
+function buildGlobalHintOption(hint, blacklist, range, state, pos) {
+  const isFunctionLike =
+    hint.type === 'method' ||
+    hint.type === 'function' ||
+    hint.kindLabel === 'fun';
+
+  return {
+    ...hint,
+    ...(isFunctionLike && {
+      apply: createFunctionApply(hint.label, state, pos)
+    }),
+    blacklisted: blacklist.includes(hint.label),
+    warning: blacklist.includes(hint.label)
+      ? '⚠️ use with caution in this context'
+      : null,
+    from: range.from,
+    to: range.to
+  };
+}
+
+export default function contextAwareHinter(context, { hints = [] } = {}) {
+  const { state, pos } = context;
+  const cm = state.doc.toString();
+
   const {
     variableToP5ClassMap = {},
     scopeToDeclaredVarsMap = {},
@@ -22,12 +186,9 @@ export default function contextAwareHinter(cm, options = {}) {
     userDefinedClassMetadata = {}
   } = p5CodeAstAnalyzer(cm) || {};
 
-  const { hinter } = options;
-  if (!hinter || typeof hinter.search !== 'function') {
-    return [];
-  }
+  const baseHintLookup = makeBaseHintLookup(hints);
 
-  const baseExpression = getExpressionBeforeCursor(cm);
+  const baseExpression = getExpressionBeforeCursor(state, pos);
 
   if (baseExpression) {
     const className = variableToP5ClassMap[baseExpression];
@@ -38,60 +199,41 @@ export default function contextAwareHinter(cm, options = {}) {
     let methods = [];
 
     if (userClassEntry?.methods) {
-      const { methods: userMethods } = userClassEntry;
-      methods = userMethods;
+      methods = userClassEntry.methods;
     } else if (className && classMap[className]?.methods) {
-      const { methods: classMethods } = classMap[className];
-      methods = classMethods;
+      methods = classMap[className].methods;
     } else {
       return [];
     }
 
-    const cursor = cm.getCursor();
-    const lineText = cm.getLine(cursor.line);
-    const dotMatch = lineText
-      .slice(0, cursor.ch)
-      .match(/\.([a-zA-Z_$][\w$]*)?$/);
+    const memberInfo = getTypedMemberInfo(state, pos);
+    const typedLower = memberInfo.typed.toLowerCase();
 
-    let from = cursor;
-    if (dotMatch) {
-      const fullMatch = dotMatch[0];
-      const methodStart = cursor.ch - fullMatch.length + 1;
-      from = { line: cursor.line, ch: methodStart };
-    } else {
-      from = cursor;
-    }
+    const options = methods
+      .filter((method) => method.toLowerCase().startsWith(typedLower))
+      .map((method) =>
+        buildMethodOption(
+          method,
+          baseHintLookup.get(method),
+          memberInfo,
+          state,
+          pos
+        )
+      );
 
-    const to = { line: cursor.line, ch: cursor.ch };
-    const typed = dotMatch?.[1]?.toLowerCase() || '';
-
-    const methodHints = methods
-      .filter((method) => method.toLowerCase().startsWith(typed))
-      .map((method) => ({
-        item: {
-          text: method,
-          type: 'fun',
-          isMethod: true
-        },
-        displayText: method,
-        from,
-        to
-      }));
-
-    return methodHints;
+    return {
+      from: memberInfo.from,
+      to: memberInfo.to,
+      options,
+      filter: false
+    };
   }
 
-  const { line, ch } = cm.getCursor();
-  const { string } = cm.getTokenAt({ line, ch });
-  const currentWord = string.trim();
+  const wordInfo = getCurrentWordInfo(context);
+  const lowerCurrentWord = wordInfo.text.toLowerCase();
 
-  const currentContext = getContext(cm);
-  const allHints = hinter.search(currentWord);
-
-  // const whitelist = scopeMap[currentContext]?.whitelist || [];
+  const currentContext = getContext(cm, pos);
   const blacklist = scopeMap[currentContext]?.blacklist || [];
-
-  const lowerCurrentWord = currentWord.toLowerCase();
 
   function isInScope(varName) {
     return Object.entries(scopeToDeclaredVarsMap).some(
@@ -103,13 +245,13 @@ export default function contextAwareHinter(cm, options = {}) {
   const allVarNames = Array.from(
     new Set(
       Object.values(scopeToDeclaredVarsMap)
-        .map((s) => Object.keys(s))
+        .map((scopeVars) => Object.keys(scopeVars))
         .flat()
         .filter((name) => typeof name === 'string')
     )
   );
 
-  const varHints = allVarNames
+  const localOptions = allVarNames
     .filter(
       (varName) =>
         varName.toLowerCase().startsWith(lowerCurrentWord) && isInScope(varName)
@@ -120,70 +262,62 @@ export default function contextAwareHinter(cm, options = {}) {
         (!scopeToDeclaredVarsMap[currentContext]?.[varName] &&
           scopeToDeclaredVarsMap.global?.[varName] === 'fun');
 
-      const baseItem = isFunc
-        ? { ...userDefinedFunctionMetadata[varName] }
-        : {
-            text: varName,
-            type: 'var',
-            params: [],
-            p5: false
-          };
-
-      return {
-        item: baseItem,
-        isBlacklisted: blacklist.includes(varName)
-      };
+      return buildVarOrFunctionOption({
+        name: varName,
+        isFunc,
+        userDefinedFunctionMetadata,
+        blacklist,
+        range: wordInfo,
+        state,
+        pos
+      });
     });
 
-  const filteredHints = allHints
+  const globalOptions = hints
     .filter(
-      (h) =>
-        h &&
-        h.item &&
-        typeof h.item.text === 'string' &&
-        h.item.text.toLowerCase().startsWith(lowerCurrentWord)
+      (hint) =>
+        hint &&
+        typeof hint.label === 'string' &&
+        hint.label.toLowerCase().startsWith(lowerCurrentWord)
     )
-    .map((hint) => {
-      const name = hint.item?.text || '';
-      const isBlacklisted = blacklist.includes(name);
+    .map((hint) =>
+      buildGlobalHintOption(hint, blacklist, wordInfo, state, pos)
+    );
 
-      return {
-        ...hint,
-        isBlacklisted
-      };
-    });
-
-  const combinedHints = [...varHints, ...filteredHints];
+  const combinedOptions = [...localOptions, ...globalOptions];
 
   const typePriority = {
-    fun: 0,
-    var: 1,
+    method: 0,
+    variable: 1,
     keyword: 2,
-    other: 3
+    constant: 3,
+    boolean: 4,
+    obj: 5,
+    other: 6
   };
 
-  const sorted = combinedHints.sort((a, b) => {
-    const nameA = a.item?.text || '';
-    const nameB = b.item?.text || '';
-    const typeA = a.item?.type || 'other';
-    const typeB = b.item?.type || 'other';
-
-    const isBlacklistedA = a.isBlacklisted ? 1 : 0;
-    const isBlacklistedB = b.isBlacklisted ? 1 : 0;
-
-    const typeScoreA = typePriority[typeA] ?? typePriority.other;
-    const typeScoreB = typePriority[typeB] ?? typePriority.other;
+  combinedOptions.sort((a, b) => {
+    const isBlacklistedA = a.blacklisted ? 1 : 0;
+    const isBlacklistedB = b.blacklisted ? 1 : 0;
 
     if (isBlacklistedA !== isBlacklistedB) {
       return isBlacklistedA - isBlacklistedB;
     }
 
-    if (typeScoreA !== typeScoreB) {
-      return typeScoreA - typeScoreB;
+    const typeA = typePriority[a.type] ?? typePriority.other;
+    const typeB = typePriority[b.type] ?? typePriority.other;
+
+    if (typeA !== typeB) {
+      return typeA - typeB;
     }
 
-    return nameA.localeCompare(nameB);
+    return a.label.localeCompare(b.label);
   });
 
-  return sorted;
+  return {
+    from: wordInfo.from,
+    to: wordInfo.to,
+    options: combinedOptions,
+    filter: false
+  };
 }

@@ -6,33 +6,68 @@ $p5js-pink-opacity: #ed225d80;
 $p5js-active-pink: #f10046;
 $white: #fff;
 $black: #000;
-$yellow: #F5DC23;
-$dodgerblue: #1E90FF;
-$p5-contrast-pink: #FFA9D9;
+$yellow: #f5dc23;
+$dodgerblue: #1e90ff;
+$p5-contrast-pink: #ffa9d9;
 
-$outline-color: #0F9DD7;
+$outline-color: #0f9dd7;
 
 // Grayscale values
-$lightest: #FFF; // primary
-$lighter: #FBFBFB;
+$lightest: #fff; // primary
+$lighter: #fbfbfb;
 
-$light: #F0F0F0; // primary
-$medium-light: #D9D9D9;
-$middle-light: #A6A6A6;
+$light: #f0f0f0; // primary
+$medium-light: #d9d9d9;
+$middle-light: #a6a6a6;
 
 // $middle-gray: #7D7D7D; // primary
 $middle-gray: #747474; // primary
 $middle-dark: #666;
-$medium-dark: #4D4D4D;
+$medium-dark: #4d4d4d;
 
 $dark: #333; // primary
-$darker: #1C1C1C;
+$darker: #1c1c1c;
 $darkest: #000;
+
+// Light highlight styles
+$p5-light-selected: $medium-light;
+$p5-light-activeline: #cfcfcf44;
+$p5-light-brown: #7a5a3a;
+$p5-light-black: #333333;
+$p5-light-pink: #d52889;
+$p5-light-gray: #666;
+$p5-light-blue: #0b7ca9;
+$p5-light-orange: #a06801;
+$p5-light-lightgray: $middle-gray;
+$p5-light-green: #47820a;
+
+// Dark highlight styles
+$p5-dark-selected: $medium-dark;
+$p5-dark-activeline: #cfcfcf22;
+$p5-dark-pink: #de4a9b;
+$p5-dark-gray: #9b9b9b;
+$p5-dark-lightblue: #0f9dd7;
+$p5-dark-white: #fdfdfd;
+$p5-dark-orange: #ee9900;
+$p5-dark-green: #58a10b;
+$p5-dark-goldbrown: #b58318;
+
+// Contrast highlight styles
+$p5-contrast-selected: $middle-dark;
+$p5-contrast-activeline: #333333aa;
+$p5-contrast-white: #fdfdfd;
+$p5-contrast-lightgray: #c1c1c1;
+$p5-contrast-blue: #00ffff;
+$p5-contrast-green: #2de9b6;
+$p5-contrast-yellow: #f5dc23;
+$p5-contrast-orange: #ffa95d;
+$p5-contrast-pink: #ffa9d9;
 
 $themes: (
   light: (
-    admonition-background: #E4F8FF,
-    admonition-border: #22C8ED,
+    activeline-background-color: $p5-light-activeline,
+    admonition-background: #e4f8ff,
+    admonition-border: #22c8ed,
     admonition-text: #075769,
     background-color: $lighter,
     button-active-color: $lightest,
@@ -42,11 +77,12 @@ $themes: (
     button-border-color: $middle-light,
     button-color: $black,
     button-hover-color: $lightest,
-    button-nav-inactive-color: $middle-gray,
+    button-nav-active-color: $darker,
+    button-nav-inactive-color: $middle-dark,
     button-secondary-background-color: $medium-light,
-    codefold-icon-closed: url("../images/triangle-arrow-right.svg?byUrl"),
-    codefold-icon-open: url("../images/triangle-arrow-down.svg?byUrl"),
-    console-active-arrow-color: #0071AD,
+    codefold-icon-closed: url('../images/triangle-arrow-right.svg?byUrl'),
+    codefold-icon-open: url('../images/triangle-arrow-down.svg?byUrl'),
+    console-active-arrow-color: #0071ad,
     console-arrow-color: $middle-gray,
     console-background-color: $light,
     console-color: $darker,
@@ -57,19 +93,35 @@ $themes: (
     error-color: $p5js-pink,
     file-hover-color: $light,
     file-selected-color: $medium-light,
-    form-input-placeholder-text-color: $middle-light,
+    form-input-placeholder-text-color: $middle-gray,
     form-input-text-color: $dark,
     form-navigation-options-color: $middle-dark,
     form-secondary-title-color: $medium-dark,
     form-title-color: rgba(51, 51, 51, 0.87),
     heavy-text-color: $darker,
+    highlight-style-comment-color: $p5-light-lightgray,
+    highlight-style-variable-color: $p5-light-blue,
+    highlight-style-string-color: $p5-light-green,
+    highlight-style-regexp-color: $p5-light-orange,
+    highlight-style-number-color: $p5-light-black,
+    highlight-style-atom-color: $p5-light-pink,
+    highlight-style-keyword-color: $p5-light-brown,
+    highlight-style-operator-color: $p5-light-brown,
+    highlight-style-def-color: $p5-light-blue,
+    highlight-style-tag-color: $p5-light-pink,
+    highlight-style-property-color: $p5-light-black,
+    highlight-style-attribute-color: $p5-light-black,
+    highlight-style-matching-selection-background-color:
+      rgba($p5-contrast-pink, 0.3),
+    highlight-style-matched-selection-background-color:
+      rgba($p5-contrast-pink, 0.6),
     hint-arrow-background-active-color: $p5js-active-pink,
     hint-arrow-background-color: #ed225ddd,
     hint-arrow-color: $lightest,
     hint-arrow-focus-outline-color: $middle-dark,
     hint-background-color: $white,
-    hint-fun-active-border-bottom-color: #0B7CA9,
-    hint-fun-text-color: #0B7CA9,
+    hint-fun-active-border-bottom-color: #0b7ca9,
+    hint-fun-text-color: #0b7ca9,
     hint-inline-text-color-light: $middle-light,
     hint-inline-text-color: $middle-gray,
     hint-item-active-background-color: $middle-gray,
@@ -79,19 +131,20 @@ $themes: (
     hint-item-active-type-text-color: $white,
     hint-item-border-bottom-color: $white,
     hint-item-hover-background-color: #f4f4f4,
-    hint-keyword-text-color: #7A5A3A,
+    hint-keyword-text-color: #7a5a3a,
     hint-no-link-background-color: $medium-light,
     hint-text-color: $dark,
     hint-type-text-color: $medium-dark,
-    hint-var-active-border-bottom-color: #D52889,
-    hint-var-text-color: #D52889,
+    hint-var-active-border-bottom-color: #d52889,
+    hint-var-text-color: #d52889,
     icon-color: $middle-gray,
     icon-hover-color: $darker,
     icon-toast-hover-color: $lightest,
     ide-border-color: $medium-light,
     inactive-text-color: $middle-dark,
     input-background-color: $lightest,
-    input-border-color: $middle-light,
+    input-border-color: $middle-dark,
+    input-placeholder-color: $middle-dark,
     input-secondary-background-color: $lightest,
     input-selection-background-color: $medium-light,
     input-selection-text-color: $dark,
@@ -108,15 +161,17 @@ $themes: (
     preferences-warning-color: $p5js-pink,
     primary-text-color: $dark,
     progress-bar-active-color: $p5js-active-pink,
-    progress-bar-background-color: $middle-gray,
+    progress-bar-background-color: $light,
+    progress-bar-border-color: $middle-gray,
     search-background-color: $lightest,
     search-clear-background-color: $light,
     search-hover-background-color: $medium-dark,
     search-hover-text-color: $lightest,
     secondary-text-color: $medium-dark,
+    selected-background-color: $p5-light-selected,
     shadow-color: rgba(0, 0, 0, 0.16),
     table-button-active-color: $lightest,
-    table-button-background-active-color: #00A1D3,
+    table-button-background-active-color: #00a1d3,
     table-button-background-color: $middle-gray,
     table-button-background-hover-color: $p5js-pink,
     table-button-color: $lightest,
@@ -126,12 +181,13 @@ $themes: (
     toast-background-color: $medium-dark,
     toast-text-color: $lightest,
     toolbar-button-background-color: $medium-light,
-    toolbar-button-color: $dark,
+    toolbar-button-color: $dark
   ),
   dark: (
-    admonition-background: #105A7F,
-    admonition-border: #22C8ED,
-    admonition-text: #FFFFFF,
+    activeline-background-color: $p5-dark-activeline,
+    admonition-background: #105a7f,
+    admonition-border: #22c8ed,
+    admonition-text: #ffffff,
     background-color: $darker,
     button-active-color: $lightest,
     button-background-active-color: $p5js-active-pink,
@@ -140,11 +196,12 @@ $themes: (
     button-border-color: $middle-dark,
     button-color: $light,
     button-hover-color: $lightest,
+    button-nav-active-color: $lightest,
     button-nav-inactive-color: $middle-light,
     button-secondary-background-color: $medium-dark,
-    codefold-icon-closed: url("../images/triangle-arrow-right-white.svg?byUrl"),
-    codefold-icon-open: url("../images/triangle-arrow-down-white.svg?byUrl"),
-    console-active-arrow-color: #097BB3,
+    codefold-icon-closed: url('../images/triangle-arrow-right-white.svg?byUrl'),
+    codefold-icon-open: url('../images/triangle-arrow-down-white.svg?byUrl'),
+    console-active-arrow-color: #097bb3,
     console-arrow-color: $medium-light,
     console-background-color: $dark,
     console-color: $lightest,
@@ -155,17 +212,34 @@ $themes: (
     error-color: $p5js-pink,
     file-hover-color: $dark,
     file-selected-color: $medium-dark,
+    form-input-placeholder-text-color: $middle-gray,
     form-navigation-options-color: $middle-light,
     form-secondary-title-color: $medium-light,
     form-title-color: $lightest,
     heavy-text-color: $lightest,
+    highlight-style-comment-color: $p5-dark-gray,
+    highlight-style-variable-color: $p5-dark-lightblue,
+    highlight-style-string-color: $p5-dark-green,
+    highlight-style-regexp-color: $p5-dark-orange,
+    highlight-style-number-color: $p5-dark-white,
+    highlight-style-atom-color: $p5-dark-pink,
+    highlight-style-keyword-color: $p5-dark-goldbrown,
+    highlight-style-operator-color: $p5-dark-goldbrown,
+    highlight-style-def-color: $p5-dark-lightblue,
+    highlight-style-tag-color: $p5-dark-pink,
+    highlight-style-property-color: $p5-dark-white,
+    highlight-style-attribute-color: $p5-dark-lightblue,
+    highlight-style-matching-selection-background-color:
+      rgba($p5-contrast-pink, 0.2),
+    highlight-style-matched-selection-background-color:
+      rgba($p5-contrast-pink, 0.35),
     hint-arrow-background-active-color: $p5js-active-pink,
     hint-arrow-background-color: #ed225ddd,
     hint-arrow-color: $lightest,
     hint-arrow-focus-outline-color: #cfcfcf,
     hint-background-color: $darker,
-    hint-fun-active-border-bottom-color: #0F9DD7,
-    hint-fun-text-color: #0F9DD7,
+    hint-fun-active-border-bottom-color: #0f9dd7,
+    hint-fun-text-color: #0f9dd7,
     hint-inline-text-color-light: $middle-gray,
     hint-inline-text-color: #cfcfcf,
     hint-item-active-background-color: #cfcfcf,
@@ -175,19 +249,20 @@ $themes: (
     hint-item-active-type-text-color: $darker,
     hint-item-border-bottom-color: $darker,
     hint-item-hover-background-color: $medium-dark,
-    hint-keyword-text-color: #B58318,
+    hint-keyword-text-color: #b58318,
     hint-no-link-background-color: $medium-dark,
     hint-text-color: $light,
     hint-type-text-color: $light,
-    hint-var-active-border-bottom-color: #DE4A9B,
-    hint-var-text-color: #DE4A9B,
+    hint-var-active-border-bottom-color: #de4a9b,
+    hint-var-text-color: #de4a9b,
     icon-color: $middle-light,
     icon-hover-color: $lightest,
     icon-toast-hover-color: $lightest,
     ide-border-color: $middle-dark,
     inactive-text-color: $middle-light,
     input-background-color: $dark,
-    input-border-color: $middle-dark,
+    input-border-color: $light,
+    input-placeholder-color: $middle-light,
     input-secondary-background-color: $medium-dark,
     input-selection-background-color: $lightest,
     input-selection-text-color: $darkest,
@@ -204,15 +279,17 @@ $themes: (
     preferences-warning-color: $yellow,
     primary-text-color: $lightest,
     progress-bar-active-color: $p5js-active-pink,
-    progress-bar-background-color: $middle-gray,
+    progress-bar-background-color: $darker,
+    progress-bar-border-color: $middle-gray,
     search-background-color: $darker,
     search-clear-background-color: $medium-dark,
     search-hover-background-color: $p5js-pink,
     search-hover-text-color: $lightest,
     secondary-text-color: $medium-light,
+    selected-background-color: $p5-dark-selected,
     shadow-color: rgba(0, 0, 0, 0.16),
     table-button-active-color: $lightest,
-    table-button-background-active-color: #00A1D3,
+    table-button-background-active-color: #00a1d3,
     table-button-background-color: $middle-gray,
     table-button-background-hover-color: $p5js-pink,
     table-button-color: $lightest,
@@ -222,11 +299,12 @@ $themes: (
     toast-background-color: $medium-light,
     toast-text-color: $dark,
     toolbar-button-background-color: $medium-dark,
-    toolbar-button-color: $lightest,
+    toolbar-button-color: $lightest
   ),
   contrast: (
+    activeline-background-color: $p5-contrast-activeline,
     admonition-background: #000000,
-    admonition-border: #22C8ED,
+    admonition-border: #22c8ed,
     admonition-text: #ffffff,
     background-color: $darker,
     button-active-color: $dark,
@@ -236,10 +314,11 @@ $themes: (
     button-border-color: $middle-dark,
     button-color: $light,
     button-hover-color: $dark,
-    button-nav-inactive-color: $light,
+    button-nav-active-color: $lightest,
+    button-nav-inactive-color: $middle-light,
     button-secondary-background-color: $medium-dark,
-    codefold-icon-closed: url("../images/triangle-arrow-right-white.svg?byUrl"),
-    codefold-icon-open: url("../images/triangle-arrow-down-white.svg?byUrl"),
+    codefold-icon-closed: url('../images/triangle-arrow-right-white.svg?byUrl'),
+    codefold-icon-open: url('../images/triangle-arrow-down-white.svg?byUrl'),
     console-active-arrow-color: $dodgerblue,
     console-arrow-color: $lightest,
     console-background-color: $dark,
@@ -255,13 +334,27 @@ $themes: (
     form-secondary-title-color: $medium-light,
     form-title-color: $lightest,
     heavy-text-color: $yellow,
-    hint-arrow-background-active-color: #F5DC23,
-    hint-arrow-background-color: #F5DC23DD,
+    highlight-style-comment-color: $p5-contrast-lightgray,
+    highlight-style-variable-color: $p5-contrast-blue,
+    highlight-style-string-color: $p5-contrast-green,
+    highlight-style-regexp-color: $p5-contrast-green,
+    highlight-style-number-color: $p5-contrast-pink,
+    highlight-style-atom-color: $p5-contrast-pink,
+    highlight-style-keyword-color: $p5-contrast-yellow,
+    highlight-style-operator-color: $p5-contrast-lightgray,
+    highlight-style-def-color: $p5-contrast-blue,
+    highlight-style-tag-color: $p5-contrast-orange,
+    highlight-style-property-color: $p5-contrast-white,
+    highlight-style-attribute-color: $p5-contrast-white,
+    highlight-style-matching-selection-background-color: $medium-dark,
+    highlight-style-matched-selection-background-color: $medium-dark,
+    hint-arrow-background-active-color: #f5dc23,
+    hint-arrow-background-color: #f5dc23dd,
     hint-arrow-color: $darker,
     hint-arrow-focus-outline-color: $lighter,
     hint-background-color: $darkest,
     hint-fun-active-border-bottom-color: none,
-    hint-fun-text-color: #00FFFF,
+    hint-fun-text-color: #00ffff,
     hint-inline-text-color-light: $middle-gray,
     hint-inline-text-color: #cfcfcf,
     hint-item-active-background-color: unset,
@@ -271,19 +364,20 @@ $themes: (
     hint-item-active-type-text-color: $lighter,
     hint-item-border-bottom-color: $medium-dark,
     hint-item-hover-background-color: $dark,
-    hint-keyword-text-color: #F5DC23,
+    hint-keyword-text-color: #f5dc23,
     hint-no-link-background-color: $medium-dark,
     hint-text-color: $medium-light,
     hint-type-text-color: $middle-light,
     hint-var-active-border-bottom-color: none,
-    hint-var-text-color: #FFA9D9,
+    hint-var-text-color: #ffa9d9,
     icon-color: $medium-light,
     icon-hover-color: $yellow,
     icon-toast-hover-color: $yellow,
     ide-border-color: $middle-dark,
     inactive-text-color: $light,
     input-background-color: $dark,
-    input-border-color: $middle-dark,
+    input-border-color: $light,
+    input-placeholder-color: $light,
     input-secondary-background-color: $medium-dark,
     input-selection-background-color: $lightest,
     input-selection-text-color: $darkest,
@@ -299,16 +393,18 @@ $themes: (
     preferences-button-background-color: $medium-light,
     preferences-warning-color: $yellow,
     primary-text-color: $lightest,
-    progress-bar-active-color: $p5js-active-pink,
-    progress-bar-background-color: $middle-gray,
+    progress-bar-active-color: $yellow,
+    progress-bar-background-color: $darker,
+    progress-bar-border-color: $middle-light,
     search-background-color: $darker,
     search-clear-background-color: $medium-dark,
     search-hover-background-color: $yellow,
     search-hover-text-color: $dark,
     secondary-text-color: $lighter,
+    selected-background-color: $p5-contrast-selected,
     shadow-color: rgba(0, 0, 0, 0.16),
     table-button-active-color: $dark,
-    table-button-background-active-color: #00FFFF,
+    table-button-background-active-color: #00ffff,
     table-button-background-color: $middle-gray,
     table-button-background-hover-color: $yellow,
     table-button-color: $dark,
@@ -318,6 +414,6 @@ $themes: (
     toast-background-color: $medium-light,
     toast-text-color: $darker,
     toolbar-button-background-color: $medium-light,
-    toolbar-button-color: $dark,
+    toolbar-button-color: $dark
   )
 );

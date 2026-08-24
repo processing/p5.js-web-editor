@@ -48,7 +48,7 @@
     }
   },
   "Banner": {
-    "Copy": "<bold>Donate Today!</bold> Support p5.js and the Processing Foundation."
+    "Copy": "<bold>p5.js v2 is now the default</bold>. If you teach with p5, check out this essential guide!"
   },
   "CodemirrorFindAndReplace": {
     "ToggleReplace": "Увімкнути заміну",
@@ -497,6 +497,7 @@
     "AddSketch": "Додати скетч",
     "DeleteFromCollection": "Ви впевнені, що хочете видалити {{name_sketch}} з цієї колекції?",
     "SketchDeleted": "Скетч видалено",
+    "SketchRemoveLabel": "Remove from Collection",
     "SketchRemoveARIA": "Видалити скетч із колекції",
     "DescriptionPlaceholder": "Додати опис",
     "Description": "опис",
@@ -676,7 +677,6 @@
   "Cookies": {
     "Header": "Файли cookie",
     "Body": "Редактор p5.js використовує файли cookie. Деякі з них необхідні для роботи сайту та дозволяють керувати обліковим записом і налаштуваннями. Інші не є обов’язковими — вони використовуються для аналітики і допомагають нам краще розуміти нашу спільноту. <strong>Ми ніколи не продаємо ці дані і не використовуємо їх для реклами.</strong> Ви можете обирати, які файли cookie дозволяти, і дізнатися більше у нашій <0>Політиці конфіденційності<0>.",
-    "AllowAll": "Дозволити все",
     "AllowEssential": "Дозволити необхідні"
   },
   "Legal": {

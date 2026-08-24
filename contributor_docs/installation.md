@@ -37,6 +37,13 @@ _Note_: The installation steps assume you are using a Unix-like shell. If you ar
 7. Install MongoDB and make sure it is running
    * For Mac OSX with [homebrew](http://brew.sh/): `brew tap mongodb/brew` then `brew install mongodb-community` and finally start the server with `brew services start mongodb-community` or you can visit the installation guide here [Installation Guide For MacOS](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/)
    * For Windows and Linux: [MongoDB Installation](https://docs.mongodb.com/manual/installation/)
+   * If you have trouble setting up MongoDB locally, an alternative is to use [MongoDB Atlas](https://cloud.mongodb.com/) to get a connection string that you can use as your `MONGO_URL` in the `.env` file. To get your connection string:
+      - Navigate to [mongodb.com](https://www.mongodb.com/) and sign up or log in.
+      - Create a new project. Give it any name, and either add a key-value pair or skip that step.
+      - Create a cluster by choosing the free tier. Give your cluster a name, choose a region, and keep the provider as AWS.
+      - Set a username and password for your database-user, these will be part of your connection string.
+      - Choose **Node.js** as the driver for your connection method. You will see a connection string, with or without the password filled in.
+      - Copy the string and use it as your `MONGO_URL` in the `.env` file.
 8. `$ cp .env.example .env`
 9. (Optional) Update `.env` with necessary keys to enable certain app behaviors, i.e. add Github ID and Github Secret if you want to be able to log in with Github.
    * See the [GitHub API Configuration](#github-api-configuration) section for information on how to authenticate with Github.
@@ -82,6 +89,19 @@ To open a terminal/shell in the running Docker server (i.e. after `docker-compos
 If you don't have the full server environment running, you can launch a one-off container instance (and have it automatically deleted after you're done using it):
 
 12. `$ docker-compose -f docker-compose-development.yml run app --rm bash -l`
+
+## Environment Files
+
+The repo has several `.env`-style files, and they are loaded in different situations:
+
+| File | Committed? | Used when |
+| --- | --- | --- |
+| `.env` | no | Local development. Create it by copying `.env.example` (see steps above). |
+| `.env.example` | yes | Template only — never loaded by the app. |
+| `.env.e2e` | yes | End-to-end tests (`npm run e2e`, `e2e:headed`, `e2e:ci`). Merged *over* `.env`, so its values (test database, ports 9000/9002) win and `.env` fills in the rest. Contains no secrets. |
+| `.env.production` / `.env.staging` | no | Only for hand-run ops scripts (e.g. `server/migrations/start.js`) and an optional `docker-compose.yml` override. **Deployed production/staging never read `.env` files** — environment variables are injected by Kubernetes (see [deployment.md](./deployment.md)). |
+
+All env loading goes through [`loadEnv.js`](../loadEnv.js) at the repo root, which documents the merge rule. `playwright.config.ts` sets `APP_ENV=e2e` itself before loading env, so every way of running the tests (npm scripts, `npx playwright test`, VS Code) uses the e2e environment and can't accidentally hit your development database; `npm run start:e2e` starts the app server with the same overlay. The one intentional exception is `server/migrations/start.js`, a hand-run script that migrates the production database, so it loads `.env.production` directly. In the future, `loadEnv` might grow to accommodate a production overlay.
 
 ## S3 Bucket Configuration
 

@@ -1,4 +1,3 @@
-import loopProtect from 'loop-protect';
 import { Hook, Decode, Encode } from 'console-feed';
 import StackTrace from 'stacktrace-js';
 import { evaluateExpression } from './evaluateExpression';
@@ -14,8 +13,46 @@ const htmlOffset = 12;
 window.objectUrls[window.location.href] = '/index.html';
 const blobPath = window.location.href.split('/').pop();
 window.objectPaths[blobPath] = 'index.html';
+let hitCount = 0;
+let lastHitTime = 0;
+let firstLine = null;
+let stopTimeout = null;
+window.loopProtect = {
+  hit: function handleLoopHit(line) {
+    const now = Date.now();
+    if (now - lastHitTime > 1000) {
+      hitCount = 0;
+      firstLine = null;
+      if (stopTimeout) {
+        clearTimeout(stopTimeout);
+        stopTimeout = null;
+      }
+    }
+    hitCount++;
+    lastHitTime = now;
 
-window.loopProtect = loopProtect;
+    if (hitCount === 1) {
+      firstLine = line;
+      stopTimeout = setTimeout(() => {
+        if (hitCount === 1) {
+          const msg = `Infinite loop detected at line ${firstLine}. Stopping execution.`;
+          throw new Error(msg);
+        }
+      }, 30);
+    }
+
+    if (hitCount > 1) {
+      if (stopTimeout) {
+        clearTimeout(stopTimeout);
+        stopTimeout = null;
+      }
+      const msg = 'Multiple infinite loops detected. Stopping execution.';
+      throw new Error(msg);
+    }
+
+    return true;
+  }
+};
 
 const consoleBuffer = [];
 const LOGWAIT = 500;

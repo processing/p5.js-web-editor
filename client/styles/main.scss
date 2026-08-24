@@ -6,15 +6,9 @@
 @import 'base/reset';
 @import 'base/base';
 
-@import '~codemirror/lib/codemirror';
-@import '~codemirror/addon/lint/lint';
-@import '~codemirror-colorpicker/addon/codemirror-colorpicker';
 @import '~dropzone/dist/dropzone';
 @import '~primer-tooltips/build/build';
 
-@import 'components/p5-light-codemirror-theme';
-@import 'components/p5-dark-codemirror-theme';
-@import 'components/p5-contrast-codemirror-theme';
 @import 'components/account';
 @import 'components/api-key';
 @import 'components/editor';

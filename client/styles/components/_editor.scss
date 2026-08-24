@@ -1,378 +1,326 @@
 @use "sass:math";
 
-.CodeMirror {
+.cm-editor {
   font-family: Inconsolata, monospace;
   height: 100%;
-}
 
-.CodeMirror-linenumbers {
-  padding-right: #{math.div(10, $base-font-size)}rem;
-}
-
-.CodeMirror-linenumber {
-  width: #{math.div(32, $base-font-size)}rem;
-  left: #{math.div(-3, $base-font-size)}rem !important;
   @include themify() {
-    color: getThemifyVariable("inactive-text-color");
+    color: getThemifyVariable('primary-text-color');
+  }
+
+  .cm-scroller {
+    font-family: Inconsolata, monospace;
+    line-height: 1.2;
+  }
+
+  .cm-content {
+    padding-top: #{math.div(25, $base-font-size)}rem;
+
+    .cm-line {
+      padding: 0 #{math.div(4, $base-font-size)}rem;
+    }
+
+    .cm-activeLine {
+      // Needed to place the active line highlight behind the selection highlight.
+      position: relative;
+      background-color: transparent;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -10;
+
+        @include themify() {
+          background-color: getThemifyVariable('activeline-background-color');
+        }
+      }
+    }
+
+    .cm-errorLine.cm-activeLine,
+    .cm-errorLine {
+      background-color: rgb(255 95 82 / 30%);
+    }
+  }
+  .cm-focused > .cm-scroller .cm-selectionLayer .cm-selectionBackground,
+  .cm-selectionLayer .cm-selectionBackground,
+  ::selection {
+    @include themify() {
+      background-color: getThemifyVariable(
+        'selected-background-color'
+      ) !important;
+    }
+  }
+
+  .cm-cursorLayer .cm-cursor {
+    @include themify() {
+      border-left-color: getThemifyVariable('primary-text-color');
+    }
   }
 }
 
-.CodeMirror-lines {
-  padding-top: #{math.div(25, $base-font-size)}rem;
-}
-
-pre.CodeMirror-line {
-  padding-left: #{math.div(5, $base-font-size)}rem;
-}
-
-.CodeMirror-gutter-wrapper {
-  right: 100%;
-  top: 0;
-  bottom: 0;
-}
-
-.CodeMirror-lint-marker-warning,
-.CodeMirror-lint-marker-error,
-.CodeMirror-lint-marker-multiple {
-  background-image: none;
-  width: #{math.div(49, $base-font-size)}rem;
-  position: absolute;
-  height: 100%;
-  right: 100%;
-}
-
-.CodeMirror-lint-message-error,
-.CodeMirror-lint-message-warning {
-  background-image: none;
-  padding-left: inherit;
-}
-
-.CodeMirror-lint-marker-warning {
-  background-color: rgb(255, 190, 5);
-}
-
-.CodeMirror-lint-marker-error {
-  background-color: rgb(255, 95, 82);
-}
-
-.CodeMirror-gutter-elt:not(.CodeMirror-linenumber) {
-  opacity: 0.2;
-  width: #{math.div(49, $base-font-size)}rem !important;
-  height: 100%;
-  left: 49px !important;
-  // background-color: rgb(255, 95, 82);
-}
-
-.CodeMirror-lint-tooltip {
+.cm-gutters {
   @include themify() {
-    background-color: getThemifyVariable("modal-background-color");
-    border: 1px solid getThemifyVariable("modal-border-color");
-    box-shadow: 0 12px 12px getThemifyVariable("shadow-color");
-    color: getThemifyVariable("primary-text-color");
+    background-color: getThemifyVariable('editor-gutter-color');
+    border-color: getThemifyVariable('ide-border-color');
   }
-  border-radius: 2px;
-  font-family: Montserrat, sans-serif;
-}
+  min-width: #{math.div(48, $base-font-size)}rem;
+  position: relative;
 
-.CodeMirror-gutters {
-  @include themify() {
-    background-color: getThemifyVariable("editor-gutter-color");
-    border-color: getThemifyVariable("ide-border-color");
+  .cm-gutter {
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
   }
-  // left: 0 !important;
-  width: #{math.div(48, $base-font-size)}rem;
-}
 
-/*
-  Search dialog
-*/
+  .cm-lineNumbers {
+    @include themify() {
+      color: getThemifyVariable('inactive-text-color');
+    }
+    pointer-events: none;
+    flex-grow: 1;
+  }
 
-.CodeMirror-dialog {
-  position: fixed;
-  top: 0;
-  left: 50%;
-  margin-left: #{math.div(-552 * 0.5, $base-font-size)}rem;
-  
-  @media (max-width: 770px) {
+  .cm-activeLineGutter {
+    background-color: transparent;
+  }
+
+  .cm-gutter-lint {
+    position: absolute;
     left: 0;
-    right: 0;
     width: 100%;
-    margin-left: 0;
+    z-index: 0;
+
+    .cm-activeLineGutter {
+      @include themify() {
+        background-color: getThemifyVariable('active-line-background-color');
+      }
+    }
+
+    .cm-gutterElement {
+      padding: 0;
+    }
   }
 
-  z-index: 10;
+  .cm-lint-marker {
+    content: '';
+    width: 100%;
+    height: 100%;
+    opacity: 0.2;
 
-  width: 580px;
-  font-family: Montserrat, sans-serif;
+    &.cm-lint-marker-error {
+      background-color: rgb(255, 95, 82);
+    }
 
-  padding: #{math.div(8, $base-font-size)}rem #{math.div(10, $base-font-size)}rem #{math.div(5, $base-font-size)}rem #{math.div(9, $base-font-size)}rem;
+    &.cm-lint-marker-warning {
+      background-color: rgb(255, 190, 5);
+    }
+  }
+}
 
+.cm-tooltip-lint {
+  @include themify() {
+    background-color: getThemifyVariable('modal-background-color');
+    border: 1px solid getThemifyVariable('modal-border-color');
+    box-shadow: 0 12px 12px getThemifyVariable('shadow-color');
+    color: getThemifyVariable('primary-text-color');
+  }
   border-radius: 2px;
+  font-family: Montserrat, sans-serif;
+}
 
+/** Search dialog */
+.cm-search-panel {
   @include themify() {
-    background-color: getThemifyVariable("modal-background-color");
-    box-shadow: 0 12px 12px 0 getThemifyVariable("shadow-color");
-    border: solid 0.5px getThemifyVariable("modal-border-color");
+    color: getThemifyVariable('primary-text-color');
+    background-color: getThemifyVariable('modal-background-color');
+    border: solid 0.5px getThemifyVariable('modal-border-color');
+    font-family: Montserrat, sans-serif;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    padding-left: 4px;
+    // Extra padding for the play button to not overlap with the search panel
+    padding-bottom: 20px;
+
+    &:not(.mobile) {
+      position: absolute;
+      right: 0px;
+      top: 0px;
+      box-shadow: 0 12px 12px 0 getThemifyVariable('shadow-color');
+      padding-bottom: 0px;
+    }
   }
-}
 
-.CodeMirror-find-popup-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
+  .cm-search-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 8px 8px 8px 4px;
+  }
 
-.Toggle-replace-btn-div {
-  height: #{math.div(40, $base-font-size)}rem;
-  padding: 0;
-}
+  // Various button stylings
+  .cm-search-button {
+    @extend %toolbar-button;
+    white-space: nowrap;
 
-.Toggle-replace-btn-div > button {
-  width: 100%;
-  height: 100%;
-}
+    &.cm-search-previous,
+    &.cm-search-next {
+      height: #{math.div(32, $base-font-size)}rem;
+      width: #{math.div(32, $base-font-size)}rem;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
 
-.CodeMirror-search-results {
-  margin: 0 #{math.div(20, $base-font-size)}rem;
-  width: #{math.div(75, $base-font-size)}rem;
-  font-size: #{math.div(12, $base-font-size)}rem;
-}
+  .cm-search-close {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 48px;
+    height: 48px;
+    margin: -12px;
 
-.CodeMirror-find-controls {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: #{math.div(35, $base-font-size)}rem;
-}
-.CodeMirror-search-inputs {
-  width: 30%;
-  margin-left: 10px;
-}
-.CodeMirror-replace-div {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-}
-.CodeMirror-search-controls {
-  width: 60%;
-  display: flex;
-  flex-wrap: wrap-reverse;
-  justify-content: flex-start;
-  align-items: flex-end;
-}
-.CodeMirror-replace-controls {
-  display: flex;
-  margin-left: #{math.div(10, $base-font-size)}rem;
-}
+    svg {
+      width: 24px;
+      height: 24px;
+    }
+  }
 
-.CodeMirror-replace-options {
-  width: #{math.div(552, $base-font-size)}rem;
-  height: #{math.div(65, $base-font-size)}rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.CodeMirror-replace-options button {
-  width: #{math.div(200, $base-font-size)}rem;
-}
+  .cm-search-replace {
+    .cm-search-button {
+      height: auto;
+      width: auto;
+      border-radius: 10rem;
+      padding: 0.5rem 0.7rem;
+    }
+  }
 
-.CodeMirror-search-title {
-  display: block;
-  margin-bottom: #{math.div(12, $base-font-size)}rem;
+  svg {
+    fill: currentColor;
 
-  font-size: #{math.div(21, $base-font-size)}rem;
-  font-weight: bold;
-}
+    g {
+      opacity: 1;
+    }
+  }
 
-.CodeMirror-search-field {
-  display: block;
-  width: 100%;
-  max-width: #{math.div(166, $base-font-size)}rem;
-  margin-bottom: #{math.div(4, $base-font-size)}rem;
-  @include themify() {
-    color: getThemifyVariable("input-text-color");
-    background-color: getThemifyVariable("input-secondary-background-color");
-    border: solid 0.5px getThemifyVariable("button-border-color");
-    &::placeholder {
-      color: getThemifyVariable("inactive-text-color");
+  .cm-search-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .cm-search-previous {
+    svg {
+      transform: rotate(180deg);
+    }
+  }
+
+  input[type='text'] {
+    width: 200px;
+  }
+
+  .cm-search-find {
+    padding-right: 32px;
+  }
+
+  .cm-search-findContainer {
+    position: relative;
+
+    .cm-search-findOptions {
+      position: absolute;
+      right: 0px;
+      top: 0px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px;
+
+      @include themify() {
+        label {
+          cursor: pointer;
+          svg {
+            opacity: 0.8;
+            fill: getThemifyVariable('inactive-text-color');
+          }
+          &:has(> input[type='checkbox']:checked) {
+            svg {
+              fill: getThemifyVariable('button-background-active-color');
+              opacity: 1;
+            }
+          }
+          &:has(> input:focus-visible) {
+            outline: 1px solid $outline-color;
+          }
+          &:has(> input:hover) {
+            svg {
+              opacity: 1;
+            }
+          }
+        }
+      }
+
+      input[type='checkbox'] {
+        @extend .visually-hidden;
+      }
     }
   }
 }
 
-.CodeMirror-search-nav {
-  display: flex;
-  align-items: center;
-}
-
-.CodeMirror-search-count {
-  display: block;
-  height: #{math.div(20, $base-font-size)}rem;
-  text-align: right;
-}
-
-.CodeMirror-search-actions {
-  display: flex;
-  justify-content: space-between;
-}
-
-.CodeMirror-search-modifiers {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  margin-left: #{math.div(10, $base-font-size)}rem;
-
-  @media (max-width: 579px) {
-    display: none;
-  }
-}
-
-.CodeMirror-regexp-button,
-.CodeMirror-case-button,
-.CodeMirror-word-button {
-  @include themify() {
-    // @extend %button;
-    padding: #{math.div(2, $base-font-size)}rem #{math.div(7, $base-font-size)}rem;
-    border: 2px solid transparent;
-    &:hover {
-      border-color: getThemifyVariable("button-border-color");
-    }
-  }
-  width: #{math.div(35, $base-font-size)}rem;
-  height: #{math.div(35, $base-font-size)}rem;
-
-  & + & {
-    margin-left: #{math.div(3, $base-font-size)}rem;
-  }
-
-  word-break: keep-all;
-  white-space: nowrap;
-}
-
-.CodeMirror-regexp-button .label,
-.CodeMirror-case-button .label,
-.CodeMirror-word-button .label {
-  @extend %hidden-element;
-}
-
-[aria-checked="true"] {
-  @include themify() {
-    color: getThemifyVariable("heavy-text-color");
-    background-color: getThemifyVariable("button-secondary-background-color");
-    border-color: getThemifyVariable("button-border-color");
-  }
-}
-
-/*
-  Previous / Next buttons
-*/
-
-// Visually hide button text
-.CodeMirror-search-button .label {
-  @extend %hidden-element;
-}
-
-.CodeMirror-search-button {
-  margin-right: #{math.div(10, $base-font-size)}rem;
-}
-
-.CodeMirror-search-match {
-  background: gold;
-  border-top: #{math.div(1, $base-font-size)}rem solid orange;
-  border-bottom: #{math.div(1, $base-font-size)}rem solid orange;
-  box-sizing: border-box;
-  opacity: 0.5;
-}
-
-/*
-  Close button
-*/
-.CodeMirror-close-button-container {
-  display: flex;
-  align-items: center;
-}
-
-// foldgutter
-.CodeMirror-foldmarker {
-  text-shadow:
-    -1px 0 #ed225d,
-    0 1px #ed225d,
-    1px 0 #ed225d,
-    0 -1px #ed225d;
-  color: #fff;
-  /* background-color: rgba(237, 34, 93, 0.42); */
-  /* border-radius: 3px; */
-  font-weight: bold;
-  font-family: arial;
-  line-height: 0.3;
+// CM5: .CodeMirror-foldgutter-open, .CodeMirror-foldgutter-folded
+.cm-foldGutter {
   cursor: pointer;
-  opacity: 0.75;
-}
-.CodeMirror-foldgutter {
-  width: 2.7em;
-}
-.CodeMirror-foldgutter-open,
-.CodeMirror-foldgutter-folded {
-  cursor: pointer;
-  padding-bottom: 0.4em;
-  text-align: right;
-  line-height: 1;
-}
-.CodeMirror-foldgutter-open:after {
-  content: "\25BE";
-}
-.CodeMirror-foldgutter-folded:after {
-  content: "\25B8";
 }
 
-.CodeMirror-foldgutter-open,
-.CodeMirror-foldgutter-folded {
-  position: absolute;
-  right: 100%;
-}
-
-.CodeMirror-foldgutter-open:after {
-  @include themify() {
-    background-image: getThemifyVariable("codefold-icon-open");
-  }
-}
-
-.CodeMirror-foldgutter-folded:after {
-  @include themify() {
-    background-image: getThemifyVariable("codefold-icon-closed");
-  }
-}
-
-.CodeMirror-foldgutter-folded:after,
-.CodeMirror-foldgutter-open:after {
-  background-size: 10px 10px;
-  content: "";
-  padding-left: 15px;
+// CM5: .CodeMirror-foldgutter-open:after / .CodeMirror-foldgutter-folded:after
+.cm-fold-open,
+.cm-fold-closed {
+  display: inline-block;
+  width: #{math.div(10, $base-font-size)}rem;
+  height: #{math.div(10, $base-font-size)}rem;
+  background-size: #{math.div(10, $base-font-size)}rem #{math.div(
+      10,
+      $base-font-size
+    )}rem;
   background-repeat: no-repeat;
   background-position: center center;
+  opacity: 0.2;
 }
 
-.CodeMirror-foldmarker {
-  text-shadow: none;
-  border-radius: 5px;
-  opacity: 1;
-  font-weight: normal;
+.cm-fold-open {
+  @include themify() {
+    background-image: getThemifyVariable('codefold-icon-open');
+  }
+}
+
+.cm-fold-closed {
+  @include themify() {
+    background-image: getThemifyVariable('codefold-icon-closed');
+  }
+}
+
+// CM5: .CodeMirror-foldmarker
+.cm-foldPlaceholder {
   display: inline-block;
   vertical-align: middle;
   height: 0.85em;
   line-height: 0.7;
+  border-radius: 5px;
   padding: 0 #{math.div(5, $base-font-size)}rem;
   font-family: serif;
-}
+  cursor: pointer;
+  opacity: 0.75;
 
-.line-runtime-error + .CodeMirror-activeline-gutter {
-  background-color: rgb(255, 95, 82);
-  opacity: 0.3;
-}
-
-.line-runtime-error {
-  background-color: rgb(255, 95, 82) !important;
-  opacity: 0.3;
+  @include themify() {
+    background-color: getThemifyVariable('primary-text-color');
+    color: getThemifyVariable('background-color');
+  }
 }
 
 .editor-holder {
@@ -380,7 +328,7 @@ pre.CodeMirror-line {
   width: 100%;
   position: absolute;
   @include themify() {
-    border: 1px solid getThemifyVariable("ide-border-color");
+    border: 1px solid getThemifyVariable('ide-border-color');
   }
   &.editor-holder--hidden .CodeMirror {
     display: none;
@@ -393,7 +341,7 @@ pre.CodeMirror-line {
 
 .editor__file-name {
   @include themify() {
-    color: getThemifyVariable("primary-text-color");
+    color: getThemifyVariable('primary-text-color');
   }
   height: #{math.div(29, $base-font-size)}rem;
   padding-top: #{math.div(7, $base-font-size)}rem;
@@ -406,7 +354,7 @@ pre.CodeMirror-line {
 
 .editor__library-version {
   @include themify() {
-    color: getThemifyVariable("primary-text-color");
+    color: getThemifyVariable('primary-text-color');
   }
   position: absolute;
   top: 0;
@@ -422,41 +370,147 @@ pre.CodeMirror-line {
 }
 
 /** Inline abbreviation preview */
-
-.emmet-abbreviation-preview {
+.emmet-preview.cm-tooltip {
   @extend %modal;
-  position: absolute;
   @include themify() {
-    background: getThemifyVariable("background-color");
+    background: getThemifyVariable('background-color');
   }
-  & .CodeMirror-lines {
+  .cm-content {
     padding: 0;
   }
-  & .CodeMirror {
-    height: auto;
-    max-width: #{math.div(400, $base-font-size)}rem;
-    max-height: #{math.div(300, $base-font-size)}rem;
-    border: none;
+}
+
+// Used for comment, lineComment, blockComment, docComment, docString
+.cm-comment {
+  @include themify() {
+    color: getThemifyVariable('highlight-style-comment-color');
   }
 }
 
-.emmet-abbreviation-preview:not(.has-error) .emmet-abbreviation-preview-error {
-  display: none;
+// Used for name, variableName, typeName
+.cm-variable {
+  @include themify() {
+    color: getThemifyVariable('highlight-style-variable-color');
+  }
 }
 
-.emmet-abbreviation-preview.has-error .CodeMirror {
-  display: none;
+// Used for string, character, attributeValue
+.cm-string {
+  @include themify() {
+    color: getThemifyVariable('highlight-style-string-color');
+  }
 }
 
-.emmet-abbreviation-preview .CodeMirror-cursors {
-  visibility: hidden !important;
+// Used for regexp
+.cm-regexp {
+  @include themify() {
+    color: getThemifyVariable('highlight-style-regexp-color');
+  }
 }
 
-.emmet-abbreviation-preview .emmet-error-snippet-message {
-  padding: 5px;
+// Used for number, integer, float
+.cm-number {
+  @include themify() {
+    color: getThemifyVariable('highlight-style-number-color');
+  }
 }
 
-.emmet-open-tag,
-.emmet-close-tag {
-  text-decoration: underline;
+// Used for bool, atom, null
+.cm-atom {
+  @include themify() {
+    color: getThemifyVariable('highlight-style-atom-color');
+  }
+}
+
+// Used for keyword, self, function, className
+.cm-keyword {
+  @include themify() {
+    color: getThemifyVariable('highlight-style-keyword-color');
+  }
+}
+
+// Used for operatorKeyword, controlKeyword, operator, derefOperator, arithmeticOperator,
+// logicOperator, bitwiseOperator, compareOperator, updateOperator, typeOperator
+// controlOperator
+.cm-operator {
+  @include themify() {
+    color: getThemifyVariable('highlight-style-operator-color');
+  }
+}
+
+// Used for definitionKeyword, definition, const, local
+.cm-def {
+  @include themify() {
+    color: getThemifyVariable('highlight-style-def-color');
+  }
+}
+
+// tagName, heading, heading1, heading2, heading3, heading4, heading5, heading6,
+// list, quote, emphasis, strong, link
+.cm-tag {
+  @include themify() {
+    color: getThemifyVariable('highlight-style-tag-color');
+  }
+}
+
+// Used for propertyName
+.cm-property {
+  @include themify() {
+    color: getThemifyVariable('highlight-style-property-color');
+  }
+}
+
+// Used for attributeName
+.cm-attribute {
+  @include themify() {
+    color: getThemifyVariable('highlight-style-attribute-color');
+  }
+}
+
+// Unassigned Lezer tags: literal, escape, color, url, unit, modifier, punctuation,
+// separator, bracket, angleBracket, squareBracket, paren, brace, content
+// contentSeparator, monospace, strikethrough, inserted, deleted, changed, invalid, meta,
+// documentMeta, annotation, processingInstruction, standard, special, macroName
+
+// CM6 uses EditorView.theme() instead of cm-s-* classes, so the p5 highlight styles
+// from the CM5 theme files do not apply. These rules replicate them for CM6.
+.cm-p5-function,
+.cm-p5-function .cm-variable {
+  @include themify() {
+    color: getThemifyVariable('highlight-style-variable-color');
+    font-weight: bold;
+  }
+}
+
+.cm-p5-variable,
+.cm-p5-variable .cm-variable {
+  @include themify() {
+    color: getThemifyVariable('highlight-style-atom-color');
+  }
+}
+
+// Additional matching selection styling
+.cm-matchingBracket {
+  @include themify() {
+    outline: 1px solid getThemifyVariable('primary-text-color');
+    outline-offset: 1px;
+    background-color: transparent !important;
+  }
+}
+
+.cm-selectionMatch,
+.cm-searchMatch {
+  @include themify() {
+    background-color: getThemifyVariable(
+      'highlight-style-matching-selection-background-color'
+    );
+  }
+}
+
+.cm-searchMatch-selected {
+  @include themify() {
+    background-color: getThemifyVariable(
+      'highlight-style-matched-selection-background-color'
+    );
+  }
 }

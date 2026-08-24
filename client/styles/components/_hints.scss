@@ -1,276 +1,252 @@
 @use "sass:math";
 
-.CodeMirror-hints {
-  position: absolute;
-  z-index: 10;
-  overflow: hidden;
-  list-style: none;
-
-  margin: 0;
-  padding: 0;
-
+.cm-tooltip-autocomplete.CodeMirror-hints {
   box-shadow: 0 0 #{math.div(18, $base-font-size)}rem 0 rgba(0, 0, 0, 0.16);
-  border: #{math.div(1, $base-font-size)}rem solid #A6A6A6;
-
-  font-size: 100%;
+  border: #{math.div(1, $base-font-size)}rem solid #a6a6a6;
   font-family: Inconsolata, monospace;
-
-  width: 20rem;
-  max-height: 20rem;
-  overflow-y: auto;
-
-  transform-origin: top left;
+  font-size: 1rem;
+  z-index: 1001;
 
   @include themify() {
     background: getThemifyVariable('hint-background-color');
+    color: getThemifyVariable('hint-text-color');
+  }
 
-    .CodeMirror-hint {
+  ul {
+    @include themify() {
+      background: getThemifyVariable('hint-background-color');
+    }
+  }
+
+  li.CodeMirror-hint {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto #{math.div(40, $base-font-size)}rem;
+    align-items: center;
+    min-height: #{math.div(24, $base-font-size)}rem;
+    font-weight: 500;
+
+    @include themify() {
+      background: getThemifyVariable('hint-background-color');
       color: getThemifyVariable('hint-text-color');
-      border-bottom: #{math.div(1, $base-font-size)}rem solid getThemifyVariable('hint-item-border-bottom-color');
+      border-bottom: #{math.div(1, $base-font-size)}rem solid
+        getThemifyVariable('hint-item-border-bottom-color');
     }
 
-    .hint-container {
-      display: flex;
-      align-items: center;
-      flex-direction: column;
-      justify-content: center;
-      width: 100%;
-      height: 100%;
-
-      // Widen the entire row only if a warning is present
-      &.has-warning {
-        width: 100%; // Let it fill the parent .CodeMirror-hint width
-        max-width: 24rem;
+    &:hover:not([aria-selected='true']) {
+      @include themify() {
+        background: getThemifyVariable('hint-item-hover-background-color');
       }
     }
 
-    .hint-main {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-grow: 1;
-      padding: 0 0.5rem;
-      width: 100%;
-      height: 100%;
-      // position: relative; // optional, only if you want absolutely-positioned children
+    &[aria-selected='true'] {
+      @include themify() {
+        background: getThemifyVariable('hint-item-active-background-color');
+        color: getThemifyVariable('hint-item-active-text-color');
+        outline: getThemifyVariable('hint-item-active-outline');
+        outline-offset: getThemifyVariable('hint-item-active-outline-offset');
+      }
+
+      .cm-completionKind {
+        @include themify() {
+          color: getThemifyVariable('hint-item-active-type-text-color');
+        }
+      }
+
+      .cm-completionMatchedText {
+        color: inherit;
+      }
     }
 
-    .hint-main a {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 2rem;
-      height: 100%;
-      padding: 0;
-      // margin-left: auto;
-      text-align: center;
-      text-decoration: none;
-      font-size: 1.2rem;
+    &.blacklisted {
+      height: auto;
+      min-height: 3.2rem; // enough to show the warning + content
     }
+  }
 
-    .hint-name {
-      font-size: 1.2rem;
-      font-weight: bold;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+  .cm-completionLabel {
+    grid-column: 1;
+    justify-self: start;
+    margin-left: #{math.div(6, $base-font-size)}rem;
+    line-height: 1.1;
+    font-weight: bold;
+    color: inherit;
+    background: transparent;
+    padding: 0 0.5rem;
+  }
 
-    .hint-type {
-      font-size: 1rem;
-      font-weight: normal;
-      color: #999;
-      margin-left: 1rem;
-      margin-right: 2.5rem; // leaves space for the arrow icon
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
+  .cm-completionMatchedText {
+    color: inherit;
+    text-decoration: none;
+    font-weight: inherit;
+  }
 
-    // Warning box
-    .blacklist-warning {
-      background-color: #fff3cd;
-      border: 1px solid #ffc107;
-      color: #856404;
-      padding: 6px 10px;
-      border-radius: 4px;
-      font-size: 0.85rem;
-      margin: 0.25rem 0.5rem 0 0.5rem;
-      width: calc(100% - 1rem); // Match padding
-      box-sizing: border-box;
-    }
-  
-    .fun-name, .obj-name {
-      color: getThemifyVariable('hint-fun-text-color');
-    }
-  
-    .var-name, .boolean-name {
-      color: getThemifyVariable('hint-var-text-color');
-    }
+  .cm-completionDetail {
+    display: none;
+  }
 
-    .keyword-name {
-      color: getThemifyVariable('hint-keyword-text-color');
-    }
-  
-    .hint-type {
+  .cm-completionKind {
+    grid-column: 2;
+    justify-self: end;
+    padding-right: #{math.div(28, $base-font-size)}rem;
+    font-size: 0.8rem;
+
+    @include themify() {
       color: getThemifyVariable('hint-type-text-color');
-      margin-right: #{math.div(10, $base-font-size)}rem;
     }
-  
-    a {
-      color: getThemifyVariable('hint-arrow-color');
-      background: getThemifyVariable('hint-arrow-background-color');
+  }
 
-      &:hover, &:active, &.focused-hint-link {
+  .cm-completionRefLink {
+    grid-column: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: stretch;
+    width: 75%;
+    text-decoration: none;
+
+    @include themify() {
+      background: getThemifyVariable('hint-arrow-background-color');
+      color: getThemifyVariable('hint-arrow-color');
+    }
+
+    &:hover,
+    &:active,
+    &.focused-hint-link {
+      @include themify() {
         background: getThemifyVariable('hint-arrow-background-active-color');
       }
+    }
 
-      &.focused-hint-link {
-        outline: #{math.div(3, $base-font-size)}rem solid getThemifyVariable('hint-arrow-focus-outline-color');
+    &.focused-hint-link {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      align-self: stretch;
+
+      @include themify() {
+        outline: #{math.div(3, $base-font-size)}rem solid
+          getThemifyVariable('hint-arrow-focus-outline-color');
         outline-offset: #{math.div(-3, $base-font-size)}rem;
       }
     }
+  }
 
-    .no-link-placeholder {
+  .cm-completionRefLink--disabled,
+  li:not(.has-doc-link) .cm-completionRefLink {
+    @include themify() {
       background: getThemifyVariable('hint-no-link-background-color');
-      pointer-events: none;
+      color: getThemifyVariable('hint-arrow-color');
     }
-  
-    li.CodeMirror-hint-active:not(.unfocused) {
-      background: getThemifyVariable('hint-item-active-background-color');
-      outline: getThemifyVariable('hint-item-active-outline');
-      outline-offset: getThemifyVariable('hint-item-active-outline-offset');
+  }
 
-      // .fun-item {
-      //   border-bottom: #{2 / $base-font-size}rem solid getThemifyVariable('hint-fun-active-border-bottom-color');
-      // }
+  // label colors
+  li.hint-type-method:not([aria-selected='true']),
+  li.hint-type-obj:not([aria-selected='true']) {
+    .cm-completionLabel,
+    .cm-completionMatchedText {
+      @include themify() {
+        color: getThemifyVariable('hint-fun-text-color');
+      }
+    }
+  }
 
-      // .var-item {
-      //   border-bottom: #{2 / $base-font-size}rem solid getThemifyVariable('hint-var-active-border-bottom-color');
-      // }
+  li.hint-type-variable:not([aria-selected='true']),
+  li.hint-type-constant:not([aria-selected='true']),
+  li.hint-type-boolean:not([aria-selected='true']) {
+    .cm-completionLabel,
+    .cm-completionMatchedText {
+      @include themify() {
+        color: getThemifyVariable('hint-var-text-color');
+      }
+    }
+  }
 
-      .hint-name {
+  li.hint-type-keyword:not([aria-selected='true']) {
+    .cm-completionLabel,
+    .cm-completionMatchedText {
+      @include themify() {
+        color: getThemifyVariable('hint-keyword-text-color');
+      }
+    }
+  }
+
+  // highlighted completion label colors
+  li.hint-type-method[aria-selected='true'],
+  li.hint-type-obj[aria-selected='true'] {
+    .cm-completionLabel {
+      @include themify() {
+        background: getThemifyVariable('hint-fun-text-color');
+        color: getThemifyVariable('hint-item-active-text-color');
+        border-bottom: #{math.div(1, $base-font-size)}rem solid
+          getThemifyVariable('hint-fun-active-border-bottom-color');
+      }
+    }
+  }
+
+  li.hint-type-variable[aria-selected='true'],
+  li.hint-type-constant[aria-selected='true'],
+  li.hint-type-boolean[aria-selected='true'] {
+    .cm-completionLabel {
+      @include themify() {
+        background: getThemifyVariable('hint-var-text-color');
+        color: getThemifyVariable('hint-item-active-text-color');
+        border-bottom: #{math.div(1, $base-font-size)}rem solid
+          getThemifyVariable('hint-var-active-border-bottom-color');
+      }
+    }
+  }
+
+  li.hint-type-keyword[aria-selected='true'] {
+    .cm-completionLabel {
+      @include themify() {
+        background: getThemifyVariable('hint-keyword-text-color');
         color: getThemifyVariable('hint-item-active-text-color');
       }
-
-      .fun-name, .obj-name {
-        background-color: getThemifyVariable('hint-fun-text-color');
-      }
-    
-      .var-name, .boolean-name {
-        background-color: getThemifyVariable('hint-var-text-color');
-      }
-
-      .keyword-name {
-        background-color: getThemifyVariable('hint-keyword-text-color');
-      }
-  
-      .hint-type, .plain-hint-item {
-        color: getThemifyVariable('hint-item-active-type-text-color');
-      }
-    }
-  
-    .CodeMirror-hint:hover:not(.CodeMirror-hint-active) {
-      background: getThemifyVariable('hint-item-hover-background-color');
     }
   }
 
-  .CodeMirror-hint {
-    display: flex;
+  .cm-completionWarning {
+    grid-column: 1 / 4;
+    display: inline-flex;
     align-items: center;
-    justify-content: space-between;
+    gap: 0.35rem;
+    width: fit-content;
+    margin: 0.35rem 0.75rem 0.5rem 0.75rem;
+    padding: 0.32rem 0.55rem;
+    border: 1px solid #d9a300;
+    border-radius: 0.45rem;
+    background: #f3e7b7;
+    color: #9a6b00;
+    font-size: 0.8rem;
+    line-height: 1.1;
+    white-space: nowrap;
+  }
 
-    position: relative;
-    margin: 0;
-    padding: 0;
-    height: 2rem;
-    white-space: pre;
-    cursor: pointer;
+  .cm-completionWarningIcon {
+    flex: 0 0 auto;
+    font-size: 1rem;
+  }
 
-    &:has(.focused-hint-link) {
-      z-index: 999;
-    }
+  .cm-completionWarningText {
+    line-height: 1.1;
+  }
 
-    &:only-child, &:last-child {
-      border-bottom: none !important;
+  .cm-ghostCompletion {
+    @include themify() {
+      color: getThemifyVariable('hint-inline-text-color');
     }
+  }
 
-    p {
-      display: flex;
-      width: 100%;
-      height: 100%;
+  .cm-ghostCompletion.cm-ghostCompletion--light {
+    @include themify() {
+      color: getThemifyVariable('hint-inline-text-color-light');
     }
-  
-    .hint-name, .plain-hint-item {
-      display: flex;
-      align-items: center;
-      padding: 0 0.5rem;
-      width: min-content;
-      font-size: 1.2rem;
-      line-height: 100%;
-      font-weight: bold;
-    }
-  
-    .hint-type {
-      margin: 0.5rem 2.4rem 0.5rem auto;
-      font-size: 1rem;
-      line-height: 100%;
-      font-weight: normal;
-    }
+  }
 
-    .hint-hidden {
+  .hint-hidden {
+    @include themify() {
       @extend %hidden-element;
-    }
-  
-    a, .no-link-placeholder {
-      // position: absolute;
-      top: 0;
-      right: 0;
-      height: 100%;
-      width: calc(2rem - #{math.div(1, $base-font-size)}rem);
-      margin: 0;
-      padding-top: 0.4rem;
-      font-size: 1.2rem;
-      line-height: 100%;
-      text-align: center;
-      outline: none;
-      z-index: 1;
-    }
-  
-    a:focus, a:active {
-      outline: 0;
+      display: none;
     }
   }
-
-  .CodeMirror-hint.blacklisted {
-    height: auto;
-    min-height: 3.2rem; // enough to show the warning + content
-  }
-}
-
-// Inline hinter
-.CodeMirror-widget {
-  line-height: inherit;
-
-  @include themify() {
-    .autocomplete-inline-hinter {
-      // make the border left look like a cursor and animate like a cursor
-      // border-left: #{1.2 / $base-font-size}rem solid getThemifyVariable(hint-inline-text-color);
-      // animation: inline-hint-caret-blink 1s step-end infinite;
-      pointer-events: none;
-
-      .inline-hinter-suggestion {
-        color: getThemifyVariable(hint-inline-text-color);
-        font-style: italic;
-      }
-
-      .inline-hinter-suggestion-light {
-        color: getThemifyVariable(hint-inline-text-color-light);
-        font-style: italic;
-      }
-    }
-  }
-}
-
-@keyframes inline-hint-caret-blink {
-  50% { border-color: transparent; }
 }

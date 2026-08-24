@@ -2,9 +2,7 @@ import blobUtil from 'blob-util';
 import PropTypes from 'prop-types';
 import React, { useRef, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
-import loopProtect from 'loop-protect';
-import { JSHINT } from 'jshint';
-import decomment from 'decomment';
+import { jsPreprocess } from './jsPreprocess';
 import { resolvePathToFile } from '../../../server/utils/filePath';
 import { getConfig } from '../../utils/getConfig';
 import {
@@ -34,6 +32,10 @@ const Frame = styled.iframe`
   `}
 `;
 
+function getHtmlFile(files) {
+  return files.filter((file) => file.name.match(/.*\.html$/i))[0];
+}
+
 function resolveCSSLinksInString(content, files) {
   let newContent = content;
   let cssFileStrings = content.match(STRING_REGEX);
@@ -56,23 +58,9 @@ function resolveCSSLinksInString(content, files) {
   return newContent;
 }
 
-function jsPreprocess(jsText) {
-  let newContent = jsText;
-  // check the code for js errors before sending it to strip comments
-  // or loops.
-  JSHINT(newContent);
-
-  if (JSHINT.errors.length === 0) {
-    newContent = decomment(newContent, {
-      ignore: /\/\/\s*noprotect/g,
-      space: true
-    });
-    newContent = loopProtect(newContent);
-  }
-  return newContent;
-}
-
 function resolveJSLinksInString(content, files) {
+  const indexFile = getHtmlFile(files);
+  const indexSrc = indexFile?.content;
   let newContent = content;
   let jsFileStrings = content.match(STRING_REGEX);
   jsFileStrings = jsFileStrings || [];
@@ -98,7 +86,7 @@ function resolveJSLinksInString(content, files) {
     }
   });
 
-  return jsPreprocess(newContent);
+  return jsPreprocess(newContent, indexSrc);
 }
 
 function resolveScripts(sketchDoc, files) {
@@ -184,11 +172,11 @@ function resolveJSAndCSSLinks(files) {
   return newFiles;
 }
 
-function addLoopProtect(sketchDoc) {
+function addLoopProtect(sketchDoc, indexSrc) {
   const scriptsInHTML = sketchDoc.getElementsByTagName('script');
   const scriptsInHTMLArray = Array.prototype.slice.call(scriptsInHTML);
   scriptsInHTMLArray.forEach((script) => {
-    script.innerHTML = jsPreprocess(script.innerHTML); // eslint-disable-line
+    script.innerHTML = jsPreprocess(script.innerHTML, indexSrc); // eslint-disable-line
   });
 }
 
@@ -200,6 +188,8 @@ function injectLocalFiles(files, htmlFile, options) {
   const resolvedFiles = resolveJSAndCSSLinks(files);
   const parser = new DOMParser();
   const sketchDoc = parser.parseFromString(htmlFile.content, 'text/html');
+  const indexFile = getHtmlFile(files);
+  const indexSrc = indexFile?.content;
 
   const base = sketchDoc.createElement('base');
   base.href = `${window.origin}${basePath}${basePath.length > 1 && '/'}`;
@@ -247,14 +237,10 @@ p5.prototype.registerMethod('afterSetup', p5.prototype.ensureAccessibleCanvas);`
     window.objectPaths = ${JSON.stringify(objectPaths)};
     window.editorOrigin = '${getConfig('EDITOR_URL')}';
   `;
-  addLoopProtect(sketchDoc);
+  addLoopProtect(sketchDoc, indexSrc);
   sketchDoc.head.prepend(consoleErrorsScript);
 
   return `<!DOCTYPE HTML>\n${sketchDoc.documentElement.outerHTML}`;
-}
-
-function getHtmlFile(files) {
-  return files.filter((file) => file.name.match(/.*\.html$/i))[0];
 }
 
 function EmbedFrame({ files, isPlaying, basePath, gridOutput, textOutput }) {

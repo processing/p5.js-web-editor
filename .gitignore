@@ -4,6 +4,7 @@
 .env.staging
 .vscode/
 node_modules/
+minio/
 npm-debug.log
 dump.rdb
 static/dist/
@@ -24,3 +25,10 @@ duplicates.json
 coverage
 
 *.tsbuildinfo
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/

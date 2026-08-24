@@ -5,7 +5,8 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { removeFromCollection } from '../../IDE/actions/collections';
 import { formatDateToString } from '../../../utils/formatDate';
-import RemoveIcon from '../../../images/close.svg';
+import { TableDropdown } from '../../../components/Dropdown/TableDropdown';
+import { MenuItem } from '../../../components/Dropdown/MenuItem';
 
 const CollectionItemRow = ({ collection, item, isOwner }) => {
   const { t } = useTranslation();
@@ -46,15 +47,16 @@ const CollectionItemRow = ({ collection, item, isOwner }) => {
       <th scope="row">{name}</th>
       <td>{formatDateToString(item.createdAt)}</td>
       <td>{sketchOwnerUsername}</td>
-      <td className="collection-row__action-column">
+      <td className="sketch-list__dropdown-column">
         {isOwner && (
-          <button
-            className="collection-row__remove-button"
-            onClick={handleSketchRemove}
-            aria-label={t('Collection.SketchRemoveARIA')}
+          <TableDropdown
+            aria-label={t('SketchList.ToggleLabelARIA')}
+            className="collection-item__dropdown"
           >
-            <RemoveIcon focusable="false" aria-hidden="true" />
-          </button>
+            <MenuItem onClick={handleSketchRemove}>
+              {t('Collection.SketchRemoveLabel')}
+            </MenuItem>
+          </TableDropdown>
         )}
       </td>
     </tr>

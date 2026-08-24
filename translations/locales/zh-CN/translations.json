@@ -48,7 +48,7 @@
     }
   },
   "Banner": {
-    "Copy": "<bold>Donate Today!</bold> Support p5.js and the Processing Foundation."
+    "Copy": "<bold>p5.js v2 is now the default</bold>. If you teach with p5, check out this essential guide!"
   },
   "CodemirrorFindAndReplace": {
     "ToggleReplace": "开关替换选项",
@@ -438,6 +438,7 @@
     "AddSketch": "添加项目",
     "DeleteFromCollection": "您确定要从此集合中删除 {{name_sketch}} 吗？",
     "SketchDeleted": "项目已删除",
+    "SketchRemoveLabel": "Remove from Collection",
     "SketchRemoveARIA": "从集合中移除项目",
     "DescriptionPlaceholder": "添加描述",
     "Description": "描述",

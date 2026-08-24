@@ -2,84 +2,102 @@ const fs = require('fs');
 const process = require('process');
 const axios = require('axios');
 
-// const getDescription = (d) => {
-//   return d.split('\n')[0].replace('<p>', '');
-// };
+const VERSIONS = [
+  {
+    version: 'v1',
+    url: 'https://v1.p5js.org/reference/data.json'
+  },
+  {
+    version: 'v2',
+    url: 'https://p5js.org/reference/data.json'
+  }
+];
 
+// TODO: Currently this makes duplicate entries because
+// the default Javascript hinter also has these,
+// but should we keep them around for the p5 reference links?
 const reservedKeywords = [
-  { name: 'await', p5DocPath: false },
-  { name: 'break', p5DocPath: false },
-  { name: 'case', p5DocPath: false },
-  { name: 'catch', p5DocPath: false },
+  { name: 'await', p5DocPath: undefined },
   { name: 'class', p5DocPath: 'class' },
   { name: 'const', p5DocPath: 'const' },
-  { name: 'continue', p5DocPath: false },
-  { name: 'debugger', p5DocPath: false },
-  { name: 'default', p5DocPath: false },
-  { name: 'delete', p5DocPath: false },
-  { name: 'do', p5DocPath: false },
   { name: 'else', p5DocPath: 'if-else' },
-  { name: 'export', p5DocPath: false },
-  { name: 'extends', p5DocPath: false },
-  { name: 'finally', p5DocPath: false },
+  { name: 'export', p5DocPath: undefined },
   { name: 'for', p5DocPath: 'for' },
   { name: 'function', p5DocPath: 'function' },
   { name: 'if', p5DocPath: 'if-else' },
-  { name: 'import', p5DocPath: false },
-  { name: 'in', p5DocPath: false },
-  { name: 'instanceof', p5DocPath: false },
-  { name: 'new', p5DocPath: false },
   { name: 'return', p5DocPath: 'return' },
-  { name: 'super', p5DocPath: false },
-  { name: 'switch', p5DocPath: false },
-  { name: 'this', p5DocPath: false },
-  { name: 'throw', p5DocPath: false },
-  { name: 'try', p5DocPath: false },
-  { name: 'typeof', p5DocPath: false },
-  { name: 'var', p5DocPath: false },
-  { name: 'void', p5DocPath: false },
   { name: 'while', p5DocPath: 'while' },
-  { name: 'with', p5DocPath: false },
-  { name: 'yield', p5DocPath: false },
+  { name: 'with', p5DocPath: undefined },
   { name: 'let', p5DocPath: 'let' }
 ];
 
 const reservedObjects = [
-  { name: 'Array', p5DocPath: false },
-  { name: 'Boolean', p5DocPath: false },
-  { name: 'Date', p5DocPath: false },
-  { name: 'Error', p5DocPath: false },
-  { name: 'Function', p5DocPath: false },
+  { name: 'Array', p5DocPath: undefined },
+  { name: 'Boolean', p5DocPath: undefined },
+  { name: 'Date', p5DocPath: undefined },
+  { name: 'Error', p5DocPath: undefined },
+  { name: 'Function', p5DocPath: undefined },
   { name: 'JSON', p5DocPath: 'JSON' },
-  { name: 'Math', p5DocPath: false },
-  { name: 'Number', p5DocPath: false },
-  { name: 'Object', p5DocPath: false },
-  { name: 'RegExp', p5DocPath: false },
-  { name: 'String', p5DocPath: false },
-  { name: 'Promise', p5DocPath: false },
-  { name: 'Set', p5DocPath: false },
-  { name: 'Map', p5DocPath: false },
-  { name: 'Symbol', p5DocPath: false },
-  { name: 'WeakMap', p5DocPath: false },
-  { name: 'WeakSet', p5DocPath: false },
-  { name: 'ArrayBuffer', p5DocPath: false },
-  { name: 'DataView', p5DocPath: false },
-  { name: 'Int32Array', p5DocPath: false },
-  { name: 'Uint32Array', p5DocPath: false },
-  { name: 'Float32Array', p5DocPath: false },
-  { name: 'window', p5DocPath: false },
-  { name: 'document', p5DocPath: false },
-  { name: 'navigator', p5DocPath: false },
+  { name: 'Math', p5DocPath: undefined },
+  { name: 'Number', p5DocPath: undefined },
+  { name: 'Object', p5DocPath: undefined },
+  { name: 'RegExp', p5DocPath: undefined },
+  { name: 'String', p5DocPath: undefined },
+  { name: 'Promise', p5DocPath: undefined },
+  { name: 'Set', p5DocPath: undefined },
+  { name: 'Map', p5DocPath: undefined },
+  { name: 'Symbol', p5DocPath: undefined },
+  { name: 'WeakMap', p5DocPath: undefined },
+  { name: 'WeakSet', p5DocPath: undefined },
+  { name: 'ArrayBuffer', p5DocPath: undefined },
+  { name: 'DataView', p5DocPath: undefined },
+  { name: 'Int32Array', p5DocPath: undefined },
+  { name: 'Uint32Array', p5DocPath: undefined },
+  { name: 'Float32Array', p5DocPath: undefined },
+  { name: 'window', p5DocPath: undefined },
+  { name: 'document', p5DocPath: undefined },
+  { name: 'navigator', p5DocPath: undefined },
   { name: 'console', p5DocPath: 'console' },
-  { name: 'localStorage', p5DocPath: false },
-  { name: 'sessionStorage', p5DocPath: false },
-  { name: 'history', p5DocPath: false },
-  { name: 'location', p5DocPath: false }
+  { name: 'localStorage', p5DocPath: undefined },
+  { name: 'sessionStorage', p5DocPath: undefined },
+  { name: 'history', p5DocPath: undefined },
+  { name: 'location', p5DocPath: undefined }
 ];
 
-axios
-  .get('https://p5js.org/reference/data.json')
-  .then((response) => {
+function getKindLabel(type) {
+  switch (type) {
+    case 'method':
+      return 'fun';
+    case 'variable':
+      return 'var';
+    case 'constant':
+      return 'const';
+    case 'keyword':
+      return 'kw';
+    case 'boolean':
+      return 'bool';
+    case 'obj':
+      return 'obj';
+    default:
+      return type;
+  }
+}
+
+// create ghost text preview for methods
+function makePreview(label, type, params = []) {
+  const formattedParams = params
+    .map((param) => (param.o ? `[${param.p}]` : param.p))
+    .join(', ');
+
+  if (type === 'method') {
+    return `${label}(${formattedParams})`;
+  }
+
+  return label;
+}
+
+function generateHinter({ version, url }) {
+  return axios.get(url).then((response) => {
     const { data } = response;
 
     const arr = data.classitems;
@@ -92,49 +110,60 @@ axios
         obj.name &&
         obj.itemtype
       ) {
-        let type;
+        let itemType;
         let params = [];
         if (obj.itemtype === 'method') {
-          type = 'fun';
+          itemType = 'method';
 
           params = obj.params?.map((param) => ({
             p: param.name, // param name
             o: param.optional ?? false // optional
           }));
         } else if (obj.itemtype === 'property') {
-          type = 'var';
-        } else type = 'attr';
+          itemType = obj.module === 'Constants' ? 'constant' : 'variable';
+        } else itemType = 'attr';
 
         p5Keywords.push({
-          text: obj.name,
-          type,
+          label: obj.name,
+          type: itemType,
+          kindLabel: getKindLabel(itemType),
           params,
-          p5: true
+          preview: makePreview(obj.name, itemType, params),
+          p5DocPath: obj.name
         });
       }
     });
 
     ['true', 'false'].forEach((bol) => {
       p5Keywords.push({
-        text: bol,
+        label: bol,
         type: 'boolean',
-        p5: 'boolean'
+        kindLabel: 'bool',
+        params: [],
+        preview: bol,
+        p5DocPath: 'boolean'
       });
     });
 
     reservedKeywords.forEach((keyword) => {
       p5Keywords.push({
-        text: keyword.name,
+        label: keyword.name,
         type: 'keyword',
-        p5: keyword.p5DocPath
+        kindLabel: 'keyword',
+        params: [],
+        preview: keyword.name,
+        p5DocPath: keyword.p5DocPath
       });
     });
 
     reservedObjects.forEach((keyword) => {
       p5Keywords.push({
-        text: keyword.name,
+        label: keyword.name,
         type: 'obj',
-        p5: keyword.p5DocPath
+        kindLabel: 'obj',
+        params: [],
+        preview: keyword.name,
+        p5DocPath: keyword.p5DocPath
       });
     });
 
@@ -144,19 +173,28 @@ axios
     generatedCode +=
       '/* generated: do not edit! helper file for hinter.' +
       ' generated by update-p5-hinter script */\n';
-    generatedCode += `exports.p5Hinter = ${keywords};\n`;
+    generatedCode += `exports.p5Hinter${version.toUpperCase()} = ${keywords};\n`;
 
-    fs.writeFile(
-      `${process.cwd()}/client/utils/p5-hinter.js`,
-      generatedCode,
-      (error) => {
-        if (error) {
-          console.log("Error!! Couldn't write to the file", error);
-        } else {
-          console.log('Hinter files updated successfully');
+    return new Promise((resolve, reject) => {
+      fs.writeFile(
+        `${process.cwd()}/client/utils/p5-hinter-${version}.js`,
+        generatedCode,
+        (error) => {
+          if (error) {
+            console.log("Error!! Couldn't write to the file", error);
+            reject(error);
+          } else {
+            resolve();
+          }
         }
-      }
-    );
+      );
+    });
+  });
+}
+
+Promise.all(VERSIONS.map(generateHinter))
+  .then(() => {
+    console.log('Hinter files updated successfully');
   })
   .catch((err) => {
     throw err;
