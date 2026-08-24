@@ -21,7 +21,7 @@ import {
   setLinewrap,
   setPreferencesTab
 } from '../../actions/preferences';
-import { majorVersion, p5URL, useP5Version } from '../../hooks/useP5Version';
+import { majorVersion, p5URL, useP5Version } from '../../hooks';
 import { p5SoundURL } from '../../../../../common/p5URLs';
 import VersionPicker from '../VersionPicker';
 import { updateFileContent } from '../../actions/files';

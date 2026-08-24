@@ -33,7 +33,7 @@ import {
 import IDEOverlays from '../components/IDEOverlays';
 import { useIsMobile } from '../hooks';
 import Banner from '../components/Banner';
-import { P5VersionProvider } from '../hooks/useP5Version';
+import { P5VersionProvider } from '../hooks';
 import { stopSketch } from '../actions/ide';
 
 const BANNER_DISMISS_KEY = 'bannerLastDismissedAt';

@@ -11,8 +11,9 @@ import {
   p5DataAddonURL,
   p5URLTemplate
 } from '../../../../common/p5URLs';
+import { RootState } from '../../../reducers';
 
-export const majorVersion = (version) => version.split('.')[0];
+export const majorVersion = (version: string) => version.split('.')[0];
 
 export const p5SoundURLOld = p5SoundURLOldTemplate.replace(
   '$VERSION',
@@ -22,10 +23,10 @@ export const p5URL = p5URLTemplate.replace('$VERSION', currentP5Version);
 
 const P5VersionContext = React.createContext({});
 
-export function P5VersionProvider(props) {
-  const files = useSelector((state) => state.files);
+export function P5VersionProvider(props: { children: React.ReactNode }) {
+  const files = useSelector((state: RootState) => state.files);
   const indexFile = files.find(
-    (file) =>
+    (file: { fileType: string; name: string; filePath: string }) =>
       file.fileType === 'file' &&
       file.name === 'index.html' &&
       file.filePath === ''
@@ -83,9 +84,9 @@ export function P5VersionProvider(props) {
           /^https?:\/\/cdn.jsdelivr.net\/npm\/p5.sound@(.+)\/dist\/p5\.sound(?:\.min)?\.js$/
         ].some((regex) => regex.exec(s.getAttribute('src') || ''))
       );
-      const setP5Sound = function (enabled) {
+      const setP5Sound = function (enabled: boolean) {
         if (!enabled && p5SoundNode) {
-          p5SoundNode.parentNode.removeChild(p5SoundNode);
+          p5SoundNode.parentNode?.removeChild(p5SoundNode);
         } else if (enabled && !p5SoundNode) {
           const newNode = document.createElement('script');
           newNode.setAttribute(
@@ -94,23 +95,23 @@ export function P5VersionProvider(props) {
               ? p5SoundURL
               : p5SoundURLOldTemplate.replace('$VERSION', version)
           );
-          scriptNode.parentNode.insertBefore(newNode, scriptNode.nextSibling);
+          scriptNode.parentNode?.insertBefore(newNode, scriptNode.nextSibling);
         }
         return serializeResult();
       };
 
-      const setP5SoundURL = function (url) {
+      const setP5SoundURL = function (url: string) {
         if (p5SoundNode) {
           p5SoundNode.setAttribute('src', url);
         } else {
           const newNode = document.createElement('script');
           newNode.setAttribute('src', url);
-          scriptNode.parentNode.insertBefore(newNode, scriptNode.nextSibling);
+          scriptNode.parentNode?.insertBefore(newNode, scriptNode.nextSibling);
         }
         return serializeResult();
       };
 
-      const replaceVersion = function (newVersion) {
+      const replaceVersion = function (newVersion: string) {
         const file = minified ? 'p5.min.js' : 'p5.js';
         scriptNode.setAttribute(
           'src',
@@ -138,13 +139,13 @@ export function P5VersionProvider(props) {
       const p5PreloadAddonNode = [
         ...dom.documentElement.querySelectorAll('script')
       ].find((s) => s.getAttribute('src') === p5PreloadAddonURL);
-      const setP5PreloadAddon = function (enabled) {
+      const setP5PreloadAddon = function (enabled: boolean) {
         if (!enabled && p5PreloadAddonNode) {
-          p5PreloadAddonNode.parentNode.removeChild(p5PreloadAddonNode);
+          p5PreloadAddonNode.parentNode?.removeChild(p5PreloadAddonNode);
         } else if (enabled && !p5PreloadAddonNode) {
           const newNode = document.createElement('script');
           newNode.setAttribute('src', p5PreloadAddonURL);
-          scriptNode.parentNode.insertBefore(newNode, scriptNode.nextSibling);
+          scriptNode.parentNode?.insertBefore(newNode, scriptNode.nextSibling);
         }
         return serializeResult();
       };
@@ -152,13 +153,13 @@ export function P5VersionProvider(props) {
       const p5ShapesAddonNode = [
         ...dom.documentElement.querySelectorAll('script')
       ].find((s) => s.getAttribute('src') === p5ShapesAddonURL);
-      const setP5ShapesAddon = function (enabled) {
+      const setP5ShapesAddon = function (enabled: boolean) {
         if (!enabled && p5ShapesAddonNode) {
-          p5ShapesAddonNode.parentNode.removeChild(p5ShapesAddonNode);
+          p5ShapesAddonNode.parentNode?.removeChild(p5ShapesAddonNode);
         } else if (enabled && !p5ShapesAddonNode) {
           const newNode = document.createElement('script');
           newNode.setAttribute('src', p5ShapesAddonURL);
-          scriptNode.parentNode.insertBefore(newNode, scriptNode.nextSibling);
+          scriptNode.parentNode?.insertBefore(newNode, scriptNode.nextSibling);
         }
         return serializeResult();
       };
@@ -166,13 +167,13 @@ export function P5VersionProvider(props) {
       const p5DataAddonNode = [
         ...dom.documentElement.querySelectorAll('script')
       ].find((s) => s.getAttribute('src') === p5DataAddonURL);
-      const setP5DataAddon = function (enabled) {
+      const setP5DataAddon = function (enabled: boolean) {
         if (!enabled && p5DataAddonNode) {
-          p5DataAddonNode.parentNode.removeChild(p5DataAddonNode);
+          p5DataAddonNode.parentNode?.removeChild(p5DataAddonNode);
         } else if (enabled && !p5DataAddonNode) {
           const newNode = document.createElement('script');
           newNode.setAttribute('src', p5DataAddonURL);
-          scriptNode.parentNode.insertBefore(newNode, scriptNode.nextSibling);
+          scriptNode.parentNode?.insertBefore(newNode, scriptNode.nextSibling);
         }
         return serializeResult();
       };
@@ -206,10 +207,6 @@ export function P5VersionProvider(props) {
     </P5VersionContext.Provider>
   );
 }
-
-P5VersionProvider.propTypes = {
-  children: PropTypes.node.isRequired
-};
 
 export function useP5Version() {
   return useContext(P5VersionContext);

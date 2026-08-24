@@ -33,7 +33,7 @@ import { FolderIcon } from '../../../../common/icons';
 import { IconButton } from '../../../../common/IconButton';
 
 import useCodeMirror from './codemirror';
-import { useP5Version } from '../../hooks/useP5Version';
+import { useP5Version } from '../../hooks';
 
 import {
   addErrorDecoration,

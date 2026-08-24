@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import { prop } from '../../../theme';
-import { useP5Version } from '../hooks/useP5Version';
+import { useP5Version } from '../hooks';
 import { p5Versions } from '../../../../common/p5Versions';
 import { MenuItem } from '../../../components/Dropdown/MenuItem';
 import { DropdownMenu } from '../../../components/Dropdown/DropdownMenu';

@@ -6,7 +6,7 @@ import { openPreferences } from '../actions/ide';
 import { setPreferencesTab } from '../actions/preferences';
 import { prop } from '../../../theme';
 
-import { useP5Version } from '../hooks/useP5Version';
+import { useP5Version } from '../hooks';
 
 const VersionPickerButton = styled.button`
   color: ${prop('toolbarTextColor')} !important;
