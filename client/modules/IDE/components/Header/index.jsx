@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import useIsMobile from '../../hooks/useIsMobile';
+import { useIsMobile } from '../../hooks';
 
 import Nav from './Nav';
 import Toolbar from './Toolbar';

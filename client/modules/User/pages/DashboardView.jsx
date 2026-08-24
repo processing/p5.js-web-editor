@@ -22,7 +22,7 @@ import {
   DashboardTabSwitcher,
   TabKey
 } from '../components/DashboardTabSwitcher';
-import useIsMobile from '../../IDE/hooks/useIsMobile';
+import { useIsMobile } from '../../IDE/hooks';
 
 const DashboardView = () => {
   const isMobile = useIsMobile();

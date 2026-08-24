@@ -9,7 +9,7 @@ import {
 
 import DownFilledTriangleIcon from '../../images/down-filled-triangle.svg';
 import MoreIconSvg from '../../images/more.svg';
-import useIsMobile from '../../modules/IDE/hooks/useIsMobile';
+import { useIsMobile } from '../../modules/IDE/hooks';
 
 const DotsHorizontal = styled(MoreIconSvg)`
   transform: rotate(90deg);

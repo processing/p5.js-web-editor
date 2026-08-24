@@ -30,7 +30,7 @@ import {
 import { logoutUser } from '../../../User/actions';
 import { CmControllerContext } from '../../pages/IDEView';
 import MobileNav from './MobileNav';
-import useIsMobile from '../../hooks/useIsMobile';
+import { useIsMobile } from '../../hooks';
 
 const Nav = ({ layout }) => {
   const isMobile = useIsMobile();

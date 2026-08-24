@@ -31,7 +31,7 @@ import {
   PreviewWrapper
 } from '../components/Editor/MobileEditor';
 import IDEOverlays from '../components/IDEOverlays';
-import useIsMobile from '../hooks/useIsMobile';
+import { useIsMobile } from '../hooks';
 import Banner from '../components/Banner';
 import { P5VersionProvider } from '../hooks/useP5Version';
 import { stopSketch } from '../actions/ide';
