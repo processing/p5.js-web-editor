@@ -9,16 +9,19 @@ import { startSketch } from '../actions/ide';
 import {
   listen,
   dispatchMessage,
-  MessageTypes
+  MessageTypes,
+  Message
 } from '../../../utils/dispatcher';
 import useInterval from '../hooks/useInterval';
 import { RootPage } from '../../../components/RootPage';
+import { RootState } from '../../../reducers';
 
-function FullView() {
+export function FullView() {
   const dispatch = useDispatch();
-  const project = useSelector((state) => state.project);
+  const project = useSelector((state: RootState) => state.project);
   const [isRendered, setIsRendered] = useState(false);
-  const params = useParams();
+  // eslint-disable-next-line camelcase
+  const params = useParams<{ project_id: string; username: string }>();
 
   useEffect(() => {
     dispatch(getProject(params.project_id, params.username));
@@ -40,7 +43,7 @@ function FullView() {
     clearInterval();
   }
 
-  function handleMessageEvent(message) {
+  function handleMessageEvent(message: Message) {
     if (message.type === MessageTypes.REGISTER) {
       if (!isRendered) {
         setIsRendered(true);
@@ -74,5 +77,3 @@ function FullView() {
     </RootPage>
   );
 }
-
-export default FullView;

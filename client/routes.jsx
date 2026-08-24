@@ -5,7 +5,7 @@ import { Route as RouterRoute, Switch } from 'react-router-dom';
 
 import { App } from './modules/App/App';
 import IDEView from './modules/IDE/pages/IDEView';
-import FullView from './modules/IDE/pages/FullView';
+import { FullView } from './modules/IDE/pages/FullView';
 import { About } from './modules/About/pages/About';
 import { CodeOfConduct } from './modules/Legal/pages/CodeOfConduct';
 import { PrivacyPolicy } from './modules/Legal/pages/PrivacyPolicy';
