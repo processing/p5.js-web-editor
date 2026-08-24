@@ -132,6 +132,12 @@ function getSynchedProject(currentState, responseProject) {
   };
 }
 
+/**
+ * @param selectedFile { id: string, content: string } | null
+ * @param autosave boolean
+ * @param mobile boolean
+ * @returns
+ */
 export function saveProject(
   selectedFile = null,
   autosave = false,

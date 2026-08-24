@@ -11,16 +11,21 @@ import {
 import { showToast } from '../actions/toast';
 import { showErrorModal, showShareModal } from '../actions/ide';
 import { selectCanEditSketch } from '../selectors/users';
+import { RootState } from '../../../reducers';
 
-const useSketchActions = () => {
-  const unsavedChanges = useSelector((state) => state.ide.unsavedChanges);
-  const authenticated = useSelector((state) => state.user.authenticated);
-  const project = useSelector((state) => state.project);
-  const user = useSelector((state) => state.user);
+export const useSketchActions = () => {
+  const unsavedChanges = useSelector(
+    (state: RootState) => state.ide.unsavedChanges
+  );
+  const authenticated = useSelector(
+    (state: RootState) => state.user.authenticated
+  );
+  const project = useSelector((state: RootState) => state.project);
+  const user = useSelector((state: RootState) => state.user);
   const canEditProjectName = useSelector(selectCanEditSketch);
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const params = useParams();
+  const params = useParams<{ username: string }>();
 
   function newSketch() {
     if (!unsavedChanges) {
@@ -32,7 +37,9 @@ const useSketchActions = () => {
     }
   }
 
-  function saveSketch(cmController) {
+  function saveSketch(cmController: {
+    getContent: () => { id: string; content: string };
+  }) {
     if (authenticated) {
       dispatch(saveProject(cmController?.getContent()));
     } else {
@@ -52,7 +59,7 @@ const useSketchActions = () => {
     dispatch(showShareModal(project.id, project.name, username));
   }
 
-  function changeSketchName(name) {
+  function changeSketchName(name: string) {
     const newProjectName = name.trim();
     if (newProjectName.length > 0) {
       dispatch(setProjectName(newProjectName));
@@ -69,5 +76,3 @@ const useSketchActions = () => {
     canEditProjectName
   };
 };
-
-export default useSketchActions;
