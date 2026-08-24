@@ -96,6 +96,10 @@ test.describe.serial('sketch lifecycle', () => {
     await editor().click();
     await page.keyboard.press('ControlOrMeta+A');
     await page.keyboard.type(updatedCode, { delay: 5 });
+    // Wait for the unsaved changes indicator to appear, then save the sketch.
+    await expect(
+      page.getByRole('img', { name: 'Sketch has unsaved changes' })
+    ).toBeVisible();
     await page.keyboard.press('Control+S');
     await expect(page.getByText('Sketch saved.')).toBeVisible({
       timeout: 10_000
