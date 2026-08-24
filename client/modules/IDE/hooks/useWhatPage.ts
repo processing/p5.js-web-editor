@@ -1,13 +1,14 @@
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+import { RootState } from '../../../reducers';
 
 /**
  *
  * @returns {"home" | "myStuff" | "login" | "signup" | "account" | "examples"}
  */
-const useWhatPage = () => {
-  const username = useSelector((state) => state.user.username);
+export const useWhatPage = () => {
+  const username = useSelector((state: RootState) => state.user.username);
   const { pathname } = useLocation();
 
   const pageName = useMemo(() => {
@@ -26,5 +27,3 @@ const useWhatPage = () => {
 
   return pageName;
 };
-
-export default useWhatPage;
