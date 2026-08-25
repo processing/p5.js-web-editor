@@ -130,7 +130,7 @@ function getFileEmmetConfig(fileName) {
  *
  * Returns a "file state" object containing the CodeMirror state and compartments.
  */
-export function createNewFileState(filename, document, settings) {
+export function createNewFileState(filename, fileDocument, settings) {
   const {
     linewrap,
     lineNumbers,
@@ -140,7 +140,8 @@ export function createNewFileState(filename, document, settings) {
     onViewUpdate,
     referenceBaseUrl,
     fontSize,
-    p5Version
+    p5Version,
+    searchPanelCallback
   } = settings;
   const lineNumbersCpt = new Compartment();
   const lineWrappingCpt = new Compartment();
@@ -154,7 +155,7 @@ export function createNewFileState(filename, document, settings) {
   // across files via a shared module-level array.
   const mode = getFileMode(filename);
 
-  const keymaps = buildKeymaps(mode);
+  const keymaps = buildKeymaps(mode, searchPanelCallback);
 
   // https://github.com/codemirror/basic-setup/blob/main/src/codemirror.ts
   const extensions = [
@@ -171,7 +172,13 @@ export function createNewFileState(filename, document, settings) {
 
     // Everything below here should always be on.
     history(),
-    search(),
+    search({
+      createPanel: (view) => ({
+        // Create an empty search panel, the actual panel
+        // is rendered in the SearchPanel component.
+        dom: document.createElement('div')
+      })
+    }),
     // Highlight extensions
     highlightActiveLine(),
     highlightActiveLineGutter(),
@@ -240,8 +247,8 @@ export function createNewFileState(filename, document, settings) {
   const stateOptions = {
     extensions
   };
-  if (document) {
-    stateOptions.doc = document;
+  if (fileDocument) {
+    stateOptions.doc = fileDocument;
   }
 
   const cmState = EditorState.create(stateOptions);
