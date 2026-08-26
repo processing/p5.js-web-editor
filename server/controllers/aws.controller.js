@@ -271,6 +271,84 @@ export async function moveObjectToUserInS3(url, userId) {
   return `${s3Bucket}${userId}/${newFilename}`;
 }
 
+export async function deleteAllObjectsForUser(userId) {
+  try {
+    const params = {
+      Bucket: process.env.S3_BUCKET,
+      Prefix: `${userId}/`
+    };
+    const data = await s3Client.send(new ListObjectsCommand(params));
+    const keys = (data.Contents || []).map((object) => object.Key);
+    if (keys.length > 0) {
+      await deleteObjectsFromS3(keys);
+    }
+  } catch (error) {
+    if (error instanceof TypeError) {
+      return;
+    }
+    console.error('Error deleting all S3 objects for user: ', error);
+    throw error;
+  }
+}
+
+export async function listObjectsInS3ForUser(userId) {
+  try {
+    let assets = [];
+    const params = {
+      Bucket: process.env.S3_BUCKET,
+      Prefix: `${userId}/`
+    };
+
+    const data = await s3Client.send(new ListObjectsCommand(params));
+
+    assets = data.Contents?.map((object) => ({
+      key: object.Key,
+      size: object.Size
+    }));
+
+    const projects = await Project.getProjectsForUserId(userId);
+    const projectAssets = [];
+    let totalSize = 0;
+
+    assets?.forEach((asset) => {
+      const name = asset.key.split('/').pop();
+      const foundAsset = {
+        key: asset.key,
+        name,
+        size: asset.size,
+        url: `${process.env.S3_BUCKET_URL_BASE}${asset.key}`
+      };
+      totalSize += asset.size;
+
+      const wasMatched = projects.some((project) =>
+        project.files.some((file) => {
+          if (!file.url) return false;
+          if (file.url.includes(asset.key)) {
+            foundAsset.name = file.name;
+            foundAsset.sketchName = project.name;
+            foundAsset.sketchId = project.id;
+            foundAsset.url = file.url;
+            return true;
+          }
+          return false;
+        })
+      );
+
+      if (wasMatched) {
+        projectAssets.push(foundAsset);
+      }
+    });
+
+    return { assets: projectAssets, totalSize };
+  } catch (error) {
+    if (error instanceof TypeError) {
+      return null;
+    }
+    console.error('Got an error: ', error);
+    throw error;
+  }
+}
+
 export async function listObjectsInS3ForUserRequestHandler(req, res) {
   const { username } = req.user;
 
