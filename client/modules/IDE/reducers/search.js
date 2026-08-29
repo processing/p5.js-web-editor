@@ -1,15 +1,24 @@
-import * as ActionTypes from '../../../constants';
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   collectionSearchTerm: '',
   sketchSearchTerm: ''
 };
 
-export default (state = initialState, action) => {
-  switch (action.type) {
-    case ActionTypes.SET_SEARCH_TERM:
-      return { ...state, [`${action.scope}SearchTerm`]: action.query };
-    default:
-      return state;
+const searchSlice = createSlice({
+  name: 'search',
+  initialState,
+  reducers: {
+    setSearchTerm: {
+      reducer: (state, action) => {
+        const { scope, query } = action.payload;
+        state[`${scope}SearchTerm`] = query;
+      },
+      prepare: (scope, query) => ({ payload: { scope, query } })
+    }
   }
-};
+});
+
+export const { setSearchTerm } = searchSlice.actions;
+
+export default searchSlice.reducer;
