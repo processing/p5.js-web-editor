@@ -5,4 +5,16 @@
     max-height: 70vh;
     overflow-y: auto;
   }
+  .dz-preview.dz-success {
+    .dz-error-message {
+      display: block !important;
+      opacity: 1 !important;
+      background: #4caf50 !important;
+      color: white !important;
+
+      &:after {
+        border-bottom: 6px solid #4caf50 !important;
+      }
+    }
+  }
 }
