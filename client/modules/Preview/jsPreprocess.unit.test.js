@@ -43,6 +43,32 @@ describe('jsPreprocess', () => {
       const result = jsPreprocess(code, '');
       expect(result).toContain('window.loopProtect.hit');
     });
+
+    it('adds loop protection to nested for loops without braces', () => {
+      // Regression: inner loop of `for (...) for (...) stmt` is not directly in
+      // a BlockStatement, so its timer variable declaration was silently dropped
+      // while the check still referenced it → ReferenceError: _LP0 is not defined.
+      const code = `
+        for (let h = 0; h < 40; h++)
+          for (let i = 0; i < 50; i++)
+            doSomething();
+      `;
+      const result = jsPreprocess(code, '');
+      expect(result).toContain('window.loopProtect.hit');
+      // Both loops must be protected — two hit-checks in output
+      expect(result.match(/window\.loopProtect\.hit/g).length).toBe(2);
+    });
+
+    it('adds loop protection to a while loop nested in a for loop without braces', () => {
+      const code = `
+        for (let h = 0; h < 10; h++)
+          while (condition())
+            doSomething();
+      `;
+      const result = jsPreprocess(code, '');
+      expect(result).toContain('window.loopProtect.hit');
+      expect(result.match(/window\.loopProtect\.hit/g).length).toBe(2);
+    });
   });
 
   describe('shader strings', () => {
