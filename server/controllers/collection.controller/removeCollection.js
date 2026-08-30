@@ -1,6 +1,6 @@
 import Collection from '../../models/collection';
 
-export default function createCollection(req, res) {
+export default function removeCollection(req, res) {
   const { id: collectionId } = req.params;
   const owner = req.user._id;
 
