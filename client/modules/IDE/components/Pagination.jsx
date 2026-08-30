@@ -9,14 +9,18 @@ const Pagination = ({
   onPageChange,
   limit,
   totalSketches,
+  totalCollections,
   isOverlay
 }) => {
   if (totalPages <= 1) return null;
 
   const { t } = useTranslation();
 
-  const startSketch = (page - 1) * limit + 1;
-  const endSketch = Math.min(page * limit, totalSketches);
+  const totalItems = Number.isFinite(totalSketches)
+    ? totalSketches
+    : totalCollections;
+  const startItem = totalItems > 0 ? (page - 1) * limit + 1 : 0;
+  const endItem = totalItems > 0 ? Math.min(page * limit, totalItems) : 0;
 
   return (
     <div className={`pagination ${isOverlay ? 'pagination-overlay' : ''}`}>
@@ -35,9 +39,9 @@ const Pagination = ({
         <li className="pagination-info">
           <span>
             <span className="bold-text">
-              {startSketch} - {endSketch}
+              {startItem} - {endItem}
             </span>{' '}
-            {t('Pagination.Of')} {totalSketches}
+            {t('Pagination.Of')} {totalItems}
           </span>
         </li>
         <li
@@ -66,11 +70,14 @@ Pagination.propTypes = {
   totalPages: PropTypes.number.isRequired,
   onPageChange: PropTypes.func.isRequired,
   limit: PropTypes.number.isRequired,
-  totalSketches: PropTypes.number.isRequired,
+  totalSketches: PropTypes.number,
+  totalCollections: PropTypes.number,
   isOverlay: PropTypes.bool
 };
 
 Pagination.defaultProps = {
+  totalCollections: undefined,
+  totalSketches: undefined,
   isOverlay: false
 };
 
