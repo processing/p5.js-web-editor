@@ -4,8 +4,6 @@ import { metaKeyName, metaKey } from '../../../utils/metaKey';
 
 function KeyboardShortcutModal() {
   const { t } = useTranslation();
-  const replaceCommand =
-    metaKey === 'Ctrl' ? `${metaKeyName} + H` : `${metaKeyName} + ⌥ + F`;
   const newFileCommand =
     metaKey === 'Ctrl' ? `${metaKeyName} + Alt + N` : `${metaKeyName} + ⌥ + N`;
   const renameCommand = metaKey === 'Ctrl' ? 'F2' : 'Ctrl + F2';
@@ -55,10 +53,6 @@ function KeyboardShortcutModal() {
           <span>
             {t('KeyboardShortcuts.CodeEditing.FindPreviousTextMatch')}
           </span>
-        </li>
-        <li className="keyboard-shortcut-item">
-          <span className="keyboard-shortcut__command">{replaceCommand}</span>
-          <span>{t('KeyboardShortcuts.CodeEditing.ReplaceTextMatch')}</span>
         </li>
         <li className="keyboard-shortcut-item">
           <span className="keyboard-shortcut__command">{metaKeyName} + [</span>

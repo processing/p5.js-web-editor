@@ -257,7 +257,7 @@
     "SublimeText": "Sublime Text shortcuts",
     "CodeEditing": {
       "Tidy": "Tidy",
-      "FindText": "Find Text",
+      "FindText": "Find / Replace Text",
       "FindNextMatch": "Find Next Match",
       "FindPrevMatch": "Find Previous Match",
       "ReplaceTextMatch": "Replace Text Match",
