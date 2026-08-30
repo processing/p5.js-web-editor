@@ -9,6 +9,21 @@ function KeyboardShortcutModal() {
   const newFileCommand =
     metaKey === 'Ctrl' ? `${metaKeyName} + Alt + N` : `${metaKeyName} + ⌥ + N`;
   const renameCommand = metaKey === 'Ctrl' ? 'F2' : 'Ctrl + F2';
+  const selectNextOccurrenceCommand = `${metaKeyName} + D`;
+  const addCursorAboveCommand =
+    metaKey === 'Ctrl'
+      ? `${metaKeyName} + Alt + Up`
+      : `${metaKeyName} + ⌥ + Up`;
+  const addCursorBelowCommand =
+    metaKey === 'Ctrl'
+      ? `${metaKeyName} + Alt + Down`
+      : `${metaKeyName} + ⌥ + Down`;
+  const deleteLineCommand = `${metaKeyName} + Shift + K`;
+  const goToLineCommand =
+    metaKey === 'Ctrl' ? `${metaKeyName} + Alt + G` : `${metaKeyName} + ⌥ + G`;
+  const matchingBracketCommand = `${metaKeyName} + Shift + \\`;
+  const duplicateLineUpCommand =
+    metaKey === 'Ctrl' ? 'Shift + Alt + Up' : 'Shift + ⌥ + Up';
   return (
     <div className="keyboard-shortcuts">
       <h3 className="keyboard-shortcuts__title">
@@ -79,6 +94,46 @@ function KeyboardShortcutModal() {
         <li className="keyboard-shortcut-item">
           <span className="keyboard-shortcut__command">{renameCommand}</span>
           <span>{t('KeyboardShortcuts.CodeEditing.RenameVariable')}</span>
+        </li>
+        <li className="keyboard-shortcut-item">
+          <span className="keyboard-shortcut__command">
+            {selectNextOccurrenceCommand}
+          </span>
+          <span>{t('KeyboardShortcuts.CodeEditing.SelectNextOccurrence')}</span>
+        </li>
+        <li className="keyboard-shortcut-item">
+          <span className="keyboard-shortcut__command">
+            {addCursorAboveCommand}
+          </span>
+          <span>{t('KeyboardShortcuts.CodeEditing.AddCursorAbove')}</span>
+        </li>
+        <li className="keyboard-shortcut-item">
+          <span className="keyboard-shortcut__command">
+            {addCursorBelowCommand}
+          </span>
+          <span>{t('KeyboardShortcuts.CodeEditing.AddCursorBelow')}</span>
+        </li>
+        <li className="keyboard-shortcut-item">
+          <span className="keyboard-shortcut__command">
+            {deleteLineCommand}
+          </span>
+          <span>{t('KeyboardShortcuts.CodeEditing.DeleteLine')}</span>
+        </li>
+        <li className="keyboard-shortcut-item">
+          <span className="keyboard-shortcut__command">{goToLineCommand}</span>
+          <span>{t('KeyboardShortcuts.CodeEditing.GoToLine')}</span>
+        </li>
+        <li className="keyboard-shortcut-item">
+          <span className="keyboard-shortcut__command">
+            {matchingBracketCommand}
+          </span>
+          <span>{t('KeyboardShortcuts.CodeEditing.MatchingBracket')}</span>
+        </li>
+        <li className="keyboard-shortcut-item">
+          <span className="keyboard-shortcut__command">
+            {duplicateLineUpCommand}
+          </span>
+          <span>{t('KeyboardShortcuts.CodeEditing.DuplicateLineUp')}</span>
         </li>
       </ul>
       <h3 className="keyboard-shortcuts__title">

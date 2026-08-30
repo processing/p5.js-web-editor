@@ -269,7 +269,14 @@
       "CodeEditing": "Code Editing",
       "ColorPicker": "Show Inline Color Picker",
       "CreateNewFile": "Create New File",
-      "RenameVariable": "Rename Variable"
+      "RenameVariable": "Rename Variable",
+      "SelectNextOccurrence": "Select Next Occurrence",
+      "AddCursorAbove": "Add Cursor Above",
+      "AddCursorBelow": "Add Cursor Below",
+      "DeleteLine": "Delete Line",
+      "GoToLine": "Go to Line",
+      "MatchingBracket": "Jump to Matching Bracket",
+      "DuplicateLineUp": "Duplicate Line Up"
     },
     "General": "General",
     "GeneralSelection": {
