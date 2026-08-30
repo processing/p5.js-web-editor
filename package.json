@@ -46,6 +46,14 @@
     ]
   },
   "jest": {
+    "coverageReporters": [
+      "text-summary"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "lines": 5
+      }
+    },
     "projects": [
       {
         "displayName": "server",
