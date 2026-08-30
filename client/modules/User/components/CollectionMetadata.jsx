@@ -63,6 +63,7 @@ function CollectionMetadata({ collectionId }) {
               <EditableInput
                 value={name}
                 onChange={handleEditCollectionName}
+                aria-label={t('Collection.NameARIA')}
                 validate={(value) => value !== ''}
               />
             ) : (
@@ -76,6 +77,7 @@ function CollectionMetadata({ collectionId }) {
                 InputComponent="textarea"
                 value={description}
                 onChange={handleEditCollectionDescription}
+                aria-label={t('Collection.DescriptionARIA')}
                 emptyPlaceholder={t('Collection.DescriptionPlaceholder')}
               />
             ) : (
