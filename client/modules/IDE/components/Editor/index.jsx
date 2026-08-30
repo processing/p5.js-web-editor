@@ -27,6 +27,7 @@ import AssetPreview from '../AssetPreview';
 import Timer from '../Timer';
 import EditorAccessibility from '../EditorAccessibility';
 import UnsavedChangesIndicator from '../UnsavedChangesIndicator';
+import SearchPanel from './SearchPanel';
 import { EditorContainer, EditorHolder } from './MobileEditor';
 import { FolderIcon } from '../../../../common/icons';
 import { IconButton } from '../../../../common/IconButton';
@@ -81,6 +82,7 @@ function Editor({
 }) {
   const { versionInfo } = useP5Version();
   const [currentLine, setCurrentLine] = useState(1);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const beep = useRef();
 
   const updateLintingMessageAccessibility = debounce((annotations) => {
@@ -95,6 +97,14 @@ function Editor({
     }
   }, 2000);
 
+  const showSearch = useCallback(() => {
+    setIsSearchOpen(true);
+  }, []);
+
+  const hideSearch = useCallback(() => {
+    setIsSearchOpen(false);
+  }, []);
+
   // The useCodeMirror hook manages CodeMirror state and returns
   // a reference to the actual CM instance.
   const {
@@ -103,7 +113,6 @@ function Editor({
     codemirrorView,
     getContent,
     tidyCode,
-    showSearch,
     updateEditorFileContent
   } = useCodeMirror({
     project,
@@ -121,6 +130,7 @@ function Editor({
     fontSize,
     updateLintingMessageAccessibility,
     setCurrentLine,
+    showSearch,
     referenceBaseUrl: getReferenceBaseUrl(htmlFile),
     p5Version: versionInfo?.version
   });
@@ -218,6 +228,12 @@ function Editor({
               </div>
             </div>
             <article ref={onContainerMounted} className={editorHolderClass} />
+            {isSearchOpen && (
+              <SearchPanel
+                view={codemirrorView.current}
+                closePanel={hideSearch}
+              />
+            )}
             {file.url ? <AssetPreview url={file.url} name={file.name} /> : null}
             <EditorAccessibility
               lintMessages={lintMessages}
@@ -243,6 +259,13 @@ function Editor({
                 currentLine={currentLine}
               />
             </section>
+            {isSearchOpen && (
+              <SearchPanel
+                isMobile
+                view={codemirrorView.current}
+                closePanel={hideSearch}
+              />
+            )}
           </EditorContainer>
         )
       }
