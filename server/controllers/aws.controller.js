@@ -32,7 +32,12 @@ function getExtension(filename) {
 }
 
 export function getObjectKey(url) {
-  const urlArray = url.split('/');
+  const pendingMarker = '/pending/';
+  const pendingIndex = url.indexOf(pendingMarker);
+  if (pendingIndex !== -1) {
+    return url.substring(pendingIndex + 1).split('?')[0];
+  }
+  const urlArray = url.split('?')[0].split('/');
   const objectKey = urlArray.pop();
   const userId = urlArray.pop();
   if (ObjectId.isValid(userId) && userId === new ObjectId(userId).toString()) {
@@ -67,7 +72,9 @@ export async function deleteObjectsFromS3(keyList) {
 export async function deleteObjectFromS3(req, res) {
   const userId = req.user.id;
   const { objectKey } = req.query;
-  const fullObjectKey = `${userId}/${objectKey}`;
+  const fullObjectKey = objectKey.startsWith('pending/')
+    ? objectKey
+    : `${userId}/${objectKey}`;
 
   try {
     await deleteObjectsFromS3([fullObjectKey]);
@@ -80,18 +87,31 @@ export async function deleteObjectFromS3(req, res) {
 
 export async function listObjectsInS3ForUser(userId) {
   try {
-    let assets = [];
-    const params = {
-      Bucket: process.env.S3_BUCKET,
-      Prefix: `${userId}/`
-    };
+    const [savedData, pendingData] = await Promise.all([
+      s3Client.send(
+        new ListObjectsCommand({
+          Bucket: process.env.S3_BUCKET,
+          Prefix: `${userId}/`
+        })
+      ),
+      s3Client.send(
+        new ListObjectsCommand({
+          Bucket: process.env.S3_BUCKET,
+          Prefix: `pending/${userId}/`
+        })
+      )
+    ]);
 
-    const data = await s3Client.send(new ListObjectsCommand(params));
-
-    assets = data.Contents?.map((object) => ({
-      key: object.Key,
-      size: object.Size
-    }));
+    const assets = [
+      ...(savedData.Contents?.map((object) => ({
+        key: object.Key,
+        size: object.Size
+      })) ?? []),
+      ...(pendingData.Contents?.map((object) => ({
+        key: object.Key,
+        size: object.Size
+      })) ?? [])
+    ];
 
     const projects = await Project.getProjectsForUserId(userId);
     const projectAssets = [];
@@ -156,7 +176,7 @@ export async function signS3(req, res) {
     const acl = 'public-read';
     const policy = S3Policy.generate({
       acl,
-      key: `${req.body.userId}/${filename}`,
+      key: `pending/${req.user.id}/${filename}`,
       bucket: process.env.S3_BUCKET,
       contentType: req.body.type,
       region: process.env.AWS_REGION,

@@ -49,7 +49,7 @@
     }
   },
   "Banner": {
-    "Copy": "<bold>Donate Today!</bold> Support p5.js and the Processing Foundation."
+    "Copy": "<bold>p5.js v2 is now the default</bold>. If you teach with p5, check out this essential guide!"
   },
   "LoginForm": {
     "UsernameOrEmail": "이메일 또는 아이디",

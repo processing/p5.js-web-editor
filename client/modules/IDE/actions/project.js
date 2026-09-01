@@ -306,6 +306,8 @@ export function cloneProject(project) {
     generateNewIdsForChildren(rootFile, newFiles);
 
     // duplicate all files hosted on S3
+    const copiedAssetKeys = [];
+
     each(
       newFiles,
       (file, callback) => {
@@ -316,24 +318,34 @@ export function cloneProject(project) {
           (file.url.includes(S3_BUCKET_URL_BASE) ||
             file.url.includes(S3_BUCKET))
         ) {
-          const formParams = {
-            url: file.url
-          };
-          apiClient.post('/S3/copy', formParams).then((response) => {
-            file.url = response.data.url;
-            callback(null);
-          });
+          apiClient
+            .post('/S3/copy', { url: file.url })
+            .then((response) => {
+              file.url = response.data.url;
+              const objectKey = response.data.url.split('/').pop();
+              copiedAssetKeys.push(objectKey);
+              callback(null);
+            })
+            .catch(callback);
         } else {
           callback(null);
         }
       },
       (err) => {
-        // if not errors in duplicating the files on S3, then duplicate it
-        const formParams = Object.assign(
-          {},
-          { name: `${projectName} copy` },
-          { files: newFiles }
-        );
+        if (err) {
+          copiedAssetKeys.forEach((key) => {
+            apiClient.delete(`/S3/delete?objectKey=${key}`).catch(() => {});
+          });
+          dispatch({
+            type: ActionTypes.PROJECT_SAVE_FAIL,
+            error: err?.response?.data
+          });
+          return;
+        }
+        const formParams = {
+          name: `${projectName} copy`,
+          files: newFiles
+        };
         apiClient
           .post('/projects', formParams)
           .then((response) => {
@@ -343,6 +355,9 @@ export function cloneProject(project) {
             dispatch(setNewProject(response.data));
           })
           .catch((error) => {
+            copiedAssetKeys.forEach((key) => {
+              apiClient.delete(`/S3/delete?objectKey=${key}`).catch(() => {});
+            });
             dispatch({
               type: ActionTypes.PROJECT_SAVE_FAIL,
               error: error?.response?.data

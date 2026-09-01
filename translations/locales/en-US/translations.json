@@ -56,7 +56,7 @@
     }
   },
   "Banner": {
-    "Copy": "<bold>Donate Today!</bold> Support p5.js and the Processing Foundation."
+    "Copy": "<bold>p5.js v2 is now the default</bold>. If you teach with p5, check out this essential guide!"
   },
   "CodemirrorFindAndReplace": {
     "ToggleReplace": "Toggle Replace",
@@ -237,7 +237,7 @@
     "TableText": "Table-text",
     "TableOutputARIA": "table output on",
     "LibraryVersion": "p5.js Version",
-    "LibraryVersionInfo": "There's a [new 2.0 release](https://github.com/processing/p5.js/releases/) of p5.js available! It will become default in August, 2026, so take this time to test it out and report bugs. Interested in transitioning sketches from 1.x to 2.0? Check out the [compatibility & transition resources.](https://github.com/processing/p5.js-compatibility)",
+    "LibraryVersionInfo": "If you teach with p5.js v1, be sure to check out this [essential guide](https://p5js.org/tutorials/v2_transition/) to using p5.js v2.",
     "CustomVersionTitle": "Managing your own libraries? Nice!",
     "CustomVersionInfo": "The version of p5.js is currently being managed in the code of index.html. This means it can't be adjusted from this tab.",
     "CustomVersionReset": "If you'd like to use the default libraries, you can replace the script tags in index.html with the following:",
@@ -703,7 +703,6 @@
   "Cookies": {
     "Header": "Cookies",
     "Body": "The p5.js Editor uses cookies. Some are essential to the website functionality and allow you to manage an account and preferences. Others are not essential—they are used for analytics and allow us to learn more about our community. <strong> We never sell this data or use it for advertising. </strong> You can decide which cookies you would like to allow, and learn more in our <0>Privacy Policy<0>.",
-    "AllowAll": "Allow All",
     "AllowEssential": "Allow Essential"
   },
   "Legal": {

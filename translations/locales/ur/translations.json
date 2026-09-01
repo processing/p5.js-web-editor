@@ -48,7 +48,7 @@
       }
     },
     "Banner": {
-      "Copy": "<bold>Donate Today!</bold> Support p5.js and the Processing Foundation."
+      "Copy": "<bold>p5.js v2 is now the default</bold>. If you teach with p5, check out this essential guide!"
     },
     "CodemirrorFindAndReplace": {
       "ToggleReplace": "تبدیل کرنے کو ٹوگل کریں۔",
@@ -616,7 +616,6 @@
     "Cookies": {
       "Header": "کوکیز",
       "Body": "p5.js ایڈیٹر کوکیز استعمال کرتا ہے۔  <strong> ہم اس ڈیٹا کو کبھی فروخت نہیں کرتے اور نہ ہی اسے اشتہارات کے لیے استعمال کرتے ہیں۔ </strong> آپ فیصلہ کر سکتے ہیں کہ آپ کن کوکیز کی اجازت دینا چاہیں گے، اور ہماری میں مزید جانیں۔ <0>رازداری کی پالیسی<0>.",
-      "AllowAll": "سب کو اجازت دیں۔",
       "AllowEssential": "ضروری کی اجازت دیں۔"
     },
     "Legal": {
