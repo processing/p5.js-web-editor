@@ -257,7 +257,7 @@
     "SublimeText": "Sublime Text shortcuts",
     "CodeEditing": {
       "Tidy": "Tidy",
-      "FindText": "Find Text",
+      "FindText": "Find / Replace Text",
       "FindNextMatch": "Find Next Match",
       "FindPrevMatch": "Find Previous Match",
       "ReplaceTextMatch": "Replace Text Match",
@@ -269,7 +269,9 @@
       "CodeEditing": "Code Editing",
       "ColorPicker": "Show Inline Color Picker",
       "CreateNewFile": "Create New File",
-      "RenameVariable": "Rename Variable"
+      "RenameVariable": "Rename Variable",
+      "MoveLineUp": "Move Line Up",
+      "MoveLineDown": "Move Line Down"
     },
     "General": "General",
     "GeneralSelection": {
