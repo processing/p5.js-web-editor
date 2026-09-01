@@ -24,7 +24,7 @@ export const initialState: PreferencesState = {
   autorefresh: false,
   language: i18n.language,
   autocloseBracketsQuotes: true,
-  autocompleteHinter: false
+  autocompleteHinter: true
 };
 
 export const preferences = (
