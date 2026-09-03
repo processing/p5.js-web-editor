@@ -67,6 +67,7 @@ function Editor({
   updateLintMessage,
   updateFileContent,
   autorefresh,
+  isPlaying,
   clearConsole,
   startSketch,
   autocompleteHinter,
@@ -124,6 +125,7 @@ function Editor({
     file,
     files,
     autorefresh,
+    isPlaying,
     clearConsole,
     startSketch,
     autocompleteHinter,
@@ -308,6 +310,7 @@ Editor.propTypes = {
   setUnsavedChanges: PropTypes.func.isRequired,
   startSketch: PropTypes.func.isRequired,
   autorefresh: PropTypes.bool.isRequired,
+  isPlaying: PropTypes.bool.isRequired,
   files: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
