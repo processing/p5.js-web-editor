@@ -289,7 +289,7 @@
     "AddFileARIA": "add file",
     "UploadFile": "Upload file",
     "UploadFileARIA": "upload file",
-    "UploadFileTooltipUnauthenticated": "Log in to upload files"
+    "UploadFileTooltip": "Log in to upload file"
   },
   "FileNode": {
     "OpenFolderARIA": "Open folder contents",
