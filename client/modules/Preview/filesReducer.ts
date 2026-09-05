@@ -1,48 +1,51 @@
-import { useMemo } from 'react';
 import blobUtil from 'blob-util';
 import mime from 'mime';
 import { PLAINTEXT_FILE_REGEX } from '../../../server/utils/fileUtils';
 
-// https://gist.github.com/fnky/7d044b94070a35e552f3c139cdf80213
-export function useSelectors(state, mapStateToSelectors) {
-  const selectors = useMemo(() => mapStateToSelectors(state), [state]);
-  return selectors;
+export interface PreviewFile {
+  id: string;
+  name: string;
+  content?: string;
+  blobUrl?: string;
+  url?: string;
+  children: string[];
+  fileType: 'file' | 'folder';
 }
 
-export function getFileSelectors(state) {
+export interface SetFilesAction {
+  type: 'SET_FILES';
+  files: PreviewFile[];
+}
+
+export type FilesReducerAction = SetFilesAction;
+
+export function setFilesAction(files: PreviewFile[]) {
   return {
-    getHTMLFile: () => state.filter((file) => file.name.match(/.*\.html$/i))[0],
-    getJSFiles: () => state.filter((file) => file.name.match(/.*\.js$/i)),
-    getCSSFiles: () => state.filter((file) => file.name.match(/.*\.css$/i))
+    type: 'SET_FILES' as const,
+    files
   };
 }
 
-function sortedChildrenId(state, children) {
+function sortedChildrenId(state: PreviewFile[], children: string[]) {
   const childrenArray = state.filter((file) => children.includes(file.id));
   childrenArray.sort((a, b) => (a.name > b.name ? 1 : -1));
   return childrenArray.map((child) => child.id);
 }
 
-export function setFiles(files) {
-  return {
-    type: 'SET_FILES',
-    files
-  };
-}
-
-export function createBlobUrl(file) {
+export function createBlobUrl(file: PreviewFile) {
   if (file.blobUrl) {
     blobUtil.revokeObjectURL(file.blobUrl);
   }
 
-  const mimeType = mime.getType(file.name) || 'text/plain';
-
-  const fileBlob = blobUtil.createBlob([file.content], { type: mimeType });
+  const mimeType = mime.lookup(file.name) || 'text/plain';
+  const fileBlob = blobUtil.createBlob([file.content ?? ''], {
+    type: mimeType
+  });
   const blobURL = blobUtil.createObjectURL(fileBlob);
   return blobURL;
 }
 
-export function createBlobUrls(state) {
+export function createBlobUrls(state: PreviewFile[]) {
   return state.map((file) => {
     if (file.name.match(PLAINTEXT_FILE_REGEX)) {
       const blobUrl = createBlobUrl(file);
@@ -52,7 +55,7 @@ export function createBlobUrls(state) {
   });
 }
 
-export function filesReducer(state, action) {
+export function filesReducer(state: PreviewFile[], action: FilesReducerAction) {
   switch (action.type) {
     case 'SET_FILES':
       return createBlobUrls(action.files);
