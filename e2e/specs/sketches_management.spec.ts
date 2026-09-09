@@ -126,6 +126,11 @@ test.describe.serial('sketch lifecycle', () => {
       .getByText('renamed-sketch')
       .click();
 
+    // Confirm the reopened sketch has actually loaded before playing it
+    await expect(
+      page.locator('button.editable-input__label')
+    ).toContainText('renamed-sketch', { timeout: 10_000 });
+
     // Run the renamed sketch and verify the edited code persisted
     await page.locator('#play-sketch').click({ force: true });
     await expect(
