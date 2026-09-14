@@ -39,14 +39,27 @@ function makeVarDecl(varName) {
         type: 'VariableDeclarator',
         id: { type: 'Identifier', name: varName },
         init: {
-          type: 'CallExpression',
-          callee: {
-            type: 'MemberExpression',
-            object: { type: 'Identifier', name: 'Date' },
-            property: { type: 'Identifier', name: 'now' },
-            computed: false
-          },
-          arguments: []
+          type: 'ObjectExpression',
+          properties: [
+            {
+              type: 'Property',
+              key: { type: 'Identifier', name: 't' },
+              value: {
+                type: 'CallExpression',
+                callee: {
+                  type: 'MemberExpression',
+                  object: { type: 'Identifier', name: 'Date' },
+                  property: { type: 'Identifier', name: 'now' },
+                  computed: false
+                },
+                arguments: []
+              },
+              kind: 'init',
+              method: false,
+              shorthand: false,
+              computed: false
+            }
+          ]
         }
       }
     ]
@@ -72,7 +85,12 @@ function makeCheckStatement(varName, line) {
           },
           arguments: []
         },
-        right: { type: 'Identifier', name: varName }
+        right: {
+          type: 'MemberExpression',
+          object: { type: 'Identifier', name: varName },
+          property: { type: 'Identifier', name: 't' },
+          computed: false
+        }
       },
       right: {
         type: 'Literal',
@@ -160,6 +178,8 @@ function collectLoopsToProtect(ast, shaderNames) {
 
   walk.ancestor(ast, {
     ForStatement: visitNode,
+    ForInStatement: visitNode,
+    ForOfStatement: visitNode,
     WhileStatement: visitNode,
     DoWhileStatement: visitNode
   });
@@ -178,6 +198,41 @@ function injectProtection(loops) {
     } else {
       loop.body = { type: 'BlockStatement', body: [check, loop.body] };
     }
+
+    walk.ancestor(loop.body, {
+      AwaitExpression(node, ancestors) {
+        const isInsideNestedFunction = ancestors.some(
+          (ancestor) =>
+            ancestor !== loop.body &&
+            (ancestor.type === 'FunctionDeclaration' ||
+              ancestor.type === 'FunctionExpression' ||
+              ancestor.type === 'ArrowFunctionExpression')
+        );
+
+        if (!isInsideNestedFunction) {
+          const originalAwait = {
+            type: 'AwaitExpression',
+            argument: node.argument
+          };
+          node.type = 'CallExpression';
+          node.callee = {
+            type: 'MemberExpression',
+            object: {
+              type: 'MemberExpression',
+              object: { type: 'Identifier', name: 'window' },
+              property: { type: 'Identifier', name: 'loopProtect' },
+              computed: false
+            },
+            property: { type: 'Identifier', name: 'reset' },
+            computed: false
+          };
+          node.arguments = [
+            { type: 'Identifier', name: varName },
+            originalAwait
+          ];
+        }
+      }
+    });
 
     if (parentBlock) {
       const varDecl = makeVarDecl(varName);
