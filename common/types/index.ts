@@ -26,6 +26,7 @@ export type {
   ResetOrUpdatePasswordRequestParams,
   UpdatePasswordRequestBody,
   CreateUserRequestBody,
+  DeleteAccountRequestBody,
   DuplicateUserCheckQuery,
   VerifyEmailQuery
 } from '../../server/types/user';
