@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   list: [],
-  totalSize: 0
+  totalSize: undefined
 };
 
 const assetsSlice = createSlice({

@@ -21,9 +21,7 @@ const formatPercent = (percent) => {
 const AssetSize = () => {
   const { t } = useTranslation();
 
-  const totalSize = useSelector(
-    (state) => state.user.totalSize || state.assets.totalSize
-  );
+  const totalSize = useSelector((state) => state.assets.totalSize);
 
   if (totalSize === undefined) {
     return null;
