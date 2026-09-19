@@ -6,6 +6,9 @@ import sessionRouter from '../../routes/session.routes';
 import userRouter from '../../routes/user.routes';
 import { authRateLimiter, createAuthRateLimiter } from '../authRateLimiter';
 
+jest.mock('../../utils/mail');
+jest.mock('../../views/mail');
+
 type RouteLayer = {
   route?: {
     path: string;
