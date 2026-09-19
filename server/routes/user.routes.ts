@@ -1,6 +1,7 @@
-import { Router } from 'express';
+import { RequestHandler, Router } from 'express';
 import * as UserController from '../controllers/user.controller';
 import { isAuthenticated } from '../middleware/isAuthenticated';
+import { authRateLimiter } from '../middleware/authRateLimiter';
 
 const router = Router();
 
@@ -10,9 +11,13 @@ const router = Router();
  * ===============
  */
 // POST /signup
-router.post('/signup', UserController.createUser);
+router.post('/signup', authRateLimiter, UserController.createUser);
 // GET /signup/duplicate_check
-router.get('/signup/duplicate_check', UserController.duplicateUserCheck);
+router.get(
+  '/signup/duplicate_check',
+  authRateLimiter,
+  (UserController.duplicateUserCheck as unknown) as RequestHandler
+);
 // POST /verify/send
 router.post('/verify/send', UserController.emailVerificationInitiate);
 // GET /verify
@@ -38,11 +43,19 @@ router.delete(
  * ===============
  */
 // POST /reset-password
-router.post('/reset-password', UserController.resetPasswordInitiate);
+router.post(
+  '/reset-password',
+  authRateLimiter,
+  UserController.resetPasswordInitiate
+);
 // GET /reset-password/:token
 router.get('/reset-password/:token', UserController.validateResetPasswordToken);
 // POST /reset-password/:token
-router.post('/reset-password/:token', UserController.updatePassword);
+router.post(
+  '/reset-password/:token',
+  authRateLimiter,
+  UserController.updatePassword
+);
 // PUT /account (updating username, email or password while logged in)
 router.put('/account', isAuthenticated, UserController.updateSettings);
 // DELETE /auth/github

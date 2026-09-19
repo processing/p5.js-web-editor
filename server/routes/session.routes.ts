@@ -1,9 +1,10 @@
 import { Router } from 'express';
 import * as SessionController from '../controllers/session.controller';
+import { authRateLimiter } from '../middleware/authRateLimiter';
 
 const router = Router();
 
-router.post('/login', SessionController.createSession);
+router.post('/login', authRateLimiter, SessionController.createSession);
 
 router.get('/session', SessionController.getSession);
 

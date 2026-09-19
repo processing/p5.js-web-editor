@@ -277,6 +277,7 @@
     "eslint-webpack-plugin": "^3.1.1",
     "express": "^4.22.1",
     "express-basic-auth": "^1.2.0",
+    "express-rate-limit": "^8.7.0",
     "express-session": "^1.18.2",
     "final-form": "^4.20.2",
     "friendly-words": "^1.2.1",
