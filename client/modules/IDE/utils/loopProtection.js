@@ -16,3 +16,11 @@ export function removeNoProtect(src = '') {
 export function toggleLoopProtection(src = '', enabled) {
   return enabled ? removeNoProtect(src) : addNoProtect(src);
 }
+
+// Version/addon HTML rewrites serialize via documentElement.outerHTML, which
+// drops comments outside <html> — including a leading <!-- noprotect -->.
+export function preserveNoProtect(originalSrc = '', serializedSrc = '') {
+  return hasNoProtect(originalSrc)
+    ? addNoProtect(serializedSrc)
+    : serializedSrc;
+}

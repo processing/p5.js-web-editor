@@ -11,6 +11,7 @@ import {
   p5DataAddonURL,
   p5URLTemplate
 } from '../../../../common/p5URLs';
+import { preserveNoProtect } from '../utils/loopProtection';
 
 export const majorVersion = (version) => version.split('.')[0];
 
@@ -46,7 +47,7 @@ export function P5VersionProvider(props) {
         src = `${doctype}\n${src}`;
       }
 
-      return src;
+      return preserveNoProtect(indexSrc, src);
     };
 
     const usedP5Versions = [...dom.documentElement.querySelectorAll('script')]
