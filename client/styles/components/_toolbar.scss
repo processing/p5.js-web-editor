@@ -1,205 +1,227 @@
 @use "sass:math";
 
-.toolbar__play-button {
-	@include themify() {
-		@extend %toolbar-button;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		padding: 0 0 0 #{math.div(3, $base-font-size)}rem;
+.toolbar-start-stop-button {
+  @include themify() {
+    @extend %toolbar-button;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: #{math.div(2, $base-font-size)}rem solid
+      getThemifyVariable('toolbar-start-stop-button-outline-color');
+    background-color: transparent;
 
-		&--selected {
-			@extend %toolbar-button--selected;
-		}
+    & g,
+    & path {
+      stroke: getThemifyVariable('toolbar-start-stop-button-outline-color');
+      fill: getThemifyVariable('background-color');
+      stroke-width: 1.5;
+    }
 
-		&:disabled {
-			cursor: auto;
+    &:hover {
+      & g,
+      & path {
+        fill: getThemifyVariable('background-color');
+      }
+    }
+    &:hover:not(&--selected) {
+      background-color: transparent;
+      border: #{math.div(2, $base-font-size)}rem solid
+        getThemifyVariable('toolbar-start-stop-button-hover-outline-color');
+      & g,
+      & path {
+        stroke: getThemifyVariable(
+          'toolbar-start-stop-button-hover-outline-color'
+        );
+        fill: getThemifyVariable('background-color');
+        stroke-width: 1;
+      }
+    }
 
-			& g,
-			& path {
-				fill: getThemifyVariable('button-border-color');
-			}
+    &--selected {
+      background-color: getThemifyVariable('button-background-hover-color');
+      border: none;
+      stroke: transparent;
+      & g,
+      & path {
+        fill: getThemifyVariable('background-color');
+        stroke: transparent;
+      }
+    }
+    &:disabled {
+      cursor: auto;
 
-			&:hover {
-				background-color: getThemifyVariable('toolbar-button-background-color');
+      & g,
+      & path {
+        fill: getThemifyVariable('button-border-color');
+      }
 
-				& g,
-				& path {
-					fill: getThemifyVariable('button-border-color');
-				}
-			}
-		}
-	}
+      &:hover {
+        background-color: getThemifyVariable('toolbar-button-background-color');
 
-	margin-right: #{math.div(15, $base-font-size)}rem;
+        & g,
+        & path {
+          fill: getThemifyVariable('button-border-color');
+        }
+      }
+    }
 
-	span {
-		padding-left: #{math.div(4, $base-font-size)}rem;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: #{math.div(20, $base-font-size)}rem;
-		height: #{math.div(20, $base-font-size)}rem;
-	}
+    &.play {
+      padding: 0 0 0 #{math.div(3, $base-font-size)}rem;
+      margin-right: #{math.div(15, $base-font-size)}rem;
+      span {
+        padding-left: #{math.div(4, $base-font-size)}rem;
+      }
+    }
+
+    &.stop {
+      margin-right: #{math.div(15, $base-font-size)}rem;
+      padding: 0;
+    }
+  }
+  span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: #{math.div(20, $base-font-size)}rem;
+    height: #{math.div(20, $base-font-size)}rem;
+  }
 }
 
 .toolbar__play-sketch-button {
-	@extend %hidden-element;
-}
-
-.toolbar__stop-button {
-	@include themify() {
-		@extend %toolbar-button;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		margin-right: #{math.div(15, $base-font-size)}rem;
-		padding: 0;
-
-		&--selected {
-			@extend %toolbar-button--selected;
-		}
-	}
-
-	span {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: #{math.div(20, $base-font-size)}rem;
-		height: #{math.div(20, $base-font-size)}rem;
-	}
+  @extend %hidden-element;
 }
 
 .toolbar__preferences-button {
-	@include themify() {
-		@extend %toolbar-button;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		padding: 0;
+  @include themify() {
+    @extend %toolbar-button;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
 
-		&--selected {
-			@extend %toolbar-button--selected;
-		}
-	}
+    &--selected {
+      @extend %toolbar-button--selected;
+    }
+  }
 
-	margin-left: auto;
+  margin-left: auto;
 
-	& span {
-		padding-left: #{math.div(1, $base-font-size)}rem;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: #{math.div(20, $base-font-size)}rem;
-		height: #{math.div(20, $base-font-size)}rem;
-	}
+  & span {
+    padding-left: #{math.div(1, $base-font-size)}rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: #{math.div(20, $base-font-size)}rem;
+    height: #{math.div(20, $base-font-size)}rem;
+  }
 }
 
 .toolbar__logo {
-	margin-right: #{math.div(30, $base-font-size)}rem;
+  margin-right: #{math.div(30, $base-font-size)}rem;
 
-	@include themify() {
-		& g,
-		& path {
-			fill: getThemifyVariable('logo-color');
-		}
-	}
+  @include themify() {
+    & g,
+    & path {
+      fill: getThemifyVariable('logo-color');
+    }
+  }
 }
 
 .toolbar {
-	padding: #{math.div(10, $base-font-size)}rem #{math.div(20, $base-font-size)}rem;
-	display: flex;
-	align-items: center;
+  padding: #{math.div(10, $base-font-size)}rem #{math.div(20, $base-font-size)}rem;
+  display: flex;
+  align-items: center;
 
-	@include themify() {
-		border-bottom: 1px dashed map-get($theme-map, 'nav-border-color');
-	}
+  @include themify() {
+    border-bottom: 1px dashed map-get($theme-map, 'nav-border-color');
+  }
 }
 
 .lock-icon {
-	height: 60%;
-	width: 60%;
+  height: 60%;
+  width: 60%;
 }
 
 .unlock-icon {
-	height: 60%;
-	width: 60%;
+  height: 60%;
+  width: 60%;
 }
 
 .toolbar__project-name-container {
-	margin-left: #{math.div(10, $base-font-size)}rem;
-	padding-left: #{math.div(10, $base-font-size)}rem;
-	display: flex;
-	align-items: center;
+  margin-left: #{math.div(10, $base-font-size)}rem;
+  padding-left: #{math.div(10, $base-font-size)}rem;
+  display: flex;
+  align-items: center;
 
-	> section {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		height: 30px;
-		width: 30px;
-	}
+  > section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+    width: 30px;
+  }
 }
 
 .toolbar .editable-input__label {
-	@include themify() {
-		color: getThemifyVariable('secondary-text-color');
+  @include themify() {
+    color: getThemifyVariable('secondary-text-color');
 
-		& path {
-			fill: getThemifyVariable('secondary-text-color');
-		}
-	}
+    & path {
+      fill: getThemifyVariable('secondary-text-color');
+    }
+  }
 }
 
 .toolbar .editable-input__input {
-	border: 0;
+  border: 0;
 }
 
 .toolbar__project-owner {
-	margin: 0 #{math.div(5, $base-font-size)}rem;
-	@include themify() {
-		color: getThemifyVariable('secondary-text-color');
-	}
+  margin: 0 #{math.div(5, $base-font-size)}rem;
+  @include themify() {
+    color: getThemifyVariable('secondary-text-color');
+  }
 }
 
 .toolbar__autorefresh-label {
-	cursor: pointer;
+  cursor: pointer;
 
-	@include themify() {
-		color: getThemifyVariable('secondary-text-color');
+  @include themify() {
+    color: getThemifyVariable('secondary-text-color');
 
-		&:hover {
-			color: getThemifyVariable('logo-color');
-		}
-	}
+    &:hover {
+      color: getThemifyVariable('logo-color');
+    }
+  }
 
-	margin-left: #{math.div(5, $base-font-size)}rem;
-	font-size: #{math.div(12, $base-font-size)}rem;
+  margin-left: #{math.div(5, $base-font-size)}rem;
+  font-size: #{math.div(12, $base-font-size)}rem;
 }
 
 .toolbar__autorefresh {
-	display: flex;
-	align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .checkbox__autorefresh {
-	cursor: pointer;
+  cursor: pointer;
 
-	@include themify() {
-		accent-color: getThemifyVariable('logo-color');
-	}
+  @include themify() {
+    accent-color: getThemifyVariable('logo-color');
+  }
 }
 
 .toolbar__makeprivate {
-	display: flex;
-	align-items: center;
-	gap: #{math.div(4, $base-font-size)}rem;
+  display: flex;
+  align-items: center;
+  gap: #{math.div(4, $base-font-size)}rem;
 }
 
 .toolbar__togglevisibility {
-	cursor: pointer;
+  cursor: pointer;
 
-	@include themify() {
-		accent-color: getThemifyVariable('logo-color');
-	}
+  @include themify() {
+    accent-color: getThemifyVariable('logo-color');
+  }
 }
+
