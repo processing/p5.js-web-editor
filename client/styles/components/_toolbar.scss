@@ -10,7 +10,8 @@
       getThemifyVariable('toolbar-start-stop-button-outline-color');
     background-color: transparent;
 
-    & g,
+    & rect,
+    & polygon,
     & path {
       stroke: getThemifyVariable('toolbar-start-stop-button-outline-color');
       fill: getThemifyVariable('background-color');
@@ -18,7 +19,8 @@
     }
 
     &:hover {
-      & g,
+      & rect,
+      & polygon,
       & path {
         fill: getThemifyVariable('background-color');
       }
@@ -27,7 +29,8 @@
       background-color: transparent;
       border: #{math.div(2, $base-font-size)}rem solid
         getThemifyVariable('toolbar-start-stop-button-hover-outline-color');
-      & g,
+      & rect,
+      & polygon,
       & path {
         stroke: getThemifyVariable(
           'toolbar-start-stop-button-hover-outline-color'
@@ -41,7 +44,8 @@
       background-color: getThemifyVariable('button-background-hover-color');
       border: none;
       stroke: transparent;
-      & g,
+      & rect,
+      & polygon,
       & path {
         fill: getThemifyVariable('background-color');
         stroke: transparent;
@@ -50,7 +54,8 @@
     &:disabled {
       cursor: auto;
 
-      & g,
+      & rect,
+      & polygon,
       & path {
         fill: getThemifyVariable('button-border-color');
       }
@@ -58,7 +63,8 @@
       &:hover {
         background-color: getThemifyVariable('toolbar-button-background-color');
 
-        & g,
+        & rect,
+        & polygon,
         & path {
           fill: getThemifyVariable('button-border-color');
         }
@@ -225,3 +231,136 @@
   }
 }
 
+.toolbar__preferences-button {
+  @include themify() {
+    @extend %toolbar-button;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+
+    &--selected {
+      @extend %toolbar-button--selected;
+    }
+  }
+
+  margin-left: auto;
+
+  & span {
+    padding-left: #{math.div(1, $base-font-size)}rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: #{math.div(20, $base-font-size)}rem;
+    height: #{math.div(20, $base-font-size)}rem;
+  }
+}
+
+.toolbar__logo {
+  margin-right: #{math.div(30, $base-font-size)}rem;
+
+  @include themify() {
+    & g,
+    & path {
+      fill: getThemifyVariable('logo-color');
+    }
+  }
+}
+
+.toolbar {
+  padding: #{math.div(10, $base-font-size)}rem #{math.div(20, $base-font-size)}rem;
+  display: flex;
+  align-items: center;
+
+  @include themify() {
+    border-bottom: 1px dashed map-get($theme-map, 'nav-border-color');
+  }
+}
+
+.lock-icon {
+  height: 60%;
+  width: 60%;
+}
+
+.unlock-icon {
+  height: 60%;
+  width: 60%;
+}
+
+.toolbar__project-name-container {
+  margin-left: #{math.div(10, $base-font-size)}rem;
+  padding-left: #{math.div(10, $base-font-size)}rem;
+  display: flex;
+  align-items: center;
+
+  > section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+    width: 30px;
+  }
+}
+
+.toolbar .editable-input__label {
+  @include themify() {
+    color: getThemifyVariable('secondary-text-color');
+
+    & path {
+      fill: getThemifyVariable('secondary-text-color');
+    }
+  }
+}
+
+.toolbar .editable-input__input {
+  border: 0;
+}
+
+.toolbar__project-owner {
+  margin: 0 #{math.div(5, $base-font-size)}rem;
+  @include themify() {
+    color: getThemifyVariable('secondary-text-color');
+  }
+}
+
+.toolbar__autorefresh-label {
+  cursor: pointer;
+
+  @include themify() {
+    color: getThemifyVariable('secondary-text-color');
+
+    &:hover {
+      color: getThemifyVariable('logo-color');
+    }
+  }
+
+  margin-left: #{math.div(5, $base-font-size)}rem;
+  font-size: #{math.div(12, $base-font-size)}rem;
+}
+
+.toolbar__autorefresh {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox__autorefresh {
+  cursor: pointer;
+
+  @include themify() {
+    accent-color: getThemifyVariable('logo-color');
+  }
+}
+
+.toolbar__makeprivate {
+  display: flex;
+  align-items: center;
+  gap: #{math.div(4, $base-font-size)}rem;
+}
+
+.toolbar__togglevisibility {
+  cursor: pointer;
+
+  @include themify() {
+    accent-color: getThemifyVariable('logo-color');
+  }
+}
