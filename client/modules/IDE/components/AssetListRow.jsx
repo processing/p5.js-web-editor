@@ -13,9 +13,9 @@ const AssetMenu = ({ item: asset }) => {
   const dispatch = useDispatch();
 
   const handleAssetDelete = () => {
-    const { key, name } = asset;
+    const { name } = asset;
     if (window.confirm(t('Common.DeleteConfirmation', { name }))) {
-      dispatch(deleteAssetRequest(key));
+      dispatch(deleteAssetRequest(asset));
     }
   };
 
@@ -33,7 +33,10 @@ AssetMenu.propTypes = {
   item: PropTypes.shape({
     key: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired
+    name: PropTypes.string.isRequired,
+    sketchId: PropTypes.string,
+    fileId: PropTypes.string,
+    parentId: PropTypes.string
   }).isRequired
 };
 
@@ -64,6 +67,8 @@ AssetListRow.propTypes = {
     url: PropTypes.string.isRequired,
     sketchId: PropTypes.string,
     sketchName: PropTypes.string,
+    fileId: PropTypes.string,
+    parentId: PropTypes.string,
     name: PropTypes.string.isRequired,
     size: PropTypes.number.isRequired
   }).isRequired,

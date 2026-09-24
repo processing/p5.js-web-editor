@@ -27,14 +27,29 @@ export function getAssets() {
   };
 }
 
-export function deleteAssetRequest(assetKey) {
-  return async (dispatch) => {
+export function deleteAssetRequest(asset) {
+  return async (dispatch, getState) => {
     try {
-      const path = assetKey.split('/').pop();
-      await apiClient.delete(
-        `/S3/delete?objectKey=${encodeURIComponent(path)}`
-      );
-      dispatch(deleteAsset(assetKey));
+      if (asset.sketchId) {
+        await apiClient.delete(
+          `/projects/${asset.sketchId}/files/${asset.fileId}`,
+          { params: { parentId: asset.parentId } }
+        );
+
+        const { project } = getState();
+        if (project.id === asset.sketchId) {
+          dispatch({
+            type: ActionTypes.DELETE_FILE,
+            id: asset.fileId,
+            parentId: asset.parentId
+          });
+        }
+      } else {
+        await apiClient.delete('/S3/delete', {
+          params: { objectKey: asset.key }
+        });
+      }
+      dispatch(deleteAsset(asset.key));
     } catch (error) {
       dispatch({
         type: ActionTypes.ERROR
