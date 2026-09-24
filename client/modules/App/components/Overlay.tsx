@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -31,7 +31,8 @@ export const Overlay = ({
     (state: RootState) => state.ide.previousPath
   );
 
-  const ref = useRef<HTMLElement>(null);
+  const modalRef = useRef<HTMLElement>(null);
+  const [refNode, setRefNode] = useState<HTMLDivElement | null>(null);
 
   const browserHistory = useHistory();
 
@@ -39,31 +40,106 @@ export const Overlay = ({
   const isMobile = useMediaQuery({ maxWidth: 769 });
 
   const close = useCallback(() => {
-    const node = ref.current;
+    const node = modalRef.current;
     if (!node) return;
     // Only close if it is the last (and therefore the topmost overlay)
-    const overlays = document.getElementsByClassName('overlay');
-    if (node.parentElement?.parentElement !== overlays[overlays.length - 1])
-      return;
+    const overlays = document.getElementsByClassName('overlay__body');
+    if (node !== overlays[overlays.length - 1]) return;
 
     if (!closeOverlay) {
       browserHistory.push(previousPath);
     } else {
       closeOverlay();
     }
-  }, [previousPath, closeOverlay, ref]);
+  }, [previousPath, closeOverlay]);
 
-  useModalClose(close, ref);
+  useModalClose(close, modalRef);
+
+  const refCallback = useCallback((node: HTMLDivElement | null) => {
+    setRefNode(node);
+  }, []);
+
+  useLayoutEffect(() => {
+    if (!refNode) {
+      return () => {};
+    }
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key !== 'Tab') return;
+      if (!refNode.contains(document.activeElement)) return;
+
+      const focusableSelectors = [
+        'button:not([disabled])',
+        'input:not([disabled])',
+        'select:not([disabled])',
+        'textarea:not([disabled])',
+        'a[href]',
+        '[tabindex="0"]'
+      ].join(', ');
+
+      const header = refNode.querySelector('.overlay__header');
+      const headerElements = Array.from(
+        header?.querySelectorAll<HTMLElement>(focusableSelectors) ?? []
+      );
+
+      const activeTab = refNode.querySelector<HTMLElement>(
+        '.react-tabs__tab--selected'
+      );
+
+      const activePanel = refNode.querySelector<HTMLElement>(
+        '.react-tabs__tab-panel--selected'
+      );
+      const panelElements = Array.from(
+        activePanel?.querySelectorAll<HTMLElement>(focusableSelectors) ?? []
+      );
+
+      const focusableElements = [
+        ...headerElements,
+        ...(activeTab ? [activeTab] : []),
+        ...panelElements
+      ];
+
+      const currentIndex = focusableElements.indexOf(
+        document.activeElement as HTMLElement
+      );
+
+      e.preventDefault();
+
+      if (currentIndex === -1) {
+        const firstPanelElement = panelElements[0] ?? focusableElements[0];
+        firstPanelElement.focus();
+        return;
+      }
+
+      if (e.shiftKey) {
+        const prevIndex =
+          currentIndex <= 0 ? focusableElements.length - 1 : currentIndex - 1;
+        focusableElements[prevIndex].focus();
+      } else {
+        const nextIndex =
+          currentIndex >= focusableElements.length - 1 ? 0 : currentIndex + 1;
+        focusableElements[nextIndex].focus();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [refNode]);
 
   return (
     <div
       className={`overlay ${isFixedHeight ? 'overlay--is-fixed-height' : ''}`}
+      ref={refCallback}
     >
       <div className="overlay__content">
         <section
-          role="main"
+          role="dialog"
+          aria-modal="true"
           aria-label={ariaLabel}
-          ref={ref}
+          ref={modalRef}
           className="overlay__body"
         >
           <header className="overlay__header">
