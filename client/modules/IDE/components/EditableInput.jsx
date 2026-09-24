@@ -13,6 +13,7 @@ function EditableInput({
   inputProps,
   onChange,
   disabled,
+  description,
   'aria-label': ariaLabel
 }) {
   const [isEditing, setIsEditing] = React.useState(false);
@@ -26,6 +27,14 @@ function EditableInput({
   }`;
   const inputRef = React.useRef();
   const { t } = useTranslation();
+  const inputLabel =
+    description ??
+    ariaLabel ??
+    t('EditableInput.EditValue', { display: displayValue });
+  const buttonLabel =
+    ariaLabel ??
+    description ??
+    t('EditableInput.EditValue', { display: displayValue });
   React.useEffect(() => {
     if (isEditing) {
       const inputElement = inputRef.current;
@@ -78,9 +87,7 @@ function EditableInput({
       <button
         className="editable-input__label"
         onClick={beginEditing}
-        aria-label={
-          ariaLabel ?? t('EditableInput.EditValue', { display: displayValue })
-        }
+        aria-label={buttonLabel}
         aria-hidden={isEditing}
         disabled={disabled}
       >
@@ -98,6 +105,7 @@ function EditableInput({
         {...inputProps}
         disabled={!isEditing}
         aria-hidden={!isEditing}
+        aria-label={inputLabel}
         onBlur={doneEditing}
         onChange={updateValue}
         onKeyDown={checkForKeyAction}
@@ -115,6 +123,7 @@ EditableInput.defaultProps = {
   validate: () => true,
   value: '',
   disabled: false,
+  description: undefined,
   'aria-label': undefined
 };
 
@@ -127,6 +136,7 @@ EditableInput.propTypes = {
   validate: PropTypes.func,
   value: PropTypes.string,
   disabled: PropTypes.bool,
+  description: PropTypes.string,
   'aria-label': PropTypes.string
 };
 
