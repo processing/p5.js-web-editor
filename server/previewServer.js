@@ -1,5 +1,4 @@
 import Express from 'express';
-import mongoose from 'mongoose';
 import path from 'path';
 import webpack from 'webpack';
 import cors from 'cors';
@@ -12,54 +11,24 @@ import { renderPreviewIndex } from './views/previewIndex';
 
 const app = new Express();
 
-// This also works if you take out the mongoose connection
-// but i have no idea why
-const mongoConnectionString = process.env.MONGO_URL;
-
-const connectToMongoDB = async () => {
-  try {
-    mongoose.set('strictQuery', true);
-
-    await mongoose.connect(mongoConnectionString, {
-      serverSelectionTimeoutMS: 30000,
-      socketTimeoutMS: 45000
-    });
-  } catch (error) {
-    console.error('Failed to connect to MongoDB:', error);
-    process.exit(1);
-  }
-};
-
-connectToMongoDB();
-
-mongoose.connection.on('error', (err) => {
-  console.error(
-    'MongoDB Connection Error. Please make sure that MongoDB is running.',
-    err
-  );
-});
-
 const allowedCorsOrigins = [
   /p5js\.org$/,
   process.env.EDITOR_URL,
   process.env.PREVIEW_URL
 ];
 
-// to allow client-only development
 if (process.env.CORS_ALLOW_LOCALHOST === 'true') {
   allowedCorsOrigins.push(/localhost/);
 }
 
-// Enable Cross-Origin Resource Sharing (CORS)
 const corsMiddleware = cors({
   credentials: true,
   origin: allowedCorsOrigins
 });
+
 app.use(corsMiddleware);
-// Enable pre-flight OPTIONS route for all end-points
 app.options('*', corsMiddleware);
 
-// Run Webpack dev server in development mode
 if (process.env.NODE_ENV === 'development') {
   const compiler = webpack(config);
   app.use(
@@ -85,18 +54,14 @@ app.get('/', (req, res) => {
 app.use('/', embedRoutes);
 app.use('/', assetRoutes);
 
-// Handle missing routes.
 app.get('*', (req, res) => {
-  res.status(404);
-  res.type('txt').send('Not found.');
+  res.status(404).type('txt').send('Not found.');
 });
 
-app.listen(process.env.PREVIEW_PORT, (error) => {
-  if (!error) {
-    console.log(
-      `p5.js Preview Server is running on port: ${process.env.PREVIEW_PORT}`
-    );
-  }
+app.listen(process.env.PREVIEW_PORT, () => {
+  console.log(
+    `p5.js Preview Server is running on port: ${process.env.PREVIEW_PORT}`
+  );
 });
 
 export default app;
