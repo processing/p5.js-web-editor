@@ -1,4 +1,4 @@
-export const currentP5Version = '2.3.2';
+export const currentP5Version = '2.3.4';
 
 // Generated from https://www.npmjs.com/package/p5?activeTab=versions
 // Run this in the console:
