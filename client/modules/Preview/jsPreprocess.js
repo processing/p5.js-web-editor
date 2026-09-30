@@ -144,18 +144,25 @@ function collectLoopsToProtect(ast, shaderNames) {
     if (isInsideShader) return;
 
     let parentBlock = null;
+    // directParent is the immediate ancestor that contains this loop as its
+    // body (e.g. an outer for-loop whose body is this loop without braces).
+    let directParent = null;
     for (let i = ancestors.length - 1; i >= 0; i--) {
       const ancestor = ancestors[i];
-      if (
-        ancestor !== node &&
-        (ancestor.type === 'BlockStatement' || ancestor.type === 'Program')
-      ) {
-        parentBlock = ancestor;
-        break;
+      if (ancestor !== node) {
+        // Record the first non-self ancestor as the direct parent
+        if (directParent === null) {
+          directParent = ancestor;
+        }
+
+        if (ancestor.type === 'BlockStatement' || ancestor.type === 'Program') {
+          parentBlock = ancestor;
+          break;
+        }
       }
     }
 
-    loops.push({ loop: node, parentBlock });
+    loops.push({ loop: node, parentBlock, directParent });
   }
 
   walk.ancestor(ast, {
@@ -168,7 +175,7 @@ function collectLoopsToProtect(ast, shaderNames) {
 }
 
 function injectProtection(loops) {
-  loops.forEach(({ loop, parentBlock }, idx) => {
+  loops.forEach(({ loop, parentBlock, directParent }, idx) => {
     const varName = `_LP${idx}`;
     const { line } = loop.loc.start;
     const check = makeCheckStatement(varName, line);
@@ -184,6 +191,19 @@ function injectProtection(loops) {
       const nodeIdx = parentBlock.body.indexOf(loop);
       if (nodeIdx !== -1) {
         parentBlock.body.splice(nodeIdx, 0, varDecl);
+      } else if (directParent && directParent.body === loop) {
+        // The loop is the un-braced body of a parent control statement
+        // (e.g. `for(...) for(...) stmt` — inner loop without braces).
+        // We cannot splice into parentBlock because the loop is not directly
+        // in its body array, so the varDecl would never be declared while the
+        // check inside the loop still references it → ReferenceError: _LP${idx}
+        // is not defined.
+        // Fix: wrap the directParent's body in a BlockStatement that prepends
+        // the varDecl so the variable is always in scope.
+        directParent.body = {
+          type: 'BlockStatement',
+          body: [varDecl, loop]
+        };
       }
     }
   });
