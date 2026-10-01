@@ -3,6 +3,8 @@ on:
   workflow_dispatch:
   pull_request:
     branches: [develop]
+env:
+  WAIT_ON_VERSION: '7'
 jobs:
   test-e2e:
     environment: e2e-tests
@@ -25,7 +27,7 @@ jobs:
     - name: Set up node
       uses: actions/setup-node@v4
       with:
-        node-version: '18.20.x'
+        node-version-file: '.nvmrc'
         cache: 'npm'
 
     - name: Create .env file
@@ -36,7 +38,15 @@ jobs:
       with:
         mongodb-version: '6.0'
 
+    - name: Cache node_modules
+      uses: actions/cache@v4
+      id: node-modules-cache
+      with:
+        path: node_modules
+        key: node-modules-${{ runner.os }}-node-${{ hashFiles('.nvmrc') }}-${{ hashFiles('package-lock.json') }}
+
     - name: Install dependencies
+      if: steps.node-modules-cache.outputs.cache-hit != 'true'
       run: npm ci
 
     - name: Cache Playwright browsers
@@ -54,13 +64,24 @@ jobs:
       if: steps.playwright-cache.outputs.cache-hit == 'true'
       run: npx playwright install-deps chromium
 
+    - name: Cache wait-on
+      uses: actions/cache@v4
+      id: wait-on-cache
+      with:
+        path: ~/.npm/_npx
+        key: npx-wait-on-${{ env.WAIT_ON_VERSION }}-${{ runner.os }}
+
+    - name: Install wait-on
+      if: steps.wait-on-cache.outputs.cache-hit != 'true'
+      run: npx -y wait-on@$WAIT_ON_VERSION --version
+
     - name: Start app
       run: npm run start:e2e > app.log 2>&1 &
 
     - name: Wait for app to be ready
       run: |
-        npx wait-on@7 http://localhost:9000 --timeout 180000 || {
-          echo "::error::App failed to become ready at http://localhost:9000 within 180s"
+        npx wait-on@$WAIT_ON_VERSION http://localhost:8000 --timeout 180000 || {
+          echo "::error::App failed to become ready at http://localhost:8000 within 180s"
           echo "----- app.log -----"
           cat app.log
           exit 1
