@@ -37,6 +37,27 @@ export function createUniqueName(name, parentId, files) {
   return testName;
 }
 
+export function generateDuplicateFileName(sourceName, parentId, files) {
+  const siblingFiles = files
+    .find((file) => file.id === parentId)
+    .children.map((childFileId) =>
+      files.find((file) => file.id === childFileId)
+    );
+
+  const baseName = sourceName.replace(/-\(\d+\)(?=\.[^.]*$|$)/, '');
+
+  let testName = sourceName;
+  let index = 1;
+  let existingName = siblingFiles.find((file) => sourceName === file.name);
+
+  while (existingName) {
+    testName = appendToFilename(baseName, `-(${index})`);
+    index += 1;
+    existingName = siblingFiles.find((file) => testName === file.name); // eslint-disable-line
+  }
+  return testName;
+}
+
 export function updateFileContent(id, content) {
   return {
     type: ActionTypes.UPDATE_FILE_CONTENT,
