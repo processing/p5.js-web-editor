@@ -40,7 +40,7 @@ body:
       label: Actual Behavior
       description: |
         Screenshots or screen recordings are preferred if possible. Please paste them into the markdown editor below.
-      placeholder: What is currently happening.
+      placeholder: What is currently happening. Screenshots or other visuals are appreciated.
     validations:
       required: true
 
