@@ -10,7 +10,25 @@ env:
   DEPLOYMENT_NAME: web-editor-node
   IMAGE: ${{ secrets.DOCKER_USERNAME }}/p5.js-web-editor
 jobs:
+  # Only deploy tags whose commit is on the `release` branch
+  verify_release_branch:
+    name: Verify release tag is on the release branch
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.release.tag_name }}
+          fetch-depth: 0
+      - run: |-
+          if ! git merge-base --is-ancestor "$GITHUB_SHA" origin/release; then
+            echo "::error::Tag ${{ github.event.release.tag_name }} ($GITHUB_SHA) is not on the release branch"
+            exit 1
+          fi
+  test:
+    needs: verify_release_branch
+    uses: ./.github/workflows/test.yml
   push_to_registry:
+    needs: test
     environment: production
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
@@ -37,6 +55,7 @@ jobs:
           push: true
           tags: |
             ${{ env.IMAGE }}:${{ github.sha }}
+            ${{ env.IMAGE }}:${{ github.event.release.tag_name }}
             ${{ env.IMAGE }}:latest
           target: production
       # Setup gcloud CLI
