@@ -478,6 +478,16 @@ exports[`Nav renders dashboard version for mobile 1`] = `
               About
             </a>
           </li>
+          <li>
+            <a
+              aria-disabled="false"
+              href="https://github.com/processing/p5.js-web-editor/releases/tag/v1.2.3"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Web Editor v1.2.3
+            </a>
+          </li>
         </ul>
       </div>
     </div>
@@ -658,6 +668,9 @@ exports[`Nav renders editor version for desktop 1`] = `
               </li>
               <li>
                 Post on the Forum
+              </li>
+              <li>
+                Web Editor v1.2.3
               </li>
             </ul>
           </li>
@@ -1088,6 +1101,16 @@ exports[`Nav renders editor version for mobile 1`] = `
               href="/about"
             >
               About
+            </a>
+          </li>
+          <li>
+            <a
+              aria-disabled="false"
+              href="https://github.com/processing/p5.js-web-editor/releases/tag/v1.2.3"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Web Editor v1.2.3
             </a>
           </li>
         </ul>
