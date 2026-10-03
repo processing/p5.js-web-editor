@@ -181,7 +181,9 @@ $themes: (
     toast-background-color: $medium-dark,
     toast-text-color: $lightest,
     toolbar-button-background-color: $medium-light,
-    toolbar-button-color: $dark
+    toolbar-button-color: $dark,
+    toolbar-start-stop-button-hover-outline-color: $p5js-pink,
+    toolbar-start-stop-button-outline-color: $dark
   ),
   dark: (
     activeline-background-color: $p5-dark-activeline,
@@ -299,7 +301,9 @@ $themes: (
     toast-background-color: $medium-light,
     toast-text-color: $dark,
     toolbar-button-background-color: $medium-dark,
-    toolbar-button-color: $lightest
+    toolbar-button-color: $lightest,
+    toolbar-start-stop-button-hover-outline-color: $p5js-pink,
+    toolbar-start-stop-button-outline-color: $lightest
   ),
   contrast: (
     activeline-background-color: $p5-contrast-activeline,
@@ -414,6 +418,8 @@ $themes: (
     toast-background-color: $medium-light,
     toast-text-color: $darker,
     toolbar-button-background-color: $medium-light,
-    toolbar-button-color: $dark
+    toolbar-button-color: $dark,
+    toolbar-start-stop-button-hover-outline-color: $yellow,
+    toolbar-start-stop-button-outline-color: $medium-light
   )
 );

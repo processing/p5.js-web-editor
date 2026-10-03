@@ -36,12 +36,12 @@ const Toolbar = (props) => {
   const showVisibilityDropdown = project?.owner && userIsOwner;
 
   const playButtonClass = classNames({
-    'toolbar__play-button': true,
-    'toolbar__play-button--selected': isPlaying
+    'toolbar-start-stop-button play': true,
+    'toolbar-start-stop-button--selected play': isPlaying
   });
   const stopButtonClass = classNames({
-    'toolbar__stop-button': true,
-    'toolbar__stop-button--selected': !isPlaying
+    'toolbar-start-stop-button stop': true,
+    'toolbar-start-stop-button--selected stop': !isPlaying
   });
   const preferencesButtonClass = classNames({
     'toolbar__preferences-button': true,
