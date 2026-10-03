@@ -51,8 +51,9 @@ const Toolbar = (props) => {
   const handleVisibilityChange = useCallback(
     (sketchId, sketchName, newVisibility) => {
       dispatch(changeVisibility(sketchId, sketchName, newVisibility, t));
+      // update the ui here
     },
-    [changeVisibility]
+    [dispatch, t]
   );
 
   return (
