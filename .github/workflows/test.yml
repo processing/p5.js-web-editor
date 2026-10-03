@@ -6,6 +6,7 @@ on:
     branches:
       - develop
       - release
+  workflow_call:
 
 jobs:
   test:
