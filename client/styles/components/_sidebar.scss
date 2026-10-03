@@ -331,4 +331,16 @@
   .sidebar--project-options & {
     display: flex;
   }
+  & button:disabled {
+    @include themify() {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    &:hover {
+      @include themify() {
+        background-color: transparent;
+        color: getThemifyVariable('primary-text-color');
+      }
+    }
+  }
 }
