@@ -21,9 +21,11 @@ jobs:
           fetch-depth: 0
       - run: |-
           if ! git merge-base --is-ancestor "$GITHUB_SHA" origin/release; then
-            echo "::error::Tag ${{ github.event.release.tag_name }} ($GITHUB_SHA) is not on the release branch"
+            printf '::error::Tag %s (%s) is not on the release branch\n' "$RELEASE_TAG" "$GITHUB_SHA"
             exit 1
           fi
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
   test:
     needs: verify_release_branch
     uses: ./.github/workflows/test.yml
