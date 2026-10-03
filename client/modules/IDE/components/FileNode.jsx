@@ -231,6 +231,9 @@ const FileNode = ({
     if (!canEdit) {
       return;
     }
+    if (!isOptionsOpen) {
+      fileOptionsRef.current?.focus();
+    }
     setIsOptionsOpen(!isOptionsOpen);
   };
 
