@@ -57,7 +57,6 @@ jobs:
           push: true
           tags: |
             ${{ env.IMAGE }}:${{ github.sha }}
-            ${{ env.IMAGE }}:${{ github.event.release.tag_name }}
             ${{ env.IMAGE }}:latest
           target: production
       # Setup gcloud CLI
