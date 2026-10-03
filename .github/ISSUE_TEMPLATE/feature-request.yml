@@ -12,5 +12,7 @@ body:
   - type: textarea
     attributes:
       label: Feature request details
+      description: |
+        If you want to include screenshots or screen recordings, paste them into the markdown editor below.
     validations:
       required: true
