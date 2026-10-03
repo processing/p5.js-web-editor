@@ -6,6 +6,11 @@ import Nav from './Nav';
 
 jest.mock('../../../../utils/generateRandomName');
 
+// Mock the editor version so the snapshot stays stable across releases.
+// The component reads the real version from package.json at runtime (it bumps
+// every release), which would otherwise break these snapshots each release day.
+jest.mock('../../../../../package.json', () => ({ version: '1.2.3' }));
+
 // mock Menubar
 jest.mock('../../../../components/Menubar/Menubar', () => ({
   Menubar: ({ children, className = 'nav__menubar' }) => (
