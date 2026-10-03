@@ -16,6 +16,13 @@ import {
   rewritePendingFileUrls
 } from '../utils/pendingAssets';
 
+function isPrivateProject(project, user) {
+  return (
+    project.visibility === 'Private' &&
+    (!user || !project.user._id.equals(user._id))
+  );
+}
+
 const s3Client = new S3Client({
   credentials: {
     accessKeyId: process.env.AWS_ACCESS_KEY,
@@ -126,6 +133,11 @@ export async function getProject(req, res) {
       .status(404)
       .send({ message: 'Project with that id does not exist' });
   }
+
+  if (isPrivateProject(project, req.user)) {
+    return res.status(403).send({ message: 'Project is private' });
+  }
+
   return res.json(project);
 }
 
@@ -142,11 +154,7 @@ export async function getProjectAsset(req, res) {
       .send({ message: 'Project with that id does not exist' });
   }
 
-  // Check visibility and ownership for private projects
-  if (
-    project.visibility === 'Private' &&
-    (!req.user || !project.user._id.equals(req.user._id))
-  ) {
+  if (isPrivateProject(project, req.user)) {
     return res.status(403).send({ message: 'Project is private' });
   }
 
@@ -417,6 +425,12 @@ export async function downloadProjectAsZip(req, res) {
       res.status(404).send({ message: 'Project with that id does not exist' });
       return;
     }
+
+    if (isPrivateProject(project, req.user)) {
+      res.status(403).send({ message: 'Project is private' });
+      return;
+    }
+
     await buildZip(project, req, res);
   } catch (err) {
     console.error('Error in downloadProjectAsZip:', err);
