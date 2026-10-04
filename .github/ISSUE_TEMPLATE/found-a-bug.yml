@@ -38,7 +38,9 @@ body:
   - type: textarea
     attributes:
       label: Actual Behavior
-      placeholder: What is currently happening.
+      description: |
+        Screenshots or screen recordings are preferred if possible. Please paste them into the markdown editor below.
+      placeholder: What is currently happening. Screenshots or other visuals are appreciated.
     validations:
       required: true
 
@@ -46,7 +48,7 @@ body:
     attributes:
       label: Expected Behavior
       description: |
-        If you want to include screenshots, paste them into the markdown editor below.
+        If you want to include screenshots or screen recordings, paste them into the markdown editor below.
       placeholder: What were you expecting?
     validations:
       required: true
