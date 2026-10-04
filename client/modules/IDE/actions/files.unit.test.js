@@ -1,4 +1,22 @@
-import { generateDuplicateFileName } from './files';
+import configureStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
+import { setupServer } from 'msw/node';
+import { rest } from 'msw';
+import { setUnsavedChanges, setSelectedFile, createError } from './ide';
+import { setProjectSavedTime } from './project';
+import {
+  handleDuplicateFile,
+  generateDuplicateFileName,
+  createFile
+} from './files';
+
+const mockStore = configureStore([thunk]);
+
+const server = setupServer();
+
+beforeAll(() => server.listen());
+afterEach(() => server.resetHandlers());
+afterAll(() => server.close());
 
 describe('generateDuplicateFileName', () => {
   it('generates the first duplicate name for a file', () => {
@@ -156,5 +174,169 @@ describe('generateDuplicateFileName', () => {
     const result = generateDuplicateFileName('sketch.js', 'folder1', files);
 
     expect(result).toBe('sketch-(1).js');
+  });
+});
+
+describe('handleDuplicateFile', () => {
+  const projectId = 'project-1';
+  const parentId = 'folder-1';
+
+  const sourceFile = {
+    id: 'file-1',
+    name: 'sketch.js',
+    fileType: 'file',
+    content: 'console.log("hello");',
+    children: []
+  };
+
+  const parentFolder = {
+    id: parentId,
+    name: 'root',
+    fileType: 'folder',
+    children: ['file-1']
+  };
+
+  const createState = (files = [parentFolder, sourceFile]) => ({
+    files,
+    project: {
+      id: projectId
+    }
+  });
+
+  it('duplicates a file and dispatches the expected actions', async () => {
+    const duplicatedFile = {
+      id: 'file-2',
+      name: 'sketch-(1).js',
+      fileType: 'file',
+      content: 'console.log("hello");',
+      children: []
+    };
+
+    server.use(
+      rest.post(`/projects/${projectId}/files`, (_req, res, ctx) =>
+        res(
+          ctx.status(200),
+          ctx.json({
+            updatedFile: duplicatedFile,
+            project: {
+              updatedAt: '2026-10-03T10:00:00.000Z'
+            }
+          })
+        )
+      )
+    );
+
+    const store = mockStore(createState());
+
+    await store.dispatch(handleDuplicateFile('file-1', parentId));
+
+    expect(store.getActions()).toEqual([
+      createFile(duplicatedFile, parentId),
+      setProjectSavedTime('2026-10-03T10:00:00.000Z'),
+      setUnsavedChanges(true),
+      setSelectedFile('file-2')
+    ]);
+  });
+
+  it('preserves the url when duplicating an uploaded file', async () => {
+    const source = {
+      ...sourceFile,
+      name: 'image.png',
+      content: '',
+      url: 'https://example.com/image.png'
+    };
+
+    const duplicatedFile = {
+      id: 'file-2',
+      name: 'image-(1).png',
+      fileType: 'file',
+      content: '',
+      url: 'https://example.com/image.png',
+      children: []
+    };
+
+    server.use(
+      rest.post(`/projects/${projectId}/files`, (_req, res, ctx) =>
+        res(
+          ctx.status(200),
+          ctx.json({
+            updatedFile: duplicatedFile,
+            project: {
+              updatedAt: '2026-10-03T10:00:00.000Z'
+            }
+          })
+        )
+      )
+    );
+
+    const store = mockStore(createState([parentFolder, source]));
+
+    await store.dispatch(handleDuplicateFile('file-1', parentId));
+
+    expect(store.getActions()).toEqual([
+      createFile(duplicatedFile, parentId),
+      setProjectSavedTime('2026-10-03T10:00:00.000Z'),
+      setUnsavedChanges(true),
+      setSelectedFile('file-2')
+    ]);
+  });
+
+  it('does nothing when the source file does not exist', async () => {
+    const store = mockStore(createState());
+
+    await store.dispatch(handleDuplicateFile('does-not-exist', parentId));
+
+    expect(store.getActions()).toEqual([]);
+  });
+
+  it('does nothing when the source is a folder', async () => {
+    const folder = {
+      id: 'folder-2',
+      name: 'components',
+      fileType: 'folder',
+      children: []
+    };
+
+    const store = mockStore(createState([parentFolder, sourceFile, folder]));
+
+    await store.dispatch(handleDuplicateFile('folder-2', parentId));
+
+    expect(store.getActions()).toEqual([]);
+  });
+
+  it('does nothing when parentId is missing', async () => {
+    const store = mockStore(createState());
+
+    await store.dispatch(handleDuplicateFile('file-1'));
+
+    expect(store.getActions()).toEqual([]);
+  });
+
+  it('dispatches an error when the API request fails', async () => {
+    const errorResponse = {
+      message: 'Unable to create file'
+    };
+
+    server.use(
+      rest.post(`/projects/${projectId}/files`, (_req, res, ctx) =>
+        res(ctx.status(400), ctx.json(errorResponse))
+      )
+    );
+
+    const store = mockStore(createState());
+
+    const result = await store.dispatch(
+      handleDuplicateFile('file-1', parentId)
+    );
+
+    expect(result).toEqual({
+      error: expect.anything()
+    });
+
+    expect(store.getActions()).toContainEqual(createError(errorResponse));
+
+    expect(store.getActions()).not.toContainEqual(
+      createFile(expect.anything(), parentId)
+    );
   });
 });

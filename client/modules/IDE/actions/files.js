@@ -132,6 +132,52 @@ export function handleCreateFile(formProps, setSelected = true) {
   };
 }
 
+export function handleDuplicateFile(sourceId, parentId) {
+  return (dispatch, getState) => {
+    const { files } = getState();
+    const projectId = getState().project.id;
+
+    const source = files.find((file) => file.id === sourceId);
+
+    if (!source || source.fileType !== 'file' || !parentId) {
+      return Promise.resolve();
+    }
+
+    const formProps = {
+      name: generateDuplicateFileName(source.name, parentId, files),
+      content: source.content,
+      url: source.url
+    };
+
+    return new Promise((resolve) => {
+      submitFile(formProps, files, parentId, projectId)
+        .then((response) => {
+          const { file, updatedAt } = response;
+
+          dispatch(createFile(file, parentId));
+
+          if (updatedAt) {
+            dispatch(setProjectSavedTime(updatedAt));
+          }
+
+          dispatch(setUnsavedChanges(true));
+          dispatch(setSelectedFile(file.id));
+
+          resolve();
+        })
+        .catch((error) => {
+          const { response } = error;
+
+          if (response) {
+            dispatch(createError(response.data));
+          }
+
+          resolve({ error });
+        });
+    });
+  };
+}
+
 export function submitFolder(formProps, files, parentId, projectId) {
   if (projectId) {
     const postParams = {
