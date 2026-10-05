@@ -1,0 +1,707 @@
+{
+  "Nav": {
+    "File": {
+      "Title": "ملف",
+      "New": "جديد",
+      "Share": "مشاركة",
+      "Duplicate": "نسخ",
+      "Open": "فتح",
+      "Download": "تحميل",
+      "AddToCollection": "إضافة إلى مجموعة",
+      "Examples": "أمثلة",
+      "SaveTooltipUnauthenticated": "سجّل الدخول لحفظ رسمتك",
+      "DuplicateTooltipUnauthenticated": "سجّل الدخول لنسخ هذه الرسمة",
+      "OpenTooltipUnauthenticated": "سجّل الدخول لفتح رسمك",
+      "AddToCollectionTooltipUnauthenticated": "سجّل الدخول للإضافة إلى المجموعات",
+      "ShareTooltipUnsaved": "احفظ رسمتك قبل المشاركة",
+      "DownloadTooltipUnsaved": "احفظ رسمتك قبل التحميل"
+    },
+    "Edit": {
+      "Title": "تحرير",
+      "TidyCode": "ترتيب الكود",
+      "Find": "بحث",
+      "Replace": "استبدال"
+    },
+    "Sketch": {
+      "Title": "رسمة",
+      "AddFile": "إضافة ملف",
+      "AddFolder": "إضافة مجلد",
+      "Run": "تشغيل",
+      "Stop": "إيقاف"
+    },
+    "Help": {
+      "Title": "مساعدة",
+      "KeyboardShortcuts": "اختصارات لوحة المفاتيح",
+      "Reference": "المرجع",
+      "ReportBug": "الإبلاغ عن خطأ",
+      "ChatOnDiscord": "الدردشة على Discord",
+      "PostOnTheForum": "نشر في المنتدى"
+    },
+    "Lang": "اللغة",
+    "BackEditor": "العودة إلى المحرر",
+    "WarningUnsavedChanges": "هل أنت متأكد أنك تريد مغادرة هذه الصفحة؟ لديك تغييرات غير محفوظة.",
+    "Login": "تسجيل الدخول",
+    "LoginOr": "أو",
+    "SignUp": "إنشاء حساب",
+    "Auth": {
+      "Welcome": "مرحبًا",
+      "Hello": "مرحبًا",
+      "MyAccount": "حسابي",
+      "My": "خاصتي",
+      "MySketches": "رسمي",
+      "MyCollections": "مجموعاتي",
+      "Asset": "مورد",
+      "MyAssets": "مواردي",
+      "LogOut": "تسجيل الخروج"
+    }
+  },
+  "Banner": {
+    "Copy": "<bold>تبرّع اليوم!</bold> ادعم p5.js وProcessing Foundation."
+  },
+  "CodemirrorFindAndReplace": {
+    "ToggleReplace": "إظهار/إخفاء الاستبدال",
+    "Find": "بحث",
+    "FindPlaceholder": "البحث في الملفات",
+    "Replace": "استبدال",
+    "ReplaceAll": "استبدال الكل",
+    "ReplacePlaceholder": "النص المراد استبداله",
+    "Regex": "تعبير منتظم",
+    "CaseSensitive": "مراعاة حالة الأحرف",
+    "WholeWords": "كلمات كاملة",
+    "Previous": "السابق",
+    "Next": "التالي",
+    "NoResults": "لا توجد نتائج",
+    "Close": "إغلاق"
+  },
+  "LoginForm": {
+    "UsernameOrEmail": "البريد الإلكتروني أو اسم المستخدم",
+    "UsernameOrEmailARIA": "البريد الإلكتروني أو اسم المستخدم",
+    "Password": "كلمة المرور",
+    "PasswordARIA": "كلمة المرور",
+    "Submit": "تسجيل الدخول",
+    "Errors": {
+      "invalidCredentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة."
+    }
+  },
+  "LoginView": {
+    "Title": "محرر p5.js على الويب | تسجيل الدخول",
+    "Login": "تسجيل الدخول",
+    "LoginOr": "أو",
+    "SignUp": "إنشاء حساب",
+    "Email": "البريد الإلكتروني",
+    "Username": "اسم المستخدم",
+    "DontHaveAccount": "ليس لديك حساب؟ ",
+    "ForgotPassword": "نسيت كلمة المرور؟ ",
+    "ResetPassword": "إعادة تعيين كلمة المرور"
+  },
+  "SocialAuthButton": {
+    "Connect": "ربط حساب {{serviceauth}}",
+    "Unlink": "فك ربط حساب {{serviceauth}}",
+    "Login": "تسجيل الدخول عبر {{serviceauth}}",
+    "LogoARIA": "شعار {{serviceauth}}"
+  },
+  "About": {
+    "Title": "حول",
+    "TitleHelmet": "محرر p5.js على الويب | حول",
+    "Headline": "أنشئ وشارك وعدّل رسم p5.js باستخدام محرر p5.js.",
+    "Contribute": "المساهمة",
+    "IntroDescription1": "p5.js مكتبة JavaScript مجانية ومفتوحة المصدر لتعلم البرمجة وصنع الفن. باستخدام محرر p5.js يمكنك إنشاء ومشاركة وتعديل رسم p5.js دون تنزيل أو إعداد أي شيء.",
+    "IntroDescription2": "نؤمن بأن البرمجيات وأدوات تعلمها يجب أن تكون مفتوحة وشاملة قدر الإمكان. يمكنك دعم هذا العمل بالتبرع لـProcessing Foundation التي تدعم p5.js. تبرعك يدعم تطوير p5.js وموارد تعليمية مثل الأمثلة والدروس والزمالات والفعاليات المجتمعية.",
+    "Donate": "تبرع",
+    "NewP5": "جديد على p5.js؟",
+    "Report": "الإبلاغ عن خطأ",
+    "Learn": "تعلّم",
+    "X": "X",
+    "Home": "الرئيسية p5.js",
+    "Instagram": "إنستغرام",
+    "Discord": "ديسكورد",
+    "DiscordCTA": "انضم إلى Discord",
+    "Youtube": "يوتيوب",
+    "Github": "جيت هب",
+    "GetInvolved": "شارك معنا",
+    "WebEditor": "المحرر على الويب",
+    "Resources": "الموارد",
+    "Reference": "المرجع",
+    "Libraries": "المكتبات",
+    "Forum": "المنتدى",
+    "ForumCTA": "انضم إلى المنتدى",
+    "Examples": "أمثلة",
+    "PrivacyPolicy": "سياسة الخصوصية",
+    "TermsOfUse": "شروط الاستخدام",
+    "CodeOfConduct": "قواعد السلوك",
+    "Email": "البريد الإلكتروني",
+    "EmailAddress": "hello@p5js.org",
+    "Socials": "وسائل التواصل",
+    "LinkDescriptions": {
+      "Home": "اعرف المزيد عن p5.js ومجتمعنا.",
+      "Examples": "استكشف إمكانيات p5.js بأمثلة قصيرة.",
+      "CodeOfConduct": "اقرأ بيان المجتمع وقواعد السلوك.",
+      "Libraries": "وسّع إمكانيات p5.js بمكتبات من المجتمع.",
+      "Reference": "شرح مبسط لكل جزء من كود p5.js.",
+      "Donate": "ادعم هذا العمل بالتبرع لـProcessing Foundation.",
+      "Contribute": "ساهم في محرر p5.js المفتوح المصدر على Github.",
+      "Report": "أبلغ عن سلوك خاطئ أو معطّل في محرر p5.js.",
+      "Forum": "اطرح أسئلة وشارك رسمك واحصل على مساعدة من مجتمع p5.js.",
+      "Discord": "تحدث مع مجتمع p5.js واحصل على مساعدة سريعة."
+    },
+    "Contact": "اتصل بنا"
+  },
+  "Toast": {
+    "OpenedNewSketch": "تم فتح رسمة جديدة.",
+    "SketchSaved": "تم حفظ الرسمة.",
+    "SketchFailedSave": "فشل حفظ الرسمة.",
+    "AutosaveEnabled": "الحفظ التلقائي مفعّل.",
+    "LangChange": "تم تغيير اللغة",
+    "SettingsSaved": "تم حفظ الإعدادات.",
+    "EmptyCurrentPass": "حقل كلمة المرور الحالية فارغ",
+    "IncorrectCurrentPass": "كلمة المرور الحالية غير صحيحة",
+    "DefaultError": "حدث خطأ ما",
+    "UserNotFound": "المستخدم غير موجود",
+    "NetworkError": "خطأ في الشبكة"
+  },
+  "Toolbar": {
+    "Preview": "معاينة",
+    "Auto-refresh": "تحديث تلقائي",
+    "OpenPreferencesARIA": "فتح التفضيلات",
+    "PlaySketchARIA": "تشغيل الرسمة",
+    "PlayOnlyVisualSketchARIA": "تشغيل الرسمة المرئية فقط",
+    "StopSketchARIA": "إيقاف الرسمة",
+    "EditSketchARIA": "تعديل اسم الرسمة",
+    "NewSketchNameARIA": "اسم الرسمة الجديدة",
+    "By": " بواسطة ",
+    "CustomLibraryVersion": "إصدار p5.js مخصص",
+    "VersionPickerARIA": "اختيار الإصدار",
+    "NewVersionPickerARIA": "اختيار الإصدار"
+  },
+  "Console": {
+    "Title": "وحدة التحكم",
+    "Clear": "مسح",
+    "ClearARIA": "مسح وحدة التحكم",
+    "Close": "إغلاق",
+    "CloseARIA": "إغلاق وحدة التحكم",
+    "Open": "فتح",
+    "OpenARIA": "فتح وحدة التحكم"
+  },
+  "Preferences": {
+    "Settings": "الإعدادات",
+    "GeneralSettings": "الإعدادات العامة",
+    "Accessibility": "إمكانية الوصول",
+    "LibraryManagement": "إدارة المكتبات",
+    "Theme": "المظهر",
+    "LightTheme": "فاتح",
+    "LightThemeARIA": "المظهر الفاتح مفعّل",
+    "DarkTheme": "داكن",
+    "DarkThemeARIA": "المظهر الداكن مفعّل",
+    "HighContrastTheme": "تباين عالٍ",
+    "HighContrastThemeARIA": "مظهر التباين العالي مفعّل",
+    "TextSize": "حجم النص",
+    "DecreaseFont": "تصغير",
+    "DecreaseFontARIA": "تصغير حجم الخط",
+    "IncreaseFont": "تكبير",
+    "IncreaseFontARIA": "تكبير حجم الخط",
+    "FontSize": "حجم الخط",
+    "SetFontSize": "تعيين حجم الخط",
+    "Autosave": "الحفظ التلقائي",
+    "On": "تشغيل",
+    "AutosaveOnARIA": "الحفظ التلقائي مفعّل",
+    "Off": "إيقاف",
+    "AutosaveOffARIA": "الحفظ التلقائي معطّل",
+    "AutocloseBracketsQuotes": "إغلاق تلقائي للأقواس والعلامات",
+    "AutocloseBracketsQuotesOnARIA": "إغلاق الأقواس والعلامات مفعّل",
+    "AutocloseBracketsQuotesOffARIA": "إغلاق الأقواس والعلامات معطّل",
+    "AutocompleteHinter": "تلميحات الإكمال التلقائي",
+    "AutocompleteHinterOnARIA": "الإكمال التلقائي مفعّل",
+    "AutocompleteHinterOffARIA": "الإكمال التلقائي معطّل",
+    "WordWrap": "التفاف النص",
+    "WordWrapOnARIA": "التفاف النص مفعّل",
+    "WordWrapOffARIA": "التفاف النص معطّل",
+    "LineNumbers": "أرقام الأسطر",
+    "LineNumbersOnARIA": "أرقام الأسطر مفعّلة",
+    "LineNumbersOffARIA": "أرقام الأسطر معطّلة",
+    "LintWarningSound": "صوت تحذير Lint",
+    "LintWarningOnARIA": "تحذير lint مفعّل",
+    "LintWarningOffARIA": "تحذير lint معطّل",
+    "PreviewSound": "صوت المعاينة",
+    "PreviewSoundARIA": "صوت المعاينة",
+    "AccessibleTextBasedCanvas": "لوحة قائمة على النص لسهولة الوصول",
+    "UsedScreenReader": "للاستخدام مع قارئ الشاشة",
+    "PlainText": "نص عادي",
+    "TextOutputARIA": "مخرجات النص مفعّلة",
+    "TableText": "نص جدولي",
+    "TableOutputARIA": "مخرجات الجدول مفعّلة",
+    "LibraryVersion": "إصدار p5.js",
+    "LibraryVersionInfo": "يتوفر [إصدار 2.0 جديد](https://github.com/processing/p5.js/releases/) من p5.js! سيصبح الافتراضي في أغسطس 2026، فجرّبه وأبلغ عن الأخطاء. مهتم بالانتقال من 1.x إلى 2.0؟ راجع [موارد التوافق والانتقال](https://github.com/processing/p5.js-compatibility).",
+    "CustomVersionTitle": "تدير مكتباتك بنفسك؟ رائع!",
+    "CustomVersionInfo": "إصدار p5.js يُدار حالياً من داخل كود index.html ولا يمكن تغييره من هذه التبويبة.",
+    "CustomVersionReset": "إذا أردت استخدام المكتبات الافتراضية، استبدل وسوم السكربت في index.html بما يلي:",
+    "SoundAddon": "مكتبة الإضافة p5.sound.js",
+    "PreloadAddon": "مكتبة توافق p5.js 1.x — Preload",
+    "ShapesAddon": "مكتبة توافق p5.js 1.x — الأشكال",
+    "DataAddon": "مكتبة توافق p5.js 1.x — البيانات والأحداث",
+    "AddonOnARIA": "مفعّل",
+    "AddonOffARIA": "معطّل",
+    "SoundReference": "عرض مرجع p5.sound المتوافق مع p5.js {{version}}",
+    "CopyToClipboardSuccess": "تم النسخ إلى الحافظة!",
+    "CopyToClipboardFailure": "لم نتمكن من نسخ النص، حدّده وانسخه يدويًا."
+  },
+  "KeyboardShortcuts": {
+    "Title": " اختصارات لوحة المفاتيح",
+    "ShortcutsFollow": "اختصارات تحرير الكود تتبع",
+    "SublimeText": "اختصارات Sublime Text",
+    "CodeEditing": {
+      "Tidy": "ترتيب",
+      "FindText": "بحث عن نص",
+      "FindNextMatch": "المطابقة التالية",
+      "FindPrevMatch": "المطابقة السابقة",
+      "ReplaceTextMatch": "استبدال المطابقة",
+      "IndentCodeLeft": "تقليل المسافة البادئة",
+      "IndentCodeRight": "زيادة المسافة البادئة",
+      "CommentLine": "تعليق السطر",
+      "FindNextTextMatch": "البحث عن المطابقة التالية",
+      "FindPreviousTextMatch": "البحث عن المطابقة السابقة",
+      "CodeEditing": "تحرير الكود",
+      "ColorPicker": "إظهار منتقي الألوان",
+      "CreateNewFile": "إنشاء ملف جديد",
+      "RenameVariable": "إعادة تسمية المتغير"
+    },
+    "General": "عام",
+    "GeneralSelection": {
+      "StartSketch": "تشغيل الرسمة",
+      "StopSketch": "إيقاف الرسمة",
+      "TurnOnAccessibleOutput": "تفعيل المخرجات القابلة للوصول",
+      "TurnOffAccessibleOutput": "إيقاف المخرجات القابلة للوصول",
+      "Reference": "الانتقال إلى المرجع للعنصر المحدد في التلميحات"
+    }
+  },
+  "Sidebar": {
+    "Title": "ملفات الرسمة",
+    "ToggleARIA": "فتح/إغلاق خيارات ملفات الرسمة",
+    "AddFolder": "إنشاء مجلد",
+    "AddFolderARIA": "إضافة مجلد",
+    "AddFile": "إنشاء ملف",
+    "AddFileARIA": "إضافة ملف",
+    "UploadFile": "رفع ملف",
+    "UploadFileARIA": "رفع ملف",
+    "UploadFileTooltipUnauthenticated": "سجّل الدخول لرفع الملفات"
+  },
+  "FileNode": {
+    "OpenFolderARIA": "فتح محتويات المجلد",
+    "CloseFolderARIA": "إغلاق محتويات المجلد",
+    "ToggleFileOptionsARIA": "فتح/إغلاق خيارات الملف",
+    "AddFolder": "إنشاء مجلد",
+    "AddFolderARIA": "إضافة مجلد",
+    "AddFile": "إنشاء ملف",
+    "AddFileARIA": "إضافة ملف",
+    "UploadFile": "رفع ملف",
+    "UploadFileARIA": "رفع ملف",
+    "Rename": "إعادة تسمية",
+    "Delete": "حذف"
+  },
+  "Common": {
+    "SiteName": "محرر p5.js على الويب",
+    "Error": "خطأ",
+    "ErrorARIA": "خطأ",
+    "Save": "حفظ",
+    "p5logoARIA": "شعار p5.js",
+    "DeleteConfirmation": "هل أنت متأكد أنك تريد حذف {{name}}؟"
+  },
+  "IDEView": {
+    "SubmitFeedback": "إرسال ملاحظات",
+    "SubmitFeedbackARIA": "إرسال-ملاحظات",
+    "AddCollectionTitle": "إضافة إلى مجموعة",
+    "AddCollectionARIA": "إضافة إلى مجموعة",
+    "ShareTitle": "مشاركة",
+    "ShareARIA": "مشاركة"
+  },
+  "NewFileModal": {
+    "Title": "إنشاء ملف",
+    "CloseButtonARIA": "إغلاق نافذة الملف الجديد",
+    "EnterName": "الرجاء إدخال الاسم",
+    "InvalidType": "نوع ملف غير صالح. الامتدادات المسموحة: .js, .css, .json, .xml, .stl, .txt, .csv, .tsv, .mtl, .frag, .vert."
+  },
+  "NewFileForm": {
+    "AddFileSubmit": "إضافة ملف",
+    "Placeholder": "الاسم"
+  },
+  "NewFolderModal": {
+    "Title": "إنشاء مجلد",
+    "CloseButtonARIA": "إغلاق نافذة المجلد الجديد",
+    "EnterName": "الرجاء إدخال الاسم",
+    "EmptyName": "اسم المجلد لا يمكن أن يكون مسافات فقط",
+    "InvalidExtension": "اسم المجلد لا يمكن أن يحتوي على امتداد"
+  },
+  "NewFolderForm": {
+    "AddFolderSubmit": "إضافة مجلد",
+    "Placeholder": "الاسم"
+  },
+  "ResetPasswordForm": {
+    "Email": "البريد المستخدم في التسجيل",
+    "EmailARIA": "البريد الإلكتروني",
+    "Submit": "إرسال بريد إعادة تعيين كلمة المرور"
+  },
+  "ResetPasswordView": {
+    "Title": "محرر p5.js على الويب | إعادة تعيين كلمة المرور",
+    "Reset": "إعادة تعيين كلمة المرور",
+    "Submitted": "يجب أن يصل بريد إعادة التعيين قريباً. إن لم يظهر، تحقق من مجلد البريد العشوائي.",
+    "Login": "تسجيل الدخول",
+    "LoginOr": "أو",
+    "SignUp": "إنشاء حساب"
+  },
+  "ReduxFormUtils": {
+    "errorInvalidEmail": "الرجاء إدخال بريد إلكتروني صالح",
+    "errorEmptyEmail": "الرجاء إدخال البريد الإلكتروني",
+    "errorEmptyEmailorUserName": "الرجاء إدخال البريد الإلكتروني أو اسم المستخدم",
+    "errorPasswordMismatch": "كلمتا المرور يجب أن تتطابقا",
+    "errorEmptyPassword": "الرجاء إدخال كلمة المرور",
+    "errorShortPassword": "كلمة المرور يجب أن تكون 6 أحرف على الأقل",
+    "errorConfirmPassword": "الرجاء تأكيد كلمة المرور",
+    "errorNewPassword": "الرجاء إدخال كلمة مرور جديدة أو اترك الحقل الحالي فارغًا.",
+    "errorNewPasswordRepeat": "كلمة المرور الجديدة يجب أن تختلف عن الحالية.",
+    "errorEmptyUsername": "الرجاء إدخال اسم المستخدم.",
+    "errorLongUsername": "اسم المستخدم يجب أن يكون أقل من 20 حرفًا.",
+    "errorValidUsername": "اسم المستخدم يجب أن يحتوي فقط على أرقام وحروف ونقاط وشرطات وشرطات سفلية."
+  },
+  "NewPasswordView": {
+    "Title": "محرر p5.js على الويب | كلمة مرور جديدة",
+    "Description": "تعيين كلمة مرور جديدة",
+    "TokenInvalidOrExpired": "رابط إعادة التعيين غير صالح أو منتهي الصلاحية.",
+    "EmptyPassword": "الرجاء إدخال كلمة المرور",
+    "PasswordConfirmation": "الرجاء تأكيد كلمة المرور",
+    "PasswordMismatch": "كلمتا المرور يجب أن تتطابقا"
+  },
+  "AccountForm": {
+    "Email": "البريد الإلكتروني",
+    "EmailARIA": "البريد الإلكتروني",
+    "Unconfirmed": "غير مؤكد.",
+    "EmailSent": "تم إرسال التأكيد، تحقق من بريدك.",
+    "Resend": "إعادة إرسال بريد التأكيد",
+    "UserName": "اسم المستخدم",
+    "UserNameARIA": "اسم المستخدم",
+    "CurrentPassword": "كلمة المرور الحالية",
+    "CurrentPasswordARIA": "كلمة المرور الحالية",
+    "NewPassword": "كلمة المرور الجديدة",
+    "NewPasswordARIA": "كلمة المرور الجديدة",
+    "SaveAccountDetails": "حفظ تفاصيل الحساب"
+  },
+  "AccountView": {
+    "SocialLogin": "تسجيل الدخول الاجتماعي",
+    "SocialLoginDescription": "استخدم حساب GitHub أو Google لتسجيل الدخول إلى محرر p5.js.",
+    "Title": "محرر p5.js على الويب | إعدادات الحساب",
+    "Settings": "حسابي",
+    "AccountTab": "الحساب",
+    "AccessTokensTab": "رموز الوصول"
+  },
+  "APIKeyForm": {
+    "ConfirmDelete": "هل أنت متأكد أنك تريد حذف {{key_label}}؟",
+    "Summary": "رموز الوصول الشخصية تعمل ككلمة مرور للسماح للسكربتات بالوصول إلى واجهة المحرر. أنشئ رمزًا لكل سكربت يحتاج وصولًا.",
+    "CreateToken": "إنشاء رمز جديد",
+    "TokenLabel": "ما الغرض من هذا الرمز؟",
+    "TokenPlaceholder": "ما الغرض من هذا الرمز؟ مثلاً: سكربت استيراد أمثلة",
+    "CreateTokenSubmit": "إنشاء",
+    "NoTokens": "ليس لديك رموز حالية.",
+    "NewTokenTitle": "رمز الوصول الجديد",
+    "NewTokenInfo": "تأكد من نسخ رمز الوصول الآن. لن تتمكن من رؤيته مرة أخرى!",
+    "ExistingTokensTitle": "الرموز الحالية"
+  },
+  "APIKeyList": {
+    "Name": "الاسم",
+    "Created": "تاريخ الإنشاء",
+    "LastUsed": "آخر استخدام",
+    "Actions": "إجراءات",
+    "Never": "أبداً",
+    "DeleteARIA": "حذف رمز API"
+  },
+  "NewPasswordForm": {
+    "Title": "كلمة المرور",
+    "TitleARIA": "كلمة المرور",
+    "ConfirmPassword": "تأكيد كلمة المرور",
+    "ConfirmPasswordARIA": "تأكيد كلمة المرور",
+    "SubmitSetNewPassword": "تعيين كلمة المرور الجديدة"
+  },
+  "SignupForm": {
+    "Title": "اسم المستخدم",
+    "TitleARIA": "اسم المستخدم",
+    "Email": "البريد الإلكتروني",
+    "EmailARIA": "البريد الإلكتروني",
+    "Password": "كلمة المرور",
+    "PasswordARIA": "كلمة المرور",
+    "ConfirmPassword": "تأكيد كلمة المرور",
+    "ConfirmPasswordARIA": "تأكيد كلمة المرور",
+    "SubmitSignup": "إنشاء حساب"
+  },
+  "SignupView": {
+    "Title": "محرر p5.js على الويب | التسجيل",
+    "Description": "إنشاء حساب",
+    "Or": "أو",
+    "AlreadyHave": "لديك حساب بالفعل؟",
+    "Login": "تسجيل الدخول",
+    "Warning": "بالتسجيل، أنت توافق على <0>شروط الاستخدام</0> و<1>سياسة الخصوصية</1> لمحرر p5.js."
+  },
+  "EmailVerificationView": {
+    "Title": "محرر p5.js على الويب | التحقق من البريد",
+    "Verify": "التحقق من بريدك الإلكتروني",
+    "InvalidTokenNull": "هذا الرابط غير صالح.",
+    "Checking": "جاري التحقق من الرمز، انتظر...",
+    "Verified": "تم. تم التحقق من بريدك الإلكتروني.",
+    "InvalidState": "الرمز غير صالح أو منتهي الصلاحية."
+  },
+  "AssetList": {
+    "Title": "محرر p5.js على الويب | مواردي",
+    "ToggleOpenCloseARIA": "فتح/إغلاق خيارات الموارد",
+    "Delete": "حذف",
+    "OpenNewTab": "فتح في تبويب جديد",
+    "NoUploadedAssets": "لا توجد موارد مرفوعة.",
+    "HeaderName": "الاسم",
+    "HeaderSize": "الحجم",
+    "HeaderSketch": "الرسمة",
+    "maximum": "الحد الأقصى"
+  },
+  "Feedback": {
+    "Title": "محرر p5.js على الويب | الملاحظات",
+    "ViaGithubHeader": "عبر مشاكل Github",
+    "ViaGithubDescription": "إن كنت تعرف Github، فهذه طريقتنا المفضلة لتلقي تقارير الأخطاء والملاحظات.",
+    "GoToGithub": "الذهاب إلى Github",
+    "ViaGoogleHeader": "عبر نموذج Google",
+    "ViaGoogleDescription": "يمكنك أيضًا إرسال هذا النموذج السريع.",
+    "GoToForm": "الذهاب إلى النموذج"
+  },
+  "Searchbar": {
+    "SearchSketch": "البحث في الرسم...",
+    "SearchCollection": "البحث في المجموعات...",
+    "ClearTerm": "مسح"
+  },
+  "UploadFileModal": {
+    "Title": "رفع ملف",
+    "CloseButtonARIA": "إغلاق نافذة رفع الملف",
+    "SizeLimitError": "خطأ: لا يمكنك رفع المزيد. وصلت للحد الأقصى {{sizeLimit}}. لرفع المزيد، احذف ما لا تستخدمه من "
+  },
+  "FileUploader": {
+    "DictDefaultMessage": "أفلت الملفات هنا أو انقر لفتح مستعرض الملفات"
+  },
+  "ErrorModal": {
+    "MessageLogin": "لحفظ الرسم يجب تسجيل الدخول. ",
+    "Login": "تسجيل الدخول",
+    "LoginOr": " أو ",
+    "SignUp": "إنشاء حساب",
+    "MessageLoggedOut": "يبدو أنك خرجت. ",
+    "LogIn": "سجّل الدخول",
+    "SavedDifferentWindow": "تم حفظ المشروع من نافذة أخرى. حدّث الصفحة لرؤية آخر نسخة.",
+    "LinkTitle": "خطأ في ربط الحساب",
+    "LinkMessage": "حدثت مشكلة في ربط حساب {{serviceauth}} بحسابك في محرر p5.js. حساب {{serviceauth}} مربوط فعلاً بحساب آخر في المحرر."
+  },
+  "ShareModal": {
+    "Embed": "تضمين الرسمة",
+    "Present": "عرض",
+    "Fullscreen": "مشاركة الرسمة للعرض فقط",
+    "Edit": "مشاركة الرسمة مع السماح بالتعديل"
+  },
+  "CollectionView": {
+    "TitleCreate": "إنشاء مجموعة",
+    "TitleDefault": "مجموعة"
+  },
+  "Collection": {
+    "Title": "محرر p5.js على الويب | مجموعاتي",
+    "AnothersTitle": "محرر p5.js على الويب | مجموعات {{anotheruser}}",
+    "Share": "مشاركة",
+    "URLLink": "رابط المجموعة",
+    "AddSketch": "إضافة رسمة",
+    "DeleteFromCollection": "هل أنت متأكد أنك تريد إزالة {{name_sketch}} من هذه المجموعة؟",
+    "SketchDeleted": "تم حذف الرسمة",
+    "SketchRemoveARIA": "إزالة الرسمة من المجموعة",
+    "DescriptionPlaceholder": "إضافة وصف",
+    "Description": "الوصف",
+    "NumSketches": "{{count}} رسمة",
+    "NumSketches_plural": "{{count}} رسمة",
+    "By": "مجموعة بواسطة ",
+    "NoSketches": "لا توجد رسم في المجموعة",
+    "TableSummary": "جدول يحتوي كل المجموعات",
+    "HeaderName": "الاسم",
+    "HeaderCreatedAt": "تاريخ الإضافة",
+    "HeaderUser": "المالك",
+    "DirectionAscendingARIA": "تصاعدي",
+    "DirectionDescendingARIA": "تنازلي",
+    "ButtonLabelAscendingARIA": "ترتيب حسب {{displayName}} تصاعديًا.",
+    "ButtonLabelDescendingARIA": "ترتيب حسب {{displayName}} تنازليًا."
+  },
+  "AddToCollectionList": {
+    "Title": "محرر p5.js على الويب | مجموعاتي",
+    "AnothersTitle": "محرر p5.js على الويب | مجموعات {{anotheruser}}",
+    "Empty": "لا توجد مجموعات"
+  },
+  "CollectionCreate": {
+    "Title": "محرر p5.js على الويب | إنشاء مجموعة",
+    "FormError": "تعذّر إنشاء المجموعة",
+    "FormLabel": "اسم المجموعة",
+    "FormLabelARIA": "الاسم",
+    "NameRequired": "اسم المجموعة مطلوب",
+    "Description": "الوصف (اختياري)",
+    "DescriptionARIA": "الوصف",
+    "DescriptionPlaceholder": "رسمي المفضلة",
+    "SubmitCollectionCreate": "إنشاء مجموعة"
+  },
+  "DashboardView": {
+    "CreateCollection": "إنشاء مجموعة",
+    "NewSketch": "رسمة جديدة",
+    "CreateCollectionOverlay": "إنشاء مجموعة"
+  },
+  "DashboardTabSwitcher": {
+    "Sketches": "الرسم",
+    "Collections": "المجموعات",
+    "Assets": "الموارد"
+  },
+  "CollectionList": {
+    "Title": "محرر p5.js على الويب | مجموعاتي",
+    "AnothersTitle": "محرر p5.js على الويب | مجموعات {{anotheruser}}",
+    "NoCollections": "لا توجد مجموعات.",
+    "TableSummary": "جدول يحتوي كل المجموعات",
+    "HeaderName": "الاسم",
+    "HeaderCreatedAt": "تاريخ الإنشاء",
+    "HeaderCreatedAt_mobile": "الإنشاء",
+    "HeaderUpdatedAt": "تاريخ التحديث",
+    "HeaderUpdatedAt_mobile": "التحديث",
+    "HeaderNumItems": "# رسم",
+    "HeaderNumItems_mobile": "# رسم",
+    "DirectionAscendingARIA": "تصاعدي",
+    "DirectionDescendingARIA": "تنازلي",
+    "ButtonLabelAscendingARIA": "ترتيب حسب {{displayName}} تصاعديًا.",
+    "ButtonLabelDescendingARIA": "ترتيب حسب {{displayName}} تنازليًا.",
+    "AddSketch": "إضافة رسمة"
+  },
+  "CollectionListRow": {
+    "ToggleCollectionOptionsARIA": "فتح/إغلاق خيارات المجموعة",
+    "AddSketch": "إضافة رسمة",
+    "Delete": "حذف",
+    "Rename": "إعادة تسمية"
+  },
+  "Overlay": {
+    "AriaLabel": "إغلاق نافذة {{title}}"
+  },
+  "QuickAddList": {
+    "ButtonRemoveARIA": "إزالة من المجموعة",
+    "ButtonAddToCollectionARIA": "إضافة إلى المجموعة",
+    "View": "عرض"
+  },
+  "SketchList": {
+    "View": "عرض",
+    "Title": "محرر p5.js على الويب | رسمي",
+    "AnothersTitle": "محرر p5.js على الويب | رسم {{anotheruser}}",
+    "ToggleLabelARIA": "فتح/إغلاق خيارات الرسمة",
+    "DropdownRename": "إعادة تسمية",
+    "DropdownDownload": "تحميل",
+    "DropdownDuplicate": "نسخ",
+    "DropdownAddToCollection": "إضافة إلى مجموعة",
+    "DropdownDelete": "حذف",
+    "DirectionAscendingARIA": "تصاعدي",
+    "DirectionDescendingARIA": "تنازلي",
+    "ButtonLabelAscendingARIA": "ترتيب حسب {{displayName}} تصاعديًا.",
+    "ButtonLabelDescendingARIA": "ترتيب حسب {{displayName}} تنازليًا.",
+    "AddToCollectionOverlayTitle": "إضافة إلى مجموعة",
+    "TableSummary": "جدول يحتوي كل المشاريع المحفوظة",
+    "HeaderName": "الرسمة",
+    "HeaderCreatedAt": "تاريخ الإنشاء",
+    "HeaderCreatedAt_mobile": "الإنشاء",
+    "HeaderUpdatedAt": "تاريخ التحديث",
+    "HeaderUpdatedAt_mobile": "التحديث",
+    "NoSketches": "لا توجد رسم."
+  },
+  "AddToCollectionSketchList": {
+    "Title": "محرر p5.js على الويب | رسمي",
+    "AnothersTitle": "محرر p5.js على الويب | رسم {{anotheruser}}",
+    "NoCollections": "لا توجد مجموعات."
+  },
+  "Editor": {
+    "OpenSketchARIA": "فتح تنقل ملفات الرسمة",
+    "CloseSketchARIA": "إغلاق تنقل ملفات الرسمة",
+    "UnsavedChangesARIA": "الرسمة فيها تغييرات غير محفوظة",
+    "KeyUpLineNumber": "السطر {{lineNumber}}"
+  },
+  "EditorAccessibility": {
+    "NoLintMessages": "لا توجد رسائل lint",
+    "CurrentLine": "السطر الحالي"
+  },
+  "Timer": {
+    "SavedAgo": "تم الحفظ: {{timeAgo}}"
+  },
+  "formatDate": {
+    "JustNow": "الآن",
+    "15Seconds": "منذ 15 ثانية",
+    "25Seconds": "منذ 25 ثانية",
+    "35Seconds": "منذ 35 ثانية",
+    "Ago": "منذ {{timeAgo}}"
+  },
+  "CopyableInput": {
+    "CopiedARIA": "تم النسخ إلى الحافظة!",
+    "OpenViewTabARIA": "فتح عرض {{label}} في تبويب جديد"
+  },
+  "EditableInput": {
+    "EditValue": "تعديل قيمة {{display}}",
+    "EmptyPlaceholder": "لا توجد قيمة"
+  },
+  "PreviewNav": {
+    "EditSketchARIA": "تعديل الرسمة",
+    "ByUser": "بواسطة"
+  },
+  "MobilePreferences": {
+    "Settings": "الإعدادات",
+    "GeneralSettings": "الإعدادات العامة",
+    "Accessibility": "إمكانية الوصول",
+    "AccessibleOutput": "المخرجات القابلة للوصول",
+    "Theme": "المظهر",
+    "LightTheme": "فاتح",
+    "DarkTheme": "داكن",
+    "HighContrastTheme": "تباين عالٍ",
+    "Autosave": "الحفظ التلقائي",
+    "AutocompleteHinter": "تلميحات الإكمال التلقائي",
+    "WordWrap": "التفاف النص",
+    "LineNumbers": "أرقام الأسطر",
+    "LintWarningSound": "صوت تحذير Lint",
+    "UsedScreenReader": "للاستخدام مع قارئ الشاشة",
+    "PlainText": "نص عادي",
+    "TableText": "نص جدولي",
+    "Sound": "الصوت",
+    "Preferences": "التفضيلات",
+    "Language": "اللغة"
+  },
+  "PreferenceCreators": {
+    "On": "تشغيل",
+    "Off": "إيقاف"
+  },
+  "MobileDashboardView": {
+    "Examples": "أمثلة",
+    "Sketches": "الرسم",
+    "Collections": "المجموعات",
+    "Assets": "الموارد",
+    "MyStuff": "أشيائي",
+    "CreateSketch": "إنشاء رسمة",
+    "CreateCollection": "إنشاء مجموعة"
+  },
+  "Explorer": {
+    "Files": "الملفات"
+  },
+  "Cookies": {
+    "Header": "ملفات تعريف الارتباط",
+    "Body": "محرر p5.js يستخدم ملفات تعريف الارتباط. بعضها أساسي لعمل الموقع وإدارة الحساب والإعدادات. والبعض غير أساسي ويُستخدم للتحليلات. <strong>لا نبيع هذه البيانات ولا نستخدمها للإعلان.</strong> يمكنك اختيار ما تسمح به. للمزيد راجع <0>سياسة الخصوصية<0>.",
+    "AllowAll": "السماح بالكل",
+    "AllowEssential": "السماح بالأساسي فقط"
+  },
+  "Legal": {
+    "PrivacyPolicy": "سياسة الخصوصية",
+    "TermsOfUse": "شروط الاستخدام",
+    "CodeOfConduct": "قواعد السلوك"
+  },
+  "SkipLink": {
+    "PlaySketch": "الانتقال إلى تشغيل الرسمة"
+  },
+  "Visibility": {
+    "Label": "الظهور",
+    "Public": {
+      "Description": "أي شخص يمكنه رؤية هذه الرسمة.",
+      "Label": "عام"
+    },
+    "Private": {
+      "Description": "فقط أنت يمكنك رؤية هذه الرسمة.",
+      "Label": "خاص"
+    },
+    "Changed": "'{{projectName}}' أصبحت الآن {{newVisibility}}..."
+  }
+}
