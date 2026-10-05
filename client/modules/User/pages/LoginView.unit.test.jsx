@@ -26,7 +26,7 @@ jest.mock('../../../common/useSyncFormTranslations', () => ({
   useSyncFormTranslations: jest.fn()
 }));
 
-describe('<LoginView /> integration', () => {
+describe('<LoginView />', () => {
   let store;
 
   beforeEach(() => {
