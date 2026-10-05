@@ -1,11 +1,8 @@
 name: Deploy to production
 on:
-  workflow_run:
-    workflows: ["Test"]
-    branches:
-      - release
+  release:
     types:
-      - completed
+      - published
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
   GKE_CLUSTER: p5-gke-cluster
@@ -13,7 +10,27 @@ env:
   DEPLOYMENT_NAME: web-editor-node
   IMAGE: ${{ secrets.DOCKER_USERNAME }}/p5.js-web-editor
 jobs:
+  # Only deploy tags whose commit is on the `release` branch
+  verify_release_branch:
+    name: Verify release tag is on the release branch
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.release.tag_name }}
+          fetch-depth: 0
+      - run: |-
+          if ! git merge-base --is-ancestor "$GITHUB_SHA" origin/release; then
+            printf '::error::Tag %s (%s) is not on the release branch\n' "$RELEASE_TAG" "$GITHUB_SHA"
+            exit 1
+          fi
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+  test:
+    needs: verify_release_branch
+    uses: ./.github/workflows/test.yml
   push_to_registry:
+    needs: test
     environment: production
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
@@ -21,7 +38,7 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v3
         with:
-          ref: release
+          ref: ${{ github.event.release.tag_name }}
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
         with:
