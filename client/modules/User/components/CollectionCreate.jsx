@@ -24,7 +24,8 @@ const CollectionCreate = () => {
   const handleCreateCollection = (event) => {
     event.preventDefault();
 
-    dispatch(createCollection({ name, description }));
+    // second argument is redirect flag, set to false to avoid redirect
+    dispatch(createCollection({ name, description }, false));
   };
 
   const invalid = name === '' || name == null;

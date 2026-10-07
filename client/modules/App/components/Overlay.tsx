@@ -15,6 +15,7 @@ type OverlayProps = {
   title?: string;
   ariaLabel?: string;
   isFixedHeight?: boolean;
+  isCompactHeight?: boolean;
 };
 
 export const Overlay = ({
@@ -22,6 +23,7 @@ export const Overlay = ({
   ariaLabel = 'modal',
   children,
   closeOverlay,
+  isCompactHeight = false,
   isFixedHeight = false,
   title = 'Modal'
 }: OverlayProps) => {
@@ -43,8 +45,7 @@ export const Overlay = ({
     if (!node) return;
     // Only close if it is the last (and therefore the topmost overlay)
     const overlays = document.getElementsByClassName('overlay');
-    if (node.parentElement?.parentElement !== overlays[overlays.length - 1])
-      return;
+    if (node.closest('.overlay') !== overlays[overlays.length - 1]) return;
 
     if (!closeOverlay) {
       browserHistory.push(previousPath);
@@ -57,7 +58,9 @@ export const Overlay = ({
 
   return (
     <div
-      className={`overlay ${isFixedHeight ? 'overlay--is-fixed-height' : ''}`}
+      className={`overlay ${isFixedHeight ? 'overlay--is-fixed-height' : ''} ${
+        isCompactHeight ? 'overlay--is-compact-height' : ''
+      }`}
     >
       <div className="overlay__content">
         <section
@@ -72,7 +75,10 @@ export const Overlay = ({
               {isDesktop && actions}
               <button
                 className="overlay__close-button"
-                onClick={close}
+                onClick={(event) => {
+                  event.stopPropagation();
+                  close();
+                }}
                 aria-label={t('Overlay.AriaLabel', { title })}
               >
                 <ExitIcon focusable="false" aria-hidden="true" />
