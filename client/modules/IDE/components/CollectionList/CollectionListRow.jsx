@@ -167,7 +167,7 @@ const CollectionListRowBase = (props) => {
       <TableDropdown
         aria-label={props.t('CollectionListRow.ToggleCollectionOptionsARIA')}
       >
-        <MenuItem onClick={handleAddSketches}>
+        <MenuItem hideIf={!userIsOwner} onClick={handleAddSketches}>
           {props.t('CollectionListRow.AddSketch')}
         </MenuItem>
         <MenuItem hideIf={!userIsOwner} onClick={handleCollectionDelete}>
