@@ -31,7 +31,6 @@ describe('<FileNode />', () => {
 
   const renderFileNode = (fileType, extraProps = {}) => {
     const props = {
-      ...extraProps,
       id: '0',
       name: fileType === 'folder' ? 'afolder' : 'test.jsx',
       fileType,
@@ -42,13 +41,15 @@ describe('<FileNode />', () => {
       setSelectedFile: jest.fn(),
       deleteFile: jest.fn(),
       updateFileName: jest.fn(),
+      handleDuplicateFile: jest.fn(),
       resetSelectedFile: jest.fn(),
       newFile: jest.fn(),
       newFolder: jest.fn(),
       showFolderChildren: jest.fn(),
       hideFolderChildren: jest.fn(),
       openUploadFileModal: jest.fn(),
-      setProjectName: jest.fn()
+      setProjectName: jest.fn(),
+      ...extraProps
     };
 
     const mockFiles = [
@@ -97,6 +98,23 @@ describe('<FileNode />', () => {
 
       await waitFor(() => expect(props.updateFileName).not.toHaveBeenCalled());
       await expectFileNameToBe(props.name);
+    });
+
+    it('can duplicate a file', () => {
+      const props = renderFileNode('file');
+
+      const optionsButton = screen.getByLabelText(
+        'Toggle open/close file options'
+      );
+      fireEvent.click(optionsButton);
+
+      const duplicateButton = screen.getByText(/Duplicate/i);
+      fireEvent.click(duplicateButton);
+
+      expect(props.handleDuplicateFile).toHaveBeenCalledWith(
+        props.id,
+        props.parentId
+      );
     });
 
     it('can change to a valid filename', async () => {
@@ -156,6 +174,18 @@ describe('<FileNode />', () => {
 
       await waitFor(() => expect(props.updateFileName).not.toHaveBeenCalled());
       await expectFileNameToBe(props.name);
+    });
+
+    it('cannot duplicate a folder', () => {
+      const props = renderFileNode('folder');
+
+      const optionsButton = screen.getByLabelText(
+        'Toggle open/close file options'
+      );
+      fireEvent.click(optionsButton);
+
+      expect(screen.queryByText(/Duplicate/i)).not.toBeInTheDocument();
+      expect(props.handleDuplicateFile).not.toHaveBeenCalled();
     });
 
     it('can change to another name', async () => {
