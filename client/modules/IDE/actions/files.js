@@ -37,6 +37,27 @@ export function createUniqueName(name, parentId, files) {
   return testName;
 }
 
+export function generateDuplicateFileName(sourceName, parentId, files) {
+  const siblingFiles = files
+    .find((file) => file.id === parentId)
+    .children.map((childFileId) =>
+      files.find((file) => file.id === childFileId)
+    );
+
+  const baseName = sourceName.replace(/-\(\d+\)(?=\.[^.]*$|$)/, '');
+
+  let testName = sourceName;
+  let index = 1;
+  let existingName = siblingFiles.find((file) => sourceName === file.name);
+
+  while (existingName) {
+    testName = appendToFilename(baseName, `-(${index})`);
+    index += 1;
+    existingName = siblingFiles.find((file) => testName === file.name); // eslint-disable-line
+  }
+  return testName;
+}
+
 export function updateFileContent(id, content) {
   return {
     type: ActionTypes.UPDATE_FILE_CONTENT,
@@ -105,6 +126,52 @@ export function handleCreateFile(formProps, setSelected = true) {
         .catch((error) => {
           const { response } = error;
           dispatch(createError(response.data));
+          resolve({ error });
+        });
+    });
+  };
+}
+
+export function handleDuplicateFile(sourceId, parentId) {
+  return (dispatch, getState) => {
+    const { files } = getState();
+    const projectId = getState().project.id;
+
+    const source = files.find((file) => file.id === sourceId);
+
+    if (!source || source.fileType !== 'file' || !parentId) {
+      return Promise.resolve();
+    }
+
+    const formProps = {
+      name: generateDuplicateFileName(source.name, parentId, files),
+      content: source.content,
+      url: source.url
+    };
+
+    return new Promise((resolve) => {
+      submitFile(formProps, files, parentId, projectId)
+        .then((response) => {
+          const { file, updatedAt } = response;
+
+          dispatch(createFile(file, parentId));
+
+          if (updatedAt) {
+            dispatch(setProjectSavedTime(updatedAt));
+          }
+
+          dispatch(setUnsavedChanges(true));
+          dispatch(setSelectedFile(file.id));
+
+          resolve();
+        })
+        .catch((error) => {
+          const { response } = error;
+
+          if (response) {
+            dispatch(createError(response.data));
+          }
+
           resolve({ error });
         });
     });
