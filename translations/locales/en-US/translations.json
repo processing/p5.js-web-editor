@@ -35,7 +35,8 @@
       "Reference": "Reference",
       "ReportBug": "Report a Bug",
       "ChatOnDiscord": "Chat On Discord",
-      "PostOnTheForum": "Post on the Forum"
+      "PostOnTheForum": "Post on the Forum",
+      "WebEditorVersion": "Web Editor v{{version}}"
     },
     "Lang": "Language",
     "BackEditor": "Back to Editor",
