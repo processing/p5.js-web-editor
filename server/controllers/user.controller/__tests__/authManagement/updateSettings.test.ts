@@ -220,6 +220,26 @@ describe('user.controller > auth management > updateSettings (email, username, p
         });
       });
 
+      describe('when the email changes while a reset token is outstanding', () => {
+        beforeEach(async () => {
+          testUser.resetPasswordToken = 'old-reset-token';
+          testUser.resetPasswordExpires = fixedTime + 3600000;
+          givenRecentStepUp();
+          requestBody = { ...minimumValidRequest, email: NEW_EMAIL };
+          request.setBody(requestBody);
+          await updateSettings(
+            (request as unknown) as Request,
+            (response as unknown) as Response,
+            next
+          );
+        });
+        it('invalidates the reset token issued for the previous address', () => {
+          expect(testUser.resetPasswordToken).toBeUndefined();
+          expect(testUser.resetPasswordExpires).toBeUndefined();
+          expect(testUser.save).toHaveBeenCalledTimes(1);
+        });
+      });
+
       describe('when given new username and new email with a valid current password', () => {
         beforeEach(async () => {
           requestBody = {

@@ -219,6 +219,11 @@ export const updateSettings: RequestHandler<
       user.verified = User.EmailConfirmation().Sent;
       user.email = req.body.email;
 
+      // Any outstanding reset token was issued for the previous address;
+      // a reset link sent there must not stay usable after the change.
+      user.resetPasswordToken = undefined;
+      user.resetPasswordExpires = undefined;
+
       const token = await generateToken();
       user.verifiedToken = token;
       user.verifiedTokenExpires = Date.now() + 3600000 * 24; // 24 hours
