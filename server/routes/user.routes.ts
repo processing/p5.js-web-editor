@@ -6,6 +6,20 @@ const router = Router();
 
 /**
  * ===============
+ * STEP-UP RE-AUTHENTICATION
+ * ===============
+ */
+// POST /account/step-up (verify password or emailed code)
+router.post('/account/step-up', isAuthenticated, UserController.verifyStepUp);
+// POST /account/step-up/code (send a code to the account email; passwordless accounts only)
+router.post(
+  '/account/step-up/code',
+  isAuthenticated,
+  UserController.initiateStepUpCode
+);
+
+/**
+ * ===============
  * SIGN UP
  * ===============
  */
