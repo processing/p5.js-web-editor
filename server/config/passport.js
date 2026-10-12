@@ -23,15 +23,27 @@ function generateUniqueUsername(username) {
 
 passport.serializeUser((user, done) => {
   if (user) {
-    done(null, user.id);
+    done(null, { id: user.id, v: user.sessionVersion ?? 0 });
   } else {
     done(new Error('User is not available for serialization.'));
   }
 });
 
-passport.deserializeUser(async (id, done) => {
+passport.deserializeUser(async (serialized, done) => {
   try {
+    // Sessions created before sessionVersion existed store a plain id string;
+    // treat them as version 0.
+    const { id, v } =
+      typeof serialized === 'string'
+        ? { id: serialized, v: 0 }
+        : serialized || {};
     const user = await User.findById(id).exec();
+    if (user && (user.sessionVersion ?? 0) !== v) {
+      // The user's credentials changed after this session was created:
+      // reject the session so it is logged out.
+      done(null, false);
+      return;
+    }
     done(null, user);
   } catch (err) {
     done(err);

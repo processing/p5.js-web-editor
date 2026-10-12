@@ -298,15 +298,17 @@ describe('user.controller > auth management > password management', () => {
 
     describe('and when there is a user with valid token', () => {
       const sanitisedMockUser = createMockUser({ email: 'test@example.com' });
-      mockUser = {
-        ...sanitisedMockUser,
-        password: 'oldpassword',
-        resetPasswordToken: 'valid-token',
-        resetPasswordExpires: fixedTime + 10000, // still valid
-        save: jest.fn()
-      } as UserDocument;
 
       beforeEach(async () => {
+        mockUser = {
+          ...sanitisedMockUser,
+          password: 'oldpassword',
+          resetPasswordToken: 'valid-token',
+          resetPasswordExpires: fixedTime + 10000, // still valid
+          sessionVersion: 0,
+          save: jest.fn()
+        } as UserDocument;
+
         User.findOne = jest.fn().mockReturnValue({
           exec: jest.fn().mockResolvedValue(mockUser)
         });
@@ -336,6 +338,10 @@ describe('user.controller > auth management > password management', () => {
       });
       it('returns a success response with the sanitised user', () => {
         expect(response.json).toHaveBeenCalledWith(sanitisedMockUser);
+      });
+      it('revokes other sessions and re-logs-in the current request', () => {
+        expect(mockUser.sessionVersion).toBe(1);
+        expect(request.logIn).toHaveBeenCalled();
       });
     });
   });

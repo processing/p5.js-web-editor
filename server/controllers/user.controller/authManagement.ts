@@ -1,4 +1,4 @@
-import { RequestHandler } from 'express';
+import { Request, RequestHandler } from 'express';
 import { User } from '../../models/user';
 import { saveUser, generateToken, userResponse } from './helpers';
 import {
@@ -9,10 +9,20 @@ import {
   ResetPasswordInitiateRequestBody,
   ResetOrUpdatePasswordRequestParams,
   UpdatePasswordRequestBody,
-  UpdateSettingsRequestBody
+  UpdateSettingsRequestBody,
+  UserDocument
 } from '../../types';
 import { mailerService } from '../../utils/mail';
 import { renderResetPassword, renderEmailConfirmation } from '../../views/mail';
+
+/**
+ * Re-serializes the current session after a sessionVersion bump so that the
+ * request's own session survives while every other session is logged out.
+ */
+const reLogin = (req: Request, user: UserDocument) =>
+  new Promise<void>((resolve, reject) => {
+    req.logIn(user, (err: unknown) => (err ? reject(err) : resolve()));
+  });
 
 /**
  * - Method: `POST`
@@ -128,6 +138,9 @@ export const updatePassword: RequestHandler<
   user.password = req.body.password;
   user.resetPasswordToken = undefined;
   user.resetPasswordExpires = undefined;
+  // Log out every other session; the req.logIn below re-serializes this one
+  // with the new version.
+  user.sessionVersion = (user.sessionVersion ?? 0) + 1;
 
   await user.save();
   req.logIn(user, (loginErr) => res.json(userResponse(req.user!)));
@@ -220,11 +233,19 @@ export const unlinkGithub: RequestHandler<
   UnlinkThirdPartyResponseBody
 > = async (req, res) => {
   if (req.user) {
-    req.user.github = undefined;
-    req.user.tokens = req.user.tokens.filter(
-      (token) => token.kind !== 'github'
-    );
-    await saveUser(res, req.user);
+    try {
+      req.user.github = undefined;
+      req.user.tokens = req.user.tokens.filter(
+        (token) => token.kind !== 'github'
+      );
+      // Log out every other session; re-serialize this one so it survives.
+      req.user.sessionVersion = (req.user.sessionVersion ?? 0) + 1;
+      await reLogin(req, req.user);
+      await saveUser(res, req.user);
+    } catch (err) {
+      console.error('Could not unlink GitHub account:', err);
+      res.status(500).json({ error: 'Internal server error' });
+    }
     return;
   }
   res.status(404).json({
@@ -247,11 +268,19 @@ export const unlinkGoogle: RequestHandler<
   UnlinkThirdPartyResponseBody
 > = async (req, res) => {
   if (req.user) {
-    req.user.google = undefined;
-    req.user.tokens = req.user.tokens.filter(
-      (token) => token.kind !== 'google'
-    );
-    await saveUser(res, req.user);
+    try {
+      req.user.google = undefined;
+      req.user.tokens = req.user.tokens.filter(
+        (token) => token.kind !== 'google'
+      );
+      // Log out every other session; re-serialize this one so it survives.
+      req.user.sessionVersion = (req.user.sessionVersion ?? 0) + 1;
+      await reLogin(req, req.user);
+      await saveUser(res, req.user);
+    } catch (err) {
+      console.error('Could not unlink Google account:', err);
+      res.status(500).json({ error: 'Internal server error' });
+    }
     return;
   }
   res.status(404).json({

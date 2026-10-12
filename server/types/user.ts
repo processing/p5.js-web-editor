@@ -26,6 +26,8 @@ export interface IUser extends VirtualId, MongooseTimestamps {
   cookieConsent: CookieConsentOptions;
   banned: boolean;
   lastLoginTimestamp?: Date;
+  /** Bumped on credential changes to invalidate sessions serialized with an older version */
+  sessionVersion?: number;
 }
 
 /** User object which can be exposed to the client */
