@@ -28,9 +28,14 @@ export function LoginView() {
         <div className="form-container__content">
           <h2 className="form-container__title">{t('LoginView.Login')}</h2>
           <Intro>
+            During this alpha testing period, please continue below to login
+            with your existing OpenProcessing account. Test by making new
+            sketches.
+          </Intro>
+          {/* <Intro>
             All user accounts migrated to OpenProcessing. Continue below to
             login with your existing account or create a new one.
-          </Intro>
+          </Intro> */}
           <div
             className="form-container__stack"
             style={{ textAlign: 'center' }}
