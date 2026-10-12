@@ -111,6 +111,44 @@ describe('user.controller > auth management > password management', () => {
         });
       });
     });
+    describe('if the user is found but their email is not verified', () => {
+      beforeEach(async () => {
+        mockToken = 'mock-token';
+        mockUser = createMockUser(
+          {
+            email: 'test@example.com',
+            verified: 'sent',
+            save: jest.fn().mockResolvedValue(null)
+          },
+          false
+        ) as UserDocument;
+
+        (generateToken as jest.Mock).mockResolvedValue(mockToken);
+        User.findByEmail = jest.fn().mockResolvedValue(mockUser);
+
+        request.body = { email: 'test@example.com' };
+        request.headers.host = 'localhost:3000';
+
+        await resetPasswordInitiate(
+          (request as unknown) as Request,
+          (response as unknown) as Response,
+          next
+        );
+      });
+      it('does not set a reset token or send the reset password email', () => {
+        expect(mockUser.resetPasswordToken).toBeUndefined();
+        expect(mockUser.save).not.toHaveBeenCalled();
+        expect(mailerService.send).not.toHaveBeenCalled();
+      });
+      it('returns the same success message as every other outcome, for security purposes', () => {
+        expect(response.json).toHaveBeenCalledWith({
+          success: true,
+          message:
+            'If the email is registered with the editor, an email has been sent.'
+        });
+      });
+    });
+
     describe('if the user is not found', () => {
       beforeEach(() => {
         mockToken = 'mock-token';

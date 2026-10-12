@@ -41,7 +41,10 @@ export const resetPasswordInitiate: RequestHandler<
   try {
     const token = await generateToken();
     const user = await User.findByEmail(req.body.email);
-    if (!user) {
+    // Only send reset links to verified addresses. An unverified address may
+    // not belong to the account owner (e.g. set by someone with a stolen
+    // session). Respond identically to avoid user enumeration.
+    if (!user || user.verified !== User.EmailConfirmation().Verified) {
       res.json({
         success: true,
         message:
