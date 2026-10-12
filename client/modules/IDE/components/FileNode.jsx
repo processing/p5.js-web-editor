@@ -74,6 +74,7 @@ const FileNode = ({
   setSelectedFile,
   deleteFile,
   updateFileName,
+  handleDuplicateFile,
   resetSelectedFile,
   newFile,
   newFolder,
@@ -163,6 +164,11 @@ const FileNode = ({
       resetSelectedFile(id);
       setTimeout(() => deleteFile(id, parentId), 100);
     }
+  };
+
+  const handleClickDuplicate = () => {
+    handleDuplicateFile(id, parentId);
+    setTimeout(() => hideFileOptions(), 0);
   };
 
   const hideEditFileName = () => {
@@ -366,6 +372,17 @@ const FileNode = ({
                   {t('FileNode.Rename')}
                 </button>
               </li>
+
+              {isFile && (
+                <li>
+                  <button
+                    onClick={handleClickDuplicate}
+                    className="sidebar__file-item-option"
+                  >
+                    {t('FileNode.Duplicate')}
+                  </button>
+                </li>
+              )}
               <li>
                 <button
                   onClick={handleClickDelete}
@@ -407,6 +424,7 @@ FileNode.propTypes = {
   setSelectedFile: PropTypes.func.isRequired,
   deleteFile: PropTypes.func.isRequired,
   updateFileName: PropTypes.func.isRequired,
+  handleDuplicateFile: PropTypes.func.isRequired,
   resetSelectedFile: PropTypes.func.isRequired,
   newFile: PropTypes.func.isRequired,
   newFolder: PropTypes.func.isRequired,
