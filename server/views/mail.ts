@@ -108,7 +108,7 @@ export const renderStepUpCode = (
       'Use the following code to confirm the changes to your p5.js Web Editor account:',
     highlightText: data.body.code,
     noteText:
-      'This code is only valid for the next 10 minutes. If you did not request it, please ignore this email and consider reviewing your account. Thanks for using the p5.js Web Editor!', // eslint-disable-line max-len
+      'This code will expire in 10 minutes. If you did not request it, please ignore this email and consider reviewing your account. Thanks for using the p5.js Web Editor!', // eslint-disable-line max-len
     meta: mailMeta
   };
 
