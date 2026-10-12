@@ -13,7 +13,12 @@ import {
   UserDocument
 } from '../../types';
 import { mailerService } from '../../utils/mail';
-import { renderResetPassword, renderEmailConfirmation } from '../../views/mail';
+import {
+  renderResetPassword,
+  renderEmailConfirmation,
+  renderEmailChangedNotice
+} from '../../views/mail';
+import { hasRecentStepUp } from '../../middleware/requireStepUp';
 
 /**
  * Re-serializes the current session after a sessionVersion bump so that the
@@ -158,7 +163,12 @@ export const updatePassword: RequestHandler<
  *
  * Description:
  *   - Used to update the user's username, email, or password on the `/account` page while authenticated
- *   - Currently the client only shows the `currentPassword` and `newPassword` fields if no social logins (github & google) are enabled
+ *   - Username changes only need a session. Email and password changes are
+ *     sensitive: they require a recent step-up (POST /account/step-up) or,
+ *     for accounts with a password, a valid `currentPassword` in the same
+ *     request
+ *   - Email and password changes bump `sessionVersion`, logging out every
+ *     other session; the current session is re-serialized and survives
  */
 export const updateSettings: RequestHandler<
   {},
@@ -171,51 +181,77 @@ export const updateSettings: RequestHandler<
       res.status(404).json({ error: 'User not found' });
       return;
     }
-    user.username = req.body.username;
 
-    if (req.body.newPassword) {
-      if (user.password === undefined) {
-        user.password = req.body.newPassword;
-        saveUser(res, user);
+    const previousEmail = user.email;
+    const changingEmail = req.body.email !== user.email;
+    const changingPassword = Boolean(req.body.newPassword);
+
+    // All checks run before anything is modified or saved.
+    if (changingEmail || changingPassword) {
+      let steppedUp = hasRecentStepUp(req);
+      if (!steppedUp && user.password && req.body.currentPassword) {
+        const isMatch = await user.comparePassword(req.body.currentPassword);
+        if (!isMatch) {
+          res.status(401).json({ error: 'Current password is invalid.' });
+          return;
+        }
+        steppedUp = true;
       }
-      if (!req.body.currentPassword) {
-        res.status(401).json({ error: 'Current password is not provided.' });
+      if (!steppedUp) {
+        res.status(403).json({ error: 'step_up_required' });
         return;
       }
     }
-    if (req.body.currentPassword) {
-      const isMatch = await user.comparePassword(req.body.currentPassword);
-      if (!isMatch) {
-        res.status(401).json({ error: 'Current password is invalid.' });
-        return;
-      }
-      user.password = req.body.newPassword!;
-      await saveUser(res, user);
-    } else if (user.email !== req.body.email) {
-      const EMAIL_VERIFY_TOKEN_EXPIRY_TIME = Date.now() + 3600000 * 24; // 24 hours
-      user.verified = User.EmailConfirmation().Sent;
 
+    user.username = req.body.username;
+
+    if (!changingEmail && !changingPassword) {
+      await saveUser(res, user);
+      return;
+    }
+
+    if (changingPassword) {
+      user.password = req.body.newPassword!;
+    }
+
+    let verificationMail = null;
+    if (changingEmail) {
+      user.verified = User.EmailConfirmation().Sent;
       user.email = req.body.email;
 
       const token = await generateToken();
       user.verifiedToken = token;
-      user.verifiedTokenExpires = EMAIL_VERIFY_TOKEN_EXPIRY_TIME;
-
-      await saveUser(res, user);
+      user.verifiedTokenExpires = Date.now() + 3600000 * 24; // 24 hours
 
       const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
-      const mailOptions = renderEmailConfirmation({
+      verificationMail = renderEmailConfirmation({
         body: {
           domain: `${protocol}://${req.headers.host}`,
           link: `${protocol}://${req.headers.host}/verify?t=${token}`
         },
         to: user.email
       });
-
-      await mailerService.send(mailOptions);
-    } else {
-      await saveUser(res, user);
     }
+
+    // Log out every other session; the reLogin below keeps this one valid.
+    user.sessionVersion = (user.sessionVersion ?? 0) + 1;
+    await user.save();
+    await reLogin(req, user);
+
+    if (verificationMail) {
+      await mailerService.send(verificationMail);
+      // Tell the old address, with no links that act on the account.
+      const noticeMail = renderEmailChangedNotice({
+        body: {
+          domain: process.env.EDITOR_URL!,
+          newEmail: user.email
+        },
+        to: previousEmail
+      });
+      await mailerService.send(noticeMail);
+    }
+
+    res.json(userResponse(user));
   } catch (err) {
     console.error('Could not save settings:', err);
     res.status(500).json({ error: 'Internal server error' });
