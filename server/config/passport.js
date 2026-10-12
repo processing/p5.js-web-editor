@@ -9,9 +9,13 @@ import GoogleStrategy from 'passport-google-oauth20';
 import { BasicStrategy } from 'passport-http';
 
 import { User } from '../models/user';
+import { hasRecentStepUp } from '../middleware/requireStepUp';
 
 const accountSuspensionMessage =
   'Account has been suspended. Please contact privacy@p5js.org if you believe this is an error.';
+
+const stepUpRequiredMessage =
+  'Please confirm your password or verification code before linking an account.';
 
 function generateUniqueUsername(username) {
   const adj =
@@ -163,6 +167,12 @@ passport.use(
     },
     async (req, accessToken, refreshToken, profile, done) => {
       try {
+        // A request with a logged-in user reaching this callback is linking
+        // the GitHub account to that user — a sensitive action that must not
+        // be possible with a session alone.
+        if (req.user && !hasRecentStepUp(req)) {
+          return done(null, false, { msg: stepUpRequiredMessage });
+        }
         const existingUser = await User.findOne({ github: profile.id }).exec();
 
         if (existingUser) {
@@ -264,6 +274,12 @@ passport.use(
     },
     async (req, accessToken, refreshToken, profile, done) => {
       try {
+        // A request with a logged-in user reaching this callback is linking
+        // the Google account to that user — a sensitive action that must not
+        // be possible with a session alone.
+        if (req.user && !hasRecentStepUp(req)) {
+          return done(null, false, { msg: stepUpRequiredMessage });
+        }
         // Validate that emails array exists and has at least one element
         const primaryEmail = getGooglePrimaryEmail(profile._json?.emails);
         if (!primaryEmail) {
