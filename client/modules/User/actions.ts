@@ -10,6 +10,7 @@ import { showToast, setToastText } from '../IDE/actions/toast';
 import type {
   CreateApiKeyRequestBody,
   CreateUserRequestBody,
+  DeleteAccountRequestBody,
   Error,
   PublicUser,
   PublicUserOrError,
@@ -505,4 +506,34 @@ export function setUserCookieConsent(
         dispatch(authError(message));
       });
   };
+}
+
+/**
+ * - Method: `DELETE`
+ * - Endpoint: `/account`
+ * - Authenticated: `true`
+ * - Id: `UserController.deleteAccount`
+ *
+ * Description:
+ *   - Permanently delete the authenticated user's account and all their data.
+ *   - Returns the error message from the server on failure, or redirects to `/` on success.
+ */
+export function deleteAccount(formValues: DeleteAccountRequestBody) {
+  return (dispatch: Dispatch) =>
+    new Promise<void | string>((resolve) => {
+      apiClient
+        .delete('/account', { data: formValues })
+        .then(() => {
+          dispatch({ type: ActionTypes.UNAUTH_USER });
+          dispatch({ type: ActionTypes.RESET_PROJECT });
+          dispatch({ type: ActionTypes.CLEAR_CONSOLE });
+          browserHistory.push('/');
+          resolve();
+        })
+        .catch((error) => {
+          const message =
+            error.response?.data?.message || 'Error deleting account.';
+          resolve(message);
+        });
+    });
 }

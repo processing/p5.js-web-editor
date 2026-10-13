@@ -130,6 +130,10 @@ export interface CreateUserRequestBody {
   email: string;
   password: string;
 }
+/** userController.deleteAccount - Request */
+export interface DeleteAccountRequestBody {
+  password?: string;
+}
 /** userController.duplicateUserCheck - Query */
 export interface DuplicateUserCheckQuery {
   // eslint-disable-next-line camelcase
