@@ -119,4 +119,36 @@ describe('<AccountForm />', () => {
       });
     });
   });
+  it('keeps updated username and email and clears passwords on submit', async () => {
+    subject();
+
+    const saveAccountDetailsButton = screen.getByRole('button', {
+      name: /save account details/i
+    });
+    const emailElement = screen.getByRole('textbox', {
+      name: /email/i
+    });
+    const currentPasswordElement = screen.getByLabelText(/current password/i);
+    const newPasswordElement = screen.getByLabelText(/new password/i);
+
+    fireEvent.change(emailElement, {
+      target: { value: 'newemail@example.com' }
+    });
+    fireEvent.change(currentPasswordElement, {
+      target: { value: 'currentPassword' }
+    });
+    fireEvent.change(newPasswordElement, {
+      target: { value: 'newPassword' }
+    });
+
+    await act(async () => {
+      fireEvent.click(saveAccountDetailsButton);
+    });
+
+    await waitFor(() => {
+      expect(emailElement).toHaveValue('newemail@example.com');
+      expect(currentPasswordElement).toHaveValue('');
+      expect(newPasswordElement).toHaveValue('');
+    });
+  });
 });

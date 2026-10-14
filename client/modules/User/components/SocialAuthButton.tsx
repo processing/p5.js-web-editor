@@ -1,13 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { remSize } from '../../../theme';
 import { GithubIcon, GoogleIcon } from '../../../common/icons';
 import { Button } from '../../../common/Button';
 import { unlinkService } from '../actions';
 import { persistState } from '../../IDE/actions/project';
+import { requestStepUp } from '../stepUp';
+import type { RootState } from '../../../reducers';
 
 const authUrls = {
   github: '/auth/github',
@@ -56,6 +58,22 @@ export function SocialAuthButton({
   });
   const ariaLabel = t('SocialAuthButton.LogoARIA', { serviceauth: service });
   const dispatch = useDispatch();
+  const authenticated = useSelector(
+    (state: RootState) => !!(state.user as any).authenticated
+  );
+  const handleConnectClick = async (evt: React.MouseEvent) => {
+    dispatch(persistState());
+    // Logged-out sign-in stays untouched. While logged in this button links
+    // the OAuth account, which needs a recent step-up first.
+    if (!authenticated) {
+      return;
+    }
+    evt.preventDefault();
+    const verified = await requestStepUp();
+    if (verified) {
+      window.location.href = authUrls[service];
+    }
+  };
   if (linkStyle) {
     if (isConnected) {
       return (
@@ -73,7 +91,7 @@ export function SocialAuthButton({
       <StyledButton
         iconBefore={<ServiceIcon aria-label={ariaLabel} />}
         href={authUrls[service]}
-        onClick={() => dispatch(persistState())}
+        onClick={handleConnectClick}
       >
         {connectLabel}
       </StyledButton>
