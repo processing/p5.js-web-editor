@@ -249,7 +249,7 @@
     "@types/express": "^5.0.3",
     "acorn": "^8.14.1",
     "acorn-walk": "^8.3.4",
-    "async": "^3.2.3",
+    "async": "^3.2.2",
     "axios": "^1.18.1",
     "babel-plugin-styled-components": "^1.13.2",
     "bcryptjs": "^2.4.3",
@@ -344,5 +344,10 @@
     "webpack": "^5.94.0",
     "webpack-dev-middleware": "^5.3.4",
     "xhr": "^2.6.0"
+  },
+  "overrides": {
+    "htmlhint": {
+      "async": "3.2.2"
+    }
   }
 }
