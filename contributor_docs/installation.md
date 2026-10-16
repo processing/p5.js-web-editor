@@ -90,6 +90,19 @@ If you don't have the full server environment running, you can launch a one-off 
 
 12. `$ docker-compose -f docker-compose-development.yml run app --rm bash -l`
 
+## Environment Files
+
+The repo has several `.env`-style files, and they are loaded in different situations:
+
+| File | Committed? | Used when |
+| --- | --- | --- |
+| `.env` | no | Local development. Create it by copying `.env.example` (see steps above). |
+| `.env.example` | yes | Template only — never loaded by the app. |
+| `.env.e2e` | yes | End-to-end tests (`npm run e2e`, `e2e:headed`, `e2e:ci`). Merged *over* `.env`, so its values (test database, ports 9000/9002) win and `.env` fills in the rest. Contains no secrets. |
+| `.env.production` / `.env.staging` | no | Only for hand-run ops scripts (e.g. `server/migrations/start.js`) and an optional `docker-compose.yml` override. **Deployed production/staging never read `.env` files** — environment variables are injected by Kubernetes (see [deployment.md](./deployment.md)). |
+
+All env loading goes through [`loadEnv.js`](../loadEnv.js) at the repo root, which documents the merge rule. `playwright.config.ts` sets `APP_ENV=e2e` itself before loading env, so every way of running the tests (npm scripts, `npx playwright test`, VS Code) uses the e2e environment and can't accidentally hit your development database; `npm run start:e2e` starts the app server with the same overlay. The one intentional exception is `server/migrations/start.js`, a hand-run script that migrates the production database, so it loads `.env.production` directly. In the future, `loadEnv` might grow to accommodate a production overlay.
+
 ## S3 Bucket Configuration
 
 See [this configuration guide](./s3_configuration.md) for information about how to configure your own S3 bucket. These instructions were adapted from [this gist](https://gist.github.com/catarak/70c9301f0fd1ac2d6b58de03f61997e3).

@@ -2,11 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Cookies from 'js-cookie';
 import styled from 'styled-components';
-import ReactGA from 'react-ga';
 import { Transition } from 'react-transition-group';
 import { Link } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
-import { getConfig } from '../../../utils/getConfig';
 import { setUserCookieConsent } from '../actions';
 import { remSize, prop, device } from '../../../theme';
 import { Button, ButtonKinds } from '../../../common/Button';
@@ -81,8 +79,6 @@ const CookieConsentButtons = styled.div`
   }
 `;
 
-const GOOGLE_ANALYTICS_ID = getConfig('GA_MEASUREMENT_ID');
-
 export function CookieConsent({ hide = false }: { hide?: boolean }) {
   const user = useSelector((state: RootState) => state.user);
   const [
@@ -108,16 +104,6 @@ export function CookieConsent({ hide = false }: { hide?: boolean }) {
     });
   }
 
-  function acceptAllCookies() {
-    if (user.authenticated) {
-      dispatch(setUserCookieConsent(CookieConsentOptions.ALL));
-    }
-    setBrowserCookieConsent(CookieConsentOptions.ALL);
-    Cookies.set('p5-cookie-consent', CookieConsentOptions.ALL, {
-      expires: 365
-    });
-  }
-
   function acceptEssentialCookies() {
     if (user.authenticated) {
       dispatch(setUserCookieConsent(CookieConsentOptions.ESSENTIAL));
@@ -126,10 +112,6 @@ export function CookieConsent({ hide = false }: { hide?: boolean }) {
     Cookies.set('p5-cookie-consent', CookieConsentOptions.ESSENTIAL, {
       expires: 365
     });
-    // Remove Google Analytics Cookies
-    Cookies.remove('_ga');
-    Cookies.remove('_gat');
-    Cookies.remove('_gid');
   }
 
   function mergeCookieConsent() {
@@ -157,19 +139,6 @@ export function CookieConsent({ hide = false }: { hide?: boolean }) {
       setBrowserCookieConsent(p5CookieConsent as CookieConsentOptions);
     } else {
       initializeCookieConsent();
-    }
-
-    if (GOOGLE_ANALYTICS_ID) {
-      if (p5CookieConsent === 'essential') {
-        ReactGA.initialize(GOOGLE_ANALYTICS_ID, {
-          gaOptions: {
-            storage: 'none'
-          }
-        });
-      } else {
-        ReactGA.initialize(GOOGLE_ANALYTICS_ID);
-      }
-      ReactGA.pageview(window.location.pathname + window.location.search);
     }
   }, []);
 
@@ -201,9 +170,6 @@ export function CookieConsent({ hide = false }: { hide?: boolean }) {
                 />
               </CookieConsentCopy>
               <CookieConsentButtons>
-                <Button kind={ButtonKinds.SECONDARY} onClick={acceptAllCookies}>
-                  {t('Cookies.AllowAll')}
-                </Button>
                 <Button onClick={acceptEssentialCookies}>
                   {t('Cookies.AllowEssential')}
                 </Button>

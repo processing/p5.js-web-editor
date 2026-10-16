@@ -1,55 +1,13 @@
-// TODO: convert to functional component
-
 import PropTypes from 'prop-types';
-import React from 'react';
-import CodeMirror from 'codemirror';
-import Fuse from 'fuse.js';
-import emmet from '@emmetio/codemirror-plugin';
-import prettier from 'prettier/standalone';
-import babelParser from 'prettier/parser-babel';
-import htmlParser from 'prettier/parser-html';
-import cssParser from 'prettier/parser-postcss';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { withTranslation } from 'react-i18next';
 import StackTrace from 'stacktrace-js';
-import 'codemirror/mode/css/css';
-import 'codemirror/mode/clike/clike';
-import 'codemirror/addon/selection/active-line';
-import 'codemirror/addon/lint/lint';
-import 'codemirror/addon/lint/javascript-lint';
-import 'codemirror/addon/lint/css-lint';
-import 'codemirror/addon/lint/html-lint';
-import 'codemirror/addon/fold/brace-fold';
-import 'codemirror/addon/fold/comment-fold';
-import 'codemirror/addon/fold/foldcode';
-import 'codemirror/addon/fold/foldgutter';
-import 'codemirror/addon/fold/indent-fold';
-import 'codemirror/addon/fold/xml-fold';
-import 'codemirror/addon/comment/comment';
-import 'codemirror/keymap/sublime';
-import 'codemirror/addon/search/searchcursor';
-import 'codemirror/addon/search/matchesonscrollbar';
-import 'codemirror/addon/search/match-highlighter';
-import 'codemirror/addon/search/jump-to-line';
-import 'codemirror/addon/edit/matchbrackets';
-import 'codemirror/addon/edit/closebrackets';
-import 'codemirror/addon/selection/mark-selection';
-import 'codemirror/addon/hint/css-hint';
-import 'codemirror-colorpicker';
 
-import { JSHINT } from 'jshint';
-import { CSSLint } from 'csslint';
-import { HTMLHint } from 'htmlhint';
 import classNames from 'classnames';
 import { debounce } from 'lodash';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import MediaQuery from 'react-responsive';
-import '../../../../utils/htmlmixed';
-import '../../../../utils/p5-javascript';
-import { metaKey } from '../../../../utils/metaKey';
-import '../show-hint';
-import * as hinter from '../../../../utils/p5-hinter';
-import '../../../../utils/codemirror-search';
 
 import beepUrl from '../../../../sounds/audioAlert.mp3';
 import RightArrowIcon from '../../../../images/right-arrow.svg';
@@ -69,707 +27,250 @@ import AssetPreview from '../AssetPreview';
 import Timer from '../Timer';
 import EditorAccessibility from '../EditorAccessibility';
 import UnsavedChangesIndicator from '../UnsavedChangesIndicator';
+import SearchPanel from './SearchPanel';
 import { EditorContainer, EditorHolder } from './MobileEditor';
 import { FolderIcon } from '../../../../common/icons';
 import { IconButton } from '../../../../common/IconButton';
-import { saveLocalBackup } from '../../utils/localBackup';
 
-import contextAwareHinter from '../../../../utils/contextAwareHinter';
-import showRenameDialog from '../../../../utils/showRenameDialog';
-import handleRename from '../../../../utils/rename-variable';
-import { jumpToDefinition } from '../../../../utils/jump-to-definition';
-import { ensureAriaLiveRegion } from '../../../../utils/ScreenReaderHelper';
-import { isMac } from '../../../../utils/device';
+import useCodeMirror from './codemirror';
+import { useP5Version } from '../../hooks/useP5Version';
 
-emmet(CodeMirror);
+import {
+  addErrorDecoration,
+  removeErrorDecorations
+} from './utils/consoleErrorDecoration';
 
-window.JSHINT = JSHINT;
-window.CSSLint = CSSLint;
-window.HTMLHint = HTMLHint;
+// temporary until p5.js 2.0 becomes default
+// checks if sketch is using p5.js 2.0 to pass correct base url for autocomplete hinter reference
+export function getReferenceBaseUrl(htmlFile) {
+  const html = htmlFile?.content || '';
 
-const INDENTATION_AMOUNT = 2;
+  const isV2 =
+    /https:\/\/beta\.p5js\.org\b/i.test(html) || /\bp5(@|-)2\./i.test(html);
 
-class Editor extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      currentLine: 1
+  return isV2 ? 'https://p5js.org' : 'https://v1.p5js.org';
+}
+
+function Editor({
+  provideController,
+  files,
+  file,
+  project,
+  linewrap,
+  lineNumbers,
+  closeProjectOptions,
+  setSelectedFile,
+  setUnsavedChanges,
+  lintMessages,
+  lintWarning,
+  clearLintMessage,
+  updateLintMessage,
+  updateFileContent,
+  autorefresh,
+  clearConsole,
+  startSketch,
+  autocompleteHinter,
+  autocloseBracketsQuotes,
+  fontSize,
+  consoleEvents,
+  expandConsole,
+  isExpanded,
+  htmlFile,
+  t,
+  collapseSidebar,
+  expandSidebar
+}) {
+  const { versionInfo } = useP5Version();
+  const [currentLine, setCurrentLine] = useState(1);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const beep = useRef();
+
+  const updateLintingMessageAccessibility = debounce((annotations) => {
+    clearLintMessage();
+    annotations.forEach((x) => {
+      if (x.from.line > -1) {
+        updateLintMessage(x.severity, x.from.line + 1, x.message);
+      }
+    });
+    if (lintMessages.length > 0 && lintWarning) {
+      beep.play();
+    }
+  }, 2000);
+
+  const showSearch = useCallback(() => {
+    setIsSearchOpen(true);
+  }, []);
+
+  const hideSearch = useCallback(() => {
+    setIsSearchOpen(false);
+  }, []);
+
+  // The useCodeMirror hook manages CodeMirror state and returns
+  // a reference to the actual CM instance.
+  const {
+    setupCodeMirrorOnContainerMounted,
+    teardownCodeMirror,
+    codemirrorView,
+    getContent,
+    tidyCode,
+    updateEditorFileContent
+  } = useCodeMirror({
+    project,
+    lineNumbers,
+    linewrap,
+    autocloseBracketsQuotes,
+    setUnsavedChanges,
+    updateFileContent,
+    file,
+    files,
+    autorefresh,
+    clearConsole,
+    startSketch,
+    autocompleteHinter,
+    fontSize,
+    updateLintingMessageAccessibility,
+    setCurrentLine,
+    showSearch,
+    referenceBaseUrl: getReferenceBaseUrl(htmlFile),
+    p5Version: versionInfo?.version
+  });
+
+  // Lets the parent component access file content-specific functionality...
+  useEffect(() => {
+    provideController({
+      tidyCode,
+      getContent,
+      showSearch,
+      updateFileContent: updateEditorFileContent
+    });
+  }, [tidyCode, showSearch, getContent, updateEditorFileContent]);
+
+  // When the CM container div mounts, we set up CodeMirror.
+  const onContainerMounted = useCallback(setupCodeMirrorOnContainerMounted, []);
+
+  // This is acting as a "componentDidMount" call where it runs once
+  // at the start and never again. It also provides a cleanup function.
+  useEffect(() => {
+    beep.current = new Audio(beepUrl);
+
+    return () => {
+      provideController(null);
+      teardownCodeMirror();
     };
-    this._cm = null;
-    this.tidyCode = this.tidyCode.bind(this);
+  }, []);
 
-    this.updateLintingMessageAccessibility = debounce((annotations) => {
-      this.props.clearLintMessage();
-      annotations.forEach((x) => {
-        if (x.from.line > -1) {
-          this.props.updateLintMessage(x.severity, x.from.line + 1, x.message);
-        }
+  // Updates the runtime error console.
+  useEffect(() => {
+    const consoleErrors = consoleEvents.filter((e) => e.method === 'error');
+
+    if (consoleErrors.length > 0) {
+      const firstError = consoleErrors[0];
+      const errorObj = { stack: firstError.data[0].toString() };
+      StackTrace.fromError(errorObj).then((stackLines) => {
+        expandConsole();
+        const line = stackLines.find(
+          (l) => l.fileName && l.fileName.startsWith('/')
+        );
+        if (!line) return;
+        const fileNameArray = line.fileName.split('/');
+        const fileName = fileNameArray.slice(-1)[0];
+        const filePath = fileNameArray.slice(0, -1).join('/');
+        const fileWithError = files.find(
+          (f) => f.name === fileName && f.filePath === filePath
+        );
+        setSelectedFile(fileWithError.id);
+        addErrorDecoration(codemirrorView.current, line.lineNumber);
       });
-      if (this.props.lintMessages.length > 0 && this.props.lintWarning) {
-        this.beep.play();
-      }
-    }, 2000);
-    this.showFind = this.showFind.bind(this);
-    this.showReplace = this.showReplace.bind(this);
-    this.getContent = this.getContent.bind(this);
-    this.updateFileContent = this.updateFileContent.bind(this);
-  }
-
-  componentDidMount() {
-    this.beep = new Audio(beepUrl);
-    ensureAriaLiveRegion();
-    // this.widgets = [];
-    this._cm = CodeMirror(this.codemirrorContainer, {
-      theme: `p5-${this.props.theme}`,
-      lineNumbers: this.props.lineNumbers,
-      styleActiveLine: true,
-      inputStyle: 'contenteditable',
-      lineWrapping: this.props.linewrap,
-      fixedGutter: false,
-      foldGutter: true,
-      foldOptions: { widget: '\u2026' },
-      gutters: ['CodeMirror-foldgutter', 'CodeMirror-lint-markers'],
-      keyMap: 'sublime',
-      highlightSelectionMatches: true, // highlight current search match
-      matchBrackets: true,
-      emmet: {
-        preview: ['html'],
-        markTagPairs: true,
-        autoRenameTags: true
-      },
-      autoCloseBrackets: this.props.autocloseBracketsQuotes,
-      styleSelectedText: true,
-      lint: {
-        onUpdateLinting: (annotations) => {
-          this.updateLintingMessageAccessibility(annotations);
-        },
-        options: {
-          asi: true,
-          eqeqeq: false,
-          '-W041': false,
-          esversion: 11
-        }
-      },
-      colorpicker: {
-        type: 'sketch',
-        mode: 'edit'
-      }
-    });
-
-    this.hinter = new Fuse(hinter.p5Hinter, {
-      threshold: 0.05,
-      keys: ['text']
-    });
-
-    delete this._cm.options.lint.options.errors;
-
-    this._cm.getWrapperElement().addEventListener('click', (e) => {
-      const isCtrlClick = isMac() ? e.metaKey : e.ctrlKey;
-
-      if (isCtrlClick) {
-        const pos = this._cm.coordsChar({ left: e.clientX, top: e.clientY });
-        jumpToDefinition.call(this, pos);
-      }
-    });
-
-    const renameKey = isMac() ? 'Ctrl-F2' : 'F2';
-
-    const replaceCommand =
-      metaKey === 'Ctrl' ? `${metaKey}-H` : `${metaKey}-Option-F`;
-    this._cm.setOption('extraKeys', {
-      Tab: (cm) => {
-        if (!cm.execCommand('emmetExpandAbbreviation')) return;
-        // might need to specify and indent more?
-        const selection = cm.doc.getSelection();
-        if (selection.length > 0) {
-          cm.execCommand('indentMore');
-        } else {
-          cm.replaceSelection(' '.repeat(INDENTATION_AMOUNT));
-        }
-      },
-      Enter: 'emmetInsertLineBreak',
-      Esc: 'emmetResetAbbreviation',
-      [`Shift-${metaKey}-E`]: (cm) => {
-        cm.getInputField().blur();
-      },
-      [renameKey]: (cm) => this.renameVariable(cm),
-      [`Shift-Tab`]: false,
-      [`${metaKey}-Enter`]: () => null,
-      [`Shift-${metaKey}-Enter`]: () => null,
-      [`${metaKey}-F`]: 'findPersistent',
-      [`Shift-${metaKey}-F`]: this.tidyCode,
-      [`${metaKey}-G`]: 'findPersistentNext',
-      [`Shift-${metaKey}-G`]: 'findPersistentPrev',
-      [replaceCommand]: 'replace',
-      // Cassie Tarakajian: If you don't set a default color, then when you
-      // choose a color, it deletes characters inline. This is a
-      // hack to prevent that.
-      [`${metaKey}-K`]: (cm, event) =>
-        cm.state.colorpicker.popup_color_picker({ length: 0 }),
-      [`${metaKey}-.`]: 'toggleComment' // Note: most adblockers use the shortcut ctrl+.
-    });
-
-    this.initializeDocuments(this.props.files);
-    this._cm.swapDoc(this._docs[this.props.file.id]);
-
-    this._cm.on(
-      'change',
-      debounce(() => {
-        this.props.setUnsavedChanges(true);
-        this.props.hideRuntimeErrorWarning();
-        this.props.updateFileContent(this.props.file.id, this._cm.getValue());
-
-        // Save a local backup to localStorage for crash recovery (#3891).
-        // This ensures work is recoverable even if the tab crashes
-        // (e.g. from an infinite loop) before the server autosave fires.
-        const projectId = this.props.project?.id || 'unsaved';
-        saveLocalBackup(projectId, this.props.files);
-
-        if (this.props.autorefresh) {
-          this.props.clearConsole();
-          this.props.startSketch();
-        }
-      }, 1000)
-    );
-
-    if (this._cm) {
-      this._cm.on('keyup', this.handleKeyUp);
-    }
-
-    // Mobile autocomplete support (CM5 IME + contenteditable input)
-    const triggerHint = (cm) => {
-      const mode = cm.getOption('mode');
-      if (mode !== 'css' && mode !== 'javascript') return;
-
-      const cursor = cm.getCursor();
-      const token = cm.getTokenAt(cursor);
-
-      // Android keyboards often append a trailing space after each word.
-      // When that happens, stripping the space so the hinter sees the word.
-      if (token.string === ' ' && cursor.ch > 0 && cursor.ch === token.end) {
-        const prevToken = cm.getTokenAt({
-          line: cursor.line,
-          ch: cursor.ch - 1
-        });
-        if (prevToken.string && /[a-z]/i.test(prevToken.string)) {
-          cm.replaceRange(
-            '',
-            { line: cursor.line, ch: cursor.ch - 1 },
-            cursor,
-            '+trimHint'
-          );
-          this.showHint(cm);
-          return;
-        }
-      }
-      if (token.string && /[a-z]/i.test(token.string)) {
-        this.showHint(cm);
-      }
-    };
-
-    // Desktop: fires on each keystroke via CM5's textarea input path.
-    this._cm.on('change', (_cm, changeObj) => {
-      if (changeObj.origin !== '+input') return;
-      if (/[a-z]/i.test(changeObj.text.join(''))) {
-        triggerHint(_cm);
-      }
-    });
-
-    // Mobile (word commit): fires when a composed word is accepted.
-    this._compositionEndHandler = () => {
-      setTimeout(() => {
-        if (this._cm) triggerHint(this._cm);
-      }, 150);
-    };
-    this._cm
-      .getInputField()
-      .addEventListener('compositionend', this._compositionEndHandler);
-
-    // Mobile (per-character): forces CM5 to process composing text
-    // during typing so autocomplete appears before keyboard dismissal.
-    this._compositionFlushTimer = null;
-    this._compositionUpdateHandler = (e) => {
-      if (!e.data || !/[a-z]/i.test(e.data)) return;
-      clearTimeout(this._compositionFlushTimer);
-      this._compositionFlushTimer = setTimeout(() => {
-        const display = this._cm && this._cm.display;
-        if (display && display.input && display.input.composing) {
-          display.input.composing.done = true;
-          display.input.readFromDOMSoon();
-        }
-      }, 200);
-    };
-    this._cm
-      .getInputField()
-      .addEventListener('compositionupdate', this._compositionUpdateHandler);
-
-    this._cm.getWrapperElement().style[
-      'font-size'
-    ] = `${this.props.fontSize}px`;
-
-    this.props.provideController({
-      tidyCode: this.tidyCode,
-      showFind: this.showFind,
-      showReplace: this.showReplace,
-      getContent: this.getContent,
-      updateFileContent: this.updateFileContent
-    });
-  }
-
-  componentWillUpdate(nextProps) {
-    // check if files have changed
-    if (this.props.files[0].id !== nextProps.files[0].id) {
-      // then need to make CodeMirror documents
-      this.initializeDocuments(nextProps.files);
-    }
-    if (this.props.files.length !== nextProps.files.length) {
-      this.initializeDocuments(nextProps.files);
-    }
-  }
-
-  componentDidUpdate(prevProps) {
-    if (this.props.file.id !== prevProps.file.id) {
-      const fileMode = this.getFileMode(this.props.file.name);
-      if (fileMode === 'javascript') {
-        // Define the new Emmet configuration based on the file mode
-        const emmetConfig = {
-          preview: ['html'],
-          markTagPairs: false,
-          autoRenameTags: true
-        };
-        this._cm.setOption('emmet', emmetConfig);
-      }
-      const oldDoc = this._cm.swapDoc(this._docs[this.props.file.id]);
-      this._docs[prevProps.file.id] = oldDoc;
-      this._cm.focus();
-
-      if (!prevProps.unsavedChanges) {
-        setTimeout(() => this.props.setUnsavedChanges(false), 400);
-      }
-    } else if (this.getContent().content !== this.props.file.content) {
-      // TODO: make this not break regular edits!
-      // this._cm.setValue(this.props.file.content);
-    }
-    if (this.props.fontSize !== prevProps.fontSize) {
-      this._cm.getWrapperElement().style[
-        'font-size'
-      ] = `${this.props.fontSize}px`;
-    }
-    if (this.props.linewrap !== prevProps.linewrap) {
-      this._cm.setOption('lineWrapping', this.props.linewrap);
-    }
-    if (this.props.theme !== prevProps.theme) {
-      this._cm.setOption('theme', `p5-${this.props.theme}`);
-    }
-    if (this.props.lineNumbers !== prevProps.lineNumbers) {
-      this._cm.setOption('lineNumbers', this.props.lineNumbers);
-    }
-    if (
-      this.props.autocloseBracketsQuotes !== prevProps.autocloseBracketsQuotes
-    ) {
-      this._cm.setOption(
-        'autoCloseBrackets',
-        this.props.autocloseBracketsQuotes
-      );
-    }
-    if (this.props.autocompleteHinter !== prevProps.autocompleteHinter) {
-      if (!this.props.autocompleteHinter) {
-        // close the hinter window once the preference is turned off
-        CodeMirror.showHint(this._cm, () => {}, {});
-      }
-    }
-
-    if (this.props.runtimeErrorWarningVisible) {
-      if (this.props.consoleEvents.length !== prevProps.consoleEvents.length) {
-        this.props.consoleEvents.forEach((consoleEvent) => {
-          if (consoleEvent.method === 'error') {
-            // It doesn't work if you create a new Error, but this works
-            // LOL
-            const errorObj = { stack: consoleEvent.data[0].toString() };
-            StackTrace.fromError(errorObj).then((stackLines) => {
-              this.props.expandConsole();
-              const line = stackLines.find(
-                (l) => l.fileName && l.fileName.startsWith('/')
-              );
-              if (!line) return;
-              const fileNameArray = line.fileName.split('/');
-              const fileName = fileNameArray.slice(-1)[0];
-              const filePath = fileNameArray.slice(0, -1).join('/');
-              const fileWithError = this.props.files.find(
-                (f) => f.name === fileName && f.filePath === filePath
-              );
-              this.props.setSelectedFile(fileWithError.id);
-              this._cm.addLineClass(
-                line.lineNumber - 1,
-                'background',
-                'line-runtime-error'
-              );
-            });
-          }
-        });
-      } else {
-        for (let i = 0; i < this._cm.lineCount(); i += 1) {
-          this._cm.removeLineClass(i, 'background', 'line-runtime-error');
-        }
-      }
-    }
-
-    if (this.props.file.id !== prevProps.file.id) {
-      for (let i = 0; i < this._cm.lineCount(); i += 1) {
-        this._cm.removeLineClass(i, 'background', 'line-runtime-error');
-      }
-    }
-
-    this.props.provideController({
-      tidyCode: this.tidyCode,
-      showFind: this.showFind,
-      showReplace: this.showReplace,
-      getContent: this.getContent,
-      updateFileContent: this.updateFileContent
-    });
-  }
-
-  componentWillUnmount() {
-    if (this._cm) {
-      this._cm.off('keyup', this.handleKeyUp);
-      const inputField = this._cm.getInputField();
-      if (this._compositionEndHandler) {
-        inputField.removeEventListener(
-          'compositionend',
-          this._compositionEndHandler
-        );
-      }
-      if (this._compositionUpdateHandler) {
-        inputField.removeEventListener(
-          'compositionupdate',
-          this._compositionUpdateHandler
-        );
-      }
-      clearTimeout(this._compositionFlushTimer);
-    }
-    this.props.provideController(null);
-  }
-
-  getFileMode(fileName) {
-    let mode;
-    if (fileName.match(/.+\.js$/i)) {
-      mode = 'javascript';
-    } else if (fileName.match(/.+\.css$/i)) {
-      mode = 'css';
-    } else if (fileName.match(/.+\.(html|xml)$/i)) {
-      mode = 'htmlmixed';
-    } else if (fileName.match(/.+\.json$/i)) {
-      mode = 'application/json';
-    } else if (fileName.match(/.+\.(frag|glsl)$/i)) {
-      mode = 'x-shader/x-fragment';
-    } else if (fileName.match(/.+\.(vert|stl|mtl)$/i)) {
-      mode = 'x-shader/x-vertex';
     } else {
-      mode = 'text/plain';
+      removeErrorDecorations(codemirrorView.current);
     }
-    return mode;
-  }
+  }, [consoleEvents]);
 
-  getContent() {
-    const content = this._cm.getValue();
-    const updatedFile = Object.assign({}, this.props.file, { content });
-    return updatedFile;
-  }
+  const editorSectionClass = classNames({
+    editor: true,
+    'sidebar--contracted': !isExpanded
+  });
 
-  updateFileContent(id, src) {
-    const file = this._docs[id];
-    if (file) {
-      this._docs[id] = CodeMirror.Doc(src, this._docs[id].modeOption);
-      if (id === this.props.file.id) {
-        this._cm.swapDoc(this._docs[id]);
-      }
-    }
-  }
+  const editorHolderClass = classNames({
+    'editor-holder': true,
+    'editor-holder--hidden': file.fileType === 'folder' || file.url
+  });
 
-  handleKeyUp = () => {
-    const lineNumber = parseInt(this._cm.getCursor().line + 1, 10);
-    this.setState({ currentLine: lineNumber });
-  };
-
-  showFind() {
-    this._cm.execCommand('findPersistent');
-  }
-
-  // temporary until p5.js 2.0 becomes default
-  // checks if sketch is using p5.js 2.0 to pass correct base url for autocomplete hinter reference
-  getReferenceBaseUrl = () => {
-    const html = this.props.htmlFile?.content || '';
-
-    const isV2 =
-      /https:\/\/beta\.p5js\.org\b/i.test(html) || /\bp5(@|-)2\./i.test(html);
-
-    return isV2 ? 'https://beta.p5js.org' : 'https://p5js.org';
-  };
-
-  showHint(_cm) {
-    if (!_cm) return;
-
-    if (!this.props.autocompleteHinter) {
-      CodeMirror.showHint(_cm, () => {}, {});
-      return;
-    }
-
-    let focusedLinkElement = null;
-
-    const setFocusedLinkElement = (set) => {
-      if (set && !focusedLinkElement) {
-        const activeItemLink = document.querySelector(
-          `.CodeMirror-hint-active a`
-        );
-        if (activeItemLink) {
-          focusedLinkElement = activeItemLink;
-          focusedLinkElement.classList.add('focused-hint-link');
-          focusedLinkElement.parentElement.parentElement.classList.add(
-            'unfocused'
-          );
-        }
-      }
-    };
-
-    const removeFocusedLinkElement = () => {
-      if (focusedLinkElement) {
-        focusedLinkElement.classList.remove('focused-hint-link');
-        focusedLinkElement.parentElement.parentElement.classList.remove(
-          'unfocused'
-        );
-        focusedLinkElement = null;
-        return true;
-      }
-      return false;
-    };
-
-    const hintOptions = {
-      _fontSize: this.props.fontSize,
-      referenceBaseUrl: this.getReferenceBaseUrl(),
-      completeSingle: false,
-      extraKeys: {
-        'Shift-Right': (cm, e) => {
-          const activeItemLink = document.querySelector(
-            `.CodeMirror-hint-active a`
-          );
-          if (activeItemLink) activeItemLink.click();
-        },
-        Right: (cm, e) => setFocusedLinkElement(true),
-        Left: (cm, e) => removeFocusedLinkElement(),
-        Up: (cm, e) => {
-          const onLink = removeFocusedLinkElement();
-          e.moveFocus(-1);
-          setFocusedLinkElement(onLink);
-        },
-        Down: (cm, e) => {
-          const onLink = removeFocusedLinkElement();
-          e.moveFocus(1);
-          setFocusedLinkElement(onLink);
-        },
-        Enter: (cm, e) => {
-          if (focusedLinkElement) focusedLinkElement.click();
-          else e.pick();
-        }
-      },
-      closeOnUnfocus: false
-    };
-
-    const triggerHints = () => {
-      if (_cm.options.mode === 'javascript') {
-        CodeMirror.showHint(
-          _cm,
-          () => {
-            const c = _cm.getCursor();
-            const token = _cm.getTokenAt(c);
-            const hints = contextAwareHinter(_cm, { hinter: this.hinter });
-            return {
-              list: hints,
-              from: CodeMirror.Pos(c.line, token.start),
-              to: CodeMirror.Pos(c.line, c.ch)
-            };
-          },
-          hintOptions
-        );
-      } else if (_cm.options.mode === 'css') {
-        CodeMirror.showHint(_cm, CodeMirror.hint.css, hintOptions);
-      }
-    };
-
-    setTimeout(triggerHints, 0);
-  }
-
-  showReplace() {
-    this._cm.execCommand('replace');
-  }
-
-  prettierFormatWithCursor(parser, plugins) {
-    try {
-      const { formatted, cursorOffset } = prettier.formatWithCursor(
-        this._cm.doc.getValue(),
-        {
-          cursorOffset: this._cm.doc.indexFromPos(this._cm.doc.getCursor()),
-          parser,
-          plugins
-        }
-      );
-      const { left, top } = this._cm.getScrollInfo();
-      this._cm.doc.setValue(formatted);
-      this._cm.focus();
-      this._cm.doc.setCursor(this._cm.doc.posFromIndex(cursorOffset));
-      this._cm.scrollTo(left, top);
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  tidyCode() {
-    const mode = this._cm.getOption('mode');
-    if (mode === 'javascript') {
-      this.prettierFormatWithCursor('babel', [babelParser]);
-    } else if (mode === 'css') {
-      this.prettierFormatWithCursor('css', [cssParser]);
-    } else if (mode === 'htmlmixed') {
-      this.prettierFormatWithCursor('html', [htmlParser]);
-    }
-  }
-
-  renameVariable(cm) {
-    const cursorCoords = cm.cursorCoords(true, 'page');
-    const selection = cm.getSelection();
-    const pos = cm.getCursor(); // or selection start
-    const token = cm.getTokenAt(pos);
-    const tokenType = token.type;
-    if (!selection) {
-      return;
-    }
-
-    const sel = cm.listSelections()[0];
-    const fromPos =
-      CodeMirror.cmpPos(sel.anchor, sel.head) <= 0 ? sel.anchor : sel.head;
-
-    showRenameDialog(
-      cm,
-      fromPos,
-      tokenType,
-      cursorCoords,
-      selection,
-      (newName) => {
-        if (newName && newName.trim() !== '' && newName !== selection) {
-          handleRename(fromPos, selection, newName, cm);
-        }
-      }
-    );
-  }
-
-  initializeDocuments(files) {
-    this._docs = {};
-    files.forEach((file) => {
-      if (file.name !== 'root') {
-        this._docs[file.id] = CodeMirror.Doc(
-          file.content,
-          this.getFileMode(file.name)
-        ); // eslint-disable-line
-      }
-    });
-  }
-
-  render() {
-    const editorSectionClass = classNames({
-      editor: true,
-      'sidebar--contracted': !this.props.isExpanded
-    });
-
-    const editorHolderClass = classNames({
-      'editor-holder': true,
-      'editor-holder--hidden':
-        this.props.file.fileType === 'folder' || this.props.file.url
-    });
-
-    const { currentLine } = this.state;
-
-    return (
-      <MediaQuery minWidth={770}>
-        {(matches) =>
-          matches ? (
-            <section className={editorSectionClass}>
-              <div className="editor__header">
-                <button
-                  aria-label={this.props.t('Editor.CloseSketchARIA')}
-                  className="sidebar__contract"
-                  onClick={() => {
-                    this.props.collapseSidebar();
-                    this.props.closeProjectOptions();
-                  }}
-                >
-                  <LeftArrowIcon focusable="false" aria-hidden="true" />
-                </button>
-                <button
-                  aria-label={this.props.t('Editor.OpenSketchARIA')}
-                  className="sidebar__expand"
-                  onClick={this.props.expandSidebar}
-                >
-                  <RightArrowIcon focusable="false" aria-hidden="true" />
-                </button>
-                <div className="editor__file-name">
-                  <span>
-                    {this.props.file.name}
-                    <UnsavedChangesIndicator />
-                  </span>
-                  <Timer />
-                </div>
-              </div>
-              <article
-                ref={(element) => {
-                  this.codemirrorContainer = element;
+  return (
+    <MediaQuery minWidth={770}>
+      {(matches) =>
+        matches ? (
+          <section className={editorSectionClass}>
+            <div className="editor__header">
+              <button
+                aria-label={t('Editor.CloseSketchARIA')}
+                className="sidebar__contract"
+                onClick={() => {
+                  collapseSidebar();
+                  closeProjectOptions();
                 }}
-                className={editorHolderClass}
+              >
+                <LeftArrowIcon focusable="false" aria-hidden="true" />
+              </button>
+              <button
+                aria-label={t('Editor.OpenSketchARIA')}
+                className="sidebar__expand"
+                onClick={expandSidebar}
+              >
+                <RightArrowIcon focusable="false" aria-hidden="true" />
+              </button>
+              <div className="editor__file-name">
+                <span>
+                  {file.name}
+                  <UnsavedChangesIndicator />
+                </span>
+                <Timer />
+              </div>
+            </div>
+            <article ref={onContainerMounted} className={editorHolderClass} />
+            {isSearchOpen && (
+              <SearchPanel
+                view={codemirrorView.current}
+                closePanel={hideSearch}
               />
-              {this.props.file.url ? (
-                <AssetPreview
-                  url={this.props.file.url}
-                  name={this.props.file.name}
-                />
+            )}
+            {file.url ? <AssetPreview url={file.url} name={file.name} /> : null}
+            <EditorAccessibility
+              lintMessages={lintMessages}
+              currentLine={currentLine}
+            />
+          </section>
+        ) : (
+          <EditorContainer expanded={isExpanded}>
+            <div>
+              <IconButton onClick={expandSidebar} icon={FolderIcon} />
+              <span>
+                {file.name}
+                <UnsavedChangesIndicator />
+              </span>
+            </div>
+            <section>
+              <EditorHolder ref={onContainerMounted} />
+              {file.url ? (
+                <AssetPreview url={file.url} name={file.name} />
               ) : null}
               <EditorAccessibility
-                lintMessages={this.props.lintMessages}
+                lintMessages={lintMessages}
                 currentLine={currentLine}
               />
             </section>
-          ) : (
-            <EditorContainer expanded={this.props.isExpanded}>
-              <div>
-                <IconButton
-                  onClick={this.props.expandSidebar}
-                  icon={FolderIcon}
-                />
-                <span>
-                  {this.props.file.name}
-                  <UnsavedChangesIndicator />
-                </span>
-              </div>
-              <section>
-                <EditorHolder
-                  ref={(element) => {
-                    this.codemirrorContainer = element;
-                  }}
-                />
-                {this.props.file.url ? (
-                  <AssetPreview
-                    url={this.props.file.url}
-                    name={this.props.file.name}
-                  />
-                ) : null}
-                <EditorAccessibility
-                  lintMessages={this.props.lintMessages}
-                  currentLine={currentLine}
-                />
-              </section>
-            </EditorContainer>
-          )
-        }
-      </MediaQuery>
-    );
-  }
+            {isSearchOpen && (
+              <SearchPanel
+                isMobile
+                view={codemirrorView.current}
+                closePanel={hideSearch}
+              />
+            )}
+          </EditorContainer>
+        )
+      }
+    </MediaQuery>
+  );
 }
 
 Editor.propTypes = {
@@ -807,8 +308,6 @@ Editor.propTypes = {
   setUnsavedChanges: PropTypes.func.isRequired,
   startSketch: PropTypes.func.isRequired,
   autorefresh: PropTypes.bool.isRequired,
-  theme: PropTypes.string.isRequired,
-  unsavedChanges: PropTypes.bool.isRequired,
   files: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -816,16 +315,14 @@ Editor.propTypes = {
       content: PropTypes.string.isRequired
     })
   ).isRequired,
+  isExpanded: PropTypes.bool.isRequired,
   htmlFile: PropTypes.shape({
     content: PropTypes.string
   }),
-  isExpanded: PropTypes.bool.isRequired,
   collapseSidebar: PropTypes.func.isRequired,
   closeProjectOptions: PropTypes.func.isRequired,
   expandSidebar: PropTypes.func.isRequired,
   clearConsole: PropTypes.func.isRequired,
-  hideRuntimeErrorWarning: PropTypes.func.isRequired,
-  runtimeErrorWarningVisible: PropTypes.bool.isRequired,
   provideController: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
   setSelectedFile: PropTypes.func.isRequired,

@@ -45,7 +45,7 @@ function PreviewFrame({ fullView, isOverlayVisible }) {
   const sandboxAttributes = `allow-forms allow-modals allow-pointer-lock allow-popups 
     allow-same-origin allow-scripts allow-top-navigation-by-user-activation allow-downloads`;
   const allow = `accelerometer; ambient-light-sensor; autoplay; bluetooth; camera; encrypted-media; geolocation; gyroscope; \
-    hid; microphone; magnetometer; midi; payment; usb; serial; vr; xr-spatial-tracking`;
+    hid; local-network-access; microphone; magnetometer; midi; payment; usb; serial; vr; xr-spatial-tracking`;
 
   return (
     <>

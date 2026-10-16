@@ -156,7 +156,7 @@ We work with third party services to provide website development, hosting, and m
 
 
 
-* [Google Analytics & Google Cloud Engine](https://policies.google.com/privacy?hl=en_US) (Hosting)
+* [Google Cloud Engine](https://policies.google.com/privacy?hl=en_US) (Hosting)
 * [MongoDB Atlas](https://www.mongodb.com/legal/privacy-policy)
 * [Cloudflare](https://www.cloudflare.com/privacypolicy/)
 * [Mailgun](https://www.mailgun.com/privacy-policy/)
@@ -291,11 +291,6 @@ You can set your browser to refuse all or some browser cookies, or to alert you 
 ### Location 
 
 Mobile browsers may collect real-time information about the location of your device for geo-fencing, mileage tracking, or similar purposes. If you do not want us to collect this information, you may decline our request or disable location services in your mobile device’s settings, if requested. However, opting out of the collection of location information will cause location-based features to be disabled and the online and/or mobile browsing may not function properly. 
-
-
-### Analytics
-
-We may use third-party web analytics (Google Analytics) to better understand the users that interact with our Website. You can opt out of analytics by installing the [Google Analytics Opt-out Browser Add-on](https://tools.google.com/dlpage/gaoptout), which prohibits data transmission to Google Analytics.
 
 
 ### Promotional offers from the Processing Foundation 

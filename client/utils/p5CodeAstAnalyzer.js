@@ -24,8 +24,7 @@ let lastValidResult = {
   userDefinedClassMetadata: {}
 };
 
-function _p5CodeAstAnalyzer(_cm) {
-  const code = _cm.getValue();
+function _p5CodeAstAnalyzer(code) {
   let ast;
 
   try {
@@ -153,8 +152,7 @@ function _p5CodeAstAnalyzer(_cm) {
                     expr.left.object.type === 'ThisExpression' &&
                     expr.left.property.type === 'Identifier'
                   ) {
-                    const propName = expr.left.property.name;
-                    classInfo.fields.add(propName);
+                    classInfo.fields.add(expr.left.property.name);
                   }
                 },
 
@@ -165,8 +163,7 @@ function _p5CodeAstAnalyzer(_cm) {
                     callee.object.type === 'ThisExpression' &&
                     callee.property.type === 'Identifier'
                   ) {
-                    const methodName = callee.property.name;
-                    classInfo.fields.add(methodName);
+                    classInfo.fields.add(callee.property.name);
                   }
                 }
               },

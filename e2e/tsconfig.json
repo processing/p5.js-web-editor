@@ -1,0 +1,11 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "commonjs",
+    "lib": ["ES2022", "dom"],
+    "types": ["node"]
+  },
+  "include": ["./**/*", "../playwright.config.ts"],
+  "exclude": ["../node_modules"]
+}
