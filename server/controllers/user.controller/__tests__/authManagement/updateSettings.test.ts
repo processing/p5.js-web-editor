@@ -8,6 +8,7 @@ import { saveUser, generateToken } from '../../helpers';
 import { createMockUser } from '../../__testUtils__';
 
 import { mailerService } from '../../../../utils/mail';
+import { renderEmailConfirmation } from '../../../../views/mail';
 import { UpdateSettingsRequestBody, UserDocument } from '../../../../types';
 
 jest.mock('../../../../models/user');
@@ -178,7 +179,10 @@ describe('user.controller > auth management > updateSettings (email, username, p
       });
 
       describe('when given old username and new email, after a recent step-up', () => {
+        const previousEditorUrl = process.env.EDITOR_URL;
+
         beforeEach(async () => {
+          process.env.EDITOR_URL = 'https://editor.p5js.org';
           givenRecentStepUp();
           requestBody = { ...minimumValidRequest, email: NEW_EMAIL };
           request.setBody(requestBody);
@@ -187,6 +191,10 @@ describe('user.controller > auth management > updateSettings (email, username, p
             (response as unknown) as Response,
             next
           );
+        });
+
+        afterEach(() => {
+          process.env.EDITOR_URL = previousEditorUrl;
         });
         it('saves the user with the correct details & verification token once', () => {
           expect(testUser.save).toHaveBeenCalledTimes(1);
@@ -217,6 +225,15 @@ describe('user.controller > auth management > updateSettings (email, username, p
               subject: 'Mock email changed notice'
             })
           );
+        });
+        it('renders the verification email with a public logo origin and the request verification link', () => {
+          expect(renderEmailConfirmation).toHaveBeenCalledWith({
+            body: {
+              domain: 'https://editor.p5js.org',
+              link: `http://localhost:3000/verify?t=${GENERATED_TOKEN}`
+            },
+            to: NEW_EMAIL
+          });
         });
       });
 
