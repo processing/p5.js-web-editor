@@ -148,4 +148,51 @@ describe('jsPreprocess', () => {
       expect(result).toContain('window.loopProtect.hit');
     });
   });
+
+  describe('async/await loop protection', () => {
+    it('wraps await expressions in for loop with window.loopProtect.reset', () => {
+      const code = `
+        async function setup() {
+          for (let i = 0; i < fns.length; i++) {
+            imgs.push(await loadImage(fns[i]));
+          }
+        }
+      `;
+      const result = jsPreprocess(code, '');
+      expect(result).toContain('window.loopProtect.hit');
+      expect(result).toContain(
+        'window.loopProtect.reset(_LP0, await loadImage(fns[i]))'
+      );
+    });
+
+    it('does not wrap await expressions outside loops', () => {
+      const code = `
+        async function setup() {
+          const img = await loadImage('a.jpg');
+          for (let i = 0; i < 10; i++) {}
+        }
+      `;
+      const result = jsPreprocess(code, '');
+      expect(result).toContain("await loadImage('a.jpg')");
+      expect(result).not.toContain(
+        'window.loopProtect.reset(_LP0, await loadImage'
+      );
+    });
+
+    it('handles nested loops with await expressions', () => {
+      const code = `
+        async function run() {
+          for (let i = 0; i < 2; i++) {
+            for (let j = 0; j < 2; j++) {
+              await loadData(i, j);
+            }
+          }
+        }
+      `;
+      const result = jsPreprocess(code, '');
+      expect(result).toContain(
+        'window.loopProtect.reset(_LP0, window.loopProtect.reset(_LP1, await loadData(i, j)))'
+      );
+    });
+  });
 });
