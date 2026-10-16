@@ -422,15 +422,15 @@
   }
 }
 
-// Used for keyword, self, function, className
+// Used for keyword, self, function, className, controlKeyword
 .cm-keyword {
   @include themify() {
     color: getThemifyVariable('highlight-style-keyword-color');
   }
 }
 
-// Used for operatorKeyword, controlKeyword, operator, derefOperator, arithmeticOperator,
-// logicOperator, bitwiseOperator, compareOperator, updateOperator, typeOperator
+// Used for operatorKeyword, operator, derefOperator, arithmeticOperator,
+// logicOperator, bitwiseOperator, compareOperator, updateOperator, typeOperator,
 // controlOperator
 .cm-operator {
   @include themify() {
