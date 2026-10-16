@@ -9,6 +9,8 @@ $black: #000;
 $yellow: #f5dc23;
 $dodgerblue: #1e90ff;
 $p5-contrast-pink: #ffa9d9;
+$p5-contrast-light-pink: #ffa9d9;
+$p5-contrast-dark-pink: #b20046;
 
 $outline-color: #0f9dd7;
 
@@ -150,6 +152,7 @@ $themes: (
     input-selection-text-color: $dark,
     input-text-color: $dark,
     keyboard-shortcut-color: $middle-gray,
+    link-text-color: $p5-contrast-dark-pink,
     logo-background-color: $lightest,
     logo-color: $p5js-pink,
     modal-background-color: $light,
@@ -209,7 +212,7 @@ $themes: (
     console-header-color: $lightest,
     console-input-background-color: $darker,
     editor-gutter-color: $darker,
-    error-color: $p5js-pink,
+    error-color: $p5-contrast-light-pink,
     file-hover-color: $dark,
     file-selected-color: $medium-dark,
     form-input-placeholder-text-color: $middle-gray,
@@ -268,6 +271,7 @@ $themes: (
     input-selection-text-color: $darkest,
     input-text-color: $lightest,
     keyboard-shortcut-color: $middle-light,
+    link-text-color: $p5-contrast-light-pink,
     logo-background-color: $lightest,
     logo-color: $p5js-pink,
     modal-background-color: $dark,
@@ -327,7 +331,7 @@ $themes: (
     console-header-color: $lightest,
     console-input-background-color: $darker,
     editor-gutter-color: $darker,
-    error-color: $p5-contrast-pink,
+    error-color: $p5-contrast-light-pink,
     file-hover-color: $dark,
     file-selected-color: $medium-dark,
     form-navigation-options-color: $middle-light,
@@ -383,6 +387,7 @@ $themes: (
     input-selection-text-color: $darkest,
     input-text-color: $lightest,
     keyboard-shortcut-color: $middle-light,
+    link-text-color: $p5-contrast-light-pink,
     logo-background-color: $darker,
     logo-color: $yellow,
     modal-background-color: $dark,
