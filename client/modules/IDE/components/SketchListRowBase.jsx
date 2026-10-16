@@ -96,7 +96,7 @@ const SketchListRowBase = ({
     (sketchId, sketchName, newVisibility) => {
       changeVisibility(sketchId, sketchName, newVisibility, t);
     },
-    [changeVisibility]
+    [changeVisibility, t]
   );
 
   const userIsOwner = user.username === username;
