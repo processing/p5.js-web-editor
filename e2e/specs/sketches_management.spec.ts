@@ -52,6 +52,12 @@ test.describe.serial('sketch lifecycle', () => {
     await expect(
       page.locator('iframe[title="sketch preview"]')
     ).toHaveAttribute('src', /9002/, { timeout: 10_000 });
+
+    // Wait for console to have any content before asserting on specific text
+    await expect(page.locator('.preview-console__messages')).not.toBeEmpty({
+      timeout: 10_000
+    });
+
     await expect(
       page.locator('.preview-console__messages')
     ).toContainText('initial log', { timeout: 10_000 });
@@ -136,6 +142,12 @@ test.describe.serial('sketch lifecycle', () => {
     await expect(
       page.locator('iframe[title="sketch preview"]')
     ).toHaveAttribute('src', /9002/, { timeout: 10_000 });
+
+    // Give the sketch time to execute and send output
+    await expect(page.locator('.preview-console__messages')).not.toBeEmpty({
+      timeout: 10_000
+    });
+
     await expect(
       page.locator('.preview-console__messages')
     ).toContainText('updated log', { timeout: 10_000 });
