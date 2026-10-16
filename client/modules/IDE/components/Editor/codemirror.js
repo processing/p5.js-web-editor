@@ -32,6 +32,7 @@ export default function useCodeMirror({
   file,
   files,
   autorefresh,
+  isPlaying,
   clearConsole,
   startSketch,
   autocompleteHinter,
@@ -52,6 +53,7 @@ export default function useCodeMirror({
   onChangeStateRef.current = {
     fileId: file.id,
     autorefresh,
+    isPlaying,
     project,
     files
   };
@@ -69,7 +71,7 @@ export default function useCodeMirror({
     const projectId = state.project?.id || 'unsaved';
     saveLocalBackup(projectId, state.files);
 
-    if (state.autorefresh) {
+    if (state.autorefresh && state.isPlaying) {
       clearConsole();
       startSketch();
     }
