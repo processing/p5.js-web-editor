@@ -45,15 +45,16 @@ _Note_: The installation steps assume you are using a Unix-like shell. If you ar
       - Choose **Node.js** as the driver for your connection method. You will see a connection string, with or without the password filled in.
       - Copy the string and use it as your `MONGO_URL` in the `.env` file.
 8. `$ cp .env.example .env`
-9. (Optional) Update `.env` with necessary keys to enable certain app behaviors, i.e. add Github ID and Github Secret if you want to be able to log in with Github.
+9. To test emails locally, install and run [Mailpit](https://github.com/axllent/mailpit) and read mail at [http://localhost:8025](http://localhost:8025).
+10. (Optional) Update `.env` with necessary keys to enable certain app behaviors, i.e. add Github ID and Github Secret if you want to be able to log in with Github.
    * See the [GitHub API Configuration](#github-api-configuration) section for information on how to authenticate with Github.
    * See the [S3 Bucket Configuration](#s3-bucket-configuration) section for information on how to set up an S3 bucket
-10. (Optional) Run `$ npm run fetch-examples` to download the example sketches into a user called 'p5'. Note that you need to configure your GitHub Credentials, which you can do by following the [Github API Configuration](#github-api-configuration) section.
-11. Enable Prettier in your text editor by following [this guide](https://prettier.io/docs/en/editors.html).
-12. `$ npm start`
-13. Navigate to [http://localhost:8000](http://localhost:8000) in your browser
-14. Install the [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en)
-15. Open and close the Redux DevTools using `ctrl+h`, and move them with `ctrl+w`
+11. (Optional) Run `$ npm run fetch-examples` to download the example sketches into a user called 'p5'. Note that you need to configure your GitHub Credentials, which you can do by following the [Github API Configuration](#github-api-configuration) section.
+12. Enable Prettier in your text editor by following [this guide](https://prettier.io/docs/en/editors.html).
+13. `$ npm start`
+14. Navigate to [http://localhost:8000](http://localhost:8000) in your browser
+15. Install the [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en)
+16. Open and close the Redux DevTools using `ctrl+h`, and move them with `ctrl+w`
 
 ## Docker Installation
 
@@ -81,14 +82,15 @@ Now, anytime you wish to start the server with its dependencies, you can run:
 
 9. `$ docker-compose -f docker-compose-development.yml up`
 10. Navigate to [http://localhost:8000](http://localhost:8000) in your browser
+11. Mail sent by the app is caught by the bundled Mailpit service, read it at [http://localhost:8025](http://localhost:8025).
 
 To open a terminal/shell in the running Docker server (i.e. after `docker-compose up` has been run):
 
-11. `$ docker-compose -f docker-compose-development.yml exec app bash -l`
+12. `$ docker-compose -f docker-compose-development.yml exec app bash -l`
 
 If you don't have the full server environment running, you can launch a one-off container instance (and have it automatically deleted after you're done using it):
 
-12. `$ docker-compose -f docker-compose-development.yml run app --rm bash -l`
+13. `$ docker-compose -f docker-compose-development.yml run app --rm bash -l`
 
 ## Environment Files
 
