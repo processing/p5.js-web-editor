@@ -3,9 +3,10 @@ const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ReactRefreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
+const loadEnv = require('../loadEnv');
 
 if (process.env.NODE_ENV === 'development') {
-  require('dotenv').config();
+  loadEnv();
 }
 
 module.exports = {

@@ -16,6 +16,11 @@
     width: #{math.div(60, $base-font-size)}rem;
     position: relative;
   }
+  & .asset-table__size-column {
+    white-space: nowrap;
+    width: #{math.div(100, $base-font-size)}rem;
+    padding-right: #{math.div(12, $base-font-size)}rem;
+  }
 }
 
 .asset-table thead th {

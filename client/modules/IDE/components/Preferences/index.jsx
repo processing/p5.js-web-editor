@@ -29,6 +29,7 @@ import { CmControllerContext } from '../../pages/IDEView';
 import Stars from '../Stars';
 import Admonition from '../Admonition';
 import TextArea from '../TextArea';
+import { hasNoProtect, toggleLoopProtection } from '../../utils/loopProtection';
 
 export default function Preferences() {
   const { t } = useTranslation();
@@ -53,6 +54,15 @@ export default function Preferences() {
   const { versionInfo, indexID } = useP5Version();
   const cmRef = useContext(CmControllerContext);
   const [showStars, setShowStars] = useState(null);
+  const files = useSelector((s) => s.files);
+  const indexFile = files.find(
+    (file) =>
+      file.fileType === 'file' &&
+      file.name === 'index.html' &&
+      file.filePath === ''
+  );
+  const indexSrc = indexFile?.content;
+  const loopProtection = useMemo(() => !hasNoProtect(indexSrc), [indexSrc]);
   const timerRef = useRef(null);
   const pickerRef = useRef(null);
   const onChangeVersion = (version) => {
@@ -114,6 +124,15 @@ export default function Preferences() {
     dispatch(updateFileContent(indexID, src));
     cmRef.current?.updateFileContent(indexID, src);
   };
+
+  function handleLoopProtection(enabled) {
+    if (!indexID || !indexSrc) return;
+
+    const next = toggleLoopProtection(indexSrc, enabled);
+    if (next === indexSrc) return;
+
+    updateHTML(next);
+  }
 
   const markdownComponents = useMemo(() => {
     // eslint-disable-next-line react/no-unstable-nested-components
@@ -410,6 +429,42 @@ export default function Preferences() {
                 checked={!linewrap}
               />
               <label htmlFor="wordwrap-off" className="preference__option">
+                {t('Preferences.Off')}
+              </label>
+            </fieldset>
+          </div>
+          <div className="preference">
+            <h4 className="preference__title">
+              {t('Preferences.LoopProtection')}
+            </h4>
+            <fieldset className="preference__options">
+              <input
+                type="radio"
+                onChange={() => handleLoopProtection(true)}
+                aria-label={t('Preferences.LoopProtectionOnARIA')}
+                name="loopprotection"
+                id="loopprotection-on"
+                className="preference__radio-button"
+                value="On"
+                checked={loopProtection}
+              />
+              <label htmlFor="loopprotection-on" className="preference__option">
+                {t('Preferences.On')}
+              </label>
+              <input
+                type="radio"
+                onChange={() => handleLoopProtection(false)}
+                aria-label={t('Preferences.LoopProtectionOffARIA')}
+                name="loopprotection"
+                id="loopprotection-off"
+                className="preference__radio-button"
+                value="Off"
+                checked={!loopProtection}
+              />
+              <label
+                htmlFor="loopprotection-off"
+                className="preference__option"
+              >
                 {t('Preferences.Off')}
               </label>
             </fieldset>

@@ -1,36 +1,38 @@
 import { jsPreprocess } from './jsPreprocess';
 
 describe('jsPreprocess', () => {
-  describe('// noprotect', () => {
-    it('returns code unchanged when // noprotect is present', () => {
-      const code = '// noprotect\nfor (let i = 0; i < 10; i++) {}';
-      expect(jsPreprocess(code)).toBe(code);
+  describe('<!-- noprotect -->', () => {
+    it('returns code unchanged when <!-- noprotect --> is present in index.html', () => {
+      const code = 'for (let i = 0; i < 10; i++) {}';
+      const indexSrc = '<!-- noprotect -->\n<html></html>';
+
+      expect(jsPreprocess(code, indexSrc)).toBe(code);
     });
   });
 
   describe('regular loop protection', () => {
     it('adds loop protection to a for loop', () => {
       const code = 'for (let i = 0; i < 10; i++) {}';
-      const result = jsPreprocess(code);
+      const result = jsPreprocess(code, '');
       expect(result).toContain('window.loopProtect.hit');
       expect(result).toContain('Date.now()');
     });
 
     it('adds loop protection to a while loop', () => {
       const code = 'while (true) {}';
-      const result = jsPreprocess(code);
+      const result = jsPreprocess(code, '');
       expect(result).toContain('window.loopProtect.hit');
     });
 
     it('adds loop protection to a do-while loop', () => {
       const code = 'do {} while (true)';
-      const result = jsPreprocess(code);
+      const result = jsPreprocess(code, '');
       expect(result).toContain('window.loopProtect.hit');
     });
 
     it('returns original code if transform fails', () => {
       const code = 'this is not valid javascript @@@@';
-      expect(jsPreprocess(code)).toBe(code);
+      expect(jsPreprocess(code, '')).toBe(code);
     });
 
     it('handles module scripts with import statements', () => {
@@ -38,7 +40,7 @@ describe('jsPreprocess', () => {
         import something from 'somewhere';
         for (let i = 0; i < 10; i++) {}
       `;
-      const result = jsPreprocess(code);
+      const result = jsPreprocess(code, '');
       expect(result).toContain('window.loopProtect.hit');
     });
   });
@@ -52,13 +54,13 @@ describe('jsPreprocess', () => {
           }
         \`;
       `;
-      const result = jsPreprocess(code);
+      const result = jsPreprocess(code, '');
       expect(result).not.toContain('window.loopProtect.hit');
     });
 
     it('does not modify for loops inside single-quoted strings', () => {
       const code = "const glsl = 'for (int i = 0; i < 10; i++) {}';";
-      const result = jsPreprocess(code);
+      const result = jsPreprocess(code, '');
       expect(result).not.toContain('window.loopProtect.hit');
     });
 
@@ -72,7 +74,7 @@ describe('jsPreprocess', () => {
           }\`
         });
       `;
-      const result = jsPreprocess(code);
+      const result = jsPreprocess(code, '');
       expect(result).not.toContain('window.loopProtect.hit');
     });
   });
@@ -85,7 +87,7 @@ describe('jsPreprocess', () => {
           for (let i = 0; i < 20; i++) {}
         }
       `;
-      const result = jsPreprocess(code);
+      const result = jsPreprocess(code, '');
       expect(result).not.toContain('window.loopProtect.hit');
     });
 
@@ -96,7 +98,7 @@ describe('jsPreprocess', () => {
         };
         blur = buildFilterShader(doBlur);
       `;
-      const result = jsPreprocess(code);
+      const result = jsPreprocess(code, '');
       expect(result).not.toContain('window.loopProtect.hit');
     });
 
@@ -106,7 +108,7 @@ describe('jsPreprocess', () => {
           for (let i = 0; i < 20; i++) {}
         });
       `;
-      const result = jsPreprocess(code);
+      const result = jsPreprocess(code, '');
       expect(result).not.toContain('window.loopProtect.hit');
     });
 
@@ -117,7 +119,7 @@ describe('jsPreprocess', () => {
           for (let i = 0; i < 20; i++) {}
         }
       `;
-      const result = jsPreprocess(code);
+      const result = jsPreprocess(code, '');
       expect(result).not.toContain('window.loopProtect.hit');
     });
 
@@ -128,7 +130,7 @@ describe('jsPreprocess', () => {
           for (let i = 0; i < 20; i++) {}
         }
       `;
-      const result = jsPreprocess(code);
+      const result = jsPreprocess(code, '');
       expect(result).not.toContain('window.loopProtect.hit');
     });
 
@@ -142,7 +144,7 @@ describe('jsPreprocess', () => {
           for (let j = 0; j < 100; j++) {}
         }
       `;
-      const result = jsPreprocess(code);
+      const result = jsPreprocess(code, '');
       expect(result).toContain('window.loopProtect.hit');
     });
   });
