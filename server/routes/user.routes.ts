@@ -1,8 +1,23 @@
 import { Router } from 'express';
 import * as UserController from '../controllers/user.controller';
 import { isAuthenticated } from '../middleware/isAuthenticated';
+import { requireStepUp } from '../middleware/requireStepUp';
 
 const router = Router();
+
+/**
+ * ===============
+ * STEP-UP RE-AUTHENTICATION
+ * ===============
+ */
+// POST /account/step-up (verify password or emailed code)
+router.post('/account/step-up', isAuthenticated, UserController.verifyStepUp);
+// POST /account/step-up/code (send a code to the account email; passwordless accounts only)
+router.post(
+  '/account/step-up/code',
+  isAuthenticated,
+  UserController.initiateStepUpCode
+);
 
 /**
  * ===============
@@ -24,7 +39,12 @@ router.get('/verify', UserController.verifyEmail);
  * ===============
  */
 // POST /account/api-keys
-router.post('/account/api-keys', isAuthenticated, UserController.createApiKey);
+router.post(
+  '/account/api-keys',
+  isAuthenticated,
+  requireStepUp,
+  UserController.createApiKey
+);
 // DELETE /account/api-keys/:keyId
 router.delete(
   '/account/api-keys/:keyId',
@@ -46,9 +66,19 @@ router.post('/reset-password/:token', UserController.updatePassword);
 // PUT /account (updating username, email or password while logged in)
 router.put('/account', isAuthenticated, UserController.updateSettings);
 // DELETE /auth/github
-router.delete('/auth/github', UserController.unlinkGithub);
+router.delete(
+  '/auth/github',
+  isAuthenticated,
+  requireStepUp,
+  UserController.unlinkGithub
+);
 // DELETE /auth/google
-router.delete('/auth/google', UserController.unlinkGoogle);
+router.delete(
+  '/auth/google',
+  isAuthenticated,
+  requireStepUp,
+  UserController.unlinkGoogle
+);
 
 /**
  * ===============

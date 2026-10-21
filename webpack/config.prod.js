@@ -7,8 +7,10 @@ const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 const postcssPresetEnv = require('postcss-preset-env');
 const postcssFocus = require('postcss-focus');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const loadEnv = require('../loadEnv');
+
 if (process.env.NODE_ENV === 'development') {
-  require('dotenv').config();
+  loadEnv();
 }
 
 module.exports = {

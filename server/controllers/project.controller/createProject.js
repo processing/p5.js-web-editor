@@ -4,26 +4,33 @@ import {
   FileValidationError,
   ProjectValidationError
 } from '../../domain-objects/Project';
+import {
+  commitPendingAssets,
+  rewritePendingFileUrls
+} from '../../utils/pendingAssets';
 
-export default function createProject(req, res) {
-  const projectValues = Object.assign({}, req.body, { user: req.user._id });
+export default async function createProject(req, res) {
+  try {
+    const projectValues = Object.assign({}, req.body, { user: req.user._id });
 
-  function sendFailure(err) {
-    res.status(400).json({ success: false });
-  }
+    if (projectValues.files) {
+      await commitPendingAssets(req.user.id, projectValues.files);
+      projectValues.files = rewritePendingFileUrls(
+        projectValues.files,
+        req.user.id
+      );
+    }
 
-  function populateUserData(newProject) {
-    return Project.populate(newProject, {
+    const newProject = await Project.create(projectValues);
+    const newProjectWithUser = await Project.populate(newProject, {
       path: 'user',
       select: 'username'
-    }).then((newProjectWithUser) => {
-      res.json(newProjectWithUser);
     });
-  }
 
-  return Project.create(projectValues)
-    .then(populateUserData)
-    .catch(sendFailure);
+    res.json(newProjectWithUser);
+  } catch (err) {
+    res.status(400).json({ success: false });
+  }
 }
 
 // TODO: What happens if you don't supply any files?
@@ -86,7 +93,13 @@ export async function apiCreateProject(req, res) {
       throw error;
     }
 
+    if (model.files) {
+      await commitPendingAssets(req.user.id, model.files);
+      model.files = rewritePendingFileUrls(model.files, req.user.id);
+    }
+
     const newProject = await model.save();
+
     res.status(201).json({ id: newProject.id });
   } catch (err) {
     handleErrors(err);

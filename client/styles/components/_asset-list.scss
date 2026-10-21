@@ -16,6 +16,11 @@
     width: #{math.div(60, $base-font-size)}rem;
     position: relative;
   }
+  & .asset-table__size-column {
+    white-space: nowrap;
+    width: #{math.div(100, $base-font-size)}rem;
+    padding-right: #{math.div(12, $base-font-size)}rem;
+  }
 }
 
 .asset-table thead th {
@@ -50,6 +55,7 @@
 .asset-table__row a {
   @include themify() {
     color: getThemifyVariable('primary-text-color');
+    text-decoration: underline;
   }
 }
 
@@ -77,4 +83,8 @@
   @include themify() {
     background-color: getThemifyVariable('background-color');
   }
+}
+
+.asset-table__row a:hover {
+  text-decoration-thickness: 0.1em;
 }

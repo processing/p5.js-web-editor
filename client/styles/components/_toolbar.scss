@@ -156,7 +156,7 @@
 }
 
 .toolbar__project-owner {
-	margin: 0; 
+	margin: 0 #{math.div(5, $base-font-size)}rem;
 	@include themify() {
 		color: getThemifyVariable('secondary-text-color');
 	}

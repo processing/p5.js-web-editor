@@ -1,0 +1,32 @@
+name: Weekly release reminder
+
+on:
+  # Tuesdays 15:30 UTC
+  schedule:
+    - cron: "30 15 * * 2"
+  workflow_dispatch: {}
+
+permissions:
+  issues: write
+
+jobs:
+  remind:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Open release reminder issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `Weekly release - ${new Date().toISOString().slice(0, 10)}`,
+              body: [
+                "1. Decide on any remaining PRs to merge into `develop`. Check the [Approved Candidates for Release](https://github.com/processing/p5.js-web-editor/pulls?q=is%3Apr+is%3Aopen+review%3Aapproved)",
+                "2. Review what's merged into `develop` since the last release.",
+                "3. Decide the version bump (patch/minor/major).",
+                "4. Run the [Create a release](../actions/workflows/release.yml) workflow with that version.",
+                "",
+                "No release needed this week? Just close this issue."
+              ].join("\n")
+            });

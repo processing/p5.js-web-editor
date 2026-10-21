@@ -1,9 +1,11 @@
+/* global Express */
 import passport from 'passport';
+import { RequestHandler } from 'express';
 
 import { userResponse } from './user.controller';
 
-export function createSession(req, res, next) {
-  passport.authenticate('local', (err, user) => {
+export const createSession: RequestHandler = (req, res, next) => {
+  passport.authenticate('local', (err: Error, user: Express.User) => {
     if (err) {
       next(err);
       return;
@@ -13,17 +15,17 @@ export function createSession(req, res, next) {
       return;
     }
 
-    req.logIn(user, (innerErr) => {
+    req.logIn(user, (innerErr: Error) => {
       if (innerErr) {
         next(innerErr);
         return;
       }
-      res.json(userResponse(req.user));
+      res.json(userResponse(req.user as Express.User));
     });
   })(req, res, next);
-}
+};
 
-export function getSession(req, res) {
+export const getSession: RequestHandler = (req, res) => {
   if (!req.user) {
     return res.status(200).send({ user: null });
   }
@@ -32,15 +34,15 @@ export function getSession(req, res) {
   }
 
   return res.json(userResponse(req.user));
-}
+};
 
-export function destroySession(req, res, next) {
-  req.logout((err) => {
+export const destroySession: RequestHandler = (req, res, next) => {
+  req.logout((err: Error) => {
     if (err) {
       next(err);
       return;
     }
-    req.session.destroy((error) => {
+    (req as any).session.destroy((error: Error) => {
       if (error) {
         next(error);
         return;
@@ -48,4 +50,4 @@ export function destroySession(req, res, next) {
       res.json({ success: true });
     });
   });
-}
+};

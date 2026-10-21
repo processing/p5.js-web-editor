@@ -2,6 +2,7 @@
   "files": [],
   "references": [
     { "path": "./client" },
-    { "path": "./server" }
+    { "path": "./server" },
+    { "path": "./e2e" }
   ],
 }
