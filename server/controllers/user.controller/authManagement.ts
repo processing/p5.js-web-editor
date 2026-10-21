@@ -229,10 +229,12 @@ export const updateSettings: RequestHandler<
       user.verifiedTokenExpires = Date.now() + 3600000 * 24; // 24 hours
 
       const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
+      const requestOrigin = `${protocol}://${req.headers.host}`;
       verificationMail = renderEmailConfirmation({
         body: {
-          domain: `${protocol}://${req.headers.host}`,
-          link: `${protocol}://${req.headers.host}/verify?t=${token}`
+          // Logo must be loaded by email clients from a public origin.
+          domain: process.env.EDITOR_URL || requestOrigin,
+          link: `${requestOrigin}/verify?t=${token}`
         },
         to: user.email
       });
