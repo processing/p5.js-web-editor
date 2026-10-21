@@ -96,6 +96,10 @@ test.describe.serial('sketch lifecycle', () => {
     await editor().click();
     await page.keyboard.press('ControlOrMeta+A');
     await page.keyboard.type(updatedCode, { delay: 5 });
+    // Wait for the unsaved changes indicator to appear, then save the sketch.
+    await expect(
+      page.getByRole('img', { name: 'Sketch has unsaved changes' })
+    ).toBeVisible();
     await page.keyboard.press('Control+S');
     await expect(page.getByText('Sketch saved.')).toBeVisible({
       timeout: 10_000
@@ -121,6 +125,11 @@ test.describe.serial('sketch lifecycle', () => {
       .locator('table.sketches-table')
       .getByText('renamed-sketch')
       .click();
+
+    // Confirm the reopened sketch has actually loaded before playing it
+    await expect(
+      page.locator('button.editable-input__label')
+    ).toContainText('renamed-sketch', { timeout: 10_000 });
 
     // Run the renamed sketch and verify the edited code persisted
     await page.locator('#play-sketch').click({ force: true });
