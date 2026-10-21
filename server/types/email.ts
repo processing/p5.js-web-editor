@@ -38,6 +38,22 @@ export interface ConfirmEmailEmailOptions {
   };
   to: string;
 }
+/** Options to generate the step-up verification code email */
+export interface StepUpCodeEmailOptions {
+  body: {
+    domain: string;
+    code: string;
+  };
+  to: string;
+}
+/** Options to generate the notice sent to the old address after an email change */
+export interface EmailChangedNoticeEmailOptions {
+  body: {
+    domain: string;
+    newEmail: string;
+  };
+  to: string;
+}
 
 // -------- EMAIL RENDERING TEMPLATES --------
 /** Base template for emails */
@@ -66,6 +82,15 @@ export interface AccountConsolidationEmailTemplate extends BaseEmailTemplate {
   resetPasswordLink: string;
   resetPasswordText: string;
 }
+/** Template for an email without any action link, optionally highlighting a short text (e.g. a code) */
+export interface NoticeEmailTemplate
+  extends Omit<BaseEmailTemplate, 'directLinkText'> {
+  highlightText?: string;
+}
+/** Template for rendering the step-up verification code email */
+export type StepUpCodeEmailTemplate = NoticeEmailTemplate;
+/** Template for rendering the email changed notice */
+export type EmailChangedNoticeEmailTemplate = NoticeEmailTemplate;
 /** Template for rendering the confirm email email */
 export type ConfirmEmailEmailTemplate = EmailWithPrimaryButtonTemplate;
 /** Template for rendering the reset password email */
