@@ -7,6 +7,7 @@ import isAfter from 'date-fns/isAfter';
 import axios from 'axios';
 import slugify from 'slugify';
 import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3';
+import safeProjectFileFetch from '../utils/safeProjectFileFetch';
 import Project from '../models/project';
 import { User } from '../models/user';
 import { resolvePathToFile } from '../utils/filePath';
@@ -171,9 +172,7 @@ export async function getProjectAsset(req, res) {
   }
 
   try {
-    const { data } = await axios.get(resolvedFile.url, {
-      responseType: 'arraybuffer'
-    });
+    const data = await safeProjectFileFetch(resolvedFile.url);
     res.set('Content-Type', contentType);
     return res.send(data);
   } catch (error) {
