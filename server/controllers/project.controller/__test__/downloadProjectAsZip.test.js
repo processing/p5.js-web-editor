@@ -115,7 +115,7 @@ describe('downloadProjectAsZip', () => {
     );
   });
 
-  it('returns an error response before ZIP headers when a URL fetch is blocked', async () => {
+  it('adds an empty placeholder when the safe fetcher blocks an asset', async () => {
     const project = makeProject('http://127.0.0.1/private.png');
     Project.findById = jest.fn().mockReturnValue({
       exec: jest.fn().mockResolvedValue(project)
@@ -124,25 +124,21 @@ describe('downloadProjectAsZip', () => {
       new Error('Project file host is not public')
     );
     const response = new TestResponse();
-    const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const finished = new Promise((resolve) => response.on('finish', resolve));
 
     await downloadProjectAsZip(
       { params: { project_id: 'project-123' } },
       response
     );
+    await finished;
 
     expect(safeProjectFileFetch).toHaveBeenCalledWith(
       'http://127.0.0.1/private.png'
     );
-    expect(response.statusCode).toBe(500);
-    expect(response.headersSent).toBe(false);
-    expect(response.body).toEqual({
-      success: false,
-      message: 'Failed to generate zip file. Please try again.'
-    });
-    expect(response.chunks).toHaveLength(0);
-    expect(errorSpy).toHaveBeenCalledWith('Error building zip file');
-    errorSpy.mockRestore();
+    expect(response.statusCode).toBe(200);
+    expect(response.headersSent).toBe(true);
+    const archive = await JSZip.loadAsync(Buffer.concat(response.chunks));
+    expect(await archive.file('image.png').async('nodebuffer')).toHaveLength(0);
   });
 
   it('reads a valid application S3 asset from the configured bucket and owner prefix', async () => {
@@ -193,12 +189,13 @@ describe('downloadProjectAsZip', () => {
     });
     safeProjectFileFetch.mockResolvedValue(Buffer.from('library bytes'));
     const response = new TestResponse();
-    const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const finished = new Promise((resolve) => response.on('finish', resolve));
 
     await downloadProjectAsZip(
       { params: { project_id: 'project-123' } },
       response
     );
+    await finished;
 
     expect(S3Client.mockSend).not.toHaveBeenCalled();
     expect(safeProjectFileFetch).toHaveBeenCalledTimes(1);
@@ -208,8 +205,8 @@ describe('downloadProjectAsZip', () => {
     expect(safeProjectFileFetch).not.toHaveBeenCalledWith(
       'https://attacker-bucket.s3.us-west-2.amazonaws.com/owner-123/image.png'
     );
-    expect(response.statusCode).toBe(500);
-    expect(response.headersSent).toBe(false);
-    errorSpy.mockRestore();
+    expect(response.statusCode).toBe(200);
+    const archive = await JSZip.loadAsync(Buffer.concat(response.chunks));
+    expect(await archive.file('image.png').async('nodebuffer')).toHaveLength(0);
   });
 });

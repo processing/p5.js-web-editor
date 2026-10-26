@@ -311,7 +311,7 @@ async function addFileToZip(file, files, zip, userId, downloadedBytes) {
       }
     } catch (e) {
       console.warn('Failed to fetch project file');
-      throw e;
+      zip.file(file.name, Buffer.alloc(0));
     }
   } else {
     zip.file(file.name, file.content);
