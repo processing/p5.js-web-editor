@@ -36,7 +36,6 @@ const s3Client = new S3Client({
   },
   region: process.env.AWS_REGION
 });
-const MAX_REMOTE_ZIP_BYTES = Number(process.env.UPLOAD_LIMIT) || 250000000;
 
 export {
   default as createProject,
@@ -283,30 +282,22 @@ async function getStreamFromS3Url(url, userId) {
  * @param {JSZip} zip
  * @return {Promise<void>}
  */
-async function addFileToZip(file, files, zip, userId, downloadedBytes) {
+async function addFileToZip(file, files, zip, userId) {
   if (file.fileType === 'folder') {
     const folderZip = file.name === 'root' ? zip : zip.folder(file.name);
     await file.children.reduce(async (previousPromise, fileId) => {
       await previousPromise;
       const childFile = files.find((f) => f.id === fileId);
-      return addFileToZip(childFile, files, folderZip, userId, downloadedBytes);
+      return addFileToZip(childFile, files, folderZip, userId);
     }, Promise.resolve());
   } else if (file.url) {
     try {
       if (hasConfiguredS3Origin(file.url)) {
         const data = await getStreamFromS3Url(file.url, userId);
-        downloadedBytes.total += data.length;
-        if (downloadedBytes.total > MAX_REMOTE_ZIP_BYTES) {
-          throw new Error('Project ZIP assets exceed the size limit');
-        }
         zip.file(file.name, data, { binary: true });
       } else {
         if (isS3Url(file.url)) throw new Error('Unsupported project asset URL');
         const data = await safeProjectFileFetch(file.url);
-        downloadedBytes.total += data.length;
-        if (downloadedBytes.total > MAX_REMOTE_ZIP_BYTES) {
-          throw new Error('Project ZIP assets exceed the size limit');
-        }
         zip.file(file.name, data, { binary: true });
       }
     } catch (e) {
@@ -334,7 +325,7 @@ async function buildZip(project, res) {
     }
 
     bundleExternalLibs(project);
-    await addFileToZip(root, files, zip, project.user.toString(), { total: 0 });
+    await addFileToZip(root, files, zip, project.user.toString());
     res.writeHead(200, {
       'Content-Type': 'application/zip',
       'Content-disposition': `attachment; filename=${zipFileName}`,
