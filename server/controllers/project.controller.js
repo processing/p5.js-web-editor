@@ -1,5 +1,7 @@
 import JSZip from 'jszip';
 import format from 'date-fns/format';
+import isUrl from 'is-url';
+import { JSDOM } from 'jsdom';
 import mime from 'mime';
 import isAfter from 'date-fns/isAfter';
 import slugify from 'slugify';
@@ -235,6 +237,38 @@ export async function getProjectForUser(username, projectId) {
     : { exists: false };
 }
 
+/**
+ * @param {object} project
+ */
+function bundleExternalLibs(project) {
+  const indexHtml = project.files.find((file) => file.name === 'index.html');
+  if (!indexHtml || !indexHtml.content) {
+    return;
+  }
+
+  const { window } = new JSDOM(indexHtml.content);
+  const scriptTags = window.document.getElementsByTagName('script');
+
+  Object.values(scriptTags).forEach(({ src }) => {
+    if (!isUrl(src)) return;
+
+    const path = src.split('/');
+    const filename = path[path.length - 1];
+
+    if (project.files.some((f) => f.name === filename && f.url === src)) {
+      return;
+    }
+
+    project.files.push({
+      name: filename,
+      url: src
+    });
+
+    const libId = project.files.find((file) => file.name === filename).id;
+    project.files.find((file) => file.name === 'root').children.push(libId);
+  });
+}
+
 async function getStreamFromS3Url(url, userId) {
   const { bucket, key } = parseS3ProjectAssetUrl(url, userId);
   return readBoundedS3Object(
@@ -299,6 +333,7 @@ async function buildZip(project, res) {
       throw new Error('Project has no root folder');
     }
 
+    bundleExternalLibs(project);
     await addFileToZip(root, files, zip, project.user.toString(), { total: 0 });
     res.writeHead(200, {
       'Content-Type': 'application/zip',

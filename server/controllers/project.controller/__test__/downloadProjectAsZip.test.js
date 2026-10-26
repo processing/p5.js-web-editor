@@ -79,7 +79,7 @@ describe('downloadProjectAsZip', () => {
 
   afterEach(() => jest.restoreAllMocks());
 
-  it('uses the safe fetcher and keeps external script references only in index.html', async () => {
+  it('uses the safe fetcher for assets and bundles external scripts', async () => {
     const project = makeProject('https://assets.example.test/image.png');
     Project.findById = jest.fn().mockReturnValue({
       exec: jest.fn().mockResolvedValue(project)
@@ -94,16 +94,22 @@ describe('downloadProjectAsZip', () => {
     );
     await finished;
 
-    expect(safeProjectFileFetch).toHaveBeenCalledTimes(1);
+    expect(safeProjectFileFetch).toHaveBeenCalledTimes(2);
     expect(safeProjectFileFetch).toHaveBeenCalledWith(
       'https://assets.example.test/image.png'
+    );
+    expect(safeProjectFileFetch).toHaveBeenCalledWith(
+      'https://cdn.example.test/library.js'
     );
     expect(response.statusCode).toBe(200);
     const archive = await JSZip.loadAsync(Buffer.concat(response.chunks));
     expect(Object.keys(archive.files)).toEqual(
       expect.arrayContaining(['index.html', 'image.png'])
     );
-    expect(archive.file('library.js')).toBeNull();
+    expect(archive.file('library.js')).not.toBeNull();
+    expect(await archive.file('library.js').async('string')).toBe(
+      'image bytes'
+    );
     expect(await archive.file('index.html').async('string')).toBe(
       '<html><script src="https://cdn.example.test/library.js"></script></html>'
     );
@@ -146,6 +152,7 @@ describe('downloadProjectAsZip', () => {
     Project.findById = jest.fn().mockReturnValue({
       exec: jest.fn().mockResolvedValue(project)
     });
+    safeProjectFileFetch.mockResolvedValue(Buffer.from('library bytes'));
     S3Client.mockSend.mockResolvedValue({
       ContentLength: 8,
       Body: Readable.from([Buffer.from('s3 bytes')])
@@ -164,9 +171,17 @@ describe('downloadProjectAsZip', () => {
       Key: 'owner-123/image.png'
     });
     expect(S3Client.mockSend).toHaveBeenCalledTimes(1);
-    expect(safeProjectFileFetch).not.toHaveBeenCalled();
+    expect(safeProjectFileFetch).toHaveBeenCalledWith(
+      'https://cdn.example.test/library.js'
+    );
+    expect(safeProjectFileFetch).not.toHaveBeenCalledWith(
+      'https://s3-us-west-2.amazonaws.com/project-assets/owner-123/image.png'
+    );
     const archive = await JSZip.loadAsync(Buffer.concat(response.chunks));
     expect(await archive.file('image.png').async('string')).toBe('s3 bytes');
+    expect(await archive.file('library.js').async('string')).toBe(
+      'library bytes'
+    );
   });
 
   it('rejects an arbitrary S3 bucket instead of using SDK credentials or HTTP fetch', async () => {
@@ -176,6 +191,7 @@ describe('downloadProjectAsZip', () => {
     Project.findById = jest.fn().mockReturnValue({
       exec: jest.fn().mockResolvedValue(project)
     });
+    safeProjectFileFetch.mockResolvedValue(Buffer.from('library bytes'));
     const response = new TestResponse();
     const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
 
@@ -185,7 +201,13 @@ describe('downloadProjectAsZip', () => {
     );
 
     expect(S3Client.mockSend).not.toHaveBeenCalled();
-    expect(safeProjectFileFetch).not.toHaveBeenCalled();
+    expect(safeProjectFileFetch).toHaveBeenCalledTimes(1);
+    expect(safeProjectFileFetch).toHaveBeenCalledWith(
+      'https://cdn.example.test/library.js'
+    );
+    expect(safeProjectFileFetch).not.toHaveBeenCalledWith(
+      'https://attacker-bucket.s3.us-west-2.amazonaws.com/owner-123/image.png'
+    );
     expect(response.statusCode).toBe(500);
     expect(response.headersSent).toBe(false);
     errorSpy.mockRestore();
