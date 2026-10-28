@@ -51,6 +51,12 @@ window.loopProtect = {
     }
 
     return true;
+  },
+  reset: function resetLoopTimer(loopObj, val) {
+    if (loopObj) {
+      loopObj.t = Date.now();
+    }
+    return val;
   }
 };
 
