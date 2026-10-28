@@ -7,6 +7,11 @@ on:
       - develop
       - release
 
+# Cancel superseded PR runs; let develop/release runs finish since they trigger deploys
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   test:
     name: Test and lint code base
