@@ -8,7 +8,7 @@ on:
       - completed
 # Run production deploys one at a time
 concurrency:
-  group: deploy-production
+  group: deploy-production-${{ github.event.workflow_run.conclusion }}
   cancel-in-progress: false
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
