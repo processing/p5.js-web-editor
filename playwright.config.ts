@@ -48,7 +48,7 @@ export default defineConfig({
       name: 'app (e2e env)',
       command: 'npm run start:e2e',
       url: EDITOR_URL,
-      /** CI > e2e.yml starts up the e2e app server separately for more logging */
+      /** CI (test.yml, test-e2e job) starts up the e2e app server separately for more logging */
       reuseExistingServer: true,
       /** stream the app server's startup logs into the terminal running Playwright */
       stdout: 'pipe',
@@ -61,7 +61,7 @@ export default defineConfig({
        * Local mail catcher for signup/verification emails. Requires the
        * binary locally (e.g. `winget install axllent.mailpit` / `brew
        * install mailpit`); on CI an already-running service container is
-       * reused instead (see e2e.yml).
+       * reused instead (see the test-e2e job in test.yml).
        */
       name: 'Mailpit',
       command: `mailpit --smtp localhost:${mailpitSmtpPort()} --listen localhost:${mailpitUiPort()}`,
