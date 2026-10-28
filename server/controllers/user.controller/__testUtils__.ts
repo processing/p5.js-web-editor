@@ -35,7 +35,8 @@ export const mockBaseUserSanitised: PublicUser = {
   totalSize: 42,
   cookieConsent: CookieConsentOptions.NONE,
   google: 'user@gmail.com',
-  github: 'user123'
+  github: 'user123',
+  hasPassword: true
 };
 
 /** Mock full user for testing. createdAt is omitted to simplify jest timers where possible */

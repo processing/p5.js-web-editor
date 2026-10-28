@@ -1,8 +1,27 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import passport from 'passport';
 import { UserDocument } from '../types';
+import { hasRecentStepUp } from '../middleware/requireStepUp';
 
 const router = Router();
+
+/**
+ * Visiting /auth/github or /auth/google while logged in links the OAuth
+ * account to the current user, which is a sensitive action: without this
+ * check, anyone holding a stolen session could attach their own OAuth
+ * account and keep access permanently. Plain sign-in (no session) stays open.
+ */
+const requireStepUpForLinking = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  if (req.user && !hasRecentStepUp(req)) {
+    res.redirect('/account?error=stepUpRequired');
+    return;
+  }
+  next();
+};
 
 const authenticateOAuth = (service: string) => (
   req: Request,
@@ -35,10 +54,18 @@ const authenticateOAuth = (service: string) => (
   )(req, res, next);
 };
 
-router.get('/auth/github', passport.authenticate('github'));
+router.get(
+  '/auth/github',
+  requireStepUpForLinking,
+  passport.authenticate('github')
+);
 router.get('/auth/github/callback', authenticateOAuth('github'));
 
-router.get('/auth/google', passport.authenticate('google'));
+router.get(
+  '/auth/google',
+  requireStepUpForLinking,
+  passport.authenticate('google')
+);
 router.get('/auth/google/callback', authenticateOAuth('google'));
 
 // eslint-disable-next-line import/no-default-export
