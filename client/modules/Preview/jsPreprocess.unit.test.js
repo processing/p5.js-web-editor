@@ -1,3 +1,4 @@
+import * as acorn from 'acorn';
 import { jsPreprocess } from './jsPreprocess';
 
 describe('jsPreprocess', () => {
@@ -146,6 +147,124 @@ describe('jsPreprocess', () => {
       `;
       const result = jsPreprocess(code, '');
       expect(result).toContain('window.loopProtect.hit');
+    });
+  });
+
+  describe('line numbers', () => {
+    const lineOf = (text, marker) =>
+      text.split('\n').findIndex((line) => line.includes(marker)) + 1;
+
+    it('keeps a runtime error on the line where it was written (#4356)', () => {
+      const code = [
+        'function setup() {',
+        '  createCanvas(200, 200);',
+        '  background(220);',
+        '',
+        ...Array.from({ length: 10 }, (_, i) => `  // padding ${i + 1}`),
+        '',
+        '',
+        '  let x = 0;',
+        '  for (let i = 0; i < 1; i++) {',
+        '    x += 1;',
+        '  }',
+        '',
+        '',
+        '  // deliberate error below',
+        '',
+        '  definitelyNotAFunction();',
+        '}'
+      ].join('\n');
+      expect(lineOf(code, 'definitelyNotAFunction')).toBe(25);
+
+      const result = jsPreprocess(code, '');
+
+      expect(result).toContain('window.loopProtect.hit(18)');
+      expect(lineOf(result, 'definitelyNotAFunction')).toBe(25);
+    });
+
+    it('only changes the lines that contain a loop', () => {
+      const code = `// comment
+let x = 0;
+/* block comment
+   over two lines */
+
+for (let i = 0; i < 2; i++) {
+  // nested loop
+  for (let j = 0; j < 2; j++) {
+    x += i * j;
+  }
+}
+for (let i = 0; i < 2; i++) x++;
+while (x > 100) x--; do { x++; } while (x < 5);
+if (x > 0) {
+  while (x > 10) x--;
+} else {
+  do x++; while (x < 0);
+}
+if (x < 0) for (;;) x++; else while (x < 0) x++;
+outer: for (let i = 0; i < 2; i++) {
+  for (let j = 0; j < 2; j++) {
+    if (j) continue outer;
+  }
+}
+
+definitelyNotAFunction();`;
+
+      const result = jsPreprocess(code, '');
+
+      expect(() =>
+        acorn.parse(result, { ecmaVersion: 'latest' })
+      ).not.toThrow();
+      expect(result.match(/window\.loopProtect\.hit/g)).toHaveLength(11);
+      const codeLines = code.split('\n');
+      const resultLines = result.split('\n');
+      expect(resultLines).toHaveLength(codeLines.length);
+      const changed = codeLines
+        .map((line, i) => (line === resultLines[i] ? null : i + 1))
+        .filter(Boolean);
+      expect(changed).toEqual([6, 8, 12, 13, 15, 17, 19, 20, 21]);
+    });
+
+    it('inserts each guard at its own loop when edits share an offset', () => {
+      const timer = (n) => `var _LP${n} = Date.now(); `;
+      const check = (n, line) =>
+        `if (Date.now() - _LP${n} > 100) { window.loopProtect.hit(${line}); break; }`;
+      const code = 'while (a) a--;while (b) {while (c) {}}\nwhile (d) d--;';
+
+      expect(jsPreprocess(code, '')).toBe(
+        `${timer(0)}while (a) { ${check(0, 1)} a--; }` +
+          `${timer(2)}while (b) { ${check(2, 1)}` +
+          `${timer(1)}while (c) { ${check(1, 1)}}}\n` +
+          `${timer(3)}while (d) { ${check(3, 2)} d--; }`
+      );
+    });
+
+    it('still stops infinite loops and reports their original line', () => {
+      const run = (code) => {
+        const hits = [];
+        const window = { loopProtect: { hit: (line) => hits.push(line) } };
+        // eslint-disable-next-line no-new-func
+        const result = new Function('window', `${code}\nreturn result;`)(
+          window
+        );
+        return { result, hits };
+      };
+
+      const finite = jsPreprocess(
+        `let result = 0;
+for (let i = 0; i < 3; i++) {
+  for (let j = 0; j < 3; j++) result++;
+}
+do result++; while (result < 12);`,
+        ''
+      );
+      expect(run(finite)).toEqual({ result: 12, hits: [] });
+
+      const infinite = jsPreprocess(
+        '// comment\n\nlet result = "stopped";\nwhile (true) {}',
+        ''
+      );
+      expect(run(infinite)).toEqual({ result: 'stopped', hits: [4] });
     });
   });
 });

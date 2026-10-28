@@ -1,6 +1,5 @@
 import * as acorn from 'acorn';
 import * as walk from 'acorn-walk';
-import escodegen from 'escodegen';
 import { hasNoProtect } from '../IDE/utils/loopProtection';
 
 const LOOP_TIMEOUT_MS = 100;
@@ -31,81 +30,11 @@ function collectShaderFunctionNames(ast) {
 }
 
 function makeVarDecl(varName) {
-  return {
-    type: 'VariableDeclaration',
-    kind: 'var',
-    declarations: [
-      {
-        type: 'VariableDeclarator',
-        id: { type: 'Identifier', name: varName },
-        init: {
-          type: 'CallExpression',
-          callee: {
-            type: 'MemberExpression',
-            object: { type: 'Identifier', name: 'Date' },
-            property: { type: 'Identifier', name: 'now' },
-            computed: false
-          },
-          arguments: []
-        }
-      }
-    ]
-  };
+  return `var ${varName} = Date.now(); `;
 }
 
 function makeCheckStatement(varName, line) {
-  return {
-    type: 'IfStatement',
-    test: {
-      type: 'BinaryExpression',
-      operator: '>',
-      left: {
-        type: 'BinaryExpression',
-        operator: '-',
-        left: {
-          type: 'CallExpression',
-          callee: {
-            type: 'MemberExpression',
-            object: { type: 'Identifier', name: 'Date' },
-            property: { type: 'Identifier', name: 'now' },
-            computed: false
-          },
-          arguments: []
-        },
-        right: { type: 'Identifier', name: varName }
-      },
-      right: {
-        type: 'Literal',
-        value: LOOP_TIMEOUT_MS,
-        raw: String(LOOP_TIMEOUT_MS)
-      }
-    },
-    consequent: {
-      type: 'BlockStatement',
-      body: [
-        {
-          type: 'ExpressionStatement',
-          expression: {
-            type: 'CallExpression',
-            callee: {
-              type: 'MemberExpression',
-              object: {
-                type: 'MemberExpression',
-                object: { type: 'Identifier', name: 'window' },
-                property: { type: 'Identifier', name: 'loopProtect' },
-                computed: false
-              },
-              property: { type: 'Identifier', name: 'hit' },
-              computed: false
-            },
-            arguments: [{ type: 'Literal', value: line, raw: String(line) }]
-          }
-        },
-        { type: 'BreakStatement', label: null }
-      ]
-    },
-    alternate: null
-  };
+  return `if (Date.now() - ${varName} > ${LOOP_TIMEOUT_MS}) { window.loopProtect.hit(${line}); break; }`;
 }
 
 function collectLoopsToProtect(ast, shaderNames) {
@@ -167,26 +96,34 @@ function collectLoopsToProtect(ast, shaderNames) {
   return loops;
 }
 
-function injectProtection(loops) {
+// Insert protection without changing the original line layout.
+function injectProtection(jsText, loops) {
+  const edits = [];
+
   loops.forEach(({ loop, parentBlock }, idx) => {
     const varName = `_LP${idx}`;
     const { line } = loop.loc.start;
     const check = makeCheckStatement(varName, line);
 
     if (loop.body.type === 'BlockStatement') {
-      loop.body.body.unshift(check);
+      edits.push({ pos: loop.body.start + 1, rank: 1, text: ` ${check}` });
     } else {
-      loop.body = { type: 'BlockStatement', body: [check, loop.body] };
+      edits.push({ pos: loop.body.start, rank: 1, text: `{ ${check} ` });
+      edits.push({ pos: loop.body.end, rank: 0, text: ' }' });
     }
 
-    if (parentBlock) {
-      const varDecl = makeVarDecl(varName);
-      const nodeIdx = parentBlock.body.indexOf(loop);
-      if (nodeIdx !== -1) {
-        parentBlock.body.splice(nodeIdx, 0, varDecl);
-      }
+    if (parentBlock && parentBlock.body.includes(loop)) {
+      edits.push({ pos: loop.start, rank: 2, text: makeVarDecl(varName) });
     }
   });
+
+  // Apply edits from the end so earlier offsets remain valid.
+  edits.sort((a, b) => b.pos - a.pos || b.rank - a.rank);
+
+  return edits.reduce(
+    (result, { pos, text }) => result.slice(0, pos) + text + result.slice(pos),
+    jsText
+  );
 }
 
 function parseJs(jsText) {
@@ -215,7 +152,5 @@ export function jsPreprocess(jsText, indexSrc) {
 
   if (loops.length === 0) return jsText;
 
-  injectProtection(loops);
-
-  return escodegen.generate(ast);
+  return injectProtection(jsText, loops);
 }
