@@ -61,7 +61,6 @@ export function renderIndex() {
           process.env.TRANSLATIONS_ENABLED === 'true'
         }; 
         window.process.env.PREVIEW_URL = '${process.env.PREVIEW_URL}';
-        window.process.env.GA_MEASUREMENT_ID='${process.env.GA_MEASUREMENT_ID}';
       </script>
     </head>
     <body>
@@ -138,7 +137,6 @@ export function renderProjectIndex(username: string, projectName: string) {
           process.env.TRANSLATIONS_ENABLED === 'true'
         }; 
         window.process.env.PREVIEW_URL = '${process.env.PREVIEW_URL}';
-        window.process.env.GA_MEASUREMENT_ID='${process.env.GA_MEASUREMENT_ID}';
       </script>
     </head>
     <body>

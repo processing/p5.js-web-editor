@@ -1,41 +1,41 @@
 import PropTypes from 'prop-types';
-import React, { useRef, useEffect, useState } from 'react';
-import CodeMirror from 'codemirror';
+import React, { useRef, useEffect } from 'react';
+import { EditorState } from '@codemirror/state';
+import { EditorView, highlightSpecialChars, keymap } from '@codemirror/view';
+import { bracketMatching, syntaxHighlighting } from '@codemirror/language';
+import { closeBrackets, closeBracketsKeymap } from '@codemirror/autocomplete';
+import { defaultKeymap, history, historyKeymap } from '@codemirror/commands';
+import { javascript } from '@codemirror/lang-javascript';
+
 import { useDispatch } from 'react-redux';
 import { Encode } from 'console-feed';
 
 import RightArrowIcon from '../../../images/right-arrow.svg';
 import { dispatchConsoleEvent } from '../actions/console';
 import { dispatchMessage, MessageTypes } from '../../../utils/dispatcher';
+import { highlightStyle } from './Editor/utils/highlightStyle';
 
 // heavily inspired by
 // https://github.com/codesandbox/codesandbox-client/blob/92a1131f4ded6f7d9c16945dc7c18aa97c8ada27/packages/app/src/app/components/Preview/DevTools/Console/Input/index.tsx
 
+// TODO(connie): Add theme support?
 function ConsoleInput({ theme, fontSize }) {
-  const [commandHistory, setCommandHistory] = useState([]);
-  const [commandCursor, setCommandCursor] = useState(-1);
+  const commandHistory = useRef([]);
+  const commandCursor = useRef(-1);
   const codemirrorContainer = useRef(null);
-  const cmInstance = useRef(null);
+  const cmView = useRef(null);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    cmInstance.current = CodeMirror(codemirrorContainer.current, {
-      theme: `p5-${theme}`,
-      scrollbarStyle: null,
-      keymap: 'sublime',
-      mode: 'javascript',
-      inputStyle: 'contenteditable'
-    });
-  }, []);
-
-  useEffect(() => {
-    const handleEnterKey = (cm, e) => {
-      if (e.key === 'Enter' && !e.shiftKey) {
-        e.preventDefault();
-        e.stopPropagation();
-
-        const value = cm.getValue().trim();
-        if (value === '') return;
+    const enterKeymap = {
+      key: 'Enter',
+      shiftKey: () => false, // Treat like a normal Enter key press if the Shift key is held down.
+      preventDefault: true,
+      stopPropogation: true,
+      run: (view) => {
+        const value = view.state.doc.toString().trim();
+        if (value === '' || view.state.selection.main.empty === false)
+          return false;
 
         const messages = [
           { log: Encode({ method: 'command', data: [value] }) }
@@ -48,77 +48,91 @@ function ConsoleInput({ theme, fontSize }) {
         });
 
         dispatch(dispatchConsoleEvent(consoleEvent));
-        cm.setValue('');
-        setCommandHistory([value, ...commandHistory]);
-        setCommandCursor(-1);
+        view.dispatch({
+          changes: { from: 0, to: view.state.doc.length, insert: '' }
+        });
+        commandHistory.current.unshift(value);
+        commandCursor.current = -1;
+        return true;
       }
     };
 
-    if (cmInstance.current) {
-      cmInstance.current.on('keydown', handleEnterKey);
-    }
-
-    return () => {
-      if (cmInstance.current) {
-        cmInstance.current.off('keydown', handleEnterKey);
-      }
-    };
-  }, [commandHistory]);
-
-  useEffect(() => {
-    const handleUpArrowKey = (cm, e) => {
-      if (e.key === 'ArrowUp') {
-        const lineNumber = cm.getDoc().getCursor().line;
-        if (lineNumber !== 0) return;
+    const upArrowKeymap = {
+      key: 'ArrowUp',
+      run: (view) => {
+        // Just let the cursor go up if we have a multiline input
+        // and the cursor isn't at the first line.
+        const currentLine = view.state.doc.lineAt(
+          view.state.selection.main.head
+        ).number;
+        // CM lines are 1-indexed, so the first line is 1.
+        if (currentLine > 1) return false;
 
         const newCursor = Math.min(
-          commandCursor + 1,
-          commandHistory.length - 1
+          commandCursor.current + 1,
+          commandHistory.current.length - 1
         );
-        cm.setValue(commandHistory[newCursor] || '');
-        const cursorPos = cm.getDoc().getLine(0).length - 1;
-        cm.getDoc().setCursor({ line: 0, ch: cursorPos });
-        setCommandCursor(newCursor);
+        const newValue = commandHistory.current[newCursor] || '';
+        view.dispatch({
+          changes: { from: 0, to: view.state.doc.length, insert: newValue }
+        });
+        const newCursorPos = newValue.length;
+        view.dispatch({
+          selection: { anchor: newCursorPos, head: newCursorPos }
+        });
+        commandCursor.current = newCursor;
+        return true;
       }
     };
 
-    if (cmInstance.current) {
-      cmInstance.current.on('keydown', handleUpArrowKey);
-    }
+    const downArrowKeymap = {
+      key: 'ArrowDown',
+      run: (view) => {
+        // Just let the cursor go down if we have a multiline input
+        // and the cursor isn't at the last line.
+        const currentLine = view.state.doc.lineAt(
+          view.state.selection.main.head
+        ).number;
+        const docLength = view.state.doc.lines;
+        if (currentLine !== docLength) return false;
 
-    return () => {
-      if (cmInstance.current) {
-        cmInstance.current.off('keydown', handleUpArrowKey);
+        const newCursor = Math.max(commandCursor.current - 1, -1);
+        const newValue = commandHistory.current[newCursor] || '';
+        view.dispatch({
+          changes: { from: 0, to: view.state.doc.length, insert: newValue }
+        });
+        const newCursorPos = newValue.length;
+        view.dispatch({
+          selection: { anchor: newCursorPos, head: newCursorPos }
+        });
+        commandCursor.current = newCursor;
+        return true;
       }
     };
-  }, [commandCursor, commandHistory]);
 
-  useEffect(() => {
-    const handleArrowDownKey = (cm, e) => {
-      if (e.key === 'ArrowDown') {
-        const lineNumber = cm.getDoc().getCursor().line;
-        const lineCount = cm.lineCount();
-        if (lineNumber + 1 !== lineCount) return;
-
-        const newCursor = Math.max(commandCursor - 1, -1);
-        cm.setValue(commandHistory[newCursor] || '');
-        const newLine = cm.getDoc().getLine(lineCount - 1);
-        const cursorPos = newLine ? newLine.length - 1 : 1;
-        cm.getDoc().setCursor({ line: lineCount - 1, ch: cursorPos });
-        setCommandCursor(newCursor);
-      }
-    };
-
-    if (cmInstance.current) {
-      cmInstance.current.on('keydown', handleArrowDownKey);
-    }
-
-    return () => {
-      if (cmInstance.current) {
-        cmInstance.current.off('keydown', handleArrowDownKey);
-      }
-    };
-  }, [commandCursor, commandHistory]);
+    const cmState = EditorState.create({
+      extensions: [
+        history(),
+        highlightSpecialChars(),
+        bracketMatching(),
+        closeBrackets(),
+        syntaxHighlighting(highlightStyle),
+        javascript(),
+        keymap.of([
+          enterKeymap,
+          upArrowKeymap,
+          downArrowKeymap,
+          ...defaultKeymap,
+          ...closeBracketsKeymap,
+          ...historyKeymap
+        ])
+      ]
+    });
+    cmView.current = new EditorView({
+      state: cmState,
+      parent: codemirrorContainer.current
+    });
+  }, []);
 
   return (
     <div className="console__input">

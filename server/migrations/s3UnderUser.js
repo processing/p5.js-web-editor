@@ -4,17 +4,14 @@ import {
   CopyObjectCommand,
   HeadObjectCommand
 } from '@aws-sdk/client-s3';
-import path from 'path';
 import mongoose from 'mongoose';
 import { User } from '../models/user';
 import Project from '../models/project';
 import async from 'async';
-import dotenv from 'dotenv';
-
-dotenv.config({ path: path.resolve('.env') });
+require('../../loadEnv')();
 
 async function main() {
-  mongoose.connect('mongodb://localhost:27017/p5js-web-editor');
+  mongoose.connect(process.env.MONGO_URL);
   mongoose.connection.on('error', () => {
     console.error(
       'MongoDB Connection Error. Please make sure that MongoDB is running.'

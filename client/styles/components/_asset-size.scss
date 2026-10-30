@@ -20,6 +20,7 @@
 
   @include themify() {
     background-color: getThemifyVariable('progress-bar-background-color');
+    border-color: getThemifyVariable('progress-bar-border-color');
   }
 }
 

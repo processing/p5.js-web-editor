@@ -48,7 +48,7 @@
     }
   },
   "Banner": {
-    "Copy": "<bold>Donate Today!</bold> Support p5.js and the Processing Foundation."
+    "Copy": "<bold>p5.js v2 is now the default</bold>. If you teach with p5, check out this essential guide!"
   },
   "CodemirrorFindAndReplace": {
     "ToggleReplace": "Değiştirme Aç/Kapa",
@@ -618,7 +618,6 @@
   "Cookies": {
     "Header": "Çerezler",
     "Body": "p5.js Editörü çerezleri kullanır. Bazıları web sitesi işlevselliği için önemlidir ve hesabınızı ve tercihlerinizi yönetmenize olanak tanır. Diğerleri önemli değildir - analiz için kullanılırlar ve topluluğumuz hakkında daha fazla bilgi edinmemizi sağlarlar. <strong> Bu verileri asla satmıyoruz veya reklam için kullanmıyoruz. </strong> Hangi çerezlere izin vermek istediğinize karar verebilirsiniz ve <0>Gizlilik Politikamızda<0> daha fazla bilgi edinebilirsiniz.",
-    "AllowAll": "Tümüne İzin Ver",
     "AllowEssential": "Önemli Olanlara İzin Ver"
   },
   "Legal": {

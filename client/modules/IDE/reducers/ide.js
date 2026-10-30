@@ -22,7 +22,6 @@ const initialState = {
   justOpenedProject: false,
   previousPath: '/',
   errorType: undefined,
-  runtimeErrorWarningVisible: false,
   parentId: undefined
 };
 
@@ -111,10 +110,6 @@ const ide = (state = initialState, action) => {
       return Object.assign({}, state, { errorType: action.modalType });
     case ActionTypes.HIDE_ERROR_MODAL:
       return Object.assign({}, state, { errorType: undefined });
-    case ActionTypes.HIDE_RUNTIME_ERROR_WARNING:
-      return Object.assign({}, state, { runtimeErrorWarningVisible: false });
-    case ActionTypes.SHOW_RUNTIME_ERROR_WARNING:
-      return Object.assign({}, state, { runtimeErrorWarningVisible: true });
     case ActionTypes.OPEN_UPLOAD_FILE_MODAL:
       return Object.assign({}, state, {
         uploadFileModalVisible: true,

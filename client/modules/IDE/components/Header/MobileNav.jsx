@@ -33,6 +33,7 @@ import { availableLanguages, languageKeyToLabel } from '../../../../i18n';
 import { showToast } from '../../actions/toast';
 import { setLanguage } from '../../actions/preferences';
 import { Overlay } from '../../../App/components/Overlay';
+import packageData from '../../../../../package.json';
 import ProjectName from './ProjectName';
 import CollectionCreate from '../../../User/components/CollectionCreate';
 
@@ -427,7 +428,7 @@ const MoreMenu = () => {
           <MobileMenuItem onClick={cmRef.current?.tidyCode}>
             {t('Nav.Edit.TidyCode')}
           </MobileMenuItem>
-          <MobileMenuItem onClick={cmRef.current?.showFind}>
+          <MobileMenuItem onClick={cmRef.current?.showSearch}>
             {t('Nav.Edit.Find')}
           </MobileMenuItem>
           <b>{t('Nav.Sketch.Title')}</b>
@@ -456,6 +457,11 @@ const MoreMenu = () => {
             {t('Nav.Help.Reference')}
           </MobileMenuItem>
           <MobileMenuItem href="/about">{t('About.Title')}</MobileMenuItem>
+          <MobileMenuItem
+            href={`https://github.com/processing/p5.js-web-editor/releases/tag/v${packageData.version}`}
+          >
+            {t('Nav.Help.WebEditorVersion', { version: packageData.version })}
+          </MobileMenuItem>
         </ParentMenuContext.Provider>
       </ul>
     </div>

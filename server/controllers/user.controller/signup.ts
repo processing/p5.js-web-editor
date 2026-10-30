@@ -199,6 +199,13 @@ export const verifyEmail: RequestHandler<{}, {}, {}, VerifyEmailQuery> = async (
   res
 ) => {
   const token = req.query.t;
+  if (typeof token !== 'string') {
+    res.status(400).json({
+      error: 'Missing or invalid verification token.'
+    });
+    return;
+  }
+
   const user = await User.findOne({
     verifiedToken: token,
     verifiedTokenExpires: { $gt: new Date() }
