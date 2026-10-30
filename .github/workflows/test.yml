@@ -33,7 +33,6 @@ jobs:
     # Only after unit tests pass, and only for PRs into develop or release
     needs: test
     if: ${{ github.event_name == 'pull_request' && contains(fromJSON('["develop", "release"]'), github.base_ref) }}
-    environment: e2e-tests
     timeout-minutes: 60
     runs-on: ubuntu-latest
 
