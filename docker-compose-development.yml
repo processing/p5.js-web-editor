@@ -10,6 +10,7 @@ services:
       target: development
     environment:
       - MONGO_URL=mongodb://mongo:27017/p5js-web-editor
+      - MAILPIT_SMTP_HOST=mailpit
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
@@ -18,5 +19,10 @@ services:
       - '8002:8002'
     depends_on:
       - mongo
+      - mailpit
+  mailpit:
+    image: axllent/mailpit
+    ports:
+      - '8025:8025'
 volumes:
   dbdata:

@@ -4,6 +4,8 @@ import { RenderedMailerData } from '../types/email';
 
 // When EMAIL_TRANSPORT=smtp, emails are sent over plain SMTP (e.g. to a local
 // mail catcher like Mailpit during e2e tests) instead of Mailgun.
+// MAILPIT_SMTP_HOST defaults to localhost; set it to the Mailpit hostname
+// when the server runs in Docker while Mailpit runs in another container.
 const useSmtpTransport = process.env.EMAIL_TRANSPORT === 'smtp';
 
 function createTransport(): nodemailer.Transporter {
@@ -19,7 +21,7 @@ function createTransport(): nodemailer.Transporter {
     }
 
     return nodemailer.createTransport({
-      host: 'localhost',
+      host: process.env.MAILPIT_SMTP_HOST || 'localhost',
       port: Number(MAILPIT_SMTP_PORT),
       secure: false
     });
