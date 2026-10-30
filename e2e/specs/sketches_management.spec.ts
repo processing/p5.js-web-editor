@@ -2,6 +2,7 @@ import type { Page } from '@playwright/test';
 import { test, expect } from '../fixtures';
 import { dismissCookieBanner } from '../helpers/cookie-banner';
 import { createTestUser, loginAs, TestUser } from '../helpers/auth';
+import { waitForPreviewReady } from '../helpers/preview';
 
 test.describe.serial('sketch lifecycle', () => {
   let testUser: TestUser;
@@ -48,10 +49,8 @@ test.describe.serial('sketch lifecycle', () => {
     await page.keyboard.press('ControlOrMeta+A');
     await page.keyboard.type(initialCode, { delay: 5 });
 
+    await waitForPreviewReady(page);
     await page.locator('#play-sketch').click({ force: true });
-    await expect(
-      page.locator('iframe[title="sketch preview"]')
-    ).toHaveAttribute('src', /9002/, { timeout: 10_000 });
     await expect(
       page.locator('.preview-console__messages')
     ).toContainText('initial log', { timeout: 10_000 });
@@ -132,10 +131,8 @@ test.describe.serial('sketch lifecycle', () => {
     ).toContainText('renamed-sketch', { timeout: 10_000 });
 
     // Run the renamed sketch and verify the edited code persisted
+    await waitForPreviewReady(page);
     await page.locator('#play-sketch').click({ force: true });
-    await expect(
-      page.locator('iframe[title="sketch preview"]')
-    ).toHaveAttribute('src', /9002/, { timeout: 10_000 });
     await expect(
       page.locator('.preview-console__messages')
     ).toContainText('updated log', { timeout: 10_000 });

@@ -2,6 +2,7 @@ import { test, expect } from '../fixtures';
 import { dismissCookieBanner } from '../helpers/cookie-banner';
 import { usernamePrefix, emailSuffix, password } from '../helpers/test-user';
 import { getVerificationLink } from '../helpers/email';
+import { waitForPreviewReady } from '../helpers/preview';
 
 test.describe('signup and email verification', () => {
   test('can sign up and verify email via the emailed link', async ({
@@ -141,11 +142,8 @@ test.describe('signup and email verification', () => {
     // but never writes it. Without this wait the sketch is lost on signup.
     await page.waitForTimeout(1000);
 
+    await waitForPreviewReady(page);
     await page.locator('#play-sketch').click({ force: true });
-
-    await expect(
-      page.locator('iframe[title="sketch preview"]')
-    ).toHaveAttribute('src', /9002/, { timeout: 10_000 });
 
     await expect(
       page.locator('.preview-console__messages')
@@ -196,11 +194,8 @@ test.describe('signup and email verification', () => {
     ).toContainText("console.log('hi from sketch')", { timeout: 10_000 });
 
     // ...and still runs as the now-authenticated user
+    await waitForPreviewReady(page);
     await page.locator('#play-sketch').click({ force: true });
-
-    await expect(
-      page.locator('iframe[title="sketch preview"]')
-    ).toHaveAttribute('src', /9002/, { timeout: 10_000 });
 
     await expect(
       page.locator('.preview-console__messages')
