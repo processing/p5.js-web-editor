@@ -1,6 +1,7 @@
 import { renderMjml } from '../utils/renderMjml';
 import { mailLayout } from './mailLayout';
 import { consolidationMailLayout } from './consolidationMailLayout';
+import { noticeMailLayout } from './noticeMailLayout';
 import {
   AccountConsolidationEmailOptions,
   AccountConsolidationEmailTemplate,
@@ -8,8 +9,19 @@ import {
   ResetPasswordEmailTemplate,
   ConfirmEmailEmailOptions,
   ConfirmEmailEmailTemplate,
+  StepUpCodeEmailOptions,
+  StepUpCodeEmailTemplate,
+  EmailChangedNoticeEmailOptions,
+  EmailChangedNoticeEmailTemplate,
   RenderedMailerData
 } from '../types/email';
+
+const mailMeta = {
+  keywords: 'p5.js, p5.js web editor, web editor, processing, code editor',
+  description:
+    'A web editor for p5.js, a JavaScript library with the goal' +
+    ' of making coding accessible to artists, designers, educators, and beginners.'
+};
 
 export const renderAccountConsolidation = (
   data: AccountConsolidationEmailOptions
@@ -81,6 +93,46 @@ export const renderResetPassword = (
   const html = renderMjml(template);
 
   // Return options to send mail
+  return Object.assign({}, data, { html, subject });
+};
+
+export const renderStepUpCode = (
+  data: StepUpCodeEmailOptions
+): RenderedMailerData => {
+  const subject = 'p5.js Web Editor Verification Code';
+  const templateOptions: StepUpCodeEmailTemplate = {
+    domain: data.body.domain,
+    headingText: 'Your verification code',
+    greetingText: 'Hello,',
+    messageText:
+      'Use the following code to confirm the changes to your p5.js Web Editor account:',
+    highlightText: data.body.code,
+    noteText:
+      'This code will expire in 10 minutes. If you did not request it, please ignore this email and consider reviewing your account. Thanks for using the p5.js Web Editor!', // eslint-disable-line max-len
+    meta: mailMeta
+  };
+
+  const template = noticeMailLayout(templateOptions);
+  const html = renderMjml(template);
+  return Object.assign({}, data, { html, subject });
+};
+
+export const renderEmailChangedNotice = (
+  data: EmailChangedNoticeEmailOptions
+): RenderedMailerData => {
+  const subject = 'p5.js Web Editor Account Email Changed';
+  const templateOptions: EmailChangedNoticeEmailTemplate = {
+    domain: data.body.domain,
+    headingText: 'Your account email was changed',
+    greetingText: 'Hello,',
+    messageText: `The email address on your p5.js Web Editor account was changed to ${data.body.newEmail}. This address will no longer receive messages about the account.`, // eslint-disable-line max-len
+    noteText:
+      'If you did not make this change, please contact privacy@p5js.org immediately.',
+    meta: mailMeta
+  };
+
+  const template = noticeMailLayout(templateOptions);
+  const html = renderMjml(template);
   return Object.assign({}, data, { html, subject });
 };
 

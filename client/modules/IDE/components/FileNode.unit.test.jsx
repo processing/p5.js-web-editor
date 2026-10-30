@@ -33,7 +33,7 @@ describe('<FileNode />', () => {
     const props = {
       ...extraProps,
       id: '0',
-      name: fileType === 'folder' ? 'afolder' : 'test.jsx',
+      name: fileType === 'folder' ? 'afolder' : 'test.js',
       fileType,
       canEdit: true,
       children: [],
@@ -48,7 +48,8 @@ describe('<FileNode />', () => {
       showFolderChildren: jest.fn(),
       hideFolderChildren: jest.fn(),
       openUploadFileModal: jest.fn(),
-      setProjectName: jest.fn()
+      setProjectName: jest.fn(),
+      showToast: jest.fn()
     };
 
     const mockFiles = [
@@ -100,7 +101,7 @@ describe('<FileNode />', () => {
     });
 
     it('can change to a valid filename', async () => {
-      const newName = 'newname.jsx';
+      const newName = 'newname.js';
       const props = renderFileNode('file');
 
       changeName(newName);
@@ -125,7 +126,7 @@ describe('<FileNode />', () => {
       const mockConfirm = jest.fn(() => true);
       window.confirm = mockConfirm;
 
-      const newName = 'newname.gif';
+      const newName = 'newname.json';
       const props = renderFileNode('file');
 
       changeName(newName);
@@ -137,8 +138,19 @@ describe('<FileNode />', () => {
       await expectFileNameToBe(props.name);
     });
 
+    it('cannot change to an invalid extension', async () => {
+      const newName = 'newname.obj';
+      const props = renderFileNode('file');
+
+      changeName(newName);
+
+      await waitFor(() => expect(props.updateFileName).not.toHaveBeenCalled());
+      expect(props.showToast).toHaveBeenCalled();
+      await expectFileNameToBe(props.name);
+    });
+
     it('cannot be just an extension', async () => {
-      const newName = '.jsx';
+      const newName = '.js';
       const props = renderFileNode('file');
 
       changeName(newName);
@@ -171,7 +183,7 @@ describe('<FileNode />', () => {
     });
 
     it('cannot have a file extension', async () => {
-      const newName = 'foldername.jsx';
+      const newName = 'foldername.js';
       const props = renderFileNode('folder');
 
       changeName(newName);

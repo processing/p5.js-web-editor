@@ -47,6 +47,11 @@ describe('user.controller > auth management > updateSettings (email, username, p
     email: OLD_EMAIL
   };
 
+  /** Marks the current session as recently stepped-up (POST /account/step-up) */
+  const givenRecentStepUp = () => {
+    (request as any).session = { stepUpAt: fixedTime };
+  };
+
   beforeAll(() => {
     jest.useFakeTimers().setSystemTime(fixedTime);
   });
@@ -66,7 +71,9 @@ describe('user.controller > auth management > updateSettings (email, username, p
         email: OLD_EMAIL,
         password: OLD_PASSWORD,
         id: '123459',
-        comparePassword: jest.fn().mockResolvedValue(true)
+        sessionVersion: 0,
+        comparePassword: jest.fn().mockResolvedValue(true),
+        save: jest.fn().mockResolvedValue(null)
       },
       false
     ) as UserDocument;
@@ -81,6 +88,10 @@ describe('user.controller > auth management > updateSettings (email, username, p
 
     request.user = createMockUser({ id: 'valid-id' });
     request.headers.host = 'localhost:3000';
+    (request as any).session = {};
+    (request as any).logIn = jest.fn(
+      (_user: unknown, cb: (err?: unknown) => void) => cb()
+    );
   });
 
   afterEach(() => {
@@ -111,6 +122,7 @@ describe('user.controller > auth management > updateSettings (email, username, p
 
     it('does not save the user', () => {
       expect(saveUser).not.toHaveBeenCalled();
+      expect(testUser.save).not.toHaveBeenCalled();
     });
   });
 
@@ -132,6 +144,9 @@ describe('user.controller > auth management > updateSettings (email, username, p
         });
         it('does not send a confirmation email to the user', () => {
           expect(mailerService.send).not.toHaveBeenCalled();
+        });
+        it('does not revoke other sessions', () => {
+          expect(testUser.sessionVersion).toBe(0);
         });
       });
 
@@ -156,10 +171,15 @@ describe('user.controller > auth management > updateSettings (email, username, p
         it('does not send a confirmation email to the user', () => {
           expect(mailerService.send).not.toHaveBeenCalled();
         });
+        it('does not require a step-up or current password', () => {
+          expect(response.status).not.toHaveBeenCalledWith(403);
+          expect(testUser.comparePassword).not.toHaveBeenCalled();
+        });
       });
 
-      describe('when given old username and new email', () => {
+      describe('when given old username and new email, after a recent step-up', () => {
         beforeEach(async () => {
+          givenRecentStepUp();
           requestBody = { ...minimumValidRequest, email: NEW_EMAIL };
           request.setBody(requestBody);
           await updateSettings(
@@ -169,27 +189,64 @@ describe('user.controller > auth management > updateSettings (email, username, p
           );
         });
         it('saves the user with the correct details & verification token once', () => {
-          expect(saveUser).toHaveBeenCalledWith(response, {
-            ...startingUser,
+          expect(testUser.save).toHaveBeenCalledTimes(1);
+          expect(testUser).toMatchObject({
             email: NEW_EMAIL,
             verified: STATUSES.Sent,
             verifiedToken: GENERATED_TOKEN,
             verifiedTokenExpires: TOKEN_EXPIRY_TIME
           });
-          expect(saveUser).toHaveBeenCalledTimes(1);
         });
-        it('sends a confirmation email to the user', () => {
+        it('responds with the sanitised user', () => {
+          expect(response.json).toHaveBeenCalledWith(
+            expect.objectContaining({ email: NEW_EMAIL, hasPassword: true })
+          );
+        });
+        it('revokes other sessions and keeps the current one', () => {
+          expect(testUser.sessionVersion).toBe(1);
+          expect((request as any).logIn).toHaveBeenCalled();
+        });
+        it('sends a confirmation email to the new address and a notice to the old one', () => {
           expect(mailerService.send).toHaveBeenCalledWith(
             expect.objectContaining({
               subject: 'Mock confirm your email'
             })
           );
+          expect(mailerService.send).toHaveBeenCalledWith(
+            expect.objectContaining({
+              subject: 'Mock email changed notice'
+            })
+          );
         });
       });
 
-      describe('when given new username and new email', () => {
+      describe('when the email changes while a reset token is outstanding', () => {
         beforeEach(async () => {
-          requestBody = { username: NEW_USERNAME, email: NEW_EMAIL };
+          testUser.resetPasswordToken = 'old-reset-token';
+          testUser.resetPasswordExpires = fixedTime + 3600000;
+          givenRecentStepUp();
+          requestBody = { ...minimumValidRequest, email: NEW_EMAIL };
+          request.setBody(requestBody);
+          await updateSettings(
+            (request as unknown) as Request,
+            (response as unknown) as Response,
+            next
+          );
+        });
+        it('invalidates the reset token issued for the previous address', () => {
+          expect(testUser.resetPasswordToken).toBeUndefined();
+          expect(testUser.resetPasswordExpires).toBeUndefined();
+          expect(testUser.save).toHaveBeenCalledTimes(1);
+        });
+      });
+
+      describe('when given new username and new email with a valid current password', () => {
+        beforeEach(async () => {
+          requestBody = {
+            username: NEW_USERNAME,
+            email: NEW_EMAIL,
+            currentPassword: OLD_PASSWORD
+          };
           request.setBody(requestBody);
           await updateSettings(
             (request as unknown) as Request,
@@ -198,15 +255,14 @@ describe('user.controller > auth management > updateSettings (email, username, p
           );
         });
         it('saves the user with the correct details once', () => {
-          expect(saveUser).toHaveBeenCalledWith(response, {
-            ...startingUser,
+          expect(testUser.save).toHaveBeenCalledTimes(1);
+          expect(testUser).toMatchObject({
             username: NEW_USERNAME,
             email: NEW_EMAIL,
             verified: STATUSES.Sent,
             verifiedToken: GENERATED_TOKEN,
             verifiedTokenExpires: TOKEN_EXPIRY_TIME
           });
-          expect(saveUser).toHaveBeenCalledTimes(1);
         });
         it('sends a confirmation email to the user', () => {
           expect(mailerService.send).toHaveBeenCalledWith(
@@ -231,12 +287,13 @@ describe('user.controller > auth management > updateSettings (email, username, p
             next
           );
         });
-        it('saves the user with the correct details once', () => {
-          expect(saveUser).toHaveBeenCalledWith(response, {
-            ...startingUser,
-            password: NEW_PASSWORD
-          });
-          expect(saveUser).toHaveBeenCalledTimes(1);
+        it('saves the user with the new password once', () => {
+          expect(testUser.save).toHaveBeenCalledTimes(1);
+          expect(testUser.password).toBe(NEW_PASSWORD);
+        });
+        it('revokes other sessions and keeps the current one', () => {
+          expect(testUser.sessionVersion).toBe(1);
+          expect((request as any).logIn).toHaveBeenCalled();
         });
         it('does not send a confirmation email to the user', () => {
           expect(mailerService.send).not.toHaveBeenCalled();
@@ -259,24 +316,23 @@ describe('user.controller > auth management > updateSettings (email, username, p
           );
         });
         it('saves the user with the correct details once', () => {
-          expect(saveUser).toHaveBeenCalledWith(response, {
-            ...startingUser,
+          expect(testUser.save).toHaveBeenCalledTimes(1);
+          expect(testUser).toMatchObject({
             username: NEW_USERNAME,
             password: NEW_PASSWORD
           });
-          expect(saveUser).toHaveBeenCalledTimes(1);
         });
         it('does not send a confirmation email to the user', () => {
           expect(mailerService.send).not.toHaveBeenCalled();
         });
       });
 
-      describe.skip('when given old username, new email, and new password with valid current password', () => {
+      describe('when a user without a password sets a first password after a recent step-up', () => {
         beforeEach(async () => {
+          testUser.password = undefined;
+          givenRecentStepUp();
           requestBody = {
             ...minimumValidRequest,
-            email: NEW_EMAIL,
-            currentPassword: OLD_PASSWORD,
             newPassword: NEW_PASSWORD
           };
           request.setBody(requestBody);
@@ -286,147 +342,18 @@ describe('user.controller > auth management > updateSettings (email, username, p
             next
           );
         });
-        it('saves the user with the correct details once', () => {
-          expect(saveUser).toHaveBeenCalledWith(response, {
-            ...startingUser,
-            email: NEW_EMAIL,
-            verified: STATUSES.Sent,
-            verifiedToken: GENERATED_TOKEN,
-            verifiedTokenExpires: TOKEN_EXPIRY_TIME,
-            password: NEW_PASSWORD
-          });
-          expect(saveUser).toHaveBeenCalledTimes(1);
+        it('saves the user with the new password once', () => {
+          expect(testUser.save).toHaveBeenCalledTimes(1);
+          expect(testUser.password).toBe(NEW_PASSWORD);
         });
-        it('sends a confirmation email to the user', () => {
-          expect(mailerService.send).toHaveBeenCalledWith(
-            expect.objectContaining({
-              subject: 'Mock confirm your email'
-            })
-          );
-        });
-      });
-
-      describe.skip('when given new username, new email, and new password with valid current password', () => {
-        beforeEach(async () => {
-          requestBody = {
-            username: NEW_USERNAME,
-            email: NEW_EMAIL,
-            currentPassword: OLD_PASSWORD,
-            newPassword: NEW_PASSWORD
-          };
-          request.setBody(requestBody);
-          await updateSettings(
-            (request as unknown) as Request,
-            (response as unknown) as Response,
-            next
-          );
-        });
-        it('saves the user with the correct details once', () => {
-          expect(saveUser).toHaveBeenCalledWith(response, {
-            ...startingUser,
-            username: NEW_USERNAME,
-            email: NEW_EMAIL,
-            verified: STATUSES.Sent,
-            verifiedToken: GENERATED_TOKEN,
-            verifiedTokenExpires: TOKEN_EXPIRY_TIME,
-            password: NEW_PASSWORD
-          });
-          expect(saveUser).toHaveBeenCalledTimes(1);
-        });
-        it('sends a confirmation email to the user', () => {
-          expect(mailerService.send).toHaveBeenCalledWith(
-            expect.objectContaining({
-              subject: 'Mock confirm your email'
-            })
-          );
+        it('revokes other sessions', () => {
+          expect(testUser.sessionVersion).toBe(1);
         });
       });
     });
 
     describe('unhappy paths', () => {
-      // Client-side checks to require username
-      describe.skip('when missing username', () => {
-        beforeEach(async () => {
-          request.setBody({ email: OLD_EMAIL });
-          await updateSettings(
-            (request as unknown) as Request,
-            (response as unknown) as Response,
-            next
-          );
-        });
-
-        it('returns 401 with an "Missing username" message', () => {
-          expect(response.status).toHaveBeenCalledWith(400);
-          expect(response.json).toHaveBeenCalledWith({
-            error: 'Username is required.'
-          });
-        });
-
-        it('does not save the user with the new password', () => {
-          expect(saveUser).not.toHaveBeenCalled();
-        });
-        it('does not send a confirmation email to the user', () => {
-          expect(mailerService.send).not.toHaveBeenCalled();
-        });
-      });
-
-      // Client-side checks to require email
-      describe.skip('when missing email', () => {
-        beforeEach(async () => {
-          request.setBody({ username: OLD_USERNAME });
-          await updateSettings(
-            (request as unknown) as Request,
-            (response as unknown) as Response,
-            next
-          );
-        });
-
-        it('returns 401 with an "Missing email" message', () => {
-          expect(response.status).toHaveBeenCalledWith(401);
-          expect(response.json).toHaveBeenCalledWith({
-            error: 'Email is required.'
-          });
-        });
-
-        it('does not save the user with the new password', () => {
-          expect(saveUser).not.toHaveBeenCalled();
-        });
-        it('does not send a confirmation email to the user', () => {
-          expect(mailerService.send).not.toHaveBeenCalled();
-        });
-      });
-
-      // Client-side checks to require new password if current password is provided
-      describe.skip('when given old username, old email, and matching current password and no new password', () => {
-        beforeEach(async () => {
-          requestBody = {
-            ...minimumValidRequest,
-            currentPassword: OLD_PASSWORD
-          };
-          request.setBody(requestBody);
-          await updateSettings(
-            (request as unknown) as Request,
-            (response as unknown) as Response,
-            next
-          );
-        });
-
-        it('returns 401 with an "New password is required" message', () => {
-          expect(response.status).toHaveBeenCalledWith(401);
-          expect(response.json).toHaveBeenCalledWith({
-            error: 'New password is required.'
-          });
-        });
-
-        it('does not save the user with the new password', () => {
-          expect(saveUser).not.toHaveBeenCalled();
-        });
-        it('does not send a confirmation email to the user', () => {
-          expect(mailerService.send).not.toHaveBeenCalled();
-        });
-      });
-
-      describe('when given old username, old email, and non-matching current password and no new password', () => {
+      describe('when given old username, old email, and non-matching current password and a new password', () => {
         beforeEach(async () => {
           testUser.comparePassword = jest.fn().mockResolvedValue(false);
 
@@ -452,20 +379,22 @@ describe('user.controller > auth management > updateSettings (email, username, p
 
         it('does not save the user with the new password', () => {
           expect(saveUser).not.toHaveBeenCalled();
+          expect(testUser.save).not.toHaveBeenCalled();
+          expect(testUser.password).toBe(OLD_PASSWORD);
         });
         it('does not send a confirmation email to the user', () => {
           expect(mailerService.send).not.toHaveBeenCalled();
         });
       });
 
-      describe('when given old username, old email, and non-matching current password and a new password', () => {
+      describe('when given a new email with a non-matching current password', () => {
         beforeEach(async () => {
           testUser.comparePassword = jest.fn().mockResolvedValue(false);
 
           requestBody = {
             ...minimumValidRequest,
-            currentPassword: 'not the same password',
-            newPassword: NEW_PASSWORD
+            email: NEW_EMAIL,
+            currentPassword: 'not the same password'
           };
           request.setBody(requestBody);
           await updateSettings(
@@ -475,22 +404,21 @@ describe('user.controller > auth management > updateSettings (email, username, p
           );
         });
 
-        it('returns 401 with an error message', () => {
+        it('returns 401 with an "Current password is invalid" message', () => {
           expect(response.status).toHaveBeenCalledWith(401);
           expect(response.json).toHaveBeenCalledWith({
             error: 'Current password is invalid.'
           });
         });
 
-        it('does not save the user with the new password', () => {
+        it('does not change the email', () => {
           expect(saveUser).not.toHaveBeenCalled();
-        });
-        it('does not send a confirmation email to the user', () => {
-          expect(mailerService.send).not.toHaveBeenCalled();
+          expect(testUser.save).not.toHaveBeenCalled();
+          expect(testUser.email).toBe(OLD_EMAIL);
         });
       });
 
-      describe('when given old username, old email, and no current password and a new password', () => {
+      describe('when given a new password with no current password and no recent step-up', () => {
         beforeEach(async () => {
           requestBody = {
             ...minimumValidRequest,
@@ -504,18 +432,102 @@ describe('user.controller > auth management > updateSettings (email, username, p
           );
         });
 
-        it('returns 401 with an error message', () => {
-          expect(response.status).toHaveBeenCalledWith(401);
+        it('returns 403 requiring a step-up', () => {
+          expect(response.status).toHaveBeenCalledWith(403);
           expect(response.json).toHaveBeenCalledWith({
-            error: 'Current password is not provided.'
+            error: 'step_up_required'
           });
         });
 
         it('does not save the user with the new password', () => {
           expect(saveUser).not.toHaveBeenCalled();
+          expect(testUser.save).not.toHaveBeenCalled();
+          expect(testUser.password).toBe(OLD_PASSWORD);
         });
         it('does not send a confirmation email to the user', () => {
           expect(mailerService.send).not.toHaveBeenCalled();
+        });
+      });
+
+      describe('when given a new email with no current password and no recent step-up', () => {
+        beforeEach(async () => {
+          requestBody = { ...minimumValidRequest, email: NEW_EMAIL };
+          request.setBody(requestBody);
+          await updateSettings(
+            (request as unknown) as Request,
+            (response as unknown) as Response,
+            next
+          );
+        });
+
+        it('returns 403 requiring a step-up', () => {
+          expect(response.status).toHaveBeenCalledWith(403);
+          expect(response.json).toHaveBeenCalledWith({
+            error: 'step_up_required'
+          });
+        });
+
+        it('does not change the email and sends no email', () => {
+          expect(saveUser).not.toHaveBeenCalled();
+          expect(testUser.save).not.toHaveBeenCalled();
+          expect(testUser.email).toBe(OLD_EMAIL);
+          expect(mailerService.send).not.toHaveBeenCalled();
+        });
+      });
+
+      describe('when a user without a password requests changes without a recent step-up', () => {
+        beforeEach(async () => {
+          testUser.password = undefined;
+          requestBody = {
+            ...minimumValidRequest,
+            email: NEW_EMAIL,
+            // currentPassword cannot substitute for step-up without a password
+            currentPassword: 'anything',
+            newPassword: NEW_PASSWORD
+          };
+          request.setBody(requestBody);
+          await updateSettings(
+            (request as unknown) as Request,
+            (response as unknown) as Response,
+            next
+          );
+        });
+
+        it('returns 403 requiring a step-up', () => {
+          expect(response.status).toHaveBeenCalledWith(403);
+          expect(response.json).toHaveBeenCalledWith({
+            error: 'step_up_required'
+          });
+        });
+
+        it('does not save anything', () => {
+          expect(saveUser).not.toHaveBeenCalled();
+          expect(testUser.save).not.toHaveBeenCalled();
+          expect(testUser.password).toBeUndefined();
+          expect(testUser.email).toBe(OLD_EMAIL);
+        });
+      });
+
+      describe('when the step-up is stale', () => {
+        beforeEach(async () => {
+          // 10-minute window elapsed
+          (request as any).session = {
+            stepUpAt: fixedTime - 10 * 60 * 1000
+          };
+          requestBody = { ...minimumValidRequest, email: NEW_EMAIL };
+          request.setBody(requestBody);
+          await updateSettings(
+            (request as unknown) as Request,
+            (response as unknown) as Response,
+            next
+          );
+        });
+
+        it('returns 403 requiring a step-up', () => {
+          expect(response.status).toHaveBeenCalledWith(403);
+          expect(response.json).toHaveBeenCalledWith({
+            error: 'step_up_required'
+          });
         });
       });
     });
