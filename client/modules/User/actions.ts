@@ -4,6 +4,7 @@ import type { ThunkDispatch } from 'redux-thunk';
 import * as ActionTypes from '../../constants';
 import browserHistory from '../../browserHistory';
 import { apiClient } from '../../utils/apiClient';
+import { isStepUpRequiredError, requestStepUp } from './stepUp';
 import { showErrorModal, justOpenedProject } from '../IDE/actions/ide';
 import { setLanguage } from '../IDE/actions/preferences';
 import { showToast, setToastText } from '../IDE/actions/toast';
@@ -414,33 +415,64 @@ export function updateSettings(formValues: Partial<UpdateSettingsRequestBody>) {
         resolve();
         return;
       }
-      submitSettings(formValues as UpdateSettingsRequestBody)
-        .then((response) => {
-          dispatch(updateSettingsSuccess(response.data));
-          dispatch(showToast(5500));
-          dispatch(setToastText('Toast.SettingsSaved'));
-          resolve();
-        })
-        .catch((error) => {
-          if (error.response) {
-            switch (error.response.status) {
-              case 401:
-                dispatch(showToast(5500));
-                dispatch(setToastText('Toast.IncorrectCurrentPass'));
-                break;
-              case 404:
-                dispatch(showToast(5500));
-                dispatch(setToastText('Toast.UserNotFound'));
-                break;
-              default:
-                dispatch(showToast(5500));
-                dispatch(setToastText('Toast.DefaultError'));
+      const onSuccess = (response: {
+        data: PublicUser & { confirmationMailSent?: boolean };
+      }) => {
+        const { confirmationMailSent, ...user } = response.data;
+        dispatch(updateSettingsSuccess(user));
+        dispatch(showToast(5500));
+        dispatch(
+          setToastText(
+            confirmationMailSent === false
+              ? 'Toast.SettingsSavedMailFailed'
+              : 'Toast.SettingsSaved'
+          )
+        );
+        resolve();
+      };
+      const onError = async (error: any, retried = false) => {
+        if (isStepUpRequiredError(error) && !retried) {
+          const verified = await requestStepUp();
+          if (verified) {
+            try {
+              const retryResponse = await submitSettings(
+                formValues as UpdateSettingsRequestBody
+              );
+              onSuccess(retryResponse);
+            } catch (retryError) {
+              onError(retryError, true);
             }
-          } else {
-            dispatch(showToast(5500));
-            dispatch(setToastText('Toast.NetworkError'));
+            return;
           }
-        });
+          dispatch(showToast(5500));
+          dispatch(setToastText('Toast.StepUpRequired'));
+          resolve();
+          return;
+        }
+        if (error.response) {
+          switch (error.response.status) {
+            case 401:
+              dispatch(showToast(5500));
+              dispatch(setToastText('Toast.IncorrectCurrentPass'));
+              break;
+            case 404:
+              dispatch(showToast(5500));
+              dispatch(setToastText('Toast.UserNotFound'));
+              break;
+            default:
+              dispatch(showToast(5500));
+              dispatch(setToastText('Toast.DefaultError'));
+          }
+        } else {
+          dispatch(showToast(5500));
+          dispatch(setToastText('Toast.NetworkError'));
+        }
+        resolve();
+      };
+      submitSettings(formValues as UpdateSettingsRequestBody).then(
+        onSuccess,
+        onError
+      );
     });
 }
 
@@ -452,16 +484,28 @@ export function createApiKeySuccess(user: PublicUser) {
 }
 
 export function createApiKey(label: CreateApiKeyRequestBody['label']) {
-  return (dispatch: Dispatch) =>
-    apiClient
-      .post('/account/api-keys', { label })
-      .then((response) => {
+  return (dispatch: ThunkDispatch<RootState, unknown, AnyAction>) => {
+    const attempt = async (retried = false): Promise<void> => {
+      try {
+        const response = await apiClient.post('/account/api-keys', { label });
         dispatch(createApiKeySuccess(response.data));
-      })
-      .catch((error) => {
+      } catch (error: any) {
+        if (isStepUpRequiredError(error) && !retried) {
+          const verified = await requestStepUp();
+          if (verified) {
+            await attempt(true);
+            return;
+          }
+          dispatch(showToast(5500));
+          dispatch(setToastText('Toast.StepUpRequired'));
+          return;
+        }
         const { response } = error;
-        Promise.reject(new Error(response.data.error));
-      });
+        throw new Error(response?.data?.error || 'Failed to create API key.');
+      }
+    };
+    return attempt();
+  };
 }
 
 export function removeApiKey(keyId: RemoveApiKeyRequestParams['keyId']) {
@@ -481,21 +525,32 @@ export function removeApiKey(keyId: RemoveApiKeyRequestParams['keyId']) {
 }
 
 export function unlinkService(service: string) {
-  return (dispatch: Dispatch) => {
-    if (!['github', 'google'].includes(service)) return;
-    apiClient
-      .delete(`/auth/${service}`)
-      .then((response) => {
+  return (dispatch: ThunkDispatch<RootState, unknown, AnyAction>) => {
+    if (!['github', 'google'].includes(service)) return Promise.resolve();
+    const attempt = async (retried = false): Promise<void> => {
+      try {
+        const response = await apiClient.delete(`/auth/${service}`);
         dispatch(authenticateUser(response.data));
-      })
-      .catch((error) => {
+      } catch (error: any) {
+        if (isStepUpRequiredError(error) && !retried) {
+          const verified = await requestStepUp();
+          if (verified) {
+            await attempt(true);
+            return;
+          }
+          dispatch(showToast(5500));
+          dispatch(setToastText('Toast.StepUpRequired'));
+          return;
+        }
         const message =
           error.response?.message ||
           error.response?.data?.error ||
           error.message ||
-          'Unknown error.';
+          'Failed to unlink account.';
         dispatch(authError(message));
-      });
+      }
+    };
+    return attempt();
   };
 }
 
