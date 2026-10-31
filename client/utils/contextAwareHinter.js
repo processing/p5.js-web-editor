@@ -262,15 +262,17 @@ export default function contextAwareHinter(context, { hints = [] } = {}) {
         (!scopeToDeclaredVarsMap[currentContext]?.[varName] &&
           scopeToDeclaredVarsMap.global?.[varName] === 'fun');
 
-      return buildVarOrFunctionOption({
-        name: varName,
-        isFunc,
-        userDefinedFunctionMetadata,
-        blacklist,
-        range: wordInfo,
+      return buildVarOrFunctionOption(
+        {
+          name: varName,
+          isFunc,
+          userDefinedFunctionMetadata,
+          blacklist,
+          range: wordInfo
+        },
         state,
         pos
-      });
+      );
     });
 
   const globalOptions = hints
