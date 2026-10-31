@@ -19,8 +19,7 @@ import {
   uk,
   sv,
   tr,
-  enIN,
-  ne
+  enIN
 } from 'date-fns/locale';
 
 import { getPreferredLanguage } from './utils/language-utils';
@@ -105,8 +104,7 @@ export function languageKeyToDateLocale(lang) {
     'zh-CN': zhCN,
     'zh-TW': zhTW,
     tr,
-    ur: enIN,
-    ne
+    ur: enIN
   };
   return languageMap[lang];
 }

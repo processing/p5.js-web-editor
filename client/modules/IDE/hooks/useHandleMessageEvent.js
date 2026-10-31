@@ -59,6 +59,7 @@ export default function useHandleMessageEvent() {
     if (hasInfiniteLoop) {
       dispatch(stopSketch());
       dispatch(expandConsole());
+      dispatch(dispatchConsoleEvent(decodedMessages));
       return;
     }
 

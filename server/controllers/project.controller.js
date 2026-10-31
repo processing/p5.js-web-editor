@@ -11,6 +11,17 @@ import Project from '../models/project';
 import { User } from '../models/user';
 import { resolvePathToFile } from '../utils/filePath';
 import { generateFileSystemSafeName } from '../utils/generateFileSystemSafeName';
+import {
+  commitPendingAssets,
+  rewritePendingFileUrls
+} from '../utils/pendingAssets';
+
+function isPrivateProject(project, user) {
+  return (
+    project.visibility === 'Private' &&
+    (!user || !project.user._id.equals(user._id))
+  );
+}
 
 const s3Client = new S3Client({
   credentials: {
@@ -65,6 +76,12 @@ export async function updateProject(req, res) {
         updateData[field] = req.body[field];
       }
     });
+
+    if (updateData.files) {
+      await commitPendingAssets(req.user.id, updateData.files);
+      updateData.files = rewritePendingFileUrls(updateData.files, req.user.id);
+    }
+
     const updatedProject = await Project.findByIdAndUpdate(
       req.params.project_id,
       {
@@ -77,6 +94,7 @@ export async function updateProject(req, res) {
     )
       .populate('user', 'username')
       .exec();
+
     if (
       req.body.files &&
       updatedProject.files.length !== req.body.files.length
@@ -115,6 +133,11 @@ export async function getProject(req, res) {
       .status(404)
       .send({ message: 'Project with that id does not exist' });
   }
+
+  if (isPrivateProject(project, req.user)) {
+    return res.status(403).send({ message: 'Project is private' });
+  }
+
   return res.json(project);
 }
 
@@ -131,11 +154,7 @@ export async function getProjectAsset(req, res) {
       .send({ message: 'Project with that id does not exist' });
   }
 
-  // Check visibility and ownership for private projects
-  if (
-    project.visibility === 'Private' &&
-    (!req.user || !project.user._id.equals(req.user._id))
-  ) {
+  if (isPrivateProject(project, req.user)) {
     return res.status(403).send({ message: 'Project is private' });
   }
 
@@ -319,7 +338,7 @@ async function buildZip(project, req, res) {
     const currentTime = format(new Date(), 'yyyy_MM_dd_HH_mm_ss');
     project.slug = slugify(project.name, '_');
     const zipFileName = `${generateFileSystemSafeName(
-      project.slug
+      project.name
     )}_${currentTime}.zip`;
     const { files } = project;
     const root = files.find((file) => file.name === 'root');
@@ -406,6 +425,12 @@ export async function downloadProjectAsZip(req, res) {
       res.status(404).send({ message: 'Project with that id does not exist' });
       return;
     }
+
+    if (isPrivateProject(project, req.user)) {
+      res.status(403).send({ message: 'Project is private' });
+      return;
+    }
+
     await buildZip(project, req, res);
   } catch (err) {
     console.error('Error in downloadProjectAsZip:', err);

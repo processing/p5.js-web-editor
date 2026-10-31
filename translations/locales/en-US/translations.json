@@ -35,7 +35,8 @@
       "Reference": "Reference",
       "ReportBug": "Report a Bug",
       "ChatOnDiscord": "Chat On Discord",
-      "PostOnTheForum": "Post on the Forum"
+      "PostOnTheForum": "Post on the Forum",
+      "WebEditorVersion": "Web Editor v{{version}}"
     },
     "Lang": "Language",
     "BackEditor": "Back to Editor",
@@ -56,7 +57,7 @@
     }
   },
   "Banner": {
-    "Copy": "<bold>Donate Today!</bold> Support p5.js and the Processing Foundation."
+    "Copy": "<bold>p5.js v2 is now the default</bold>. If you teach with p5, check out this essential guide!"
   },
   "CodemirrorFindAndReplace": {
     "ToggleReplace": "Toggle Replace",
@@ -160,7 +161,9 @@
     "DefaultError": "Something went wrong",
     "UserNotFound": "User not found",
     "NetworkError": "Network error",
-    "CloseAlertARIA": "Close Alert"
+    "CloseAlertARIA": "Close Alert",
+    "StepUpRequired": "Verification is required to continue. Please verify and try again.",
+    "SettingsSavedMailFailed": "Settings saved, but the confirmation email could not be sent. Use Resend confirmation email."
   },
   "Toolbar": {
     "Preview": "Preview",
@@ -219,6 +222,9 @@
     "WordWrap": "Word Wrap",
     "WordWrapOnARIA": "wordwrap on",
     "WordWrapOffARIA": "wordwrap off",
+    "LoopProtection": "Loop Protection",
+    "LoopProtectionOnARIA": "loop protection on",
+    "LoopProtectionOffARIA": "loop protection off",
     "LineNumbers": "Line numbers",
     "LineNumbersOnARIA": "line numbers on",
     "LineNumbersOffARIA": "line numbers off",
@@ -234,7 +240,7 @@
     "TableText": "Table-text",
     "TableOutputARIA": "table output on",
     "LibraryVersion": "p5.js Version",
-    "LibraryVersionInfo": "There's a [new 2.0 release](https://github.com/processing/p5.js/releases/) of p5.js available! It will become default in August, 2026, so take this time to test it out and report bugs. Interested in transitioning sketches from 1.x to 2.0? Check out the [compatibility & transition resources.](https://github.com/processing/p5.js-compatibility)",
+    "LibraryVersionInfo": "If you teach with p5.js v1, be sure to check out this [essential guide](https://p5js.org/tutorials/v2_transition/) to using p5.js v2.",
     "CustomVersionTitle": "Managing your own libraries? Nice!",
     "CustomVersionInfo": "The version of p5.js is currently being managed in the code of index.html. This means it can't be adjusted from this tab.",
     "CustomVersionReset": "If you'd like to use the default libraries, you can replace the script tags in index.html with the following:",
@@ -516,6 +522,7 @@
     "DeleteFromCollection": "Are you sure you want to remove {{name_sketch}} from this collection?",
     "SketchDeleted": "Sketch deleted",
     "SketchRemoveARIA": "Remove sketch from collection",
+    "SketchRemoveLabel": "Remove from Collection",
     "DescriptionPlaceholder": "Add description",
     "Description": "description",
     "NumSketches": "{{count}} sketch",
@@ -699,7 +706,6 @@
   "Cookies": {
     "Header": "Cookies",
     "Body": "The p5.js Editor uses cookies. Some are essential to the website functionality and allow you to manage an account and preferences. Others are not essential—they are used for analytics and allow us to learn more about our community. <strong> We never sell this data or use it for advertising. </strong> You can decide which cookies you would like to allow, and learn more in our <0>Privacy Policy<0>.",
-    "AllowAll": "Allow All",
     "AllowEssential": "Allow Essential"
   },
   "Legal": {
@@ -721,5 +727,23 @@
       "Label": "Private"
     },
     "Changed": "'{{projectName}}' is now {{newVisibility}}..."
+  },
+  "StepUp": {
+    "Title": "Confirm it is you",
+    "Description": "This action needs extra verification. Your login session alone is not enough.",
+    "PasswordLabel": "Password",
+    "CodeLabel": "Verification code",
+    "Verify": "Verify",
+    "Verifying": "Verifying...",
+    "SendCode": "Send code",
+    "ResendCode": "Resend code",
+    "SendCodeWait": "Send code ({{seconds}}s)",
+    "CodeSentMessage": "A 6-digit code was sent to your email. It is valid for 10 minutes.",
+    "IncorrectPassword": "That password is incorrect.",
+    "IncorrectCode": "That code is incorrect or expired.",
+    "VerifyFailed": "Verification failed. Please try again.",
+    "SendFailed": "Could not send the code. Please try again.",
+    "CodeResendWait": "A code was sent recently. Please wait before requesting another one.",
+    "PasswordAccountMessage": "This account uses a password. Please verify with your password instead."
   }
 }

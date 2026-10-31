@@ -13,10 +13,11 @@ export const getCanUploadMedia = createSelector(
   getAuthenticated,
   getTotalSize,
   (authenticated, totalSize) => {
+    const currentSize = totalSize || 0;
     if (!authenticated) return false;
     // eventually do the same thing for verified when
     // email verification actually works
-    if (totalSize > limit) return false;
+    if (currentSize >= limit) return false;
     return true;
   }
 );
@@ -25,8 +26,8 @@ export const getreachedTotalSizeLimit = createSelector(
   getTotalSize,
   getAssetsTotalSize,
   (totalSize, assetsTotalSize) => {
-    const currentSize = totalSize || assetsTotalSize;
-    if (currentSize && currentSize > limit) return true;
+    const currentSize = totalSize || assetsTotalSize || 0;
+    if (currentSize >= limit) return true;
     // if (totalSize > 1000) return true;
     return false;
   }

@@ -432,6 +432,7 @@
     "AddSketch": "Sketch hinzufügen",
     "DeleteFromCollection": "Bist Du sicher, dass Du {{name_sketch}} aus dieser Sammlung entfernen willst?",
     "SketchDeleted": "Sketch gelöscht",
+    "SketchRemoveLabel": "Remove from Collection",
     "SketchRemoveARIA": "Sketch aus der Sammlung entfernen",
     "DescriptionPlaceholder": "Beschreibung hinzufügen",
     "Description": "Beschreibung",

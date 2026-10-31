@@ -10,7 +10,7 @@ FROM base AS development
 ENV NODE_ENV development
 COPY package.json package-lock.json ./
 RUN npm install
-COPY .babelrc index.js nodemon.json ./
+COPY .babelrc index.js nodemon.json loadEnv.js ./
 COPY ./webpack ./webpack
 COPY client ./client
 COPY server ./server
@@ -25,7 +25,7 @@ RUN npm run build
 
 FROM base AS production
 ENV NODE_ENV=production
-COPY package.json package-lock.json index.js ./
+COPY package.json package-lock.json index.js .eslintrc ./
 RUN npm install --production
 COPY --from=build $APP_HOME/dist ./dist
 CMD ["npm", "run", "start:prod"]

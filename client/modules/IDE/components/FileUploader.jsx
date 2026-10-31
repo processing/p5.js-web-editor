@@ -69,7 +69,7 @@ function FileUploader() {
       acceptedFiles: fileExtensionsAndMimeTypes,
       dictDefaultMessage: t('FileUploader.DictDefaultMessage'),
       accept: (file, done) => {
-        dropzoneAcceptCallback(userId, file, done);
+        dropzoneAcceptCallback(userId, file, done, dispatch);
       },
       sending: dropzoneSendingCallback
     });

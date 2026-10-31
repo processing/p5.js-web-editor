@@ -49,7 +49,7 @@
     }
   },
   "Banner": {
-    "Copy": "<bold>Donate Today!</bold> Support p5.js and the Processing Foundation."
+    "Copy": "<bold>p5.js v2 is now the default</bold>. If you teach with p5, check out this essential guide!"
   },
   "LoginForm": {
     "UsernameOrEmail": "이메일 또는 아이디",
@@ -424,6 +424,7 @@
     "AddSketch": "스케치 추가하기 Add Sketch",
     "DeleteFromCollection": "Are you sure you want to remove {{name_sketch}} from this collection?",
     "SketchDeleted": "Sketch deleted",
+    "SketchRemoveLabel": "Remove from Collection",
     "SketchRemoveARIA": "Remove sketch from collection",
     "DescriptionPlaceholder": "Add description",
     "Description": "description",

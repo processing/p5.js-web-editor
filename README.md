@@ -15,7 +15,7 @@ Stay in touch with Processing Foundation across other platforms:
 - [Instagram](https://www.instagram.com/p5xjs)
 - [Youtube](https://www.youtube.com/@ProcessingFoundation)
 - [X](https://x.com/p5xjs)
-- [Discord](https://discord.com/invite/esmGA6H6wm)
+- [Discord](https://discord.p5js.org)
 - [Forum](https://discourse.processing.org)
 
 ## Using the p5.js Editor 🤔

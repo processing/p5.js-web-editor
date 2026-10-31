@@ -29,6 +29,7 @@ import {
 } from '../../actions/ide';
 import { logoutUser } from '../../../User/actions';
 import { CmControllerContext } from '../../pages/IDEView';
+import packageData from '../../../../../package.json';
 import MobileNav from './MobileNav';
 import useIsMobile from '../../hooks/useIsMobile';
 
@@ -169,8 +170,6 @@ const ProjectMenu = () => {
     shareSketch
   } = useSketchActions();
 
-  const replaceCommand =
-    metaKey === 'Ctrl' ? `${metaKeyName}+H` : `${metaKeyName}+⌥+F`;
   const newFileCommand =
     metaKey === 'Ctrl' ? `${metaKeyName}+Alt+N` : `${metaKeyName}+⌥+N`;
 
@@ -264,17 +263,23 @@ const ProjectMenu = () => {
         </MenubarItem>
       </MenubarSubmenu>
       <MenubarSubmenu id="edit" title={t('Nav.Edit.Title')}>
-        <MenubarItem id="edit-tidy" onClick={cmRef.current?.tidyCode}>
+        <MenubarItem
+          id="edit-tidy"
+          onClick={() => {
+            cmRef.current?.tidyCode();
+          }}
+        >
           {t('Nav.Edit.TidyCode')}
           <span className="nav__keyboard-shortcut">{metaKeyName}+Shift+F</span>
         </MenubarItem>
-        <MenubarItem id="edit-find" onClick={cmRef.current?.showFind}>
+        <MenubarItem
+          id="edit-find"
+          onClick={() => {
+            cmRef.current?.showSearch();
+          }}
+        >
           {t('Nav.Edit.Find')}
           <span className="nav__keyboard-shortcut">{metaKeyName}+F</span>
-        </MenubarItem>
-        <MenubarItem id="edit-replace" onClick={cmRef.current?.showReplace}>
-          {t('Nav.Edit.Replace')}
-          <span className="nav__keyboard-shortcut">{replaceCommand}</span>
         </MenubarItem>
       </MenubarSubmenu>
       <MenubarSubmenu id="sketch" title={t('Nav.Sketch.Title')}>
@@ -321,10 +326,7 @@ const ProjectMenu = () => {
         >
           {t('Nav.Help.ReportBug')}
         </MenubarItem>
-        <MenubarItem
-          id="help-discord"
-          href="https://discord.com/invite/SHQ8dH25r9"
-        >
+        <MenubarItem id="help-discord" href="https://discord.p5js.org">
           {t('Nav.Help.ChatOnDiscord')}
         </MenubarItem>
         <MenubarItem
@@ -332,6 +334,12 @@ const ProjectMenu = () => {
           href="https://discourse.processing.org/c/p5js/10"
         >
           {t('Nav.Help.PostOnTheForum')}
+        </MenubarItem>
+        <MenubarItem
+          id="help-web-editor-version"
+          href={`https://github.com/processing/p5.js-web-editor/releases/tag/v${packageData.version}`}
+        >
+          {t('Nav.Help.WebEditorVersion', { version: packageData.version })}
         </MenubarItem>
       </MenubarSubmenu>
       {getConfig('TRANSLATIONS_ENABLED') && <LanguageMenu />}
