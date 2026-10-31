@@ -51,16 +51,21 @@ describe('user.controller > auth management > 3rd party auth', () => {
       });
     });
     describe('and when there is a user in the request', () => {
-      const user = createMockUser(
-        {
-          github: 'testuser',
-          tokens: [{ kind: 'github' }, { kind: 'google' }]
-        },
-        true
-      ) as UserDocument;
+      let user: UserDocument;
 
       beforeEach(async () => {
+        user = createMockUser(
+          {
+            github: 'testuser',
+            tokens: [{ kind: 'github' }, { kind: 'google' }],
+            sessionVersion: 0
+          },
+          true
+        ) as UserDocument;
         request.user = user;
+        (request as any).logIn = jest.fn(
+          (_user: unknown, cb: (err?: unknown) => void) => cb()
+        );
         await unlinkGithub(
           (request as unknown) as Request,
           (response as unknown) as Response,
@@ -75,6 +80,10 @@ describe('user.controller > auth management > 3rd party auth', () => {
       });
       it('does calls saveUser', () => {
         expect(saveUser).toHaveBeenCalledWith(response, user);
+      });
+      it('revokes other sessions and keeps the current one', () => {
+        expect(user.sessionVersion).toBe(1);
+        expect((request as any).logIn).toHaveBeenCalled();
       });
     });
   });
@@ -100,16 +109,21 @@ describe('user.controller > auth management > 3rd party auth', () => {
       });
     });
     describe('and when there is a user in the request', () => {
-      const user = createMockUser(
-        {
-          google: 'testuser',
-          tokens: [{ kind: 'github' }, { kind: 'google' }]
-        },
-        true
-      ) as UserDocument;
+      let user: UserDocument;
 
       beforeEach(async () => {
+        user = createMockUser(
+          {
+            google: 'testuser',
+            tokens: [{ kind: 'github' }, { kind: 'google' }],
+            sessionVersion: 0
+          },
+          true
+        ) as UserDocument;
         request.user = user;
+        (request as any).logIn = jest.fn(
+          (_user: unknown, cb: (err?: unknown) => void) => cb()
+        );
         await unlinkGoogle(
           (request as unknown) as Request,
           (response as unknown) as Response,
@@ -124,6 +138,10 @@ describe('user.controller > auth management > 3rd party auth', () => {
       });
       it('does calls saveUser', () => {
         expect(saveUser).toHaveBeenCalledWith(response, user);
+      });
+      it('revokes other sessions and keeps the current one', () => {
+        expect(user.sessionVersion).toBe(1);
+        expect((request as any).logIn).toHaveBeenCalled();
       });
     });
   });

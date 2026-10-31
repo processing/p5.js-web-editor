@@ -66,7 +66,11 @@ export function AccountForm() {
           className="form"
           onSubmit={async (event: React.FormEvent) => {
             const result = await handleSubmit(event);
-            form.restart();
+            const currentValues = form.getState().values;
+            form.restart({
+              username: currentValues?.username ?? user.username,
+              email: currentValues?.email ?? user.email
+            });
             return result;
           }}
         >
