@@ -9,6 +9,8 @@ $black: #000;
 $yellow: #f5dc23;
 $dodgerblue: #1e90ff;
 $p5-contrast-pink: #ffa9d9;
+$p5-contrast-light-pink: #ffa9d9;
+$p5-contrast-dark-pink: #b20046;
 
 $outline-color: #0f9dd7;
 
@@ -150,6 +152,7 @@ $themes: (
     input-selection-text-color: $dark,
     input-text-color: $dark,
     keyboard-shortcut-color: $middle-gray,
+    link-text-color: $p5-contrast-dark-pink,
     logo-background-color: $lightest,
     logo-color: $p5js-pink,
     modal-background-color: $light,
@@ -181,7 +184,13 @@ $themes: (
     toast-background-color: $medium-dark,
     toast-text-color: $lightest,
     toolbar-button-background-color: $medium-light,
-    toolbar-button-color: $dark
+    toolbar-button-color: $dark,
+    toolbar-start-stop-button-background-color: #dbdbdb,
+    toolbar-start-stop-button-hover-background-color: #ed225e,
+    toolbar-start-stop-button-hover-outline-color: $p5js-pink,
+    toolbar-start-stop-button-outline-color: #dbdbdb,
+    toolbar-start-stop-icon-color: $p5-light-black,
+    toolbar-start-stop-active-icon-color: #ffffff
   ),
   dark: (
     activeline-background-color: $p5-dark-activeline,
@@ -209,7 +218,7 @@ $themes: (
     console-header-color: $lightest,
     console-input-background-color: $darker,
     editor-gutter-color: $darker,
-    error-color: $p5js-pink,
+    error-color: $p5-contrast-light-pink,
     file-hover-color: $dark,
     file-selected-color: $medium-dark,
     form-input-placeholder-text-color: $middle-gray,
@@ -268,6 +277,7 @@ $themes: (
     input-selection-text-color: $darkest,
     input-text-color: $lightest,
     keyboard-shortcut-color: $middle-light,
+    link-text-color: $p5-contrast-light-pink,
     logo-background-color: $lightest,
     logo-color: $p5js-pink,
     modal-background-color: $dark,
@@ -299,7 +309,13 @@ $themes: (
     toast-background-color: $medium-light,
     toast-text-color: $dark,
     toolbar-button-background-color: $medium-dark,
-    toolbar-button-color: $lightest
+    toolbar-button-color: $lightest,
+    toolbar-start-stop-button-background-color: #dedede,
+    toolbar-start-stop-button-hover-background-color: #ed225e,
+    toolbar-start-stop-button-hover-outline-color: $p5js-pink,
+    toolbar-start-stop-button-outline-color: #dedede,
+    toolbar-start-stop-icon-color: $p5-light-black,
+    toolbar-start-stop-active-icon-color: #ffffff
   ),
   contrast: (
     activeline-background-color: $p5-contrast-activeline,
@@ -327,7 +343,7 @@ $themes: (
     console-header-color: $lightest,
     console-input-background-color: $darker,
     editor-gutter-color: $darker,
-    error-color: $p5-contrast-pink,
+    error-color: $p5-contrast-light-pink,
     file-hover-color: $dark,
     file-selected-color: $medium-dark,
     form-navigation-options-color: $middle-light,
@@ -383,6 +399,7 @@ $themes: (
     input-selection-text-color: $darkest,
     input-text-color: $lightest,
     keyboard-shortcut-color: $middle-light,
+    link-text-color: $p5-contrast-light-pink,
     logo-background-color: $darker,
     logo-color: $yellow,
     modal-background-color: $dark,
@@ -414,6 +431,12 @@ $themes: (
     toast-background-color: $medium-light,
     toast-text-color: $darker,
     toolbar-button-background-color: $medium-light,
-    toolbar-button-color: $dark
+    toolbar-button-color: $dark,
+    toolbar-start-stop-button-background-color: $darker,
+    toolbar-start-stop-button-hover-background-color: $p5-contrast-yellow,
+    toolbar-start-stop-button-hover-outline-color: $yellow,
+    toolbar-start-stop-button-outline-color: #ffffff,
+    toolbar-start-stop-icon-color: #ffffff,
+    toolbar-start-stop-active-icon-color: #000000
   )
 );
