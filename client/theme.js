@@ -19,7 +19,8 @@ export const colors = {
   red: '#ff0000',
   lightsteelblue: '#B0C4DE',
   dodgerblue: '#1E90FF',
-  p5ContrastPink: ' #FFA9D9',
+  p5ContrastLightPink: '#FFA9D9',
+  p5ContrastDarkPink: '#B20046',
   p5ContrastYellow: '#fff001',
   borderColor: ' #B5B5B5',
   outlineColor: '#0F9DD7'
@@ -71,6 +72,7 @@ const baseThemes = {
   [Theme.light]: {
     colors,
     ...common,
+    linkTextColor: colors.p5ContrastDarkPink,
     primaryTextColor: grays.dark,
     inactiveTextColor: grays.middleDark,
     backgroundColor: grays.lighter,
@@ -166,6 +168,7 @@ const baseThemes = {
   [Theme.dark]: {
     colors,
     ...common,
+    linkTextColor: colors.p5ContrastLightPink,
     primaryTextColor: grays.lightest,
     inactiveTextColor: grays.middleLight,
     backgroundColor: grays.darker,
@@ -269,6 +272,7 @@ export default {
     toolbarTextColor: grays.dark,
     toolbarBackgroundColor: grays.light,
     toolbarTextHoverColor: grays.dark,
+    linkTextColor: colors.p5ContrastLightPink,
 
     Button: {
       primary: {

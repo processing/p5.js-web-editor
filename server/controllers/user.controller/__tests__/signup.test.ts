@@ -225,6 +225,40 @@ describe('user.controller > signup', () => {
       expect(saveMock).toHaveBeenCalled();
       expect(response.json).toHaveBeenCalledWith({ success: true });
     });
+
+    it('returns 400 and does not query for an object-shaped token', async () => {
+      User.findOne = jest.fn();
+      request.query = { t: { $ne: 'invalid-token' } };
+
+      await verifyEmail(
+        (request as unknown) as Request<{}, {}, {}, VerifyEmailQuery>,
+        (response as unknown) as Response,
+        next
+      );
+
+      expect(User.findOne).not.toHaveBeenCalled();
+      expect(response.status).toHaveBeenCalledWith(400);
+      expect(response.json).toHaveBeenCalledWith({
+        error: 'Missing or invalid verification token.'
+      });
+    });
+
+    it('returns 400 if the token is missing', async () => {
+      User.findOne = jest.fn();
+      request.query = {};
+
+      await verifyEmail(
+        (request as unknown) as Request<{}, {}, {}, VerifyEmailQuery>,
+        (response as unknown) as Response,
+        next
+      );
+
+      expect(User.findOne).not.toHaveBeenCalled();
+      expect(response.status).toHaveBeenCalledWith(400);
+      expect(response.json).toHaveBeenCalledWith({
+        error: 'Missing or invalid verification token.'
+      });
+    });
   });
 
   describe('emailVerificationInitiate', () => {
