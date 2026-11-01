@@ -9,6 +9,7 @@ import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3';
 import safeProjectFileFetch from '../utils/safeProjectFileFetch';
 import {
   hasConfiguredS3Origin,
+  isConfiguredS3HttpUrl,
   isS3Url,
   parseS3ProjectAssetUrl,
   readBoundedS3Object
@@ -269,10 +270,12 @@ function bundleExternalLibs(project) {
 }
 
 async function getStreamFromS3Url(url, userId) {
-  const { bucket, key } = parseS3ProjectAssetUrl(url, userId);
+  const asset = parseS3ProjectAssetUrl(url, userId);
+  if (!asset) return null;
+
   return readBoundedS3Object(
     s3Client,
-    new GetObjectCommand({ Bucket: bucket, Key: key })
+    new GetObjectCommand({ Bucket: asset.bucket, Key: asset.key })
   );
 }
 
@@ -294,9 +297,16 @@ async function addFileToZip(file, files, zip, userId) {
     try {
       if (hasConfiguredS3Origin(file.url)) {
         const data = await getStreamFromS3Url(file.url, userId);
-        zip.file(file.name, data, { binary: true });
+        if (data) {
+          zip.file(file.name, data, { binary: true });
+        } else {
+          const fallbackData = await safeProjectFileFetch(file.url);
+          zip.file(file.name, fallbackData, { binary: true });
+        }
       } else {
-        if (isS3Url(file.url)) throw new Error('Unsupported project asset URL');
+        if (isS3Url(file.url) && !isConfiguredS3HttpUrl(file.url, userId)) {
+          throw new Error('Unsupported project asset URL');
+        }
         const data = await safeProjectFileFetch(file.url);
         zip.file(file.name, data, { binary: true });
       }

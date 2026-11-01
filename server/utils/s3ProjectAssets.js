@@ -5,7 +5,7 @@ const REQUEST_TIMEOUT_MS = 10000;
 export function getS3BaseUrl() {
   const configuredBase =
     process.env.S3_BUCKET_URL_BASE ||
-    `https://s3-${process.env.AWS_REGION}.amazonaws.com/${process.env.S3_BUCKET}/`;
+    `https://s3.${process.env.AWS_REGION}.amazonaws.com/${process.env.S3_BUCKET}/`;
   const base = new URL(configuredBase);
   if (
     base.protocol !== 'https:' ||
@@ -21,9 +21,30 @@ export function getS3BaseUrl() {
   return base;
 }
 
+function getConfiguredS3Bases() {
+  const base = getS3BaseUrl();
+  const regionalHost = base.hostname.match(
+    /^s3([.-])([a-z\d-]+)\.amazonaws\.com$/i
+  );
+  const expectedPath = `/${process.env.S3_BUCKET}/`;
+  const basePath = base.pathname.endsWith('/')
+    ? base.pathname
+    : `${base.pathname}/`;
+
+  if (!regionalHost || basePath !== expectedPath) return [base];
+
+  const [, separator, region] = regionalHost;
+  const alternate = new URL(base.href);
+  alternate.hostname = `s3${
+    separator === '-' ? '.' : '-'
+  }${region}.amazonaws.com`;
+  return [base, alternate];
+}
+
 export function hasConfiguredS3Origin(rawUrl) {
   try {
-    return new URL(rawUrl).origin === getS3BaseUrl().origin;
+    const { origin } = new URL(rawUrl);
+    return getConfiguredS3Bases().some((base) => origin === base.origin);
   } catch (error) {
     return false;
   }
@@ -41,6 +62,68 @@ export function isS3Url(rawUrl) {
   }
 }
 
+export function isConfiguredS3HttpUrl(rawUrl, userId) {
+  let url;
+  try {
+    url = new URL(rawUrl);
+  } catch (error) {
+    return false;
+  }
+
+  const bucket = process.env.S3_BUCKET;
+  if (
+    !bucket ||
+    url.protocol !== 'https:' ||
+    url.username ||
+    url.password ||
+    url.port ||
+    url.search ||
+    url.hash
+  ) {
+    return false;
+  }
+
+  const host = url.hostname.toLowerCase();
+  const region = process.env.AWS_REGION;
+  const isPathStyle = [
+    `s3.${region}.amazonaws.com`,
+    `s3-${region}.amazonaws.com`
+  ].includes(host);
+  const isVirtualHosted = [
+    `${bucket}.s3.${region}.amazonaws.com`,
+    `${bucket}.s3-${region}.amazonaws.com`
+  ].includes(host);
+  if (!isPathStyle && !isVirtualHosted) return false;
+
+  const rawPath = rawUrl.match(/^https:\/\/[^/?#]*(\/[^?#]*)?/i)?.[1] || '/';
+  if (/%(?:2e|2f|5c)/i.test(rawPath) || rawPath.includes('\\')) {
+    return false;
+  }
+
+  let components;
+  try {
+    components = rawPath
+      .split('/')
+      .slice(1)
+      .map((component) => decodeURIComponent(component));
+  } catch (error) {
+    return false;
+  }
+
+  if (components.some((part) => !part || part === '.' || part === '..')) {
+    return false;
+  }
+
+  if (isPathStyle && components.shift() !== bucket) return false;
+
+  const key = components.join('/');
+  return (
+    Boolean(key) &&
+    key !== userId &&
+    (components.length === 1 || key.startsWith(`${userId}/`))
+  );
+}
+
 export function parseS3ProjectAssetUrl(rawUrl, userId) {
   let url;
   try {
@@ -48,7 +131,10 @@ export function parseS3ProjectAssetUrl(rawUrl, userId) {
   } catch (error) {
     throw new Error('Invalid project asset URL');
   }
-  const base = getS3BaseUrl();
+  const base = getConfiguredS3Bases().find(
+    (candidate) => candidate.origin === url.origin
+  );
+  if (!base) throw new Error('Unsupported project asset URL');
   const rawPath =
     rawUrl.match(/^[a-z][a-z\d+.-]*:\/\/[^/?#]*(\/[^?#]*)?/i)?.[1] || '/';
   let rawComponents;
@@ -90,12 +176,19 @@ export function parseS3ProjectAssetUrl(rawUrl, userId) {
   }
   const components = key.split('/');
   if (
-    !key.startsWith(`${userId}/`) ||
+    !key ||
     components.some(
       (component) => !component || component === '.' || component === '..'
     ) ||
     key.includes('\\')
   ) {
+    throw new Error('Unsupported project asset URL');
+  }
+
+  if (key === userId) throw new Error('Unsupported project asset URL');
+  if (components.length === 1) return null;
+
+  if (!key.startsWith(`${userId}/`)) {
     throw new Error('Unsupported project asset URL');
   }
   return { bucket: process.env.S3_BUCKET, key };

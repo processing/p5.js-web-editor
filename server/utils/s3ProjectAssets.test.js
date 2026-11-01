@@ -2,6 +2,7 @@ import { PassThrough, Readable } from 'stream';
 import {
   getS3BaseUrl,
   hasConfiguredS3Origin,
+  isConfiguredS3HttpUrl,
   isS3Url,
   parseS3ProjectAssetUrl,
   readBoundedS3Object
@@ -51,22 +52,91 @@ describe('S3 project assets', () => {
     expect(isS3Url('https://assets.example.test/file.png')).toBe(false);
   });
 
-  it('uses the existing default regional S3 URL format', () => {
+  it('uses the production dotted regional S3 URL format by default', () => {
     delete process.env.S3_BUCKET_URL_BASE;
     expect(getS3BaseUrl().href).toBe(
-      'https://s3-us-west-2.amazonaws.com/project-assets/'
+      'https://s3.us-west-2.amazonaws.com/project-assets/'
     );
     expect(
       parseS3ProjectAssetUrl(
-        'https://s3-us-west-2.amazonaws.com/project-assets/user-123/sketch.png',
+        'https://s3.us-west-2.amazonaws.com/project-assets/user-123/sketch.png',
         'user-123'
       )
     ).toEqual({ bucket: 'project-assets', key: 'user-123/sketch.png' });
   });
 
+  it('leaves a legacy flat key for the safe HTTP fetch path', () => {
+    delete process.env.S3_BUCKET_URL_BASE;
+    expect(
+      parseS3ProjectAssetUrl(
+        'https://s3.us-west-2.amazonaws.com/project-assets/legacy-asset.png',
+        'user-123'
+      )
+    ).toBeNull();
+  });
+
+  it('rejects malformed key paths on the configured S3 origin', () => {
+    delete process.env.S3_BUCKET_URL_BASE;
+    expect(() =>
+      parseS3ProjectAssetUrl(
+        'https://s3.us-west-2.amazonaws.com/project-assets/user-123//image.png',
+        'user-123'
+      )
+    ).toThrow();
+  });
+
+  it('accepts the previous regional hostname only for the configured bucket', () => {
+    delete process.env.S3_BUCKET_URL_BASE;
+    const url =
+      'https://s3-us-west-2.amazonaws.com/project-assets/user-123/sketch.png';
+
+    expect(hasConfiguredS3Origin(url)).toBe(true);
+    expect(parseS3ProjectAssetUrl(url, 'user-123')).toEqual({
+      bucket: 'project-assets',
+      key: 'user-123/sketch.png'
+    });
+    expect(() =>
+      parseS3ProjectAssetUrl(
+        'https://s3-us-west-2.amazonaws.com/other-bucket/user-123/sketch.png',
+        'user-123'
+      )
+    ).toThrow();
+  });
+
+  it('allows safe HTTP fetches only from alternate endpoints for this bucket', () => {
+    expect(
+      isConfiguredS3HttpUrl(
+        'https://project-assets.s3.us-west-2.amazonaws.com/legacy.png',
+        'user-123'
+      )
+    ).toBe(true);
+    expect(
+      isConfiguredS3HttpUrl(
+        'https://project-assets.s3.us-west-2.amazonaws.com/other-user/file.png',
+        'user-123'
+      )
+    ).toBe(false);
+    expect(
+      isConfiguredS3HttpUrl(
+        'https://attacker-bucket.s3.us-west-2.amazonaws.com/legacy.png',
+        'user-123'
+      )
+    ).toBe(false);
+    expect(
+      isConfiguredS3HttpUrl(
+        'https://s3.us-west-2.amazonaws.com/other-bucket/legacy.png',
+        'user-123'
+      )
+    ).toBe(false);
+  });
+
   it.each([
+    'not-a-url',
+    'ftp://s3.us-west-2.amazonaws.com/project-assets/user-123/file.png',
     'https://other.example.test/assets/user-123/file.png',
+    'https://s3.us-west-2.amazonaws.com/other-bucket/user-123/file.png',
     'https://s3-us-west-2.amazonaws.com/other-bucket/user-123/file.png',
+    'https://s3.us-west-2.amazonaws.com/project-assets/other-user/file.png',
     'https://cdn.example.test/other/user-123/file.png',
     'https://cdn.example.test/assets/other-user/file.png',
     'https://cdn.example.test/assets/user-123//file.png',

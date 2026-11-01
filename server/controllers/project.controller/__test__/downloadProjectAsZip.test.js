@@ -141,17 +141,158 @@ describe('downloadProjectAsZip', () => {
     expect(await archive.file('image.png').async('nodebuffer')).toHaveLength(0);
   });
 
-  it('reads a valid application S3 asset from the configured bucket and owner prefix', async () => {
-    const project = makeProject(
-      'https://s3-us-west-2.amazonaws.com/project-assets/owner-123/image.png'
-    );
+  it.each([
+    'https://s3.us-west-2.amazonaws.com/project-assets/owner-123/image.png',
+    'https://s3-us-west-2.amazonaws.com/project-assets/owner-123/image.png'
+  ])(
+    'reads a valid application S3 asset from the configured bucket and owner prefix: %s',
+    async (assetUrl) => {
+      const project = makeProject(assetUrl);
+      Project.findById = jest.fn().mockReturnValue({
+        exec: jest.fn().mockResolvedValue(project)
+      });
+      safeProjectFileFetch.mockResolvedValue(Buffer.from('library bytes'));
+      S3Client.mockSend.mockResolvedValue({
+        ContentLength: 8,
+        Body: Readable.from([Buffer.from('s3 bytes')])
+      });
+      const response = new TestResponse();
+      const finished = new Promise((resolve) => response.on('finish', resolve));
+
+      await downloadProjectAsZip(
+        { params: { project_id: 'project-123' } },
+        response
+      );
+      await finished;
+
+      expect(GetObjectCommand).toHaveBeenCalledWith({
+        Bucket: 'project-assets',
+        Key: 'owner-123/image.png'
+      });
+      expect(S3Client.mockSend).toHaveBeenCalledTimes(1);
+      expect(safeProjectFileFetch).toHaveBeenCalledWith(
+        'https://cdn.example.test/library.js'
+      );
+      expect(safeProjectFileFetch).not.toHaveBeenCalledWith(assetUrl);
+      const archive = await JSZip.loadAsync(Buffer.concat(response.chunks));
+      expect(await archive.file('image.png').async('string')).toBe('s3 bytes');
+      expect(await archive.file('library.js').async('string')).toBe(
+        'library bytes'
+      );
+    }
+  );
+
+  it('uses the safe fetcher for a legacy flat-key S3 URL', async () => {
+    const legacyUrl =
+      'https://s3-us-west-2.amazonaws.com/project-assets/legacy-image.png';
+    const project = makeProject(legacyUrl);
     Project.findById = jest.fn().mockReturnValue({
       exec: jest.fn().mockResolvedValue(project)
     });
-    safeProjectFileFetch.mockResolvedValue(Buffer.from('library bytes'));
-    S3Client.mockSend.mockResolvedValue({
-      ContentLength: 8,
-      Body: Readable.from([Buffer.from('s3 bytes')])
+    safeProjectFileFetch.mockResolvedValue(Buffer.from('legacy image bytes'));
+    const response = new TestResponse();
+    const finished = new Promise((resolve) => response.on('finish', resolve));
+
+    await downloadProjectAsZip(
+      { params: { project_id: 'project-123' } },
+      response
+    );
+    await finished;
+
+    expect(S3Client.mockSend).not.toHaveBeenCalled();
+    expect(safeProjectFileFetch).toHaveBeenCalledWith(legacyUrl);
+    const archive = await JSZip.loadAsync(Buffer.concat(response.chunks));
+    expect(await archive.file('image.png').async('string')).toBe(
+      'legacy image bytes'
+    );
+  });
+
+  it('uses the safe fetcher for a legacy virtual-hosted flat-key S3 URL', async () => {
+    const legacyUrl =
+      'https://project-assets.s3.us-west-2.amazonaws.com/legacy-image.png';
+    const project = makeProject(legacyUrl);
+    Project.findById = jest.fn().mockReturnValue({
+      exec: jest.fn().mockResolvedValue(project)
+    });
+    safeProjectFileFetch.mockResolvedValue(Buffer.from('legacy image bytes'));
+    const response = new TestResponse();
+    const finished = new Promise((resolve) => response.on('finish', resolve));
+
+    await downloadProjectAsZip(
+      { params: { project_id: 'project-123' } },
+      response
+    );
+    await finished;
+
+    expect(S3Client.mockSend).not.toHaveBeenCalled();
+    expect(safeProjectFileFetch).toHaveBeenCalledWith(legacyUrl);
+    const archive = await JSZip.loadAsync(Buffer.concat(response.chunks));
+    expect(await archive.file('image.png').async('string')).toBe(
+      'legacy image bytes'
+    );
+  });
+
+  it('uses the safe fetcher for a same-bucket S3 URL outside the configured base', async () => {
+    const alternateUrl =
+      'https://project-assets.s3.us-west-2.amazonaws.com/owner-123/image.png';
+    const project = makeProject(alternateUrl);
+    Project.findById = jest.fn().mockReturnValue({
+      exec: jest.fn().mockResolvedValue(project)
+    });
+    safeProjectFileFetch.mockResolvedValue(
+      Buffer.from('alternate image bytes')
+    );
+    const response = new TestResponse();
+    const finished = new Promise((resolve) => response.on('finish', resolve));
+
+    await downloadProjectAsZip(
+      { params: { project_id: 'project-123' } },
+      response
+    );
+    await finished;
+
+    expect(S3Client.mockSend).not.toHaveBeenCalled();
+    expect(safeProjectFileFetch).toHaveBeenCalledWith(alternateUrl);
+    const archive = await JSZip.loadAsync(Buffer.concat(response.chunks));
+    expect(await archive.file('image.png').async('string')).toBe(
+      'alternate image bytes'
+    );
+  });
+
+  it.each([
+    'https://project-assets.s3.us-west-2.amazonaws.com/other-user/image.png',
+    'https://project-assets.s3.us-west-2.amazonaws.com/owner-123/%2e%2e/private.png'
+  ])(
+    'rejects an alternate S3 URL with unauthorized or malformed key: %s',
+    async (assetUrl) => {
+      const project = makeProject(assetUrl);
+      Project.findById = jest.fn().mockReturnValue({
+        exec: jest.fn().mockResolvedValue(project)
+      });
+      const response = new TestResponse();
+      const finished = new Promise((resolve) => response.on('finish', resolve));
+
+      await downloadProjectAsZip(
+        { params: { project_id: 'project-123' } },
+        response
+      );
+      await finished;
+
+      expect(S3Client.mockSend).not.toHaveBeenCalled();
+      expect(safeProjectFileFetch).not.toHaveBeenCalledWith(assetUrl);
+      const archive = await JSZip.loadAsync(Buffer.concat(response.chunks));
+      expect(await archive.file('image.png').async('nodebuffer')).toHaveLength(
+        0
+      );
+    }
+  );
+
+  it('rejects an owner-prefixed S3 key belonging to another user', async () => {
+    const unauthorizedUrl =
+      'https://s3.us-west-2.amazonaws.com/project-assets/other-user/image.png';
+    const project = makeProject(unauthorizedUrl);
+    Project.findById = jest.fn().mockReturnValue({
+      exec: jest.fn().mockResolvedValue(project)
     });
     const response = new TestResponse();
     const finished = new Promise((resolve) => response.on('finish', resolve));
@@ -162,22 +303,10 @@ describe('downloadProjectAsZip', () => {
     );
     await finished;
 
-    expect(GetObjectCommand).toHaveBeenCalledWith({
-      Bucket: 'project-assets',
-      Key: 'owner-123/image.png'
-    });
-    expect(S3Client.mockSend).toHaveBeenCalledTimes(1);
-    expect(safeProjectFileFetch).toHaveBeenCalledWith(
-      'https://cdn.example.test/library.js'
-    );
-    expect(safeProjectFileFetch).not.toHaveBeenCalledWith(
-      'https://s3-us-west-2.amazonaws.com/project-assets/owner-123/image.png'
-    );
+    expect(S3Client.mockSend).not.toHaveBeenCalled();
+    expect(safeProjectFileFetch).not.toHaveBeenCalledWith(unauthorizedUrl);
     const archive = await JSZip.loadAsync(Buffer.concat(response.chunks));
-    expect(await archive.file('image.png').async('string')).toBe('s3 bytes');
-    expect(await archive.file('library.js').async('string')).toBe(
-      'library bytes'
-    );
+    expect(await archive.file('image.png').async('nodebuffer')).toHaveLength(0);
   });
 
   it('rejects an arbitrary S3 bucket instead of using SDK credentials or HTTP fetch', async () => {
