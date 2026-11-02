@@ -309,7 +309,7 @@ async function createProjectsInP5user(projectsInAllCategories) {
                 },
                 {
                   name: 'index.html',
-                  content: defaultHTML(),
+                  content: defaultHTML({ version: '1.11.13' }),
                   id: b,
                   _id: b,
                   fileType: 'file',
