@@ -1,6 +1,7 @@
 import type { BrowserContext, Page } from '@playwright/test';
 import { test, expect } from '../fixtures';
 import { dismissCookieBanner } from '../helpers/cookie-banner';
+import { waitForPreviewReady } from '../helpers/preview';
 
 test.describe('editor page', () => {
   test.beforeEach(async ({ page }) => {
@@ -54,17 +55,11 @@ test.describe('editor page', () => {
     // Confirm count starts as 0, before the sketch has run at all
     await expect(logRow).toHaveCount(0);
 
+    await waitForPreviewReady(page);
     // Click Play (start the loop)
     await page
       .getByRole('button', { name: 'Play only visual sketch' })
       .click({ force: true });
-
-    // Wait for the sketch iframe src to confirm the sketch actually started
-    await expect(page.getByTitle('sketch preview')).toHaveAttribute(
-      'src',
-      /9002/,
-      { timeout: 10_000 }
-    );
 
     // Assert console output
     await expect(page.locator('.preview-console__messages')).toContainText(
@@ -252,17 +247,11 @@ test.describe('editor page', () => {
 
     await page.waitForTimeout(1000);
 
+    await waitForPreviewReady(page);
     // Click Play
     await page
       .getByRole('button', { name: 'Play only visual sketch' })
       .click({ force: true });
-
-    // Wait for the sketch iframe src to confirm the sketch actually started
-    await expect(page.getByTitle('sketch preview')).toHaveAttribute(
-      'src',
-      /9002/,
-      { timeout: 10_000 }
-    );
 
     // Assert console output
     await expect(
@@ -466,17 +455,11 @@ test.describe('editor page', () => {
 
     await page.waitForTimeout(1000);
 
+    await waitForPreviewReady(page);
     // Click Play
     await page
       .getByRole('button', { name: 'Play only visual sketch' })
       .click({ force: true });
-
-    // Wait for the sketch iframe src to confirm the sketch actually started
-    await expect(page.getByTitle('sketch preview')).toHaveAttribute(
-      'src',
-      /9002/,
-      { timeout: 10_000 }
-    );
 
     // Assert console output
     await expect(
