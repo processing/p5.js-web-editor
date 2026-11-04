@@ -37,9 +37,15 @@ module.exports = {
     }
   },
   plugins: [
-    new ESLintPlugin({
-      extensions: ['js', 'jsx', 'ts', 'tsx']
-    }),
+    // Skipped for e2e runs: linting is ~60% of each dev build and is already
+    // covered by `npm run lint` in CI and the pre-commit hook.
+    ...(process.env.APP_ENV === 'e2e'
+      ? []
+      : [
+          new ESLintPlugin({
+            extensions: ['js', 'jsx', 'ts', 'tsx']
+          })
+        ]),
     new webpack.HotModuleReplacementPlugin(),
     new ReactRefreshPlugin({
       overlay: {

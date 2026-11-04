@@ -7,17 +7,23 @@ on:
       - develop
       - release
 
+# Cancel superseded PR runs; let develop/release runs finish since they trigger deploys
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   test:
     name: Test and lint code base
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Use Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
           node-version: '18.20.x'
-      - run: npm install
+          cache: 'npm'
+      - run: npm ci
       - run: npm run test
       - run: npm run typecheck
       - run: npm run lint

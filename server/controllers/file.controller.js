@@ -161,6 +161,14 @@ export function getFileContent(req, res) {
         return;
       }
 
+      if (
+        project.visibility === 'Private' &&
+        (!req.user || !project.user.equals(req.user._id))
+      ) {
+        res.status(403).send({ message: 'Project is private' });
+        return;
+      }
+
       const filePath = req.params[0];
       const resolvedFile = resolvePathToFile(filePath, project.files);
 

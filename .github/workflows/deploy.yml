@@ -6,6 +6,10 @@ on:
       - release
     types:
       - completed
+# Run production deploys one at a time
+concurrency:
+  group: deploy-production-${{ github.event.workflow_run.conclusion }}
+  cancel-in-progress: false
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
   GKE_CLUSTER: p5-gke-cluster
@@ -14,6 +18,7 @@ env:
   IMAGE: ${{ secrets.DOCKER_USERNAME }}/p5.js-web-editor
 jobs:
   push_to_registry:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     environment: production
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
@@ -47,7 +52,7 @@ jobs:
         with:
           service_account_key: ${{ secrets.GKE_SA_KEY }}
           project_id: ${{ secrets.GKE_PROJECT }}
- 
+
       # Configure docker to use the gcloud command-line tool as a credential helper
       - run: |-
           gcloud --quiet auth configure-docker

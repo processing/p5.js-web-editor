@@ -482,6 +482,10 @@ export async function changeProjectVisibility(req, res) {
 
     return res.status(200).json(updatedProject);
   } catch (error) {
-    return res.status(500).json(error);
+    console.error('Error in changeProjectVisibility:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Failed to change project visibility.'
+    });
   }
 }
