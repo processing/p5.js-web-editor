@@ -4,7 +4,11 @@
 import { Request, Response } from 'jest-express';
 import Project from '../../models/project';
 import { User } from '../../models/user';
-import { getProject, downloadProjectAsZip } from '../project.controller';
+import {
+  getProject,
+  downloadProjectAsZip,
+  changeProjectVisibility
+} from '../project.controller';
 
 jest.mock('../../models/project');
 jest.mock('../../models/user');
@@ -206,6 +210,39 @@ describe('project.controller', () => {
         message: 'Project is private'
       });
       expect(ownerId.equals).toHaveBeenCalledWith('other-user-id');
+    });
+  });
+
+  describe('changeProjectVisibility()', () => {
+    it('does not leak the error object when the update fails', async () => {
+      const request = new Request();
+      request.setBody({ projectId: 'project-123', visibility: 'Private' });
+      request.user = { _id: 'owner-id' };
+      const response = new Response();
+      const consoleError = jest
+        .spyOn(console, 'error')
+        .mockImplementation(() => {});
+
+      const dbError = new Error('connection to mongo lost');
+      Project.findOne = jest.fn().mockResolvedValue({
+        user: { equals: jest.fn().mockReturnValue(true) }
+      });
+      Project.findByIdAndUpdate = jest.fn().mockImplementation(() => {
+        throw dbError;
+      });
+
+      await changeProjectVisibility(request, response);
+
+      expect(response.status).toHaveBeenCalledWith(500);
+      expect(response.json).toHaveBeenCalledWith({
+        success: false,
+        message: 'Failed to change project visibility.'
+      });
+      expect(consoleError).toHaveBeenCalledWith(
+        'Error in changeProjectVisibility:',
+        dbError
+      );
+      consoleError.mockRestore();
     });
   });
 });

@@ -224,6 +224,7 @@
 }
 
 .nav__items-right {
+  min-width: 11rem;
   padding-right: #{math.div(20, $base-font-size)}rem;
 
   & .nav__dropdown {
