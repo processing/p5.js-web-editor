@@ -12,11 +12,13 @@ function createTransport(): nodemailer.Transporter {
   if (useSmtpTransport) {
     const { MAILPIT_SMTP_PORT } = process.env;
     if (!MAILPIT_SMTP_PORT) {
-      throw new Error('MAILPIT_SMTP_PORT missing from .env.e2e');
+      throw new Error(
+        'MAILPIT_SMTP_PORT missing from environment (.env or .env.e2e)'
+      );
     }
     if (Number.isNaN(Number(MAILPIT_SMTP_PORT))) {
       throw new Error(
-        'MAILPIT_SMTP_PORT is not a valid number. Check .env.e2e'
+        'MAILPIT_SMTP_PORT is not a valid number. Check your environment (.env or .env.e2e)'
       );
     }
 

@@ -45,7 +45,11 @@ _Note_: The installation steps assume you are using a Unix-like shell. If you ar
       - Choose **Node.js** as the driver for your connection method. You will see a connection string, with or without the password filled in.
       - Copy the string and use it as your `MONGO_URL` in the `.env` file.
 8. `$ cp .env.example .env`
-9. To test emails locally, install and run [Mailpit](https://github.com/axllent/mailpit) and read mail at [http://localhost:8025](http://localhost:8025).
+9. (Optional) To test emails locally, install and run [Mailpit](https://github.com/axllent/mailpit) and read mail at [http://localhost:8025](http://localhost:8025).
+   * MacOS with homebrew: `brew install mailpit`, then run `mailpit`.
+   * Windows: `winget install axllent.mailpit`, then run `mailpit`.
+   * Docker: `docker run -p 1025:1025 -p 8025:8025 axllent/mailpit` (skip this if you're using the Docker installation below, which bundles Mailpit).
+   * Note: if Mailpit isn't running, sending email (e.g. signup verification) will fail.
 10. (Optional) Update `.env` with necessary keys to enable certain app behaviors, i.e. add Github ID and Github Secret if you want to be able to log in with Github.
    * See the [GitHub API Configuration](#github-api-configuration) section for information on how to authenticate with Github.
    * See the [S3 Bucket Configuration](#s3-bucket-configuration) section for information on how to set up an S3 bucket
