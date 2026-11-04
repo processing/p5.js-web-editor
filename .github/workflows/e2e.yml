@@ -3,6 +3,12 @@ on:
   workflow_dispatch:
   pull_request:
     branches: [develop]
+
+# Cancel superseded PR runs
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   test-e2e:
     environment: e2e-tests
