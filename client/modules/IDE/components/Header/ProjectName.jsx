@@ -16,10 +16,10 @@ export default function ProjectName() {
     <EditableInput
       value={projectName}
       disabled={!canEditProjectName}
+      description={t('Toolbar.NewSketchNameARIA')}
       aria-label={t('Toolbar.EditSketchARIA')}
       inputProps={{
-        maxLength: 128,
-        'aria-label': t('Toolbar.NewSketchNameARIA')
+        maxLength: 128
       }}
       validate={(text) => text.trim().length > 0}
       onChange={changeSketchName}
