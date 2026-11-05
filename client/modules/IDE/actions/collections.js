@@ -34,7 +34,7 @@ export function getCollections(username) {
   };
 }
 
-export function createCollection(collection) {
+export function createCollection(collection, redirect = true) {
   return (dispatch) => {
     dispatch(startLoader());
     const url = '/collections';
@@ -52,8 +52,9 @@ export function createCollection(collection) {
 
         const pathname = `/${newCollection.owner.username}/collections/${newCollection.id}`;
         const location = { pathname, state: { skipSavingPath: true } };
-
-        browserHistory.push(location);
+        if (redirect) {
+          browserHistory.push(location);
+        }
       })
       .catch((error) => {
         dispatch({
