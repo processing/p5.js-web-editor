@@ -1,6 +1,7 @@
-import { Hook, Decode, Encode } from 'console-feed';
+import { Decode, Encode } from 'console-feed';
 import StackTrace from 'stacktrace-js';
 import { evaluateExpression } from './evaluateExpression';
+import hookConsoleSync from './hookConsoleSync';
 
 // should postMessage user the dispatcher? does the parent window need to
 // be registered as a frame? or a just a listener?
@@ -56,7 +57,7 @@ window.loopProtect = {
 
 const consoleBuffer = [];
 const LOGWAIT = 500;
-Hook(window.console, (log) => {
+hookConsoleSync(window.console, (log) => {
   consoleBuffer.push({
     log
   });
