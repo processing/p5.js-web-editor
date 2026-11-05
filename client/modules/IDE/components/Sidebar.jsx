@@ -126,33 +126,29 @@ export default function SideBar() {
                   </button>
                 </li>
                 <li>
-                  {isAuthenticated ? (
-                    <button
-                      aria-label={t('Sidebar.UploadFileARIA')}
-                      onClick={() => {
+                  <button
+                    className={classNames(
+                      !isAuthenticated && 'tooltipped-no-delay',
+                      !isAuthenticated && 'tooltipped',
+                      !isAuthenticated && 'tooltipped-s'
+                    )}
+                    aria-label={
+                      !isAuthenticated
+                        ? t('Sidebar.UploadFileTooltip')
+                        : t('Sidebar.UploadFileARIA')
+                    }
+                    disabled={!isAuthenticated}
+                    onClick={() => {
+                      if (!isAuthenticated) {
+                        window.location.href = '/login';
+                      } else {
                         dispatch(openUploadFileModal(rootFile.id));
                         setTimeout(() => dispatch(closeProjectOptions()), 300);
-                      }}
-                    >
-                      {t('Sidebar.UploadFile')}
-                    </button>
-                  ) : (
-                    <Tooltip
-                      content={t('Sidebar.UploadFileTooltipUnauthenticated')}
-                    >
-                      <button
-                        aria-label={t('Sidebar.UploadFileARIA')}
-                        aria-disabled
-                        onClick={(e) => {
-                          // prevent any action when unauthenticated
-                          e.preventDefault();
-                          e.stopPropagation();
-                        }}
-                      >
-                        {t('Sidebar.UploadFile')}
-                      </button>
-                    </Tooltip>
-                  )}
+                      }
+                    }}
+                  >
+                    {t('Sidebar.UploadFile')}
+                  </button>
                 </li>
               </ul>
             )}
