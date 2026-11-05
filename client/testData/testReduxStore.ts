@@ -1,3 +1,4 @@
+import { any } from 'prop-types';
 import { initialState as initialFilesState } from '../modules/IDE/reducers/files';
 import { initialState as initialPrefState } from '../modules/IDE/reducers/preferences';
 import { RootState } from '../reducers';

@@ -6,33 +6,62 @@ import { setToastText, showToast } from './toast';
 
 const TOAST_DISPLAY_TIME_MS = 1500;
 
-export function getCollections(username) {
-  return (dispatch) => {
-    dispatch(startLoader());
-    let url;
-    if (username) {
-      url = `/${username}/collections`;
-    } else {
-      url = '/collections';
-    }
-    return apiClient
-      .get(url)
-      .then((response) => {
-        dispatch({
-          type: ActionTypes.SET_COLLECTIONS,
-          collections: response.data
-        });
-        dispatch(stopLoader());
-      })
-      .catch((error) => {
-        dispatch({
-          type: ActionTypes.ERROR,
-          error: error?.response?.data
-        });
-        dispatch(stopLoader());
-      });
-  };
-}
+const buildCollectionUrl = (username, options = {}) => {
+  const {
+    page = 1,
+    limit = 10,
+    sortField = 'updatedAt',
+    sortDir = 'desc',
+    q = ''
+  } = options;
+
+  const base = username
+    ? `/${encodeURIComponent(username)}/collections`
+    : '/collections';
+
+  const params = new URLSearchParams({
+    page: String(page),
+    limit: String(limit),
+    sortField,
+    sortDir
+  });
+
+  const trimmed = q.trim();
+
+  if (trimmed) {
+    params.set('q', trimmed);
+  }
+
+  return `${base}?${params.toString()}`;
+};
+
+const fetchCollections = (username, options, successType) => (dispatch) => {
+  dispatch(startLoader());
+
+  const url = buildCollectionUrl(username, options);
+  return apiClient
+    .get(url)
+    .then((response) => {
+      dispatch({ type: successType, collections: response.data });
+      dispatch(stopLoader());
+      return response.data;
+    })
+    .catch((error) => {
+      dispatch({ type: ActionTypes.ERROR, error: error?.response?.data });
+      dispatch(stopLoader());
+      throw error;
+    });
+};
+
+export const getCollections = (username, options) =>
+  fetchCollections(username, options, ActionTypes.SET_COLLECTIONS);
+
+export const getCollectionsForCollectionList = (username, options) =>
+  fetchCollections(
+    username,
+    options,
+    ActionTypes.SET_COLLECTIONS_FOR_COLLECTION_LIST
+  );
 
 export function createCollection(collection) {
   return (dispatch) => {
