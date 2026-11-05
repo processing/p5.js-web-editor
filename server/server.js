@@ -57,7 +57,7 @@ if (process.env.NODE_ENV === 'development') {
   app.use(webpackHotMiddleware(compiler, { log: false }));
 }
 
-const mongoConnectionString = process.env.MONGO_URL;
+const mongoConnectionString = process.env.MONGO_URI || process.env.MONGO_URL;
 app.set('trust proxy', true);
 
 // Enable Cross-Origin Resource Sharing (CORS) for all origins
@@ -95,8 +95,7 @@ app.use(
       maxAge: 1000 * 60 * 60 * 24 * 28 // 4 weeks in milliseconds
     },
     store: MongoStore.create({
-      mongoUrl: mongoConnectionString,
-      ttl: 1000 * 60 * 60 * 24 * 28 // 4 weeks in milliseconds to match cookie maxAge
+      mongoUrl: mongoConnectionString
     })
   })
 );
