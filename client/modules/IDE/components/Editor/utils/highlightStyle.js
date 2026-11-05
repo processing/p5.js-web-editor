@@ -26,7 +26,7 @@ export const highlightStyle = HighlightStyle.define([
   { tag: tags.function, class: 'cm-keyword' },
   { tag: tags.operator, class: 'cm-operator' },
   { tag: tags.operatorKeyword, class: 'cm-operator' },
-  { tag: tags.controlKeyword, class: 'cm-operator' },
+  { tag: tags.controlKeyword, class: 'cm-keyword' },
   { tag: tags.derefOperator, class: 'cm-operator' },
   { tag: tags.arithmeticOperator, class: 'cm-operator' },
   { tag: tags.logicOperator, class: 'cm-operator' },
