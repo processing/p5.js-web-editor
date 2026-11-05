@@ -125,7 +125,6 @@ export async function listObjectsInS3ForUser(userId) {
         size: asset.size,
         url: `${process.env.S3_BUCKET_URL_BASE}${asset.key}`
       };
-      totalSize += asset.size;
 
       const wasMatched = projects.some((project) =>
         project.files.some((file) => {
@@ -141,8 +140,11 @@ export async function listObjectsInS3ForUser(userId) {
         })
       );
 
+      // Only count referenced assets toward the limit; unreferenced S3
+      // leftovers aren't shown or deletable in "My Assets".
       if (wasMatched) {
         projectAssets.push(foundAsset);
+        totalSize += asset.size;
       }
     });
 
