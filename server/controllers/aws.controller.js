@@ -131,9 +131,14 @@ export async function listObjectsInS3ForUser(userId) {
         project.files.some((file) => {
           if (!file.url) return false;
           if (file.url.includes(asset.key)) {
+            const parent = project.files.find((f) =>
+              f.children.includes(file.id)
+            );
             foundAsset.name = file.name;
             foundAsset.sketchName = project.name;
             foundAsset.sketchId = project.id;
+            foundAsset.fileId = file.id;
+            foundAsset.parentId = parent?.id;
             foundAsset.url = file.url;
             return true;
           }
