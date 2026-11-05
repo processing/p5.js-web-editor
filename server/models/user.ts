@@ -12,7 +12,7 @@ import { apiKeySchema } from './apiKey';
 const userSchema = new Schema<UserDocument, UserModel>(
   {
     name: { type: String, default: '' },
-    username: { type: String, required: true, unique: true },
+    username: { type: String, required: true },
     password: { type: String },
     resetPasswordToken: String,
     resetPasswordExpires: Date,
@@ -21,7 +21,7 @@ const userSchema = new Schema<UserDocument, UserModel>(
     verifiedTokenExpires: Date,
     github: { type: String },
     google: { type: String },
-    email: { type: String, unique: true },
+    email: { type: String },
     tokens: Array,
     apiKeys: { type: [apiKeySchema] },
     preferences: {
