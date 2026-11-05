@@ -126,8 +126,26 @@ const SketchListRowBase = ({
   return (
     <tr className="sketches-table__row">
       <th scope="row">{name}</th>
-      <td>{formatDateCell(sketch.createdAt, mobile)}</td>
-      <td>{formatDateCell(sketch.updatedAt, mobile)}</td>
+      <td
+        className="sketches-table__date-cell"
+        tabIndex={0}
+        aria-label={`${t('SketchList.HeaderCreatedAt')}: ${formatDateCell(
+          sketch.createdAt,
+          mobile
+        )}`}
+      >
+        {formatDateCell(sketch.createdAt, mobile)}
+      </td>
+      <td
+        className="sketches-table__date-cell"
+        tabIndex={0}
+        aria-label={`${t('SketchList.HeaderUpdatedAt')}: ${formatDateCell(
+          sketch.updatedAt,
+          mobile
+        )}`}
+      >
+        {formatDateCell(sketch.updatedAt, mobile)}
+      </td>
       <td hidden={!userIsOwner || mobile}>
         <VisibilityDropdown
           sketch={sketch}
