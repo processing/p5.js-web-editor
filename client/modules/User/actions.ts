@@ -26,7 +26,7 @@ import type {
 } from '../../../common/types';
 import type { GetRootState, RootState } from '../../reducers';
 
-export function authError(error: Error) {
+export function authError(error: Error | string) {
   return {
     type: ActionTypes.AUTH_ERROR,
     payload: error
@@ -98,7 +98,10 @@ export function validateAndLoginUser(formProps: {
           })
           .catch((error) =>
             resolve({
-              [FORM_ERROR]: error.response.data.message
+              [FORM_ERROR]:
+                error.response?.data?.message ||
+                error.message ||
+                'Unknown error.'
             })
           );
       }
@@ -128,8 +131,12 @@ export function validateAndSignUpUser(formValues: CreateUserRequestBody) {
           resolve();
         })
         .catch((error) => {
-          const { response } = error;
-          dispatch(authError(response.data.error));
+          const message =
+            error.response?.data?.error ||
+            error.response?.data?.message ||
+            error.message ||
+            'Unknown error.';
+          dispatch(authError(message));
           resolve({ error });
         });
     });
@@ -189,7 +196,7 @@ export function resetProject(dispatch: Dispatch) {
 }
 
 export function logoutUser() {
-  return (dispatch: Dispatch) => {
+  return (dispatch: Dispatch) =>
     apiClient
       .get('/logout')
       .then(() => {
@@ -199,10 +206,13 @@ export function logoutUser() {
         resetProject(dispatch);
       })
       .catch((error) => {
-        const { response } = error;
-        dispatch(authError(response.data.error));
+        const message =
+          error.response?.data?.error ||
+          error.response?.data?.message ||
+          error.message ||
+          'Unknown error.';
+        dispatch(authError(message));
       });
-  };
 }
 
 /**
@@ -532,10 +542,10 @@ export function unlinkService(service: string) {
           dispatch(setToastText('Toast.StepUpRequired'));
           return;
         }
-        const { response } = error;
         const message =
-          response?.message ||
-          response?.data?.error ||
+          error.response?.message ||
+          error.response?.data?.error ||
+          error.message ||
           'Failed to unlink account.';
         dispatch(authError(message));
       }
@@ -558,8 +568,11 @@ export function setUserCookieConsent(
         });
       })
       .catch((error) => {
-        const { response } = error;
-        const message = response.message || response.data.error;
+        const message =
+          error.response?.message ||
+          error.response?.data?.error ||
+          error.message ||
+          'Unknown error.';
         dispatch(authError(message));
       });
   };
