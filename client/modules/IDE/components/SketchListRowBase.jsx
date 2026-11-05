@@ -99,6 +99,14 @@ const SketchListRowBase = ({
     [changeVisibility]
   );
 
+  const isPublic =
+    typeof sketch.visibility === 'string' &&
+    sketch.visibility.toLowerCase() === 'public';
+  const toggleVisibilityFromMenu = () => {
+    const toggle = isPublic ? 'Private' : 'Public';
+    handleVisibilityChange(sketch.id, sketch.name, toggle);
+  };
+
   const userIsOwner = user.username === username;
 
   let url = `/${username}/sketches/${sketch.id}`;
@@ -150,6 +158,14 @@ const SketchListRowBase = ({
           </MenuItem>
           <MenuItem hideIf={!user.authenticated} onClick={onAddToCollection}>
             {t('SketchList.DropdownAddToCollection')}
+          </MenuItem>
+          <MenuItem
+            hideIf={!userIsOwner || !mobile}
+            onClick={toggleVisibilityFromMenu}
+          >
+            {isPublic
+              ? t('SketchList.MakePrivate', 'Make Private')
+              : t('SketchList.MakePublic', 'Make Public')}
           </MenuItem>
           {/* <MenuItem onClick={handleSketchShare}>
             {t('SketchList.DropdownShare')}
