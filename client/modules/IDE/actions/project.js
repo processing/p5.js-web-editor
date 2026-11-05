@@ -433,6 +433,28 @@ export function deleteProject(id) {
 export function changeVisibility(projectId, projectName, visibility, t) {
   return (dispatch, getState) => {
     const state = getState();
+    const isCurrentProject = state.project.id === projectId;
+    const previousVisibility = isCurrentProject
+      ? state.project.visibility
+      : state.sketches?.projects?.find((sketch) => sketch.id === projectId)
+          ?.visibility;
+
+    // Update connected dropdowns immediately while the server request is in flight.
+    dispatch({
+      type: ActionTypes.CHANGE_VISIBILITY,
+      payload: {
+        id: projectId,
+        visibility
+      }
+    });
+
+    if (isCurrentProject) {
+      dispatch({
+        type: ActionTypes.SET_PROJECT_VISIBILITY,
+        visibility,
+        updatedAt: state.project.updatedAt
+      });
+    }
 
     apiClient
       .patch('/project/visibility', { projectId, visibility })
@@ -484,6 +506,24 @@ export function changeVisibility(projectId, projectName, visibility, t) {
         }
       })
       .catch((error) => {
+        if (previousVisibility !== undefined) {
+          dispatch({
+            type: ActionTypes.CHANGE_VISIBILITY,
+            payload: {
+              id: projectId,
+              visibility: previousVisibility
+            }
+          });
+
+          if (isCurrentProject) {
+            dispatch({
+              type: ActionTypes.SET_PROJECT_VISIBILITY,
+              visibility: previousVisibility,
+              updatedAt: state.project.updatedAt
+            });
+          }
+        }
+
         dispatch({
           type: ActionTypes.ERROR,
           error: error?.response?.data
