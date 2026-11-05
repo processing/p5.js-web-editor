@@ -1,6 +1,7 @@
 import * as ActionTypes from '../../../constants';
 import { clearConsole } from './console';
 import { dispatchMessage, MessageTypes } from '../../../utils/dispatcher';
+import * as FileActions from './files';
 
 export function startVisualSketch() {
   return {
@@ -46,9 +47,16 @@ export function stopAccessibleOutput() {
 }
 
 export function setSelectedFile(fileId) {
-  return {
-    type: ActionTypes.SET_SELECTED_FILE,
-    selectedFile: fileId
+  return (dispatch, getState) => {
+    const state = getState();
+    const file = state.files.find((f) => f.id === fileId);
+    dispatch({
+      type: ActionTypes.SET_SELECTED_FILE,
+      selectedFile: fileId
+    });
+    if (file && file.url && !file.content) {
+      dispatch(FileActions.fetchS3FileContent(file));
+    }
   };
 }
 
