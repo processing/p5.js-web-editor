@@ -10,8 +10,6 @@ import Project from '../models/project';
 const clientId = process.env.GITHUB_ID;
 const clientSecret = process.env.GITHUB_SECRET;
 
-const headers = { 'User-Agent': 'p5js-web-editor/0.0.1' };
-
 const mongoConnectionString = process.env.MONGO_URL;
 
 mongoose.connect(mongoConnectionString, {
@@ -26,18 +24,23 @@ mongoose.connection.on('error', () => {
   process.exit(1);
 });
 
+// shared headers for both v1 and v2 examples
+function authHeaders() {
+  return {
+    'User-Agent': 'p5js-web-editor/0.0.1',
+    Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString(
+      'base64'
+    )}`
+  };
+}
+
 async function getCategories() {
   const categories = [];
   const options = {
     url:
       'https://api.github.com/repos/processing/p5.js-website-legacy/contents/src/data/examples/en',
     method: 'GET',
-    headers: {
-      ...headers,
-      Authorization: `Basic ${Buffer.from(
-        `${clientId}:${clientSecret}`
-      ).toString('base64')}`
-    }
+    headers: authHeaders()
   };
   const { data } = await axios.request(options);
   data.forEach((metadata) => {
@@ -56,12 +59,7 @@ function getSketchesInCategories(categories) {
       const options = {
         url: `${category.url.replace('?ref=main', '')}`,
         method: 'GET',
-        headers: {
-          ...headers,
-          Authorization: `Basic ${Buffer.from(
-            `${clientId}:${clientSecret}`
-          ).toString('base64')}`
-        },
+        headers: authHeaders(),
         json: true
       };
       const { data } = await axios.request(options);
@@ -108,12 +106,7 @@ function getSketchContent(projectsInAllCategories) {
           const options = {
             url: `${project.sketchUrl.replace('?ref=main', '')}`,
             method: 'GET',
-            headers: {
-              ...headers,
-              Authorization: `Basic ${Buffer.from(
-                `${clientId}:${clientSecret}`
-              ).toString('base64')}`
-            }
+            headers: authHeaders()
           };
           const { data } = await axios.request(options);
           const noNumberprojectName = project.projectName.replace(/(\d+)/g, '');
@@ -174,15 +167,9 @@ async function addAssetsToProject(assets, response, project) {
         const assetOptions = {
           url: assetUrl,
           method: 'GET',
-          headers: {
-            ...headers,
-            Authorization: `Basic ${Buffer.from(
-              `${clientId}:${clientSecret}`
-            ).toString('base64')}`
-          }
+          headers: authHeaders()
         };
 
-        // a function to await for the response that contains the content of asset file
         const doRequest = async (optionsAsset) => {
           const { data } = await axios.request(optionsAsset);
           return data;
@@ -220,21 +207,16 @@ async function addAssetsToProject(assets, response, project) {
   /* eslint-disable no-await-in-loop */
 }
 
-async function createProjectsInP5user(projectsInAllCategories) {
+async function createProjectsInP5user(projectsInAllCategories, user) {
   const options = {
     url:
       'https://api.github.com/repos/processing/p5.js-website-legacy/contents/src/data/examples/assets',
     method: 'GET',
-    headers: {
-      ...headers,
-      Authorization: `Basic ${Buffer.from(
-        `${clientId}:${clientSecret}`
-      ).toString('base64')}`
-    }
+    headers: authHeaders()
   };
 
   const { data } = await axios.request(options);
-  const user = await User.findOne({ username: 'p5' }).exec();
+
   await Q.all(
     projectsInAllCategories.map((projectsInOneCategory) =>
       Q.all(
@@ -340,13 +322,139 @@ async function createProjectsInP5user(projectsInAllCategories) {
       )
     )
   );
-  process.exit();
+}
+
+async function importV2Examples(user) {
+  console.log('--- Importing v2 examples ---');
+
+  // 1. Get all category folders from p5.js-example repo
+  const { data: categoryDirs } = await axios.request({
+    url:
+      'https://api.github.com/repos/processing/p5.js-example/contents/examples',
+    method: 'GET',
+    headers: authHeaders()
+  });
+
+  await Q.all(
+    categoryDirs
+      .filter((item) => item.type === 'dir')
+      .map(async (categoryDir) => {
+        // Category name: "01_Shapes_And_Color" → "Shapes And Color"
+        const categoryName = categoryDir.name.split('_').slice(1).join(' ');
+
+        // 2. Get all sketch folders inside this category
+        const { data: sketchDirs } = await axios.request({
+          url: categoryDir.url,
+          method: 'GET',
+          headers: authHeaders()
+        });
+
+        await Q.all(
+          sketchDirs
+            .filter((item) => item.type === 'dir')
+            .map(async (sketchDir) => {
+              // 3. Get files inside this sketch folder
+              const { data: sketchFiles } = await axios.request({
+                url: sketchDir.url,
+                method: 'GET',
+                headers: authHeaders()
+              });
+
+              const codeFile = sketchFiles.find((f) => f.name === 'code.js');
+              const descFile = sketchFiles.find(
+                (f) => f.name === 'description.mdx'
+              );
+
+              // skip sketch if no code.js found
+              if (!codeFile) {
+                console.log(`Skipping ${sketchDir.name}: no code.js found`);
+                return;
+              }
+
+              // 4. Download code.js content
+              const { data: sketchContent } = await axios.request({
+                url: codeFile.download_url,
+                method: 'GET',
+                headers: authHeaders()
+              });
+
+              // 5. Extract title from description.mdx if available
+              let sketchTitle = sketchDir.name.split('_').slice(1).join(' '); // fallback to folder name
+
+              if (descFile) {
+                const { data: mdxContent } = await axios.request({
+                  url: descFile.download_url,
+                  method: 'GET',
+                  headers: authHeaders()
+                });
+                const titleMatch = mdxContent.match(/^title:\s*(.+)$/m);
+                if (titleMatch) {
+                  sketchTitle = titleMatch[1].trim();
+                }
+              }
+
+              const projectName = `${categoryName}: ${sketchTitle}`;
+
+              // 6. Build the project file structure and save to MongoDB
+              const a = objectID().toHexString();
+              const b = objectID().toHexString();
+              const c = objectID().toHexString();
+              const r = objectID().toHexString();
+
+              const newProject = new Project({
+                name: projectName,
+                user: user._id,
+                files: [
+                  {
+                    name: 'root',
+                    id: r,
+                    _id: r,
+                    children: [a, b, c],
+                    fileType: 'folder'
+                  },
+                  {
+                    name: 'sketch.js',
+                    content: sketchContent,
+                    id: a,
+                    _id: a,
+                    isSelectedFile: true,
+                    fileType: 'file',
+                    children: []
+                  },
+                  {
+                    name: 'index.html',
+                    // NOTE: defaultHTML() called without version for now
+                    // TODO: update to explicit v2 version in other existing PR
+                    content: defaultHTML(),
+                    id: b,
+                    _id: b,
+                    fileType: 'file',
+                    children: []
+                  },
+                  {
+                    name: 'style.css',
+                    content: defaultCSS,
+                    id: c,
+                    _id: c,
+                    fileType: 'file',
+                    children: []
+                  }
+                ],
+                _id: shortid.generate()
+              });
+
+              const savedProject = await newProject.save();
+              console.log(`Created v2 project: ${savedProject.name}`);
+            })
+        );
+      })
+  );
 }
 
 async function getp5User() {
   console.log('Getting p5 user');
-  const user = await User.findOne({ username: 'p5' }).exec();
-  let p5User = user;
+  let p5User = await User.findOne({ username: 'p5' }).exec();
+
   if (!p5User) {
     p5User = new User({
       username: 'p5',
@@ -356,16 +464,25 @@ async function getp5User() {
     await p5User.save();
     console.log(`Created a user p5 ${p5User}`);
   }
+
+  // Delete all old projects before reimporting
   const projects = await Project.find({ user: p5User._id }).exec();
   console.log('Deleting old projects...');
-  projects.forEach(async (project) => {
-    await Project.deleteOne({ _id: project._id });
-  });
+  await Promise.all(
+    projects.map((project) => Project.deleteOne({ _id: project._id }))
+  );
+
+  // Import v1 examples (legacy repo, p5 v1.11.13)
+  console.log('--- Importing v1 examples ---');
   const categories = await getCategories();
   const sketchesInCategories = await getSketchesInCategories(categories);
   const sketchContent = await getSketchContent(sketchesInCategories);
-  const projectsInUser = await createProjectsInP5user(sketchContent);
-  return projectsInUser;
+  await createProjectsInP5user(sketchContent, p5User);
+
+  // Import v2 examples (p5.js-example repo, current p5 version)
+  await importV2Examples(p5User);
+
+  process.exit();
 }
 
 getp5User();
