@@ -16,6 +16,7 @@ import { getAllScriptOffsets } from '../../utils/consoleUtils';
 import { registerFrame } from '../../utils/dispatcher';
 import { createBlobUrl } from './filesReducer';
 import resolvePathsForElementsWithAttribute from '../../../server/utils/resolveUtils';
+import { getFileUrls } from '../../utils/previewFetch';
 
 let objectUrls = {};
 let objectPaths = {};
@@ -235,6 +236,7 @@ p5.prototype.registerMethod('afterSetup', p5.prototype.ensureAccessibleCanvas);`
     window.offs = ${JSON.stringify(scriptOffs)};
     window.objectUrls = ${JSON.stringify(objectUrls)};
     window.objectPaths = ${JSON.stringify(objectPaths)};
+    window.fileUrls = ${JSON.stringify(getFileUrls(files))};
     window.editorOrigin = '${getConfig('EDITOR_URL')}';
   `;
   addLoopProtect(sketchDoc, indexSrc);
