@@ -194,6 +194,10 @@ const SketchList = ({
                     context: mobile ? 'mobile' : ''
                   })
                 )}
+                {renderFieldHeader(
+                  'p5Version',
+                  t('SketchList.HeaderP5Version')
+                )}
                 {userIsOwner &&
                   renderFieldHeader('visibility', t('Visibility.Label'))}
                 <th scope="col"></th>
@@ -251,6 +255,7 @@ SketchList.propTypes = {
       name: PropTypes.string.isRequired,
       createdAt: PropTypes.string.isRequired,
       updatedAt: PropTypes.string.isRequired,
+      p5Version: PropTypes.string,
       visibility: PropTypes.string
     })
   ).isRequired,

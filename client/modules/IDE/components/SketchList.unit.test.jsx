@@ -23,6 +23,7 @@ const makeProjects = (prefix, count) =>
     name: `${prefix}-sketch-${i + 1}`,
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
+    p5Version: i % 2 === 0 ? '2.3.4' : 'Custom',
     visibility: 'public'
   }));
 
@@ -154,6 +155,38 @@ describe('<SketchList />', () => {
     await waitFor(() => {
       expect(requestCount).toBeGreaterThan(before);
       expect(lastSearchParams.get('sortField')).toBe('createdAt');
+    });
+  });
+
+  it('renders p5 version column values', async () => {
+    subject();
+    await screen.findByText('page1-sketch-1');
+
+    expect(
+      screen.getByRole('columnheader', { name: /SketchList\.HeaderP5Version/i })
+    ).toBeInTheDocument();
+    expect(screen.getAllByText('2.3.4').length).toBeGreaterThan(0);
+    expect(
+      screen.getAllByText('SketchList.P5VersionCustom').length
+    ).toBeGreaterThan(0);
+  });
+
+  it('clicking on p5 version header refetches with sortField=p5Version', async () => {
+    subject();
+    await screen.findByText('page1-sketch-1');
+
+    const before = requestCount;
+
+    const versionHeader = screen.getByRole('columnheader', {
+      name: /SketchList\.HeaderP5Version/i
+    });
+    const versionSortButton = within(versionHeader).getByRole('button');
+
+    fireEvent.click(versionSortButton);
+
+    await waitFor(() => {
+      expect(requestCount).toBeGreaterThan(before);
+      expect(lastSearchParams.get('sortField')).toBe('p5Version');
     });
   });
 

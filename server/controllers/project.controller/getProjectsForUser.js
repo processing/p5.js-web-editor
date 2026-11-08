@@ -1,6 +1,19 @@
 import Project from '../../models/project';
 import { User } from '../../models/user';
 import { toApi as toApiProjectObject } from '../../domain-objects/Project';
+import {
+  compareP5Versions,
+  detectP5VersionFromFiles
+} from '../../../common/detectP5Version';
+
+const projectToListItem = (project) => {
+  const json =
+    typeof project.toJSON === 'function' ? project.toJSON() : project;
+  return {
+    ...json,
+    p5Version: detectP5VersionFromFiles(json.files)
+  };
+};
 
 /**
  * Fetches projects for the username in the request.
@@ -47,11 +60,52 @@ const createCoreHandler = (mapProjectsToResponse) => async (req, res) => {
       'name',
       'createdAt',
       'updatedAt',
-      'visibility'
+      'visibility',
+      'p5Version'
     ]);
     const safeSortField = allowedSortFields.has(sortField)
       ? sortField
       : 'updatedAt';
+
+    // p5Version is derived from index.html, so sorting must happen in memory.
+    if (safeSortField === 'p5Version') {
+      const allProjects = await Project.find(filter)
+        .select('name files id createdAt updatedAt visibility')
+        .exec();
+
+      const mapped = allProjects.map(projectToListItem).sort((a, b) => {
+        const versionCompare =
+          compareP5Versions(a.p5Version, b.p5Version) * dir;
+        if (versionCompare !== 0) {
+          return versionCompare;
+        }
+        // Stable secondary sort by id
+        if (a.id === b.id) {
+          return 0;
+        }
+        return a.id > b.id ? dir : -dir;
+      });
+
+      const totalProjects = mapped.length;
+      const projects = usePagination
+        ? mapped.slice((parsedPage - 1) * parsedLimit, parsedPage * parsedLimit)
+        : mapped;
+
+      const response = {
+        projects: mapProjectsToResponse(projects),
+        ...(usePagination && {
+          metadata: {
+            page: parsedPage,
+            totalPages: Math.max(Math.ceil(totalProjects / parsedLimit), 1),
+            totalProjects,
+            limit: parsedLimit,
+            hasPagination: true
+          }
+        })
+      };
+
+      return res.json(response);
+    }
 
     const query = Project.find(filter)
       .sort({ [safeSortField]: dir, _id: dir })
@@ -68,7 +122,7 @@ const createCoreHandler = (mapProjectsToResponse) => async (req, res) => {
       : projects.length;
 
     const response = {
-      projects: mapProjectsToResponse(projects),
+      projects: mapProjectsToResponse(projects.map(projectToListItem)),
       ...(usePagination && {
         metadata: {
           page: parsedPage,
