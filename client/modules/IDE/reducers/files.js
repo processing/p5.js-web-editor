@@ -226,7 +226,7 @@ const files = (state, action) => {
       // ${updatedFile.filePath.length > 0 ? '/' : ''}${updatedFile.name}`;
       const childPath = `${updatedFile.filePath}/${updatedFile.name}`;
       updatedFile.children.forEach((childId) => {
-        setFilePath(newState, action.id, childPath);
+        setFilePath(newState, childId, childPath);
       });
       return newState.map((file) => {
         if (file.children.includes(action.id)) {
