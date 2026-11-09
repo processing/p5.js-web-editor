@@ -13,6 +13,7 @@ beforeAll(async () => {
   });
   const uri = mongoServer.getUri();
   await mongoose.connect(uri);
+  await User.init();
 });
 
 afterAll(async () => {

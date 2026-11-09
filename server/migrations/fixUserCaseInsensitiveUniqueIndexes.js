@@ -1,39 +1,19 @@
 /* eslint-disable */
 /**
- * Migration for #4338 — replace case-sensitive unique indexes on User.username
- * and User.email with a single case-insensitive unique index each.
+ * Drop the old case-sensitive unique indexes on User.username and User.email,
+ * then recreate each as a single unique case-insensitive index. Aborts if
+ * case-insensitive duplicates remain.
  *
- * Why this is needed
- * ------------------
- * Older schemas declared `unique: true` on the fields (case-sensitive unique
- * indexes named username_1 / email_1) AND also called schema.index() with a
- * collation (non-unique). That produced Mongoose duplicate-index warnings and
- * left case-insensitive uniqueness enforced only in application code.
- *
- * The User model now defines a single unique+collation index per field. Existing
- * databases still have the old case-sensitive indexes, so those must be dropped
- * before the new ones can be built under the same names.
- *
- * Before running
- * --------------
- * 1. Resolve any case-insensitive duplicate usernames/emails (this script reports
- *    them and aborts if any remain — use emailConsolidation.js / manual cleanup).
- * 2. Point MONGO_URL at the target database (.env / .env.production).
- *
- * How to run (development)
- * ------------------------
+ * Development:
  *   node -r @babel/register server/migrations/fixUserCaseInsensitiveUniqueIndexes.js
  *
- * How to run (production — via start.js pattern)
- * ----------------------------------------------
- * Temporarily require this file from server/migrations/start.js, then:
+ * Production: temporarily require this file from server/migrations/start.js, then:
  *   node server/migrations/start.js
  *
- * Manual alternative (mongosh)
- * ----------------------------
+ * mongosh fallback:
  *   db.users.dropIndex('username_1')
  *   db.users.dropIndex('email_1')
- * Then restart the app so Mongoose creates the new unique+collation indexes, or:
+ * Then restart the app so Mongoose creates the new indexes, or:
  *   db.users.createIndex({ username: 1 }, { unique: true, collation: { locale: 'en', strength: 2 } })
  *   db.users.createIndex({ email: 1 }, { unique: true, collation: { locale: 'en', strength: 2 } })
  */
