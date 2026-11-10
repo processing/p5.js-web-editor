@@ -11,7 +11,15 @@ import type { AxeResults, Result, NodeResult } from 'axe-core';
  */
 export async function runAccessibilityScan(page: Page): Promise<AxeResults> {
   return new AxeBuilder({ page })
-    .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'best-practice'])
+    .withTags([
+      'wcag2a',
+      'wcag2aa',
+      'wcag21a',
+      'wcag21aa',
+      'wcag22a',
+      'wcag22aa',
+      'best-practice'
+    ])
     .analyze();
 }
 function formatNode(node: NodeResult): string {
