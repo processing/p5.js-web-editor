@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import * as IDEActions from '../actions/ide';
 import * as FileActions from '../actions/files';
 import { showToast as showToastAction } from '../actions/toast';
-import { CREATE_FILE_REGEX } from '../../../../server/utils/fileUtils';
+import { VALID_FILE_REGEX } from '../../../../server/utils/fileUtils';
 import DownArrowIcon from '../../../images/down-filled-triangle.svg';
 import FolderRightIcon from '../../../images/triangle-arrow-right.svg';
 import FolderDownIcon from '../../../images/triangle-arrow-down.svg';
@@ -199,7 +199,7 @@ const FileNode = ({
     const hasOnlyExtension =
       newFileExtension && updatedName.trim() === newFileExtension[0];
 
-    if (fileType === 'file' && !updatedName.match(CREATE_FILE_REGEX)) {
+    if (fileType === 'file' && !updatedName.match(VALID_FILE_REGEX)) {
       showToast(t('NewFileModal.InvalidType'));
       setUpdatedName(currentName);
       return;

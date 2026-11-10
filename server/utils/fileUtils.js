@@ -74,3 +74,8 @@ export const NOT_EXTERNAL_LINK_REGEX = /^(?!(http:\/\/|https:\/\/))/;
 export const EXTERNAL_LINK_REGEX = /^(http:\/\/|https:\/\/)/;
 
 export const CREATE_FILE_REGEX = /.+\.(json|txt|csv|tsv|js|css|frag|vert|xml|html|htm|stl|mtl)$/i;
+export const VALID_FILE_REGEX = new RegExp(
+  `.+\\.(${fileExtensionsArray.join('|')})$`,
+  'i'
+);
+export const RENAME_FILE_REGEX = VALID_FILE_REGEX;

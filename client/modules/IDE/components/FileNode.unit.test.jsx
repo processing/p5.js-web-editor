@@ -31,7 +31,6 @@ describe('<FileNode />', () => {
 
   const renderFileNode = (fileType, extraProps = {}) => {
     const props = {
-      ...extraProps,
       id: '0',
       name: fileType === 'folder' ? 'afolder' : 'test.js',
       fileType,
@@ -49,7 +48,8 @@ describe('<FileNode />', () => {
       hideFolderChildren: jest.fn(),
       openUploadFileModal: jest.fn(),
       setProjectName: jest.fn(),
-      showToast: jest.fn()
+      showToast: jest.fn(),
+      ...extraProps
     };
 
     const mockFiles = [
@@ -138,8 +138,60 @@ describe('<FileNode />', () => {
       await expectFileNameToBe(props.name);
     });
 
+    it('can rename a sound file with the same extension', async () => {
+      const newName = 'soundtrack.mp3';
+      const props = renderFileNode('file', { name: 'audio.mp3' });
+
+      changeName(newName);
+
+      await waitFor(() =>
+        expect(props.updateFileName).toHaveBeenCalledWith(props.id, newName)
+      );
+      await expectFileNameToBe(newName);
+    });
+
+    it('can rename a sound file to another supported sound extension (.wav)', async () => {
+      const mockConfirm = jest.fn(() => true);
+      window.confirm = mockConfirm;
+
+      const newName = 'soundtrack.wav';
+      const props = renderFileNode('file', { name: 'audio.mp3' });
+
+      changeName(newName);
+
+      expect(mockConfirm).toHaveBeenCalled();
+      await waitFor(() =>
+        expect(props.updateFileName).toHaveBeenCalledWith(props.id, newName)
+      );
+      await expectFileNameToBe(props.name);
+    });
+
+    it('can rename an image or model file with a valid extension', async () => {
+      const newName = 'character.png';
+      const props = renderFileNode('file', { name: 'avatar.png' });
+
+      changeName(newName);
+
+      await waitFor(() =>
+        expect(props.updateFileName).toHaveBeenCalledWith(props.id, newName)
+      );
+      await expectFileNameToBe(newName);
+    });
+
+    it('can rename a 3D model file (.obj)', async () => {
+      const newName = 'sculpture.obj';
+      const props = renderFileNode('file', { name: 'mesh.obj' });
+
+      changeName(newName);
+
+      await waitFor(() =>
+        expect(props.updateFileName).toHaveBeenCalledWith(props.id, newName)
+      );
+      await expectFileNameToBe(newName);
+    });
+
     it('cannot change to an invalid extension', async () => {
-      const newName = 'newname.obj';
+      const newName = 'newname.invalid';
       const props = renderFileNode('file');
 
       changeName(newName);
