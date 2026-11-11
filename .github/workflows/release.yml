@@ -3,13 +3,16 @@ name: Create a release
 on:
   workflow_dispatch:
     inputs:
-      newversion:
+      versiontype:
         description: >
-          Version to release. Accepts an explicit semver (e.g. 2.22.0) or an
-          npm version keyword (patch, minor, major, prepatch, preminor,
-          premajor, prerelease). See https://docs.npmjs.com/cli/version
+          Which part of the version to bump, passed to `npm version`.
+          See https://docs.npmjs.com/cli/version
         required: true
-        type: string
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
 
 permissions:
   contents: write
@@ -57,20 +60,21 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Create cut release branch
-        run: git checkout -b "release-${{ inputs.newversion }}"
-
       - name: Bump version
         id: bump
         run: |
-          NEW_VERSION=$(npm version "${{ inputs.newversion }}" -m "v%s")
+          NEW_VERSION=$(npm version "${{ inputs.versiontype }}" -m "v%s")
           echo "version=$NEW_VERSION" >> "$GITHUB_OUTPUT"
+          echo "branch=release-${NEW_VERSION#v}" >> "$GITHUB_OUTPUT"
+
+      - name: Create cut release branch
+        run: git checkout -b "${{ steps.bump.outputs.branch }}"
 
       - name: Merge into release
         run: |
           git checkout release
           git pull origin release
-          git merge --no-ff "release-${{ inputs.newversion }}" -m "Merge release-${{ inputs.newversion }} into release"
+          git merge --no-ff "${{ steps.bump.outputs.branch }}" -m "Merge ${{ steps.bump.outputs.branch }} into release"
           git push origin release
           git push origin --tags
 
@@ -78,17 +82,17 @@ jobs:
         run: |
           git checkout develop
           git pull origin develop
-          git merge --no-ff "release-${{ inputs.newversion }}" -m "Merge release-${{ inputs.newversion }} into develop"
+          git merge --no-ff "${{ steps.bump.outputs.branch }}" -m "Merge ${{ steps.bump.outputs.branch }} into develop"
           git push origin develop
 
       - name: Push cut release branch
-        run: git push origin "release-${{ inputs.newversion }}"
+        run: git push origin "${{ steps.bump.outputs.branch }}"
 
       - name: Draft GitHub release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release create "${{ steps.bump.outputs.version }}" \
+          RELEASE_URL=$(gh release create "${{ steps.bump.outputs.version }}" \
             --target release \
             --title "${{ steps.bump.outputs.version }}" \
             --generate-notes \
