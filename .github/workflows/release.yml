@@ -17,6 +17,11 @@ on:
 permissions:
   contents: write
 
+# Only one release can run at a time. A second run waits for the first to finish.
+concurrency:
+  group: release
+  cancel-in-progress: false
+
 jobs:
   verify:
     runs-on: ubuntu-latest
