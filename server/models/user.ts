@@ -12,7 +12,9 @@ import { apiKeySchema } from './apiKey';
 const userSchema = new Schema<UserDocument, UserModel>(
   {
     name: { type: String, default: '' },
-    username: { type: String, required: true, unique: true },
+    // Uniqueness is enforced by the case-insensitive collation indexes below.
+    // Do not add `unique: true` here — that creates a second, case-sensitive index.
+    username: { type: String, required: true },
     password: { type: String },
     resetPasswordToken: String,
     resetPasswordExpires: Date,
@@ -21,7 +23,7 @@ const userSchema = new Schema<UserDocument, UserModel>(
     verifiedTokenExpires: Date,
     github: { type: String },
     google: { type: String },
-    email: { type: String, unique: true },
+    email: { type: String },
     tokens: Array,
     apiKeys: { type: [apiKeySchema] },
     preferences: {
@@ -334,8 +336,14 @@ userSchema.statics.findByEmailAndUsername = async function findByEmailAndUsernam
   return foundUser;
 };
 
-userSchema.index({ username: 1 }, { collation: { locale: 'en', strength: 2 } });
-userSchema.index({ email: 1 }, { collation: { locale: 'en', strength: 2 } });
+userSchema.index(
+  { username: 1 },
+  { unique: true, collation: { locale: 'en', strength: 2 } }
+);
+userSchema.index(
+  { email: 1 },
+  { unique: true, collation: { locale: 'en', strength: 2 } }
+);
 
 userSchema.statics.EmailConfirmation = () => EmailConfirmationStates;
 
