@@ -96,4 +96,12 @@ jobs:
             --target release \
             --title "${{ steps.bump.outputs.version }}" \
             --generate-notes \
-            --draft
+            --draft)
+          echo "Draft release created: $RELEASE_URL"
+          {
+            echo "## Draft release ${{ steps.bump.outputs.version }} created"
+            echo ""
+            echo "The release is still a **draft** and must be published manually:"
+            echo ""
+            echo "- [Review and publish the draft release]($RELEASE_URL)"
+          } >> "$GITHUB_STEP_SUMMARY"
