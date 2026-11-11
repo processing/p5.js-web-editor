@@ -57,11 +57,14 @@ export default function useCodeMirror({
   };
 
   // When the file changes, update the file content and save status.
-  function onChange() {
+  // `fileId` and `doc` are captured at edit time, so that the content is
+  // written to the file that was actually edited, even if the user has
+  // switched to another file by the time this runs.
+  function onChange(fileId, doc) {
     const state = onChangeStateRef.current;
 
     setUnsavedChanges(true);
-    updateFileContent(state.fileId, cmView.current.state.doc.toString());
+    updateFileContent(fileId, doc.toString());
 
     // Save a local backup to localStorage for crash recovery (#3891).
     // This ensures work is recoverable even if the tab crashes
@@ -74,8 +77,18 @@ export default function useCodeMirror({
       startSketch();
     }
   }
-  // Call onChange at most once every second.
-  const debouncedOnChange = debounce(onChange, 1000);
+  // Each file's CodeMirror state captures `onViewUpdate` when it is created,
+  // so the debounced function must be a single stable instance that always
+  // calls the latest `onChange`. Call it at most once every second.
+  const latestOnChange = useRef(onChange);
+  latestOnChange.current = onChange;
+  const debouncedOnChange = useRef();
+  if (!debouncedOnChange.current) {
+    debouncedOnChange.current = debounce(
+      (fileId, doc) => latestOnChange.current(fileId, doc),
+      1000
+    );
+  }
 
   // This is called when the CM view updates.
   function onViewUpdate(updateView) {
@@ -85,9 +98,13 @@ export default function useCodeMirror({
     setCurrentLine(state.doc.lineAt(state.selection.main.head).number);
 
     if (updateView.docChanged) {
-      debouncedOnChange();
+      // The file being edited is the one currently shown.
+      debouncedOnChange.current(onChangeStateRef.current.fileId, state.doc);
     }
   }
+
+  // Don't drop the last second of typing when the editor unmounts.
+  useEffect(() => () => debouncedOnChange.current.flush(), []);
 
   // When the container component enters the DOM, we want this function
   // to be called so we can setup the CodeMirror instance with the container.
@@ -222,6 +239,9 @@ export default function useCodeMirror({
   // When the file changes, make the CodeMirror call to swap out the document.
   useEffectWithComparison(
     (_, prevProps) => {
+      // Write any pending edit to the file it belongs to before swapping.
+      debouncedOnChange.current.flush();
+
       // We need to save the previous CodeMirror state so we can restore it
       // when we switch back to it.
       const previousState = cmView.current.state;
