@@ -1,5 +1,6 @@
 import { omitBy, isUndefined } from 'lodash';
 import Collection from '../../models/collection';
+import validateCollectionFields from './validateCollectionFields';
 
 function removeUndefined(obj) {
   return omitBy(obj, isUndefined);
@@ -15,6 +16,12 @@ export default function createCollection(req, res) {
     description,
     slug
   });
+
+  const validationError = validateCollectionFields(values);
+  if (validationError) {
+    res.status(400).json({ success: false, message: validationError });
+    return null;
+  }
 
   function sendFailure({ code = 500, message = 'Something went wrong' }) {
     res.status(code).json({ success: false, message });
