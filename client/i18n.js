@@ -3,6 +3,7 @@ import { initReactI18next } from 'react-i18next';
 import Backend from 'i18next-http-backend';
 
 import {
+  ar,
   bn,
   enUS,
   es,
@@ -26,6 +27,7 @@ import { getPreferredLanguage } from './utils/language-utils';
 const fallbackLng = ['en-US'];
 
 export const availableLanguages = [
+  'ar',
   'bn',
   'de',
   'en-US',
@@ -62,6 +64,7 @@ if (
 
 export function languageKeyToLabel(lang) {
   const languageMap = {
+    ar: 'العربية',
     bn: 'বাংলা',
     de: 'Deutsch',
     'en-US': 'English',
@@ -85,6 +88,7 @@ export function languageKeyToLabel(lang) {
 
 export function languageKeyToDateLocale(lang) {
   const languageMap = {
+    ar,
     bn,
     de,
     'en-US': enUS,
