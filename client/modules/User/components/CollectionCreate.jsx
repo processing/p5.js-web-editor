@@ -6,6 +6,10 @@ import { useDispatch } from 'react-redux';
 import { generateCollectionName } from '../../../utils/generateRandomName';
 import { Button, ButtonTypes } from '../../../common/Button';
 import { createCollection } from '../../IDE/actions/collections';
+import {
+  COLLECTION_DESCRIPTION_MAX_LENGTH,
+  COLLECTION_NAME_MAX_LENGTH
+} from '../../../../common/collectionLimits';
 
 const CollectionCreate = () => {
   const generatedCollectionName = useMemo(() => generateCollectionName(), []);
@@ -27,7 +31,11 @@ const CollectionCreate = () => {
     dispatch(createCollection({ name, description }));
   };
 
-  const invalid = name === '' || name == null;
+  const nameTooLong = name.length > COLLECTION_NAME_MAX_LENGTH;
+  const descriptionTooLong =
+    description.length > COLLECTION_DESCRIPTION_MAX_LENGTH;
+  const invalid =
+    name === '' || name == null || nameTooLong || descriptionTooLong;
 
   return (
     <div className="collection-create">
@@ -50,15 +58,24 @@ const CollectionCreate = () => {
               aria-label={t('CollectionCreate.FormLabelARIA')}
               type="text"
               id="name"
+              maxLength={COLLECTION_NAME_MAX_LENGTH}
               value={name}
               placeholder={generatedCollectionName}
               onChange={(e) => setName(e.target.value)}
             />
-            {invalid && (
+            {(name === '' || name == null || nameTooLong) && (
               <span className="form-error" aria-live="polite">
-                {t('CollectionCreate.NameRequired')}
+                {nameTooLong
+                  ? t('Collection.NameTooLong')
+                  : t('CollectionCreate.NameRequired')}
               </span>
             )}
+            <span className="collection-character-count" aria-live="polite">
+              {t('Collection.CharacterCount', {
+                current: name.length,
+                max: COLLECTION_NAME_MAX_LENGTH
+              })}
+            </span>
           </p>
           <p className="form__field">
             <label htmlFor="description" className="form__label">
@@ -68,11 +85,23 @@ const CollectionCreate = () => {
               className="form__input form__input-flexible-height"
               aria-label={t('CollectionCreate.DescriptionARIA')}
               id="description"
+              maxLength={COLLECTION_DESCRIPTION_MAX_LENGTH}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder={t('CollectionCreate.DescriptionPlaceholder')}
               rows="6"
             />
+            {descriptionTooLong && (
+              <span className="form-error" aria-live="polite">
+                {t('Collection.DescriptionTooLong')}
+              </span>
+            )}
+            <span className="collection-character-count" aria-live="polite">
+              {t('Collection.CharacterCount', {
+                current: description.length,
+                max: COLLECTION_DESCRIPTION_MAX_LENGTH
+              })}
+            </span>
           </p>
           <Button type={ButtonTypes.SUBMIT} disabled={invalid}>
             {t('CollectionCreate.SubmitCollectionCreate')}
