@@ -16,23 +16,20 @@ This project's release guide is based on:
 ### via GHA:
 
 1. An issue titled "Weekly release - DATE" will be created every Tuesday at 15:30 UTC. Go to the [Issues tab](https://github.com/processing/p5.js-web-editor/issues) and click the link in the description to the [Create a release](../.github/workflows/release.yml) GitHub Actions workflow.
-2. Run the **Create a release** workflow via "Run workflow".
-3. Enter the `version` to release
-4. `version` can be `major`, `minor`, `patch`, etc. (see [npm-version](https://docs.npmjs.com/cli/version) for valid values.
-5. Wait for the workflow to run the `verify` job.
-6. This tests the checkout code from `develop`.
-7. If tests fail, the workflow will stop & record its result as a failure. Devs should fix any test failures, then attempt the [Create a release](../.github/workflows/release.yml) workflow again.
-8. If the tests succeed, the workflow will wait on maintainer approval for the `draft-release` job.
-9. Go to [Staging](https://stagingeditor.p5js.org) and perform any remaining manual checks.
-10. If all looks good, approve the `release` job.
-11. This does the manual steps 5-12 below:
-12. Merges the cut release into `release`
-13. Merges `release` into `develop`
-14. Creates a new draft GitHub release with auto-generated notes & version & tags.
-15. [Review the drafted release](https://github.com/processing/p5.js-web-editor/releases) and click **Publish release** when ready. This will then trigger the deployment to [Production](editor.p5js.org).
-16. **Manually** verify the release has completed successfully:
-17. `$ kubectl get pods --namespace production` to check the pods are running (this might take a few minutes and you can rerun the command to check again).
-18. Validate that [production](https://stagingeditor.p5js.org/) is working and you are finished!
+2. Run the **Create a release** workflow via "Run workflow", and pick the `versiontype` to bump: `patch`, `minor`, or `major` (see [npm-version](https://docs.npmjs.com/cli/version)). The new version number is calculated from the current version in `package.json`.
+3. Wait for the workflow to run the `verify` job, which runs the tests against `develop`.
+   - If tests fail, the workflow will stop & record its result as a failure. Devs should fix any test failures, then run the [Create a release](../.github/workflows/release.yml) workflow again.
+   - If the tests succeed, the workflow will wait on maintainer approval for the `release` job.
+4. Go to [Staging](https://stagingeditor.p5js.org) and perform any remaining manual checks.
+5. If all looks good, approve the `release` job. This does manual steps 3 and 5-12 below:
+   - Bumps the version and creates the `release-<newversion>` branch and tag
+   - Merges the cut release into `release`, which triggers the deployment to [Production](https://editor.p5js.org)
+   - Merges the cut release back into `develop`
+   - Creates a new **draft** GitHub release with auto-generated notes
+6. The draft release is **not** published automatically. Open the workflow run's summary page and follow the **Review and publish the draft release** link (or find it on the [Releases page](https://github.com/processing/p5.js-web-editor/releases)), then click **Publish release**.
+7. **Manually** verify the release has completed successfully:
+   - `$ kubectl get pods --namespace production` to check the pods are running (this might take a few minutes and you can rerun the command to check again).
+   - Validate that [production](https://editor.p5js.org/) is working and you are finished!
 
 ### Manually:
 
