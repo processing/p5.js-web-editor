@@ -24,4 +24,27 @@ test.describe('accessibility', () => {
       formatAccessibilityViolations(results.violations)
     ).toEqual([]);
   });
+
+  test('login page has no accessibility violations after invalid credentials', async ({
+    page
+  }) => {
+    await page.goto('/login');
+    await dismissCookieBanner(page);
+
+    await page.locator('input[name="email"]').fill('unknown-user@example.test');
+    await page.locator('input[name="password"]').fill('invalid-password');
+    await page.getByRole('button', { name: 'Log In' }).click();
+
+    const error = page.locator('.form-error[aria-live="assertive"]');
+
+    await expect(error).toBeVisible();
+    await expect(error).toHaveText('Invalid email or password.');
+
+    const results = await runAccessibilityScan(page);
+
+    expect(
+      results.violations,
+      formatAccessibilityViolations(results.violations)
+    ).toEqual([]);
+  });
 });
