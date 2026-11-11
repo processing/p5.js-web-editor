@@ -1,4 +1,5 @@
 import Collection from '../../models/collection';
+import validateCollectionFields from './validateCollectionFields';
 
 export default function createCollection(req, res) {
   const owner = req.user._id;
@@ -35,6 +36,12 @@ export default function createCollection(req, res) {
 
   if (owner == null) {
     sendFailure({ code: 404, message: 'No user specified' });
+    return null;
+  }
+
+  const validationError = validateCollectionFields({ name, description });
+  if (validationError) {
+    sendFailure({ code: 400, message: validationError });
     return null;
   }
 

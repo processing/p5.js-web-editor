@@ -52,6 +52,16 @@
 
 .collection-metadata__name {
   // padding: #{8 / $base-font-size}rem 0;
+  overflow-wrap: anywhere;
+}
+
+.collection-metadata .editable-input {
+  height: auto;
+  flex-wrap: wrap;
+}
+
+.collection-metadata .editable-input__limit {
+  width: 100%;
 }
 
 .collection-metadata__name .editable-input__label {
@@ -77,10 +87,18 @@
   padding-top: #{math.div(8, $base-font-size)}rem;
   text-align: left;
   font-size: #{math.div(14, $base-font-size)}rem;
+  overflow-wrap: anywhere;
 }
 
 .collection-metadata__description .editable-input__label {
   text-align: left;
+  width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.collection-metadata__description .editable-input__label > span {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .collection-metadata__description .editable-input--has-value:not(:hover) .editable-input__label  {
@@ -151,4 +169,3 @@
     right: calc(100% - 26px);
   }
 }
-

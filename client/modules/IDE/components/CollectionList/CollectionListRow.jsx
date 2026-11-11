@@ -13,6 +13,7 @@ import * as IdeActions from '../../actions/ide';
 import * as ToastActions from '../../actions/toast';
 import { formatDateToString } from '../../../../utils/formatDate';
 import { remSize, prop } from '../../../../theme';
+import { COLLECTION_NAME_MAX_LENGTH } from '../../../../../common/collectionLimits';
 
 const SketchsTableRow = styled.tr`
   &&& {
@@ -75,6 +76,25 @@ const SketchesTableName = styled.span`
   &&& {
     display: flex;
     align-items: center;
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  a.collection-list-row__name {
+    flex: 1;
+    display: block;
+    min-width: 0;
+    max-width: 25rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .collection-list-row__rename {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
   }
 `;
 const SketchlistDropdownColumn = styled.td`
@@ -105,12 +125,16 @@ const CollectionListRowBase = (props) => {
   };
 
   const updateName = () => {
-    const isValid = renameValue.trim().length !== 0;
+    const trimmedName = renameValue.trim();
+    const isValid =
+      trimmedName.length !== 0 &&
+      trimmedName.length <= COLLECTION_NAME_MAX_LENGTH;
     if (isValid) {
       props.editCollection(props.collection.id, {
-        name: renameValue.trim()
+        name: trimmedName
       });
     }
+    return isValid;
   };
 
   const handleAddSketches = () => {
@@ -144,8 +168,9 @@ const CollectionListRowBase = (props) => {
   const handleRenameEnter = (e) => {
     if (e.key === 'Enter') {
       e.preventDefault();
-      updateName();
-      closeAll();
+      if (updateName()) {
+        closeAll();
+      }
     }
   };
 
@@ -156,8 +181,9 @@ const CollectionListRowBase = (props) => {
   };
 
   const handleRenameBlur = () => {
-    updateName();
-    closeAll();
+    if (updateName()) {
+      closeAll();
+    }
   };
 
   const renderActions = () => {
@@ -190,21 +216,48 @@ const CollectionListRowBase = (props) => {
             pathname: `/${username}/collections/${collection.id}`,
             state: { skipSavingPath: true }
           }}
+          className="collection-list-row__name"
         >
-          {renameOpen ? '' : collection.name}
+          <span title={collection.name}>
+            {renameOpen ? '' : collection.name}
+          </span>
         </Link>
         {renameOpen && (
-          <input
-            value={renameValue}
-            onChange={handleRenameChange}
-            onKeyDown={handleRenameEnter}
-            onBlur={handleRenameBlur}
-            onClick={(e) => e.stopPropagation()}
-            ref={(node) => {
-              renameInput.current = node;
-              handleRenameFocus();
-            }}
-          />
+          <div className="collection-list-row__rename">
+            <input
+              value={renameValue}
+              maxLength={COLLECTION_NAME_MAX_LENGTH}
+              aria-label={props.t('CollectionListRow.Rename')}
+              aria-invalid={
+                renameValue.trim().length === 0 ||
+                renameValue.length > COLLECTION_NAME_MAX_LENGTH
+              }
+              onChange={handleRenameChange}
+              onKeyDown={handleRenameEnter}
+              onBlur={handleRenameBlur}
+              onClick={(e) => e.stopPropagation()}
+              ref={(node) => {
+                renameInput.current = node;
+                handleRenameFocus();
+              }}
+            />
+            <span className="collection-list-row__limit" aria-live="polite">
+              {props.t('Collection.CharacterCount', {
+                current: renameValue.length,
+                max: COLLECTION_NAME_MAX_LENGTH
+              })}
+            </span>
+            {renameValue.length > COLLECTION_NAME_MAX_LENGTH && (
+              <span className="form-error" role="alert">
+                {props.t('Collection.NameTooLong')}
+              </span>
+            )}
+            {renameValue.trim().length === 0 && (
+              <span className="form-error" role="alert">
+                {props.t('CollectionCreate.NameRequired')}
+              </span>
+            )}
+          </div>
         )}
       </>
     );

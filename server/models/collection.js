@@ -1,6 +1,10 @@
 import mongoose from 'mongoose';
 import shortid from 'shortid';
 import slugify from 'slugify';
+import {
+  COLLECTION_DESCRIPTION_MAX_LENGTH,
+  COLLECTION_NAME_MAX_LENGTH
+} from '../../common/collectionLimits';
 
 const { Schema } = mongoose;
 
@@ -30,8 +34,12 @@ collectedProjectSchema.set('toJSON', {
 const collectionSchema = new Schema(
   {
     _id: { type: String, default: shortid.generate },
-    name: { type: String, default: 'My collection' },
-    description: { type: String },
+    name: {
+      type: String,
+      default: 'My collection',
+      maxlength: COLLECTION_NAME_MAX_LENGTH
+    },
+    description: { type: String, maxlength: COLLECTION_DESCRIPTION_MAX_LENGTH },
     slug: { type: String },
     owner: { type: Schema.Types.ObjectId, ref: 'User' },
     items: { type: [collectedProjectSchema] }
