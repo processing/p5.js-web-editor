@@ -3,13 +3,36 @@
 A guide for deploying a release to the p5.js Editor production environment.
 
 ## Background
-This project's release guide is based on:
-* [git-flow](https://nvie.com/posts/a-successful-git-branching-model/)
-* [Semantic Versioning (semver)](https://semver.org/)
-* [npm-version](https://docs.npmjs.com/cli/version)
-* [Let's stop saying Master/Slave](https://medium.com/@mikebroberts/let-s-stop-saying-master-slave-10f1d1bf34df)
 
-## Steps
+This project's release guide is based on:
+
+- [git-flow](https://nvie.com/posts/a-successful-git-branching-model/)
+- [Semantic Versioning (semver)](https://semver.org/)
+- [npm-version](https://docs.npmjs.com/cli/version)
+- [Let's stop saying Master/Slave](https://medium.com/@mikebroberts/let-s-stop-saying-master-slave-10f1d1bf34df)
+
+## Steps for a standard release:
+
+### via GHA:
+
+1. An issue titled "Weekly release - DATE" will be created every Tuesday at 15:30 UTC. Go to the [Issues tab](https://github.com/processing/p5.js-web-editor/issues) and click the link in the description to the [Create a release](../.github/workflows/release.yml) GitHub Actions workflow.
+2. Run the **Create a release** workflow via "Run workflow", and pick the `versiontype` to bump: `patch`, `minor`, or `major` (see [npm-version](https://docs.npmjs.com/cli/version)). The new version number is calculated from the current version in `package.json`.
+3. Wait for the workflow to run the `verify` job, which runs the tests against `develop`.
+   - If tests fail, the workflow will stop & record its result as a failure. Devs should fix any test failures, then run the [Create a release](../.github/workflows/release.yml) workflow again.
+   - If the tests succeed, the workflow will wait on maintainer approval for the `release` job.
+4. Go to [Staging](https://stagingeditor.p5js.org) and perform any remaining manual checks.
+5. If all looks good, approve the `release` job. This does manual steps 3 and 5-12 below:
+   - Bumps the version and creates the `release-<newversion>` branch and tag
+   - Merges the cut release into `release`, which triggers the deployment to [Production](https://editor.p5js.org)
+   - Merges the cut release back into `develop`
+   - Creates a new **draft** GitHub release with auto-generated notes
+6. The draft release is **not** published automatically. Open the workflow run's summary page and follow the **Review and publish the draft release** link (or find it on the [Releases page](https://github.com/processing/p5.js-web-editor/releases)), then click **Publish release**.
+7. **Manually** verify the release has completed successfully:
+   - `$ kubectl get pods --namespace production` to check the pods are running (this might take a few minutes and you can rerun the command to check again).
+   - Validate that [production](https://editor.p5js.org/) is working and you are finished!
+
+### Manually:
+
 1. `$ git checkout develop`
 2. `$ git pull origin develop`
 3. `$ git checkout -b release-<newversion>`
@@ -29,9 +52,11 @@ This project's release guide is based on:
 14. `$ kubectl get pods --namespace production` to check the pods are running (this might take a few minutes and you can rerun the command to check again).
 15. Validate that [production](https://stagingeditor.p5js.org/) is working and you are finished!
 
-
 ## Steps for a Patch Release
+
 Sometimes you might need to push a release for an isolated and small bug fix without what's currently been merged into the `develop` branch. The steps for pushing a Patch Release are similar to a standard Release, except you work with the `release` branch as opposed to `develop`.
+
+This process is not yet automated by the Actions workflow above, so it's still done by hand.
 
 1. `$ git checkout release`
 2. `$ git pull origin release`
