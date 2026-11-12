@@ -506,7 +506,14 @@ export function changeVisibility(projectId, projectName, visibility, t) {
         }
       })
       .catch((error) => {
-        if (previousVisibility !== undefined) {
+        const currentState = getState();
+        const currentSketch = currentState.sketches?.projects?.find(
+          (sketch) => sketch.id === projectId
+        );
+        if (
+          previousVisibility !== undefined &&
+          currentSketch?.visibility === visibility
+        ) {
           dispatch({
             type: ActionTypes.CHANGE_VISIBILITY,
             payload: {
@@ -514,14 +521,18 @@ export function changeVisibility(projectId, projectName, visibility, t) {
               visibility: previousVisibility
             }
           });
+        }
 
-          if (isCurrentProject) {
-            dispatch({
-              type: ActionTypes.SET_PROJECT_VISIBILITY,
-              visibility: previousVisibility,
-              updatedAt: state.project.updatedAt
-            });
-          }
+        if (
+          previousVisibility !== undefined &&
+          currentState.project.id === projectId &&
+          currentState.project.visibility === visibility
+        ) {
+          dispatch({
+            type: ActionTypes.SET_PROJECT_VISIBILITY,
+            visibility: previousVisibility,
+            updatedAt: currentState.project.updatedAt
+          });
         }
 
         dispatch({
