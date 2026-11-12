@@ -33,7 +33,8 @@ export function userResponse(user: UserDocument): PublicUser {
     totalSize: user.totalSize,
     github: user.github,
     google: user.google,
-    cookieConsent: user.cookieConsent
+    cookieConsent: user.cookieConsent,
+    hasPassword: Boolean(user.password)
   };
 }
 

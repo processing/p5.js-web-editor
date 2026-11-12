@@ -35,7 +35,8 @@
       "Reference": "Reference",
       "ReportBug": "Report a Bug",
       "ChatOnDiscord": "Chat On Discord",
-      "PostOnTheForum": "Post on the Forum"
+      "PostOnTheForum": "Post on the Forum",
+      "WebEditorVersion": "Web Editor v{{version}}"
     },
     "Lang": "Language",
     "BackEditor": "Back to Editor",
@@ -160,7 +161,9 @@
     "DefaultError": "Something went wrong",
     "UserNotFound": "User not found",
     "NetworkError": "Network error",
-    "CloseAlertARIA": "Close Alert"
+    "CloseAlertARIA": "Close Alert",
+    "StepUpRequired": "Verification is required to continue. Please verify and try again.",
+    "SettingsSavedMailFailed": "Settings saved, but the confirmation email could not be sent. Use Resend confirmation email."
   },
   "Toolbar": {
     "Preview": "Preview",
@@ -724,5 +727,23 @@
       "Label": "Private"
     },
     "Changed": "'{{projectName}}' is now {{newVisibility}}..."
+  },
+  "StepUp": {
+    "Title": "Confirm it is you",
+    "Description": "This action needs extra verification. Your login session alone is not enough.",
+    "PasswordLabel": "Password",
+    "CodeLabel": "Verification code",
+    "Verify": "Verify",
+    "Verifying": "Verifying...",
+    "SendCode": "Send code",
+    "ResendCode": "Resend code",
+    "SendCodeWait": "Send code ({{seconds}}s)",
+    "CodeSentMessage": "A 6-digit code was sent to your email. It is valid for 10 minutes.",
+    "IncorrectPassword": "That password is incorrect.",
+    "IncorrectCode": "That code is incorrect or expired.",
+    "VerifyFailed": "Verification failed. Please try again.",
+    "SendFailed": "Could not send the code. Please try again.",
+    "CodeResendWait": "A code was sent recently. Please wait before requesting another one.",
+    "PasswordAccountMessage": "This account uses a password. Please verify with your password instead."
   }
 }

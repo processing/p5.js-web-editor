@@ -41,6 +41,16 @@
 	flex: 1;
 	flex-direction: column;
 	overflow-y: auto;
+	a.linkified {
+    @include themify() {
+      color: getThemifyVariable('link-text-color');
+    }
+
+    &:hover {
+      text-decoration: underline;
+      text-decoration-thickness: 0.1em;
+    }
+  }
 	& div div div:first-child {
 		height: unset;
     line-height: unset;

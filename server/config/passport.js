@@ -9,9 +9,13 @@ import GoogleStrategy from 'passport-google-oauth20';
 import { BasicStrategy } from 'passport-http';
 
 import { User } from '../models/user';
+import { hasRecentStepUp } from '../middleware/requireStepUp';
 
 const accountSuspensionMessage =
   'Account has been suspended. Please contact privacy@p5js.org if you believe this is an error.';
+
+const stepUpRequiredMessage =
+  'Please confirm your password or verification code before linking an account.';
 
 function generateUniqueUsername(username) {
   const adj =
@@ -23,15 +27,27 @@ function generateUniqueUsername(username) {
 
 passport.serializeUser((user, done) => {
   if (user) {
-    done(null, user.id);
+    done(null, { id: user.id, v: user.sessionVersion ?? 0 });
   } else {
     done(new Error('User is not available for serialization.'));
   }
 });
 
-passport.deserializeUser(async (id, done) => {
+passport.deserializeUser(async (serialized, done) => {
   try {
+    // Sessions created before sessionVersion existed store a plain id string;
+    // treat them as version 0.
+    const { id, v } =
+      typeof serialized === 'string'
+        ? { id: serialized, v: 0 }
+        : serialized || {};
     const user = await User.findById(id).exec();
+    if (user && (user.sessionVersion ?? 0) !== v) {
+      // The user's credentials changed after this session was created:
+      // reject the session so it is logged out.
+      done(null, false);
+      return;
+    }
     done(null, user);
   } catch (err) {
     done(err);
@@ -151,6 +167,12 @@ passport.use(
     },
     async (req, accessToken, refreshToken, profile, done) => {
       try {
+        // A request with a logged-in user reaching this callback is linking
+        // the GitHub account to that user — a sensitive action that must not
+        // be possible with a session alone.
+        if (req.user && !hasRecentStepUp(req)) {
+          return done(null, false, { msg: stepUpRequiredMessage });
+        }
         const existingUser = await User.findOne({ github: profile.id }).exec();
 
         if (existingUser) {
@@ -252,6 +274,12 @@ passport.use(
     },
     async (req, accessToken, refreshToken, profile, done) => {
       try {
+        // A request with a logged-in user reaching this callback is linking
+        // the Google account to that user — a sensitive action that must not
+        // be possible with a session alone.
+        if (req.user && !hasRecentStepUp(req)) {
+          return done(null, false, { msg: stepUpRequiredMessage });
+        }
         // Validate that emails array exists and has at least one element
         const primaryEmail = getGooglePrimaryEmail(profile._json?.emails);
         if (!primaryEmail) {

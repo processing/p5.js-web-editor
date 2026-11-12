@@ -29,6 +29,7 @@ import {
 } from '../../actions/ide';
 import { logoutUser } from '../../../User/actions';
 import { CmControllerContext } from '../../pages/IDEView';
+import packageData from '../../../../../package.json';
 import MobileNav from './MobileNav';
 import useIsMobile from '../../hooks/useIsMobile';
 
@@ -333,6 +334,12 @@ const ProjectMenu = () => {
           href="https://discourse.processing.org/c/p5js/10"
         >
           {t('Nav.Help.PostOnTheForum')}
+        </MenubarItem>
+        <MenubarItem
+          id="help-web-editor-version"
+          href={`https://github.com/processing/p5.js-web-editor/releases/tag/v${packageData.version}`}
+        >
+          {t('Nav.Help.WebEditorVersion', { version: packageData.version })}
         </MenubarItem>
       </MenubarSubmenu>
       {getConfig('TRANSLATIONS_ENABLED') && <LanguageMenu />}

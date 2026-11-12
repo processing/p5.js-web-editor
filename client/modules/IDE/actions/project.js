@@ -196,12 +196,12 @@ export function saveProject(
           dispatch(endSavingProject());
           dispatch(setToastText('Toast.SketchFailedSave'));
           dispatch(showToast(1500));
-          if (response.status === 403) {
+          if (response?.status === 403) {
             dispatch(showErrorModal('staleSession'));
-          } else if (response.status === 409) {
+          } else if (response?.status === 409) {
             dispatch(showErrorModal('staleProject'));
           } else {
-            dispatch(projectSaveFail(response.data));
+            dispatch(projectSaveFail(response?.data));
           }
         });
     }
@@ -246,10 +246,10 @@ export function saveProject(
         dispatch(endSavingProject());
         dispatch(setToastText('Toast.SketchFailedSave'));
         dispatch(showToast(1500));
-        if (response.status === 403) {
+        if (response?.status === 403) {
           dispatch(showErrorModal('staleSession'));
         } else {
-          dispatch(projectSaveFail(response.data));
+          dispatch(projectSaveFail(response?.data));
         }
       });
   };
