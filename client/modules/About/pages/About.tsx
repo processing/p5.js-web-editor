@@ -133,11 +133,7 @@ export const About = () => {
           <div>
             <ContactTitle>{t('About.Email')}</ContactTitle>
             <ContactHandles>
-              <a
-                href={t('About.EmailAddress')}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <a href={`mailto:${t('About.EmailAddress')}`}>
                 {t('About.EmailAddress')}
               </a>
             </ContactHandles>
