@@ -1,4 +1,4 @@
-import { RequestHandler } from 'express';
+import { Request, RequestHandler } from 'express';
 import { User } from '../../models/user';
 import { saveUser, generateToken, userResponse } from './helpers';
 import {
@@ -9,10 +9,25 @@ import {
   ResetPasswordInitiateRequestBody,
   ResetOrUpdatePasswordRequestParams,
   UpdatePasswordRequestBody,
-  UpdateSettingsRequestBody
+  UpdateSettingsRequestBody,
+  UserDocument
 } from '../../types';
 import { mailerService } from '../../utils/mail';
-import { renderResetPassword, renderEmailConfirmation } from '../../views/mail';
+import {
+  renderResetPassword,
+  renderEmailConfirmation,
+  renderEmailChangedNotice
+} from '../../views/mail';
+import { hasRecentStepUp } from '../../middleware/requireStepUp';
+
+/**
+ * Re-serializes the current session after a sessionVersion bump so that the
+ * request's own session survives while every other session is logged out.
+ */
+const reLogin = (req: Request, user: UserDocument) =>
+  new Promise<void>((resolve, reject) => {
+    req.logIn(user, (err: unknown) => (err ? reject(err) : resolve()));
+  });
 
 /**
  * - Method: `POST`
@@ -31,7 +46,10 @@ export const resetPasswordInitiate: RequestHandler<
   try {
     const token = await generateToken();
     const user = await User.findByEmail(req.body.email);
-    if (!user) {
+    // Only send reset links to verified addresses. An unverified address may
+    // not belong to the account owner (e.g. set by someone with a stolen
+    // session). Respond identically to avoid user enumeration.
+    if (!user || user.verified !== User.EmailConfirmation().Verified) {
       res.json({
         success: true,
         message:
@@ -128,6 +146,9 @@ export const updatePassword: RequestHandler<
   user.password = req.body.password;
   user.resetPasswordToken = undefined;
   user.resetPasswordExpires = undefined;
+  // Log out every other session; the req.logIn below re-serializes this one
+  // with the new version.
+  user.sessionVersion = (user.sessionVersion ?? 0) + 1;
 
   await user.save();
   req.logIn(user, (loginErr) => res.json(userResponse(req.user!)));
@@ -142,7 +163,12 @@ export const updatePassword: RequestHandler<
  *
  * Description:
  *   - Used to update the user's username, email, or password on the `/account` page while authenticated
- *   - Currently the client only shows the `currentPassword` and `newPassword` fields if no social logins (github & google) are enabled
+ *   - Username changes only need a session. Email and password changes are
+ *     sensitive: they require a recent step-up (POST /account/step-up) or,
+ *     for accounts with a password, a valid `currentPassword` in the same
+ *     request
+ *   - Email and password changes bump `sessionVersion`, logging out every
+ *     other session; the current session is re-serialized and survives
  */
 export const updateSettings: RequestHandler<
   {},
@@ -155,51 +181,82 @@ export const updateSettings: RequestHandler<
       res.status(404).json({ error: 'User not found' });
       return;
     }
-    user.username = req.body.username;
 
-    if (req.body.newPassword) {
-      if (user.password === undefined) {
-        user.password = req.body.newPassword;
-        saveUser(res, user);
+    const previousEmail = user.email;
+    const changingEmail = req.body.email !== user.email;
+    const changingPassword = Boolean(req.body.newPassword);
+
+    // All checks run before anything is modified or saved.
+    if (changingEmail || changingPassword) {
+      let steppedUp = hasRecentStepUp(req);
+      if (!steppedUp && user.password && req.body.currentPassword) {
+        const isMatch = await user.comparePassword(req.body.currentPassword);
+        if (!isMatch) {
+          res.status(401).json({ error: 'Current password is invalid.' });
+          return;
+        }
+        steppedUp = true;
       }
-      if (!req.body.currentPassword) {
-        res.status(401).json({ error: 'Current password is not provided.' });
+      if (!steppedUp) {
+        res.status(403).json({ error: 'step_up_required' });
         return;
       }
     }
-    if (req.body.currentPassword) {
-      const isMatch = await user.comparePassword(req.body.currentPassword);
-      if (!isMatch) {
-        res.status(401).json({ error: 'Current password is invalid.' });
-        return;
-      }
-      user.password = req.body.newPassword!;
-      await saveUser(res, user);
-    } else if (user.email !== req.body.email) {
-      const EMAIL_VERIFY_TOKEN_EXPIRY_TIME = Date.now() + 3600000 * 24; // 24 hours
-      user.verified = User.EmailConfirmation().Sent;
 
+    user.username = req.body.username;
+
+    if (!changingEmail && !changingPassword) {
+      await saveUser(res, user);
+      return;
+    }
+
+    if (changingPassword) {
+      user.password = req.body.newPassword!;
+    }
+
+    let verificationMail = null;
+    if (changingEmail) {
+      user.verified = User.EmailConfirmation().Sent;
       user.email = req.body.email;
+
+      // Any outstanding reset token was issued for the previous address;
+      // a reset link sent there must not stay usable after the change.
+      user.resetPasswordToken = undefined;
+      user.resetPasswordExpires = undefined;
 
       const token = await generateToken();
       user.verifiedToken = token;
-      user.verifiedTokenExpires = EMAIL_VERIFY_TOKEN_EXPIRY_TIME;
-
-      await saveUser(res, user);
+      user.verifiedTokenExpires = Date.now() + 3600000 * 24; // 24 hours
 
       const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
-      const mailOptions = renderEmailConfirmation({
+      verificationMail = renderEmailConfirmation({
         body: {
           domain: `${protocol}://${req.headers.host}`,
           link: `${protocol}://${req.headers.host}/verify?t=${token}`
         },
         to: user.email
       });
-
-      await mailerService.send(mailOptions);
-    } else {
-      await saveUser(res, user);
     }
+
+    // Log out every other session; the reLogin below keeps this one valid.
+    user.sessionVersion = (user.sessionVersion ?? 0) + 1;
+    await user.save();
+    await reLogin(req, user);
+
+    if (verificationMail) {
+      await mailerService.send(verificationMail);
+      // Tell the old address, with no links that act on the account.
+      const noticeMail = renderEmailChangedNotice({
+        body: {
+          domain: process.env.EDITOR_URL!,
+          newEmail: user.email
+        },
+        to: previousEmail
+      });
+      await mailerService.send(noticeMail);
+    }
+
+    res.json(userResponse(user));
   } catch (err) {
     console.error('Could not save settings:', err);
     res.status(500).json({ error: 'Internal server error' });
@@ -220,11 +277,19 @@ export const unlinkGithub: RequestHandler<
   UnlinkThirdPartyResponseBody
 > = async (req, res) => {
   if (req.user) {
-    req.user.github = undefined;
-    req.user.tokens = req.user.tokens.filter(
-      (token) => token.kind !== 'github'
-    );
-    await saveUser(res, req.user);
+    try {
+      req.user.github = undefined;
+      req.user.tokens = req.user.tokens.filter(
+        (token) => token.kind !== 'github'
+      );
+      // Log out every other session; re-serialize this one so it survives.
+      req.user.sessionVersion = (req.user.sessionVersion ?? 0) + 1;
+      await reLogin(req, req.user);
+      await saveUser(res, req.user);
+    } catch (err) {
+      console.error('Could not unlink GitHub account:', err);
+      res.status(500).json({ error: 'Internal server error' });
+    }
     return;
   }
   res.status(404).json({
@@ -247,11 +312,19 @@ export const unlinkGoogle: RequestHandler<
   UnlinkThirdPartyResponseBody
 > = async (req, res) => {
   if (req.user) {
-    req.user.google = undefined;
-    req.user.tokens = req.user.tokens.filter(
-      (token) => token.kind !== 'google'
-    );
-    await saveUser(res, req.user);
+    try {
+      req.user.google = undefined;
+      req.user.tokens = req.user.tokens.filter(
+        (token) => token.kind !== 'google'
+      );
+      // Log out every other session; re-serialize this one so it survives.
+      req.user.sessionVersion = (req.user.sessionVersion ?? 0) + 1;
+      await reLogin(req, req.user);
+      await saveUser(res, req.user);
+    } catch (err) {
+      console.error('Could not unlink Google account:', err);
+      res.status(500).json({ error: 'Internal server error' });
+    }
     return;
   }
   res.status(404).json({

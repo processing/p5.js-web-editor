@@ -44,8 +44,8 @@
         "My": "मेरा",
         "MySketches": "मेरे स्केच",
         "MyCollections": "मेरे संग्रह",
-        "Asset": "संपत्ति",
-        "MyAssets": "मेरी संपत्तियाँ",
+        "Asset": "ऐसेट",
+        "MyAssets": "मेरे ऐसेट",
         "LogOut": "लॉग आउट"
       }
     },
@@ -137,7 +137,8 @@
         "Report": "p5.js एडिटर के साथ टूटे या गलत व्यवहार की रिपोर्ट करें।",
         "Forum": "समुदाय द्वारा बनाई गई लाइब्रेरीज़ के साथ p5.js की संभावनाओं का विस्तार करें।",
         "Discord": "समुदाय द्वारा बनाई गई लाइब्रेरीज़ के साथ p5.js की संभावनाओं का विस्तार करें।"
-      }
+      },
+      "Contact": "संपर्क करें"
     },
     "Toast": {
       "OpenedNewSketch": "नया स्केच खोला",
@@ -226,10 +227,18 @@
       "TableOutputARIA": "टेबल आउटपुट चालू",
       "LibraryVersion": "p5.js संस्करण",
       "LibraryVersionInfo": "p5.js का एक [नया 2.0 संस्करण](https://github.com/processing/p5.js/releases/) उपलब्ध है! यह अगस्त 2026 में डिफ़ॉल्ट बन जाएगा, इसलिए इस समय का उपयोग इसे आज़माने और बग्स की रिपोर्ट करने के लिए करें। क्या आप 1.x से 2.0 में स्केच को स्थानांतरित करने में रुचि रखते हैं? [संगतता और स्थानांतरण संसाधनों](https://github.com/processing/p5.js-compatibility) को देखें।",
+      "CustomVersionTitle": "अपनी लाइब्रेरीज़ का प्रबंधन स्वयं कर रहे हैं? अच्छा!",
+      "CustomVersionInfo": "p5.js का संस्करण वर्तमान में index.html के कोड में प्रबंधित किया जा रहा है। इसका मतलब है कि इसे इस टैब से समायोजित नहीं किया जा सकता है।",
+      "CustomVersionReset": "यदि आप डिफ़ॉल्ट लाइब्रेरीज़ का उपयोग करना चाहते हैं, तो आप index.html में स्क्रिप्ट टैग्स को निम्नलिखित से बदल सकते हैं:",
       "SoundAddon": "p5.sound.js ऐड-ऑन लाइब्रेरी",
       "PreloadAddon": "p5.js 1.x संगतता ऐड-ऑन लाइब्रेरी — प्रीलोड",
       "ShapesAddon": "p5.js 1.x संगतता ऐड-ऑन लाइब्रेरी — आकार",
-      "DataAddon": "p5.js 1.x संगतता ऐड-ऑन लाइब्रेरी — डेटा संरचनाएँ"
+      "DataAddon": "p5.js 1.x संगतता ऐड-ऑन लाइब्रेरी — डेटा संरचनाएँ",
+      "AddonOnARIA": "चालू",
+      "AddonOffARIA": "बंद",
+      "SoundReference": "p5.sound के लिए संदर्भ देखें जो p5.js {{version}} के साथ संगत है",
+      "CopyToClipboardSuccess": "क्लिपबोर्ड में कॉपी किया गया!",
+      "CopyToClipboardFailure": "हम पाठ को कॉपी करने में असमर्थ थे, कृपया इसे चुनने और मैन्युअल रूप से कॉपी करने का प्रयास करें।"
     },
     "KeyboardShortcuts": {
       "Title": " कीबोर्ड शॉर्टकट",
@@ -248,8 +257,8 @@
         "FindPreviousTextMatch": "पिछला शब्द मिलान खोजें",
         "CodeEditing": "कोड संपादन",
         "ColorPicker": "इनलाइन कलर पिकर दिखाएँ",
-        "CreateNewFile": "नया फ़ाइल बनाएँ"
-
+        "CreateNewFile": "नया फ़ाइल बनाएँ",
+        "RenameVariable": "वैरिएबल का नाम बदलें"
       },
       "General": "सामान्य",
       "GeneralSelection": {
@@ -336,6 +345,7 @@
     "ReduxFormUtils": {
       "errorInvalidEmail": "कृपया वैध ईमेल एड्रेस लिखें",
       "errorEmptyEmail": "कृपया ईमेल एड्रेस लिखें",
+      "errorEmptyEmailorUserName": "कृपया एक ईमेल या यूजरनेम दर्ज करें",
       "errorPasswordMismatch": "पासवर्डों को मेल खाना अनिवार्य है",
       "errorEmptyPassword": "कृपया पासवर्ड लिखें",
       "errorShortPassword": "पासवर्ड कम से कम ६ अक्षरों का होना चाहिए",
@@ -439,38 +449,17 @@
       "NoUploadedAssets": "कोई ऐसेट अपलोड नही की।",
       "HeaderName": "नाम",
       "HeaderSize": "साइज़",
-      "HeaderSketch": "स्केच"
+      "HeaderSketch": "स्केच",
+      "maximum": "अधिकतम"
     },
-    "Edit": {
-      "Title": "संपादित करे",
-      "TidyCode": "कोड साफ़ करें",
-      "Find": "खोज",
-      "Replace": "बदली करें"
-    },
-    "Sketch": {
-      "Title": "चित्र",
-      "AddFile": "फाइल जोड़ें",
-      "AddFolder": "फोल्डर जोड़ें",
-      "Run": "चलाएं",
-      "Stop": "रोकें"
-    },
-    
-    "BackEditor": "एडिटर पर वापस जाएं",
-    "WarningUnsavedChanges": "क्या आप इस पेज को छोड़ना चाहते हैं? आपके पास अनसेव्ड परिवर्तन हैं।",
-    "Login": "लॉग इन",
-    "LoginOr": "या",
-    "SignUp": "साइन अप",
-    "Auth": {
-      "Hello": "नमस्ते",
-      "MyAccount": "मेरा अकाउंट",
-      "MySketches": "मेरे स्केच",
-      "MyCollections": "मेरे संग्रह",
-      "MyAssets": "मेरे ऐसेट",
-      "LogOut": "लॉग आउट"
-    },
- 
     "Feedback": {
-    "Title": "p5.js वेब एडिटर | फीडबैक"
+    "Title": "p5.js वेब एडिटर | फीडबैक",
+    "ViaGithubHeader": "Github Issues द्वारा",
+    "ViaGithubDescription": "यदि आप Github से परिचित हैं, तो बग रिपोर्ट और फीडबैक प्राप्त करने के लिए यह हमारा पसंदीदा तरीका है।",
+    "GoToGithub": "Github पर जाएं",
+    "ViaGoogleHeader": "Google फॉर्म द्वारा",
+    "ViaGoogleDescription": "आप इस फॉर्म को भी जमा कर सकते हैं।",
+    "GoToForm": "फॉर्म पर जाएं"
   },
   "Searchbar": {
     "SearchSketch": "सर्च स्केच...",
@@ -502,6 +491,10 @@
     "Fullscreen": "फुलस्क्रीन",
     "Edit": "एडीट"
   },
+  "CollectionView": {
+    "TitleCreate": "संग्रह बनाएँ",
+    "TitleDefault": "संग्रह"
+  },
   "Collection": {
     "Title": "p5.js वेब एडिटर | मेरे संग्रह",
     "AnothersTitle": "p5.js वेब एडिटर | {{anotheruser}} के संग्रह",
@@ -513,7 +506,9 @@
     "SketchRemoveLabel": "Remove from Collection",
     "SketchRemoveARIA": "स्केच संग्रह से हटाएं",
     "DescriptionPlaceholder": "विवरण लिखें",
+    "Description": "विवरण",
     "NumSketches": "{{count}} स्केच",
+    "NumSketches_plural": "{{count}} स्केच",
     "By": "संग्रह का ओनर ",
     "NoSketches": "संग्रह मे कोई स्केच नहीं",
     "TableSummary": "सभी संग्रहों की तालिका",
@@ -527,6 +522,7 @@
   },
   "AddToCollectionList": {
     "Title": "p5.js वेब एडिटर | मेरे संग्रह",
+    "AnothersTitle": "p5.js वेब एडिटर | {{anotheruser}} के संग्रह",
     "Empty": "कोई संग्रह नहीं"
   },
   "CollectionCreate": {
@@ -557,8 +553,11 @@
     "TableSummary": "सभी संग्रह युक्त तालिका",
     "HeaderName": "नाम",
     "HeaderCreatedAt": "बनाने की तारीख",
+    "HeaderCreatedAt_mobile": "बनाया गया",
     "HeaderUpdatedAt": "अपडेट करने की तारिख",
+    "HeaderUpdatedAt_mobile": "अपडेट किया",
     "HeaderNumItems": "# स्केच",
+    "HeaderNumItems_mobile": "# स्केच",
     "DirectionAscendingARIA": "आरोही",
     "DirectionDescendingARIA": "अवरोही",
     "ButtonLabelAscendingARIA": "{{displayName}} आरोही क्रम में।",
@@ -587,6 +586,7 @@
     "NextPageARIA": "Next Page"
   },
   "SketchList": {
+    "View": "देखें",
     "Title": "p5.js वेब एडिटर | मेरे स्केच",
     "AnothersTitle": "p5.js वेब एडिटर | {{anotheruser}} के स्केच",
     "ToggleLabelARIA": "स्केच ओपेन/क्लोज़ टॉगल ऑप्शन्ज़",
@@ -603,11 +603,14 @@
     "TableSummary": "सभी सेव किये गए स्केच की तालिका",
     "HeaderName": "स्केच",
     "HeaderCreatedAt": "बनाने की तारीख",
+    "HeaderCreatedAt_mobile": "बनाया गया",
     "HeaderUpdatedAt": "अपडेट करने की तारिख",
+    "HeaderUpdatedAt_mobile": "अपडेट किया",
     "NoSketches": "कोई स्केच नहीं"
   },
   "AddToCollectionSketchList": {
     "Title": "p5.js वेब एडिटर | मेरे स्केच",
+    "AnothersTitle": "p5.js वेब एडिटर | {{anotheruser}} के स्केच",
     "NoCollections": "कोई संग्रह नहीं"
   },
   "Editor": {
@@ -631,7 +634,8 @@
     "Ago": "{{timeAgo}} पहले"
   },
   "CopyableInput": {
-    "CopiedARIA": "क्लिपबोर्ड पर कॉपी किया!"
+    "CopiedARIA": "क्लिपबोर्ड पर कॉपी किया!",
+    "OpenViewTabARIA": "{{label}} व्यू नए टैब में खोलें"
   },
   "EditableInput": {
     "EditValue": "एडीट {{display}} वैल्यू",
@@ -643,12 +647,40 @@
   },
   "MobilePreferences": {
     "Settings": "सेटिंग्स",
+    "GeneralSettings": "सामान्य सेटिंग्स",
+    "Accessibility": "ऐक्सेसबिलिटी",
+    "AccessibleOutput": "ऐक्सेसबल आउटपुट",
+    "Theme": "थीम",
+    "LightTheme": "लाइट",
+    "DarkTheme": "डार्क",
+    "HighContrastTheme": "ज़्यादा कंट्रास्ट",
+    "Autosave": "ऑटोसेव",
+    "AutocompleteHinter": "ऑटोकंप्लीट हिंटर",
+    "WordWrap": "वर्ड रैप",
+    "LineNumbers": "लाइन नम्बर्ज़",
+    "LintWarningSound": "लिन्ट वॉर्निंग साउन्ड",
+    "UsedScreenReader": "स्क्रीन रीडर के साथ उपयोग किया",
+    "PlainText": "प्लेन-टेक्स्ट",
+    "TableText": "टेबल-टेक्स्ट",
+    "Sound": "ध्वनि",
     "Preferences": "प्राथमिकताएँ",
     "Language": "भाषा"
   },
   "PreferenceCreators": {
     "On": "ऑन",
     "Off": "औफ"
+  },
+  "MobileDashboardView": {
+    "Examples": "उदाहरण",
+    "Sketches": "स्केच",
+    "Collections": "संग्रह",
+    "Assets": "ऐसेट्स",
+    "MyStuff": "मेरा स्टफ",
+    "CreateSketch": "स्केच बनाएँ",
+    "CreateCollection": "संग्रह बनाएँ"
+  },
+  "Explorer": {
+    "Files": "फ़ाइलें"
   },
   "Cookies": {
     "Header": "कुकीज",

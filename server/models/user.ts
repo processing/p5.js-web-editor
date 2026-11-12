@@ -47,7 +47,11 @@ const userSchema = new Schema<UserDocument, UserModel>(
       default: CookieConsentOptions.NONE
     },
     banned: { type: Boolean, default: false },
-    lastLoginTimestamp: { type: Date }
+    lastLoginTimestamp: { type: Date },
+    // Incremented whenever credentials change (email, password, linked
+    // accounts) so that sessions serialized with an older version are
+    // rejected on deserialization, logging out every other session.
+    sessionVersion: { type: Number, default: 0 }
   },
   { timestamps: true }
 );

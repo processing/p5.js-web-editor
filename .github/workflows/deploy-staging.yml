@@ -6,6 +6,10 @@ on:
       - develop
     types:
       - completed
+# Run staging deploys one at a time
+concurrency:
+  group: deploy-staging-${{ github.event.workflow_run.conclusion }}
+  cancel-in-progress: false
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
   GKE_CLUSTER: p5-gke-cluster

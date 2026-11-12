@@ -26,6 +26,8 @@ export interface IUser extends VirtualId, MongooseTimestamps {
   cookieConsent: CookieConsentOptions;
   banned: boolean;
   lastLoginTimestamp?: Date;
+  /** Bumped on credential changes to invalidate sessions serialized with an older version */
+  sessionVersion?: number;
 }
 
 /** User object which can be exposed to the client */
@@ -48,6 +50,8 @@ export interface PublicUser
   > {
   /** Can contain either raw ApiKeyDocuments (server side) or SanitisedApiKeys (client side) */
   apiKeys: SanitisedApiKey[];
+  /** Whether the account has a password set, so the client knows which step-up flow to offer. Never the hash itself. */
+  hasPassword: boolean;
 }
 
 /** Mongoose document object for User */
@@ -110,6 +114,21 @@ export interface UpdateSettingsRequestBody {
  *   - If user is logged in, PublicUserOrError is returned
  */
 export type UnlinkThirdPartyResponseBody = PublicUserOrErrorOrGeneric;
+
+/** userController.verifyStepUp - Request */
+export interface StepUpRequestBody {
+  /** For accounts with a password */
+  password?: string;
+  /** For accounts without a password: 6-digit code sent to the account email */
+  code?: string;
+}
+/** userController.verifyStepUp - Response */
+export type StepUpResponseBody =
+  | { success: true; expiresAt: number }
+  | GenericResponseBody
+  | Error;
+/** userController.initiateStepUpCode - Response */
+export type StepUpCodeResponseBody = GenericResponseBody | Error;
 
 /** userController.resetPasswordInitiate - Request */
 export interface ResetPasswordInitiateRequestBody {

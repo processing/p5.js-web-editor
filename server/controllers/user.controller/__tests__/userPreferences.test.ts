@@ -19,7 +19,7 @@ describe('user.controller > user preferences', () => {
   let request: MockRequest;
   let response: MockResponse;
   let next: MockNext;
-  let mockUser: PublicUser & Record<string, any>;
+  let mockUser: Partial<PublicUser> & Record<string, any>;
 
   beforeEach(() => {
     request = new MockRequest();
@@ -111,6 +111,8 @@ describe('user.controller > user preferences', () => {
     it('updates cookieConsent when user exists', async () => {
       mockUser = createMockUser({
         cookieConsent: CookieConsentOptions.ALL,
+        // userResponse derives hasPassword from this field
+        password: 'a-hashed-password',
         save: jest.fn().mockResolvedValue(null)
       });
       User.findById = jest
