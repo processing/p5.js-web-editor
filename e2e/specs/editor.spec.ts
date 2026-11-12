@@ -507,4 +507,58 @@ test.describe('editor page', () => {
       page.locator('.preview-console__messages')
     ).toContainText('log from file B', { timeout: 15_000 });
   });
+
+  test('sketch can load a file through a path built at runtime, which the editor does not rewrite', async ({
+    page
+  }) => {
+    await page
+      .getByRole('button', { name: 'Open Sketch files navigation' })
+      .click();
+
+    await page
+      .getByRole('button', {
+        name: 'Toggle open/close sketch file options',
+        exact: true
+      })
+      .click();
+
+    await page.getByRole('button', { name: 'add file', exact: true }).click();
+
+    await page.getByRole('textbox', { name: 'Name:' }).fill('data.json');
+
+    await page.keyboard.press('Enter');
+
+    await page.waitForTimeout(1000);
+
+    await page.locator('.editor-holder').click();
+    await page.keyboard.type('{"word": "hello"}', { delay: 5 });
+
+    await page.waitForTimeout(1000);
+
+    await page.getByRole('button', { name: 'sketch.js', exact: true }).click();
+
+    const sketchCode = [
+      'async function setup() {',
+      '  createCanvas(100, 100);',
+      "  const path = ['data', 'json'].join('.');",
+      '  const data = await loadJSON(path);',
+      "  console.log('loaded ' + data.word);",
+      '}'
+    ].join('');
+
+    await page.locator('.editor-holder').click();
+    await page.keyboard.press('ControlOrMeta+A');
+    await page.keyboard.type(sketchCode, { delay: 5 });
+
+    await page.waitForTimeout(1000);
+
+    await waitForPreviewReady(page);
+    await page
+      .getByRole('button', { name: 'Play only visual sketch' })
+      .click({ force: true });
+
+    await expect(
+      page.locator('.preview-console__messages')
+    ).toContainText('loaded hello', { timeout: 15_000 });
+  });
 });
