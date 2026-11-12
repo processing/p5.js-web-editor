@@ -10,20 +10,23 @@ import { showToast } from '../actions/toast';
 import Toast from './Toast';
 
 describe(`Toast`, () => {
-  it('is hidden by default', () => {
+  it('is hidden by default, with an empty live region in the page', () => {
     reduxRender(<Toast />);
-    expect(screen.queryByRole('status')).not.toBeInTheDocument();
+    expect(screen.getByRole('status')).toBeEmptyDOMElement();
+    expect(screen.queryByRole('button')).not.toBeInTheDocument();
   });
 
   it('opens when an action is dispatched', async () => {
     const { store } = reduxRender(<Toast />);
+    const liveRegion = screen.getByRole('status');
     act(() => {
       store.dispatch(showToast('Toast.SketchSaved'));
     });
 
-    const toast = screen.queryByRole('status');
-    expect(toast).toBeVisible();
-    expect(toast).toHaveTextContent('Sketch saved.');
+    // The message is added to the live region that was already in the page
+    expect(screen.getByRole('status')).toBe(liveRegion);
+    expect(liveRegion).toHaveTextContent('Sketch saved.');
+    expect(screen.getByRole('button')).toBeVisible();
   });
 
   it('closes automatically after time', async () => {
@@ -32,11 +35,12 @@ describe(`Toast`, () => {
       store.dispatch(showToast('Toast.SketchSaved', 100));
     });
 
-    expect(screen.queryByRole('status')).toBeInTheDocument();
+    expect(screen.getByRole('status')).toHaveTextContent('Sketch saved.');
 
     await waitFor(() => {
-      expect(screen.queryByRole('status')).not.toBeInTheDocument();
+      expect(screen.getByRole('status')).toBeEmptyDOMElement();
     });
+    expect(screen.queryByRole('button')).not.toBeInTheDocument();
   });
 
   it('closes when "X" button is pressed', () => {
@@ -45,6 +49,7 @@ describe(`Toast`, () => {
     });
     const button = screen.getByRole('button');
     fireEvent.click(button);
-    expect(screen.queryByRole('status')).not.toBeInTheDocument();
+    expect(screen.getByRole('status')).toBeEmptyDOMElement();
+    expect(screen.queryByRole('button')).not.toBeInTheDocument();
   });
 });
