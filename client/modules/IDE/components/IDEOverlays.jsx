@@ -17,6 +17,7 @@ import NewFileModal from './NewFileModal';
 import NewFolderModal from './NewFolderModal';
 import Preferences from './Preferences';
 import { CollectionSearchbar } from './Searchbar';
+import SaveAsCopyModal from './SaveAsCopyModal';
 import ShareModal from './ShareModal';
 import UploadFileModal from './UploadFileModal';
 
@@ -29,6 +30,7 @@ export default function IDEOverlays() {
   const {
     modalIsVisible,
     newFolderModalVisible,
+    saveAsCopyModalVisible,
     uploadFileModalVisible,
     preferencesIsVisible,
     keyboardShortcutVisible,
@@ -97,6 +99,7 @@ export default function IDEOverlays() {
       )}
       {modalIsVisible && <NewFileModal />}
       {newFolderModalVisible && <NewFolderModal />}
+      {saveAsCopyModalVisible && <SaveAsCopyModal />}
       {uploadFileModalVisible && <UploadFileModal />}
     </>
   );

@@ -33,6 +33,7 @@ const initialTestState: RootState = {
     preferencesIsVisible: false,
     projectOptionsVisible: false,
     newFolderModalVisible: false,
+    saveAsCopyModalVisible: false,
     uploadFileModalVisible: false,
     shareModalVisible: false,
     shareModalProjectId: 'abcd',
