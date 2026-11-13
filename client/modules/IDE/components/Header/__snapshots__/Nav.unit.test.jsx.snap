@@ -540,7 +540,9 @@ exports[`Nav renders editor version for desktop 1`] = `
               <li>
                 New
               </li>
-              <li>
+              <li
+                data-disabled="true"
+              >
                 Save
                 <span
                   class="nav__keyboard-shortcut"
@@ -548,22 +550,34 @@ exports[`Nav renders editor version for desktop 1`] = `
                   Ctrl+S
                 </span>
               </li>
-              <li>
+              <li
+                data-disabled="true"
+              >
                 Duplicate
               </li>
-              <li>
+              <li
+                data-disabled="true"
+              >
                 Share
               </li>
-              <li>
+              <li
+                data-disabled="true"
+              >
                 Download
               </li>
-              <li>
+              <li
+                data-disabled="true"
+              >
                 Open
               </li>
-              <li>
+              <li
+                data-disabled="true"
+              >
                 Add to Collection
               </li>
-              <li>
+              <li
+                data-disabled="true"
+              >
                 Examples
               </li>
             </ul>

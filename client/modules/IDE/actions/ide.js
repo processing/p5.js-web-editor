@@ -152,6 +152,18 @@ export function closeNewFolderModal() {
   };
 }
 
+export function openSaveAsCopyModal() {
+  return {
+    type: ActionTypes.SHOW_SAVE_AS_COPY_MODAL
+  };
+}
+
+export function closeSaveAsCopyModal() {
+  return {
+    type: ActionTypes.CLOSE_SAVE_AS_COPY_MODAL
+  };
+}
+
 export function showShareModal(projectId, projectName, ownerUsername) {
   return (dispatch, getState) => {
     const { project, user } = getState();
