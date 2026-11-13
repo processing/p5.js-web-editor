@@ -2,6 +2,7 @@ import React from 'react';
 import { reduxRender } from '../../../test-utils';
 import { setupStore } from '../../../store';
 import useSketchActions from './useSketchActions';
+import { updateFileContent } from '../actions/files';
 import { saveProject, cloneProject } from '../actions/project';
 import { openSaveAsCopyModal, showErrorModal } from '../actions/ide';
 
@@ -9,6 +10,14 @@ jest.mock('../actions/project', () => ({
   ...jest.requireActual('../actions/project'),
   saveProject: jest.fn((content) => ({ type: 'TEST_SAVE', content })),
   cloneProject: jest.fn(() => ({ type: 'TEST_CLONE' }))
+}));
+jest.mock('../actions/files', () => ({
+  ...jest.requireActual('../actions/files'),
+  updateFileContent: jest.fn((id, content) => ({
+    type: 'TEST_UPDATE_FILE',
+    id,
+    content
+  }))
 }));
 
 const live = { id: 'file1', name: 'sketch.js', content: 'live code' };
@@ -55,13 +64,14 @@ describe('useSketchActions saveSketch', () => {
     expect(types()).toContain('TEST_SAVE');
   });
 
-  it('opens the save-a-copy modal for a non-owner', () => {
+  it('syncs live content then opens the modal for a non-owner', () => {
     const { types } = setup({ owner: { id: 'someone-else' } });
     actions.saveSketch(cmController);
     expect(confirmSpy).not.toHaveBeenCalled();
+    expect(updateFileContent).toHaveBeenCalledWith('file1', 'live code');
     expect(cloneProject).not.toHaveBeenCalled();
     expect(saveProject).not.toHaveBeenCalled();
-    expect(types()).toEqual([openSaveAsCopyModal().type]);
+    expect(types()).toEqual(['TEST_UPDATE_FILE', openSaveAsCopyModal().type]);
   });
 
   it('shows the auth modal when unauthenticated', () => {

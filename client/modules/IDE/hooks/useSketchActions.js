@@ -8,6 +8,7 @@ import {
   saveProject,
   setProjectName
 } from '../actions/project';
+import { updateFileContent } from '../actions/files';
 import { showToast } from '../actions/toast';
 import {
   openSaveAsCopyModal,
@@ -46,6 +47,12 @@ const useSketchActions = () => {
       return;
     }
     // Signed-in user who doesn't own this sketch: offer to save a copy.
+    // The editor syncs to redux with a debounce, so push the live content
+    // now so the copy includes the latest keystrokes.
+    const file = cmController?.getContent();
+    if (file) {
+      dispatch(updateFileContent(file.id, file.content));
+    }
     dispatch(openSaveAsCopyModal());
   }
 
