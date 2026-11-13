@@ -155,7 +155,8 @@ const IDEView = () => {
         });
         dispatch(setUnsavedChanges(true));
         // Auto-trigger a server save so the recovered content is persisted
-        dispatch(autosaveProject());
+        // (only the owner may save to the server)
+        if (isUserOwner) dispatch(autosaveProject());
       }
     }
     // Clear the backup once the project is loaded — it has either been

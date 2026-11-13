@@ -9,6 +9,7 @@ const initialState = {
   preferencesIsVisible: false,
   projectOptionsVisible: false,
   newFolderModalVisible: false,
+  saveAsCopyModalVisible: false,
   uploadFileModalVisible: false,
   shareModalVisible: false,
   shareModalProjectId: 'abcd',
@@ -71,6 +72,10 @@ const ide = (state = initialState, action) => {
       });
     case ActionTypes.CLOSE_NEW_FOLDER_MODAL:
       return Object.assign({}, state, { newFolderModalVisible: false });
+    case ActionTypes.SHOW_SAVE_AS_COPY_MODAL:
+      return Object.assign({}, state, { saveAsCopyModalVisible: true });
+    case ActionTypes.CLOSE_SAVE_AS_COPY_MODAL:
+      return Object.assign({}, state, { saveAsCopyModalVisible: false });
     case ActionTypes.SHOW_SHARE_MODAL:
       return Object.assign({}, state, {
         shareModalVisible: true,

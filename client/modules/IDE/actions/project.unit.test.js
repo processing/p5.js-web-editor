@@ -147,3 +147,73 @@ describe('saveProject', () => {
     });
   });
 });
+
+describe('saveProject ownership and immutability', () => {
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  it('does not save, leaves isSaving untouched, toasts and resolves for a sketch owned by another user', async () => {
+    const store = mockStore({
+      ...existingProjectState,
+      project: {
+        ...existingProjectState.project,
+        owner: { id: 'someone-else' }
+      }
+    });
+    const put = jest.spyOn(apiClient, 'put');
+    const post = jest.spyOn(apiClient, 'post');
+
+    await expect(
+      store.dispatch(ProjectActions.saveProject())
+    ).resolves.toBeUndefined();
+
+    const actions = store.getActions();
+    expect(put).not.toHaveBeenCalled();
+    expect(post).not.toHaveBeenCalled();
+    expect(actions).not.toContainEqual(ProjectActions.startSavingProject());
+    expect(actions).toContainEqual({
+      type: ActionTypes.SET_TOAST_TEXT,
+      text: 'Toast.SketchFailedSave'
+    });
+    expect(actions).toContainEqual({ type: ActionTypes.SHOW_TOAST });
+  });
+
+  it('does not toast on autosave for a sketch owned by another user', async () => {
+    const store = mockStore({
+      ...existingProjectState,
+      project: {
+        ...existingProjectState.project,
+        owner: { id: 'someone-else' }
+      }
+    });
+    await store.dispatch(ProjectActions.saveProject(null, true));
+    expect(store.getActions()).toEqual([]);
+  });
+
+  it('sends the selected file content without mutating state.files', async () => {
+    const originalFile = { id: 'f1', name: 'sketch.js', content: 'old' };
+    const otherFile = { id: 'f2', name: 'index.html', content: 'html' };
+    const state = {
+      ...existingProjectState,
+      files: [originalFile, otherFile]
+    };
+    const store = mockStore(state);
+    const put = jest
+      .spyOn(apiClient, 'put')
+      .mockRejectedValueOnce(new Error('Network Error'));
+
+    await store.dispatch(
+      ProjectActions.saveProject({ id: 'f1', content: 'new' })
+    );
+
+    expect(originalFile.content).toBe('old');
+    expect(state.files[0]).toBe(originalFile);
+    const [url, payload] = put.mock.calls[0];
+    expect(url).toBe('/projects/project123');
+    expect(payload.files).toEqual([
+      { id: 'f1', name: 'sketch.js', content: 'new' },
+      otherFile
+    ]);
+  });
+});

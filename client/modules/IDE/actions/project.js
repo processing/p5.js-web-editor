@@ -142,22 +142,33 @@ export function saveProject(
     if (state.project.isSaving) {
       return Promise.resolve();
     }
-    dispatch(startSavingProject());
     if (
       state.user.id &&
       state.project.owner &&
       state.project.owner.id !== state.user.id
     ) {
-      return Promise.reject();
+      if (!autosave) {
+        dispatch(setToastText('Toast.SketchFailedSave'));
+        dispatch(showToast(1500));
+      }
+      return Promise.resolve();
     }
-    const formParams = Object.assign({}, state.project);
-    formParams.files = [...state.files];
-
-    if (selectedFile) {
-      const fileToUpdate = formParams.files.find(
-        (file) => file.id === selectedFile.id
+    dispatch(startSavingProject());
+    let formParams;
+    try {
+      formParams = Object.assign({}, state.project);
+      formParams.files = state.files.map((file) =>
+        selectedFile && file.id === selectedFile.id
+          ? { ...file, content: selectedFile.content }
+          : file
       );
-      fileToUpdate.content = selectedFile.content;
+    } catch (error) {
+      dispatch(endSavingProject());
+      if (!autosave) {
+        dispatch(setToastText('Toast.SketchFailedSave'));
+        dispatch(showToast(1500));
+      }
+      return Promise.resolve();
     }
     if (state.project.id) {
       return apiClient
