@@ -5,8 +5,17 @@ const sketches = (state = [], action) => {
     case ActionTypes.SET_PROJECTS:
       return action.projects;
     case ActionTypes.DELETE_PROJECT:
-      return state.projects.filter((sketch) => sketch.id !== action.id);
+      if (!Array.isArray(state.projects)) return state;
+      return {
+        ...state,
+        projects: state.projects.filter((sketch) => sketch.id !== action.id)
+      };
     case ActionTypes.CHANGE_VISIBILITY: {
+      // The initial state is an array; project results become an object after loading.
+      if (!Array.isArray(state.projects)) {
+        return state;
+      }
+
       const updatedProjects = state.projects.map((sketch) =>
         sketch.id === action.payload.id
           ? { ...sketch, visibility: action.payload.visibility }
@@ -20,6 +29,7 @@ const sketches = (state = [], action) => {
     }
 
     case ActionTypes.RENAME_PROJECT: {
+      if (!Array.isArray(state.projects)) return state;
       const updatedproject = state.projects.map((sketch) => {
         if (sketch.id === action.payload.id) {
           return { ...sketch, name: action.payload.name };

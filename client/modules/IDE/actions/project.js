@@ -386,7 +386,7 @@ export function changeProjectName(id, newName) {
             type: ActionTypes.RENAME_PROJECT,
             payload: { id: response.data.id, name: response.data.name }
           });
-          if (state.project.id === response.data.id) {
+          if (getState().project.id === response.data.id) {
             dispatch({
               type: ActionTypes.SET_PROJECT_NAME,
               name: response.data.name
@@ -433,6 +433,28 @@ export function deleteProject(id) {
 export function changeVisibility(projectId, projectName, visibility, t) {
   return (dispatch, getState) => {
     const state = getState();
+    const isCurrentProject = state.project.id === projectId;
+    const previousVisibility = isCurrentProject
+      ? state.project.visibility
+      : state.sketches?.projects?.find((sketch) => sketch.id === projectId)
+          ?.visibility;
+
+    // Update connected dropdowns immediately while the server request is in flight.
+    dispatch({
+      type: ActionTypes.CHANGE_VISIBILITY,
+      payload: {
+        id: projectId,
+        visibility
+      }
+    });
+
+    if (isCurrentProject) {
+      dispatch({
+        type: ActionTypes.SET_PROJECT_VISIBILITY,
+        visibility,
+        updatedAt: state.project.updatedAt
+      });
+    }
 
     apiClient
       .patch('/project/visibility', { projectId, visibility })
@@ -484,6 +506,35 @@ export function changeVisibility(projectId, projectName, visibility, t) {
         }
       })
       .catch((error) => {
+        const currentState = getState();
+        const currentSketch = currentState.sketches?.projects?.find(
+          (sketch) => sketch.id === projectId
+        );
+        if (
+          previousVisibility !== undefined &&
+          currentSketch?.visibility === visibility
+        ) {
+          dispatch({
+            type: ActionTypes.CHANGE_VISIBILITY,
+            payload: {
+              id: projectId,
+              visibility: previousVisibility
+            }
+          });
+        }
+
+        if (
+          previousVisibility !== undefined &&
+          currentState.project.id === projectId &&
+          currentState.project.visibility === visibility
+        ) {
+          dispatch({
+            type: ActionTypes.SET_PROJECT_VISIBILITY,
+            visibility: previousVisibility,
+            updatedAt: currentState.project.updatedAt
+          });
+        }
+
         dispatch({
           type: ActionTypes.ERROR,
           error: error?.response?.data
