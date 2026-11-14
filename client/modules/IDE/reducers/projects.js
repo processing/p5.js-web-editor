@@ -6,7 +6,10 @@ const sketches = (state = [], action) => {
       return action.projects;
     case ActionTypes.DELETE_PROJECT:
       if (!Array.isArray(state.projects)) return state;
-      return state.projects.filter((sketch) => sketch.id !== action.id);
+      return {
+        ...state,
+        projects: state.projects.filter((sketch) => sketch.id !== action.id)
+      };
     case ActionTypes.CHANGE_VISIBILITY: {
       // The initial state is an array; project results become an object after loading.
       if (!Array.isArray(state.projects)) {

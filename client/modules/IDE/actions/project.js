@@ -386,7 +386,7 @@ export function changeProjectName(id, newName) {
             type: ActionTypes.RENAME_PROJECT,
             payload: { id: response.data.id, name: response.data.name }
           });
-          if (state.project.id === response.data.id) {
+          if (getState().project.id === response.data.id) {
             dispatch({
               type: ActionTypes.SET_PROJECT_NAME,
               name: response.data.name
