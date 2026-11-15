@@ -115,6 +115,104 @@ describe('downloadProjectAsZip', () => {
     );
   });
 
+  it('preserves the root and normal nested directory structure', async () => {
+    const project = {
+      name: 'Nested sketch',
+      visibility: 'Public',
+      user: { toString: () => 'owner-123' },
+      files: [
+        { id: 'root', name: 'root', fileType: 'folder', children: ['src'] },
+        { id: 'src', name: 'src', fileType: 'folder', children: ['helper'] },
+        { id: 'helper', name: 'helper.js', content: 'const ok = true;' }
+      ]
+    };
+    Project.findById = jest.fn().mockReturnValue({
+      exec: jest.fn().mockResolvedValue(project)
+    });
+    const response = new TestResponse();
+    const finished = new Promise((resolve) => response.on('finish', resolve));
+
+    await downloadProjectAsZip(
+      { params: { project_id: 'project-123' } },
+      response
+    );
+    await finished;
+
+    const archive = await JSZip.loadAsync(Buffer.concat(response.chunks));
+    expect(await archive.file('src/helper.js').async('string')).toBe(
+      'const ok = true;'
+    );
+    expect(archive.file('root/src/helper.js')).toBeNull();
+  });
+
+  it.each([
+    '../../etc/passwd',
+    '../../../../etc/passwd',
+    '..\\..\\etc\\passwd',
+    '/absolute.txt',
+    'C:\\Windows\\system.txt',
+    'mixed/..\\escape.txt',
+    'bad:name.txt',
+    'null\u0000byte.txt',
+    'control\u0001byte.txt'
+  ])('fails closed for legacy unsafe ZIP entry names: %s', async (name) => {
+    jest.spyOn(console, 'error').mockImplementation(() => {});
+    const project = {
+      name: 'Unsafe legacy sketch',
+      visibility: 'Public',
+      user: { toString: () => 'owner-123' },
+      files: [
+        { id: 'root', name: 'root', fileType: 'folder', children: ['folder'] },
+        { id: 'folder', name: 'src', fileType: 'folder', children: ['bad'] },
+        { id: 'bad', name, content: 'payload' }
+      ]
+    };
+    Project.findById = jest.fn().mockReturnValue({
+      exec: jest.fn().mockResolvedValue(project)
+    });
+    const response = new TestResponse();
+    const finished = new Promise((resolve) => response.on('finish', resolve));
+
+    await downloadProjectAsZip(
+      { params: { project_id: 'project-123' } },
+      response
+    );
+    await finished;
+
+    expect(response.statusCode).toBe(500);
+    expect(response.headersSent).toBe(false);
+    expect(response.body.message).toBe(
+      'Failed to generate zip file. Please try again.'
+    );
+  });
+
+  it('treats a nested folder named root as a normal folder', async () => {
+    const project = {
+      name: 'Nested root sketch',
+      visibility: 'Public',
+      user: { toString: () => 'owner-123' },
+      files: [
+        { id: 'root', name: 'root', fileType: 'folder', children: ['subroot'] },
+        { id: 'subroot', name: 'root', fileType: 'folder', children: ['file'] },
+        { id: 'file', name: 'inside.js', content: 'nested' }
+      ]
+    };
+    Project.findById = jest.fn().mockReturnValue({
+      exec: jest.fn().mockResolvedValue(project)
+    });
+    const response = new TestResponse();
+    const finished = new Promise((resolve) => response.on('finish', resolve));
+
+    await downloadProjectAsZip(
+      { params: { project_id: 'project-123' } },
+      response
+    );
+    await finished;
+
+    const archive = await JSZip.loadAsync(Buffer.concat(response.chunks));
+    expect(await archive.file('root/inside.js').async('string')).toBe('nested');
+  });
+
   it('adds an empty placeholder when the safe fetcher blocks an asset', async () => {
     const project = makeProject('http://127.0.0.1/private.png');
     Project.findById = jest.fn().mockReturnValue({

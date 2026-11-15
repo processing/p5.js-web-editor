@@ -22,6 +22,11 @@ import {
   commitPendingAssets,
   rewritePendingFileUrls
 } from '../utils/pendingAssets';
+import {
+  FileValidationError,
+  validateFileNames,
+  validateFileName
+} from '../domain-objects/Project';
 
 function isPrivateProject(project, user) {
   return (
@@ -85,6 +90,7 @@ export async function updateProject(req, res) {
     });
 
     if (updateData.files) {
+      validateFileNames(updateData.files);
       await commitPendingAssets(req.user.id, updateData.files);
       updateData.files = rewritePendingFileUrls(updateData.files, req.user.id);
     }
@@ -118,8 +124,17 @@ export async function updateProject(req, res) {
       res.json(updatedProject);
     }
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ success: false });
+    if (error instanceof FileValidationError) {
+      res.status(400).json({
+        success: false,
+        message: 'File Validation Failed',
+        detail: error.message,
+        errors: error.files
+      });
+    } else {
+      console.error(error);
+      res.status(500).json({ success: false });
+    }
   }
 }
 
@@ -285,13 +300,14 @@ async function getStreamFromS3Url(url, userId) {
  * @param {JSZip} zip
  * @return {Promise<void>}
  */
-async function addFileToZip(file, files, zip, userId) {
+async function addFileToZip(file, files, zip, userId, isRoot = false) {
+  validateFileName(file && file.name);
   if (file.fileType === 'folder') {
-    const folderZip = file.name === 'root' ? zip : zip.folder(file.name);
-    await file.children.reduce(async (previousPromise, fileId) => {
+    const folderZip = isRoot ? zip : zip.folder(file.name);
+    await file.children.reduce(async (previousPromise, childId) => {
       await previousPromise;
-      const childFile = files.find((f) => f.id === fileId);
-      return addFileToZip(childFile, files, folderZip, userId);
+      const childFile = files.find((f) => f.id === childId);
+      return addFileToZip(childFile, files, folderZip, userId, false);
     }, Promise.resolve());
   } else if (file.url) {
     try {
@@ -328,14 +344,16 @@ async function buildZip(project, res) {
       project.name
     )}_${currentTime}.zip`;
     const { files } = project;
-    const root = files.find((file) => file.name === 'root');
+    const root = files.find(
+      (file) => file.name === 'root' && file.fileType === 'folder'
+    );
 
     if (!root) {
       throw new Error('Project has no root folder');
     }
 
     bundleExternalLibs(project);
-    await addFileToZip(root, files, zip, project.user.toString());
+    await addFileToZip(root, files, zip, project.user.toString(), true);
     res.writeHead(200, {
       'Content-Type': 'application/zip',
       'Content-disposition': `attachment; filename=${zipFileName}`,

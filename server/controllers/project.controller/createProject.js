@@ -2,7 +2,8 @@ import Project from '../../models/project';
 import {
   toModel,
   FileValidationError,
-  ProjectValidationError
+  ProjectValidationError,
+  validateFileNames
 } from '../../domain-objects/Project';
 import {
   commitPendingAssets,
@@ -14,6 +15,7 @@ export default async function createProject(req, res) {
     const projectValues = Object.assign({}, req.body, { user: req.user._id });
 
     if (projectValues.files) {
+      validateFileNames(projectValues.files);
       await commitPendingAssets(req.user.id, projectValues.files);
       projectValues.files = rewritePendingFileUrls(
         projectValues.files,
@@ -29,7 +31,16 @@ export default async function createProject(req, res) {
 
     res.json(newProjectWithUser);
   } catch (err) {
-    res.status(400).json({ success: false });
+    if (err instanceof FileValidationError) {
+      res.status(400).json({
+        success: false,
+        message: 'File Validation Failed',
+        detail: err.message,
+        errors: err.files
+      });
+    } else {
+      res.status(400).json({ success: false });
+    }
   }
 }
 

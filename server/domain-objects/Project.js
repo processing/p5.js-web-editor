@@ -11,6 +11,41 @@ export const ProjectValidationError = createApplicationErrorClass(
   'ProjectValidationError'
 );
 
+// eslint-disable-next-line no-control-regex
+const INVALID_FILE_NAME_CHARACTERS = /[\\/\\\\:\u0000-\u001f\u007f-\u009f]/;
+
+/**
+ * Validate one file or folder name. Directory structure is represented by
+ * parent/child records, so names must never contain path separators.
+ */
+export function validateFileName(name) {
+  if (
+    typeof name !== 'string' ||
+    name.length === 0 ||
+    name === '.' ||
+    name === '..' ||
+    INVALID_FILE_NAME_CHARACTERS.test(name)
+  ) {
+    const error = new FileValidationError(
+      `Invalid file or folder name: ${JSON.stringify(name)}`
+    );
+    error.files = [{ name, message: 'must be a safe path component' }];
+    throw error;
+  }
+  return name;
+}
+
+export function validateFileNames(files) {
+  if (files == null) return files;
+  if (!Array.isArray(files)) {
+    const error = new FileValidationError("'files' must be an array");
+    error.files = [];
+    throw error;
+  }
+  files.forEach((file) => validateFileName(file && file.name));
+  return files;
+}
+
 /**
  * This converts between a mongoose Project model
  * and the public API Project object properties
@@ -36,6 +71,7 @@ function transformFilesInner(tree = {}, parentNode) {
   const errors = [];
 
   Object.entries(tree).forEach(([name, params]) => {
+    validateFileName(name);
     const id = createId();
     const isFolder = params.files != null;
 
