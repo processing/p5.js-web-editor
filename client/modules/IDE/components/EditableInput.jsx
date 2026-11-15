@@ -13,6 +13,8 @@ function EditableInput({
   inputProps,
   onChange,
   disabled,
+  maxLength,
+  maxLengthMessage,
   'aria-label': ariaLabel
 }) {
   const [isEditing, setIsEditing] = React.useState(false);
@@ -50,14 +52,19 @@ function EditableInput({
   }
 
   function doneEditing() {
-    setIsEditing(false);
-
-    const isValid = typeof validate === 'function' && validate(currentValue);
+    const isValid =
+      typeof validate === 'function' &&
+      validate(currentValue) &&
+      (maxLength == null || currentValue.length <= maxLength);
 
     if (isValid) {
+      setIsEditing(false);
       onChange(currentValue);
-    } else {
+    } else if (maxLength == null || currentValue.length <= maxLength) {
+      setIsEditing(false);
       setCurrentValue(value);
+    } else {
+      inputRef.current.focus();
     }
   }
 
@@ -96,6 +103,7 @@ function EditableInput({
         className="editable-input__input"
         type="text"
         {...inputProps}
+        maxLength={maxLength}
         disabled={!isEditing}
         aria-hidden={!isEditing}
         onBlur={doneEditing}
@@ -104,6 +112,21 @@ function EditableInput({
         ref={inputRef}
         value={currentValue}
       />
+      {maxLength != null && isEditing && (
+        <span className="editable-input__limit">
+          <span aria-live="polite">
+            {t('Collection.CharacterCount', {
+              current: currentValue.length,
+              max: maxLength
+            })}
+          </span>
+          {currentValue.length > maxLength && (
+            <span className="form-error" role="alert">
+              {maxLengthMessage}
+            </span>
+          )}
+        </span>
+      )}
     </span>
   );
 }
@@ -115,6 +138,8 @@ EditableInput.defaultProps = {
   validate: () => true,
   value: '',
   disabled: false,
+  maxLength: undefined,
+  maxLengthMessage: undefined,
   'aria-label': undefined
 };
 
@@ -127,6 +152,8 @@ EditableInput.propTypes = {
   validate: PropTypes.func,
   value: PropTypes.string,
   disabled: PropTypes.bool,
+  maxLength: PropTypes.number,
+  maxLengthMessage: PropTypes.string,
   'aria-label': PropTypes.string
 };
 

@@ -12,6 +12,10 @@ import EditableInput from '../../IDE/components/EditableInput';
 import { SketchSearchbar } from '../../IDE/components/Searchbar';
 import { getCollection } from '../../IDE/selectors/collections';
 import { ShareURL } from './CollectionShareButton';
+import {
+  COLLECTION_DESCRIPTION_MAX_LENGTH,
+  COLLECTION_NAME_MAX_LENGTH
+} from '../../../../common/collectionLimits';
 
 function CollectionMetadata({ collectionId }) {
   const { t } = useTranslation();
@@ -64,6 +68,8 @@ function CollectionMetadata({ collectionId }) {
                 value={name}
                 onChange={handleEditCollectionName}
                 validate={(value) => value !== ''}
+                maxLength={COLLECTION_NAME_MAX_LENGTH}
+                maxLengthMessage={t('Collection.NameTooLong')}
               />
             ) : (
               name
@@ -77,6 +83,8 @@ function CollectionMetadata({ collectionId }) {
                 value={description}
                 onChange={handleEditCollectionDescription}
                 emptyPlaceholder={t('Collection.DescriptionPlaceholder')}
+                maxLength={COLLECTION_DESCRIPTION_MAX_LENGTH}
+                maxLengthMessage={t('Collection.DescriptionTooLong')}
               />
             ) : (
               description
