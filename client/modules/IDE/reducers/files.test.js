@@ -11,7 +11,8 @@ function createTestState(fileDescriptors) {
     content: f.content ?? '',
     fileType: f.fileType ?? 'file',
     children: f.children ?? [],
-    parentId: f.parentId ?? null
+    parentId: f.parentId ?? null,
+    filePath: f.filePath ?? ''
   }));
 }
 
@@ -184,6 +185,193 @@ describe('files reducer', () => {
       // Parent should be updated
       const root = newState.find((f) => f.id === 'root');
       expect(root.children).not.toContain('docs');
+    });
+  });
+
+  describe('UPDATE_FILE_NAME action', () => {
+    it('updates file paths of child files when a folder is renamed without duplicating the folder name', () => {
+      const state = createTestState([
+        {
+          id: 'root',
+          name: 'root',
+          fileType: 'folder',
+          children: ['folder-js'],
+          filePath: ''
+        },
+        {
+          id: 'folder-js',
+          name: 'js',
+          fileType: 'folder',
+          children: ['file-helper'],
+          parentId: 'root',
+          filePath: ''
+        },
+        {
+          id: 'file-helper',
+          name: 'helper.js',
+          parentId: 'folder-js',
+          filePath: '/js'
+        }
+      ]);
+
+      const action = {
+        type: ActionTypes.UPDATE_FILE_NAME,
+        id: 'folder-js',
+        name: 'lib'
+      };
+
+      const newState = files(state, action);
+
+      const renamedFolder = newState.find((f) => f.id === 'folder-js');
+      expect(renamedFolder.name).toBe('lib');
+      expect(renamedFolder.filePath).toBe('');
+
+      const childFile = newState.find((f) => f.id === 'file-helper');
+      expect(childFile.filePath).toBe('/lib');
+    });
+
+    it('updates descendant paths recursively across multiple nesting levels when an ancestor folder is renamed', () => {
+      const state = createTestState([
+        {
+          id: 'root',
+          name: 'root',
+          fileType: 'folder',
+          children: ['folder-src'],
+          filePath: ''
+        },
+        {
+          id: 'folder-src',
+          name: 'src',
+          fileType: 'folder',
+          children: ['folder-utils'],
+          parentId: 'root',
+          filePath: ''
+        },
+        {
+          id: 'folder-utils',
+          name: 'utils',
+          fileType: 'folder',
+          children: ['file-helper'],
+          parentId: 'folder-src',
+          filePath: '/src'
+        },
+        {
+          id: 'file-helper',
+          name: 'helper.js',
+          parentId: 'folder-utils',
+          filePath: '/src/utils'
+        }
+      ]);
+
+      const action = {
+        type: ActionTypes.UPDATE_FILE_NAME,
+        id: 'folder-src',
+        name: 'source'
+      };
+
+      const newState = files(state, action);
+
+      const renamedAncestor = newState.find((f) => f.id === 'folder-src');
+      expect(renamedAncestor.name).toBe('source');
+      expect(renamedAncestor.filePath).toBe('');
+
+      const childFolder = newState.find((f) => f.id === 'folder-utils');
+      expect(childFolder.filePath).toBe('/source');
+
+      const descendantFile = newState.find((f) => f.id === 'file-helper');
+      expect(descendantFile.filePath).toBe('/source/utils');
+    });
+
+    it('updates deeply nested descendant paths when an intermediate folder is renamed', () => {
+      const state = createTestState([
+        {
+          id: 'root',
+          name: 'root',
+          fileType: 'folder',
+          children: ['folder-src'],
+          filePath: ''
+        },
+        {
+          id: 'folder-src',
+          name: 'src',
+          fileType: 'folder',
+          children: ['folder-utils'],
+          parentId: 'root',
+          filePath: ''
+        },
+        {
+          id: 'folder-utils',
+          name: 'utils',
+          fileType: 'folder',
+          children: ['file-math'],
+          parentId: 'folder-src',
+          filePath: '/src'
+        },
+        {
+          id: 'file-math',
+          name: 'math.js',
+          parentId: 'folder-utils',
+          filePath: '/src/utils'
+        }
+      ]);
+
+      const action = {
+        type: ActionTypes.UPDATE_FILE_NAME,
+        id: 'folder-utils',
+        name: 'helpers'
+      };
+
+      const newState = files(state, action);
+
+      const parentFolder = newState.find((f) => f.id === 'folder-src');
+      expect(parentFolder.filePath).toBe('');
+
+      const renamedFolder = newState.find((f) => f.id === 'folder-utils');
+      expect(renamedFolder.name).toBe('helpers');
+      expect(renamedFolder.filePath).toBe('/src');
+
+      const childFile = newState.find((f) => f.id === 'file-math');
+      expect(childFile.filePath).toBe('/src/helpers');
+    });
+
+    it('renaming a regular file preserves its filePath and does not alter sibling paths', () => {
+      const state = createTestState([
+        {
+          id: 'root',
+          name: 'root',
+          fileType: 'folder',
+          children: ['file-a', 'file-b'],
+          filePath: ''
+        },
+        {
+          id: 'file-a',
+          name: 'sketch.js',
+          parentId: 'root',
+          filePath: ''
+        },
+        {
+          id: 'file-b',
+          name: 'style.css',
+          parentId: 'root',
+          filePath: ''
+        }
+      ]);
+
+      const action = {
+        type: ActionTypes.UPDATE_FILE_NAME,
+        id: 'file-a',
+        name: 'main.js'
+      };
+
+      const newState = files(state, action);
+
+      const renamedFile = newState.find((f) => f.id === 'file-a');
+      expect(renamedFile.name).toBe('main.js');
+      expect(renamedFile.filePath).toBe('');
+
+      const siblingFile = newState.find((f) => f.id === 'file-b');
+      expect(siblingFile.name).toBe('style.css');
+      expect(siblingFile.filePath).toBe('');
     });
   });
 });
