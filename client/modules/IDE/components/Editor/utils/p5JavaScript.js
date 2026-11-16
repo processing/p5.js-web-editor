@@ -6,19 +6,27 @@ import { p5HinterV1 } from '../../../../../utils/p5-hinter-v1';
 import { p5HinterV2 } from '../../../../../utils/p5-hinter-v2';
 import { completionPreview } from './completionPreview';
 import contextAwareHinter from '../../../../../utils/contextAwareHinter';
-import {
-  p5FunctionKeywords,
-  p5VariableKeywords
-} from '../../../../../utils/p5-keywords';
 
-const p5Functions = new Set(Object.keys(p5FunctionKeywords));
-const p5Variables = new Set(Object.keys(p5VariableKeywords));
+// The hinter files are generated from the p5.js reference for each major
+// version, so the highlighted keywords always match the sketch's version.
+function getKeywords(hints) {
+  const functions = new Set();
+  const variables = new Set();
+  hints.forEach(({ label, type }) => {
+    if (type === 'method') {
+      functions.add(label);
+    } else if (type === 'variable' || type === 'constant') {
+      variables.add(label);
+    }
+  });
+  return { functions, variables };
+}
 
 const p5FunctionMark = Decoration.mark({ class: 'cm-p5-function' });
 const p5VariableMark = Decoration.mark({ class: 'cm-p5-variable' });
 
 // Used to add highlighting to the p5-specific keywords.
-function buildHighlightDecorations(view) {
+function buildHighlightDecorations(view, { functions, variables }) {
   const builder = new RangeSetBuilder();
   view.visibleRanges.forEach(({ from, to }) => {
     syntaxTree(view.state).iterate({
@@ -29,9 +37,9 @@ function buildHighlightDecorations(view) {
         const isDefinition = node.name === 'VariableDefinition';
         if (!isVariable && !isDefinition) return;
         const name = view.state.doc.sliceString(node.from, node.to);
-        if (p5Functions.has(name)) {
+        if (functions.has(name)) {
           builder.add(node.from, node.to, p5FunctionMark);
-        } else if (p5Variables.has(name)) {
+        } else if (variables.has(name)) {
           builder.add(node.from, node.to, p5VariableMark);
         }
       }
@@ -40,25 +48,31 @@ function buildHighlightDecorations(view) {
   return builder.finish();
 }
 
-const p5Highlight = ViewPlugin.fromClass(
-  class {
-    constructor(view) {
-      this.decorations = buildHighlightDecorations(view);
-    }
-
-    update(update) {
-      if (update.docChanged || update.viewportChanged) {
-        this.decorations = buildHighlightDecorations(update.view);
+function p5Highlight(keywords) {
+  return ViewPlugin.fromClass(
+    class {
+      constructor(view) {
+        this.decorations = buildHighlightDecorations(view, keywords);
       }
-    }
-  },
-  { decorations: (v) => v.decorations }
-);
+
+      update(update) {
+        if (update.docChanged || update.viewportChanged) {
+          this.decorations = buildHighlightDecorations(update.view, keywords);
+        }
+      }
+    },
+    { decorations: (v) => v.decorations }
+  );
+}
+
+const p5HighlightV1 = p5Highlight(getKeywords(p5HinterV1));
+const p5HighlightV2 = p5Highlight(getKeywords(p5HinterV2));
 
 export function p5JavaScript(p5Version) {
   const jsLang = javascript();
 
-  const hints = p5Version?.startsWith('2.') ? p5HinterV2 : p5HinterV1;
+  const isV2 = p5Version?.startsWith('2.');
+  const hints = isV2 ? p5HinterV2 : p5HinterV1;
 
   function addCompletions(context) {
     const word = context.matchBefore(/\w*/);
@@ -78,6 +92,6 @@ export function p5JavaScript(p5Version) {
       autocomplete: addCompletions
     }),
     completionPreview(),
-    p5Highlight
+    isV2 ? p5HighlightV2 : p5HighlightV1
   ]);
 }
