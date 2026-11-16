@@ -13,6 +13,7 @@ beforeAll(async () => {
   });
   const uri = mongoServer.getUri();
   await mongoose.connect(uri);
+  await User.init();
 });
 
 afterAll(async () => {
@@ -106,6 +107,59 @@ describe('User model', () => {
   it('should return null for wrong username/email', async () => {
     const found = await User.findByEmail('nope@example.com');
     expect(found).toBeNull();
+  });
+
+  it('should define a single unique case-insensitive index per username/email', () => {
+    const indexes = User.schema.indexes();
+    const usernameIndexes = indexes.filter(
+      ([fields]) => Object.keys(fields).length === 1 && fields.username === 1
+    );
+    const emailIndexes = indexes.filter(
+      ([fields]) => Object.keys(fields).length === 1 && fields.email === 1
+    );
+
+    expect(usernameIndexes).toHaveLength(1);
+    expect(emailIndexes).toHaveLength(1);
+    expect(usernameIndexes[0][1]).toMatchObject({
+      unique: true,
+      collation: { locale: 'en', strength: 2 }
+    });
+    expect(emailIndexes[0][1]).toMatchObject({
+      unique: true,
+      collation: { locale: 'en', strength: 2 }
+    });
+  });
+
+  it('should reject case-variant duplicate email via unique collation index', async () => {
+    await new User({
+      username: 'uniqueuser1',
+      email: 'Case.Unique@Example.com',
+      password: 'pass'
+    }).save();
+
+    await expect(
+      new User({
+        username: 'uniqueuser2',
+        email: 'case.unique@example.com',
+        password: 'pass'
+      }).save()
+    ).rejects.toMatchObject({ code: 11000 });
+  });
+
+  it('should reject case-variant duplicate username via unique collation index', async () => {
+    await new User({
+      username: 'CaseUser',
+      email: 'caseuser1@example.com',
+      password: 'pass'
+    }).save();
+
+    await expect(
+      new User({
+        username: 'caseuser',
+        email: 'caseuser2@example.com',
+        password: 'pass'
+      }).save()
+    ).rejects.toMatchObject({ code: 11000 });
   });
 
   it('should hash apiKeys on save and find matching key', async () => {
