@@ -24,8 +24,7 @@ import {
 } from '../utils/pendingAssets';
 import {
   FileValidationError,
-  validateFileNames,
-  validateFileName
+  validateFileNames
 } from '../domain-objects/Project';
 
 function isPrivateProject(project, user) {
@@ -294,6 +293,15 @@ async function getStreamFromS3Url(url, userId) {
   );
 }
 
+function sanitizeZipEntryName(name) {
+  if (typeof name !== 'string') return 'unnamed';
+
+  const safeName = generateFileSystemSafeName(name, '_');
+  if (!safeName || safeName === '.' || safeName === '..') return '_';
+
+  return safeName;
+}
+
 /**
  * @param {object} file
  * @param {Array<object>} files
@@ -301,9 +309,9 @@ async function getStreamFromS3Url(url, userId) {
  * @return {Promise<void>}
  */
 async function addFileToZip(file, files, zip, userId, isRoot = false) {
-  validateFileName(file && file.name);
+  const zipEntryName = sanitizeZipEntryName(file.name);
   if (file.fileType === 'folder') {
-    const folderZip = isRoot ? zip : zip.folder(file.name);
+    const folderZip = isRoot ? zip : zip.folder(zipEntryName);
     await file.children.reduce(async (previousPromise, childId) => {
       await previousPromise;
       const childFile = files.find((f) => f.id === childId);
@@ -314,24 +322,24 @@ async function addFileToZip(file, files, zip, userId, isRoot = false) {
       if (hasConfiguredS3Origin(file.url)) {
         const data = await getStreamFromS3Url(file.url, userId);
         if (data) {
-          zip.file(file.name, data, { binary: true });
+          zip.file(zipEntryName, data, { binary: true });
         } else {
           const fallbackData = await safeProjectFileFetch(file.url);
-          zip.file(file.name, fallbackData, { binary: true });
+          zip.file(zipEntryName, fallbackData, { binary: true });
         }
       } else {
         if (isS3Url(file.url) && !isConfiguredS3HttpUrl(file.url, userId)) {
           throw new Error('Unsupported project asset URL');
         }
         const data = await safeProjectFileFetch(file.url);
-        zip.file(file.name, data, { binary: true });
+        zip.file(zipEntryName, data, { binary: true });
       }
     } catch (e) {
       console.warn('Failed to fetch project file');
-      zip.file(file.name, Buffer.alloc(0));
+      zip.file(zipEntryName, Buffer.alloc(0));
     }
   } else {
-    zip.file(file.name, file.content);
+    zip.file(zipEntryName, file.content);
   }
 }
 

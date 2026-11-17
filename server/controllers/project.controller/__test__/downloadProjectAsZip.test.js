@@ -155,7 +155,7 @@ describe('downloadProjectAsZip', () => {
     'bad:name.txt',
     'null\u0000byte.txt',
     'control\u0001byte.txt'
-  ])('fails closed for legacy unsafe ZIP entry names: %s', async (name) => {
+  ])('sanitizes legacy unsafe ZIP entry names: %s', async (name) => {
     jest.spyOn(console, 'error').mockImplementation(() => {});
     const project = {
       name: 'Unsafe legacy sketch',
@@ -179,11 +179,21 @@ describe('downloadProjectAsZip', () => {
     );
     await finished;
 
-    expect(response.statusCode).toBe(500);
-    expect(response.headersSent).toBe(false);
-    expect(response.body.message).toBe(
-      'Failed to generate zip file. Please try again.'
-    );
+    expect(response.statusCode).toBe(200);
+    expect(response.headersSent).toBe(true);
+    const archive = await JSZip.loadAsync(Buffer.concat(response.chunks));
+    const entries = Object.keys(archive.files);
+    expect(entries.length).toBeGreaterThan(0);
+    entries.forEach((entry) => {
+      expect(entry.startsWith('/')).toBe(false);
+      expect(entry).not.toContain('\\');
+      expect(entry).not.toContain(':');
+      expect(entry.split('/')).not.toContain('..');
+      expect(entry.split('/')).not.toContain('.');
+      // eslint-disable-next-line no-control-regex
+      expect(entry).not.toMatch(/[\u0000-\u001f\u007f-\u009f]/);
+      expect(entry).not.toMatch(/^\.\.(?:_|\/)/);
+    });
   });
 
   it('treats a nested folder named root as a normal folder', async () => {
