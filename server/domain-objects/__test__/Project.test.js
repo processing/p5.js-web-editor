@@ -152,6 +152,62 @@ describe('transformFiles', () => {
     ]);
   });
 
+  it('accepts valid filename and folder path components in nested trees', () => {
+    const files = transformFiles({
+      'index.html': { content: '<html />' },
+      'café-雪.js': { content: 'true' },
+      'src-v2': {
+        files: {
+          'helper.test.js': { content: 'true' }
+        }
+      }
+    });
+
+    expect(find(files, { name: 'src-v2', fileType: 'folder' })).toBeDefined();
+    expect(find(files, { name: 'helper.test.js' })).toBeDefined();
+    expect(find(files, { name: 'café-雪.js' })).toBeDefined();
+  });
+
+  it.each([
+    '../escape.js',
+    '../../../../etc/passwd.js',
+    '..\\escape.js',
+    '/absolute.js',
+    'C:\\Windows\\system.js',
+    'mixed/..\\escape.js',
+    '.',
+    '..',
+    'bad:name.js',
+    'null\u0000byte.js',
+    'control\u0001byte.js'
+  ])('rejects unsafe path components in API file trees: %s', (name) => {
+    expect(() =>
+      transformFiles({ [name]: { content: 'payload' } })
+    ).toThrowError(FileValidationError);
+  });
+
+  it.each(['\u0085', '\u009f'])(
+    'rejects Unicode C1 control character U+%s in API file trees',
+    (controlCharacter) => {
+      const name = `bad${controlCharacter}name.js`;
+      expect(() => transformFiles({ [name]: { content: 'payload' } })).toThrow(
+        FileValidationError
+      );
+    }
+  );
+
+  it('rejects unsafe folder components in API file trees', () => {
+    expect(() =>
+      transformFiles({
+        safe: {
+          files: {
+            '../escape.js': { content: 'payload' }
+          }
+        }
+      })
+    ).toThrowError(FileValidationError);
+  });
+
   it('converts tree-shaped files into list', () => {
     const tree = {
       'index.html': {

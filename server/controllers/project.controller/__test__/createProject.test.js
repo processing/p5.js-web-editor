@@ -3,6 +3,7 @@
  */
 import { Request, Response } from 'jest-express';
 import Project from '../../../models/project';
+import * as pendingAssets from '../../../utils/pendingAssets';
 import createProject, { apiCreateProject } from '../createProject';
 
 jest.mock('../../../models/project');
@@ -23,6 +24,7 @@ describe('project.controller', () => {
     afterEach(() => {
       request.resetMocked();
       response.resetMocked();
+      jest.restoreAllMocks();
     });
 
     it('fails if create fails', async () => {
@@ -49,6 +51,32 @@ describe('project.controller', () => {
       await createProject(request, response);
 
       expect(response.json).toHaveBeenCalled();
+    });
+
+    it.each([
+      '../../etc/passwd.js',
+      '..\\..\\etc\\passwd.js',
+      '/absolute.js',
+      'mixed/..\\name.js',
+      'bad:name.js',
+      'null\u0000name.js',
+      'control\u0001name.js'
+    ])('rejects an unsafe file name on project creation: %s', async (name) => {
+      const commitAssets = jest.spyOn(pendingAssets, 'commitPendingAssets');
+      request.user = { _id: 'abc123' };
+      request.body = {
+        name: 'Test',
+        files: [{ name, url: 'https://assets.test/pending/abc/image.png' }]
+      };
+
+      await createProject(request, response);
+
+      expect(response.status).toHaveBeenCalledWith(400);
+      expect(response.json).toHaveBeenCalledWith(
+        expect.objectContaining({ message: 'File Validation Failed' })
+      );
+      expect(Project.create).not.toHaveBeenCalled();
+      expect(commitAssets).not.toHaveBeenCalled();
     });
 
     it('populates referenced user on project creation', async () => {
@@ -115,6 +143,7 @@ describe('project.controller', () => {
     afterEach(() => {
       request.resetMocked();
       response.resetMocked();
+      jest.restoreAllMocks();
     });
 
     it('returns 201 with id of created sketch', async () => {
@@ -151,6 +180,30 @@ describe('project.controller', () => {
         id: 'abc123'
       });
     });
+
+    it.each(['../bad.js', '..\\bad.js', '/bad.js', 'bad:name.js'])(
+      'rejects unsafe names in API project creation: %s',
+      async (name) => {
+        const commitAssets = jest.spyOn(pendingAssets, 'commitPendingAssets');
+        request.user = { _id: 'abc123', username: 'alice' };
+        request.params = { username: 'alice' };
+        request.body = {
+          name: 'My sketch',
+          files: {
+            [name]: { url: 'https://assets.test/pending/abc/image.png' }
+          }
+        };
+
+        await apiCreateProject(request, response);
+
+        expect(response.status).toHaveBeenCalledWith(422);
+        expect(response.json.mock.calls[0][0]).toMatchObject({
+          message: 'File Validation Failed'
+        });
+        expect(Project.prototype.save).not.toHaveBeenCalled();
+        expect(commitAssets).not.toHaveBeenCalled();
+      }
+    );
 
     it('fails if slug is not unique', async () => {
       request.user = { _id: 'abc123', username: 'alice' };

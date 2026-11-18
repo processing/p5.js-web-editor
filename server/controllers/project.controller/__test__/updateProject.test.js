@@ -4,6 +4,7 @@
 import { Request, Response } from 'jest-express';
 
 import Project from '../../../models/project';
+import * as pendingAssets from '../../../utils/pendingAssets';
 import { updateProject } from '../../project.controller';
 
 jest.mock('../../../models/project');
@@ -27,6 +28,7 @@ describe('project.controller', () => {
     afterEach(() => {
       request.resetMocked();
       response.resetMocked();
+      jest.restoreAllMocks();
     });
 
     it('returns 404 if project does not exist', async () => {
@@ -106,6 +108,35 @@ describe('project.controller', () => {
       expect(setPayload).not.toHaveProperty('user');
       expect(setPayload).not.toHaveProperty('slug');
     });
+
+    it.each(['../../bad.js', '..\\..\\bad.js', '/bad.js', 'mix/..\\bad.js'])(
+      'rejects unsafe file names before project update: %s',
+      async (name) => {
+        const ownerId = 'owner-123';
+        Project.findById().exec.mockResolvedValue({
+          user: { equals: (id) => id === ownerId },
+          updatedAt: new Date('2024-01-01')
+        });
+        request.setParams({ project_id: 'proj-1' });
+        request.user = { _id: ownerId };
+        request.body = {
+          files: [
+            { name, url: 'https://assets.test/pending/owner-123/image.png' }
+          ]
+        };
+
+        const commitAssets = jest.spyOn(pendingAssets, 'commitPendingAssets');
+        jest.spyOn(console, 'error').mockImplementation(() => {});
+        await updateProject(request, response);
+
+        expect(response.status).toHaveBeenCalledWith(400);
+        expect(response.json.mock.calls[0][0]).toMatchObject({
+          message: 'File Validation Failed'
+        });
+        expect(Project.findByIdAndUpdate).not.toHaveBeenCalled();
+        expect(commitAssets).not.toHaveBeenCalled();
+      }
+    );
 
     it('allows updating whitelisted fields (name, visibility, updatedAt)', async () => {
       const ownerId = 'owner-123';
