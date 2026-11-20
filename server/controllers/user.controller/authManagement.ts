@@ -1,6 +1,7 @@
 import { Request, RequestHandler } from 'express';
 import { User } from '../../models/user';
 import { saveUser, generateToken, userResponse } from './helpers';
+import { getEditorUrl } from '../../utils/editorUrl';
 import {
   GenericResponseBody,
   PublicUserOrErrorOrGeneric,
@@ -60,15 +61,15 @@ export const resetPasswordInitiate: RequestHandler<
       });
       return;
     }
+    const editorUrl = getEditorUrl();
     user.resetPasswordToken = token;
     user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
 
     await user.save();
-    const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
     const mailOptions = renderResetPassword({
       body: {
-        domain: `${protocol}://${req.headers.host}`,
-        link: `${protocol}://${req.headers.host}/reset-password/${token}`
+        domain: editorUrl,
+        link: `${editorUrl}/reset-password/${token}`
       },
       to: user.email
     });
@@ -222,6 +223,8 @@ export const updateSettings: RequestHandler<
     }
 
     let verificationMail = null;
+    let noticeMail = null;
+    const editorUrl = getEditorUrl();
     if (changingEmail) {
       user.verified = User.EmailConfirmation().Sent;
       user.email = req.body.email;
@@ -235,13 +238,20 @@ export const updateSettings: RequestHandler<
       user.verifiedToken = token;
       user.verifiedTokenExpires = Date.now() + 3600000 * 24; // 24 hours
 
-      const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
       verificationMail = renderEmailConfirmation({
         body: {
-          domain: `${protocol}://${req.headers.host}`,
-          link: `${protocol}://${req.headers.host}/verify?t=${token}`
+          domain: editorUrl,
+          link: `${editorUrl}/verify?t=${token}`
         },
         to: user.email
+      });
+      // Tell the old address, with no links that act on the account.
+      noticeMail = renderEmailChangedNotice({
+        body: {
+          domain: editorUrl,
+          newEmail: user.email
+        },
+        to: previousEmail
       });
     }
 
@@ -250,17 +260,22 @@ export const updateSettings: RequestHandler<
     await user.save();
     await reLogin(req, user);
 
-    if (verificationMail) {
-      await mailerService.send(verificationMail);
-      // Tell the old address, with no links that act on the account.
-      const noticeMail = renderEmailChangedNotice({
-        body: {
-          domain: process.env.EDITOR_URL!,
-          newEmail: user.email
-        },
-        to: previousEmail
-      });
-      await mailerService.send(noticeMail);
+    const results = await Promise.allSettled([
+      verificationMail && mailerService.send(verificationMail),
+      noticeMail && mailerService.send(noticeMail)
+    ]);
+    const [verificationResult, noticeResult] = results;
+    if (verificationResult.status === 'rejected') {
+      console.error(
+        'Could not send email confirmation after email change:',
+        verificationResult.reason
+      );
+    }
+    if (noticeResult.status === 'rejected') {
+      console.error(
+        'Could not send email-changed notice to previous address:',
+        noticeResult.reason
+      );
     }
 
     res.json(userResponse(user));
