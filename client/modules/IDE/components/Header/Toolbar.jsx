@@ -52,7 +52,7 @@ const Toolbar = (props) => {
     (sketchId, sketchName, newVisibility) => {
       dispatch(changeVisibility(sketchId, sketchName, newVisibility, t));
     },
-    [changeVisibility]
+    [dispatch, t]
   );
 
   return (
