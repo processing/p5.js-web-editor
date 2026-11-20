@@ -200,7 +200,7 @@
     "rimraf": "^2.7.1",
     "sass": "^1.66.1",
     "sass-loader": "^13.3.3",
-    "storybook": "^10.2.10",
+    "storybook": "^10.6.2",
     "style-loader": "^3.3.4",
     "terser-webpack-plugin": "^5.3.1",
     "typescript": "^5.8.3",
