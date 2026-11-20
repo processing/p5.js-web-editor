@@ -2,6 +2,9 @@ name: Test
 
 on:
   pull_request:
+  # Started by the release workflow on the cut release branch, since its PRs
+  # are opened with GITHUB_TOKEN and don't trigger pull_request runs.
+  workflow_dispatch:
   push:
     branches:
       - develop

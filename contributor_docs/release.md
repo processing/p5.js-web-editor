@@ -17,19 +17,29 @@ This project's release guide is based on:
 
 1. An issue titled "Weekly release - DATE" will be created every Tuesday at 15:30 UTC. Go to the [Issues tab](https://github.com/processing/p5.js-web-editor/issues) and click the link in the description to the [Create a release](../.github/workflows/release.yml) GitHub Actions workflow.
 2. Run the **Create a release** workflow via "Run workflow", and pick the `versiontype` to bump: `patch`, `minor`, or `major` (see [npm-version](https://docs.npmjs.com/cli/version)). The new version number is calculated from the current version in `package.json`.
-3. Wait for the workflow to run the `verify` job, which runs the tests against `develop`.
-   - If tests fail, the workflow will stop & record its result as a failure. Devs should fix any test failures, then run the [Create a release](../.github/workflows/release.yml) workflow again.
-   - If the tests succeed, the workflow will wait on maintainer approval for the `release` job.
-4. Go to [Staging](https://stagingeditor.p5js.org) and perform any remaining manual checks.
-5. If all looks good, approve the `release` job. This does manual steps 3 and 5-12 below:
-   - Bumps the version and creates the `release-<newversion>` branch and tag
-   - Merges the cut release into `release`, which triggers the deployment to [Production](https://editor.p5js.org)
-   - Merges the cut release back into `develop`
+3. Wait for the workflow to run the `verify` job, which runs the tests against `develop`. If tests fail, the workflow will stop & record its result as a failure. Devs should fix any test failures, then run the [Create a release](../.github/workflows/release.yml) workflow again.
+4. If the tests succeed, the workflow will wait on maintainer approval for the `release` job. Go to [Staging](https://stagingeditor.p5js.org) and perform any remaining manual checks, then approve the job.
+5. The `release` job does manual steps 3, 5 and 12 below:
+   - Bumps the version and pushes the `release-<newversion>` branch and `v<newversion>` tag
+   - Starts the **Test** workflow on `release-<newversion>`, which is required before the PRs below can be merged
+   - Opens a PR from `release-<newversion>` into `release`, and another into `develop`
    - Creates a new **draft** GitHub release with auto-generated notes
-6. The draft release is **not** published automatically. Open the workflow run's summary page and follow the **Review and publish the draft release** link (or find it on the [Releases page](https://github.com/processing/p5.js-web-editor/releases)), then click **Publish release**.
-7. **Manually** verify the release has completed successfully:
+6. Open the workflow run's summary page, which links to both PRs and the draft release. Once Test has passed, merge them in this order, using **Create a merge commit** (not squash or rebase, so the version tag stays in the history):
+   1. The PR into `release`. Merging it triggers the deployment to [Production](https://editor.p5js.org).
+   2. The PR into `develop`.
+7. Publish the draft release: follow the link in the run summary (or find it on the [Releases page](https://github.com/processing/p5.js-web-editor/releases)), review the notes, and click **Publish release**.
+8. **Manually** verify the release has completed successfully:
    - `$ kubectl get pods --namespace production` to check the pods are running (this might take a few minutes and you can rerun the command to check again).
    - Validate that [production](https://editor.p5js.org/) is working and you are finished!
+
+If you decide not to release after the workflow has run, close both PRs, then delete the draft release, the `v<newversion>` tag and the `release-<newversion>` branch.
+
+If a release for the next version is already open (its PRs haven't been merged yet), the workflow stops with an error instead of creating a second one.
+
+The workflow needs the following repository setup:
+
+- A `release-approval` environment (Settings > Environments) with the maintainers listed as required reviewers.
+- **Allow GitHub Actions to create and approve pull requests** turned on under Settings > Actions > General > Workflow permissions.
 
 ### Manually:
 

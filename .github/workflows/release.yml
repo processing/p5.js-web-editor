@@ -16,6 +16,14 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
+  actions: write
+
+# Only one release can run at a time, so two runs can't bump the version from
+# the same starting point. A second run waits for the first to finish.
+concurrency:
+  group: release
+  cancel-in-progress: false
 
 jobs:
   verify:
@@ -40,20 +48,23 @@ jobs:
 
       # future: deploy to staging (+stop deploying to staging upon merges to develop) + e2e test pointed at staging
 
+  # The bot only pushes new refs (the cut release branch and its tag) and opens
+  # PRs. A maintainer merges the PRs, so `release` and `develop` are only ever
+  # changed by a person, and the merge records who made the release.
   release:
     needs: verify
     runs-on: ubuntu-latest
-    # Requires a maintainer to approve in the Actions UI before this job runs.
+    # Requires a maintainer to approve in the Actions UI before this job runs,
+    # since anyone with write access can start the workflow.
     # Configure required reviewers under Settings > Environments > release-approval.
     environment: release-approval
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Check out develop
         uses: actions/checkout@v4
         with:
           ref: develop
-
-      - name: Fetch release branch
-        run: git fetch origin release:release
 
       - name: Configure git identity
         run: |
@@ -63,45 +74,71 @@ jobs:
       - name: Bump version
         id: bump
         run: |
+          # Detach so the bump commit only ends up on the cut release branch.
+          git checkout --detach
           NEW_VERSION=$(npm version "${{ inputs.versiontype }}" -m "v%s")
           echo "version=$NEW_VERSION" >> "$GITHUB_OUTPUT"
           echo "branch=release-${NEW_VERSION#v}" >> "$GITHUB_OUTPUT"
 
-      - name: Create cut release branch
-        run: git checkout -b "${{ steps.bump.outputs.branch }}"
-
-      - name: Merge into release
+      # The version on `develop` only changes once a release PR is merged, so a
+      # second run before then computes the same version as the first.
+      - name: Check for a release already in progress
         run: |
-          git checkout release
-          git pull origin release
-          git merge --no-ff "${{ steps.bump.outputs.branch }}" -m "Merge ${{ steps.bump.outputs.branch }} into release"
-          git push origin release
-          git push origin --tags
+          if git ls-remote --exit-code origin "refs/tags/${{ steps.bump.outputs.version }}" > /dev/null; then
+            echo "::error::${{ steps.bump.outputs.version }} already exists. Merge or close its open release PRs, and delete the tag and ${{ steps.bump.outputs.branch }} branch if abandoning it, before running again."
+            exit 1
+          fi
 
-      - name: Merge back into develop
+      - name: Push cut release branch and tag
         run: |
-          git checkout develop
-          git pull origin develop
-          git merge --no-ff "${{ steps.bump.outputs.branch }}" -m "Merge ${{ steps.bump.outputs.branch }} into develop"
-          git push origin develop
+          git checkout -b "${{ steps.bump.outputs.branch }}"
+          git push origin "${{ steps.bump.outputs.branch }}"
+          git push origin "${{ steps.bump.outputs.version }}"
 
-      - name: Push cut release branch
-        run: git push origin "${{ steps.bump.outputs.branch }}"
+      # Pushes made with GITHUB_TOKEN don't trigger workflows, so the required
+      # "Test and lint code base" check wouldn't run on the PRs below. Starting
+      # Test with workflow_dispatch is allowed, and its result is reported on
+      # the cut branch's commit, which both PRs share.
+      - name: Run tests on cut release branch
+        run: gh workflow run test.yml --ref "${{ steps.bump.outputs.branch }}"
+
+      - name: Open release PRs
+        id: prs
+        run: |
+          BRANCH="${{ steps.bump.outputs.branch }}"
+          VERSION="${{ steps.bump.outputs.version }}"
+          BODY="Opened by the [Create a release](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) workflow, started by @${{ github.actor }}.
+
+          **Merge with \"Create a merge commit\"** (not squash or rebase), so the \`$VERSION\` tag stays in the history of \`release\` and \`develop\`.
+
+          See [the release guide](${{ github.server_url }}/${{ github.repository }}/blob/develop/contributor_docs/release.md) for the full steps."
+          RELEASE_PR=$(gh pr create --base release --head "$BRANCH" \
+            --title "Release $VERSION" \
+            --body "$BODY")
+          DEVELOP_PR=$(gh pr create --base develop --head "$BRANCH" \
+            --title "Merge $BRANCH back into develop" \
+            --body "$BODY")
+          echo "release_pr=$RELEASE_PR" >> "$GITHUB_OUTPUT"
+          echo "develop_pr=$DEVELOP_PR" >> "$GITHUB_OUTPUT"
 
       - name: Draft GitHub release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        id: draft
         run: |
           RELEASE_URL=$(gh release create "${{ steps.bump.outputs.version }}" \
-            --target release \
+            --verify-tag \
             --title "${{ steps.bump.outputs.version }}" \
             --generate-notes \
             --draft)
-          echo "Draft release created: $RELEASE_URL"
+          echo "url=$RELEASE_URL" >> "$GITHUB_OUTPUT"
+
+      - name: Write summary
+        run: |
           {
-            echo "## Draft release ${{ steps.bump.outputs.version }} created"
+            echo "## Release ${{ steps.bump.outputs.version }} is ready for review"
             echo ""
-            echo "The release is still a **draft** and must be published manually:"
+            echo "Merge each PR with **Create a merge commit**, in this order:"
             echo ""
-            echo "- [Review and publish the draft release]($RELEASE_URL)"
+            echo "1. [Release PR into \`release\`](${{ steps.prs.outputs.release_pr }}): merging this deploys to production"
+            echo "2. [Merge-back PR into \`develop\`](${{ steps.prs.outputs.develop_pr }})"
+            echo "3. [Publish the draft release](${{ steps.draft.outputs.url }})"
           } >> "$GITHUB_STEP_SUMMARY"
