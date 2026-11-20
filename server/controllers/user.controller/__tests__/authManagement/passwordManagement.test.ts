@@ -111,13 +111,20 @@ describe('user.controller > auth management > password management', () => {
         });
       });
     });
-    describe('if the user is found but their email is not verified', () => {
+    describe.each([
+      ['their signup email is unconfirmed', { verified: 'sent' }],
+      [
+        'they re-requested confirmation but never confirmed',
+        { verified: 'resent' }
+      ],
+      ['their account predates email verification', { verified: undefined }]
+    ])('if the user is found and %s', (_label, overrides) => {
       beforeEach(async () => {
         mockToken = 'mock-token';
         mockUser = createMockUser(
           {
             email: 'test@example.com',
-            verified: 'sent',
+            ...overrides,
             save: jest.fn().mockResolvedValue(null)
           },
           false
@@ -135,17 +142,12 @@ describe('user.controller > auth management > password management', () => {
           next
         );
       });
-      it('does not set a reset token or send the reset password email', () => {
-        expect(mockUser.resetPasswordToken).toBeUndefined();
-        expect(mockUser.save).not.toHaveBeenCalled();
-        expect(mailerService.send).not.toHaveBeenCalled();
-      });
-      it('returns the same success message as every other outcome, for security purposes', () => {
-        expect(response.json).toHaveBeenCalledWith({
-          success: true,
-          message:
-            'If the email is registered with the editor, an email has been sent.'
-        });
+      it('still sets a reset token and sends the reset password email', () => {
+        expect(mockUser.resetPasswordToken).toBe(mockToken);
+        expect(mockUser.save).toHaveBeenCalled();
+        expect(mailerService.send).toHaveBeenCalledWith(
+          expect.objectContaining({ to: 'test@example.com' })
+        );
       });
     });
 
@@ -343,9 +345,15 @@ describe('user.controller > auth management > password management', () => {
           password: 'oldpassword',
           resetPasswordToken: 'valid-token',
           resetPasswordExpires: fixedTime + 10000, // still valid
+          verified: 'sent',
+          verifiedToken: 'pending-verify-token',
           sessionVersion: 0,
           save: jest.fn()
         } as UserDocument;
+
+        User.EmailConfirmation = jest
+          .fn()
+          .mockReturnValue({ Verified: 'verified', Sent: 'sent' });
 
         User.findOne = jest.fn().mockReturnValue({
           exec: jest.fn().mockResolvedValue(mockUser)
@@ -373,6 +381,11 @@ describe('user.controller > auth management > password management', () => {
         expect(mockUser.resetPasswordToken).toBeUndefined();
         expect(mockUser.resetPasswordExpires).toBeUndefined();
         expect(mockUser.save).toHaveBeenCalled();
+      });
+      it('marks the email as confirmed, since the reset link proved inbox ownership', () => {
+        expect(mockUser.verified).toBe('verified');
+        expect(mockUser.verifiedToken).toBeNull();
+        expect(mockUser.verifiedTokenExpires).toBeNull();
       });
       it('returns a success response with the sanitised user', () => {
         expect(response.json).toHaveBeenCalledWith(sanitisedMockUser);

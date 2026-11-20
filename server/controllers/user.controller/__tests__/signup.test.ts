@@ -198,7 +198,7 @@ describe('user.controller > signup', () => {
       const saveMock = jest.fn().mockResolvedValue({});
       const mockUser = {
         save: saveMock,
-        verified: 'verified',
+        verified: 'sent',
         verifiedToken: 'validtoken',
         verifiedTokenExpires: new Date(Date.now() + 10000)
       };

@@ -15,6 +15,7 @@ import {
 } from '../../authManagement';
 import { saveUser, generateToken } from '../../helpers';
 import { mailerService } from '../../../../utils/mail';
+import { renderResetPassword } from '../../../../views/mail';
 
 jest.mock('../../../../models/user');
 jest.mock('../../../../utils/mail');
@@ -127,29 +128,29 @@ describe('the email cannot be changed with only a session', () => {
   });
 });
 
-describe('no reset token is issued for an unverified email', () => {
-  it('sends nothing and responds with the generic message', async () => {
-    const victim: any = {
-      email: 'attacker@gmail.com',
+describe("a reset link is only ever sent to the account's stored address", () => {
+  // The protection against a reset link reaching an attacker is that the
+  // stored address cannot be changed with only a session (tested above), not
+  // whether that address has been confirmed.
+  it('sends to user.email, not to the address typed into the request', async () => {
+    const owner: any = {
+      email: 'owner@example.com',
       verified: 'sent',
       save: jest.fn().mockResolvedValue(null)
     };
-    (User as any).findByEmail = jest.fn().mockResolvedValue(victim);
+    (User as any).findByEmail = jest.fn().mockResolvedValue(owner);
 
     const req: any = new MockRequest();
-    req.setBody({ email: 'attacker@gmail.com' });
+    req.setBody({ email: 'OWNER@example.com' });
     const res: any = new MockResponse();
 
     await resetPasswordInitiate(req, res, jest.fn());
 
-    expect(victim.resetPasswordToken).toBeUndefined();
-    expect(victim.save).not.toHaveBeenCalled();
-    expect(mailerService.send).not.toHaveBeenCalled();
-    expect(res.json).toHaveBeenCalledWith({
-      success: true,
-      message:
-        'If the email is registered with the editor, an email has been sent.'
-    });
+    expect(owner.resetPasswordToken).toBe('tok');
+    expect(mailerService.send).toHaveBeenCalledTimes(1);
+    expect(renderResetPassword).toHaveBeenCalledWith(
+      expect.objectContaining({ to: 'owner@example.com' })
+    );
   });
 });
 

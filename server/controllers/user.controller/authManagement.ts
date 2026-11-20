@@ -46,10 +46,13 @@ export const resetPasswordInitiate: RequestHandler<
   try {
     const token = await generateToken();
     const user = await User.findByEmail(req.body.email);
-    // Only send reset links to verified addresses. An unverified address may
-    // not belong to the account owner (e.g. set by someone with a stolen
-    // session). Respond identically to avoid user enumeration.
-    if (!user || user.verified !== User.EmailConfirmation().Verified) {
+    // Reset links go to the account's current address whether or not it has
+    // been confirmed. Withholding them from unconfirmed addresses locked out
+    // users who never clicked their signup confirmation link, and offered no
+    // protection: whoever controls an inbox can confirm it in one click.
+    // Changing the address itself is gated behind step-up (see updateSettings).
+    // Respond identically in every case to avoid user enumeration.
+    if (!user) {
       res.json({
         success: true,
         message:
@@ -146,6 +149,10 @@ export const updatePassword: RequestHandler<
   user.password = req.body.password;
   user.resetPasswordToken = undefined;
   user.resetPasswordExpires = undefined;
+  // Using the emailed link proves the user controls this address.
+  user.verified = User.EmailConfirmation().Verified;
+  user.verifiedToken = null;
+  user.verifiedTokenExpires = null;
   // Log out every other session; the req.logIn below re-serializes this one
   // with the new version.
   user.sessionVersion = (user.sessionVersion ?? 0) + 1;
