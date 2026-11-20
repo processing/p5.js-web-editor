@@ -52,8 +52,10 @@ export const resetPasswordInitiate: RequestHandler<
     // users who never clicked their signup confirmation link, and offered no
     // protection: whoever controls an inbox can confirm it in one click.
     // Changing the address itself is gated behind step-up (see updateSettings).
+    // Banned accounts are treated as missing: a reset would otherwise log them
+    // straight in (updatePassword), bypassing the ban check at login.
     // Respond identically in every case to avoid user enumeration.
-    if (!user) {
+    if (!user || user.banned) {
       res.json({
         success: true,
         message:
@@ -108,7 +110,7 @@ export const validateResetPasswordToken: RequestHandler<
     resetPasswordToken: req.params.token,
     resetPasswordExpires: { $gt: Date.now() }
   }).exec();
-  if (!user) {
+  if (!user || user.banned) {
     res.status(401).json({
       success: false,
       message: 'Password reset token is invalid or has expired.'
@@ -139,7 +141,7 @@ export const updatePassword: RequestHandler<
     resetPasswordToken: req.params.token,
     resetPasswordExpires: { $gt: Date.now() }
   }).exec();
-  if (!user) {
+  if (!user || user.banned) {
     res.status(401).json({
       success: false,
       message: 'Password reset token is invalid or has expired.'

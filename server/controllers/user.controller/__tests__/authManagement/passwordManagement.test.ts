@@ -154,6 +154,44 @@ describe('user.controller > auth management > password management', () => {
       });
     });
 
+    describe('if the user is found but banned', () => {
+      beforeEach(async () => {
+        mockToken = 'mock-token';
+        mockUser = createMockUser(
+          {
+            email: 'test@example.com',
+            banned: true,
+            save: jest.fn().mockResolvedValue(null)
+          },
+          true
+        ) as UserDocument;
+        mockUser.resetPasswordToken = undefined;
+
+        (generateToken as jest.Mock).mockResolvedValue(mockToken);
+        User.findByEmail = jest.fn().mockResolvedValue(mockUser);
+
+        request.body = { email: 'test@example.com' };
+
+        await resetPasswordInitiate(
+          (request as unknown) as Request,
+          (response as unknown) as Response,
+          next
+        );
+      });
+      it('does not set a reset token or send the reset password email', () => {
+        expect(mockUser.resetPasswordToken).toBeUndefined();
+        expect(mockUser.save).not.toHaveBeenCalled();
+        expect(mailerService.send).not.toHaveBeenCalled();
+      });
+      it('returns the same success message as every other outcome, for security purposes', () => {
+        expect(response.json).toHaveBeenCalledWith({
+          success: true,
+          message:
+            'If the email is registered with the editor, an email has been sent.'
+        });
+      });
+    });
+
     describe('if the user is not found', () => {
       beforeEach(() => {
         mockToken = 'mock-token';
@@ -265,6 +303,39 @@ describe('user.controller > auth management > password management', () => {
       });
     });
 
+    describe('and when the user with a valid token is banned', () => {
+      beforeEach(async () => {
+        const bannedUser = createMockUser(
+          {
+            email: 'test@example.com',
+            resetPasswordToken: 'valid-token',
+            resetPasswordExpires: fixedTime + 10000, // still valid
+            banned: true
+          },
+          true
+        );
+
+        User.findOne = jest.fn().mockReturnValue({
+          exec: jest.fn().mockResolvedValue(bannedUser)
+        });
+
+        request.params = { token: 'valid-token' };
+
+        await validateResetPasswordToken(
+          (request as unknown) as Request<ResetOrUpdatePasswordRequestParams>,
+          (response as unknown) as Response,
+          next
+        );
+      });
+      it('returns the same 401 as an invalid token', () => {
+        expect(response.status).toHaveBeenCalledWith(401);
+        expect(response.json).toHaveBeenCalledWith({
+          success: false,
+          message: 'Password reset token is invalid or has expired.'
+        });
+      });
+    });
+
     describe('and when there is a user with valid token', () => {
       beforeEach(async () => {
         const fakeUser = createMockUser({
@@ -336,6 +407,46 @@ describe('user.controller > auth management > password management', () => {
           success: false,
           message: 'Password reset token is invalid or has expired.'
         });
+      });
+    });
+
+    describe('and when the user with a valid token is banned', () => {
+      beforeEach(async () => {
+        mockUser = {
+          ...createMockUser({ email: 'test@example.com' }, true),
+          password: 'oldpassword',
+          resetPasswordToken: 'valid-token',
+          resetPasswordExpires: fixedTime + 10000, // still valid
+          banned: true,
+          sessionVersion: 0,
+          save: jest.fn()
+        } as UserDocument;
+
+        User.findOne = jest.fn().mockReturnValue({
+          exec: jest.fn().mockResolvedValue(mockUser)
+        });
+
+        request.params = { token: 'valid-token' };
+        request.setBody({ password: 'newpassword' });
+        request.logIn = jest.fn();
+
+        await updatePassword(
+          (request as unknown) as Request<ResetOrUpdatePasswordRequestParams>,
+          (response as unknown) as Response,
+          next
+        );
+      });
+      it('returns the same 401 as an invalid token', () => {
+        expect(response.status).toHaveBeenCalledWith(401);
+        expect(response.json).toHaveBeenCalledWith({
+          success: false,
+          message: 'Password reset token is invalid or has expired.'
+        });
+      });
+      it('does not change the password or log the user in', () => {
+        expect(mockUser.password).toBe('oldpassword');
+        expect(mockUser.save).not.toHaveBeenCalled();
+        expect(request.logIn).not.toHaveBeenCalled();
       });
     });
 
