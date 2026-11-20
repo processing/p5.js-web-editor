@@ -14,12 +14,19 @@ import {
   updatePassword
 } from '../../authManagement';
 import { saveUser, generateToken } from '../../helpers';
+import { getEditorUrl } from '../../../../utils/editorUrl';
 import { mailerService } from '../../../../utils/mail';
-import { renderResetPassword } from '../../../../views/mail';
+import {
+  renderResetPassword,
+  renderEmailConfirmation
+} from '../../../../views/mail';
 
 jest.mock('../../../../models/user');
 jest.mock('../../../../utils/mail');
 jest.mock('../../../../views/mail');
+jest.mock('../../../../utils/editorUrl', () => ({
+  getEditorUrl: jest.fn(() => 'https://editor.example')
+}));
 jest.mock('../../helpers', () => ({
   ...jest.requireActual('../../helpers'),
   saveUser: jest.fn(),
@@ -154,6 +161,85 @@ describe("a reset link is only ever sent to the account's stored address", () =>
   });
 });
 
+describe("links in emails ignore the request's Host header", () => {
+  // The Host header is client-controlled. Building links from it lets an
+  // attacker get a genuine reset email sent whose link points at their own
+  // site, leaking the reset token when the victim clicks it.
+  it('builds the reset link from EDITOR_URL', async () => {
+    const owner: any = {
+      email: 'owner@example.com',
+      save: jest.fn().mockResolvedValue(null)
+    };
+    (User as any).findByEmail = jest.fn().mockResolvedValue(owner);
+
+    const req: any = new MockRequest();
+    req.headers.host = 'evil.example';
+    req.setBody({ email: 'owner@example.com' });
+    const res: any = new MockResponse();
+
+    await resetPasswordInitiate(req, res, jest.fn());
+
+    expect(renderResetPassword).toHaveBeenCalledWith(
+      expect.objectContaining({
+        body: {
+          domain: 'https://editor.example',
+          link: 'https://editor.example/reset-password/tok'
+        }
+      })
+    );
+  });
+
+  it('builds the confirmation link for a changed email from EDITOR_URL', async () => {
+    const owner: any = {
+      id: '1',
+      username: 'owner',
+      email: 'owner@example.com',
+      password: 'hashed',
+      apiKeys: [],
+      save: jest.fn().mockResolvedValue(null)
+    };
+    (User as any).findById = jest.fn().mockResolvedValue(owner);
+
+    const req = makeRequest({ stepUpAt: Date.now() });
+    req.headers.host = 'evil.example';
+    req.setBody({ username: 'owner', email: 'new@example.com' });
+    const res: any = new MockResponse();
+
+    await updateSettings(req, res, jest.fn());
+
+    expect(renderEmailConfirmation).toHaveBeenCalledWith(
+      expect.objectContaining({
+        body: {
+          domain: 'https://editor.example',
+          link: 'https://editor.example/verify?t=tok'
+        }
+      })
+    );
+  });
+
+  it('issues no reset token if EDITOR_URL is unset', async () => {
+    (getEditorUrl as jest.Mock).mockImplementationOnce(() => {
+      throw new Error('EDITOR_URL missing from environment');
+    });
+    const owner: any = {
+      email: 'owner@example.com',
+      save: jest.fn().mockResolvedValue(null)
+    };
+    (User as any).findByEmail = jest.fn().mockResolvedValue(owner);
+
+    const req: any = new MockRequest();
+    req.setBody({ email: 'owner@example.com' });
+    const res: any = new MockResponse();
+
+    await resetPasswordInitiate(req, res, jest.fn());
+
+    expect(owner.resetPasswordToken).toBeUndefined();
+    expect(owner.save).not.toHaveBeenCalled();
+    expect(mailerService.send).not.toHaveBeenCalled();
+    expect(res.json).toHaveBeenCalledWith({ success: false });
+  });
+});
+
 describe('a password reset revokes every other session', () => {
   it('bumps sessionVersion so stale sessions fail deserialization', async () => {
     const victim: any = {
@@ -193,11 +279,16 @@ describe('session serialization carries the session version', () => {
     process.env.GOOGLE_SECRET = 'x';
     process.env.GITHUB_ID = 'x';
     process.env.GITHUB_SECRET = 'x';
-    process.env.EDITOR_URL = 'http://localhost';
     // eslint-disable-next-line global-require
     require('../../../../config/passport');
     [serializeUser] = (passport as any)._serializers;
     [deserializeUser] = (passport as any)._deserializers;
+  });
+
+  it('registers the Google callback URL from EDITOR_URL', () => {
+    expect((passport as any)._strategy('google')._callbackURL).toBe(
+      'https://editor.example/auth/google/callback'
+    );
   });
 
   it('serializes the id together with the current sessionVersion', () => {

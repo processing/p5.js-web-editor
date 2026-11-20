@@ -19,6 +19,9 @@ import {
 
 jest.mock('../../../../models/user');
 jest.mock('../../../../utils/mail');
+jest.mock('../../../../utils/editorUrl', () => ({
+  getEditorUrl: jest.fn(() => 'https://editor.example')
+}));
 jest.mock('../../helpers', () => ({
   ...jest.requireActual('../../helpers'),
   generateToken: jest.fn()
