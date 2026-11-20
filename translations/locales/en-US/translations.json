@@ -627,6 +627,8 @@
     "HeaderCreatedAt_mobile": "Created",
     "HeaderUpdatedAt": "Date Updated",
     "HeaderUpdatedAt_mobile": "Updated",
+    "HeaderP5Version": "p5 Version",
+    "P5VersionCustom": "Custom",
     "NoSketches": "No sketches."
   },
   "AddToCollectionSketchList": {
