@@ -10,6 +10,7 @@ import { BasicStrategy } from 'passport-http';
 
 import { User } from '../models/user';
 import { hasRecentStepUp } from '../middleware/requireStepUp';
+import { getEditorUrl } from '../utils/editorUrl';
 
 const accountSuspensionMessage =
   'Account has been suspended. Please contact privacy@p5js.org if you believe this is an error.';
@@ -268,7 +269,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_ID,
       clientSecret: process.env.GOOGLE_SECRET,
-      callbackURL: `${process.env.EDITOR_URL}/auth/google/callback`,
+      callbackURL: `${getEditorUrl()}/auth/google/callback`,
       passReqToCallback: true,
       scope: ['openid email']
     },
