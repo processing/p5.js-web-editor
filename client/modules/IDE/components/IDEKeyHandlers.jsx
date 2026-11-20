@@ -6,19 +6,14 @@ import {
   collapseSidebar,
   expandConsole,
   expandSidebar,
-  showErrorModal,
   startSketch,
   stopSketch,
   newFile
 } from '../actions/ide';
 import { setAllAccessibleOutput } from '../actions/preferences';
-import { cloneProject, saveProject } from '../actions/project';
+import { useSketchActions } from '../hooks';
 import { useKeyDownHandlers } from '../../../common/useKeyDownHandlers';
-import {
-  getAuthenticated,
-  getIsUserOwner,
-  getSketchOwner
-} from '../selectors/users';
+
 
 export const useIDEKeyHandlers = ({ getContent }) => {
   const dispatch = useDispatch();
@@ -30,9 +25,7 @@ export const useIDEKeyHandlers = ({ getContent }) => {
     (state) => state.files.filter((file) => file.name === 'root')[0]
   );
 
-  const isUserOwner = useSelector(getIsUserOwner);
-  const isAuthenticated = useSelector(getAuthenticated);
-  const sketchOwner = useSelector(getSketchOwner);
+  const { saveSketch } = useSketchActions();
 
   const syncFileContent = () => {
     const file = getContent();
@@ -43,13 +36,7 @@ export const useIDEKeyHandlers = ({ getContent }) => {
     'ctrl-s': (e) => {
       e.preventDefault();
       e.stopPropagation();
-      if (isUserOwner || (isAuthenticated && !sketchOwner)) {
-        dispatch(saveProject(getContent()));
-      } else if (isAuthenticated) {
-        dispatch(cloneProject());
-      } else {
-        dispatch(showErrorModal('forceAuthentication'));
-      }
+      saveSketch({ getContent });
     },
     'ctrl-shift-enter': (e) => {
       e.preventDefault();
