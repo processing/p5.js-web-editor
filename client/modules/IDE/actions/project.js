@@ -147,7 +147,7 @@ export function saveProject(
       state.project.owner &&
       state.project.owner.id !== state.user.id
     ) {
-      return Promise.resolve();//This is refused quietly as non-owners are offered copies in saveSketch instead
+      return Promise.resolve(); // This is refused quietly as non-owners are offered copies in saveSketch instead
     }
     dispatch(startSavingProject());
     const formParams = Object.assign({}, state.project);

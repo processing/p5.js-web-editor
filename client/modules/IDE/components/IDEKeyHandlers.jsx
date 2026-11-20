@@ -14,7 +14,6 @@ import { setAllAccessibleOutput } from '../actions/preferences';
 import { useSketchActions } from '../hooks';
 import { useKeyDownHandlers } from '../../../common/useKeyDownHandlers';
 
-
 export const useIDEKeyHandlers = ({ getContent }) => {
   const dispatch = useDispatch();
 

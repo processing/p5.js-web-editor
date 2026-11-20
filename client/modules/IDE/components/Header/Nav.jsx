@@ -180,10 +180,7 @@ const ProjectMenu = () => {
         </MenubarItem>
         <MenubarItem
           id="file-save"
-          isDisabled={
-            !user.authenticated ||
-            !isLoginEnabled
-          }
+          isDisabled={!user.authenticated || !isLoginEnabled}
           tooltipContent={
             !user.authenticated || !isLoginEnabled
               ? t('Nav.File.SaveTooltipUnauthenticated')
