@@ -26,7 +26,7 @@ export const getreachedTotalSizeLimit = createSelector(
   getTotalSize,
   getAssetsTotalSize,
   (totalSize, assetsTotalSize) => {
-    const currentSize = totalSize || assetsTotalSize || 0;
+    const currentSize = assetsTotalSize ?? totalSize ?? 0;
     if (currentSize >= limit) return true;
     // if (totalSize > 1000) return true;
     return false;
