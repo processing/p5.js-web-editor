@@ -192,6 +192,36 @@ describe('user.controller > auth management > password management', () => {
       });
     });
 
+    describe.each([
+      ['a query operator object', { $gt: '' }],
+      ['an array of addresses', ['a@example.com', 'b@example.com']],
+      ['missing', undefined],
+      ['a number', 42]
+    ])('if the email is %s', (_label, email) => {
+      beforeEach(async () => {
+        User.findByEmail = jest.fn();
+        request.body = { email };
+
+        await resetPasswordInitiate(
+          (request as unknown) as Request,
+          (response as unknown) as Response,
+          next
+        );
+      });
+      it('does not query the database or send an email', () => {
+        expect(User.findByEmail).not.toHaveBeenCalled();
+        expect(generateToken).not.toHaveBeenCalled();
+        expect(mailerService.send).not.toHaveBeenCalled();
+      });
+      it('returns the same success message as every other outcome, for security purposes', () => {
+        expect(response.json).toHaveBeenCalledWith({
+          success: true,
+          message:
+            'If the email is registered with the editor, an email has been sent.'
+        });
+      });
+    });
+
     describe('if the user is not found', () => {
       beforeEach(() => {
         mockToken = 'mock-token';

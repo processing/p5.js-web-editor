@@ -44,7 +44,16 @@ export const resetPasswordInitiate: RequestHandler<
   GenericResponseBody,
   ResetPasswordInitiateRequestBody
 > = async (req, res) => {
+  const genericResponse = {
+    success: true,
+    message:
+      'If the email is registered with the editor, an email has been sent.'
+  };
   try {
+    if (typeof req.body.email !== 'string') {
+      res.json(genericResponse);
+      return;
+    }
     const token = await generateToken();
     const user = await User.findByEmail(req.body.email);
     // Reset links go to the account's current address whether or not it has
@@ -56,11 +65,7 @@ export const resetPasswordInitiate: RequestHandler<
     // straight in (updatePassword), bypassing the ban check at login.
     // Respond identically in every case to avoid user enumeration.
     if (!user || user.banned) {
-      res.json({
-        success: true,
-        message:
-          'If the email is registered with the editor, an email has been sent.'
-      });
+      res.json(genericResponse);
       return;
     }
     const editorUrl = getEditorUrl();
@@ -77,11 +82,7 @@ export const resetPasswordInitiate: RequestHandler<
     });
 
     await mailerService.send(mailOptions);
-    res.json({
-      success: true,
-      message:
-        'If the email is registered with the editor, an email has been sent.'
-    });
+    res.json(genericResponse);
   } catch (err) {
     if (process.env.NODE_ENV !== 'test') {
       // don't log in test env
