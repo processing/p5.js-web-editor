@@ -142,23 +142,22 @@ export function saveProject(
     if (state.project.isSaving) {
       return Promise.resolve();
     }
-    dispatch(startSavingProject());
     if (
       state.user.id &&
       state.project.owner &&
       state.project.owner.id !== state.user.id
     ) {
-      return Promise.reject();
+      return Promise.resolve(); // This is refused quietly as non-owners are offered copies in saveSketch instead
     }
+    dispatch(startSavingProject());
     const formParams = Object.assign({}, state.project);
-    formParams.files = [...state.files];
 
-    if (selectedFile) {
-      const fileToUpdate = formParams.files.find(
-        (file) => file.id === selectedFile.id
-      );
-      fileToUpdate.content = selectedFile.content;
-    }
+    formParams.files = state.files.map((file) => {
+      if (selectedFile && file.id === selectedFile.id) {
+        return { ...file, content: selectedFile.content };
+      }
+      return file;
+    });
     if (state.project.id) {
       return apiClient
         .put(`/projects/${state.project.id}`, formParams)

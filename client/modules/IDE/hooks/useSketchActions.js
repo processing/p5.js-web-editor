@@ -6,7 +6,8 @@ import {
   exportProjectAsZip,
   newProject,
   saveProject,
-  setProjectName
+  setProjectName,
+  cloneProject
 } from '../actions/project';
 import { showToast } from '../actions/toast';
 import { showErrorModal, showShareModal } from '../actions/ide';
@@ -33,10 +34,16 @@ const useSketchActions = () => {
   }
 
   function saveSketch(cmController) {
-    if (authenticated) {
-      dispatch(saveProject(cmController?.getContent()));
-    } else {
+    if (!authenticated) {
       dispatch(showErrorModal('forceAuthentication'));
+      return;
+    }
+    if (canEditProjectName) {
+      dispatch(saveProject(cmController?.getContent()));
+      return;
+    }
+    if (window.confirm(t('Nav.File.SaveAsCopyConfirm'))) {
+      dispatch(cloneProject());
     }
   }
 
