@@ -12,6 +12,7 @@ import {
 import { showToast } from '../actions/toast';
 import { showErrorModal, showShareModal } from '../actions/ide';
 import { selectCanEditSketch } from '../selectors/users';
+import { updateFileContent } from '../actions/files';
 
 const useSketchActions = () => {
   const unsavedChanges = useSelector((state) => state.ide.unsavedChanges);
@@ -43,6 +44,10 @@ const useSketchActions = () => {
       return;
     }
     if (window.confirm(t('Nav.File.SaveAsCopyConfirm'))) {
+      const file = cmController?.getContent();
+      if (file) {
+        dispatch(updateFileContent(file.id, file.content));
+      }
       dispatch(cloneProject());
     }
   }

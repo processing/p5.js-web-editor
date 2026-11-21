@@ -146,7 +146,7 @@ describe('saveProject', () => {
       );
     });
   });
-  //New test cases involving saving
+  // New test cases involving saving
   describe('ownership and the save payload', () => {
     it('does not save, or leave isSaving stuck, for a sketch someone else owns', async () => {
       store = mockStore({
