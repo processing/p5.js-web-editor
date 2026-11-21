@@ -10,6 +10,7 @@
       "AddToCollection": "Add to Collection",
       "Examples": "Examples",
       "SaveTooltipUnauthenticated": "Log in to save your sketch",
+      "SaveAsCopyConfirm": "You don't own this sketch. Do you want to save it as a copy in your account?",
       "DuplicateTooltipUnauthenticated": "Log in to duplicate this sketch",
       "OpenTooltipUnauthenticated": "Log in to open your sketches",
       "AddToCollectionTooltipUnauthenticated": "Log in to add to collections",

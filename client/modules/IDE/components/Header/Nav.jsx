@@ -18,7 +18,7 @@ import { selectRootFile } from '../../selectors/files';
 import { selectSketchPath } from '../../selectors/project';
 import { metaKey, metaKeyName } from '../../../../utils/metaKey';
 import { useSketchActions } from '../../hooks';
-import { getAuthenticated, getIsUserOwner } from '../../selectors/users';
+import { getAuthenticated } from '../../selectors/users';
 import { cloneProject } from '../../actions/project';
 import {
   newFile,
@@ -150,7 +150,6 @@ const DashboardMenu = () => {
 };
 
 const ProjectMenu = () => {
-  const isUserOwner = useSelector(getIsUserOwner);
   const project = useSelector((state) => state.project);
   const user = useSelector((state) => state.user);
 
@@ -181,11 +180,7 @@ const ProjectMenu = () => {
         </MenubarItem>
         <MenubarItem
           id="file-save"
-          isDisabled={
-            !user.authenticated ||
-            !isLoginEnabled ||
-            (!!project?.owner && !isUserOwner)
-          }
+          isDisabled={!user.authenticated || !isLoginEnabled}
           tooltipContent={
             !user.authenticated || !isLoginEnabled
               ? t('Nav.File.SaveTooltipUnauthenticated')
