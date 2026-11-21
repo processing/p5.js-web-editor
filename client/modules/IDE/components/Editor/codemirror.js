@@ -103,9 +103,6 @@ export default function useCodeMirror({
     }
   }
 
-  // Don't drop the last second of typing when the editor unmounts.
-  useEffect(() => () => debouncedOnChange.current.flush(), []);
-
   // When the container component enters the DOM, we want this function
   // to be called so we can setup the CodeMirror instance with the container.
   function setupCodeMirrorOnContainerMounted(container) {

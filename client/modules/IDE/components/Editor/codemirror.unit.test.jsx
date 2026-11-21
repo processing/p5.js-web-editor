@@ -109,11 +109,4 @@ describe('useCodeMirror debounced onChange', () => {
     expect(props.updateFileContent).not.toHaveBeenCalledWith('b', 'xaaa');
     expect(props.updateFileContent).not.toHaveBeenCalledWith('b', 'bbb');
   });
-
-  it('flushes a pending change on unmount', () => {
-    const { unmount } = render(<Harness {...props} />);
-    type('x');
-    unmount();
-    expect(props.updateFileContent).toHaveBeenCalledWith('a', 'xaaa');
-  });
 });
