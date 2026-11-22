@@ -4,9 +4,16 @@ import isUrl from 'is-url';
 import { JSDOM } from 'jsdom';
 import mime from 'mime';
 import isAfter from 'date-fns/isAfter';
-import axios from 'axios';
 import slugify from 'slugify';
 import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3';
+import safeProjectFileFetch from '../utils/safeProjectFileFetch';
+import {
+  hasConfiguredS3Origin,
+  isConfiguredS3HttpUrl,
+  isS3Url,
+  parseS3ProjectAssetUrl,
+  readBoundedS3Object
+} from '../utils/s3ProjectAssets';
 import Project from '../models/project';
 import { User } from '../models/user';
 import { resolvePathToFile } from '../utils/filePath';
@@ -15,6 +22,10 @@ import {
   commitPendingAssets,
   rewritePendingFileUrls
 } from '../utils/pendingAssets';
+import {
+  FileValidationError,
+  validateFileNames
+} from '../domain-objects/Project';
 
 function isPrivateProject(project, user) {
   return (
@@ -78,6 +89,7 @@ export async function updateProject(req, res) {
     });
 
     if (updateData.files) {
+      validateFileNames(updateData.files);
       await commitPendingAssets(req.user.id, updateData.files);
       updateData.files = rewritePendingFileUrls(updateData.files, req.user.id);
     }
@@ -111,8 +123,17 @@ export async function updateProject(req, res) {
       res.json(updatedProject);
     }
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ success: false });
+    if (error instanceof FileValidationError) {
+      res.status(400).json({
+        success: false,
+        message: 'File Validation Failed',
+        detail: error.message,
+        errors: error.files
+      });
+    } else {
+      console.error(error);
+      res.status(500).json({ success: false });
+    }
   }
 }
 
@@ -171,9 +192,7 @@ export async function getProjectAsset(req, res) {
   }
 
   try {
-    const { data } = await axios.get(resolvedFile.url, {
-      responseType: 'arraybuffer'
-    });
+    const data = await safeProjectFileFetch(resolvedFile.url);
     res.set('Content-Type', contentType);
     return res.send(data);
   } catch (error) {
@@ -264,35 +283,23 @@ function bundleExternalLibs(project) {
   });
 }
 
-/**
- * @param {string} url - S3 URL
- * @return {Promise<Readable>}
- */
-async function getStreamFromS3Url(url) {
-  const urlObj = new URL(url);
-  let bucket;
-  let key;
+async function getStreamFromS3Url(url, userId) {
+  const asset = parseS3ProjectAssetUrl(url, userId);
+  if (!asset) return null;
 
-  if (urlObj.hostname.includes('s3')) {
-    if (urlObj.hostname.startsWith('s3')) {
-      const pathParts = urlObj.pathname.split('/').filter(Boolean);
-      [bucket] = pathParts;
-      key = pathParts.slice(1).join('/');
-    } else {
-      [bucket] = urlObj.hostname.split('.');
-      key = urlObj.pathname.substring(1);
-    }
+  return readBoundedS3Object(
+    s3Client,
+    new GetObjectCommand({ Bucket: asset.bucket, Key: asset.key })
+  );
+}
 
-    const command = new GetObjectCommand({ Bucket: bucket, Key: key });
-    const response = await s3Client.send(command);
-    return response.Body;
-  }
+function sanitizeZipEntryName(name) {
+  if (typeof name !== 'string') return 'unnamed';
 
-  const response = await axios.get(url, {
-    responseType: 'stream',
-    timeout: 30000
-  });
-  return response.data;
+  const safeName = generateFileSystemSafeName(name, '_');
+  if (!safeName || safeName === '.' || safeName === '..') return '_';
+
+  return safeName;
 }
 
 /**
@@ -301,38 +308,42 @@ async function getStreamFromS3Url(url) {
  * @param {JSZip} zip
  * @return {Promise<void>}
  */
-async function addFileToZip(file, files, zip) {
+async function addFileToZip(file, files, zip, userId, isRoot = false) {
+  const zipEntryName = sanitizeZipEntryName(file.name);
   if (file.fileType === 'folder') {
-    const folderZip = file.name === 'root' ? zip : zip.folder(file.name);
-    await file.children.reduce(async (previousPromise, fileId) => {
+    const folderZip = isRoot ? zip : zip.folder(zipEntryName);
+    await file.children.reduce(async (previousPromise, childId) => {
       await previousPromise;
-      const childFile = files.find((f) => f.id === fileId);
-      return addFileToZip(childFile, files, folderZip);
+      const childFile = files.find((f) => f.id === childId);
+      return addFileToZip(childFile, files, folderZip, userId, false);
     }, Promise.resolve());
   } else if (file.url) {
     try {
-      if (file.url.includes('s3') && file.url.includes('amazonaws.com')) {
-        const stream = await getStreamFromS3Url(file.url);
-        zip.file(file.name, stream, { binary: true });
+      if (hasConfiguredS3Origin(file.url)) {
+        const data = await getStreamFromS3Url(file.url, userId);
+        if (data) {
+          zip.file(zipEntryName, data, { binary: true });
+        } else {
+          const fallbackData = await safeProjectFileFetch(file.url);
+          zip.file(zipEntryName, fallbackData, { binary: true });
+        }
       } else {
-        const response = await axios.get(file.url, {
-          responseType: 'stream',
-          timeout: 30000
-        });
-        zip.file(file.name, response.data, { binary: true });
+        if (isS3Url(file.url) && !isConfiguredS3HttpUrl(file.url, userId)) {
+          throw new Error('Unsupported project asset URL');
+        }
+        const data = await safeProjectFileFetch(file.url);
+        zip.file(zipEntryName, data, { binary: true });
       }
     } catch (e) {
-      console.warn(`Failed to fetch file from ${file.url}:`, e.message);
-      zip.file(file.name, Buffer.alloc(0));
+      console.warn('Failed to fetch project file');
+      zip.file(zipEntryName, Buffer.alloc(0));
     }
   } else {
-    zip.file(file.name, file.content);
+    zip.file(zipEntryName, file.content);
   }
 }
 
-async function buildZip(project, req, res) {
-  let keepaliveInterval;
-
+async function buildZip(project, res) {
   try {
     const zip = new JSZip();
     const currentTime = format(new Date(), 'yyyy_MM_dd_HH_mm_ss');
@@ -341,37 +352,21 @@ async function buildZip(project, req, res) {
       project.name
     )}_${currentTime}.zip`;
     const { files } = project;
-    const root = files.find((file) => file.name === 'root');
+    const root = files.find(
+      (file) => file.name === 'root' && file.fileType === 'folder'
+    );
 
     if (!root) {
       throw new Error('Project has no root folder');
     }
 
     bundleExternalLibs(project);
-
+    await addFileToZip(root, files, zip, project.user.toString(), true);
     res.writeHead(200, {
       'Content-Type': 'application/zip',
       'Content-disposition': `attachment; filename=${zipFileName}`,
       'Transfer-Encoding': 'chunked'
     });
-
-    let keepaliveCounter = 0;
-    keepaliveInterval = setInterval(() => {
-      if (!res.writableEnded) {
-        res.write(Buffer.alloc(0));
-        keepaliveCounter++;
-        if (keepaliveCounter % 10 === 0) {
-          console.log(
-            `Keepalive: Building ZIP file list (${keepaliveCounter}s elapsed)...`
-          );
-        }
-      }
-    }, 1000);
-
-    await addFileToZip(root, files, zip);
-
-    clearInterval(keepaliveInterval);
-    keepaliveInterval = null;
 
     const zipStream = zip.generateNodeStream({
       type: 'nodebuffer',
@@ -383,7 +378,7 @@ async function buildZip(project, req, res) {
     zipStream.pipe(res);
 
     zipStream.on('error', (err) => {
-      console.error('Error streaming zip file:', err);
+      console.error('Error streaming zip file');
       if (!res.headersSent) {
         res.status(500).json({
           success: false,
@@ -394,18 +389,22 @@ async function buildZip(project, req, res) {
       }
     });
 
-    await new Promise((resolve, reject) => {
-      zipStream.on('end', resolve);
-      zipStream.on('error', reject);
-      res.on('error', reject);
-      res.on('close', () => reject(new Error('Client disconnected')));
-    });
-  } catch (err) {
-    console.error('Error building zip file:', err);
-
-    if (keepaliveInterval) {
-      clearInterval(keepaliveInterval);
+    const handleResponseClose = () => {
+      if (!res.writableFinished)
+        zipStream.destroy(new Error('Client disconnected'));
+    };
+    res.once('close', handleResponseClose);
+    try {
+      await new Promise((resolve, reject) => {
+        zipStream.once('end', resolve);
+        zipStream.once('error', reject);
+        res.once('error', reject);
+      });
+    } finally {
+      res.removeListener('close', handleResponseClose);
     }
+  } catch (err) {
+    console.error('Error building zip file');
 
     if (!res.headersSent) {
       res.status(500).json({
@@ -431,7 +430,7 @@ export async function downloadProjectAsZip(req, res) {
       return;
     }
 
-    await buildZip(project, req, res);
+    await buildZip(project, res);
   } catch (err) {
     console.error('Error in downloadProjectAsZip:', err);
     if (!res.headersSent) {

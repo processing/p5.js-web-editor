@@ -1,7 +1,7 @@
 import { Request, Response } from 'jest-express';
 import mime from 'mime';
 import Project from '../../models/project';
-import { getFileContent } from '../file.controller';
+import { createFile, getFileContent } from '../file.controller';
 import { resolvePathToFile } from '../../utils/filePath';
 
 jest.mock('../../models/project');
@@ -115,5 +115,32 @@ describe('file.controller > getFileContent', () => {
       'application/javascript'
     );
     expect(response.send).toHaveBeenCalledWith('sketch content');
+  });
+});
+
+describe('file.controller > createFile', () => {
+  afterEach(() => jest.restoreAllMocks());
+
+  it.each([
+    '../bad.js',
+    '..\\bad.js',
+    '/bad.js',
+    'mixed/..\\bad.js',
+    'bad:name.js'
+  ])('rejects unsafe file names before persistence: %s', async (name) => {
+    const persistFile = jest.spyOn(Project, 'findOneAndUpdate');
+    const request = { body: { name }, params: { project_id: 'project-123' } };
+    const response = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn()
+    };
+
+    await createFile(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.json).toHaveBeenCalledWith(
+      expect.objectContaining({ message: 'File Validation Failed' })
+    );
+    expect(persistFile).not.toHaveBeenCalled();
   });
 });

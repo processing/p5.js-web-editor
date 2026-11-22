@@ -2,16 +2,16 @@
  * @jest-environment node
  */
 import { Request, Response } from 'jest-express';
-import axios from 'axios';
 import mime from 'mime';
 import Project from '../../../models/project';
 import { getProjectAsset } from '../../project.controller';
 import { resolvePathToFile } from '../../../utils/filePath';
+import safeProjectFileFetch from '../../../utils/safeProjectFileFetch';
 
 jest.mock('../../../models/project');
 jest.mock('../../../utils/filePath');
 jest.mock('mime');
-jest.mock('axios');
+jest.mock('../../../utils/safeProjectFileFetch');
 
 describe('project.controller', () => {
   describe('getProjectAsset()', () => {
@@ -174,13 +174,11 @@ describe('project.controller', () => {
       Project.findOne().populate().exec.mockResolvedValue(project);
       resolvePathToFile.mockReturnValue(resolvedFile);
       mime.getType.mockReturnValue('image/png');
-      axios.get.mockResolvedValue({ data: imageData });
+      safeProjectFileFetch.mockResolvedValue(imageData);
 
       await getProjectAsset(request, response);
 
-      expect(axios.get).toHaveBeenCalledWith(resolvedFile.url, {
-        responseType: 'arraybuffer'
-      });
+      expect(safeProjectFileFetch).toHaveBeenCalledWith(resolvedFile.url);
       expect(response.set).toHaveBeenCalledWith('Content-Type', 'image/png');
       expect(response.send).toHaveBeenCalledWith(imageData);
     });
@@ -200,7 +198,7 @@ describe('project.controller', () => {
       Project.findOne().populate().exec.mockResolvedValue(project);
       resolvePathToFile.mockReturnValue(resolvedFile);
       mime.getType.mockReturnValue('image/png');
-      axios.get.mockRejectedValue(new Error('Network error'));
+      safeProjectFileFetch.mockRejectedValue(new Error('Network error'));
 
       await getProjectAsset(request, response);
 

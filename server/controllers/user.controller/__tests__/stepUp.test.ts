@@ -14,6 +14,9 @@ import { UserDocument } from '../../../types';
 jest.mock('../../../models/user');
 jest.mock('../../../utils/mail');
 jest.mock('../../../views/mail');
+jest.mock('../../../utils/editorUrl', () => ({
+  getEditorUrl: jest.fn(() => 'https://editor.example')
+}));
 
 const sha256 = (value: string) =>
   crypto.createHash('sha256').update(value).digest('hex');
@@ -98,7 +101,10 @@ describe('user.controller > stepUp', () => {
       // the plain code is never kept in the session
       expect(JSON.stringify(session)).not.toContain(sentCode);
       expect(renderStepUpCode).toHaveBeenCalledWith(
-        expect.objectContaining({ to: 'owner@example.com' })
+        expect.objectContaining({
+          to: 'owner@example.com',
+          body: expect.objectContaining({ domain: 'https://editor.example' })
+        })
       );
       expect(mailerService.send).toHaveBeenCalledWith(
         expect.objectContaining({ subject: 'Mock step-up code' })
