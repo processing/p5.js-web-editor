@@ -2,6 +2,10 @@ import each from 'async/each';
 import mime from 'mime';
 import isBefore from 'date-fns/isBefore';
 import Project from '../models/project';
+import {
+  FileValidationError,
+  validateFileName
+} from '../domain-objects/Project';
 import { resolvePathToFile } from '../utils/filePath';
 import { deleteObjectsFromS3, getObjectKey } from './aws.controller';
 
@@ -10,6 +14,7 @@ import { deleteObjectsFromS3, getObjectKey } from './aws.controller';
 // https://github.com/Automattic/mongoose/issues/4049
 export async function createFile(req, res) {
   try {
+    validateFileName(req.body.name);
     const updatedProject = await Project.findOneAndUpdate(
       {
         _id: req.params.project_id,
@@ -46,6 +51,14 @@ export async function createFile(req, res) {
       project: populatedProject
     });
   } catch (err) {
+    if (err instanceof FileValidationError) {
+      return res.status(400).json({
+        success: false,
+        message: 'File Validation Failed',
+        detail: err.message,
+        errors: err.files
+      });
+    }
     console.error(err);
     return res.status(500).json({ success: false });
   }

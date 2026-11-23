@@ -8,6 +8,7 @@ import {
 } from '../../types';
 import { STEP_UP_WINDOW_MS } from '../../middleware/requireStepUp';
 import { mailerService } from '../../utils/mail';
+import { getEditorUrl } from '../../utils/editorUrl';
 import { renderStepUpCode } from '../../views/mail';
 
 /** How long an emailed step-up code stays valid */
@@ -71,7 +72,7 @@ export const initiateStepUpCode: RequestHandler<
 
     const mailOptions = renderStepUpCode({
       body: {
-        domain: process.env.EDITOR_URL!,
+        domain: getEditorUrl(),
         code
       },
       to: user.email

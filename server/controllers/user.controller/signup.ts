@@ -1,6 +1,7 @@
 import { RequestHandler } from 'express';
 import { User } from '../../models/user';
 import { generateToken, userResponse } from './helpers';
+import { getEditorUrl } from '../../utils/editorUrl';
 import { renderEmailConfirmation } from '../../views/mail';
 import { mailerService } from '../../utils/mail';
 import {
@@ -37,6 +38,9 @@ export const createUser: RequestHandler<
       return;
     }
 
+    // Resolved before the account is created, so a misconfiguration fails
+    // the signup cleanly instead of leaving an account with no email sent.
+    const editorUrl = getEditorUrl();
     const EMAIL_VERIFY_TOKEN_EXPIRY_TIME = Date.now() + 3600000 * 24; // 24 hours
     const token = await generateToken();
     const user = new User({
@@ -57,11 +61,10 @@ export const createUser: RequestHandler<
         return;
       }
 
-      const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
       const mailOptions = renderEmailConfirmation({
         body: {
-          domain: `${protocol}://${req.headers.host}`,
-          link: `${protocol}://${req.headers.host}/verify?t=${token}`
+          domain: editorUrl,
+          link: `${editorUrl}/verify?t=${token}`
         },
         to: req.user!.email
       });
@@ -158,11 +161,11 @@ export const emailVerificationInitiate: RequestHandler<
       res.status(409).json({ error: 'Email already verified' });
       return;
     }
-    const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
+    const editorUrl = getEditorUrl();
     const mailOptions = renderEmailConfirmation({
       body: {
-        domain: `${protocol}://${req.headers.host}`,
-        link: `${protocol}://${req.headers.host}/verify?t=${token}`
+        domain: editorUrl,
+        link: `${editorUrl}/verify?t=${token}`
       },
       to: user.email
     });

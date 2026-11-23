@@ -13,6 +13,9 @@ import { User } from '../../../../models/user';
 jest.mock('../../../../models/user');
 jest.mock('../../../../utils/mail');
 jest.mock('../../../../views/mail');
+jest.mock('../../../../utils/editorUrl', () => ({
+  getEditorUrl: jest.fn(() => 'https://editor.example')
+}));
 
 let githubVerify: Function;
 let googleVerify: Function;
@@ -23,7 +26,6 @@ beforeAll(() => {
   process.env.GOOGLE_SECRET = 'x';
   process.env.GITHUB_ID = 'x';
   process.env.GITHUB_SECRET = 'x';
-  process.env.EDITOR_URL = 'http://localhost';
   // eslint-disable-next-line global-require
   require('../../../../config/passport');
   githubVerify = (passport as any)._strategy('github')._verify;

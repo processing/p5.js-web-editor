@@ -1,6 +1,7 @@
 import { Request, RequestHandler } from 'express';
 import { User } from '../../models/user';
 import { saveUser, generateToken, userResponse } from './helpers';
+import { getEditorUrl } from '../../utils/editorUrl';
 import {
   GenericResponseBody,
   PublicUserOrErrorOrGeneric,
@@ -43,39 +44,45 @@ export const resetPasswordInitiate: RequestHandler<
   GenericResponseBody,
   ResetPasswordInitiateRequestBody
 > = async (req, res) => {
+  const genericResponse = {
+    success: true,
+    message:
+      'If the email is registered with the editor, an email has been sent.'
+  };
   try {
-    const token = await generateToken();
-    const user = await User.findByEmail(req.body.email);
-    // Only send reset links to verified addresses. An unverified address may
-    // not belong to the account owner (e.g. set by someone with a stolen
-    // session). Respond identically to avoid user enumeration.
-    if (!user || user.verified !== User.EmailConfirmation().Verified) {
-      res.json({
-        success: true,
-        message:
-          'If the email is registered with the editor, an email has been sent.'
-      });
+    if (typeof req.body.email !== 'string') {
+      res.json(genericResponse);
       return;
     }
+    const token = await generateToken();
+    const user = await User.findByEmail(req.body.email);
+    // Reset links go to the account's current address whether or not it has
+    // been confirmed. Withholding them from unconfirmed addresses locked out
+    // users who never clicked their signup confirmation link, and offered no
+    // protection: whoever controls an inbox can confirm it in one click.
+    // Changing the address itself is gated behind step-up (see updateSettings).
+    // Banned accounts are treated as missing: a reset would otherwise log them
+    // straight in (updatePassword), bypassing the ban check at login.
+    // Respond identically in every case to avoid user enumeration.
+    if (!user || user.banned) {
+      res.json(genericResponse);
+      return;
+    }
+    const editorUrl = getEditorUrl();
     user.resetPasswordToken = token;
     user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
 
     await user.save();
-    const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
     const mailOptions = renderResetPassword({
       body: {
-        domain: `${protocol}://${req.headers.host}`,
-        link: `${protocol}://${req.headers.host}/reset-password/${token}`
+        domain: editorUrl,
+        link: `${editorUrl}/reset-password/${token}`
       },
       to: user.email
     });
 
     await mailerService.send(mailOptions);
-    res.json({
-      success: true,
-      message:
-        'If the email is registered with the editor, an email has been sent.'
-    });
+    res.json(genericResponse);
   } catch (err) {
     if (process.env.NODE_ENV !== 'test') {
       // don't log in test env
@@ -104,7 +111,7 @@ export const validateResetPasswordToken: RequestHandler<
     resetPasswordToken: req.params.token,
     resetPasswordExpires: { $gt: Date.now() }
   }).exec();
-  if (!user) {
+  if (!user || user.banned) {
     res.status(401).json({
       success: false,
       message: 'Password reset token is invalid or has expired.'
@@ -135,7 +142,7 @@ export const updatePassword: RequestHandler<
     resetPasswordToken: req.params.token,
     resetPasswordExpires: { $gt: Date.now() }
   }).exec();
-  if (!user) {
+  if (!user || user.banned) {
     res.status(401).json({
       success: false,
       message: 'Password reset token is invalid or has expired.'
@@ -146,6 +153,10 @@ export const updatePassword: RequestHandler<
   user.password = req.body.password;
   user.resetPasswordToken = undefined;
   user.resetPasswordExpires = undefined;
+  // Using the emailed link proves the user controls this address.
+  user.verified = User.EmailConfirmation().Verified;
+  user.verifiedToken = null;
+  user.verifiedTokenExpires = null;
   // Log out every other session; the req.logIn below re-serializes this one
   // with the new version.
   user.sessionVersion = (user.sessionVersion ?? 0) + 1;
@@ -215,6 +226,8 @@ export const updateSettings: RequestHandler<
     }
 
     let verificationMail = null;
+    let noticeMail = null;
+    const editorUrl = getEditorUrl();
     if (changingEmail) {
       user.verified = User.EmailConfirmation().Sent;
       user.email = req.body.email;
@@ -228,13 +241,20 @@ export const updateSettings: RequestHandler<
       user.verifiedToken = token;
       user.verifiedTokenExpires = Date.now() + 3600000 * 24; // 24 hours
 
-      const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
       verificationMail = renderEmailConfirmation({
         body: {
-          domain: `${protocol}://${req.headers.host}`,
-          link: `${protocol}://${req.headers.host}/verify?t=${token}`
+          domain: editorUrl,
+          link: `${editorUrl}/verify?t=${token}`
         },
         to: user.email
+      });
+      // Tell the old address, with no links that act on the account.
+      noticeMail = renderEmailChangedNotice({
+        body: {
+          domain: editorUrl,
+          newEmail: user.email
+        },
+        to: previousEmail
       });
     }
 
@@ -243,17 +263,22 @@ export const updateSettings: RequestHandler<
     await user.save();
     await reLogin(req, user);
 
-    if (verificationMail) {
-      await mailerService.send(verificationMail);
-      // Tell the old address, with no links that act on the account.
-      const noticeMail = renderEmailChangedNotice({
-        body: {
-          domain: process.env.EDITOR_URL!,
-          newEmail: user.email
-        },
-        to: previousEmail
-      });
-      await mailerService.send(noticeMail);
+    const results = await Promise.allSettled([
+      verificationMail && mailerService.send(verificationMail),
+      noticeMail && mailerService.send(noticeMail)
+    ]);
+    const [verificationResult, noticeResult] = results;
+    if (verificationResult.status === 'rejected') {
+      console.error(
+        'Could not send email confirmation after email change:',
+        verificationResult.reason
+      );
+    }
+    if (noticeResult.status === 'rejected') {
+      console.error(
+        'Could not send email-changed notice to previous address:',
+        noticeResult.reason
+      );
     }
 
     res.json(userResponse(user));
