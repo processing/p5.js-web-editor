@@ -11,6 +11,7 @@ import {
   p5DataAddonURL,
   p5URLTemplate
 } from '../../../../common/p5URLs';
+import { addNoProtect, hasNoProtect } from '../utils/loopProtection';
 
 export const majorVersion = (version) => version.split('.')[0];
 
@@ -44,6 +45,13 @@ export function P5VersionProvider(props) {
       if (dom.doctype) {
         const doctype = new XMLSerializer().serializeToString(dom.doctype);
         src = `${doctype}\n${src}`;
+      }
+
+      // The <!-- noprotect --> comment usually sits before the doctype, so
+      // it is not part of documentElement and would be dropped here. Keep it
+      // so that editing the libraries does not re-enable loop protection.
+      if (hasNoProtect(indexSrc)) {
+        src = addNoProtect(src);
       }
 
       return src;
