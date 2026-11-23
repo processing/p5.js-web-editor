@@ -13,6 +13,9 @@ import { UpdateSettingsRequestBody, UserDocument } from '../../../../types';
 jest.mock('../../../../models/user');
 jest.mock('../../../../utils/mail');
 jest.mock('../../../../views/mail');
+jest.mock('../../../../utils/editorUrl', () => ({
+  getEditorUrl: jest.fn(() => 'https://editor.example')
+}));
 jest.mock('../../helpers', () => ({
   ...jest.requireActual('../../helpers'), // use actual userResponse
   saveUser: jest.fn(),
@@ -219,6 +222,59 @@ describe('user.controller > auth management > updateSettings (email, username, p
           );
         });
       });
+
+      describe.each([
+        ['the confirmation email', 'Mock confirm your email'],
+        ['the email-changed notice', 'Mock email changed notice']
+      ])(
+        'when %s fails to send after the email change is saved',
+        (_label, failingSubject) => {
+          let consoleErrorSpy: jest.SpyInstance;
+          beforeEach(async () => {
+            consoleErrorSpy = jest
+              .spyOn(console, 'error')
+              .mockImplementation(() => {});
+            (mailerService.send as jest.Mock).mockImplementation(
+              async (mail: { subject: string }) => {
+                if (mail.subject === failingSubject) {
+                  throw new Error('Email failed to send.');
+                }
+                return true;
+              }
+            );
+            givenRecentStepUp();
+            requestBody = { ...minimumValidRequest, email: NEW_EMAIL };
+            request.setBody(requestBody);
+            await updateSettings(
+              (request as unknown) as Request,
+              (response as unknown) as Response,
+              next
+            );
+          });
+          afterEach(() => {
+            consoleErrorSpy.mockRestore();
+            (mailerService.send as jest.Mock).mockReset();
+          });
+          it('still attempts both emails, so the old address always gets the notice', () => {
+            expect(mailerService.send).toHaveBeenCalledWith(
+              expect.objectContaining({ subject: 'Mock confirm your email' })
+            );
+            expect(mailerService.send).toHaveBeenCalledWith(
+              expect.objectContaining({ subject: 'Mock email changed notice' })
+            );
+          });
+          it('responds with the saved user rather than an error', () => {
+            expect(testUser.save).toHaveBeenCalledTimes(1);
+            expect(response.status).not.toHaveBeenCalledWith(500);
+            expect(response.json).toHaveBeenCalledWith(
+              expect.objectContaining({ email: NEW_EMAIL })
+            );
+          });
+          it('logs the failure', () => {
+            expect(consoleErrorSpy).toHaveBeenCalled();
+          });
+        }
+      );
 
       describe('when the email changes while a reset token is outstanding', () => {
         beforeEach(async () => {
