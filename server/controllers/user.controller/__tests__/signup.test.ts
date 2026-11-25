@@ -11,12 +11,16 @@ import {
 } from '../signup';
 
 import { mailerService } from '../../../utils/mail';
+import { renderEmailConfirmation } from '../../../views/mail';
 import { DuplicateUserCheckQuery, VerifyEmailQuery } from '../../../types';
 import { createMockUser } from '../__testUtils__';
 
 jest.mock('../../../models/user');
 jest.mock('../../../utils/mail');
 jest.mock('../../../views/mail');
+jest.mock('../../../utils/editorUrl', () => ({
+  getEditorUrl: jest.fn(() => 'https://editor.example')
+}));
 
 describe('user.controller > signup', () => {
   let request: MockRequest;
@@ -198,7 +202,7 @@ describe('user.controller > signup', () => {
       const saveMock = jest.fn().mockResolvedValue({});
       const mockUser = {
         save: saveMock,
-        verified: 'verified',
+        verified: 'sent',
         verifiedToken: 'validtoken',
         verifiedTokenExpires: new Date(Date.now() + 10000)
       };
@@ -381,6 +385,75 @@ describe('user.controller > signup', () => {
       expect(response.send).toHaveBeenCalledWith({
         error: 'Error sending mail'
       });
+    });
+  });
+
+  describe("confirmation links ignore the request's Host header", () => {
+    beforeEach(() => {
+      request.headers.host = 'evil.example';
+    });
+
+    const expectLinkFromEditorUrl = () => {
+      expect(renderEmailConfirmation).toHaveBeenCalledWith(
+        expect.objectContaining({
+          body: {
+            domain: 'https://editor.example',
+            link: expect.stringMatching(
+              /^https:\/\/editor\.example\/verify\?t=[0-9a-f]+$/
+            )
+          }
+        })
+      );
+    };
+
+    it('createUser builds the signup confirmation link from EDITOR_URL', async () => {
+      User.findByEmailAndUsername = jest.fn().mockResolvedValue(null);
+      User.EmailConfirmation = jest.fn().mockReturnValue({ Sent: 'sent' });
+      const saveSpy = jest
+        .spyOn(User.prototype, 'save')
+        .mockResolvedValue(undefined as never);
+      request.setBody({
+        username: 'newuser',
+        email: 'new@example.com',
+        password: 'password'
+      });
+      request.logIn = jest.fn((user, cb) => {
+        request.user = user;
+        cb(null);
+      });
+
+      await createUser(
+        (request as unknown) as Request,
+        (response as unknown) as Response,
+        next
+      );
+      // the email is sent from the async logIn callback
+      await new Promise(setImmediate);
+
+      expectLinkFromEditorUrl();
+      expect(mailerService.send).toHaveBeenCalled();
+      saveSpy.mockRestore();
+    });
+
+    it('emailVerificationInitiate builds the resent confirmation link from EDITOR_URL', async () => {
+      User.EmailConfirmation = jest.fn().mockReturnValue({ Resent: 'resent' });
+      const mockUser = {
+        verified: 'sent',
+        email: 'test@example.com',
+        save: jest.fn().mockResolvedValue({})
+      };
+      User.findById = jest
+        .fn()
+        .mockReturnValue({ exec: jest.fn().mockResolvedValue(mockUser) });
+      request.user = createMockUser({ id: 'user1' });
+
+      await emailVerificationInitiate(
+        (request as unknown) as Request,
+        (response as unknown) as Response,
+        next
+      );
+
+      expectLinkFromEditorUrl();
     });
   });
 });
