@@ -98,6 +98,19 @@ function handleMessageEvent(e) {
 
 window.addEventListener('message', handleMessageEvent);
 
+// The sketch runs inside an iframe, which normally receives keyboard focus as
+// the default action of a mousedown. If a sketch calls preventDefault() on
+// mousedown, the iframe never gets focus and key events keep going to the
+// editor instead. Explicitly focus the sketch window so key events still work.
+// See https://github.com/processing/p5.js-web-editor/issues/4403
+window.addEventListener(
+  'mousedown',
+  () => {
+    window.focus();
+  },
+  true
+);
+
 // catch reference errors, via http://stackoverflow.com/a/12747364/2994108
 window.onerror = async function onError(
   msg,
