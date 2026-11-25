@@ -6,11 +6,13 @@ import {
   exportProjectAsZip,
   newProject,
   saveProject,
-  setProjectName
+  setProjectName,
+  cloneProject
 } from '../actions/project';
 import { showToast } from '../actions/toast';
 import { showErrorModal, showShareModal } from '../actions/ide';
 import { selectCanEditSketch } from '../selectors/users';
+import { updateFileContent } from '../actions/files';
 
 const useSketchActions = () => {
   const unsavedChanges = useSelector((state) => state.ide.unsavedChanges);
@@ -33,10 +35,20 @@ const useSketchActions = () => {
   }
 
   function saveSketch(cmController) {
-    if (authenticated) {
-      dispatch(saveProject(cmController?.getContent()));
-    } else {
+    if (!authenticated) {
       dispatch(showErrorModal('forceAuthentication'));
+      return;
+    }
+    if (canEditProjectName) {
+      dispatch(saveProject(cmController?.getContent()));
+      return;
+    }
+    if (window.confirm(t('Nav.File.SaveAsCopyConfirm'))) {
+      const file = cmController?.getContent();
+      if (file) {
+        dispatch(updateFileContent(file.id, file.content));
+      }
+      dispatch(cloneProject());
     }
   }
 

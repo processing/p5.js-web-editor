@@ -142,23 +142,22 @@ export function saveProject(
     if (state.project.isSaving) {
       return Promise.resolve();
     }
-    dispatch(startSavingProject());
     if (
       state.user.id &&
       state.project.owner &&
       state.project.owner.id !== state.user.id
     ) {
-      return Promise.reject();
+      return Promise.resolve(); // This is refused quietly as non-owners are offered copies in saveSketch instead
     }
+    dispatch(startSavingProject());
     const formParams = Object.assign({}, state.project);
-    formParams.files = [...state.files];
 
-    if (selectedFile) {
-      const fileToUpdate = formParams.files.find(
-        (file) => file.id === selectedFile.id
-      );
-      fileToUpdate.content = selectedFile.content;
-    }
+    formParams.files = state.files.map((file) => {
+      if (selectedFile && file.id === selectedFile.id) {
+        return { ...file, content: selectedFile.content };
+      }
+      return file;
+    });
     if (state.project.id) {
       return apiClient
         .put(`/projects/${state.project.id}`, formParams)
@@ -292,7 +291,6 @@ function generateNewIdsForChildren(file, files) {
 
 export function cloneProject(project) {
   return (dispatch, getState) => {
-    dispatch(setUnsavedChanges(false));
     const state = getState();
     const files = project ? project.files : state.files;
     const projectName = project ? project.name : state.project.name;
@@ -340,6 +338,8 @@ export function cloneProject(project) {
             type: ActionTypes.PROJECT_SAVE_FAIL,
             error: err?.response?.data
           });
+          dispatch(setToastText('Toast.SketchFailedSave'));
+          dispatch(showToast(1500));
           return;
         }
         const formParams = {
@@ -353,6 +353,9 @@ export function cloneProject(project) {
               `/${response.data.user.username}/sketches/${response.data.id}`
             );
             dispatch(setNewProject(response.data));
+            dispatch(setUnsavedChanges(false));
+            dispatch(showToast(1500));
+            dispatch(setToastText('Toast.SketchSaved'));
           })
           .catch((error) => {
             copiedAssetKeys.forEach((key) => {
@@ -362,6 +365,8 @@ export function cloneProject(project) {
               type: ActionTypes.PROJECT_SAVE_FAIL,
               error: error?.response?.data
             });
+            dispatch(setToastText('Toast.SketchFailedSave'));
+            dispatch(showToast(1500));
           });
       }
     );
