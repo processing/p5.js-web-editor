@@ -18,7 +18,8 @@ export const Default = {
         id: '1',
         name: 'Play Sketch',
         createdAt: Date.now().toString(),
-        updatedAt: Date.now().toString()
+        updatedAt: Date.now().toString(),
+        p5Version: '2.3.4'
       }
     ]
   }

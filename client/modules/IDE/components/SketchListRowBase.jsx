@@ -128,6 +128,11 @@ const SketchListRowBase = ({
       <th scope="row">{name}</th>
       <td>{formatDateCell(sketch.createdAt, mobile)}</td>
       <td>{formatDateCell(sketch.updatedAt, mobile)}</td>
+      <td>
+        {!sketch.p5Version || sketch.p5Version === 'Custom'
+          ? t('SketchList.P5VersionCustom')
+          : sketch.p5Version}
+      </td>
       <td hidden={!userIsOwner || mobile}>
         <VisibilityDropdown
           sketch={sketch}
@@ -169,6 +174,7 @@ SketchListRowBase.propTypes = {
     name: PropTypes.string.isRequired,
     createdAt: PropTypes.string.isRequired,
     updatedAt: PropTypes.string.isRequired,
+    p5Version: PropTypes.string,
     visibility: PropTypes.string
   }).isRequired,
   username: PropTypes.string.isRequired,
