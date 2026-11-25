@@ -1,6 +1,7 @@
 import { Hook, Decode, Encode } from 'console-feed';
 import StackTrace from 'stacktrace-js';
 import { evaluateExpression } from './evaluateExpression';
+import { createPreviewFetch } from './previewFetch';
 
 // should postMessage user the dispatcher? does the parent window need to
 // be registered as a frame? or a just a listener?
@@ -13,6 +14,11 @@ const htmlOffset = 12;
 window.objectUrls[window.location.href] = '/index.html';
 const blobPath = window.location.href.split('/').pop();
 window.objectPaths[blobPath] = 'index.html';
+window.fetch = createPreviewFetch(
+  window.fetch.bind(window),
+  window.fileUrls,
+  document.baseURI
+);
 let hitCount = 0;
 let lastHitTime = 0;
 let firstLine = null;
