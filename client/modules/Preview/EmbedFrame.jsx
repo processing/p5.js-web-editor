@@ -248,6 +248,17 @@ function EmbedFrame({ files, isPlaying, basePath, gridOutput, textOutput }) {
   const htmlFile = useMemo(() => getHtmlFile(files), [files]);
   const srcRef = useRef();
 
+  const sandboxAttributes = [
+    'allow-forms',
+    'allow-modals',
+    'allow-pointer-lock',
+    'allow-popups',
+    'allow-same-origin',
+    'allow-scripts',
+    'allow-top-navigation-by-user-activation',
+    'allow-downloads'
+  ].join(' ');
+
   useEffect(() => {
     const unsubscribe = registerFrame(
       iframe.current.contentWindow,
@@ -292,6 +303,26 @@ function EmbedFrame({ files, isPlaying, basePath, gridOutput, textOutput }) {
       role="main"
       frameBorder="0"
       ref={iframe}
+      sandbox={sandboxAttributes}
+      allow={[
+        'accelerometer',
+        'ambient-light-sensor',
+        'autoplay',
+        'bluetooth',
+        'camera',
+        'encrypted-media',
+        'geolocation',
+        'gyroscope',
+        'hid',
+        'microphone',
+        'magnetometer',
+        'midi',
+        'payment',
+        'usb',
+        'serial',
+        'vr',
+        'xr-spatial-tracking'
+      ].join('; ')}
     />
   );
 }
