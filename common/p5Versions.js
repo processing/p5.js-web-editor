@@ -5,8 +5,9 @@ export const currentP5Version = '2.3.4';
 // JSON.stringify([...document.querySelectorAll('._132722c7')].map(n => n.innerText), null, 2)
 // TODO: use their API for this to grab these at build time?
 export const p5Versions = [
-  { version: '2.3.4', label: '(Latest)' },
-  '2.3.2',
+  { version: '2.4.0', label: '(Latest)' },
+  '2.3.4',
+  '2.3.3',
   '2.3.2',
   '2.3.1',
   '2.3.0',
