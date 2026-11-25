@@ -84,7 +84,13 @@ function collectLoopsToProtect(ast, shaderNames) {
       }
     }
 
-    loops.push({ loop: node, parentBlock });
+    let statement = node;
+    for (let i = ancestors.length - 2; i >= 0; i--) {
+      if (ancestors[i].type !== 'LabeledStatement') break;
+      statement = ancestors[i];
+    }
+
+    loops.push({ loop: node, parentBlock, statement });
   }
 
   walk.ancestor(ast, {
@@ -100,7 +106,7 @@ function collectLoopsToProtect(ast, shaderNames) {
 function injectProtection(jsText, loops) {
   const edits = [];
 
-  loops.forEach(({ loop, parentBlock }, idx) => {
+  loops.forEach(({ loop, parentBlock, statement }, idx) => {
     const varName = `_LP${idx}`;
     const { line } = loop.loc.start;
     const check = makeCheckStatement(varName, line);
@@ -112,8 +118,8 @@ function injectProtection(jsText, loops) {
       edits.push({ pos: loop.body.end, rank: 0, text: ' }' });
     }
 
-    if (parentBlock && parentBlock.body.includes(loop)) {
-      edits.push({ pos: loop.start, rank: 2, text: makeVarDecl(varName) });
+    if (parentBlock && parentBlock.body.includes(statement)) {
+      edits.push({ pos: statement.start, rank: 2, text: makeVarDecl(varName) });
     }
   });
 

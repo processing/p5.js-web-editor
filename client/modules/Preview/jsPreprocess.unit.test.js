@@ -44,6 +44,31 @@ describe('jsPreprocess', () => {
       const result = jsPreprocess(code, '');
       expect(result).toContain('window.loopProtect.hit');
     });
+
+    it('declares the timer before labeled loops (#4393)', () => {
+      const code = `let result = 0;
+outer: for (let i = 0; i < 3; i++) {
+  inner: for (let j = 0; j < 3; j++) {
+    if (j === 1) continue outer;
+    result++;
+  }
+}
+a: b: for (;;) {
+  result++;
+  break a;
+}
+stop: while (true) {}`;
+      const hits = [];
+      const window = { loopProtect: { hit: (line) => hits.push(line) } };
+      // eslint-disable-next-line no-new-func
+      const run = new Function(
+        'window',
+        `${jsPreprocess(code, '')}\nreturn result;`
+      );
+
+      expect(run(window)).toBe(4);
+      expect(hits).toEqual([12]);
+    });
   });
 
   describe('shader strings', () => {
