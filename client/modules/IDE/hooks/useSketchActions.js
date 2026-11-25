@@ -40,9 +40,9 @@ const useSketchActions = () => {
     }
   }
 
-  function downloadSketch() {
+  async function downloadSketch() {
     if (authenticated && user.id === project.owner.id) {
-      dispatch(autosaveProject());
+      await dispatch(autosaveProject());
       exportProjectAsZip(project.id);
     }
   }
