@@ -13,6 +13,9 @@ import {
 import getSortedCollections from '../selectors/collections';
 import QuickAddList from './QuickAddList';
 import { remSize } from '../../../theme';
+import { Overlay } from '../../App/components/Overlay';
+import CollectionCreate from '../../User/components/CollectionCreate';
+import { Button } from '../../../common/Button';
 
 export const CollectionAddSketchWrapper = styled.div`
   width: ${remSize(600)};
@@ -40,10 +43,11 @@ const AddToCollectionList = ({ projectId }) => {
   const loading = useSelector((state) => state.loading);
   const [hasLoadedData, setHasLoadedData] = useState(false);
   const showLoader = loading && !hasLoadedData;
+  const [createCollectionVisible, setCreateCollectionVisible] = useState(false);
 
   useEffect(() => {
     dispatch(getCollections(username)).then(() => setHasLoadedData(true));
-  }, [dispatch, username]);
+  }, [dispatch, username, createCollectionVisible]);
 
   const handleCollectionAdd = (collection) => {
     dispatch(addToCollection(collection.id, projectId));
@@ -80,6 +84,19 @@ const AddToCollectionList = ({ projectId }) => {
         <Helmet>
           <title>{t('AddToCollectionList.Title')}</title>
         </Helmet>
+        <Button onClick={() => setCreateCollectionVisible(true)}>
+          {t('DashboardView.CreateCollection')}
+        </Button>
+
+        {createCollectionVisible && (
+          <Overlay
+            title={t('DashboardView.CreateCollectionOverlay')}
+            closeOverlay={() => setCreateCollectionVisible(false)}
+            isCompactHeight
+          >
+            <CollectionCreate />
+          </Overlay>
+        )}
         {getContent()}
       </QuickAddWrapper>
     </CollectionAddSketchWrapper>
