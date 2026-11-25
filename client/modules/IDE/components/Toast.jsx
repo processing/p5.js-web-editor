@@ -9,19 +9,26 @@ export default function Toast() {
   const { text, isVisible } = useSelector((state) => state.toast);
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  if (!isVisible) {
-    return null;
-  }
   return (
-    <section className="toast" role="status" aria-live="polite">
-      <p>{t(text)}</p>
-      <button
-        className="toast__close"
-        onClick={() => dispatch(hideToast())}
-        aria-label={t('Toast.CloseAlertARIA')}
-      >
-        <ExitIcon focusable="false" aria-hidden="true" />
-      </button>
-    </section>
+    <>
+      {/* The live region stays in the page, so screen readers that only watch
+          existing live regions announce the message when it is added. */}
+      <div className="visually-hidden" role="status" aria-live="polite">
+        {isVisible ? t(text) : ''}
+      </div>
+      {isVisible && (
+        <section className="toast">
+          {/* Announced through the live region above */}
+          <p aria-hidden="true">{t(text)}</p>
+          <button
+            className="toast__close"
+            onClick={() => dispatch(hideToast())}
+            aria-label={t('Toast.CloseAlertARIA')}
+          >
+            <ExitIcon focusable="false" aria-hidden="true" />
+          </button>
+        </section>
+      )}
+    </>
   );
 }
